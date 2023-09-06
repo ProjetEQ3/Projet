@@ -1,0 +1,11 @@
+# Ignore IDE files and directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Ignore Node.js modules
+node_modules/
