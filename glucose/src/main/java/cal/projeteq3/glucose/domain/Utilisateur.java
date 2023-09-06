@@ -8,7 +8,7 @@ import lombok.Data;
 
 @MappedSuperclass
 @Data
-public class Utilisateur {
+public abstract class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
