@@ -13,8 +13,8 @@ const RegistrationForm = () => {
             <div className="container bg-light">
                 <div className="row">
                     <div className="btn-group btn-group-lg">
-                        <button className={btn text-dark ${isActive ? 'active text-primary' : ''}}>Étudiant</button>
-                        <button className={btn text-dark ${!isActive ? 'active text-primary' : ''}}>Employeur</button>
+                        <button className={"btn text-dark ${isActive ? 'active text-primary' : ''}"}>Étudiant</button>
+                        <button className={"btn text-dark ${!isActive ? 'active text-primary' : ''}"}>Employeur</button>
                     </div>
                 </div>
             </div>
@@ -22,4 +22,4 @@ const RegistrationForm = () => {
     )
 }
 
-export default RegistrationForm
+export default RegistrationForm;
