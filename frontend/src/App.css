@@ -13,9 +13,17 @@
   }
 }
 
+.text-ose {
+  color: #8888f5;
+}
+
+.bg-ose {
+  background-color: #8888f5;
+}
+
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #8888f5;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
