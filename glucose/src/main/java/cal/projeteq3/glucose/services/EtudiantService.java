@@ -42,6 +42,7 @@ public class EtudiantService {
             etudiant.setAdresseCourriel(updatedEtudiant.getAdresseCourriel());
             etudiant.setMotDePasse(updatedEtudiant.getMotDePasse());
             etudiant.setCodeEtudiant(updatedEtudiant.getCodeEtudiant());
+            etudiant.setDepartement(updatedEtudiant.getDepartement());
 
             return etudiantRepository.save(etudiant);
         } else {

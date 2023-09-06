@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM, {createRoot} from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -7,18 +7,21 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RegistrationForm from "./Components/RegistrationForm";
 import 'bootstrap/dist/css/bootstrap.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <App></App>
+            <App/>
         ),
     },
     {
-        path: "register",
-        element: <RegistrationForm></RegistrationForm>,
+        path: "inscription",
+        element: <RegistrationForm/>,
     },
+    {
+        path: "connexion",
+        element: <div>Connexion</div>,
+    }
 ]);
 
 createRoot(document.getElementById("root")).render(

@@ -12,5 +12,6 @@ import lombok.ToString;
 public class Etudiant extends Utilisateur{
 
     private String codeEtudiant;
+    private Departement departement;
 
 }
