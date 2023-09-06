@@ -13,7 +13,8 @@ code {
 }
 
 .text-ose {
-  color: #8888f5;
+  --bs-text-opacity: 1;
+  color: #8888f5 !important;
 }
 
 .bg-ose {
