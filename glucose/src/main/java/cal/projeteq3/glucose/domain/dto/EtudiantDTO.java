@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EtudiantDTO {
-    private String nom;
-    private String prenom;
-    private String adresseCourriel;
-    private String codeEtudiant;
+public class EtudiantDTO extends UtilisateurDTO{
+    private String matricule;
     private Departement departement;
 }

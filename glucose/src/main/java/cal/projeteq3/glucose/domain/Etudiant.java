@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,7 +12,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class Etudiant extends Utilisateur{
 
-    private String codeEtudiant;
+    private String matricule;
     private Departement departement;
 
 }
