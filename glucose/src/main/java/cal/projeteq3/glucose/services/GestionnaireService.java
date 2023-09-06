@@ -14,4 +14,6 @@ public class GestionnaireService {
         this.gestionnaireRepository = gestionnaireRepository;
     }
 
+    // database operations here
+
 }
