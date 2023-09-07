@@ -16,7 +16,7 @@ public class myService {
         this.utilisateurRepo = utilisateurRepo;
     }
 
-    public Utilisateur findUtilisateur(String adresseCourriel) {
+    public Utilisateur findUtilisateur(String adresseCourriel){
         return utilisateurRepo.findUtilisateurByAdresseCourriel(adresseCourriel);
     }
 

@@ -22,6 +22,9 @@ public class UtilisateurController {
     @GetMapping("/login")
     public boolean login(String addresseCourriel, String motDePasse){
         utilisateur = myService.findUtilisateur(addresseCourriel);
+        if (utilisateur == null){
+            return false;
+        }
         return utilisateur.getMotDePasse().equals(motDePasse);
         //Faire rediriger?
     }
