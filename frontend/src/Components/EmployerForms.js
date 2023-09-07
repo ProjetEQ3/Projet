@@ -4,7 +4,7 @@ import axios from "axios";
 const EmployerForms = () => {
 
     const registerEmployeur = async () => {
-        const res = await axios.post('http://localhost:8080/employeur/register',
+        const res = await axios.post('/employeur/register',
             {
                 nom: this.nom,
                 prenom: this.prenom,

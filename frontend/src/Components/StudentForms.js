@@ -1,6 +1,6 @@
 import React from "react";
 import {useState} from "react";
-import axios from "axios";
+import {axiosInstance} from "../App";
 
 const StudentForms = () => {
     const [formData, setFormData] = useState({
@@ -21,7 +21,7 @@ const StudentForms = () => {
     const [programmeValid, setProgrammeValid] = useState(true);
 
     const registerEtudiant = async () => {
-        const res = await axios.post('http://localhost:8080/etudiant/register',
+        const res = await axiosInstance.post('/etudiant/register',
             {
                 nom: this.nom,
                 prenom: this.prenom,
