@@ -1,5 +1,6 @@
 import React from "react";
 import {useState} from "react";
+import axios from "axios";
 
 const StudentForms = () => {
     const [formData, setFormData] = useState({
@@ -18,6 +19,20 @@ const StudentForms = () => {
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
     const [programmeValid, setProgrammeValid] = useState(true);
+
+    const registerEtudiant = async () => {
+        const res = await axios.post('http://localhost:8080/etudiant/register',
+            {
+                nom: this.nom,
+                prenom: this.prenom,
+                adresseCourriel: this.email,
+                motDePasse: this.password,
+                matricule: this.matricule,
+                departement: this.programme,
+            }
+        )
+        return res.data
+    }
 
     const handleChanges = (e) => {
         const {name, value} = e.target;
@@ -90,6 +105,8 @@ const StudentForms = () => {
             alert('Vous devez choisir un programme');
             return;
         }
+
+        registerEtudiant().then(r => console.log(r));
 
         console.log(formData);
     }

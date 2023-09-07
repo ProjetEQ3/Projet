@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controllers;
 
 import cal.projeteq3.glucose.domain.Etudiant;
+import cal.projeteq3.glucose.domain.dto.EtudiantDTO;
 import cal.projeteq3.glucose.services.EtudiantService;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@NoArgsConstructor
 @RestController
 @RequestMapping("/etudiant")
 public class EtudiantController {
@@ -23,23 +23,10 @@ public class EtudiantController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Etudiant> register(@RequestBody Etudiant etudiant){
-        return ResponseEntity.accepted().body(etudiantService.createEtudiant(etudiant));
+    public ResponseEntity<EtudiantDTO> register(@RequestBody Etudiant etudiant){
+        etudiantService.createEtudiant(etudiant);
+//        return ResponseEntity.accepted().body(etudiantService.createEtudiant(etudiant));
+        return null;
     }
 
 }
-
-/*
-
-Nom et prénom
-
-Adresse courriel (Unique)
-
-Code d'étudiant (Unique)
-
-Mot de passe
-
-Confirmation Mot de passe
-
-Département d'étude (dropdown)
- */

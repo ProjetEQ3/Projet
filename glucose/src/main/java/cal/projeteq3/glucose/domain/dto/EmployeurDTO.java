@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public abstract class UtilisateurDTO {
-    private String nom;
-    private String prenom;
-    private String adresseCourriel;
-    private String motDePasse;
+public class EmployeurDTO extends UtilisateurDTO{
+    private String nomOrganisme;
+    private String numTelephone;
 }

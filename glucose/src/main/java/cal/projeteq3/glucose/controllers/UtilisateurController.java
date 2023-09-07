@@ -2,33 +2,35 @@ package cal.projeteq3.glucose.controllers;
 
 
 import cal.projeteq3.glucose.domain.Utilisateur;
-import cal.projeteq3.glucose.services.myService;
-import jdk.jshell.execution.Util;
+import cal.projeteq3.glucose.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @CrossOrigin(origins = "localhost:5432/projet")
-
 @RestController
+@RequestMapping("/utilisateur")
 public class UtilisateurController {
-    Utilisateur utilisateur;
-
-    @Autowired
-    myService myService;
-
-    @GetMapping("/login")
-    public boolean login(String addresseCourriel, String motDePasse){
-        utilisateur = myService.findUtilisateur(addresseCourriel);
-        if (utilisateur == null){
-            return false;
-        }
-        return utilisateur.getMotDePasse().equals(motDePasse);
-        //Faire rediriger?
-    }
-
-
+//    UtilisateurService utilisateurService;
+//
+//    @Autowired
+//    public UtilisateurController(UtilisateurService utilisateurService) {
+//        this.utilisateurService = utilisateurService;
+//    }
+//
+//    @GetMapping("/login")
+//    public ResponseEntity<Utilisateur> login(String addresseCourriel, String motDePasse){
+//
+//        Utilisateur user = utilisateurService.findUtilisateur(addresseCourriel);
+//
+//        if (user != null && user.getMotDePasse().equals(motDePasse)){
+//            return ResponseEntity.accepted().body(user);
+//        }
+//        return ResponseEntity.badRequest().build();
+//    }
 
 }

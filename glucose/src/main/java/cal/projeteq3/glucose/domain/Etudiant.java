@@ -12,8 +12,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class Etudiant extends Utilisateur{
 
-    private String codeEtudiant;
+    private String matricule;
     private Departement departement;
-
-
 }

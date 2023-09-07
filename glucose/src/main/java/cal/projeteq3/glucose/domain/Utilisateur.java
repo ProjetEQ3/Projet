@@ -18,5 +18,4 @@ public abstract class Utilisateur {
     private String prenom;
     private String adresseCourriel;
     private String motDePasse;
-
 }
