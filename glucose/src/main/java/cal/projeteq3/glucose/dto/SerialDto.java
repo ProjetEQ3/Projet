@@ -3,7 +3,7 @@ package cal.projeteq3.glucose.dto;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import cal.projeteq3.glucose.validation.Validation;
 
-public class SerialDto extends ErrorDto{
+public class SerialDto extends ErrorDTO{
 	private String serial;
 
 	public SerialDto(){

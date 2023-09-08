@@ -1,12 +1,12 @@
 package cal.projeteq3.glucose.auth;
 
 
-import cal.projeteq3.glucose.dto.ErrorDto;
+import cal.projeteq3.glucose.dto.ErrorDTO;
 import lombok.Getter;
 import java.util.List;
 
 @Getter
-public final class JWTAuthResponse extends ErrorDto {
+public final class JWTAuthResponse extends ErrorDTO {
 	private final String tokenType = "ProjetEQ3";
 	private String accessToken;
 

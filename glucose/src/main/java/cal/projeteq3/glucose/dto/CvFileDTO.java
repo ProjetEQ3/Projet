@@ -4,24 +4,24 @@ import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import cal.projeteq3.glucose.validation.Validation;
 
-public class CvFileDto extends ModelDto{
+public class CvFileDTO extends ModelDto{
 	private String fileName;
 	private byte[] fileData;
 
-	public CvFileDto(){
+	public CvFileDTO(){
 		super();
 		fileName = null;
 		fileData = null;
 	}
 
-	public CvFileDto(String serial, String fileName, byte[] fileData){
+	public CvFileDTO(String serial, String fileName, byte[] fileData){
 		super(serial);
 		this.fileName = fileName;
 		this.fileData = fileData;
 		validate();
 	}
 
-	public CvFileDto(CvFile cvFile){
+	public CvFileDTO(CvFile cvFile){
 		super(cvFile);
 		fileName = cvFile.getFileName();
 		fileData = cvFile.getFileData();
