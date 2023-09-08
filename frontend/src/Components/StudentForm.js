@@ -125,7 +125,7 @@ const StudentForm = () => {
                         <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
                         <input type="text" className="form-control" id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
                         <label htmlFor="programme" className="mt-3">Programme d'étude</label>
-                        <select className="form-control" id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
+                        <select className="form-select" id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
                             <option>Techniques de comptabilité et de gestion</option>
                             <option>Techniques de génie mécanique</option>
                             <option>Techniques de l’informatique</option>
