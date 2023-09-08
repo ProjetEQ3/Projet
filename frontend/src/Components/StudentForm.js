@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 import {axiosInstance} from "../App";
 
-const StudentForms = () => {
+const StudentForm = () => {
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
@@ -159,4 +159,4 @@ const StudentForms = () => {
     )
 }
 
-export default StudentForms
+export default StudentForm
