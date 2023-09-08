@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RegistrationForm from "./Components/RegistrationForm";
 import 'bootstrap/dist/css/bootstrap.css';
+import Login from "./Components/Login";
 
 const router = createBrowserRouter([
     {
@@ -15,12 +16,12 @@ const router = createBrowserRouter([
         ),
     },
     {
-        path: "inscription",
+        path: "register",
         element: <RegistrationForm/>,
     },
     {
         path: "connexion",
-        element: <div>Connexion</div>,
+        element: <Login/>,
     }
 ]);
 

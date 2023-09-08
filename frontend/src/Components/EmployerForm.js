@@ -1,36 +1,35 @@
-import React from "react";
-import {useState} from "react";
-import {axiosInstance} from "../App";
+import axios from "axios";
+import React, {useState} from "react";
 
-const StudentForms = () => {
+
+const EmployerForm = () => {
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
-        matricule: '',
+        nomOrganisme: '',
+        numOrganisme: '',
         email: '',
         password: '',
         passwordConfirm: '',
-        programme: ''
     });
     const [prenomValid, setPrenomValid] = useState(true);
     const [nomValid, setNomValid] = useState(true);
-    const [matriculeValid, setMatriculeValid] = useState(true);
+    const [nomOrganismeValid, setNomOrganismeValid] = useState(true);
+    const [numOrganismeValid, setNumOrganismeValid] = useState(true);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
-    const [programmeValid, setProgrammeValid] = useState(true);
 
-    const registerEtudiant = async () => {
-        const res = await axiosInstance.post('/etudiant/register',
+    const registerEmployeur = async () => {
+        const res = await axios.post('/employeur/register',
             {
                 nom: this.nom,
                 prenom: this.prenom,
-                adresseCourriel: this.email,
+                adresseCourriel: this.adresseCourriel,
                 motDePasse: this.password,
-                matricule: this.matricule,
-                departement: this.programme,
-            }
-        )
+                nomOrganisme: this.nomOrganisme,
+                numOrganisme: this.numOrganisme,
+            })
         return res.data
     }
 
@@ -43,11 +42,11 @@ const StudentForms = () => {
         e.preventDefault();
         setPrenomValid(true);
         setNomValid(true);
-        setMatriculeValid(true);
+        setNomOrganismeValid(true);
+        setNumOrganismeValid(true);
         setEmailValid(true);
         setPasswordValid(true);
         setPasswordConfirmValid(true);
-        setProgrammeValid(true);
 
         if(formData.nom === ''){
             setNomValid(false)
@@ -71,9 +70,25 @@ const StudentForms = () => {
             return;
         }
 
-        if(formData.matricule !== '' && !/^\d+$/.test(formData.matricule)){
-            setMatriculeValid(false)
-            alert('Le matricule doit contenir seulement des chiffres');
+        if(formData.nomOrganisme === ''){
+            setNomOrganismeValid(false)
+            alert('Le nom de l\'organisme est obligatoire');
+            return;
+        }
+        else if(!/^[a-zA-Z0-9-.]+$/.test(formData.nomOrganisme)){
+            setNomOrganismeValid(false)
+            alert('Le nom de l\'organisme doit être en format alphanumérique');
+            return;
+        }
+
+        if(formData.numOrganisme === ''){
+            setNumOrganismeValid(false)
+            alert('Le numéro de l\'organisme est obligatoire');
+            return;
+        }
+        else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.numOrganisme)){
+            setNumOrganismeValid(false)
+            alert('Le numéro de l\'organisme doit contenir seulement des chiffres');
             return;
         }
 
@@ -100,13 +115,7 @@ const StudentForms = () => {
             return;
         }
 
-        if(formData.programme === ''){
-            setProgrammeValid(false)
-            alert('Vous devez choisir un programme');
-            return;
-        }
-
-        registerEtudiant().then(r => console.log(r));
+        registerEmployeur().then(r => console.log(r));
 
         console.log(formData);
     }
@@ -116,37 +125,20 @@ const StudentForms = () => {
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="prenom" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="nom" className="mt-3">Nom</label>
                         <input type="text" className="form-control" id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
-                        <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
-                        <input type="text" className="form-control" id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
+                        <label htmlFor="prenom" className="mt-3">Prénom</label>
+                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className="form-control" id="email" placeholder="Email" name="email" onChange={handleChanges}/>
+                        <label htmlFor="nomOrganisme" className="mt-3">Nom de l'organisme</label>
+                        <input type="text" className="form-control" id="nomOrganisme" placeholder="Nom de l'organisme" name="nomOrganisme" onChange={handleChanges}/>
+                        <label htmlFor="numOrganisme" className="mt-3">Numéro de l'organisme</label>
+                        <input type="text" className="form-control" id="numOrganisme" placeholder="Numéro de l'organisme" name="numOrganisme" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
                         <input type="password" className="form-control" id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
                         <input type="password" className="form-control" id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
-                        <label htmlFor="programme" className="mt-3">Programme d'étude</label>
-                        <select className="form-control" id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
-
-                            <option>Techniques de comptabilité et de gestion</option>
-                            <option>Techniques de génie mécanique</option>
-                            <option>Techniques de l’informatique</option>
-                            <option>Techniques de laboratoire : biotechnologies</option>
-                            <option>Techniques de physiothérapie</option>
-                            <option>Techniques policières</option>
-                            <option>Techniques de santé animale</option>
-                            <option>Techniques de travail social</option>
-                            <option>Technologie d’analyses biomédicales</option>
-                            <option>Technologie de l’électronique industrielle</option>
-                            <option>Technologie de l’électronique : Télécommunication</option>
-                            <option>Technologie de maintenance industrielle</option>
-                            <option>Technologie de systèmes ordinés</option>
-                            <option>Technologie du génie civil</option>
-                            <option disabled={true}>Choisir un programme</option>
-                        </select>
                     </div>
                     <div className="row my-4">
                         <div className="col-4 mx-auto">
@@ -159,4 +151,4 @@ const StudentForms = () => {
     )
 }
 
-export default StudentForms
+export default EmployerForm

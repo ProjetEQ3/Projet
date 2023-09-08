@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import HeadTemplate from './HeadTemplate';
 import './RegistrationForm.css'
-import StudentForms from "./StudentForms";
-import EmployerForms from "./EmployerForms";
+import StudentForm from "./StudentForm";
+import EmployerForm from "./EmployerForm";
 
 const RegistrationForm = () => {
     const [empActive, setEmpActive] = useState(false);
@@ -32,7 +32,7 @@ const RegistrationForm = () => {
                 </div>
                 {
                     studActive ?
-                        <StudentForms/> : <EmployerForms/>
+                        <StudentForm/> : <EmployerForm/>
                 }
             </div>
         </div>
