@@ -48,25 +48,25 @@ const EmployerForm = () => {
         setPasswordValid(true);
         setPasswordConfirmValid(true);
 
-        if(formData.nom === ''){
-            setNomValid(false)
-            alert('Le nom est obligatoire');
-            return;
-        }
-        else if(formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
-            setNomValid(false)
-            alert('Le nom doit contenir seulement des lettres');
-            return;
-        }
-
-        if(formData.prenom === ''){
+        if(formData.prenom === '' && formData.nom === ''){
             setPrenomValid(false)
             alert('Le prénom est obligatoire');
             return;
         }
-        else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom)){
+        else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom) && formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
             setPrenomValid(false)
             alert('Le prénom doit contenir seulement des lettres');
+            return;
+        }
+
+        if(formData.email === ''){
+            setEmailValid(false)
+            alert('L\'email est obligatoire');
+            return;
+        }
+        else if(formData.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(formData.email)){
+            setEmailValid(false)
+            alert('L\'adresse courriel doit être en format d\'adresse courriel');
             return;
         }
 
@@ -89,17 +89,6 @@ const EmployerForm = () => {
         else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.numOrganisme)){
             setNumOrganismeValid(false)
             alert('Le numéro de l\'organisme doit contenir seulement des chiffres');
-            return;
-        }
-
-        if(formData.email === ''){
-            setEmailValid(false)
-            alert('L\'email est obligatoire');
-            return;
-        }
-        else if(formData.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(formData.email)){
-            setEmailValid(false)
-            alert('L\'adresse courriel doit être en format d\'adresse courriel');
             return;
         }
 
