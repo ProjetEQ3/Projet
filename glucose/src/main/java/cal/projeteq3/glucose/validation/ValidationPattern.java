@@ -12,7 +12,7 @@ public enum ValidationPattern{
 	COUNTRY_PATTERN("^[A-Za-zÀ-ÖØ-öø-ÿ\\- ]{2,50}$"),
 	PHONE_NUMBER_PATTERN("^(\\d{1,4}[\\s\\-()]{0,3}){1,3}\\d{1,4}$"),
 	WEBSITE_PATTERN("^([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,}$"),
-	CV_FILE_NAME_PATTERN("^[\\p{L}0-9-\\s]{2,100}\\.pdf$"),
+	CV_FILE_NAME_PATTERN("^[\\p{L}0-9-_\\s]{2,100}\\.pdf$"),
 	SERIAL_PATTERN("^[a-zA-Z0-9_ -]{3,100}$")
 	;
 
