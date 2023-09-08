@@ -83,9 +83,9 @@ const StudentForm = () => {
             return;
         }
 
-        if(formData.password.length < 8){
+        if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)){
             setPasswordValid(false)
-            alert('Le mot de passe doit contenir au moins 8 caractères');
+            alert('Le mot de passe doit contenir au moins 8 caractères incluant une majuscule et un chiffre');
             return;
         }
         else if (formData.password !== formData.passwordConfirm) {
