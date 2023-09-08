@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: "connexion",
         element: <Login/>,
+    },
+    {
+        path: "*",
+        element: <h1>404</h1>,
     }
 ]);
 

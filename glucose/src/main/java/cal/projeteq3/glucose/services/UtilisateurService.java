@@ -1,11 +1,8 @@
 package cal.projeteq3.glucose.services;
 
-import cal.projeteq3.glucose.Dto.auth.LoginDto;
-import cal.projeteq3.glucose.domain.Utilisateur;
+import cal.projeteq3.glucose.domain.auth.LoginDto;
 //import cal.projeteq3.glucose.repositories.UtilisateurRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class UtilisateurService {

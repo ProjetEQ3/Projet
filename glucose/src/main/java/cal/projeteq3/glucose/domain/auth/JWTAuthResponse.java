@@ -1,6 +1,7 @@
-package cal.projeteq3.glucose.Dto.auth;
+package cal.projeteq3.glucose.domain.auth;
 
-import cal.projeteq3.glucose.Dto.error.ErrorDto;
+
+import cal.projeteq3.glucose.domain.dto.ErrorDto;
 import lombok.Getter;
 import java.util.List;
 
