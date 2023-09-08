@@ -3,10 +3,10 @@ package cal.projeteq3.glucose.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ErrorDto{
+public abstract class ErrorDTO{
 	private List<String> errors;
 
-	public ErrorDto(){
+	public ErrorDTO(){
 		errors = new ArrayList<>();
 	}
 
