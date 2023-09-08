@@ -1,9 +1,10 @@
-package cal.projeteq3.glucose.repositories;
+package cal.projeteq3.glucose.services;
 
 import cal.projeteq3.glucose.domain.CvFile;
 import cal.projeteq3.glucose.domain.dto.CvFileDto;
 import cal.projeteq3.glucose.exception.badRequestException.CvFileExistException;
 import cal.projeteq3.glucose.exception.badRequestException.CvFileNotFoundException;
+import cal.projeteq3.glucose.repositories.CvFileRepository;
 
 public class CvFileService{
 	private final CvFileRepository cvFileRepository;
