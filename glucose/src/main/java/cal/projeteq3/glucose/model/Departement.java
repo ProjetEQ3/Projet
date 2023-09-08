@@ -3,7 +3,7 @@ package cal.projeteq3.glucose.model;
 public enum Departement {
     _410B0,
     _241A1,
-    _4200B,
+    _420B0,
     _210AA,
     _144A1,
     _310A0,

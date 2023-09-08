@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.auth.JWTAuthResponse;
-import cal.projeteq3.glucose.auth.LoginDto;
+import cal.projeteq3.glucose.auth.LoginDTO;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.service.UtilisateurService;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public final class AuthController{
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
+	public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDTO loginDto){
 		try{
 			return ResponseEntity.ok(new JWTAuthResponse(utilisateurService.authenticateUser(loginDto)));
 		}catch(APIException e){

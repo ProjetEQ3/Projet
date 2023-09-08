@@ -21,6 +21,7 @@ public class EtudiantController {
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<EtudiantDTO> register(@RequestBody Etudiant etudiant){
+        // TODO: 2023-09-08 add validation & Return EtudiantDTO
         etudiantService.createEtudiant(etudiant);
 //        return ResponseEntity.accepted().body(etudiantService.createEtudiant(etudiant));
         return null;

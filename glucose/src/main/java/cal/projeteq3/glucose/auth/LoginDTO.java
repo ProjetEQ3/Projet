@@ -8,12 +8,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginDto{
+public class LoginDTO{
 	private String email;
 	private String password;
 
 	@JsonCreator
-	public LoginDto(
+	public LoginDTO(
 		@JsonProperty("email") String email,
 		@JsonProperty("password") String password){
 		setEmail(email);

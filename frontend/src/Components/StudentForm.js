@@ -21,7 +21,7 @@ const StudentForm = () => {
     const [programmeValid, setProgrammeValid] = useState(true);
 
     const registerEtudiant = async () => {
-        const res = await axiosInstance.post('http://localhost:8080/etudiant/register',
+        const res = await axiosInstance.post('/etudiant/register',
             {
                 nom: formData.nom,
                 prenom: formData.prenom,
