@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
+import HeadTemplate from './HeadTemplate';
 import './RegistrationForm.css'
+import StudentForm from "./StudentForm";
+import EmployerForm from "./EmployerForm";
 
 const RegistrationForm = () => {
-    const [isActive, setIsActive] = useState(false);
+    const [empActive, setEmpActive] = useState(false);
+    const [studActive, setStudActive] = useState(true);
 
-    const handleButtonClick = () => {
-        setIsActive(!isActive);
+
+    const handleButtonClick = (type) => {
+        if (type === 'emp') {
+            setEmpActive(true);
+            setStudActive(false);
+        } else {
+            setEmpActive(false);
+            setStudActive(true);
+        }
     };
 
     return (
         <div className="bg-light">
-            <h1 className="text-danger text-center">Inscription</h1>
+            <HeadTemplate/>
+            <div className="m-2"></div>
             <div className="container bg-light">
                 <div className="row">
-                    <div className="btn-group btn-group-lg">
-                        <button className={`btn ${isActive ? 'active text-primary' : ''}`} onClick={handleButtonClick}>Étudiant</button>
-                        <button className={`btn ${!isActive ? 'active text-primary' : ''}`} onClick={handleButtonClick}>Employeur</button>
+                    <div className="col-8 mx-auto btn-group btn-group-lg">
+                        <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
+                        <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
                     </div>
                 </div>
+                {
+                    studActive ?
+                        <StudentForm/> : <EmployerForm/>
+                }
             </div>
         </div>
     )

@@ -41,7 +41,7 @@ public class EtudiantService {
             etudiant.setPrenom(updatedEtudiant.getPrenom());
             etudiant.setAdresseCourriel(updatedEtudiant.getAdresseCourriel());
             etudiant.setMotDePasse(updatedEtudiant.getMotDePasse());
-            etudiant.setCodeEtudiant(updatedEtudiant.getCodeEtudiant());
+            etudiant.setMatricule(updatedEtudiant.getMatricule());
             etudiant.setDepartement(updatedEtudiant.getDepartement());
 
             return etudiantRepository.save(etudiant);

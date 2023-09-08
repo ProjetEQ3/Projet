@@ -11,7 +11,7 @@ function HeadTemplate() {
                         <div className="align-self-start d-flex m-3">
                             <a className="text-light text-decoration-none m-2 h6" href="/connexion">Connexion</a>
                             <div className="vr"></div>
-                            <a className="text-light text-decoration-none m-2 h6" href="/inscription">Inscription</a>
+                            <a className="text-light text-decoration-none m-2 h6" href="/register">Inscription</a>
                         </div>
                     </div>
                 </div>

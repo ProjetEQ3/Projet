@@ -14,5 +14,4 @@ public class Etudiant extends Utilisateur{
 
     private String matricule;
     private Departement departement;
-
 }
