@@ -116,14 +116,14 @@ const StudentForm = () => {
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="prenom" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="nom" className="mt-3">Nom</label>
                         <input type="text" className="form-control" id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
-                        <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
-                        <input type="text" className="form-control" id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
+                        <label htmlFor="prenom" className="mt-3">Prénom</label>
+                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className="form-control" id="email" placeholder="Email" name="email" onChange={handleChanges}/>
+                        <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
+                        <input type="text" className="form-control" id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
                         <label htmlFor="programme" className="mt-3">Programme d'étude</label>
                         <select className="form-control" id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
                             <option>Techniques de comptabilité et de gestion</option>

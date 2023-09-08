@@ -125,16 +125,16 @@ const EmployerForm = () => {
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="prenom" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="nom" className="mt-3">Nom</label>
                         <input type="text" className="form-control" id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
+                        <label htmlFor="prenom" className="mt-3">Prénom</label>
+                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
+                        <label htmlFor="email" className="mt-3">Email</label>
+                        <input type="email" className="form-control" id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="nomOrganisme" className="mt-3">Nom de l'organisme</label>
                         <input type="text" className="form-control" id="nomOrganisme" placeholder="Nom de l'organisme" name="nomOrganisme" onChange={handleChanges}/>
                         <label htmlFor="numOrganisme" className="mt-3">Numéro de l'organisme</label>
                         <input type="text" className="form-control" id="numOrganisme" placeholder="Numéro de l'organisme" name="numOrganisme" onChange={handleChanges}/>
-                        <label htmlFor="email" className="mt-3">Email</label>
-                        <input type="email" className="form-control" id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
                         <input type="password" className="form-control" id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
