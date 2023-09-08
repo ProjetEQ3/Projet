@@ -12,7 +12,7 @@ public class UtilisateurService {
 	public String authenticateUser(LoginDto loginDto){
 		//to implement this temporary in a way that it will work correctly
 		//if user and pass is correct, then
-		//return any String like "token" or "something",
+		//return user.email like string
 		//we will implement real token later
 		throw new UnsupportedOperationException("Not implemented");
 	}

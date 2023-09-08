@@ -4,7 +4,7 @@ import axios from "axios"
 import {toast} from "react-toastify"
 import serverIp from "../App"
 
-const Login = ({user, setUser}) => {
+const Login = ({user, setToken}) => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 
@@ -16,12 +16,11 @@ const Login = ({user, setUser}) => {
 		}
 		if(!validateUser())
 			return
-		axios.post(serverIp + "/login", data)
+		axios.post(serverIp + "/auth/login", data)
 			.then((response) => {
 				if(response?.data["message"] === "success"){
 					toast.success("Login successful")
-					user.init(response?.data["user"])
-					setUser({user})
+					setToken(response.data["body"])
 				}else{
 					toast.error("Unknown error")
 				}
