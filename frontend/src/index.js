@@ -7,25 +7,24 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RegistrationForm from "./Components/RegistrationForm";
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from "./Components/Login";
+import OfferForm from "./Components/OfferForm";
+import EmployerPage from "./Components/EmployerPage";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: (
-            <App/>
-        ),
+        path: "/", element: <App/>,
     },
     {
-        path: "register",
-        element: <RegistrationForm/>,
+        path: "register", element: <RegistrationForm/>,
     },
     {
-        path: "connexion",
-        element: <Login/>,
+        path: "connexion", element: <Login/>,
     },
     {
-        path: "*",
-        element: <h1>404</h1>,
+        path: "employer", element: <EmployerPage/>,
+    },
+    {
+        path: "*", element: <h1>404</h1>,
     }
 ]);
 
