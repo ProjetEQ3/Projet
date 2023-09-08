@@ -35,14 +35,14 @@ const Login = ({user, setToken}) => {
 	}
 
 	const validateUser = () => {
-		if(validateEmail()){
+		if(!validateEmail()){
 			toast.error("Invalid email")
 			return false
 		}
-		if(validatePassword()){
-			toast.error("Invalid password. " +
-				"Password must be at least 8 characters long " +
-				"and contain at least one uppercase letter, one lowercase letter and one number"
+		if(!validatePassword()){
+			toast.error("Mot de passe invalide. " +
+				"Le mot de passe doit comporter au moins 8 caractères " +
+				"et contenir au moins une lettre majuscule, une lettre minuscule et un chiffre"
 			)
 			return false
 		}

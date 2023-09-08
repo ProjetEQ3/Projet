@@ -49,25 +49,14 @@ const StudentForm = () => {
         setPasswordConfirmValid(true);
         setProgrammeValid(true);
 
-        if(formData.nom === ''){
-            setNomValid(false)
-            alert('Le nom est obligatoire');
-            return;
-        }
-        else if(formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
-            setNomValid(false)
-            alert('Le nom doit contenir seulement des lettres');
-            return;
-        }
-
-        if(formData.prenom === ''){
+        if(formData.prenom === '' && formData.nom === ''){
             setPrenomValid(false)
             alert('Le prénom est obligatoire');
             return;
         }
-        else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom)){
+        else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom) && formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
             setPrenomValid(false)
-            alert('Le prénom doit contenir seulement des lettres');
+            alert('Le nom et prénom doit contenir seulement des lettres');
             return;
         }
 
@@ -88,6 +77,12 @@ const StudentForm = () => {
             return;
         }
 
+        if(formData.programme === ''){
+            setProgrammeValid(false)
+            alert('Vous devez choisir un programme');
+            return;
+        }
+
         if(formData.password.length < 8){
             setPasswordValid(false)
             alert('Le mot de passe doit contenir au moins 8 caractères');
@@ -97,12 +92,6 @@ const StudentForm = () => {
             setPasswordValid(false)
             setPasswordConfirmValid(false)
             alert('Les deux mots de passe ne correspondent pas');
-            return;
-        }
-
-        if(formData.programme === ''){
-            setProgrammeValid(false)
-            alert('Vous devez choisir un programme');
             return;
         }
 
