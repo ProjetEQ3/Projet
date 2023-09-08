@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 import jakarta.persistence.Entity;
 import lombok.Data;
@@ -9,8 +9,8 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Employeur extends Utilisateur{
+public class Etudiant extends Utilisateur{
 
-    private String nomOrganisme;
-    private String numTelephone;
+    private String matricule;
+    private Departement departement;
 }

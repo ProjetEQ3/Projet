@@ -1,9 +1,8 @@
-package cal.projeteq3.glucose.controllers;
+package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.domain.Employeur;
-import cal.projeteq3.glucose.domain.dto.EmployeurDTO;
-import cal.projeteq3.glucose.repositories.EmployeurRepository;
-import cal.projeteq3.glucose.services.EmployeurService;
+import cal.projeteq3.glucose.model.Employeur;
+import cal.projeteq3.glucose.dto.EmployeurDTO;
+import cal.projeteq3.glucose.service.EmployeurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

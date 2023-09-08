@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 public enum Departement {
     GESTION_DE_COMMERCES,

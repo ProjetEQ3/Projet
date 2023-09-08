@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.domain.dto;
+package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.domain.CvFile;
+import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import cal.projeteq3.glucose.validation.Validation;
 

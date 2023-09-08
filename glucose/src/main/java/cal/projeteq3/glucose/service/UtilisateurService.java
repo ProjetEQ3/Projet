@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.services;
+package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.domain.auth.LoginDto;
+import cal.projeteq3.glucose.auth.LoginDto;
 //import cal.projeteq3.glucose.repositories.UtilisateurRepo;
 import org.springframework.stereotype.Service;
 

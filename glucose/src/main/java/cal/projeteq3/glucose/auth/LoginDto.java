@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain.auth;
+package cal.projeteq3.glucose.auth;
 
 import cal.projeteq3.glucose.validation.Validation;
 import com.fasterxml.jackson.annotation.JsonCreator;

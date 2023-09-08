@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.repositories;
+package cal.projeteq3.glucose.repository;
 
-import cal.projeteq3.glucose.domain.CvFile;
+import cal.projeteq3.glucose.model.CvFile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,9 +1,9 @@
-package cal.projeteq3.glucose.controllers;
+package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.domain.auth.JWTAuthResponse;
-import cal.projeteq3.glucose.domain.auth.LoginDto;
+import cal.projeteq3.glucose.auth.JWTAuthResponse;
+import cal.projeteq3.glucose.auth.LoginDto;
 import cal.projeteq3.glucose.exception.APIException;
-import cal.projeteq3.glucose.services.UtilisateurService;
+import cal.projeteq3.glucose.service.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

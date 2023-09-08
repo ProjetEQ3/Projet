@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.domain.dto;
+package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.domain.Model;
+import cal.projeteq3.glucose.model.Model;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 
 public abstract class ModelDto extends ErrorDto{

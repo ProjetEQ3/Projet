@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.repositories;
+package cal.projeteq3.glucose.repository;
 
-import cal.projeteq3.glucose.domain.Employeur;
+import cal.projeteq3.glucose.model.Employeur;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeurRepository extends JpaRepository<Employeur, Long> {

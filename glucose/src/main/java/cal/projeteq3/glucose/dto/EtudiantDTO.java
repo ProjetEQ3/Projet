@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.domain.dto;
+package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.domain.Departement;
+import cal.projeteq3.glucose.model.Departement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

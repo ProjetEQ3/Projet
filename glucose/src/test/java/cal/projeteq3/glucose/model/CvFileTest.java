@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;

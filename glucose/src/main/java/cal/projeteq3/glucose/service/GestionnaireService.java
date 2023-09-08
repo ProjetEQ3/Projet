@@ -1,8 +1,7 @@
-package cal.projeteq3.glucose.services;
+package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.domain.Etudiant;
-import cal.projeteq3.glucose.domain.Gestionnaire;
-import cal.projeteq3.glucose.repositories.GestionnaireRepository;
+import cal.projeteq3.glucose.model.Gestionnaire;
+import cal.projeteq3.glucose.repository.GestionnaireRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

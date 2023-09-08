@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain.dto;
+package cal.projeteq3.glucose.dto;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 import cal.projeteq3.glucose.validation.Validation;
 import jakarta.persistence.Column;

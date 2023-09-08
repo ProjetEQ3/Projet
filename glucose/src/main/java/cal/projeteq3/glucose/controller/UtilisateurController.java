@@ -1,12 +1,7 @@
-package cal.projeteq3.glucose.controllers;
+package cal.projeteq3.glucose.controller;
 
 
-import cal.projeteq3.glucose.domain.Utilisateur;
-import cal.projeteq3.glucose.services.UtilisateurService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

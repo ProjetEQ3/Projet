@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.domain;
+package cal.projeteq3.glucose.model;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
