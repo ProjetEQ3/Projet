@@ -115,19 +115,19 @@ const EmployerForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="nom" className="mt-3">Nom</label>
-                        <input type="text" className="form-control" id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${nomValid? '': 'is-invalid'}`} id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
                         <label htmlFor="prenom" className="mt-3">Prénom</label>
                         <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
-                        <input type="email" className="form-control" id="email" placeholder="Email" name="email" onChange={handleChanges}/>
+                        <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="nomOrganisme" className="mt-3">Nom de l'organisme</label>
-                        <input type="text" className="form-control" id="nomOrganisme" placeholder="Nom de l'organisme" name="nomOrganisme" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${nomOrganismeValid? '': 'is-invalid'}`} id="nomOrganisme" placeholder="Nom de l'organisme" name="nomOrganisme" onChange={handleChanges}/>
                         <label htmlFor="numOrganisme" className="mt-3">Numéro de l'organisme</label>
-                        <input type="text" className="form-control" id="numOrganisme" placeholder="Numéro de l'organisme" name="numOrganisme" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${numOrganismeValid? '': 'is-invalid'}`} id="numOrganisme" placeholder="Numéro de l'organisme" name="numOrganisme" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
-                        <input type="password" className="form-control" id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
+                        <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
-                        <input type="password" className="form-control" id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
+                        <input type="password" className={`form-control ${passwordConfirmValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
                     </div>
                     <div className="row my-4">
                         <div className="col-4 mx-auto">
