@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.Dto.auth;
 
 import cal.projeteq3.glucose.validation.Validation;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +12,10 @@ public class LoginDto{
 	private String email;
 	private String password;
 
-	public LoginDto(String email, String password){
+	@JsonCreator
+	public LoginDto(
+		@JsonProperty("email") String email,
+		@JsonProperty("password") String password){
 		setEmail(email);
 		setPassword(password);
 		validate();
