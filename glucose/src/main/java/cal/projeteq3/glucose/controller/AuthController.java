@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.auth.JWTAuthResponse;
-import cal.projeteq3.glucose.auth.LoginDTO;
+import cal.projeteq3.glucose.model.auth.JWTAuthResponse;
+import cal.projeteq3.glucose.model.auth.LoginDTO;
 import cal.projeteq3.glucose.service.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +22,5 @@ public final class AuthController{
 	public ResponseEntity<JWTAuthResponse> Login(@RequestBody LoginDTO loginDto){
 		return ResponseEntity.ok(new JWTAuthResponse(utilisateurService.authenticateUser(loginDto)));
 	}
-
 
 }

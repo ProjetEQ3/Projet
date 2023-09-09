@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.auth;
+package cal.projeteq3.glucose.model.auth;
 
 import lombok.*;
 
