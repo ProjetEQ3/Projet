@@ -14,6 +14,7 @@ public class CvFileDTO{
 	private byte[] fileData;
 
 	public CvFileDTO(CvFile cvFile){
+		id = cvFile.getId();
 		fileName = cvFile.getFileName();
 		fileData = cvFile.getFileData();
 	}
