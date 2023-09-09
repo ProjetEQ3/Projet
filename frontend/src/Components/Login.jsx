@@ -3,8 +3,10 @@ import {NavLink} from "react-router-dom"
 import axios from "axios"
 import {toast} from "react-toastify"
 import serverIp from "../App"
+import User from "../model/User";
 
 const Login = ({user, setToken}) => {
+	user = new User();
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 

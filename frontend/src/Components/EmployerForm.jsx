@@ -1,36 +1,35 @@
-import React from "react";
-import {useState} from "react";
-import {axiosInstance} from "../App";
+import axios from "axios";
+import React, {useState} from "react";
 
-const StudentForm = () => {
+
+const EmployerForm = () => {
     const [formData, setFormData] = useState({
         nom: '',
         prenom: '',
-        matricule: '',
+        nomOrganisme: '',
+        numOrganisme: '',
         email: '',
         password: '',
         passwordConfirm: '',
-        programme: ''
     });
     const [prenomValid, setPrenomValid] = useState(true);
     const [nomValid, setNomValid] = useState(true);
-    const [matriculeValid, setMatriculeValid] = useState(true);
+    const [nomOrganismeValid, setNomOrganismeValid] = useState(true);
+    const [numOrganismeValid, setNumOrganismeValid] = useState(true);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
-    const [programmeValid, setProgrammeValid] = useState(true);
 
-    const registerEtudiant = async () => {
-        const res = await axiosInstance.post('/etudiant/register',
+    const registerEmployeur = async () => {
+        const res = await axios.post('/employeur/register',
             {
-                nom: formData.nom,
-                prenom: formData.prenom,
-                adresseCourriel: formData.email,
-                motDePasse: formData.password,
-                matricule: formData.matricule,
-                departement: formData.programme,
-            }
-        )
+                nom: this.nom,
+                prenom: this.prenom,
+                adresseCourriel: this.adresseCourriel,
+                motDePasse: this.password,
+                nomOrganisme: this.nomOrganisme,
+                numOrganisme: this.numOrganisme,
+            })
         return res.data
     }
 
@@ -43,11 +42,11 @@ const StudentForm = () => {
         e.preventDefault();
         setPrenomValid(true);
         setNomValid(true);
-        setMatriculeValid(true);
+        setNomOrganismeValid(true);
+        setNumOrganismeValid(true);
         setEmailValid(true);
         setPasswordValid(true);
         setPasswordConfirmValid(true);
-        setProgrammeValid(true);
 
         if(formData.prenom === '' && formData.nom === ''){
             setPrenomValid(false)
@@ -56,13 +55,7 @@ const StudentForm = () => {
         }
         else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom) && formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
             setPrenomValid(false)
-            alert('Le nom et prénom doit contenir seulement des lettres');
-            return;
-        }
-
-        if(formData.matricule !== '' && !/^\d+$/.test(formData.matricule)){
-            setMatriculeValid(false)
-            alert('Le matricule doit contenir seulement des chiffres');
+            alert('Le prénom doit contenir seulement des lettres');
             return;
         }
 
@@ -77,15 +70,31 @@ const StudentForm = () => {
             return;
         }
 
-        if(formData.programme === ''){
-            setProgrammeValid(false)
-            alert('Vous devez choisir un programme');
+        if(formData.nomOrganisme === ''){
+            setNomOrganismeValid(false)
+            alert('Le nom de l\'organisme est obligatoire');
+            return;
+        }
+        else if(!/^[a-zA-Z0-9-.]+$/.test(formData.nomOrganisme)){
+            setNomOrganismeValid(false)
+            alert('Le nom de l\'organisme doit être en format alphanumérique');
             return;
         }
 
-        if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)){
+        if(formData.numOrganisme === ''){
+            setNumOrganismeValid(false)
+            alert('Le numéro de l\'organisme est obligatoire');
+            return;
+        }
+        else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.numOrganisme)){
+            setNumOrganismeValid(false)
+            alert('Le numéro de l\'organisme doit contenir seulement des chiffres');
+            return;
+        }
+
+        if(formData.password.length < 8){
             setPasswordValid(false)
-            alert('Le mot de passe doit contenir au moins 8 caractères incluant une majuscule et un chiffre');
+            alert('Le mot de passe doit contenir au moins 8 caractères');
             return;
         }
         else if (formData.password !== formData.passwordConfirm) {
@@ -95,7 +104,7 @@ const StudentForm = () => {
             return;
         }
 
-        registerEtudiant().then(r => console.log(r));
+        registerEmployeur().then(r => console.log(r));
 
         console.log(formData);
     }
@@ -111,31 +120,14 @@ const StudentForm = () => {
                         <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
-                        <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
-                        <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
-                        <label htmlFor="programme" className="mt-3">Programme d'étude</label>
-                        <select className={`form-select ${programmeValid? '': 'is-invalid'}`} id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
-                            <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
-                            <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
-                            <option value="_420B0">420.B0 - Techniques de l’informatique</option>
-                            <option value="_210AA">210.AA - Techniques de laboratoire : biotechnologies</option>
-                            <option value="_144A1">144.A1 - Techniques de physiothérapie</option>
-                            <option value="_310A0">310.A0 - Techniques policières</option>
-                            <option value="_145A0">145.A0 - Techniques de santé animale</option>
-                            <option value="_388A0">388.A0 - Techniques de travail social</option>
-                            <option value="_140C0">140.C0 - Technologie d’analyses biomédicales</option>
-                            <option value="_243C0">243.C0 - Technologie de l’électronique industrielle</option>
-                            <option value="_243BA">243.BA - Technologie de l’électronique : Télécommunication</option>
-                            <option value="_241D0">241.D0 - Technologie de maintenance industrielle</option>
-                            <option value="_243A0">245.A0 - Technologie de systèmes ordinés</option>
-                            <option value="_221B0">221.B0 - Technologie du génie civil</option>
-                            <option disabled={true}>Choisir un programme</option>
-                        </select>
+                        <label htmlFor="nomOrganisme" className="mt-3">Nom de l'organisme</label>
+                        <input type="text" className={`form-control ${nomOrganismeValid? '': 'is-invalid'}`} id="nomOrganisme" placeholder="Nom de l'organisme" name="nomOrganisme" onChange={handleChanges}/>
+                        <label htmlFor="numOrganisme" className="mt-3">Numéro de l'organisme</label>
+                        <input type="text" className={`form-control ${numOrganismeValid? '': 'is-invalid'}`} id="numOrganisme" placeholder="Numéro de l'organisme" name="numOrganisme" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
                         <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
                         <input type="password" className={`form-control ${passwordConfirmValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
-
                     </div>
                     <div className="row my-4">
                         <div className="col-4 mx-auto">
@@ -148,4 +140,4 @@ const StudentForm = () => {
     )
 }
 
-export default StudentForm
+export default EmployerForm
