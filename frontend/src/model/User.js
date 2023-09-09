@@ -1,5 +1,5 @@
 class User{
-	type = "user"
+	id
 	firstName
 	lastName
 	email
@@ -10,6 +10,8 @@ class User{
 	constructor(){}
 
 	init(user){
+		if(user.id) this.id = user.id
+		else delete this.id
 		if(user.firstName) this.firstName = user.firstName
 		else delete this.firstName
 		if(user.lastName) this.lastName = user.lastName
