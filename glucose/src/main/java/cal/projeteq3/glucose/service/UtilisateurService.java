@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.model.Utilisateur;
-import cal.projeteq3.glucose.model.LoginDTO;
+import cal.projeteq3.glucose.dto.LoginDTO;
 //import cal.projeteq3.glucose.repositories.UtilisateurRepo;
 import org.springframework.stereotype.Service;
 

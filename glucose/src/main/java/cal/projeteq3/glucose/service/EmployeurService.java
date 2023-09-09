@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.JobOffreDTO;
 import cal.projeteq3.glucose.model.Employeur;
 import cal.projeteq3.glucose.repository.EmployeurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,22 @@ public class EmployeurService {
 
     public void deleteEmployeur(Long id) {
         employeurRepository.deleteById(id);
+    }
+
+    public JobOffreDTO createJobOffre(JobOffreDTO jobOffreDTO){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public JobOffreDTO updateJobOffre(Long id, JobOffreDTO jobOffreDTO){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void deleteJobOffre(Long id){
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Iterable<JobOffreDTO> getAllJobOffres(){
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

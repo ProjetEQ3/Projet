@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.model.Utilisateur;
-import cal.projeteq3.glucose.model.LoginDTO;
+import cal.projeteq3.glucose.dto.LoginDTO;
 import cal.projeteq3.glucose.service.UtilisateurService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
