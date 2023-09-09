@@ -1,17 +1,20 @@
 package cal.projeteq3.glucose.model;
 
-import cal.projeteq3.glucose.validation.Validation;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.Builder;
-import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "cvFile")
 @Table(name = "cv_file")
-@Getter
-public final class CvFile extends Model{
-	private final static String SERIAL_PREFIX = "cvFile";
+public final class CvFile{
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	@Column(name = "file_name", unique = true, nullable = false, updatable = false)
 	private String fileName;
@@ -19,28 +22,7 @@ public final class CvFile extends Model{
 	@Column(name = "file_data", nullable = false, updatable = false)
 	private byte[] fileData;
 
-	public CvFile(){}
-
-	@Builder
-	public CvFile(String fileName, byte[] fileData){
-		setFileName(fileName);
-		setFileData(fileData);
-	}
-
-	@Override
-	public String getSerialPrefix(){
-		return SERIAL_PREFIX;
-	}
-
-	public void setFileName(String fileName){
-		Validation.validateCvFileName(fileName);
-		this.fileName = fileName;
-	}
-
-	public void setFileData(byte[] fileData){
-		//TODO: add org.apache.tika.Tika; pour valider le type de fichier
-		this.fileData = fileData;
-	}
+	@OneToOne(mappedBy = "cvFile", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	private Etudiant etudiant;
 
 }
-
