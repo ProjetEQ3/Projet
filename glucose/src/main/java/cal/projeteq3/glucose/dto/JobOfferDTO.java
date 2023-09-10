@@ -1,14 +1,16 @@
 package cal.projeteq3.glucose.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobOffreDTO{
+public class JobOfferDTO{
 	private Long id;
+	private String title;
+	private String description;
+	private String location;
+	private String department;
 }
