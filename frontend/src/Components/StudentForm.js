@@ -4,31 +4,31 @@ import {axiosInstance} from "../App";
 
 const StudentForm = () => {
     const [formData, setFormData] = useState({
-        nom: '',
-        prenom: '',
+        lastName: '',
+        firstName: '',
         matricule: '',
         email: '',
         password: '',
         passwordConfirm: '',
-        programme: ''
+        program: ''
     });
-    const [prenomValid, setPrenomValid] = useState(true);
-    const [nomValid, setNomValid] = useState(true);
+    const [firstValid, setFirstValid] = useState(true);
+    const [lastValid, setLastValid] = useState(true);
     const [matriculeValid, setMatriculeValid] = useState(true);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
-    const [programmeValid, setProgrammeValid] = useState(true);
+    const [programValid, setProgramValid] = useState(true);
 
-    const registerEtudiant = async () => {
-        const res = await axiosInstance.post('/etudiant/register',
+    const registerStudent = async () => {
+        const res = await axiosInstance.post('/student/register',
             {
-                nom: formData.nom,
-                prenom: formData.prenom,
-                adresseCourriel: formData.email,
-                motDePasse: formData.password,
+                lastName: formData.lastName,
+                firstName: formData.firstName,
+                email: formData.email,
+                password: formData.password,
                 matricule: formData.matricule,
-                departement: formData.programme,
+                program: formData.program,
             }
         )
         return res.data
@@ -41,21 +41,23 @@ const StudentForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setPrenomValid(true);
-        setNomValid(true);
+        setFirstValid(true);
+        setLastValid(true);
         setMatriculeValid(true);
         setEmailValid(true);
         setPasswordValid(true);
         setPasswordConfirmValid(true);
-        setProgrammeValid(true);
+        setProgramValid(true);
 
-        if(formData.prenom === '' && formData.nom === ''){
-            setPrenomValid(false)
+        if(formData.firstName === '' && formData.lastName === ''){
+            setFirstValid(false)
+            setLastValid(false)
             alert('Le prénom est obligatoire');
             return;
         }
-        else if(formData.prenom && !/^[a-zA-Z-]+$/.test(formData.prenom) && formData.nom && !/^[a-zA-Z-]+$/.test(formData.nom)){
-            setPrenomValid(false)
+        else if(formData.firstName && !/^[a-zA-Z-]+$/.test(formData.firstName) && formData.lastName && !/^[a-zA-Z-]+$/.test(formData.lastName)){
+            setFirstValid(false)
+            setLastValid(false)
             alert('Le nom et prénom doit contenir seulement des lettres');
             return;
         }
@@ -77,8 +79,8 @@ const StudentForm = () => {
             return;
         }
 
-        if(formData.programme === ''){
-            setProgrammeValid(false)
+        if(formData.program === ''){
+            setProgramValid(false)
             alert('Vous devez choisir un programme');
             return;
         }
@@ -95,7 +97,7 @@ const StudentForm = () => {
             return;
         }
 
-        registerEtudiant().then(r => console.log(r));
+        registerStudent().then(r => console.log(r));
 
         console.log(formData);
     }
@@ -105,16 +107,16 @@ const StudentForm = () => {
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="nom" className="mt-3">Nom</label>
-                        <input type="text" className={`form-control ${nomValid? '': 'is-invalid'}`} id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
                         <label htmlFor="prenom" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${prenomValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${firstValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
+                        <label htmlFor="nom" className="mt-3">Nom</label>
+                        <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
                         <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
                         <label htmlFor="programme" className="mt-3">Programme d'étude</label>
-                        <select className={`form-select ${programmeValid? '': 'is-invalid'}`} id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
+                        <select className={`form-select ${programValid? '': 'is-invalid'}`} id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
                             <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
                             <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
                             <option value="_420B0">420.B0 - Techniques de l’informatique</option>
