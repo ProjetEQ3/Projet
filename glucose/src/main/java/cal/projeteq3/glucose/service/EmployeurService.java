@@ -1,8 +1,9 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.JobOffreDTO;
 import cal.projeteq3.glucose.model.Employeur;
+import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.repository.EmployeurRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,12 @@ import java.util.Optional;
 public class EmployeurService {
 
     private final EmployeurRepository employeurRepository;
+    private final JobOfferRepository jobOfferRepository;
 
     @Autowired
-    public EmployeurService(EmployeurRepository employeurRepository) {
+    public EmployeurService(EmployeurRepository employeurRepository, JobOfferRepository jobOfferRepository) {
         this.employeurRepository = employeurRepository;
+        this.jobOfferRepository = jobOfferRepository;
     }
 
     // database operations here
@@ -55,20 +58,40 @@ public class EmployeurService {
         employeurRepository.deleteById(id);
     }
 
-    public JobOffreDTO createJobOffre(JobOffreDTO jobOffreDTO){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public JobOffer createJobOffer(JobOffer jobOffer){
+        return jobOfferRepository.save(jobOffer);
     }
 
-    public JobOffreDTO updateJobOffre(Long id, JobOffreDTO jobOffreDTO){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public JobOffer updateJobOffer(Long id, JobOffer updatedJobOffer){
+        Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
+        if (existingJobOffer.isPresent()){
+            JobOffer jobOffer = existingJobOffer.get();
+
+            jobOffer.setState(updatedJobOffer.getState());
+            jobOffer.setTitle(updatedJobOffer.getTitle());
+            jobOffer.setDepartment(updatedJobOffer.getDepartment());
+            jobOffer.setDescription(updatedJobOffer.getDescription());
+            jobOffer.setLocation(updatedJobOffer.getLocation());
+            jobOffer.setStartDate(updatedJobOffer.getStartDate());
+            jobOffer.setEndDate(updatedJobOffer.getEndDate());
+            jobOffer.setHoursPerWeek(updatedJobOffer.getHoursPerWeek());
+            jobOffer.setNbDaysToApply(updatedJobOffer.getNbDaysToApply());
+
+            return jobOfferRepository.save(jobOffer);
+        } else {
+            throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
+        }
     }
 
-    public void deleteJobOffre(Long id){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void deleteJobOffer(Long id){
+        jobOfferRepository.deleteById(id);
     }
 
-    public Iterable<JobOffreDTO> getAllJobOffres(){
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<JobOffer> getAllMyJobOffers(Long idEmployeur){
+        return jobOfferRepository.findAllByEmployeurId(idEmployeur);
     }
 
+    public List<JobOffer> getAllJobOffers() {
+        return jobOfferRepository.findAll();
+    }
 }

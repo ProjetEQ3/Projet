@@ -13,4 +13,5 @@ public class Employeur extends Utilisateur{
 
     private String nomOrganisme;
     private String numTelephone;
+    private JobOffer jobOffer;
 }

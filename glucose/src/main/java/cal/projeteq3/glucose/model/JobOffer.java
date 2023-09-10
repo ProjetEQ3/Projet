@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -16,7 +20,7 @@ public class JobOffer{
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employeur")
-	private Employer employer;
+	private Employeur employeur;
 
 	@OneToMany(mappedBy = "jobOffer")
 	private List<JobApplication> jobApplications;
@@ -26,13 +30,13 @@ public class JobOffer{
 	private String department;
 	private String description;
 	private String location;
-	private localDate startDate;
-	private localDate endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private int hoursPerWeek;
 	private int nbDaysToApply;
 
 
-	public JobOffer(String title, String description, String location, localDate startDate, localDate endDate, int hoursPerWeek, int nbDaysToApply) {
+	public JobOffer(String title, String description, String location, LocalDate startDate, LocalDate endDate, int hoursPerWeek, int nbDaysToApply) {
 		this.state = "pending";
 		this.jobApplications = new ArrayList<>();
 		this.title = title;
