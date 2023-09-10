@@ -73,8 +73,8 @@ public final class Validation{
 
 	public static void validateUrl(String website){
 		if(website.matches(WEBSITE_PATTERN.toString()))
-			return;;
-		exception(ValidationMessage.WEBSITE_MESSAGE.toString());
+			return;
+        exception(ValidationMessage.WEBSITE_MESSAGE.toString());
 	}
 
 	public static void validateCvFileName(String fileName){

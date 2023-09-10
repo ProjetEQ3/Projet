@@ -14,7 +14,7 @@ public enum Departement {
     _243BA,
     _241D0,
     _243A0,
-    _221B0;
+    _221B0
 
 
 }
