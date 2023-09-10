@@ -87,8 +87,8 @@ public class EmployeurService {
         jobOfferRepository.deleteById(id);
     }
 
-    public List<JobOffer> getAllMyJobOffers(Long idEmployeur){
-        return jobOfferRepository.findAllByEmployeurId(idEmployeur);
+    public List<JobOffer> getAllMyJobOffers(Employeur employeur){
+        return jobOfferRepository.findAllByEmployeur(employeur);
     }
 
     public List<JobOffer> getAllJobOffers() {
