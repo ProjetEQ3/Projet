@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.mapper.EmployerMapper;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
@@ -9,33 +11,39 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployerService {
+
     private final JobOfferRepository jobOfferRepository;
     private final EmployerRepository employerRepository;
+    private final EmployerMapper employerMapper;
 
     @Autowired
-    public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
+    public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository, EmployerMapper employerMapper) {
         this.jobOfferRepository = jobOfferRepository;
         this.employerRepository = employerRepository;
+        this.employerMapper = employerMapper;
     }
 
     // database operations here
 
-    public Employer createEmployeur(Employer employer) {
-        return employerRepository.save(employer);
+    public EmployerDTO createEmployeur(Employer employer) {
+        return employerMapper.toDTO(employerRepository.save(employer));
     }
 
-    public List<Employer> getAllEmployeurs() {
-        return employerRepository.findAll();
+    public List<EmployerDTO> getAllEmployeurs() {
+        List<Employer> employers = employerRepository.findAll();
+        return employers.stream().map(employerMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Optional<Employer> getEmployeurByID(Long id) {
-        return employerRepository.findById(id);
+    public Optional<EmployerDTO> getEmployeurByID(Long id) {
+        Optional<Employer> employerOptional = employerRepository.findById(id);
+        return employerOptional.map(employerMapper::toDTO);
     }
 
-    public Employer updateEmployeur(Long id, Employer updatedEmployer) {
+    public EmployerDTO updateEmployeur(Long id, Employer updatedEmployer) {
         Optional<Employer> existingEmployeur = employerRepository.findById(id);
         if(existingEmployeur.isPresent()) {
             Employer employer = existingEmployeur.get();
@@ -47,10 +55,10 @@ public class EmployerService {
             employer.setOrganisationName(updatedEmployer.getOrganisationName());
             employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
-            return employerRepository.save(employer);
-        } else {
-            throw new IllegalArgumentException("Employer with ID " + id + " does not exist.");
+            return employerMapper.toDTO(employerRepository.save(employer));
         }
+
+        throw new IllegalArgumentException("Employer with ID " + id + " does not exist.");
     }
 
     public void deleteEmployeur(Long id) {
@@ -77,9 +85,9 @@ public class EmployerService {
             jobOffer.setNbDaysToApply(updatedJobOffer.getNbDaysToApply());
 
             return jobOfferRepository.save(jobOffer);
-        } else {
-            throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
         }
+
+        throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
     }
 
     public void deleteJobOffer(Long id){
