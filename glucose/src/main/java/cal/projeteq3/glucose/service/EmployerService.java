@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.mapper.EmployerMapper;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.JobOffer;
@@ -43,22 +44,22 @@ public class EmployerService {
         return employerOptional.map(employerMapper::toDTO);
     }
 
-    public EmployerDTO updateEmployeur(Long id, Employer updatedEmployer) {
+    public EmployerDTO updateEmployeur(Long id, EmployerDTO updatedEmployer) {
         Optional<Employer> existingEmployeur = employerRepository.findById(id);
         if(existingEmployeur.isPresent()) {
             Employer employer = existingEmployeur.get();
 
+            employer.setUserID(updatedEmployer.getId());
             employer.setFirstName(updatedEmployer.getFirstName());
             employer.setLastName(updatedEmployer.getLastName());
             employer.setEmail(updatedEmployer.getEmail());
-            employer.setPassword(updatedEmployer.getPassword());
             employer.setOrganisationName(updatedEmployer.getOrganisationName());
             employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
             return employerMapper.toDTO(employerRepository.save(employer));
         }
 
-        throw new IllegalArgumentException("Employer with ID " + id + " does not exist.");
+        throw new EmployerNotFoundException(id);
     }
 
     public void deleteEmployeur(Long id) {
