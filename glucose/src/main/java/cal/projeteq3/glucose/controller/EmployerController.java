@@ -18,7 +18,6 @@ public class EmployerController {
 
     private final EmployerService empService;
 
-    @Autowired
     public EmployerController(EmployerService empService) {
         this.empService = empService;
     }
@@ -31,9 +30,7 @@ public class EmployerController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-         this.empService.createEmployeur(employer);
-//        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
-        return null;
+        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
     }
 
     @GetMapping("/offer/all")
