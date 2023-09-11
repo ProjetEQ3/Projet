@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.model;
 
-public enum Departement {
+public enum Department {
     _410B0,
     _241A1,
     _420B0,

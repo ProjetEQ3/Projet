@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.model.Gestionnaire;
-import cal.projeteq3.glucose.repository.GestionnaireRepository;
+import cal.projeteq3.glucose.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,29 +11,29 @@ import java.util.Optional;
 @Service
 public class GestionnaireService {
 
-    private final GestionnaireRepository gestionnaireRepository;
+    private final ManagerRepository managerRepository;
 
     @Autowired
-    public GestionnaireService(GestionnaireRepository gestionnaireRepository) {
-        this.gestionnaireRepository = gestionnaireRepository;
+    public GestionnaireService(ManagerRepository managerRepository) {
+        this.managerRepository = managerRepository;
     }
 
     // database operations here
 
     public Gestionnaire createGestionnaire(Gestionnaire gestionnaire) {
-        return gestionnaireRepository.save(gestionnaire);
+        return managerRepository.save(gestionnaire);
     }
 
     public List<Gestionnaire> getAllGestionnaires() {
-        return gestionnaireRepository.findAll();
+        return managerRepository.findAll();
     }
 
     public Optional<Gestionnaire> getGestionnaireByID(Long id) {
-        return gestionnaireRepository.findById(id);
+        return managerRepository.findById(id);
     }
 
     public Gestionnaire updateGestionnaire(Long id, Gestionnaire updatedGestionnaire) {
-        Optional<Gestionnaire> existingGestionnaire = gestionnaireRepository.findById(id);
+        Optional<Gestionnaire> existingGestionnaire = managerRepository.findById(id);
         if(existingGestionnaire.isPresent()) {
             Gestionnaire gestionnaire = existingGestionnaire.get();
 
@@ -42,14 +42,14 @@ public class GestionnaireService {
             gestionnaire.setAdresseCourriel(updatedGestionnaire.getAdresseCourriel());
             gestionnaire.setMotDePasse(updatedGestionnaire.getMotDePasse());
 
-            return gestionnaireRepository.save(gestionnaire);
+            return managerRepository.save(gestionnaire);
         } else {
             throw new IllegalArgumentException("Gestionnaire with ID " + id + " does not exist.");
         }
     }
 
     public void deleteGestionnaire(Long id) {
-        gestionnaireRepository.deleteById(id);
+        managerRepository.deleteById(id);
     }
 
 }

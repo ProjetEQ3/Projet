@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeurService {
+public class EmployerService {
 
     private final EmployerRepository employerRepository;
     private final JobOfferRepository jobOfferRepository;
 
     @Autowired
-    public EmployeurService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
+    public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
         this.employerRepository = employerRepository;
         this.jobOfferRepository = jobOfferRepository;
     }

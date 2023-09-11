@@ -6,7 +6,7 @@ import cal.projeteq3.glucose.dto.LoginDTO;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UtilisateurService{
+public class UserService {
 	public User authenticateUser(LoginDTO loginDto){
 		throw new UnsupportedOperationException("Not implemented");
 	}
@@ -14,7 +14,7 @@ public class UtilisateurService{
 	//    private final UtilisateurRepo utilisateurRepo;
 	//
 	//    @Autowired
-	//    public UtilisateurService(UtilisateurRepo utilisateurRepo) {
+	//    public UserService(UtilisateurRepo utilisateurRepo) {
 	//        this.utilisateurRepo = utilisateurRepo;
 	//    }
 	//

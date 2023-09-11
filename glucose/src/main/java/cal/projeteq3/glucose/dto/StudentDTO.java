@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.model.Departement;
+import cal.projeteq3.glucose.model.Department;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EtudiantDTO extends UtilisateurDTO{
+public class StudentDTO extends UserDTO {
     private String matricule;
-    private Departement departement;
+    private Department department;
 }

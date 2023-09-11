@@ -19,8 +19,8 @@ public class JobOffer{
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employeur")
-	private Employeur employeur;
+	@JoinColumn(name = "employer")
+	private Employer employer;
 
 	@OneToMany(mappedBy = "jobOffer")
 	private List<JobApplication> jobApplications;

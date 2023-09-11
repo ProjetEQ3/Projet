@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Employeur extends Utilisateur{
+public class Employer extends User {
 
     private String nomOrganisme;
     private String numTelephone;

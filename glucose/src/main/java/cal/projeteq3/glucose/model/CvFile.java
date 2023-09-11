@@ -23,6 +23,6 @@ public final class CvFile{
 	private byte[] fileData;
 
 	@OneToOne(mappedBy = "cvFile", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private Etudiant etudiant;
+	private Student student;
 
 }

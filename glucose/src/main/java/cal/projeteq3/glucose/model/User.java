@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Utilisateur {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,7 @@ public abstract class Utilisateur {
     private String adresseCourriel;
     private String motDePasse;
 
-    public Utilisateur(String nom, String prenom, String adresseCourriel, String motDePasse) {
+    public User(String nom, String prenom, String adresseCourriel, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.adresseCourriel = adresseCourriel;

@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.repository;
 
-import cal.projeteq3.glucose.model.Employeur;
+import cal.projeteq3.glucose.model.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeurRepository extends JpaRepository<Employeur, Long> {
+public interface EmployerRepository extends JpaRepository<Employer, Long> {
 
     // query methods here
 

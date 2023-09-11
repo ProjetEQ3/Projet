@@ -1,8 +1,8 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.model.Etudiant;
-import cal.projeteq3.glucose.dto.EtudiantDTO;
-import cal.projeteq3.glucose.service.EtudiantService;
+import cal.projeteq3.glucose.model.Student;
+import cal.projeteq3.glucose.dto.StudentDTO;
+import cal.projeteq3.glucose.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/etudiant")
 public class EtudiantController {
-    EtudiantService etudiantService;
+    StudentService studentService;
 
     @Autowired
-    public EtudiantController(EtudiantService etudiantService) {
-        this.etudiantService = etudiantService;
+    public EtudiantController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
-    public ResponseEntity<EtudiantDTO> register(@RequestBody Etudiant etudiant){
-        // TODO: 2023-09-08 add validation & Return EtudiantDTO
-        etudiantService.createEtudiant(etudiant);
-//        return ResponseEntity.accepted().body(etudiantService.createEtudiant(etudiant));
+    public ResponseEntity<StudentDTO> register(@RequestBody Student student){
+        // TODO: 2023-09-08 add validation & Return StudentDTO
+        studentService.createEtudiant(student);
+//        return ResponseEntity.accepted().body(etudiantService.createEtudiant(student));
         return null;
     }
 

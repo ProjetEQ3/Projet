@@ -9,7 +9,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class Gestionnaire extends Utilisateur{
+public class Gestionnaire extends User {
 
 
 

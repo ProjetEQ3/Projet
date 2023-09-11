@@ -1,28 +1,28 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.model.JobOffer;
-import cal.projeteq3.glucose.model.Employeur;
-import cal.projeteq3.glucose.dto.EmployeurDTO;
-import cal.projeteq3.glucose.service.EmployeurService;
+import cal.projeteq3.glucose.model.Employer;
+import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employeur")
-public class EmployeurController {
+public class EmployerController {
 
-    private final EmployeurService empService;
+    private final EmployerService empService;
 
     @Autowired
-    public EmployeurController(EmployeurService empService) {
+    public EmployerController(EmployerService empService) {
         this.empService = empService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity<EmployeurDTO> addEmployeur(@RequestBody Employeur employeur) {
-         this.empService.createEmployeur(employeur);
-//        return ResponseEntity.accepted().body(this.empService.createEmployeur(employeur));
+    public ResponseEntity<EmployerDTO> addEmployeur(@RequestBody Employer employer) {
+         this.empService.createEmployeur(employer);
+//        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
         return null;
     }
 

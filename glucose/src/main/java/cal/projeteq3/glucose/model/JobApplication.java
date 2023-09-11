@@ -18,7 +18,7 @@ public class JobApplication {
     private Long id;
 
     @ManyToOne
-    private Etudiant etudiant;
+    private Student student;
 
     @ManyToOne
     private JobOffer jobOffer;
