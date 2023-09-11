@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/etudiant")
+@RequestMapping("/student")
 public class StudentController {
     StudentService studentService;
 
