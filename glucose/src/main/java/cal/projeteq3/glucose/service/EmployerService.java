@@ -1,8 +1,8 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.model.Employeur;
+import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.JobOffer;
-import cal.projeteq3.glucose.repository.EmployeurRepository;
+import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,49 +13,49 @@ import java.util.Optional;
 @Service
 public class EmployeurService {
 
-    private final EmployeurRepository employeurRepository;
+    private final EmployerRepository employerRepository;
     private final JobOfferRepository jobOfferRepository;
 
     @Autowired
-    public EmployeurService(EmployeurRepository employeurRepository, JobOfferRepository jobOfferRepository) {
-        this.employeurRepository = employeurRepository;
+    public EmployeurService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
+        this.employerRepository = employerRepository;
         this.jobOfferRepository = jobOfferRepository;
     }
 
     // database operations here
 
-    public Employeur createEmployeur(Employeur employeur) {
-        return employeurRepository.save(employeur);
+    public Employer createEmployeur(Employer employer) {
+        return employerRepository.save(employer);
     }
 
-    public List<Employeur> getAllEmployeurs() {
-        return employeurRepository.findAll();
+    public List<Employer> getAllEmployeurs() {
+        return employerRepository.findAll();
     }
 
-    public Optional<Employeur> getEmployeurByID(Long id) {
-        return employeurRepository.findById(id);
+    public Optional<Employer> getEmployeurByID(Long id) {
+        return employerRepository.findById(id);
     }
 
-    public Employeur updateEmployeur(Long id, Employeur updatedEmployeur) {
-        Optional<Employeur> existingEmployeur = employeurRepository.findById(id);
+    public Employer updateEmployeur(Long id, Employer updatedEmployer) {
+        Optional<Employer> existingEmployeur = employerRepository.findById(id);
         if(existingEmployeur.isPresent()) {
-            Employeur employeur = existingEmployeur.get();
+            Employer employer = existingEmployeur.get();
 
-            employeur.setNom(updatedEmployeur.getNom());
-            employeur.setPrenom(updatedEmployeur.getPrenom());
-            employeur.setAdresseCourriel(updatedEmployeur.getAdresseCourriel());
-            employeur.setMotDePasse(updatedEmployeur.getMotDePasse());
-            employeur.setNomOrganisme(updatedEmployeur.getNomOrganisme());
-            employeur.setNumTelephone(updatedEmployeur.getNumTelephone());
+            employer.setNom(updatedEmployer.getNom());
+            employer.setPrenom(updatedEmployer.getPrenom());
+            employer.setAdresseCourriel(updatedEmployer.getAdresseCourriel());
+            employer.setMotDePasse(updatedEmployer.getMotDePasse());
+            employer.setNomOrganisme(updatedEmployer.getNomOrganisme());
+            employer.setNumTelephone(updatedEmployer.getNumTelephone());
 
-            return employeurRepository.save(employeur);
+            return employerRepository.save(employer);
         } else {
-            throw new IllegalArgumentException("Employeur with ID " + id + " does not exist.");
+            throw new IllegalArgumentException("Employer with ID " + id + " does not exist.");
         }
     }
 
     public void deleteEmployeur(Long id) {
-        employeurRepository.deleteById(id);
+        employerRepository.deleteById(id);
     }
 
     public JobOffer createJobOffer(JobOffer jobOffer){
@@ -87,8 +87,8 @@ public class EmployeurService {
         jobOfferRepository.deleteById(id);
     }
 
-    public List<JobOffer> getAllMyJobOffers(Employeur employeur){
-        return jobOfferRepository.findAllByEmployeur(employeur);
+    public List<JobOffer> getAllMyJobOffers(Employer employer){
+        return jobOfferRepository.findAllByEmployeur(employer);
     }
 
     public List<JobOffer> getAllJobOffers() {
