@@ -27,7 +27,7 @@ code {
 
 .btn-outline-ose {
   --bs-btn-color: var(--ose-color) !important;
-  --bs-btn-border-color: var(--ose-color);
+  --bs-btn-border-color: var(--ose-color) !important;
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: var(--ose-color);
   --bs-btn-hover-border-color: var(--ose-color);
