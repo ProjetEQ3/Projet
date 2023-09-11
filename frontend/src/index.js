@@ -7,7 +7,6 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RegistrationForm from "./Components/RegistrationForm";
 import 'bootstrap/dist/css/bootstrap.css';
 import Login from "./Components/Login";
-import OfferForm from "./Components/OfferForm";
 import EmployerPage from "./Components/EmployerPage";
 
 const router = createBrowserRouter([
