@@ -29,7 +29,7 @@ public class EmployerController {
         } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
+        return ResponseEntity.accepted().body(this.empService.createEmployer(employer));
     }
 
     @GetMapping("/offer/all")

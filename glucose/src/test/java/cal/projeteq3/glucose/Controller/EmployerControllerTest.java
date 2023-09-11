@@ -28,7 +28,7 @@ public class EmployerControllerTest {
     void AddAValidEmploye() {
         // Arrange
         Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
-        when(employerService.createEmployeur(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone"));
+        when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone"));
 
         // Act
         ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(validEmployer);

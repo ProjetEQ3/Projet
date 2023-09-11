@@ -30,24 +30,24 @@ public class EmployerService {
 
     // database operations here
 
-    public EmployerDTO createEmployeur(Employer employer) {
+    public EmployerDTO createEmployer(Employer employer) {
         return employerMapper.toDTO(employerRepository.save(employer));
     }
 
-    public List<EmployerDTO> getAllEmployeurs() {
+    public List<EmployerDTO> getAllEmployers() {
         List<Employer> employers = employerRepository.findAll();
         return employers.stream().map(employerMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Optional<EmployerDTO> getEmployeurByID(Long id) {
+    public Optional<EmployerDTO> getEmployerByID(Long id) {
         Optional<Employer> employerOptional = employerRepository.findById(id);
         return employerOptional.map(employerMapper::toDTO);
     }
 
-    public EmployerDTO updateEmployeur(Long id, EmployerDTO updatedEmployer) {
-        Optional<Employer> existingEmployeur = employerRepository.findById(id);
-        if(existingEmployeur.isPresent()) {
-            Employer employer = existingEmployeur.get();
+    public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer) {
+        Optional<Employer> existingEmployer = employerRepository.findById(id);
+        if(existingEmployer.isPresent()) {
+            Employer employer = existingEmployer.get();
 
             employer.setUserID(updatedEmployer.getId());
             employer.setFirstName(updatedEmployer.getFirstName());
@@ -62,7 +62,7 @@ public class EmployerService {
         throw new EmployerNotFoundException(id);
     }
 
-    public void deleteEmployeur(Long id) {
+    public void deleteEmployer(Long id) {
         employerRepository.deleteById(id);
     }
 
