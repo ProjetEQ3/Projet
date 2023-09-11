@@ -49,16 +49,25 @@ const StudentForm = () => {
         setPasswordConfirmValid(true);
         setProgramValid(true);
 
-        if(formData.firstName === '' && formData.lastName === ''){
+        if(formData.firstName === ''){
             setFirstValid(false)
-            setLastValid(false)
             alert('Le prénom est obligatoire');
             return;
         }
-        else if(formData.firstName && !/^[a-zA-Z- ]+$/.test(formData.firstName) && formData.lastName && !/^[a-zA-Z- ]+$/.test(formData.lastName)){
+        else if(formData.firstName && !/^[a-zA-Z- ]+$/.test(formData.firstName)){
             setFirstValid(false)
+            alert('Le prénom doit contenir seulement des lettres');
+            return;
+        }
+
+        if(formData.lastName === ''){
             setLastValid(false)
-            alert('Le nom et prénom doit contenir seulement des lettres');
+            alert('Le nom est obligatoire');
+            return;
+        }
+        else if(formData.lastName && !/^[a-zA-Z- ]+$/.test(formData.lastName)){
+            setLastValid(false)
+            alert('Le nom doit contenir seulement des lettres');
             return;
         }
 
