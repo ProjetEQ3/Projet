@@ -25,7 +25,7 @@ public class EmployerControllerTest {
     }
 
     @Test
-    void AddAValidEmploye() {
+    void Register_ValidEmploye() {
         // Arrange
         Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
         when(employerService.createEmployeur(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone"));
@@ -37,4 +37,6 @@ public class EmployerControllerTest {
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
     }
+
+
 }
