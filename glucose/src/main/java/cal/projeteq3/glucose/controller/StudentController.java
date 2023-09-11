@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.dto.StudentDTO;
 import cal.projeteq3.glucose.service.StudentService;
@@ -22,7 +23,7 @@ public class StudentController {
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         try {
             Validation.validateStudent(student);
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.accepted().body(studentService.createStudent(student));

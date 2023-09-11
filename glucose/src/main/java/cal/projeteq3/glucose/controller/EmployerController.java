@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.dto.EmployerDTO;
@@ -25,7 +26,7 @@ public class EmployerController {
     public ResponseEntity<EmployerDTO> addEmployeur(@RequestBody Employer employer) {
         try {
             Validation.validateEmploye(employer);
-        } catch (Exception e) {
+        } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
