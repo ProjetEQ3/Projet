@@ -27,7 +27,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    void testRegister() {
+    void Register_Valid() {
         // Arrange
         Student validStudent = new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null);
 
@@ -39,5 +39,125 @@ public class StudentControllerTest {
         // Assert
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
+    }
+
+    @Test
+    void Register_MissingFirstName(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "",
+                "Michaud",
+                "T@T.com",
+                "Ose12asd3",
+                "1234567",
+                "_420B0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void Register_MissingLastName(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "Michel",
+                "",
+                "T@T.com",
+                "Ose12asd3",
+                "1234567",
+                "_420B0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void Register_MissingEmail(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "Michel",
+                "Michaud",
+                "",
+                "Ose12asd3",
+                "1234567",
+                "_420B0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void Register_MissingPassword(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "Michel",
+                "Michaud",
+                "T@T.com",
+                "",
+                "1234567",
+                "_420B0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void Register_MissingMatricule(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "Michel",
+                "Michaud",
+                "T@T.com",
+                "Ose12asd3",
+                "",
+                "_420B0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
+    }
+
+    @Test
+    void Register_MissingDepartement(){
+//        Arrange
+        Student invalidStudent = new Student(
+                "Michel",
+                "Michaud",
+                "T@T.com",
+                "Ose12asd3",
+                "1234567",
+                "_420A0",
+                null);
+
+//        Act
+        ResponseEntity<StudentDTO> responseEntity = studentController.register(invalidStudent);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+
     }
 }
