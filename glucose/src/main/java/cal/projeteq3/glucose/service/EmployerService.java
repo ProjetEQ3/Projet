@@ -12,14 +12,13 @@ import java.util.Optional;
 
 @Service
 public class EmployerService {
-
-    private final EmployerRepository employerRepository;
     private final JobOfferRepository jobOfferRepository;
+    private final EmployerRepository employerRepository;
 
     @Autowired
     public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
-        this.employerRepository = employerRepository;
         this.jobOfferRepository = jobOfferRepository;
+        this.employerRepository = employerRepository;
     }
 
     // database operations here

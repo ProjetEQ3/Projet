@@ -2,8 +2,7 @@ package cal.projeteq3.glucose.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

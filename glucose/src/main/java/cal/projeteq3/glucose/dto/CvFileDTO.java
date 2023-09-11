@@ -3,8 +3,7 @@ package cal.projeteq3.glucose.dto;
 import cal.projeteq3.glucose.model.CvFile;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

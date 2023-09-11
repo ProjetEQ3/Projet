@@ -1,12 +1,7 @@
 package cal.projeteq3.glucose.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
@@ -20,6 +15,6 @@ public class JobApplication {
     @ManyToOne
     private Student student;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private JobOffer jobOffer;
 }

@@ -1,17 +1,19 @@
 package cal.projeteq3.glucose.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 public class Employer extends User {
-
     private String organisationName;
     private String organisationPhone;
-    private JobOffer jobOffer;
+    @OneToMany(mappedBy = "employer")
+    private List<JobOffer> jobOffer;
 }

@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.model;
 
 import static org.junit.jupiter.api.Assertions.*;
-import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
+import cal.projeteq3.glucose.exception.request.*;
 import org.junit.jupiter.api.Test;
 
 public class CvFileTest{

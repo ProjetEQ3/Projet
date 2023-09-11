@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.validation;
 
-import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import java.time.LocalDate;
 import static cal.projeteq3.glucose.validation.ValidationPattern.*;
 

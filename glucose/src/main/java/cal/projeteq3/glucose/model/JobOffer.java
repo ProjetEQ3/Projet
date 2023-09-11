@@ -1,11 +1,9 @@
 package cal.projeteq3.glucose.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobOffer{
+public class JobOffer {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -30,13 +28,15 @@ public class JobOffer{
 	private String department;
 	private String description;
 	private String location;
-	private LocalDate startDate;
-	private LocalDate endDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime startDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime endDate;
 	private int hoursPerWeek;
 	private int nbDaysToApply;
 
 
-	public JobOffer(String title, String description, String location, LocalDate startDate, LocalDate endDate, int hoursPerWeek, int nbDaysToApply) {
+	public JobOffer(String title, String description, String location, LocalDateTime startDate, LocalDateTime endDate, int hoursPerWeek, int nbDaysToApply) {
 		this.state = "pending";
 		this.jobApplications = new ArrayList<>();
 		this.title = title;

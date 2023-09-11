@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.exception.badRequestException;
+package cal.projeteq3.glucose.exception.request;
 
 import cal.projeteq3.glucose.exception.APIException;
 import org.springframework.http.HttpStatus;

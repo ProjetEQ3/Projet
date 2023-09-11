@@ -3,8 +3,7 @@ package cal.projeteq3.glucose.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public final class CvFile{
 	@Column(name = "file_data", nullable = false, updatable = false)
 	private byte[] fileData;
 
-	@OneToOne(mappedBy = "cvFile", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@OneToOne(mappedBy = "cv", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Student student;
 
 }
