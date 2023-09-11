@@ -5,7 +5,6 @@ import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,6 @@ public class EmployerController {
         try {
             Validation.validateEmploye(employer);
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
