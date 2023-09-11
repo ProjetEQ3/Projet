@@ -18,15 +18,15 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long utilisateurID;
 
-    private String nom;
-    private String prenom;
-    private String adresseCourriel;
-    private String motDePasse;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 
-    public User(String nom, String prenom, String adresseCourriel, String motDePasse) {
-        this.nom = nom;
-        this.prenom = prenom;
-        this.adresseCourriel = adresseCourriel;
-        this.motDePasse = motDePasse;
+    public User(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 }

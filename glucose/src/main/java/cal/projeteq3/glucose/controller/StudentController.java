@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/etudiant")
-public class EtudiantController {
+public class StudentController {
     StudentService studentService;
 
     @Autowired
-    public EtudiantController(StudentService studentService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
@@ -22,7 +22,7 @@ public class EtudiantController {
     @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         // TODO: 2023-09-08 add validation & Return StudentDTO
-        studentService.createEtudiant(student);
+        studentService.createStudent(student);
 //        return ResponseEntity.accepted().body(etudiantService.createEtudiant(student));
         return null;
     }

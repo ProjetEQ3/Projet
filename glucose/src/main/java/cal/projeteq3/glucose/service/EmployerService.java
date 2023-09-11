@@ -41,12 +41,12 @@ public class EmployerService {
         if(existingEmployeur.isPresent()) {
             Employer employer = existingEmployeur.get();
 
-            employer.setNom(updatedEmployer.getNom());
-            employer.setPrenom(updatedEmployer.getPrenom());
-            employer.setAdresseCourriel(updatedEmployer.getAdresseCourriel());
-            employer.setMotDePasse(updatedEmployer.getMotDePasse());
-            employer.setNomOrganisme(updatedEmployer.getNomOrganisme());
-            employer.setNumTelephone(updatedEmployer.getNumTelephone());
+            employer.setFirstName(updatedEmployer.getFirstName());
+            employer.setLastName(updatedEmployer.getLastName());
+            employer.setEmail(updatedEmployer.getEmail());
+            employer.setPassword(updatedEmployer.getPassword());
+            employer.setOrganisationName(updatedEmployer.getOrganisationName());
+            employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
             return employerRepository.save(employer);
         } else {
@@ -88,7 +88,7 @@ public class EmployerService {
     }
 
     public List<JobOffer> getAllMyJobOffers(Employer employer){
-        return jobOfferRepository.findAllByEmployeur(employer);
+        return jobOfferRepository.findAllByEmployer(employer);
     }
 
     public List<JobOffer> getAllJobOffers() {

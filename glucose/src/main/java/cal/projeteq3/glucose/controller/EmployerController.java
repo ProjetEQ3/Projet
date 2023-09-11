@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/employeur")
+@RequestMapping("/employer")
 public class EmployerController {
 
     private final EmployerService empService;
@@ -26,22 +28,22 @@ public class EmployerController {
         return null;
     }
 
-    @GetMapping("/offre/all")
-    public ResponseEntity<Iterable<JobOffer>> getAllJobOffers(){
+    @GetMapping("/offer/all")
+    public ResponseEntity<List<JobOffer>> getAllJobOffers(){
         return ResponseEntity.ok(this.empService.getAllJobOffers());
     }
 
-    @PostMapping("/offre")
+    @PostMapping("/offer")
     public ResponseEntity<JobOffer> addJobOffer(@RequestBody JobOffer JobOffer){
         return ResponseEntity.accepted().body(this.empService.createJobOffer(JobOffer));
     }
 
-    @PutMapping("/offre/{id}")
+    @PutMapping("/offer/{id}")
     public ResponseEntity<JobOffer> updateJobOffer(@PathVariable Long id, @RequestBody JobOffer JobOffer){
         return ResponseEntity.accepted().body(this.empService.updateJobOffer(id, JobOffer));
     }
 
-    @DeleteMapping("/offre/{id}")
+    @DeleteMapping("/offer/{id}")
     public ResponseEntity<JobOffer> deleteJobOffer(@PathVariable Long id){
         this.empService.deleteJobOffer(id);
         return ResponseEntity.accepted().build();

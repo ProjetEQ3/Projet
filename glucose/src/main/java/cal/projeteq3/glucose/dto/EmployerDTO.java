@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployerDTO extends UserDTO {
-    private String nomOrganisme;
-    private String numTelephone;
+    private String organisationName;
+    private String organisationPhone;
 }

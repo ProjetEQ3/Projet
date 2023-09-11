@@ -20,27 +20,27 @@ public class StudentService {
 
     // database operations here
 
-    public Student createEtudiant(Student student) {
+    public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    public List<Student> getAllEtudiants() {
+    public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    public Optional<Student> getEtudiantByID(Long id) {
+    public Optional<Student> getStudentByID(Long id) {
         return studentRepository.findById(id);
     }
 
-    public Student updateEtudiant(Long id, Student updatedStudent) {
-        Optional<Student> existingEtudiant = studentRepository.findById(id);
-        if(existingEtudiant.isPresent()) {
-            Student student = existingEtudiant.get();
+    public Student updateStudent(Long id, Student updatedStudent) {
+        Optional<Student> existingStudent = studentRepository.findById(id);
+        if(existingStudent.isPresent()) {
+            Student student = existingStudent.get();
 
-            student.setNom(updatedStudent.getNom());
-            student.setPrenom(updatedStudent.getPrenom());
-            student.setAdresseCourriel(updatedStudent.getAdresseCourriel());
-            student.setMotDePasse(updatedStudent.getMotDePasse());
+            student.setFirstName(updatedStudent.getFirstName());
+            student.setLastName(updatedStudent.getLastName());
+            student.setEmail(updatedStudent.getEmail());
+            student.setPassword(updatedStudent.getPassword());
             student.setMatricule(updatedStudent.getMatricule());
             student.setDepartment(updatedStudent.getDepartment());
 
@@ -50,7 +50,7 @@ public class StudentService {
         }
     }
 
-    public void deleteEtudiant(Long id) {
+    public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
 

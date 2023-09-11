@@ -11,7 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class Employer extends User {
 
-    private String nomOrganisme;
-    private String numTelephone;
+    private String organisationName;
+    private String organisationPhone;
     private JobOffer jobOffer;
 }
