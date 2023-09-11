@@ -16,5 +16,5 @@ public enum Department {
     _243A0,
     _221B0
 
-
+    // Please add the missing departments here, in the same format as the ones above. One department per line, and don't ever add in the top/middle of the list.
 }

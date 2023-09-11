@@ -57,7 +57,6 @@ public class EmployerService {
 
             return employerMapper.toDTO(employerRepository.save(employer));
         }
-
         throw new IllegalArgumentException("Employer with ID " + id + " does not exist.");
     }
 
