@@ -1,34 +1,34 @@
-import axios from "axios";
 import React, {useState} from "react";
+import {axiosInstance} from "../App";
 
 
 const EmployerForm = () => {
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
-        orgName: '',
-        orgPhone: '',
+        organisationName: '',
+        organisationPhone: '',
         email: '',
         password: '',
         passwordConfirm: '',
     });
     const [firstValid, setFirstValid] = useState(true);
     const [lastValid, setLastValid] = useState(true);
-    const [orgNameValid, setOrgNameValid] = useState(true);
-    const [orgPhoneValid, setOrgPhoneValid] = useState(true);
+    const [organisationNameValid, setOrgNameValid] = useState(true);
+    const [organisationPhoneValid, setOrgPhoneValid] = useState(true);
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
 
     const registerEmployer = async () => {
-        const res = await axios.post('/employer/register',
+        const res = await axiosInstance.post('/employer/register',
             {
                 lastName: formData.lastName,
                 firstName: formData.firstName,
                 email: formData.email,
                 password: formData.password,
-                orgName: formData.orgName,
-                orgPhone: formData.orgPhone,
+                organisationName: formData.organisationName,
+                organisationPhone: formData.organisationPhone,
             })
         return res.data
     }
@@ -36,6 +36,7 @@ const EmployerForm = () => {
     const handleChanges = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value.trim()});
+        console.log(formData)
     }
 
     const handleSubmit = (e) => {
@@ -82,25 +83,25 @@ const EmployerForm = () => {
             return;
         }
 
-        if(formData.orgName === ''){
+        if(formData.organisationName === ''){
             setOrgNameValid(false)
             alert('Le nom de l\'organisme est obligatoire');
             return;
         }
-        else if(!/^[a-zA-Z0-9-.]+$/.test(formData.orgName)){
+        else if(!/^[a-zA-Z0-9-. ]+$/.test(formData.organisationName)){
             setOrgNameValid(false)
             alert('Le nom de l\'organisme doit être en format alphanumérique');
             return;
         }
 
-        if(formData.orgPhone === ''){
+        if(formData.organisationPhone === ''){
             setOrgPhoneValid(false)
             alert('Le numéro de l\'organisme est obligatoire');
             return;
         }
-        else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.orgPhone)){
+        else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.organisationPhone)){
             setOrgPhoneValid(false)
-            alert('Le numéro de l\'organisme doit contenir seulement des chiffres');
+            alert('Le numéro de l\'organisme doit suivre un format de numéro de téléphone. Exemple: 514-123-4567');
             return;
         }
 
@@ -132,10 +133,10 @@ const EmployerForm = () => {
                         <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="lastName" placeholder="Nom" name="lastName" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
-                        <label htmlFor="orgName" className="mt-3">Nom de l'organisme</label>
-                        <input type="text" className={`form-control ${orgNameValid? '': 'is-invalid'}`} id="orgName" placeholder="Nom de l'organisme" name="orgName" onChange={handleChanges}/>
-                        <label htmlFor="orgPhone" className="mt-3">Numéro de l'organisme</label>
-                        <input type="text" className={`form-control ${orgPhoneValid? '': 'is-invalid'}`} id="orgPhone" placeholder="Numéro de l'organisme" name="orgPhone" onChange={handleChanges}/>
+                        <label htmlFor="organisationName" className="mt-3">Nom de l'organisme</label>
+                        <input type="text" className={`form-control ${organisationNameValid? '': 'is-invalid'}`} id="organisationName" placeholder="Nom de l'organisme" name="organisationName" onChange={handleChanges}/>
+                        <label htmlFor="organisationPhone" className="mt-3">Numéro de l'organisme</label>
+                        <input type="text" className={`form-control ${organisationPhoneValid? '': 'is-invalid'}`} id="organisationPhone" placeholder="Numéro de l'organisme" name="organisationPhone" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
                         <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>

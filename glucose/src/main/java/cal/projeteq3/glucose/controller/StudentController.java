@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin(origins = "http://localhost:3000")
 public class StudentController {
     StudentService studentService;
 
@@ -19,7 +20,6 @@ public class StudentController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         // TODO: 2023-09-08 add validation & Return StudentDTO
