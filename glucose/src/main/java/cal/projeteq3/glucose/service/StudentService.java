@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.StudentDTO;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.mapper.StudentMapper;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.repository.StudentRepository;
@@ -39,22 +40,22 @@ public class StudentService {
         return studentOptional.map(studentMapper::toDTO);
     }
 
-    public StudentDTO updateStudent(Long id, Student updatedStudent) {
+    public StudentDTO updateStudent(Long id, StudentDTO updatedStudent) {
         Optional<Student> existingStudent = studentRepository.findById(id);
         if(existingStudent.isPresent()) {
             Student student = existingStudent.get();
 
+            student.setUserID(updatedStudent.getId());
             student.setFirstName(updatedStudent.getFirstName());
             student.setLastName(updatedStudent.getLastName());
             student.setEmail(updatedStudent.getEmail());
-            student.setPassword(updatedStudent.getPassword());
             student.setMatricule(updatedStudent.getMatricule());
             student.setDepartment(updatedStudent.getDepartment());
 
             return studentMapper.toDTO(studentRepository.save(student));
         }
 
-        throw new IllegalArgumentException("Student with ID " + id + " does not exist.");
+        throw new StudentNotFoundException(id);
     }
 
     public void deleteStudent(Long id) {
