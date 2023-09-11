@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,12 @@ public class EmployerController {
 
     @PostMapping("/register")
     public ResponseEntity<EmployerDTO> addEmployeur(@RequestBody Employer employer) {
+        try {
+            Validation.validateEmploye(employer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
          this.empService.createEmployeur(employer);
 //        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
         return null;
