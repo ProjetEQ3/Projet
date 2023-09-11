@@ -55,7 +55,7 @@ const StudentForm = () => {
             alert('Le prénom est obligatoire');
             return;
         }
-        else if(formData.firstName && !/^[a-zA-Z-]+$/.test(formData.firstName) && formData.lastName && !/^[a-zA-Z-]+$/.test(formData.lastName)){
+        else if(formData.firstName && !/^[a-zA-Z- ]+$/.test(formData.firstName) && formData.lastName && !/^[a-zA-Z- ]+$/.test(formData.lastName)){
             setFirstValid(false)
             setLastValid(false)
             alert('Le nom et prénom doit contenir seulement des lettres');
@@ -107,16 +107,16 @@ const StudentForm = () => {
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="prenom" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${firstValid? '': 'is-invalid'}`} id="prenom" placeholder="Prénom" name="prenom" onChange={handleChanges}/>
-                        <label htmlFor="nom" className="mt-3">Nom</label>
-                        <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="nom" placeholder="Nom" name="nom" onChange={handleChanges}/>
+                        <label htmlFor="firstName" className="mt-3">Prénom</label>
+                        <input type="text" className={`form-control ${firstValid? '': 'is-invalid'}`} id="firstName" placeholder="Prénom" name="firstName" onChange={handleChanges}/>
+                        <label htmlFor="lastName" className="mt-3">Nom</label>
+                        <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="lastName" placeholder="Nom" name="lastName" onChange={handleChanges}/>
                         <label htmlFor="email" className="mt-3">Email</label>
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
-                        <label htmlFor="numEtudiant" className="mt-3">Matricule du Cégep</label>
+                        <label htmlFor="matricule" className="mt-3">Matricule du Cégep</label>
                         <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
-                        <label htmlFor="programme" className="mt-3">Programme d'étude</label>
-                        <select className={`form-select ${programValid? '': 'is-invalid'}`} id="programme" onChange={handleChanges} name="programme" defaultValue="Choisir un programme">
+                        <label htmlFor="program" className="mt-3">Programme d'étude</label>
+                        <select className={`form-select ${programValid? '': 'is-invalid'}`} id="program" onChange={handleChanges} name="program" defaultValue="Choisir un programme">
                             <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
                             <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
                             <option value="_420B0">420.B0 - Techniques de l’informatique</option>
