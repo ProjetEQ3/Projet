@@ -18,7 +18,6 @@ public class EmployerController {
 
     private final EmployerService empService;
 
-    @Autowired
     public EmployerController(EmployerService empService) {
         this.empService = empService;
     }
