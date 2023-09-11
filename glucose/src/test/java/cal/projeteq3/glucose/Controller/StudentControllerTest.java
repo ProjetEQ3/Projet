@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.Controller;
 
 import cal.projeteq3.glucose.controller.StudentController;
 import cal.projeteq3.glucose.dto.StudentDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +29,9 @@ public class StudentControllerTest {
     @Test
     void testRegister() {
         // Arrange
-        Student validStudent = new Student("Michel", "Michaud", "T@T.com", "ose123", "1234567", "_420B0", null);
+        Student validStudent = new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null);
 
-        when(studentService.createStudent(validStudent)).thenReturn(new Student("Michel", "Michaud", "T@T.com", "ose123", "1234567", "_420B0", null));
+        when(studentService.createStudent(validStudent)).thenReturn(new StudentDTO("1234567", Department._420B0));
 
         // Act
         ResponseEntity<StudentDTO> responseEntity = studentController.register(validStudent);

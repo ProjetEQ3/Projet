@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.StudentDTO;
+import cal.projeteq3.glucose.mapper.StudentMapper;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,32 +9,37 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
     // database operations here
 
-    public Student createStudent(Student student) {
-        return studentRepository.save(student);
+    public StudentDTO createStudent(Student student) {
+        return studentMapper.toDTO(studentRepository.save(student));
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<StudentDTO> getAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        return students.stream().map(studentMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Optional<Student> getStudentByID(Long id) {
-        return studentRepository.findById(id);
+    public Optional<StudentDTO> getStudentByID(Long id) {
+        Optional<Student> studentOptional = studentRepository.findById(id);
+        return studentOptional.map(studentMapper::toDTO);
     }
 
-    public Student updateStudent(Long id, Student updatedStudent) {
+    public StudentDTO updateStudent(Long id, Student updatedStudent) {
         Optional<Student> existingStudent = studentRepository.findById(id);
         if(existingStudent.isPresent()) {
             Student student = existingStudent.get();
@@ -44,10 +51,10 @@ public class StudentService {
             student.setMatricule(updatedStudent.getMatricule());
             student.setDepartment(updatedStudent.getDepartment());
 
-            return studentRepository.save(student);
-        } else {
-            throw new IllegalArgumentException("Student with ID " + id + " does not exist.");
+            return studentMapper.toDTO(studentRepository.save(student));
         }
+
+        throw new IllegalArgumentException("Student with ID " + id + " does not exist.");
     }
 
     public void deleteStudent(Long id) {

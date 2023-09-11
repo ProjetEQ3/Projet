@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,13 +26,10 @@ public class EmployerController {
     public ResponseEntity<EmployerDTO> addEmployeur(@RequestBody Employer employer) {
         try {
             Validation.validateEmploye(employer);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ValidationException e) {
             return ResponseEntity.badRequest().build();
         }
-         this.empService.createEmployeur(employer);
-//        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
-        return null;
+        return ResponseEntity.accepted().body(this.empService.createEmployeur(employer));
     }
 
     @GetMapping("/offer/all")
