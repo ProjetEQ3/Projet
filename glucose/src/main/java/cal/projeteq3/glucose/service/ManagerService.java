@@ -1,7 +1,9 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.model.Manager;
+import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,15 @@ import java.util.Optional;
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
+    private final EmployerRepository employerRepository;
+    private final StudentRepository studentRepository;
+
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository) {
+    public ManagerService(ManagerRepository managerRepository, EmployerRepository employerRepository, StudentRepository studentRepository) {
         this.managerRepository = managerRepository;
+        this.employerRepository = employerRepository;
+        this.studentRepository = studentRepository;
     }
 
     // database operations here

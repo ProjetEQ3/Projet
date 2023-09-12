@@ -10,15 +10,4 @@ public class UserService {
 	public UserDTO authenticateUser(LoginDTO loginDto){
 		throw new UnsupportedOperationException("Not implemented");
 	}
-
-	//    private final UtilisateurRepo utilisateurRepo;
-	//
-	//    @Autowired
-	//    public UserService(UtilisateurRepo utilisateurRepo) {
-	//        this.utilisateurRepo = utilisateurRepo;
-	//    }
-	//
-	//    public User findUtilisateur(String adresseCourriel){
-	//        return utilisateurRepo.findUtilisateurByAdresseCourriel(adresseCourriel);
-	//    }
 }
