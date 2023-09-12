@@ -25,7 +25,7 @@ public class EmployerControllerTest {
     }
 
     @Test
-    void Register_ValidEmploye() {
+    void Register_Valid_Employe() {
         // Arrange
         Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
         when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone"));
@@ -38,5 +38,246 @@ public class EmployerControllerTest {
         assertNotNull(responseEntity.getBody());
     }
 
+    @Test
+    void Register_Missing_FirstName(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "",
+                "Michaud",
+                "test@test.com",
+                "Ose12asd3",
+                "Fritz",
+                "111-111-1111",
+                null);
 
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Missing_LastName(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "",
+                "test@test.com",
+                "Ose12asd3",
+                "Fritz",
+                "111-111-1111",
+                null);
+
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Missing_Email(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "Michaud",
+                "",
+                "Ose12asd3",
+                "Fritz",
+                "111-111-1111",
+                null);
+
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Missing_Password(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "Michaud",
+                "test@test.com",
+                "",
+                "Fritz",
+                "111-111-1111",
+                null);
+
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Missing_OrganisationName(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "Michaud",
+                "test@test.com",
+                "Ose12asd3",
+                "",
+                "111-111-1111",
+                null);
+
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Missing_OrganisationPhone(){
+//        Arrange
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "Michaud",
+                "test@test.com",
+                "Ose12asd3",
+                "Fritz",
+                "",
+                null);
+
+//        Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+//        Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_Email() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer(
+                "John",
+                "Doe",
+                "invalid-email",
+                "Passw0rd",
+                "OrgName",
+                "123-456-7890",
+                null);
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> response = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_Password() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer("John",
+                "Doe",
+                "john@example.com",
+                "password",
+                "OrgName",
+                "123-456-7890",
+                null);
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> response = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_FirstName() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer(
+                "InvalidName@123",
+                "Doe",
+                "john@example.com",
+                "Passw0rd",
+                "OrgName",
+                "123-456-7890",
+                null
+        );
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_LastName() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer(
+                "Michel",
+                "InvalidName@123",
+                "john@example.com",
+                "Passw0rd",
+                "OrgName",
+                "123-456-7890",
+                null
+        );
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_OrganisationName() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer(
+                "John",
+                "Doe",
+                "john@example.com",
+                "Passw0rd",
+                "Invalid Organization Name 123@",
+                "123-456-7890",
+                null
+        );
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
+
+    @Test
+    void Register_Invalid_PhoneNumber() {
+        // Arrange
+        EmployerService employerService = mock(EmployerService.class);
+        Employer invalidEmployer = new Employer(
+                "John",
+                "Doe",
+                "john@example.com",
+                "Passw0rd",
+                "OrgName",
+                "InvalidPhoneNumber",
+                null
+        );
+        EmployerController employerController = new EmployerController(employerService);
+
+        // Act
+        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployeur(invalidEmployer);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+    }
 }
