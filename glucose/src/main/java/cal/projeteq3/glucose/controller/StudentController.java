@@ -18,7 +18,6 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-
     @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         try {
@@ -27,6 +26,20 @@ public class StudentController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.accepted().body(studentService.createStudent(student));
+    }
+
+    @PostMapping("/cv")
+    public ResponseEntity<StudentDTO> addCv(@RequestBody StudentDTO student){
+        try {
+            //TODO: implement getCvFile() in StudentDTO
+            //return ResponseEntity.accepted().body(studentService.addCv(student.getId(), student.getCvFile()));
+            return null;
+        } catch (ValidationException e) {
+            //TODO: cant sent error message because of the type of the return
+            return ResponseEntity.badRequest().build();
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }
