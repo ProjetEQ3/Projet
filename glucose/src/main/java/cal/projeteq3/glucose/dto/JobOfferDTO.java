@@ -15,4 +15,9 @@ public class JobOfferDTO{
 	private String description;
 	private String location;
 	private String department;
+	private float salary;
+	private String startDate;
+	private int duration;
+	private int hoursPerWeek;
+	private String expirationDate;
 }
