@@ -15,12 +15,12 @@ const Login = ({user, setToken}) => {
 			email: email,
 			password: password
 		}
-		if(!validateUser())
-			return
-		axiosInstance.post(serverIp + "/auth/login", data)
+		console.log("data", data)
+		if(validateUser())
+			axiosInstance.post(serverIp + "/auth/login", data)
 			.then((response) => {
-				toast.success("Vous êtes connecté")
 				setToken(response.data)
+				toast.success("Vous êtes connecté")
 			})
 			.catch((error) => {
 				toast.error("Utilisateur ou mot de passe incorrect")
@@ -28,18 +28,19 @@ const Login = ({user, setToken}) => {
 	}
 
 	const validateUser = () => {
+		let isValid = true
 		if(!validateEmail()){
-			toast.error("Le format de l'email est invalide")
-			return false
+			toast.success('Logged in as ')
+			isValid = false
 		}
 		if(!validatePassword()){
 			toast.error("Mot de passe invalide. " +
 				"Le mot de passe doit comporter au moins 8 caractères " +
 				"et contenir au moins une lettre majuscule, une lettre minuscule et un chiffre"
 			)
-			return false
+			isValid = false
 		}
-		return true
+		return isValid
 	}
 
 	const validateEmail = () => {
@@ -59,7 +60,7 @@ const Login = ({user, setToken}) => {
 					<p>Logged in as {user.email} <NavLink to="../logout">Logout?</NavLink></p>
 				) : (
 					<>
-						<h2>Login</h2>
+						<h2>Se connecter</h2>
 						<form id="login-form">
 							<div className="form-group">
 								<label htmlFor="inputEmail1">Adresse email</label>

@@ -1,12 +1,27 @@
 import './App.css'
 import HeadTemplate from "./Components/HeadTemplate"
 import axios from "axios"
+import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
 
 function App(){
 	return (
-		<div className="App">
-			<HeadTemplate/>
-		</div>
+		<>
+			<ToastContainer
+				position="top-left"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				pauseOnHover
+				theme="colored"
+			/>
+			<div className="App">
+				<HeadTemplate/>
+			</div>
+		</>
 	)
 }
 
