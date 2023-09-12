@@ -1,8 +1,7 @@
 import {useState} from "react"
 import {NavLink} from "react-router-dom"
-import axios from "axios"
 import {toast} from "react-toastify"
-import serverIp from "../App"
+import serverIp, {axiosInstance} from "../App"
 import User from "../model/User";
 
 const Login = ({user, setToken}) => {
@@ -18,27 +17,19 @@ const Login = ({user, setToken}) => {
 		}
 		if(!validateUser())
 			return
-		axios.post(serverIp + "/auth/login", data)
+		axiosInstance.post(serverIp + "/auth/login", data)
 			.then((response) => {
-				if(response?.data["message"] === "success"){
-					toast.success("Login successful")
-					setToken(response.data["body"])
-				}else{
-					toast.error("Unknown error")
-				}
+				toast.success("Vous êtes connecté")
+				setToken(response.data)
 			})
 			.catch((error) => {
-				error?.response?.data?.errors?.length > 0
-					? error.response.data.errors.map((error) => {
-						toast.error(error)
-					})
-					: toast.error("Login failed")
+				toast.error("Utilisateur ou mot de passe incorrect")
 			})
 	}
 
 	const validateUser = () => {
 		if(!validateEmail()){
-			toast.error("Invalid email")
+			toast.error("Le format de l'email est invalide")
 			return false
 		}
 		if(!validatePassword()){
@@ -52,8 +43,8 @@ const Login = ({user, setToken}) => {
 	}
 
 	const validateEmail = () => {
-			const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-			return emailRegex.test(email)
+		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+		return emailRegex.test(email)
 	}
 
 	const validatePassword = () => {
@@ -70,23 +61,32 @@ const Login = ({user, setToken}) => {
 					<>
 						<h2>Login</h2>
 						<form id="login-form">
-							<label htmlFor="email">Email</label>
-							<input
-								type="email"
-								id="email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								required
-							/>
-							<label htmlFor="password">Password</label>
-							<input
-								type="password"
-								id="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								required
-							/>
-							<button onClick={handleSubmit}>Login</button>
+							<div className="form-group">
+								<label htmlFor="inputEmail1">Adresse email</label>
+								<input
+									type="email"
+									className="form-control"
+									id="inputEmail1"
+									aria-describedby="emailHelp"
+									placeholder="Entrez email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									required
+								/>
+							</div>
+							<div className="form-group">
+								<label htmlFor="inputPassword">Mot de pass</label>
+								<input
+									type="password"
+									className="form-control"
+									id="inputPassword"
+									placeholder="Mot de pass"
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									required
+								/>
+							</div>
+							<button type="submit" className="btn btn-primary" onClick={handleSubmit}>Envoyer</button>
 						</form>
 					</>
 				)

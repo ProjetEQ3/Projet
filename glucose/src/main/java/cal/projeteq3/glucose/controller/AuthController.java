@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.model.User;
+import cal.projeteq3.glucose.dto.UserDTO;
 import cal.projeteq3.glucose.dto.LoginDTO;
 import cal.projeteq3.glucose.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,9 @@ public final class AuthController{
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<User> Login(@RequestBody LoginDTO loginDTO){
-		return ResponseEntity.ok(userService.authenticateUser(loginDTO));
+	public ResponseEntity<UserDTO> Login(@RequestBody LoginDTO loginDTO){
+		UserDTO user = userService.authenticateUser(loginDTO);
+		return user != null ? ResponseEntity.ok(user) : ResponseEntity.badRequest().build();
 	}
 
 }
