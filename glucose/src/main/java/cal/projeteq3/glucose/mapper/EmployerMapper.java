@@ -32,5 +32,4 @@ public class EmployerMapper {
 
         return employer;
     }
-
 }

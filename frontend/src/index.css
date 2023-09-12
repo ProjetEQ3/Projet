@@ -1,6 +1,6 @@
 :root {
     --ose-color: #8888f5;
-    --ose-rgb: 136, 136, 245;
+    --bs-ose-rgb: 136, 136, 245;
 }
 
 body {
@@ -27,7 +27,7 @@ code {
 }
 
 .border-ose {
-  border-color: rgba(var(--ose-rgb), 1) !important;
+  --bs-border-color: rgba(var(--bs-ose-rgb), 1) !important;
 }
 
 .btn-outline-ose {
