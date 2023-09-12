@@ -18,13 +18,13 @@ const EmployerPage = () => {
                         <h3 className="text-dark fw-light">Vos offres de stages</h3>
                         <div className="row justify-content-around">
                             <div className="col-6">
-                                <div className="row">
-                                    <div className="col-12 border border-danger">
+                                <div className="row m-2">
+                                    <div className="col-12 border border-ose rounded">
                                         <h4 className="text-dark fw-light">Offre de stage 1</h4>
                                         <p className="text-dark fw-light">Description de l'offre de stage 1</p>
                                     </div>
                                 </div>
-                                <div className="row">
+                                <div className="row m-2">
                                     <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>
                                 </div>
                             </div>

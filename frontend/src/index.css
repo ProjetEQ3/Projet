@@ -25,6 +25,11 @@ code {
   background-color: var(--ose-color);
 }
 
+.border-ose{
+  --bs-border-opacity: 1;
+  border-color: rgba(var(--ose-color)) !important;
+}
+
 .btn-outline-ose {
   --bs-btn-color: var(--ose-color) !important;
   --bs-btn-border-color: var(--ose-color) !important;
