@@ -19,7 +19,7 @@ const EmployerPage = () => {
                         <div className="row justify-content-around">
                             <div className="col-6">
                                 <div className="row m-2">
-                                    <div className="col-12 border border-ose rounded">
+                                    <div className="col-12 border border-ose">
                                         <h4 className="text-dark fw-light">Offre de stage 1</h4>
                                         <p className="text-dark fw-light">Description de l'offre de stage 1</p>
                                     </div>
