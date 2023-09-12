@@ -81,9 +81,9 @@ public class EmployerService {
             jobOffer.setDescription(updatedJobOffer.getDescription());
             jobOffer.setLocation(updatedJobOffer.getLocation());
             jobOffer.setStartDate(updatedJobOffer.getStartDate());
-            jobOffer.setEndDate(updatedJobOffer.getEndDate());
             jobOffer.setHoursPerWeek(updatedJobOffer.getHoursPerWeek());
             jobOffer.setExpirationDate(updatedJobOffer.getExpirationDate());
+            jobOffer.setSalary(updatedJobOffer.getSalary());
 
             return jobOfferRepository.save(jobOffer);
         }

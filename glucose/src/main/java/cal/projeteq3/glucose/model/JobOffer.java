@@ -28,24 +28,23 @@ public class JobOffer {
 	private String department;
 	private String description;
 	private String location;
+	private float salary;
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime startDate;
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime endDate;
 	private int hoursPerWeek;
 	private LocalDateTime expirationDate;
 
 
-	public JobOffer(String title, String description, String location, LocalDateTime startDate, LocalDateTime endDate, int hoursPerWeek, LocalDateTime expirationDate) {
+	public JobOffer(String title, String description, String location, LocalDateTime startDate, LocalDateTime endDate, int hoursPerWeek, LocalDateTime expirationDate, float salary) {
 		this.state = "pending";
 		this.jobApplications = new ArrayList<>();
 		this.title = title;
 		this.description = description;
 		this.location = location;
 		this.startDate = startDate;
-		this.endDate = endDate;
 		this.hoursPerWeek = hoursPerWeek;
 		this.expirationDate = expirationDate;
+		this.salary = salary;
 	}
 }
 
