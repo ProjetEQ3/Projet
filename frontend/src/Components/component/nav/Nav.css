@@ -1,0 +1,50 @@
+#App-nav{
+	grid-area: nav;
+	justify-self: start;
+}
+
+#App-nav > .menu{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.menu{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	display: flex;
+}
+
+.menu > li{
+	float: left;
+	margin: 10px;
+}
+
+.menu > li > a{
+	display: block;
+	color: var(--primary-color);
+	text-align: center;
+	padding: var(--default-spacing);
+	text-decoration: none;
+	font-weight: bold;
+	margin: var(--default-spacing);
+}
+
+.menu > li > a:hover{
+	background-color: var(--tertiary-color);
+	color: var(--secondary-color);
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.menu > li > a.active{
+	border-bottom: 5px solid var(--tertiary-color);
+	color: var(--tertiary-color);
+}
+
+.menu > li > a.active:hover{
+	color: var(--secondary-color);
+}

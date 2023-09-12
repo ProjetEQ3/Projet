@@ -1,12 +1,17 @@
 import './App.css'
-import HeadTemplate from "./Components/HeadTemplate"
 import axios from "axios"
+import Footer from "./Components/layout/Footer";
+import {BrowserRouter} from "react-router-dom";
+import Header from "./Components/layout/Header";
+import Main from "./Components/layout/Main";
 
 function App(){
 	return (
-		<div className="App">
-			<HeadTemplate/>
-		</div>
+		<BrowserRouter>
+			<Header/>
+			<Main/>
+			<Footer/>
+		</BrowserRouter>
 	)
 }
 

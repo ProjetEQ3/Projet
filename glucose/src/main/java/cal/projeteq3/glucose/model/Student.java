@@ -4,20 +4,25 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 @NoArgsConstructor
-public class Student extends User {
-    @OneToOne
-    private CvFile cv;
-    private String matricule;
-    private Department department;
+@EqualsAndHashCode(callSuper = true)
+public class Student extends User{
 
-    public Student(String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile) {
-        super(firstName, lastName, email, password);
-        this.matricule = matricule;
-        this.department = Department.valueOf(department);
-        this.cv = cvFile;
-    }
+	@OneToOne
+	private CvFile cv;
+
+	private String matricule;
+
+	private Department department;
+
+	@Builder
+	public Student(String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile){
+		super(firstName, lastName, email, password);
+		this.matricule = matricule;
+		this.department = Department.valueOf(department);
+		this.cv = cvFile;
+	}
+
 }
