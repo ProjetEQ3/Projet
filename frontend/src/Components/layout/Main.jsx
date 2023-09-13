@@ -6,29 +6,29 @@ import ManagerPage from "../page/ManagerPage";
 import EmployerPage from "../page/EmployerPage";
 import PageNotFound from "../page/PageNotFound";
 
-const Main = () => {
+const Main = (user) => {
     return (
         <main className='App-main'>
             <Routes>
                 <Route
                     path="/"
-                    element={<Home/>}
+                    element={<Home user={user}/>}
                 />
                 <Route
                     path="auth/*"
-                    element={<AuthPage/>}
+                    element={<AuthPage user={user}/>}
                 />
                 <Route
                     path="student/*"
-                    element={<StudentPage/>}
+                    element={<StudentPage user={user}/>}
                 />
                 <Route
                     path="manager/*"
-                    element={<ManagerPage/>}
+                    element={<ManagerPage user={user}/>}
                 />
                 <Route
                     path="employer/*"
-                    element={<EmployerPage/>}
+                    element={<EmployerPage user={user}/>}
                 />
                 {<Route path="*" element={<PageNotFound/>}/>}
             </Routes>
