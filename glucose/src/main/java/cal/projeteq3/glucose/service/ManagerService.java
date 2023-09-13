@@ -27,7 +27,7 @@ public class ManagerService {
     // database operations here
 
     public ManagerDTO createGestionnaire(Manager manager) {
-        return managerRepository.save(manager).toDTO();
+        return new ManagerDTO(managerRepository.save(manager));
     }
 
     public List<Manager> getAllGestionnaires() {
@@ -59,7 +59,7 @@ public class ManagerService {
     }
 
     public List<JobOfferDTO> getAllJobOffer() {
-        return jobOfferRepository.findAll().stream().map(JobOffer::toDTO).toList();
+        return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
     }
 
 }
