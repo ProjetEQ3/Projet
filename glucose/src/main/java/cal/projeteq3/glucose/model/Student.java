@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model;
 
+import cal.projeteq3.glucose.dto.StudentDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,4 +21,18 @@ public class Student extends User {
         this.department = Department.valueOf(department);
         this.cv = cvFile;
     }
+
+    public StudentDTO toDTO() {
+        StudentDTO studentDTO = new StudentDTO();
+
+        studentDTO.setId(this.getUserID());
+        studentDTO.setLastName(this.getLastName());
+        studentDTO.setFirstName(this.getFirstName());
+        studentDTO.setEmail(this.getEmail());
+        studentDTO.setMatricule(this.getMatricule());
+        studentDTO.setDepartment(this.getDepartment());
+
+        return studentDTO;
+    }
+
 }
