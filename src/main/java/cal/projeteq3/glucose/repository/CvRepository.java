@@ -12,4 +12,5 @@ public interface CvRepository extends JpaRepository<CvFile, Long> {
     List<CvFile> findAllByState(State state);
     List<CvFile> findAllByStudent(Long id);
     void deleteAllByStudent(Long idStudent);
+    CvFile findByStudentAndFileName(long userID, String fileName);
 }
