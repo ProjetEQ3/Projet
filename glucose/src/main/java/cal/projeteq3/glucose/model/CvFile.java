@@ -26,7 +26,7 @@ public final class CvFile{
 
 	private State state;
 
-	public CvFile(String fileName, byte[] fileData){
+	public CvFile(String fileName, byte[] fileData, Student student){
 		this.fileName = fileName;
 		this.fileData = fileData;
 		this.state = State.PENDING;
