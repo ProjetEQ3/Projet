@@ -19,7 +19,12 @@ code {
 
 .text-ose {
   --bs-text-opacity: 1;
-  color: var(--ose-color) !important;
+  color: var(--ose-color);
+}
+
+.trash-btn {
+  --bs-text-opacity: 1;
+    color: var(--ose-color) !important;
 }
 
 .bg-ose {
