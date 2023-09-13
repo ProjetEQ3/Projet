@@ -30,18 +30,21 @@ const ShortJobOffer = ({ jobOffer }) => {
                                 {jobOffer.state}
                             </div>
                         </div>
-                        <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                            <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg"/>
-                        </button>
+                        <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg trash-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"/>
                         <div id="deleteModal" className="modal">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
-                                        <h3 className="modal-title">Êtes vous sûr de vouloir supprimer l'offre de stage ci-dessous:</h3>
+                                        <h3 className="modal-title">Supprimer</h3>
                                     </div>
                                     <div className="modal-body">
-                                        <h4 className="text-dark fw-light pt-1">{jobOffer.title}</h4>
+                                        <p className="text-dark fw-light pt-1">Êtes-vous sûr de vouloir supprimer l'offre de stage ci-dessous:</p>
+                                        <h4 className="text-dark fw-light mb-3">{jobOffer.title}</h4>
                                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
                                     </div>
                                 </div>
                             </div>
