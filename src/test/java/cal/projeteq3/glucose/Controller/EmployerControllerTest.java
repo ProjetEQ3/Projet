@@ -28,10 +28,10 @@ public class EmployerControllerTest {
     void Register_Valid_Employe() {
         // Arrange
         Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
-        when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone"));
+        when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone", null));
 
         // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(validEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(validEmployer);
 
         // Assert
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
@@ -51,7 +51,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -71,7 +71,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -90,7 +90,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -109,7 +109,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -128,7 +128,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -147,7 +147,7 @@ public class EmployerControllerTest {
                 null);
 
 //        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
 //        Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -168,7 +168,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> response = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> response = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -188,7 +188,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> response = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> response = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -210,7 +210,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -232,7 +232,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -254,7 +254,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
@@ -276,7 +276,7 @@ public class EmployerControllerTest {
         EmployerController employerController = new EmployerController(employerService);
 
         // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(invalidEmployer);
+        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
