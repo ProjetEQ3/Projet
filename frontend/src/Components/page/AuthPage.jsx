@@ -1,8 +1,13 @@
-const AuthPage = ({user}) => {
+import {Route, Routes} from "react-router-dom";
+import LoginForm from "../auth/LoginForm";
+import RegistrationForm from "../auth/RegistrationForm";
+
+const AuthPage = ({user, setUser}) => {
     return (
-        <div>
-            Auth
-        </div>
+        <Routes>
+            <Route path="login" element={<LoginForm/>}/>
+            <Route path="register" element={<RegistrationForm/>}/>
+        </Routes>
     )
 }
 

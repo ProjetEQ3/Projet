@@ -26,14 +26,15 @@ public class EmployerController {
     @PostMapping("/register")
     public ResponseEntity<EmployerDTO> addEmployer(@RequestBody Employer employer) {
 
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(S);
-
         try {
             Validation.validateEmploye(employer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employer));
+
         } catch (ValidationException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
-        return ResponseEntity.accepted().body(this.empService.createEmployer(employer));
     }
 
     @GetMapping("/offer/all")
