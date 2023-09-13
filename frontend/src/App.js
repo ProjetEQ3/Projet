@@ -1,5 +1,5 @@
 import './App.css'
-import HeadTemplate from "./Components/fixedElements/HeadTemplate"
+import Header from "./Components/layout/Header"
 import axios from "axios"
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
@@ -22,7 +22,7 @@ function App(){
 				theme="colored"
 			/>
 			<div className="App">
-				<HeadTemplate/>
+				<Header/>
 			</div>
 		</>
 	)

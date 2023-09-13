@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HeadTemplate from '../fixedElements/HeadTemplate';
+import Header from '../layout/Header';
 import './RegistrationForm.css'
 import StudentForm from "./StudentForm";
 import EmployerForm from "./EmployerForm";
@@ -21,7 +21,7 @@ const RegistrationForm = () => {
 
     return (
         <div className="bg-light">
-            <HeadTemplate/>
+            <Header/>
             <div className="m-2"></div>
             <div className="container bg-light">
                 <div className="row">
