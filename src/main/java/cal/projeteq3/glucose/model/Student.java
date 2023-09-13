@@ -6,9 +6,11 @@ import lombok.*;
 
 @Entity
 @Data
+@Builder
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class Student extends User {
     @OneToOne
     private CvFile cv;

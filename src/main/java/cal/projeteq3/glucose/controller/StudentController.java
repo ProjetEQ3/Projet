@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.dto.StudentDTO;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +23,13 @@ public class StudentController {
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         try {
             Validation.validateStudent(student);
+            return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
         } catch (ValidationException e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
-        return ResponseEntity.accepted().body(studentService.createStudent(student));
+
     }
 
     @PostMapping("/cv")

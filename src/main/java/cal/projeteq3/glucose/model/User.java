@@ -6,6 +6,7 @@ import lombok.*;
 
 @MappedSuperclass
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class User {
