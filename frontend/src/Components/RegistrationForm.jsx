@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import HeadTemplate from './HeadTemplate';
-import './RegistrationForm.css'
 import StudentForm from "./StudentForm";
 import EmployerForm from "./EmployerForm";
 
