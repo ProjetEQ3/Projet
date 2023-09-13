@@ -4,7 +4,7 @@ import {toast} from "react-toastify"
 import serverIp, {axiosInstance} from "../../App"
 import User from "../../model/User";
 
-const Login = ({user, setToken}) => {
+const LoginForm = ({user, setToken}) => {
 	user = new User();
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
@@ -96,4 +96,4 @@ const Login = ({user, setToken}) => {
 	)
 }
 
-export default Login
+export default LoginForm
