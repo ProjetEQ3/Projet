@@ -7,6 +7,10 @@ import {useState} from "react";
 
 const EmployerPage = () => {
     const [selectedOffer, setSelectedOffer] = useState(null);
+    const handleSelectOffer = (offer) => {
+        setSelectedOffer(offer);
+    }
+
     const testOffre = [{
         title: "Offre de stage 1",
         state: "Open",
@@ -84,8 +88,8 @@ const EmployerPage = () => {
                         <div className="row justify-content-around">
                             <div className="col-6">
                                 {
-                                    testOffre.map((offre, index) => (
-                                        <ShortJobOffer key={index} jobOffer={offre}/>
+                                    testOffre.map((offer, index) => (
+                                        <ShortJobOffer key={index} jobOffer={offer} onClick={handleSelectOffer(offer)}/>
                                     ))
                                 }
                                 <div className="row m-2">
