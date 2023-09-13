@@ -1,4 +1,7 @@
-const FullJobOffer = ({ jobOffer }) => {
+import {useState} from "react";
+
+const FullJobOffer = ({ jobId }) => {
+
     return (
         <div className="row my-2">
             <div className="col-12 bg-white rounded">

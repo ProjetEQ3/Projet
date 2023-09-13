@@ -5,13 +5,10 @@ import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
 
 const EmployerPage = ({user}) => {
-    const [selectedOffer, setSelectedOffer] = useState(null);
-    const handleSelectOffer = (offer) => {
+    const [selectedId, setSelectedId] = useState(null);
 
-        setSelectedOffer(offer);
-    }
-
-    const testOffre = [{
+    const offersDTO = [{
+        id: 1,
         title: "Offre de stage 1",
         state: "Open",
         department: "Informatique",
@@ -24,6 +21,7 @@ const EmployerPage = ({user}) => {
         expireDate: "2022-12-31",
     },
         {
+            id: 2,
             title: "Offre de stage 2",
             state: "Pending",
             department: "Informatique",
@@ -36,6 +34,7 @@ const EmployerPage = ({user}) => {
             expireDate: "2022-12-31",
         },
         {
+            id: 3,
             title: "Offre de stage 3",
             state: "Submitted",
             department: "Informatique",
@@ -48,6 +47,7 @@ const EmployerPage = ({user}) => {
             expireDate: "2022-12-31",
         },
         {
+            id: 4,
             title: "Offre de stage 4",
             state: "Expired",
             department: "Informatique",
@@ -60,6 +60,7 @@ const EmployerPage = ({user}) => {
             expireDate: "2022-12-31",
         },
         {
+            id: 5,
             title: "Offre de stage 5",
             state: "Taken",
             department: "Informatique",
@@ -85,8 +86,10 @@ const EmployerPage = ({user}) => {
                         <div className="row justify-content-around">
                             <div className="col-6">
                                 {
-                                    testOffre.map((offer, index) => (
-                                        <ShortJobOffer key={index} jobOffer={offer}/>
+                                    offersDTO.map((offer, index) => (
+                                        <div onClick={() => setSelectedId(offer)}>
+                                            <ShortJobOffer jobOffer={offer} key={index}/>
+                                        </div>
                                     ))
                                 }
                                 <div className="row m-2">
@@ -94,7 +97,15 @@ const EmployerPage = ({user}) => {
                                 </div>
                             </div>
                             <div className="col-6">
-                                <FullJobOffer jobOffer={testOffre[2]}/>
+                                {selectedId === null ?
+                                    <div className="row m-2">
+                                        <div className="col-12 bg-white rounded">
+                                            <h2 className="text-dark fw-light pt-1">Sélectionnez une offre de stage</h2>
+                                        </div>
+                                    </div>
+                                    :
+                                <FullJobOffer jobId={selectedId}/>
+                                }
                             </div>
                         </div>
                     </div>
