@@ -6,9 +6,9 @@ import ManagerPage from "../page/ManagerPage";
 import EmployerPage from "../page/EmployerPage";
 import PageNotFound from "../page/PageNotFound";
 
-const Main = (user) => {
+const Main = ({user, setUser}) => {
     return (
-        <main className='App-main'>
+        <main className='App-main '>
             <Routes>
                 <Route
                     path="/"
@@ -16,7 +16,7 @@ const Main = (user) => {
                 />
                 <Route
                     path="auth/*"
-                    element={<AuthPage user={user}/>}
+                    element={<AuthPage user={user} setUser={setUser}/>}
                 />
                 <Route
                     path="student/*"
