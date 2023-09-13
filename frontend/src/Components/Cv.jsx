@@ -31,10 +31,10 @@ function Cv({user, setCv}){
 
 	return (
 		<div>
-			{user.cv && (
+			{user.cvFile && (
 				<div>
 					<h2>CV:</h2>
-					<p>{user.cv.name}</p>
+					<p>{user.cvFile.name}</p>
 					<button onClick={handleDeletePdf}>Delete</button>
 				</div>
 			) || (
