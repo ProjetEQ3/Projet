@@ -1,9 +1,11 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
 import cal.projeteq3.glucose.mapper.ManagerMapper;
 import cal.projeteq3.glucose.model.Manager;
 import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +18,19 @@ import java.util.Optional;
 public class ManagerService {
 
     private final ManagerRepository managerRepository;
-    private final EmployerRepository employerRepository;
-    private final StudentRepository studentRepository;
-    private final ManagerMapper managerMapper;
+    private final JobOfferRepository jobOfferRepository;
 
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository, EmployerRepository employerRepository, StudentRepository studentRepository, ManagerMapper managerMapper) {
+    public ManagerService(ManagerRepository managerRepository, JobOfferRepository jobOfferRepository) {
         this.managerRepository = managerRepository;
-        this.employerRepository = employerRepository;
-        this.studentRepository = studentRepository;
-        this.managerMapper = managerMapper;
+        this.jobOfferRepository = jobOfferRepository;
     }
 
     // database operations here
 
     public ManagerDTO createGestionnaire(Manager manager) {
-        return managerMapper.toDTO(managerRepository.save(manager));
+        return managerRepository.save(manager).toDTO();
     }
 
     public List<Manager> getAllGestionnaires() {
@@ -61,6 +59,10 @@ public class ManagerService {
 
     public void deleteGestionnaire(Long id) {
         managerRepository.deleteById(id);
+    }
+
+    public List<JobOfferDTO> getAllJobOffer() {
+        return jobOfferRepository.findAll().stream().map(JobOffer::toDTO).toList();
     }
 
 }

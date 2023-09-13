@@ -14,4 +14,10 @@ public class ManagerDTO extends UserDTO{
     private String matricule;
     private String phoneNumber;
 
+    public ManagerDTO(Long id, String firstName, String lastName, String email, String matricule, String phoneNumber) {
+        super(id, firstName, lastName, email);
+        this.matricule = matricule;
+        this.phoneNumber = phoneNumber;
+    }
+
 }
