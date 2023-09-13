@@ -8,6 +8,7 @@ import {useState} from "react";
 const EmployerPage = () => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const handleSelectOffer = (offer) => {
+
         setSelectedOffer(offer);
     }
 
@@ -89,7 +90,7 @@ const EmployerPage = () => {
                             <div className="col-6">
                                 {
                                     testOffre.map((offer, index) => (
-                                        <ShortJobOffer key={index} jobOffer={offer} onClick={handleSelectOffer(offer)}/>
+                                        <ShortJobOffer key={index} jobOffer={offer}/>
                                     ))
                                 }
                                 <div className="row m-2">
