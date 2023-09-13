@@ -2,12 +2,9 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
-import cal.projeteq3.glucose.mapper.ManagerMapper;
 import cal.projeteq3.glucose.model.Manager;
-import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
