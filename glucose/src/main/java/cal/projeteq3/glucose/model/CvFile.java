@@ -24,4 +24,12 @@ public final class CvFile{
 	@OneToOne(mappedBy = "cv", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Student student;
 
+	private State state;
+
+	public CvFile(String fileName, byte[] fileData){
+		this.fileName = fileName;
+		this.fileData = fileData;
+		this.state = State.PENDING;
+	}
+
 }

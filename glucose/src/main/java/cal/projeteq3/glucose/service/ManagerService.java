@@ -1,8 +1,12 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
+import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.model.Manager;
+import cal.projeteq3.glucose.model.State;
+import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +20,14 @@ public class ManagerService {
 
     private final ManagerRepository managerRepository;
     private final JobOfferRepository jobOfferRepository;
+    private final CvRepository cvRepository;
 
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository, JobOfferRepository jobOfferRepository) {
+    public ManagerService(ManagerRepository managerRepository, JobOfferRepository jobOfferRepository, CvRepository cvRepository) {
         this.managerRepository = managerRepository;
         this.jobOfferRepository = jobOfferRepository;
+        this.cvRepository = cvRepository;
     }
 
     // database operations here
@@ -61,5 +67,15 @@ public class ManagerService {
     public List<JobOfferDTO> getAllJobOffer() {
         return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
     }
+
+    public JobOfferDTO getJobOfferByID(Long id) {
+        return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
+    }
+
+    public List<CvFileDTO> getPendingCv(){
+        return cvRepository.findAllByState(State.PENDING).stream().map(CvFileDTO::new).toList();
+    }
+
+
 
 }
