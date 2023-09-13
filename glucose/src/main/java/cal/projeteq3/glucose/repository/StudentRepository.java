@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    // query methods here
+    public Student findByEmail(String email);
+    public Student findByMatricule(String matricule);
 
 }

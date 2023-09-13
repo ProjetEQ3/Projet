@@ -1,4 +1,4 @@
-import HeadTemplate from "./HeadTemplate";
+import Header from "../layout/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "./ShortJobOffer";
@@ -68,7 +68,7 @@ const EmployerPage = () => {
     const user = "foo";
     return (
         <div className="bg-light">
-            <HeadTemplate/>
+            <Header/>
             <div className="container-fluid px-5 py-2">
                 <div className="row text-center">
                     <div className="col-12">

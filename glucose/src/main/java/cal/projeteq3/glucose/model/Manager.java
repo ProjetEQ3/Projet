@@ -15,15 +15,4 @@ public class Manager extends User {
     private String matricule;
     private String phoneNumber;
 
-    public ManagerDTO toDTO() {
-        return new ManagerDTO(
-                this.getUserID(),
-                this.getFirstName(),
-                this.getLastName(),
-                this.getEmail(),
-                this.getMatricule(),
-                this.getPhoneNumber()
-        );
-    }
-
 }

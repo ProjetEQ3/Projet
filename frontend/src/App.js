@@ -1,10 +1,14 @@
 import './App.css'
-import HeadTemplate from "./Components/HeadTemplate"
+import Header from "./Components/layout/Header"
 import axios from "axios"
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
+import {useState} from "react";
+import User from "./model/User";
+import Footer from "./Components/layout/Footer";
 
 function App(){
+	const [user, setUser] = useState(new User())
 	return (
 		<>
 			<ToastContainer
@@ -19,7 +23,8 @@ function App(){
 				theme="colored"
 			/>
 			<div className="App">
-				<HeadTemplate/>
+				<Header/>
+				<Footer/>
 			</div>
 		</>
 	)

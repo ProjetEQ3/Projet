@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.dto;
 
+import cal.projeteq3.glucose.model.Manager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,12 @@ public class ManagerDTO extends UserDTO{
         super(id, firstName, lastName, email);
         this.matricule = matricule;
         this.phoneNumber = phoneNumber;
+    }
+
+    public ManagerDTO(Manager manager){
+        super(manager.getUserID(), manager.getFirstName(), manager.getLastName(), manager.getEmail());
+        this.matricule = manager.getMatricule();
+        this.phoneNumber = manager.getPhoneNumber();
     }
 
 }

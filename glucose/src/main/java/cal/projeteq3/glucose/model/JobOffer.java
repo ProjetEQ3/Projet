@@ -50,21 +50,21 @@ public class JobOffer {
 		this.duration = duration;
 	}
 
-	public JobOfferDTO toDTO() {
-		return new JobOfferDTO(
-				this.id,
-				this.employer.toDTO(),
-				this.state,
-				this.title,
-				this.department,
-				this.description,
-				this.location,
-				this.salary,
-				this.startDate,
-				this.duration,
-				this.hoursPerWeek,
-				this.expirationDate
-		);
-	}
+//	public JobOfferDTO toDTO() {
+//		return new JobOfferDTO(
+//				this.id,
+//				this.employer.getUserID(),
+//				this.state,
+//				this.title,
+//				this.department,
+//				this.description,
+//				this.location,
+//				this.salary,
+//				this.startDate,
+//				this.duration,
+//				this.hoursPerWeek,
+//				this.expirationDate
+//		);
+//	}
 }
 

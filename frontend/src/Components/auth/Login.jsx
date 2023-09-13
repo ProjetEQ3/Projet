@@ -1,8 +1,8 @@
 import {useState} from "react"
 import {NavLink} from "react-router-dom"
 import {toast} from "react-toastify"
-import serverIp, {axiosInstance} from "../App"
-import User from "../model/User";
+import serverIp, {axiosInstance} from "../../App"
+import User from "../../model/User";
 
 const Login = ({user, setToken}) => {
 	user = new User();
