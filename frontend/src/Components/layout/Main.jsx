@@ -3,33 +3,34 @@ import Home from "../page/Home";
 import AuthPage from "../page/AuthPage";
 import StudentPage from "../page/StudentPage";
 import ManagerPage from "../page/ManagerPage";
-import EmployerPage from "../employer/EmployerPage";
+import EmployerPage from "../page/EmployerPage";
+import PageNotFound from "../page/PageNotFound";
 
-const Main = () => {
+const Main = (user) => {
     return (
         <main className='App-main'>
             <Routes>
                 <Route
                     path="/"
-                    element={<Home/>}
+                    element={<Home user={user}/>}
                 />
                 <Route
                     path="auth/*"
-                    element={<AuthPage/>}
+                    element={<AuthPage user={user}/>}
                 />
                 <Route
-                    path="etudiant/*"
-                    element={<StudentPage/>}
+                    path="student/*"
+                    element={<StudentPage user={user}/>}
                 />
                 <Route
                     path="manager/*"
-                    element={<ManagerPage/>}
+                    element={<ManagerPage user={user}/>}
                 />
                 <Route
-                    path="clientManager"
-                    element={<EmployerPage/>}
+                    path="employer/*"
+                    element={<EmployerPage user={user}/>}
                 />
-                {/*<Route path="*" element={<PageNotFound/>}/>*/}
+                {<Route path="*" element={<PageNotFound/>}/>}
             </Routes>
         </main>
     )

@@ -1,9 +1,12 @@
 import Header from "../layout/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import ShortJobOffer from "./ShortJobOffer";
+import ShortJobOffer from "../employer/ShortJobOffer";
+import FullJobOffer from "../employer/FullJobOffer";
+import {useState} from "react";
 
-const EmployerPage = () => {
+const EmployerPage = ({user}) => {
+    const [selectedOffer, setSelectedOffer] = useState(null);
     const testOffre = [{
         title: "Offre de stage 1",
         state: "Open",
@@ -33,7 +36,7 @@ const EmployerPage = () => {
             state: "Submitted",
             department: "Informatique",
             location: "Montréal",
-            description: "Description de l'offre de stage 1",
+            description: "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite collaboration avec notre équipe de développement pour contribuer au développement, à la maintenance et à l'amélioration de nos produits logiciels.",
             salary: "20",
             hourPerWeek: "40",
             startDate: "2023-01-01",
@@ -63,9 +66,7 @@ const EmployerPage = () => {
             startDate: "2023-01-01",
             duration: "12 semaines",
             expireDate: "2022-12-31",
-        }]
-
-    const user = "foo";
+        }];
     return (
         <div className="bg-light">
             <Header/>
@@ -90,12 +91,7 @@ const EmployerPage = () => {
                                 </div>
                             </div>
                             <div className="col-6">
-                                <div className="row m-2">
-                                    <div className="col-12 border border-danger">
-                                        <h4 className="text-dark fw-light">Offre de stage 2</h4>
-                                        <p className="text-dark fw-light">Description de l'offre de stage 2</p>
-                                    </div>
-                                </div>
+                                <FullJobOffer jobOffer={testOffre[2]}/>
                             </div>
                         </div>
                     </div>

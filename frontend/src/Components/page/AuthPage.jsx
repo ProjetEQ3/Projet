@@ -1,4 +1,4 @@
-const AuthPage = () => {
+const AuthPage = ({user}) => {
     return (
         <div>
             Auth
