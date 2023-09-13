@@ -5,6 +5,7 @@ import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import {useState} from "react";
 import User from "./model/User";
+import Footer from "./Components/layout/Footer";
 
 function App(){
 	const [user, setUser] = useState(new User())
@@ -23,6 +24,7 @@ function App(){
 			/>
 			<div className="App">
 				<Header/>
+				<Footer/>
 			</div>
 		</>
 	)
