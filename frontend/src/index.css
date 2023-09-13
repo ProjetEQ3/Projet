@@ -19,7 +19,7 @@ code {
 
 .text-ose {
   --bs-text-opacity: 1;
-  color: var(--ose-color);
+  color: var(--ose-color) !important;
 }
 
 .bg-ose {
