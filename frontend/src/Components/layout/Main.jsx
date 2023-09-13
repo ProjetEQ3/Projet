@@ -3,7 +3,8 @@ import Home from "../page/Home";
 import AuthPage from "../page/AuthPage";
 import StudentPage from "../page/StudentPage";
 import ManagerPage from "../page/ManagerPage";
-import EmployerPage from "../employer/EmployerPage";
+import EmployerPage from "../page/EmployerPage";
+import PageNotFound from "../page/PageNotFound";
 
 const Main = () => {
     return (
@@ -18,7 +19,7 @@ const Main = () => {
                     element={<AuthPage/>}
                 />
                 <Route
-                    path="etudiant/*"
+                    path="student/*"
                     element={<StudentPage/>}
                 />
                 <Route
@@ -26,10 +27,10 @@ const Main = () => {
                     element={<ManagerPage/>}
                 />
                 <Route
-                    path="clientManager"
+                    path="employer/*"
                     element={<EmployerPage/>}
                 />
-                {/*<Route path="*" element={<PageNotFound/>}/>*/}
+                {<Route path="*" element={<PageNotFound/>}/>}
             </Routes>
         </main>
     )

@@ -26,7 +26,7 @@ function App(){
 			/>
 			<div className="App">
 				<BrowserRouter>
-					<Header/>
+					<Header user={user}/>
 					<Main/>
 					<Footer/>
 				</BrowserRouter>
