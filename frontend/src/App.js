@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import {useState} from "react";
 import User from "./model/User";
 import Footer from "./Components/layout/Footer";
+import Main from "./Components/layout/Main";
+import {BrowserRouter} from "react-router-dom";
 
 function App(){
 	const [user, setUser] = useState(new User())
@@ -23,8 +25,11 @@ function App(){
 				theme="colored"
 			/>
 			<div className="App">
-				<Header/>
-				<Footer/>
+				<BrowserRouter>
+					<Header/>
+					<Main/>
+					<Footer/>
+				</BrowserRouter>
 			</div>
 		</>
 	)
