@@ -14,8 +14,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,9 +76,18 @@ public class StudentServiceTest {
 
         //Arrange
 
+        Long id = 1L;
+        Student student = new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null);
+        when(studentRepository.findById(id)).thenReturn(Optional.of(student));
+
         //Act
 
+        Optional<StudentDTO> studentDTO = studentService.getStudentByID(id);
+
         //Assert
+
+        assertTrue(studentDTO.isPresent());
+        verify(studentRepository, times(1)).findById(id);
 
     }
 
@@ -96,7 +107,11 @@ public class StudentServiceTest {
 
         //Arrange
 
+
+
         //Act
+
+
 
         //Assert
 
