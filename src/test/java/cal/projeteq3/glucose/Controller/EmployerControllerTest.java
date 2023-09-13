@@ -34,7 +34,7 @@ public class EmployerControllerTest {
         ResponseEntity<EmployerDTO> responseEntity = employerController.addEmployer(validEmployer);
 
         // Assert
-        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
     }
 
