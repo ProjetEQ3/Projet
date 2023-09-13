@@ -6,7 +6,6 @@ import lombok.*;
 
 @MappedSuperclass
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class User {
@@ -17,6 +16,8 @@ public abstract class User {
 
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
     private String password;
 

@@ -21,7 +21,7 @@ public class EmployerDTO extends UserDTO {
         super(employer.getUserID(), employer.getFirstName(), employer.getLastName(), employer.getEmail());
         this.organisationName = employer.getOrganisationName();
         this.organisationPhone = employer.getOrganisationPhone();
-        this.jobOffers = employer.getJobOffer().stream().map(JobOfferDTO::new).toList();
+        this.jobOffers = employer.getJobOffer() == null ? null : employer.getJobOffer().stream().map(JobOfferDTO::new).toList();
     }
 
     public Employer toEntity() {
