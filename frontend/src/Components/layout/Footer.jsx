@@ -7,7 +7,7 @@ function Footer() {
                 <div className="row">
                     <div className="col-12 text-center">
                         <p className="lead">GlucOSE - Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
-                        <p className="lead">© 2021 - Tous droits réservés.</p>
+                        <p className="lead">© 2023 - Tous droits réservés.</p>
                     </div>
                 </div>
             </div>

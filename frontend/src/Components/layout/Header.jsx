@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../logo.png";
 
-function Header() {
+function Header({user}) {
     return (
         <header className="App-header">
             <div className="container-fluid">
@@ -14,11 +14,14 @@ function Header() {
                             </div>
                         </a>
                         <p className="lead">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
-                        <div className="align-self-start d-flex m-3">
-                            <a className="text-light text-decoration-none m-2 h6" href="/connexion">Connexion</a>
-                            <div className="vr"></div>
-                            <a className="text-light text-decoration-none m-2 h6" href="/register">Inscription</a>
-                        </div>
+                        {user.isLoggedIn ?
+                            <div className="m-3"><h2 className={"h2"}>{user.firstName + " " + user.lastName}</h2></div> :
+                            <div className="align-self-start d-flex m-3">
+                                <a className="text-light text-decoration-none m-2 h6" href="/login">Connexion</a>
+                                <div className="vr"></div>
+                                <a className="text-light text-decoration-none m-2 h6" href="/register">Inscription</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
