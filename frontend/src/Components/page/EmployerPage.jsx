@@ -1,4 +1,3 @@
-import Header from "../layout/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "../employer/ShortJobOffer";
@@ -69,11 +68,10 @@ const EmployerPage = ({user}) => {
         }];
     return (
         <div className="bg-light">
-            <Header/>
             <div className="container-fluid px-5 py-2">
                 <div className="row text-center">
                     <div className="col-12">
-                        <h2 className="text-dark fw-light">Bonjour {user}!</h2>
+                        <h2 className="text-dark fw-light">Bonjour {user.firstName + " " + user.lastName} !</h2>
                     </div>
                 </div>
                 <div className="row">

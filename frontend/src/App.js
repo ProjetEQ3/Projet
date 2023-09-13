@@ -27,7 +27,7 @@ function App(){
 			<div className="App">
 				<BrowserRouter>
 					<Header user={user}/>
-					<Main user={user}/>
+					<Main user={user} setUser={setUser}/>
 					<Footer/>
 				</BrowserRouter>
 			</div>

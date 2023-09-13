@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Header from '../layout/Header';
 import './RegistrationForm.css'
-import StudentForm from "./StudentForm";
-import EmployerForm from "./EmployerForm";
+import RegisterStudentForm from "./RegisterStudentForm";
+import RegisterEmployerForm from "./RegisterEmployerForm";
 
 const RegistrationForm = () => {
     const [empActive, setEmpActive] = useState(false);
@@ -21,18 +21,17 @@ const RegistrationForm = () => {
 
     return (
         <div className="bg-light">
-            <Header/>
             <div className="m-2"></div>
             <div className="container bg-light">
                 <div className="row">
-                    <div className="col-8 mx-auto btn-group btn-group-lg">
+                    <div className="mx-auto btn-group btn-group-lg">
                         <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
                         <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
                     </div>
                 </div>
                 {
                     studActive ?
-                        <StudentForm/> : <EmployerForm/>
+                        <RegisterStudentForm/> : <RegisterEmployerForm/>
                 }
             </div>
         </div>
