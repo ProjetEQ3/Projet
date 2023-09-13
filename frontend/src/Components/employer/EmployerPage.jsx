@@ -1,4 +1,4 @@
-import HeadTemplate from "./HeadTemplate";
+import HeadTemplate from "../fixedElements/HeadTemplate";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "./ShortJobOffer";

@@ -1,10 +1,13 @@
 import './App.css'
-import HeadTemplate from "./Components/HeadTemplate"
+import HeadTemplate from "./Components/fixedElements/HeadTemplate"
 import axios from "axios"
 import {ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
+import {useState} from "react";
+import User from "./model/User";
 
 function App(){
+	const [user, setUser] = useState(new User())
 	return (
 		<>
 			<ToastContainer

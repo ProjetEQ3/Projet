@@ -1,8 +1,13 @@
 import React from "react";
 import {useState} from "react";
-import {axiosInstance} from "../App";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import Loading from "../util/Loading";
 
 const StudentForm = () => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
@@ -21,7 +26,8 @@ const StudentForm = () => {
     const [programValid, setProgramValid] = useState(true);
 
     const registerStudent = async () => {
-        const res = await axiosInstance.post('/student/register',
+        setIsLoading(true);
+        axiosInstance.post('/student/register',
             {
                 lastName: formData.lastName,
                 firstName: formData.firstName,
@@ -30,8 +36,13 @@ const StudentForm = () => {
                 matricule: formData.matricule,
                 program: formData.program,
             }
+        ).then(() => {
+            setIsLoading(false)
+            toast.success('Votre compte a été créé avec succès');
+            navigate('/')
+        }).catch(() =>
+            setIsLoading(false)
         )
-        return res.data
     }
 
     const handleChanges = (e) => {
@@ -113,6 +124,8 @@ const StudentForm = () => {
 
     return (
         <div className="row align-item-center">
+            {isLoading ? <Loading/> :
+
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -154,7 +167,7 @@ const StudentForm = () => {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>}
         </div>
     )
 }

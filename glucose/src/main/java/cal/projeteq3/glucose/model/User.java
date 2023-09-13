@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model;
 
+import cal.projeteq3.glucose.dto.UserDTO;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,5 +29,14 @@ public abstract class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public UserDTO toDTO() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(this.getUserID());
+        userDTO.setLastName(this.getLastName());
+        userDTO.setFirstName(this.getFirstName());
+        userDTO.setEmail(this.getEmail());
+        return userDTO;
     }
 }
