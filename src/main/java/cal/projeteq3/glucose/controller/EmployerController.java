@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ public class EmployerController {
 
     @PostMapping("/register")
     public ResponseEntity<EmployerDTO> addEmployer(@RequestBody Employer employer) {
+
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(S);
+
         try {
             Validation.validateEmploye(employer);
         } catch (ValidationException e) {

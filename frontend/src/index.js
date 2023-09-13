@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RegistrationForm from "./Components/auth/RegistrationForm";
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Login from "./Components/auth/Login";
 import EmployerPage from "./Components/employer/EmployerPage";
 
