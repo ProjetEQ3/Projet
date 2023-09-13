@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../logo.png";
 
-function HeadTemplate() {
+function Header() {
     return (
         <header className="App-header">
             <div className="container-fluid">
@@ -25,4 +25,4 @@ function HeadTemplate() {
         </header>
     )
 }
-export default HeadTemplate;
+export default Header;
