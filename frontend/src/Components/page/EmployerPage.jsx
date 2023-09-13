@@ -1,8 +1,8 @@
 import Header from "../layout/Header";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import ShortJobOffer from "./ShortJobOffer";
-import FullJobOffer from "./FullJobOffer";
+import ShortJobOffer from "../employer/ShortJobOffer";
+import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
 
 const EmployerPage = () => {
