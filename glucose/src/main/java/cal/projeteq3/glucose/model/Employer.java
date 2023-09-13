@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model;
 
+import cal.projeteq3.glucose.dto.EmployerDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,18 @@ public class Employer extends User {
         this.organisationPhone = organisationPhone;
         this.jobOffer = jobOffer;
     }
+
+    public EmployerDTO toDTO() {
+        EmployerDTO employerDTO = new EmployerDTO();
+
+        employerDTO.setId(this.getUserID());
+        employerDTO.setLastName(this.getLastName());
+        employerDTO.setFirstName(this.getFirstName());
+        employerDTO.setEmail(this.getEmail());
+        employerDTO.setOrganisationName(this.getOrganisationName());
+        employerDTO.setOrganisationPhone(this.getOrganisationPhone());
+
+        return employerDTO;
+    }
+
 }

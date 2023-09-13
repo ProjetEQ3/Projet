@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model;
 
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,6 +48,23 @@ public class JobOffer {
 		this.expirationDate = expirationDate;
 		this.salary = salary;
 		this.duration = duration;
+	}
+
+	public JobOfferDTO toDTO() {
+		return new JobOfferDTO(
+				this.id,
+				this.employer.toDTO(),
+				this.state,
+				this.title,
+				this.department,
+				this.description,
+				this.location,
+				this.salary,
+				this.startDate,
+				this.duration,
+				this.hoursPerWeek,
+				this.expirationDate
+		);
 	}
 }
 

@@ -4,7 +4,6 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
-import cal.projeteq3.glucose.mapper.StudentMapper;
 import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.repository.StudentRepository;
@@ -19,28 +18,26 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private final StudentMapper studentMapper;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.studentMapper = studentMapper;
     }
 
     // database operations here
 
     public StudentDTO createStudent(Student student) {
-        return studentMapper.toDTO(studentRepository.save(student));
+        return studentRepository.save(student).toDTO();
     }
 
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-        return students.stream().map(studentMapper::toDTO).collect(Collectors.toList());
+        return students.stream().map(Student::toDTO).collect(Collectors.toList());
     }
 
     public Optional<StudentDTO> getStudentByID(Long id) {
         Optional<Student> studentOptional = studentRepository.findById(id);
-        return studentOptional.map(studentMapper::toDTO);
+        return studentOptional.map(Student::toDTO);
     }
 
     public StudentDTO updateStudent(Long id, StudentDTO updatedStudent) {
@@ -55,7 +52,7 @@ public class StudentService {
             student.setMatricule(updatedStudent.getMatricule());
             student.setDepartment(updatedStudent.getDepartment());
 
-            return studentMapper.toDTO(studentRepository.save(student));
+            return studentRepository.save(student).toDTO();
         }
 
         throw new StudentNotFoundException(id);
@@ -78,7 +75,7 @@ public class StudentService {
           .fileData(cvFile.getFileData())
           .build();
         student.setCv(cv);
-        return studentMapper.toDTO(studentRepository.save(student));
+        return studentRepository.save(student).toDTO();
     }
 
     public void deleteCv(Long studentId){

@@ -2,7 +2,6 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.mapper.EmployerMapper;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.JobOffer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
@@ -19,29 +18,27 @@ public class EmployerService {
 
     private final JobOfferRepository jobOfferRepository;
     private final EmployerRepository employerRepository;
-    private final EmployerMapper employerMapper;
 
     @Autowired
-    public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository, EmployerMapper employerMapper) {
+    public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository) {
         this.jobOfferRepository = jobOfferRepository;
         this.employerRepository = employerRepository;
-        this.employerMapper = employerMapper;
     }
 
     // database operations here
 
     public EmployerDTO createEmployer(Employer employer) {
-        return employerMapper.toDTO(employerRepository.save(employer));
+        return employerRepository.save(employer).toDTO();
     }
 
     public List<EmployerDTO> getAllEmployers() {
         List<Employer> employers = employerRepository.findAll();
-        return employers.stream().map(employerMapper::toDTO).collect(Collectors.toList());
+        return employers.stream().map(Employer::toDTO).collect(Collectors.toList());
     }
 
     public Optional<EmployerDTO> getEmployerByID(Long id) {
         Optional<Employer> employerOptional = employerRepository.findById(id);
-        return employerOptional.map(employerMapper::toDTO);
+        return employerOptional.map(Employer::toDTO);
     }
 
     public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer) {
@@ -56,7 +53,7 @@ public class EmployerService {
             employer.setOrganisationName(updatedEmployer.getOrganisationName());
             employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
-            return employerMapper.toDTO(employerRepository.save(employer));
+            return employerRepository.save(employer).toDTO();
         }
 
         throw new EmployerNotFoundException(id);
