@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.ManagerDTO;
+import cal.projeteq3.glucose.mapper.ManagerMapper;
 import cal.projeteq3.glucose.model.Manager;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -16,19 +18,21 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final EmployerRepository employerRepository;
     private final StudentRepository studentRepository;
+    private final ManagerMapper managerMapper;
 
 
     @Autowired
-    public ManagerService(ManagerRepository managerRepository, EmployerRepository employerRepository, StudentRepository studentRepository) {
+    public ManagerService(ManagerRepository managerRepository, EmployerRepository employerRepository, StudentRepository studentRepository, ManagerMapper managerMapper) {
         this.managerRepository = managerRepository;
         this.employerRepository = employerRepository;
         this.studentRepository = studentRepository;
+        this.managerMapper = managerMapper;
     }
 
     // database operations here
 
-    public Manager createGestionnaire(Manager manager) {
-        return managerRepository.save(manager);
+    public ManagerDTO createGestionnaire(Manager manager) {
+        return managerMapper.toDTO(managerRepository.save(manager));
     }
 
     public List<Manager> getAllGestionnaires() {
