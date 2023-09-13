@@ -26,7 +26,7 @@ public class EmployerDTO extends UserDTO {
 
     public Employer toEntity() {
         return Employer.builder()
-                .userID(this.getUserID())
+                .id(this.getId())
                 .firstName(this.getFirstName())
                 .lastName(this.getLastName())
                 .email(this.getEmail())

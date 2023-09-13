@@ -61,6 +61,7 @@ public class EmployerControllerTest {
     void Register_Missing_LastName(){
 //        Arrange
         Employer invalidEmployer = new Employer(
+                1,
                 "Michel",
                 "",
                 "test@test.com",
