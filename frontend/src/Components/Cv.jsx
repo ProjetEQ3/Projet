@@ -1,23 +1,40 @@
-function Cv({cv, setCv}){
+import serverIp, {axiosInstance} from "../App";
+import {toast} from "react-toastify";
+
+function Cv({user, setCv}){
 	const handlePdfUpload = (e) => {
 		const file = e.target.files[0]
 		if(file && file.type === 'application/pdf'){
-			setCv(file)
+			axiosInstance.post(serverIp + '/student/cv', user.id)
+				.then(() => {
+					toast.success('CV téléversé')
+					setCv(file)
+				})
+				.catch(() => {
+					toast.error('Erreur lors du téléversement du CV')
+				})
 		}else{
 			alert('Veuillez sélectionner un fichier PDF valide.')
 		}
 	}
 
 	const handleDeletePdf = () => {
-		setCv(null)
+		axiosInstance.delete(serverIp + '/student/cv', user.id)
+			.then(() => {
+				toast.success('CV supprimé')
+				setCv(null)
+			})
+			.catch(() => {
+				toast.error('Erreur lors de la suppression du CV')
+			})
 	}
 
 	return (
 		<div>
-			{cv && (
+			{user.cv && (
 				<div>
 					<h2>CV:</h2>
-					<p>{cv.name}</p>
+					<p>{user.cv.name}</p>
 					<button onClick={handleDeletePdf}>Delete</button>
 				</div>
 			) || (

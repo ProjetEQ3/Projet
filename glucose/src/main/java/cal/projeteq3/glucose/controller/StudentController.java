@@ -42,4 +42,16 @@ public class StudentController {
         }
     }
 
+    @DeleteMapping("/cv/{studentId}")
+    public ResponseEntity<Void> deleteCv(@PathVariable Long studentId){
+        try {
+            studentService.deleteCv(studentId);
+            return ResponseEntity.noContent().build();
+        }catch(ValidationException e){
+            return ResponseEntity.badRequest().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
