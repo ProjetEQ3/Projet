@@ -2,12 +2,9 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
-import cal.projeteq3.glucose.mapper.ManagerMapper;
 import cal.projeteq3.glucose.model.Manager;
-import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +27,7 @@ public class ManagerService {
     // database operations here
 
     public ManagerDTO createGestionnaire(Manager manager) {
-        return managerRepository.save(manager).toDTO();
+        return new ManagerDTO(managerRepository.save(manager));
     }
 
     public List<Manager> getAllGestionnaires() {
@@ -62,7 +59,7 @@ public class ManagerService {
     }
 
     public List<JobOfferDTO> getAllJobOffer() {
-        return jobOfferRepository.findAll().stream().map(JobOffer::toDTO).toList();
+        return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
     }
 
 }

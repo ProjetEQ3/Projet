@@ -22,17 +22,4 @@ public class Student extends User {
         this.cv = cvFile;
     }
 
-    public StudentDTO toDTO() {
-        StudentDTO studentDTO = new StudentDTO();
-
-        studentDTO.setId(this.getUserID());
-        studentDTO.setLastName(this.getLastName());
-        studentDTO.setFirstName(this.getFirstName());
-        studentDTO.setEmail(this.getEmail());
-        studentDTO.setMatricule(this.getMatricule());
-        studentDTO.setDepartment(this.getDepartment());
-
-        return studentDTO;
-    }
-
 }

@@ -28,17 +28,17 @@ public class EmployerService {
     // database operations here
 
     public EmployerDTO createEmployer(Employer employer) {
-        return employerRepository.save(employer).toDTO();
+        return new EmployerDTO(employerRepository.save(employer));
     }
 
     public List<EmployerDTO> getAllEmployers() {
         List<Employer> employers = employerRepository.findAll();
-        return employers.stream().map(Employer::toDTO).collect(Collectors.toList());
+        return employers.stream().map(EmployerDTO::new).collect(Collectors.toList());
     }
 
     public Optional<EmployerDTO> getEmployerByID(Long id) {
         Optional<Employer> employerOptional = employerRepository.findById(id);
-        return employerOptional.map(Employer::toDTO);
+        return employerOptional.map(EmployerDTO::new);
     }
 
     public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer) {
@@ -53,7 +53,7 @@ public class EmployerService {
             employer.setOrganisationName(updatedEmployer.getOrganisationName());
             employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
-            return employerRepository.save(employer).toDTO();
+            return new EmployerDTO(employerRepository.save(employer));
         }
 
         throw new EmployerNotFoundException(id);

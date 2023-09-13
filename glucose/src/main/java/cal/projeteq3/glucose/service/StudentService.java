@@ -27,17 +27,17 @@ public class StudentService {
     // database operations here
 
     public StudentDTO createStudent(Student student) {
-        return studentRepository.save(student).toDTO();
+        return new StudentDTO(studentRepository.save(student));
     }
 
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
-        return students.stream().map(Student::toDTO).collect(Collectors.toList());
+        return students.stream().map(StudentDTO::new).collect(Collectors.toList());
     }
 
     public Optional<StudentDTO> getStudentByID(Long id) {
         Optional<Student> studentOptional = studentRepository.findById(id);
-        return studentOptional.map(Student::toDTO);
+        return studentOptional.map(StudentDTO::new);
     }
 
     public StudentDTO updateStudent(Long id, StudentDTO updatedStudent) {
@@ -52,7 +52,7 @@ public class StudentService {
             student.setMatricule(updatedStudent.getMatricule());
             student.setDepartment(updatedStudent.getDepartment());
 
-            return studentRepository.save(student).toDTO();
+            return new StudentDTO(studentRepository.save(student));
         }
 
         throw new StudentNotFoundException(id);
@@ -75,7 +75,7 @@ public class StudentService {
           .fileData(cvFile.getFileData())
           .build();
         student.setCv(cv);
-        return studentRepository.save(student).toDTO();
+        return new StudentDTO(studentRepository.save(student));
     }
 
     public void deleteCv(Long studentId){
