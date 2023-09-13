@@ -1,14 +1,25 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import {useState} from "react";
 
 const ShortJobOffer = ({ jobOffer }) => {
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+
     return (
-        <div className="row m-2">
+        <div className={`row ${!isHovered? 'm-2':'m-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-8">
-                        <h4 className="text-dark fw-light">{jobOffer.title}</h4>
-                        <p className="text-dark fw-light">{jobOffer.department}</p>
+                        <h4 className="text-dark fw-light pt-1">{jobOffer.title}</h4>
+                        <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-between">
                         <div className="mx-auto">
