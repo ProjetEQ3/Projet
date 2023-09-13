@@ -121,15 +121,16 @@ public class ManagerService {
     }
 
     public List<CvFileDTO> getAllCvFileByStudent(Long id){
-        return cvRepository.findAllByStudent(id).stream().map(CvFileDTO::new).toList();
+        Student student = studentRepository.findById(id).orElseThrow();
+        return cvRepository.findAllByStudent(student).stream().map(CvFileDTO::new).toList();
     }
 
     public List<CvFileDTO> getAllCvFileByStudentMatricule(String matricule){
-        return cvRepository.findAllByStudent(studentRepository.findByMatricule(matricule).getUserID()).stream().map(CvFileDTO::new).toList();
+        return cvRepository.findAllByStudent(studentRepository.findByMatricule(matricule)).stream().map(CvFileDTO::new).toList();
     }
 
     public CvFileDTO getCvFileByStudentAndFileName(String matricule, String fileName){
-        return new CvFileDTO(cvRepository.findByStudentAndFileName(studentRepository.findByMatricule(matricule).getUserID(), fileName));
+        return new CvFileDTO(cvRepository.findByStudentAndFileName(studentRepository.findByMatricule(matricule), fileName));
     }
 
     public void deleteCvFile(Long id){
@@ -138,7 +139,7 @@ public class ManagerService {
 
     public void deleteAllCvFileByStudendMatricule(String matricule){
         Student student = studentRepository.findByMatricule(matricule);
-        cvRepository.deleteAllByStudent(student.getUserID());
+        cvRepository.deleteAllByStudent(student);
     }
 
 
