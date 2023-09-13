@@ -77,7 +77,7 @@ public class ManagerService {
     }
 
 
-//    CV
+//    CV File
     public CvFileDTO getCvByID(Long id){
         return new CvFileDTO(cvRepository.findById(id).orElseThrow());
     }
@@ -126,6 +126,10 @@ public class ManagerService {
 
     public List<CvFileDTO> getAllCvFileByStudentMatricule(String matricule){
         return cvRepository.findAllByStudent(studentRepository.findByMatricule(matricule).getUserID()).stream().map(CvFileDTO::new).toList();
+    }
+
+    public CvFileDTO getCvFileByStudentAndFileName(String matricule, String fileName){
+        return new CvFileDTO(cvRepository.findByStudentAndFileName(studentRepository.findByMatricule(matricule).getUserID(), fileName));
     }
 
     public void deleteCvFile(Long id){
