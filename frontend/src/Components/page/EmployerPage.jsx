@@ -5,7 +5,7 @@ import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
 
-const EmployerPage = () => {
+const EmployerPage = ({user}) => {
     const [selectedOffer, setSelectedOffer] = useState(null);
     const testOffre = [{
         title: "Offre de stage 1",
@@ -66,9 +66,7 @@ const EmployerPage = () => {
             startDate: "2023-01-01",
             duration: "12 semaines",
             expireDate: "2022-12-31",
-        }]
-
-    const user = "foo";
+        }];
     return (
         <div className="bg-light">
             <Header/>

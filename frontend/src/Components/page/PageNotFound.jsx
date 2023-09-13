@@ -1,6 +1,6 @@
 import React from "react";
 
-const PageNotFound = () => {
+const PageNotFound = ({user}) => {
     return (
         <div>
             <h1>Page Not Found</h1>
