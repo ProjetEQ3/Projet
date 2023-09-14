@@ -29,7 +29,8 @@ public final class CvFile{
 	public CvFile(String fileName, byte[] fileData, Student student){
 		this.fileName = fileName;
 		this.fileData = fileData;
-		this.state = State.PENDING;
+		this.state = State.SUBMITTED;
+		this.student = student;
 	}
 
 }
