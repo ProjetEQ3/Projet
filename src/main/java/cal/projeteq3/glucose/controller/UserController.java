@@ -28,10 +28,13 @@ public class UserController {
 
         try {
             Validation.validateLogin(loginDTO);
+            System.out.println("LoginDTO is valid");
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.userService.authenticateUser(loginDTO));
         } catch (ValidationException e){
+            System.out.print("LoginDTO is not valid");
             return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
         } catch (Exception e) {
+            System.out.print("LoginDTO is not valid2");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
     }
