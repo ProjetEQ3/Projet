@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.validation;
 
 import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.dto.LoginDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Employer;
@@ -12,6 +13,14 @@ import static cal.projeteq3.glucose.validation.ValidationPattern.*;
 public final class Validation{
 	private static final int MIN_AGE = 18;
 	private static final int MAX_AGE = 100;
+
+//	Validation of exceptions
+
+	private static void exception(String message){
+		throw new ValidationException(message);
+	}
+
+//	Validation of attributes
 
 	public static void validateEmail(String email){
 		if(email.matches(EMAIL_PATTERN.toString()))
@@ -93,9 +102,20 @@ public final class Validation{
 			exception(ValidationMessage.SERIAL_MESSAGE.toString());
 	}
 
-	private static void exception(String message){
-		throw new ValidationException(message);
+	private static void validateOrgName(String organisationName) {
+		if(organisationName.matches(ORGANISATION_NAME_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.ORGANISATION_NAME_MESSAGE.toString());
 	}
+
+	private static void validateMatricule(String matricule) {
+		if(matricule.matches(MATRICULE_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.MATRICULE_MESSAGE.toString());
+	}
+
+
+//	Validation of objects
 
 	public static void validateEmploye(Employer employer) {
 		validateName(employer.getFirstName());
@@ -106,12 +126,6 @@ public final class Validation{
 		validatePhoneNumber(employer.getOrganisationPhone());
 	}
 
-	private static void validateOrgName(String organisationName) {
-		if(organisationName.matches(ORGANISATION_NAME_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.ORGANISATION_NAME_MESSAGE.toString());
-	}
-
 	public static void validateStudent(Student student) {
 		validateName(student.getFirstName());
 		validateName(student.getLastName());
@@ -120,9 +134,8 @@ public final class Validation{
 		validateMatricule(student.getMatricule());
 	}
 
-	private static void validateMatricule(String matricule) {
-		if(matricule.matches(MATRICULE_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.MATRICULE_MESSAGE.toString());
+	public static void validateLogin(LoginDTO loginDTO) {
+		validateEmail(loginDTO.getEmail());
+		validatePassword(loginDTO.getPassword());
 	}
 }
