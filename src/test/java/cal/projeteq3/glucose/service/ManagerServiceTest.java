@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,6 +10,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
 import cal.projeteq3.glucose.model.Manager;
 import cal.projeteq3.glucose.repository.CvRepository;
@@ -20,15 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Disabled;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {ManagerService.class})
+@SpringBootTest
 @ExtendWith(SpringExtension.class)
 class ManagerServiceTest {
     @MockBean
@@ -99,6 +103,66 @@ class ManagerServiceTest {
     }
 
     /**
+     * Method under test: {@link ManagerService#createGestionnaire(Manager)}
+     */
+    @Test
+    void testCreateGestionnaire3() {
+        Manager manager = new Manager();
+        manager.setEmail("jane.doe@example.org");
+        manager.setFirstName("Jane");
+        manager.setLastName("Doe");
+        manager.setMatricule("Matricule");
+        manager.setPassword("iloveyou");
+        manager.setPhoneNumber("6625550144");
+        manager.setUserID(1L);
+
+        when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager);
+        List<Manager> list = new ArrayList<>();
+        list.add(manager);
+        when(managerRepository.findAll()).thenReturn(list);
+
+        ManagerDTO actualCreateGestionnaireResult = managerService.createGestionnaire(manager);
+        assertEquals("jane.doe@example.org", actualCreateGestionnaireResult.getEmail());
+        assertEquals("6625550144", actualCreateGestionnaireResult.getPhoneNumber());
+        assertEquals("Matricule", actualCreateGestionnaireResult.getMatricule());
+        assertEquals("Doe", actualCreateGestionnaireResult.getLastName());
+        assertEquals(1L, actualCreateGestionnaireResult.getId().longValue());
+        assertEquals("Jane", actualCreateGestionnaireResult.getFirstName());
+        assertTrue(managerService.getAllCv().isEmpty());
+        assertEquals(1, managerService.getAllGestionnaires().size());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#createGestionnaire(Manager)}
+     */
+    @Test
+    void testCreateGestionnaire4() {
+        Manager manager = new Manager("Matricule", "6625550144");
+        manager.setEmail("jane.doe@example.org");
+        manager.setFirstName("Jane");
+        manager.setLastName("Doe");
+        manager.setMatricule("Matricule");
+        manager.setPassword("iloveyou");
+        manager.setPhoneNumber("6625550144");
+        manager.setUserID(1L);
+
+        when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager);
+        List<Manager> list = new ArrayList<>();
+        list.add(manager);
+        when(managerRepository.findAll()).thenReturn(list);
+
+        ManagerDTO actualCreateGestionnaireResult = managerService.createGestionnaire(manager);
+        assertEquals("jane.doe@example.org", actualCreateGestionnaireResult.getEmail());
+        assertEquals("6625550144", actualCreateGestionnaireResult.getPhoneNumber());
+        assertEquals("Matricule", actualCreateGestionnaireResult.getMatricule());
+        assertEquals("Doe", actualCreateGestionnaireResult.getLastName());
+        assertEquals(1L, actualCreateGestionnaireResult.getId().longValue());
+        assertEquals("Jane", actualCreateGestionnaireResult.getFirstName());
+        assertTrue(managerService.getAllCv().isEmpty());
+        assertEquals(1, managerService.getAllGestionnaires().size());
+    }
+
+    /**
      * Method under test: {@link ManagerService#getAllGestionnaires()}
      */
     @Test
@@ -150,6 +214,15 @@ class ManagerServiceTest {
         when(managerRepository.findById(Mockito.<Long>any())).thenThrow(new IllegalArgumentException("foo"));
         assertThrows(IllegalArgumentException.class, () -> managerService.getGestionnaireByID(1L));
         verify(managerRepository).findById(Mockito.<Long>any());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#getGestionnaireByID(Long)}
+     */
+    @Test
+    void testGetGestionnaireByID3() {
+        assertFalse(managerService.getGestionnaireByID(2L).isPresent());
+        assertTrue(managerService.getAllCv().isEmpty());
     }
 
     /**
@@ -242,6 +315,38 @@ class ManagerServiceTest {
     }
 
     /**
+     * Method under test: {@link ManagerService#updateGestionnaire(Long, Manager)}
+     */
+    @Test
+    void testUpdateGestionnaire4() {
+        Manager updatedManager = new Manager();
+        updatedManager.setEmail("jane.doe@example.org");
+        updatedManager.setFirstName("Jane");
+        updatedManager.setLastName("Doe");
+        updatedManager.setMatricule("Matricule");
+        updatedManager.setPassword("iloveyou");
+        updatedManager.setPhoneNumber("6625550144");
+        updatedManager.setUserID(1L);
+        assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(1L, updatedManager));
+    }
+
+    /**
+     * Method under test: {@link ManagerService#updateGestionnaire(Long, Manager)}
+     */
+    @Test
+    void testUpdateGestionnaire5() {
+        Manager updatedManager = new Manager();
+        updatedManager.setEmail("jane.doe@example.org");
+        updatedManager.setFirstName("Jane");
+        updatedManager.setLastName("Doe");
+        updatedManager.setMatricule("Matricule");
+        updatedManager.setPassword("iloveyou");
+        updatedManager.setPhoneNumber("6625550144");
+        updatedManager.setUserID(1L);
+        assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(2L, updatedManager));
+    }
+
+    /**
      * Method under test: {@link ManagerService#deleteGestionnaire(Long)}
      */
     @Test
@@ -262,6 +367,59 @@ class ManagerServiceTest {
     }
 
     /**
+     * Method under test: {@link ManagerService#deleteGestionnaire(Long)}
+     */
+    @Test
+    void testDeleteGestionnaire3() {
+        managerService.deleteGestionnaire(1L);
+        assertTrue(managerService.getAllCv().isEmpty());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#getAllCv()}
+     */
+    @Test
+    void testGetAllCv() {
+        List<CvFileDTO> actualAllCv = managerService.getAllCv();
+        assertTrue(actualAllCv.isEmpty());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+        assertSame(actualAllCv, managerService.getPendingCv());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#getPendingCv()}
+     */
+    @Test
+    void testGetPendingCv() {
+        List<CvFileDTO> actualPendingCv = managerService.getPendingCv();
+        assertTrue(actualPendingCv.isEmpty());
+        assertSame(actualPendingCv, managerService.getAllCv());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#getAllCvFileByStudentMatricule(String)}
+     */
+    @Test
+    void testGetAllCvFileByStudentMatricule() {
+        List<CvFileDTO> actualAllCvFileByStudentMatricule = managerService.getAllCvFileByStudentMatricule("Matricule");
+        assertTrue(actualAllCvFileByStudentMatricule.isEmpty());
+        assertSame(actualAllCvFileByStudentMatricule, managerService.getAllCv());
+        assertSame(actualAllCvFileByStudentMatricule, managerService.getPendingCv());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#getAllCvFileByStudentMatricule(String)}
+     */
+    @Test
+    void testGetAllCvFileByStudentMatricule2() {
+        assertTrue(managerService.getAllCvFileByStudentMatricule("cal.projeteq3.glucose.model.CvFile").isEmpty());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
      * Method under test: {@link ManagerService#deleteCvFile(Long)}
      */
     @Test
@@ -279,6 +437,37 @@ class ManagerServiceTest {
         doThrow(new IllegalArgumentException("foo")).when(cvRepository).deleteById(Mockito.<Long>any());
         assertThrows(IllegalArgumentException.class, () -> managerService.deleteCvFile(1L));
         verify(cvRepository).deleteById(Mockito.<Long>any());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#deleteCvFile(Long)}
+     */
+    @Test
+    void testDeleteCvFile3() {
+        managerService.deleteCvFile(1L);
+        assertTrue(managerService.getAllCv().isEmpty());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
+     */
+    @Test
+    void testDeleteAllCvFileByStudendMatricule() {
+        managerService.deleteAllCvFileByStudendMatricule("Matricule");
+        List<CvFileDTO> allCv = managerService.getAllCv();
+        assertTrue(allCv.isEmpty());
+        assertSame(allCv, managerService.getPendingCv());
+        assertTrue(managerService.getAllGestionnaires().isEmpty());
+    }
+
+    /**
+     * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
+     */
+    @Test
+    void testDeleteAllCvFileByStudendMatricule2() {
+        managerService.deleteAllCvFileByStudendMatricule("cal.projeteq3.glucose.model.CvFile");
+        assertTrue(managerService.getAllCv().isEmpty());
     }
 }
 
