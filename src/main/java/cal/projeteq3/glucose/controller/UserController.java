@@ -1,31 +1,40 @@
 package cal.projeteq3.glucose.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cal.projeteq3.glucose.dto.LoginDTO;
+import cal.projeteq3.glucose.dto.UserDTO;
+import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.service.UserService;
+import cal.projeteq3.glucose.validation.Validation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "localhost:5432/projet")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/user")
 public class UserController {
-//    UserService utilisateurService;
-//
-//    @Autowired
-//    public UserController(UserService utilisateurService) {
-//        this.utilisateurService = utilisateurService;
-//    }
-//
-//    @GetMapping("/login")
-//    public ResponseEntity<User> login(String addresseCourriel, String motDePasse){
-//
-//        User user = utilisateurService.findUtilisateur(addresseCourriel);
-//
-//        if (user != null && user.getMotDePasse().equals(motDePasse)){
-//            return ResponseEntity.accepted().body(user);
-//        }
-//        return ResponseEntity.badRequest().build();
-//    }
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> Login(@RequestBody LoginDTO loginDTO){
+
+        try {
+            Validation.validateLogin(loginDTO);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.userService.authenticateUser(loginDTO));
+        } catch (ValidationException e){
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
+        }
+    }
+
 
 }
