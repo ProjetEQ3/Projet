@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose;
 
-import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.Manager;
 import cal.projeteq3.glucose.model.Student;

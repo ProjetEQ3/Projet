@@ -1,9 +1,7 @@
 package cal.projeteq3.glucose.validation;
 
-import cal.projeteq3.glucose.dto.EmployerDTO;
 import cal.projeteq3.glucose.dto.LoginDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
-import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.Student;
 
