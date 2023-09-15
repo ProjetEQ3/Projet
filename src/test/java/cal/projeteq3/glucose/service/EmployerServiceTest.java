@@ -11,8 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -71,31 +74,77 @@ public class EmployerServiceTest {
 
         //Arrange
 
+        Long id = 1L;
+        Employer employer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
+        when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
+
         //Act
 
+        Optional<EmployerDTO> employerDTO = employerService.getEmployerByID(id);
+
         //Assert
+
+        assertTrue(employerDTO.isPresent());
+        verify(employerRepository, times(1)).findById(id);
 
     }
 
     @Test
     public void updateEmployerTest() {
 
-        //Arrange
+        // Arrange
 
-        //Act
+        Long employerId = 1L;
+        EmployerDTO updatedEmployer = new EmployerDTO();
+        updatedEmployer.setId(employerId);
+        updatedEmployer.setFirstName("UpdatedFirstName");
+        updatedEmployer.setLastName("UpdatedLastName");
+        updatedEmployer.setEmail("updated@example.com");
+        updatedEmployer.setOrganisationName("UpdatedOrgName");
+        updatedEmployer.setOrganisationPhone("123-456-7890");
 
-        //Assert
+        Employer existingEmployer = new Employer();
+        existingEmployer.setUserID(employerId);
+        existingEmployer.setFirstName("OriginalFirstName");
+        existingEmployer.setLastName("OriginalLastName");
+        existingEmployer.setEmail("original@example.com");
+        existingEmployer.setOrganisationName("OriginalOrgName");
+        existingEmployer.setOrganisationPhone("987-654-3210");
+
+        when(employerRepository.findById(employerId)).thenReturn(Optional.of(existingEmployer));
+        when(employerRepository.save(any(Employer.class))).thenReturn(existingEmployer);
+
+        // Act
+
+        EmployerDTO updatedDTO = employerService.updateEmployer(employerId, updatedEmployer);
+
+        // Assert
+
+        assertNotNull(updatedDTO);
+        assertEquals(updatedEmployer.getId(), updatedDTO.getId());
+        assertEquals(updatedEmployer.getFirstName(), updatedDTO.getFirstName());
+        assertEquals(updatedEmployer.getLastName(), updatedDTO.getLastName());
+        assertEquals(updatedEmployer.getEmail(), updatedDTO.getEmail());
+        assertEquals(updatedEmployer.getOrganisationName(), updatedDTO.getOrganisationName());
+        assertEquals(updatedEmployer.getOrganisationPhone(), updatedDTO.getOrganisationPhone());
 
     }
 
     @Test
     public void deleteEmployerTest() {
 
-        //Arrange
+        // Arrange
 
-        //Act
+        Long employerId = 1L;
+        doNothing().when(employerRepository).deleteById(employerId);
 
-        //Assert
+        // Act
+
+        employerService.deleteEmployer(employerId);
+
+        // Assert
+
+        verify(employerRepository, times(1)).deleteById(employerId);
 
     }
 

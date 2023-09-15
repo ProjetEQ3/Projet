@@ -24,7 +24,7 @@ public class EmployerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<EmployerDTO> addEmployer(@RequestBody Employer employer) {
+    public ResponseEntity<EmployerDTO> register(@RequestBody Employer employer) {
 
         try {
             Validation.validateEmploye(employer);

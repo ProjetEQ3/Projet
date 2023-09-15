@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../layout/Header';
 import './RegistrationForm.css'
 import RegisterStudentForm from "./RegisterStudentForm";
 import RegisterEmployerForm from "./RegisterEmployerForm";
@@ -24,7 +23,7 @@ const RegistrationForm = () => {
             <div className="m-2"></div>
             <div className="container bg-light">
                 <div className="row">
-                    <div className="mx-auto btn-group btn-group-lg">
+                    <div className="col-6 mx-auto btn-group btn-group-lg">
                         <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
                         <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
                     </div>

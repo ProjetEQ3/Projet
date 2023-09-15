@@ -95,14 +95,15 @@ public class ManagerService {
     }
 
     public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
-        CvFile cvFile = new CvFile(fileName, fileData, student);
-        return new CvFileDTO(cvRepository.save(cvFile));
+        return new CvFileDTO(cvRepository.save(
+                new CvFile(fileName, fileData, student))
+        );
     }
 
     public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
-        CvFile cvFile = new CvFile(fileName, fileData, studentRepository.findByMatricule(matricule));
-
-        return new CvFileDTO(cvRepository.save(cvFile));
+        return new CvFileDTO(cvRepository.save(
+                new CvFile(fileName, fileData, studentRepository.findByMatricule(matricule)))
+        );
     }
 
     public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){
@@ -121,16 +122,21 @@ public class ManagerService {
     }
 
     public List<CvFileDTO> getAllCvFileByStudent(Long id){
-        Student student = studentRepository.findById(id).orElseThrow();
-        return cvRepository.findAllByStudent(student).stream().map(CvFileDTO::new).toList();
+        return cvRepository.findAllByStudent(
+                studentRepository.findById(id).orElseThrow()
+        ).stream().map(CvFileDTO::new).toList();
     }
 
     public List<CvFileDTO> getAllCvFileByStudentMatricule(String matricule){
-        return cvRepository.findAllByStudent(studentRepository.findByMatricule(matricule)).stream().map(CvFileDTO::new).toList();
+        return cvRepository.findAllByStudent(
+                studentRepository.findByMatricule(matricule)
+        ).stream().map(CvFileDTO::new).toList();
     }
 
     public CvFileDTO getCvFileByStudentAndFileName(String matricule, String fileName){
-        return new CvFileDTO(cvRepository.findByStudentAndFileName(studentRepository.findByMatricule(matricule), fileName));
+        return new CvFileDTO(cvRepository.findByStudentAndFileName(
+                studentRepository.findByMatricule(matricule), fileName
+        ));
     }
 
     public void deleteCvFile(Long id){
@@ -138,8 +144,7 @@ public class ManagerService {
     }
 
     public void deleteAllCvFileByStudendMatricule(String matricule){
-        Student student = studentRepository.findByMatricule(matricule);
-        cvRepository.deleteAllByStudent(student);
+        cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
     }
 
 

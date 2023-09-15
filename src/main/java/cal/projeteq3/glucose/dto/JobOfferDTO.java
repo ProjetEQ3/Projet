@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JobOfferDTO{
 	private Long id;
-	private Long employerId;
 	private String state;
 	private String title;
 	private String description;
@@ -25,7 +24,6 @@ public class JobOfferDTO{
 
 	public JobOfferDTO(JobOffer jobOffer){
 		this.id = jobOffer.getId();
-		this.employerId = jobOffer.getEmployer().getUserID();
 		this.state = jobOffer.getState();
 		this.title = jobOffer.getTitle();
 		this.description = jobOffer.getDescription();
