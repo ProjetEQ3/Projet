@@ -5,7 +5,7 @@ import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
 
 const EmployerPage = ({user}) => {
-    const [selectedId, setSelectedId] = useState(null);
+    const [selectOffer, setSelectedOffer] = useState(null);
 
     const offersDTO = [{
         id: 1,
@@ -87,7 +87,7 @@ const EmployerPage = ({user}) => {
                             <div className="col-6">
                                 {
                                     offersDTO.map((offer, index) => (
-                                        <div onClick={() => setSelectedId(offer)}>
+                                        <div onClick={() => setSelectedOffer(offer)}>
                                             <ShortJobOffer jobOffer={offer} key={index}/>
                                         </div>
                                     ))
@@ -97,14 +97,14 @@ const EmployerPage = ({user}) => {
                                 </div>
                             </div>
                             <div className="col-6">
-                                {selectedId === null ?
+                                {selectOffer === null ?
                                     <div className="row m-2">
                                         <div className="col-12 bg-white rounded">
                                             <h2 className="text-dark fw-light pt-1">Sélectionnez une offre de stage</h2>
                                         </div>
                                     </div>
                                     :
-                                <FullJobOffer jobId={selectedId}/>
+                                <FullJobOffer jobOffer={selectOffer}/>
                                 }
                             </div>
                         </div>

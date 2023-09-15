@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-const FullJobOffer = ({ jobId }) => {
+const FullJobOffer = ({ jobOffer }) => {
 
     return (
         <div className="row my-2">
