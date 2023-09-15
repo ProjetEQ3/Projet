@@ -16,4 +16,9 @@ public class Manager extends User {
     private String matricule;
     private String phoneNumber;
 
+    public Manager(String firstName, String lastName, String email, String password, String matricule, String phoneNumber) {
+        super(firstName, lastName, email, password);
+        this.matricule = matricule;
+        this.phoneNumber = phoneNumber;
+    }
 }
