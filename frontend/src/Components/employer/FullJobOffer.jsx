@@ -1,5 +1,3 @@
-import {useState} from "react";
-
 const FullJobOffer = ({ jobOffer }) => {
 
     return (

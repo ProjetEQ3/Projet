@@ -1,8 +1,13 @@
 import React, {useState} from "react";
 import {axiosInstance} from "../../App";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import Loading from "../util/Loading";
 
 
 const RegisterEmployerForm = () => {
+    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         lastName: '',
         firstName: '',
@@ -21,7 +26,8 @@ const RegisterEmployerForm = () => {
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
 
     const registerEmployer = async () => {
-        const res = await axiosInstance.post('/employer/register',
+        setIsLoading(true)
+        axiosInstance.post('/employer/register',
             {
                 lastName: formData.lastName,
                 firstName: formData.firstName,
@@ -29,14 +35,19 @@ const RegisterEmployerForm = () => {
                 password: formData.password,
                 organisationName: formData.organisationName,
                 organisationPhone: formData.organisationPhone,
-            })
-        return res.data
+            }
+        ).then(() => {
+            setIsLoading(false)
+            toast.success('Votre compte a été créé avec succès');
+            navigate('/')
+        }).catch(() =>
+                setIsLoading(false)
+        )
     }
 
     const handleChanges = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value.trim()});
-        console.log(formData)
     }
 
     const handleSubmit = (e) => {
@@ -118,12 +129,11 @@ const RegisterEmployerForm = () => {
         }
 
         registerEmployer().then(r => console.log(r));
-
-        console.log(formData);
     }
 
     return (
         <div className="row align-item-center">
+            {isLoading ? <Loading/> :
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -148,7 +158,7 @@ const RegisterEmployerForm = () => {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div>}
         </div>
     )
 }

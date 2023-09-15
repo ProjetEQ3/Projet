@@ -118,8 +118,6 @@ const RegisterStudentForm = () => {
         }
 
         registerStudent().then(r => console.log(r));
-
-        console.log(formData);
     }
 
     return (
