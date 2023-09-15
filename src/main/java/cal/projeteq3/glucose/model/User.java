@@ -1,39 +1,61 @@
 package cal.projeteq3.glucose.model;
 
-import cal.projeteq3.glucose.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-@MappedSuperclass
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class User {
-
+@MappedSuperclass
+public abstract class User<U extends User<?>>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long userID;
+    private long id;
 
-    private String firstName;
-    private String lastName;
+    @Embedded
+    private Person person;
 
-    @Column(unique = true)
-    private String email;
-    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credentials", referencedColumnName = "id", nullable = false)
+    private Credentials<U> credentials;
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+    @Builder
+    public User(long id, String firstName, String lastName, String email, String password) {
+        this.id = id;
+        this.person = new Person(firstName, lastName);
+        this.credentials = new Credentials<U>(email, password, Role.STUDENT);
     }
 
-    public UserDTO toDTO() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(this.getUserID());
-        userDTO.setLastName(this.getLastName());
-        userDTO.setFirstName(this.getFirstName());
-        userDTO.setEmail(this.getEmail());
-        return userDTO;
+    public String getFirstName(){
+        return this.person.getFirstName();
     }
+
+    public String getLastName(){
+        return this.person.getLastName();
+    }
+
+    public String getEmail(){
+        return this.credentials.getEmail();
+    }
+
+    public String getPassword(){
+        return this.credentials.getPassword();
+    }
+
+    public Role getRole(){
+        return this.credentials.getRole();
+    }
+
+    public void setEmail(String email){
+        this.credentials.setEmail(email);
+    }
+
+    public void setPassword(String password){
+        this.credentials.setPassword(password);
+    }
+
+    public void setRole(Role role){
+        this.credentials.setRole(role);
+    }
+
 }

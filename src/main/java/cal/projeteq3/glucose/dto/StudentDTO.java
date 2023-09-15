@@ -15,15 +15,10 @@ public class StudentDTO extends UserDTO {
     private String matricule;
     private Department department;
 
-    public StudentDTO(Long id, String firstName, String lastName, String email, String matricule, String department) {
-        super(id, firstName, lastName, email);
-        this.matricule = matricule;
-        this.department = Department.valueOf(department);
-    }
-
     public StudentDTO(Student student){
-        super(student.getUserID(), student.getFirstName(), student.getLastName(), student.getEmail());
+        super(student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(), student.getRole().toString());
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
     }
+
 }

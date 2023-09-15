@@ -27,6 +27,7 @@ public class EmployerControllerTest {
     @Test
     void Register_Valid_Employe() {
         // Arrange
+        //TODO: ici utiliser Employer.builder.fistName("blabla).... .build();
         Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
         when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone", null));
 
@@ -61,7 +62,6 @@ public class EmployerControllerTest {
     void Register_Missing_LastName(){
 //        Arrange
         Employer invalidEmployer = new Employer(
-                1,
                 "Michel",
                 "",
                 "test@test.com",

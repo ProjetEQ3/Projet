@@ -11,14 +11,14 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student extends User {
+public final class Student extends User<Student> {
     @OneToOne
     private CvFile cv;
     private String matricule;
     private Department department;
 
-    public Student(String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile) {
-        super(firstName, lastName, email, password);
+    public Student(long id, String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile) {
+        super(id, firstName, lastName, email, password);
         this.matricule = matricule;
         this.department = Department.valueOf(department);
         this.cv = cvFile;

@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,7 +17,7 @@ public class EmployerDTO extends UserDTO {
     private List<JobOfferDTO> jobOffers;
 
     public EmployerDTO(Employer employer){
-        super(employer.getUserID(), employer.getFirstName(), employer.getLastName(), employer.getEmail());
+        super(employer.getId(), employer.getFirstName(), employer.getLastName(), employer.getEmail(), employer.getRole().toString());
         this.organisationName = employer.getOrganisationName();
         this.organisationPhone = employer.getOrganisationPhone();
         this.jobOffers = employer.getJobOffer() == null ? null : employer.getJobOffer().stream().map(JobOfferDTO::new).toList();
@@ -26,12 +25,12 @@ public class EmployerDTO extends UserDTO {
 
     public Employer toEntity() {
         return Employer.builder()
-                .id(this.getId())
-                .firstName(this.getFirstName())
-                .lastName(this.getLastName())
-                .email(this.getEmail())
-                .organisationName(this.getOrganisationName())
-                .organisationPhone(this.getOrganisationPhone())
-                .build();
+            .id(this.getId())
+            .firstName(this.getFirstName())
+            .lastName(this.getLastName())
+            .email(this.getEmail())
+            .organisationName(this.getOrganisationName())
+            .organisationPhone(this.getOrganisationPhone())
+            .build();
     }
 }
