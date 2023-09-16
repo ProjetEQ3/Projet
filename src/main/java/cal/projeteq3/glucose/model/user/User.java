@@ -1,44 +1,52 @@
 package cal.projeteq3.glucose.model.user;
 
-import cal.projeteq3.glucose.dto.user.UserDTO;
+import cal.projeteq3.glucose.model.auth.Credential;
+import cal.projeteq3.glucose.model.auth.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
-@MappedSuperclass
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@MappedSuperclass
+public abstract class User{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
+	@Column(name = "first_name")
+	private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-    @Column(unique = true)
-    private String email;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "credential", referencedColumnName = "id", nullable = false)
+	private Credential<?> credentials;
 
-    @Column(name = "password")
-    private String password;
+	public String getEmail(){
+		return this.credentials.getEmail();
+	}
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-    }
+	public String getPassword(){
+		return this.credentials.getPassword();
+	}
 
-    public UserDTO toDTO() {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(this.getId());
-        userDTO.setLastName(this.getLastName());
-        userDTO.setFirstName(this.getFirstName());
-        userDTO.setEmail(this.getEmail());
-        return userDTO;
-    }
+	public Role getRole(){
+		return this.credentials.getRole();
+	}
+
+	public void setEmail(String email){
+		this.credentials.setEmail(email);
+	}
+
+	public void setPassword(String password){
+		this.credentials.setPassword(password);
+	}
+
+	public void setRole(Role role){
+		this.credentials.setRole(role);
+	}
 
 }

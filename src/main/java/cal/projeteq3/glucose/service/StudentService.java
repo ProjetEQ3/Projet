@@ -68,13 +68,13 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         student = studentOptional.get();
-        CvFile cvExiste = student.getCv();
+        CvFile cvExiste = student.getCvFile();
         if(cvExiste != null) throw new StudentHasAlreadyCVException();
         CvFile cv = CvFile.builder()
 					.fileName(cvFile.getFileName())
           .fileData(cvFile.getFileData())
           .build();
-        student.setCv(cv);
+        student.setCvFile(cv);
         return new StudentDTO(studentRepository.save(student));
     }
 
@@ -82,7 +82,7 @@ public class StudentService {
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         Student student = studentOptional.get();
-        student.setCv(null);
+        student.setCvFile(null);
         studentRepository.save(student);
     }
 

@@ -3,10 +3,7 @@ package cal.projeteq3.glucose.dto.user;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Student;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -17,17 +14,23 @@ public class StudentDTO extends UserDTO {
     private Department department;
     private CvFileDTO cvFile;
 
-    public StudentDTO(Long id, String firstName, String lastName, String email, String matricule, String department) {
-        super(id, firstName, lastName, email);
+    @Builder
+    public StudentDTO(
+      Long id, String firstName, String lastName, String email, String role, String matricule, String department
+    ){
+        super(id, firstName, lastName, email, role);
         this.matricule = matricule;
         this.department = Department.valueOf(department);
     }
 
     public StudentDTO(Student student){
-        super(student.getId(), student.getFirstName(), student.getLastName(), student.getEmail());
+        super(
+          student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(),
+          student.getCredentials().getRole().toString()
+        );
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
-        this.cvFile = student.getCv() == null ? null : new CvFileDTO(student.getCv());
+        this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
     }
 
     public Student toEntity() {

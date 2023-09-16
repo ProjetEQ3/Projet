@@ -20,7 +20,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		System.out.println("Hello World!");
 	}
 
-//	Creation of the original database
 	@Override
 	public void run(String... args) throws Exception {
 		createDatabase();
@@ -89,145 +88,87 @@ public class GlucoseApplication implements CommandLineRunner {
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
 				.build()
-/*				new Employer(
-						"Gabriel",
-						"Non",
-						"Gabriel@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null),
-				new Employer(
-						"Chawki",
-						"Non",
-						"Chawki@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null),
-				new Employer(
-						"Zakaria",
-						"Non",
-						"Zakaria@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null),
-				new Employer(
-						"Samuel",
-						"Non",
-						"Samuel@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null),
-				new Employer(
-						"Louis",
-						"Non",
-						"Louis@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null),
-				new Employer(
-						"Jean",
-						"Non",
-						"t@professionnel.com",
-						"Ose12345",
-						"Fritz",
-						"123-456-7890",
-						null)*/
 				);
 	}
 
 	private static List<Student> createStudent(){
 		return List.of(
-				new Student(
-						"Jean",
-						"Michaud",
-						"jean@michaud.com",
-						"123-456-7890",
-						"0000001",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Joe",
-						"Michaud",
-						"Joe@michaud.com",
-						"123-456-7890",
-						"0000002",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Louis",
-						"Michaud",
-						"Louis@michaud.com",
-						"123-456-7890",
-						"0000003",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Chawki",
-						"Michaud",
-						"Chawki@michaud.com",
-						"123-456-7890",
-						"0000004",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Zakaria",
-						"Michaud",
-						"1@zaka.se",
-						"aaaAAA111",
-						"0000005",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Gabriel",
-						"Michaud",
-						"Gabriel@michaud.com",
-						"123-456-7890",
-						"0000006",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Samuel",
-						"Michaud",
-						"Samuel@michaud.com",
-						"123-456-7890",
-						"0000007",
-						"_420B0",
-						null
-				),
-				new Student(
-						"Karim",
-						"Michaud",
-						"Karim@michaud.com",
-						"123-456-7890",
-						"0000008",
-						"_420B0",
-						null
-				)
-				);
-
-
+			Student.builder()
+				.firstName("Jean")
+				.lastName("Michaud")
+				.email("jean@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000001")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Joe")
+				.lastName("Michaud")
+				.email("Joe@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000002")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Louis")
+				.lastName("Michaud")
+				.email("Louis@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000003")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Chawki")
+				.lastName("Michaud")
+				.email("Chawki@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000004")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Zakaria")
+				.lastName("Michaud")
+				.email("1@zaka.se")
+				.password("aaaAAA111")
+				.matricule("0000005")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Gabriel")
+				.lastName("Michaud")
+				.email("Gabriel@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000006")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Samuel")
+				.lastName("Michaud")
+				.email("Samuel@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000007")
+				.department("_420B0")
+				.build(),
+			Student.builder()
+				.firstName("Karim")
+				.lastName("Michaud")
+				.email("Karim@michaud.com")
+				.password("123-456-7890")
+				.matricule("0000008")
+				.department("_420B0")
+				.build());
 	}
 
 	private static Manager createManager(){
-		return new Manager(
-				"Michel",
-				"Michaud",
-				"michel@michaud.com",
-				"Ose12345",
-				"0000001",
-				"123-456-7890"
-		);
+		return
+			Manager.builder()
+				.firstName("Michel")
+				.lastName("Michaud")
+				.email("michel@michaud.com")
+				.password("Ose12345")
+				.matricule("0000001")
+				.phoneNumber("123-456-7890")
+				.build();
 	}
 
 }

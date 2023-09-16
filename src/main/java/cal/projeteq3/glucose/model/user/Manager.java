@@ -1,23 +1,35 @@
 package cal.projeteq3.glucose.model.user;
 
-import jakarta.persistence.Entity;
+import cal.projeteq3.glucose.model.auth.Credential;
+import cal.projeteq3.glucose.model.auth.Role;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Data
-@Builder
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manager extends User {
+public class Manager extends User{
+	@Column(name = "matricule")
+	private String matricule;
 
-    private String matricule;
-    private String phoneNumber;
+	@Column(name = "phone_number")
+	private String phoneNumber;
 
-    public Manager(String firstName, String lastName, String email, String password, String matricule, String phoneNumber) {
-        super(firstName, lastName, email, password);
-        this.matricule = matricule;
-        this.phoneNumber = phoneNumber;
-    }
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "credential", referencedColumnName = "id", nullable = false)
+	private Credential credentials = new Credential();
+
+	@Builder
+	public Manager(
+		Long id, String firstName, String lastName, String email, String password,
+		String matricule, String phoneNumber
+	){
+		super(id, firstName, lastName, Credential.builder().email(email).password(password).role(Role.MANAGER).build());
+		this.matricule = matricule;
+		this.phoneNumber = phoneNumber;
+	}
+
 }

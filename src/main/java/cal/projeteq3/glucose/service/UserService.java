@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.user.UserDTO;
-import cal.projeteq3.glucose.dto.user.LoginDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.EmployerRepository;

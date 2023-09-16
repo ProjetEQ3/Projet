@@ -25,7 +25,7 @@ public final class CvFile{
 	@Column(name = "cv_state")
 	private CvState cvState;
 
-	@OneToOne(mappedBy = "cv", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "cvFile", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Student student;
 
 	/*public CvFile(String fileName, byte[] fileData, Student student){
