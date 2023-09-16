@@ -35,19 +35,19 @@ public class ManagerService {
 
     // database operations here
 
-    public ManagerDTO createGestionnaire(Manager manager) {
+   /* public ManagerDTO createGestionnaire(Manager manager) {//TODO: DTO
         return new ManagerDTO(managerRepository.save(manager));
-    }
+    }*/
 
-    public List<Manager> getAllGestionnaires() {
+    /*public List<Manager> getAllGestionnaires() {//TODO: DTO
         return managerRepository.findAll();
-    }
+    }*/
 
-    public Optional<Manager> getGestionnaireByID(Long id) {
+    /*public Optional<Manager> getGestionnaireByID(Long id) {//TODO: DTO
         return managerRepository.findById(id);
-    }
+    }*/
 
-    public Manager updateGestionnaire(Long id, Manager updatedManager) {
+    /*public Manager updateGestionnaire(Long id, Manager updatedManager) {//TODO: DTO
         Optional<Manager> existingGestionnaire = managerRepository.findById(id);
         if(existingGestionnaire.isPresent()) {
             Manager manager = existingGestionnaire.get();
@@ -61,7 +61,7 @@ public class ManagerService {
         } else {
             throw new IllegalArgumentException("Manager with ID " + id + " does not exist.");
         }
-    }
+    }*/
 
     public void deleteGestionnaire(Long id) {
         managerRepository.deleteById(id);
@@ -105,7 +105,7 @@ public class ManagerService {
         );
     }*/
 
-    public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){
+    /*public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){//TODO DTO
         Optional<CvFile> existingCvFile = cvRepository.findById(id);
         if(existingCvFile.isPresent()) {
             CvFile cvFile = existingCvFile.get();
@@ -118,7 +118,7 @@ public class ManagerService {
         } else {
             throw new IllegalArgumentException("CvFile with ID " + id + " does not exist.");
         }
-    }
+    }*/
 
     public List<CvFileDTO> getAllCvFileByStudent(Long id){
         return cvRepository.findAllByStudent(

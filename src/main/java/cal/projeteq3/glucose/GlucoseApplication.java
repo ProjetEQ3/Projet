@@ -4,10 +4,8 @@ import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
-import cal.projeteq3.glucose.service.EmployerService;
-import cal.projeteq3.glucose.service.ManagerService;
-import cal.projeteq3.glucose.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,20 +27,16 @@ public class GlucoseApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private EmployerService employerService;
-	@Autowired
-	private StudentService studentService;
-	@Autowired
-	private ManagerService managerService;
-	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
 	StudentRepository studentRepository;
+	@Autowired
+	ManagerRepository managerRepository;
 
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
-		managerService.createGestionnaire(createManager());
+		managerRepository.save(createManager());
 	}
 
 	private static List<Employer> createEmployer(){
