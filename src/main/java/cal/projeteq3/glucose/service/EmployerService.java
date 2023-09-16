@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.model.Employer;
 import cal.projeteq3.glucose.model.JobOffer;
@@ -63,11 +64,11 @@ public class EmployerService {
         employerRepository.deleteById(id);
     }
 
-    public JobOffer createJobOffer(JobOffer jobOffer){
-        return jobOfferRepository.save(jobOffer);
+    public JobOfferDTO createJobOffer(JobOffer jobOffer){
+        return new JobOfferDTO(jobOfferRepository.save(jobOffer));
     }
 
-    public JobOffer updateJobOffer(Long id, JobOffer updatedJobOffer){
+    public JobOfferDTO updateJobOffer(Long id, JobOffer updatedJobOffer){
         Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
         if (existingJobOffer.isPresent()){
             JobOffer jobOffer = existingJobOffer.get();
@@ -81,8 +82,8 @@ public class EmployerService {
             jobOffer.setHoursPerWeek(updatedJobOffer.getHoursPerWeek());
             jobOffer.setExpirationDate(updatedJobOffer.getExpirationDate());
             jobOffer.setSalary(updatedJobOffer.getSalary());
-
-            return jobOfferRepository.save(jobOffer);
+            jobOffer.setEmployer(updatedJobOffer.getEmployer());
+            return new JobOfferDTO(jobOfferRepository.save(jobOffer));
         }
 
         throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
@@ -96,7 +97,8 @@ public class EmployerService {
         return jobOfferRepository.findAllByEmployer(employer);
     }
 
-    public List<JobOffer> getAllJobOffers() {
-        return jobOfferRepository.findAll();
+    public List<JobOfferDTO> getAllJobOffers() {
+        List<JobOffer> jobOffers = jobOfferRepository.findAll();
+        return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
     }
 }
