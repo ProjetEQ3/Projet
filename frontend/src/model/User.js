@@ -22,7 +22,7 @@ class User{
 		if(user.password) this.password = user.password
 		else delete this.password
 		if(user.isLoggedIn) this.isLoggedIn = user.isLoggedIn
-		else delete this.isLoggedIn
+		else this.isLoggedIn = false
 		if(user.cvFile) this.cvFile = user.cvFile
 		else delete this.cvFile
 		if(user.errors?.length > 0) this.errors = user.errors

@@ -24,7 +24,7 @@ public class StudentDTO extends UserDTO {
     }
 
     public StudentDTO(Student student){
-        super(student.getUserID(), student.getFirstName(), student.getLastName(), student.getEmail());
+        super(student.getId(), student.getFirstName(), student.getLastName(), student.getEmail());
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
         this.cvFile = student.getCv() == null ? null : new CvFileDTO(student.getCv());

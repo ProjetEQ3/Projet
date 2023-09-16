@@ -1,11 +1,10 @@
 import {useState} from "react"
 import {NavLink} from "react-router-dom"
 import {toast} from "react-toastify"
-import {axiosInstance, baseURL} from "../../App"
+import {axiosInstance} from "../../App"
 import User from "../../model/User";
 
-const LoginForm = ({user, setToken}) => {
-	user = new User();
+const LoginForm = ({user, setUser}) => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 
@@ -19,8 +18,11 @@ const LoginForm = ({user, setToken}) => {
 		if(validateUser())
 			axiosInstance.post("/user/login", data)
 				.then((response) => {
-					setToken(response.data)
-					console.log("response.data", response.data)
+					let newUser = new User()
+					newUser.init(response.data)
+					newUser.isLoggedIn = true
+					setUser(newUser)
+					console.log("response.data", newUser)
 					toast.success("Vous êtes connecté")
 				})
 				.catch((error) => {
@@ -57,7 +59,7 @@ const LoginForm = ({user, setToken}) => {
 	return (
 		<>
 			{
-				user.isLoggedIn ? (
+				user?.isLoggedIn ? (
 					<p>Logged in as {user.email} <NavLink to="../logout">Logout?</NavLink></p>
 				) : (
 					<>

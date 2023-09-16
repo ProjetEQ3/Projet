@@ -1,5 +1,7 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+/*import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';*/
+//TODO: ces imports ne fonctionnent pas ou je sais pas comment les ajouter
+
 import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
@@ -93,7 +95,7 @@ const EmployerPage = ({user}) => {
                                     ))
                                 }
                                 <div className="row m-2">
-                                    <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>
+                                   {/* <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>*/}
                                 </div>
                             </div>
                             <div className="col-6">

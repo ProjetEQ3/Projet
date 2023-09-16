@@ -22,7 +22,7 @@ public class ManagerDTO extends UserDTO{
     }
 
     public ManagerDTO(Manager manager){
-        super(manager.getUserID(), manager.getFirstName(), manager.getLastName(), manager.getEmail());
+        super(manager.getId(), manager.getFirstName(), manager.getLastName(), manager.getEmail());
         this.matricule = manager.getMatricule();
         this.phoneNumber = manager.getPhoneNumber();
     }

@@ -29,6 +29,8 @@ public class UserController {
         try {
             Validation.validateLogin(loginDTO);
             System.out.println("LoginDTO is valid");
+            UserDTO userDTO = this.userService.authenticateUser(loginDTO);
+            System.out.println("UserDTO: " + userDTO);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.userService.authenticateUser(loginDTO));
         } catch (ValidationException e){
             System.out.print("LoginDTO is not valid");

@@ -60,7 +60,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
         when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager);
 
         Manager manager2 = new Manager();
@@ -70,7 +70,7 @@ class ManagerServiceTest {
         manager2.setMatricule("Matricule");
         manager2.setPassword("iloveyou");
         manager2.setPhoneNumber("6625550144");
-        manager2.setUserID(1L);
+        manager2.setId(1L);
         ManagerDTO actualCreateGestionnaireResult = managerService.createGestionnaire(manager2);
         assertEquals("jane.doe@example.org", actualCreateGestionnaireResult.getEmail());
         assertEquals("6625550144", actualCreateGestionnaireResult.getPhoneNumber());
@@ -95,7 +95,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
         assertThrows(IllegalArgumentException.class, () -> managerService.createGestionnaire(manager));
         verify(managerRepository).save(Mockito.<Manager>any());
     }
@@ -112,7 +112,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
 
         when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager);
         List<Manager> list = new ArrayList<>();
@@ -142,7 +142,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
 
         when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager);
         List<Manager> list = new ArrayList<>();
@@ -195,7 +195,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
         Optional<Manager> ofResult = Optional.of(manager);
         when(managerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         Optional<Manager> actualGestionnaireByID = managerService.getGestionnaireByID(1L);
@@ -235,7 +235,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
         Optional<Manager> ofResult = Optional.of(manager);
 
         Manager manager2 = new Manager();
@@ -245,7 +245,7 @@ class ManagerServiceTest {
         manager2.setMatricule("Matricule");
         manager2.setPassword("iloveyou");
         manager2.setPhoneNumber("6625550144");
-        manager2.setUserID(1L);
+        manager2.setId(1L);
         when(managerRepository.save(Mockito.<Manager>any())).thenReturn(manager2);
         when(managerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
@@ -256,7 +256,7 @@ class ManagerServiceTest {
         updatedManager.setMatricule("Matricule");
         updatedManager.setPassword("iloveyou");
         updatedManager.setPhoneNumber("6625550144");
-        updatedManager.setUserID(1L);
+        updatedManager.setId(1L);
         assertSame(manager2, managerService.updateGestionnaire(1L, updatedManager));
         verify(managerRepository).save(Mockito.<Manager>any());
         verify(managerRepository).findById(Mockito.<Long>any());
@@ -274,7 +274,7 @@ class ManagerServiceTest {
         manager.setMatricule("Matricule");
         manager.setPassword("iloveyou");
         manager.setPhoneNumber("6625550144");
-        manager.setUserID(1L);
+        manager.setId(1L);
         Optional<Manager> ofResult = Optional.of(manager);
         when(managerRepository.save(Mockito.<Manager>any())).thenThrow(new IllegalArgumentException("foo"));
         when(managerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -286,7 +286,7 @@ class ManagerServiceTest {
         updatedManager.setMatricule("Matricule");
         updatedManager.setPassword("iloveyou");
         updatedManager.setPhoneNumber("6625550144");
-        updatedManager.setUserID(1L);
+        updatedManager.setId(1L);
         assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(1L, updatedManager));
         verify(managerRepository).save(Mockito.<Manager>any());
         verify(managerRepository).findById(Mockito.<Long>any());
@@ -307,7 +307,7 @@ class ManagerServiceTest {
         updatedManager.setMatricule("Matricule");
         updatedManager.setPassword("iloveyou");
         updatedManager.setPhoneNumber("6625550144");
-        updatedManager.setUserID(1L);
+        updatedManager.setId(1L);
         assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(1L, updatedManager));
         verify(managerRepository).findById(Mockito.<Long>any());
     }
@@ -324,7 +324,7 @@ class ManagerServiceTest {
         updatedManager.setMatricule("Matricule");
         updatedManager.setPassword("iloveyou");
         updatedManager.setPhoneNumber("6625550144");
-        updatedManager.setUserID(1L);
+        updatedManager.setId(1L);
         assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(1L, updatedManager));
     }
 
@@ -340,7 +340,7 @@ class ManagerServiceTest {
         updatedManager.setMatricule("Matricule");
         updatedManager.setPassword("iloveyou");
         updatedManager.setPhoneNumber("6625550144");
-        updatedManager.setUserID(1L);
+        updatedManager.setId(1L);
         assertThrows(IllegalArgumentException.class, () -> managerService.updateGestionnaire(2L, updatedManager));
     }
 

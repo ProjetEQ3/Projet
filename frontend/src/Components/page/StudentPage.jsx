@@ -1,10 +1,10 @@
 import {useState} from "react"
 import CvFile from "../../model/CvFile"
 import Cv from "../Student/Cv"
-import LoginForm from "../auth/LoginForm"
+import LoginForm from "../auth/LoginForm";
 
-const StudentPage = ({user}) => {
-  const [tab, setTab] = useState('home')
+const StudentPage = ({user, setUser}) => {
+  const [tab, setTab] = useState('home');
 
 	const setCv = (cv) => {
 		user.cvFile = new CvFile(cv)
@@ -14,7 +14,7 @@ const StudentPage = ({user}) => {
 
 	return (
 		<div className="container">
-			{!user.isLoggedIn ? (
+			{user.isLoggedIn ? (
 				<div className="login-form">
 					<h1 className="mb-4">Student Page</h1>
 					<h2>Welcome {user.name}</h2>
@@ -43,7 +43,7 @@ const StudentPage = ({user}) => {
 					{tab === 'cv' && <Cv user={user} />}
 				</div>
 			) : (
-				<LoginForm />
+				<LoginForm user={user} setUser={setUser}/>
 			)}
 		</div>
 	)

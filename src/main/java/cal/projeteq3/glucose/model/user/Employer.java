@@ -32,7 +32,8 @@ public class Employer extends User{
 		super(id, firstName, lastName, email, password);
 		this.organisationName = organisationName;
 		this.organisationPhone = organisationPhone;
-		jobOffers.forEach(this::addJobOffer);
+		if(jobOffers != null)
+			jobOffers.forEach(this::addJobOffer);
 	}
 
 	/*@Builder

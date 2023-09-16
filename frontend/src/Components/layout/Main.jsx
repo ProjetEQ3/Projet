@@ -20,7 +20,7 @@ const Main = ({user, setUser}) => {
                 />
                 <Route
                     path="student/*"
-                    element={<StudentPage user={user}/>}
+                    element={<StudentPage user={user} setUser={setUser}/>}
                 />
                 <Route
                     path="manager/*"

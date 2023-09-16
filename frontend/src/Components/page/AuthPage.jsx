@@ -6,7 +6,7 @@ import PageNotFound from "./PageNotFound";
 const AuthPage = ({user, setUser}) => {
 	return (
 		<Routes>
-			<Route path="login" element={<LoginForm/>}/>
+			<Route path="login" element={<LoginForm user={user} setUser={setUser}/>}/>
 			<Route path="register" element={<RegistrationForm/>}/>
 			<Route path="*" element={<PageNotFound/>}/>
 		</Routes>

@@ -3,6 +3,8 @@ package cal.projeteq3.glucose;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
@@ -17,6 +19,7 @@ import java.util.List;
 public class GlucoseApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(GlucoseApplication.class, args);
+		System.out.println("Hello World!");
 	}
 
 //	Creation of the original database
@@ -31,16 +34,14 @@ public class GlucoseApplication implements CommandLineRunner {
 	private StudentService studentService;
 	@Autowired
 	private ManagerService managerService;
+	@Autowired
+	private EmployerRepository employerRepository;
+	@Autowired
+	StudentRepository studentRepository;
 
 	private void createDatabase(){
-		for (Employer employer: createEmployer()) {
-			//employerService.createEmployer(employer);
-		}
-
-		for (Student student : createStudent()){
-			//studentService.createStudent(student);
-		}
-
+		employerRepository.saveAll(createEmployer());
+		studentRepository.saveAll(createStudent());
 		managerService.createGestionnaire(createManager());
 	}
 
@@ -65,8 +66,8 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Zakaria")
 				.lastName("Non")
-				.email("Zakaria@professionnel.com")
-				.password("Ose12345")
+				.email("1@zaka.se")
+				.password("aaaAAA111")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
 				.build(),
@@ -186,8 +187,8 @@ public class GlucoseApplication implements CommandLineRunner {
 				new Student(
 						"Zakaria",
 						"Michaud",
-						"Zakaria@michaud.com",
-						"123-456-7890",
+						"1@zaka.se",
+						"aaaAAA111",
 						"0000005",
 						"_420B0",
 						null

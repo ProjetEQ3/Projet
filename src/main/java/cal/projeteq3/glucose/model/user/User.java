@@ -11,7 +11,7 @@ import lombok.*;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long userID;
+    private Long id;
 
     @Column(name = "first_name")
     private String firstName;
@@ -34,7 +34,7 @@ public abstract class User {
 
     public UserDTO toDTO() {
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(this.getUserID());
+        userDTO.setId(this.getId());
         userDTO.setLastName(this.getLastName());
         userDTO.setFirstName(this.getFirstName());
         userDTO.setEmail(this.getEmail());

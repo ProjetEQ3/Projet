@@ -105,7 +105,7 @@ public class StudentServiceTest {
         updatedStudent.setDepartment(Department._420B0);
 
         Student existingStudent = new Student();
-        existingStudent.setUserID(studentId);
+        existingStudent.setId(studentId);
         existingStudent.setFirstName("OriginalFirstName");
         existingStudent.setLastName("OriginalLastName");
         existingStudent.setEmail("original@example.com");

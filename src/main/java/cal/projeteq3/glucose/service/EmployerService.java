@@ -49,7 +49,7 @@ public class EmployerService{
 		if(existingEmployer.isPresent()){
 			Employer employer = existingEmployer.get();
 
-			employer.setUserID(updatedEmployer.getId());
+			employer.setId(updatedEmployer.getId());
 			employer.setFirstName(updatedEmployer.getFirstName());
 			employer.setLastName(updatedEmployer.getLastName());
 			employer.setEmail(updatedEmployer.getEmail());

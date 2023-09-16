@@ -120,7 +120,7 @@ public class EmployerServiceTest {
         updatedEmployer.setOrganisationPhone("123-456-7890");
 
         Employer existingEmployer = new Employer();
-        existingEmployer.setUserID(employerId);
+        existingEmployer.setId(employerId);
         existingEmployer.setFirstName("OriginalFirstName");
         existingEmployer.setLastName("OriginalLastName");
         existingEmployer.setEmail("original@example.com");

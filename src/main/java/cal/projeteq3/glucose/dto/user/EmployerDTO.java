@@ -20,7 +20,7 @@ public class EmployerDTO extends UserDTO {
     private List<JobOfferDTO> jobOffers = new ArrayList<>();
 
     public EmployerDTO(Employer employer){
-        super(employer.getUserID(), employer.getFirstName(), employer.getLastName(), employer.getEmail());
+        super(employer.getId(), employer.getFirstName(), employer.getLastName(), employer.getEmail());
         this.organisationName = employer.getOrganisationName();
         this.organisationPhone = employer.getOrganisationPhone();
         this.jobOffers = employer.getJobOffers() == null ? null : employer.getJobOffers().stream().map(JobOfferDTO::new).toList();
