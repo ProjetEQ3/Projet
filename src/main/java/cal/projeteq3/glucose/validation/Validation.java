@@ -1,9 +1,9 @@
 package cal.projeteq3.glucose.validation;
 
-import cal.projeteq3.glucose.dto.LoginDTO;
+import cal.projeteq3.glucose.dto.user.LoginDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
-import cal.projeteq3.glucose.model.Employer;
-import cal.projeteq3.glucose.model.Student;
+import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 
 import java.time.LocalDate;
 import static cal.projeteq3.glucose.validation.ValidationPattern.*;

@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.model;
+package cal.projeteq3.glucose.model.user;
 
 import jakarta.persistence.Entity;
 import lombok.*;

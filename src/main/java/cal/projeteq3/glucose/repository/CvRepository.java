@@ -1,8 +1,8 @@
 package cal.projeteq3.glucose.repository;
 
-import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.CvState;
-import cal.projeteq3.glucose.model.Student;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

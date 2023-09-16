@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.EmployerDTO;
-import cal.projeteq3.glucose.model.Employer;
+import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,5 +1,6 @@
-package cal.projeteq3.glucose.model;
+package cal.projeteq3.glucose.model.cvFile;
 
+import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
 

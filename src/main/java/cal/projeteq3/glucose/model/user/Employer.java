@@ -1,5 +1,6 @@
-package cal.projeteq3.glucose.model;
+package cal.projeteq3.glucose.model.user;
 
+import cal.projeteq3.glucose.model.jobOffre.JobOffer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +25,10 @@ public class Employer extends User{
 	private List<JobOffer> jobOffers = new ArrayList<>();
 
 	@Builder
-	public Employer(long id, String firstName, String lastName, String email, String password, String organisationName, String organisationPhone, List<JobOffer> jobOffers){
+	public Employer(
+		Long id, String firstName, String lastName, String email, String password,
+		String organisationName, String organisationPhone, List<JobOffer> jobOffers
+	){
 		super(id, firstName, lastName, email, password);
 		this.organisationName = organisationName;
 		this.organisationPhone = organisationPhone;
@@ -32,14 +36,20 @@ public class Employer extends User{
 	}
 
 	/*@Builder
-	public Employer(long id, String firstName, String lastName, String email, String password, String organisationName, String organisationPhone, List<JobOffer> jobOffers){
+	public Employer(
+		long id, String firstName, String lastName, String email, String password,
+		String organisationName, String organisationPhone, List<JobOffer> jobOffers
+	){
 		super(id, firstName, lastName, email, password);
 		this.organisationName = organisationName;
 		this.organisationPhone = organisationPhone;
 		this.jobOffers = jobOffers;
 	}*/
 
-	/*public Employer(String firstName, String lastName, String email, String password, String organisationName, String organisationPhone, List<JobOffer> jobOffers){
+	/*public Employer(
+			String firstName, String lastName, String email, String password,
+			String organisationName, String organisationPhone, List<JobOffer> jobOffers
+		){
 		super(firstName, lastName, email, password);
 		this.organisationName = organisationName;
 		this.organisationPhone = organisationPhone;

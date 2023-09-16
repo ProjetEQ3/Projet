@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 import cal.projeteq3.glucose.exception.request.*;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
 import org.junit.jupiter.api.Test;
 
 public class CvFileTest{

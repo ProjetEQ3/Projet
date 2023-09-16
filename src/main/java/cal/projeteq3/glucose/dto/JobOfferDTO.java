@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.model.JobOffer;
+import cal.projeteq3.glucose.model.jobOffre.JobOffer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

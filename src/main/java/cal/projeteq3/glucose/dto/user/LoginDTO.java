@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.dto;
+package cal.projeteq3.glucose.dto.user;
 
 import lombok.*;
 

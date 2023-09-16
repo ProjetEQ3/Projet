@@ -1,11 +1,13 @@
-package cal.projeteq3.glucose.dto;
+package cal.projeteq3.glucose.dto.user;
 
-import cal.projeteq3.glucose.model.Employer;
+import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.model.user.Employer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -15,7 +17,7 @@ import java.util.List;
 public class EmployerDTO extends UserDTO {
     private String organisationName;
     private String organisationPhone;
-    private List<JobOfferDTO> jobOffers;
+    private List<JobOfferDTO> jobOffers = new ArrayList<>();
 
     public EmployerDTO(Employer employer){
         super(employer.getUserID(), employer.getFirstName(), employer.getLastName(), employer.getEmail());

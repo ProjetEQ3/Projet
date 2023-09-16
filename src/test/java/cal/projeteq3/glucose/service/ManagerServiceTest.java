@@ -11,8 +11,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.ManagerDTO;
-import cal.projeteq3.glucose.model.Manager;
+import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -21,8 +21,6 @@ import cal.projeteq3.glucose.repository.StudentRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -415,7 +413,7 @@ class ManagerServiceTest {
      */
     @Test
     void testGetAllCvFileByStudentMatricule2() {
-        assertTrue(managerService.getAllCvFileByStudentMatricule("cal.projeteq3.glucose.model.CvFile").isEmpty());
+        assertTrue(managerService.getAllCvFileByStudentMatricule("cal.projeteq3.glucose.model.cv.CvFile").isEmpty());
         assertTrue(managerService.getAllGestionnaires().isEmpty());
     }
 
@@ -466,7 +464,7 @@ class ManagerServiceTest {
      */
     @Test
     void testDeleteAllCvFileByStudendMatricule2() {
-        managerService.deleteAllCvFileByStudendMatricule("cal.projeteq3.glucose.model.CvFile");
+        managerService.deleteAllCvFileByStudendMatricule("cal.projeteq3.glucose.model.cv.CvFile");
         assertTrue(managerService.getAllCv().isEmpty());
     }
 }

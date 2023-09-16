@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
-import cal.projeteq3.glucose.model.Employer;
-import cal.projeteq3.glucose.model.JobOffer;
+import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.jobOffre.JobOffer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;

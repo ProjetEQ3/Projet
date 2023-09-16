@@ -2,10 +2,10 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
-import cal.projeteq3.glucose.dto.ManagerDTO;
-import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.Manager;
-import cal.projeteq3.glucose.model.CvState;
+import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;

@@ -1,19 +1,12 @@
 package cal.projeteq3.glucose.Controller;
 
 import cal.projeteq3.glucose.controller.StudentController;
-import cal.projeteq3.glucose.dto.StudentDTO;
-import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.service.StudentService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class StudentControllerTest {
 

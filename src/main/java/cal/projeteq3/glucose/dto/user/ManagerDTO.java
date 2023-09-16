@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.dto;
+package cal.projeteq3.glucose.dto.user;
 
-import cal.projeteq3.glucose.model.Manager;
+import cal.projeteq3.glucose.model.user.Manager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.CvState;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import lombok.*;
 
 @Data

@@ -1,5 +1,7 @@
-package cal.projeteq3.glucose.model;
+package cal.projeteq3.glucose.model.jobOffre;
 
+import cal.projeteq3.glucose.model.JobApplication;
+import cal.projeteq3.glucose.model.user.Employer;
 import jakarta.persistence.*;
 import lombok.*;
 

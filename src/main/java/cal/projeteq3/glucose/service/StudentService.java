@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.StudentDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
-import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.Student;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
