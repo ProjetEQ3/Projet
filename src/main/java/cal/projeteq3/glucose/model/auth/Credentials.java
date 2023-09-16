@@ -17,8 +17,7 @@ public final class Credentials{
 	@Column(name = "id")
 	private Long id;
 
-	//@Column(name = "email", unique = true, nullable = false, length = 50)
-	@Column(name = "email")
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 
 	@Column(name = "password", nullable = false, length = 100)

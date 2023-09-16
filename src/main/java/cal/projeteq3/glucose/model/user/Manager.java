@@ -23,11 +23,7 @@ public class Manager extends User{
 		Long id, String firstName, String lastName, String email, String password,
 		String matricule, String phoneNumber
 	){
-		//super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.MANAGER).build());
-		super(id, firstName, lastName, new Credentials());
-		setEmail(email);
-		setPassword(password);
-		setRole(Role.MANAGER);
+		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.MANAGER).build());
 		this.matricule = matricule;
 		this.phoneNumber = phoneNumber;
 	}

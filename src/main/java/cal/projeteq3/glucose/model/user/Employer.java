@@ -31,20 +31,7 @@ public class Employer extends User{
 		Long id, String firstName, String lastName, String email, String password,
 		String organisationName, String organisationPhone, List<JobOffer> jobOffers
 	){
-		super(
-			id,
-			firstName,
-			lastName,
-			Credentials.builder()
-				.email(email)
-				.password(password)
-				.role(Role.EMPLOYER)
-				.build()
-		);
-		//super(id, firstName, lastName, new Credentials());
-		//setEmail(email);
-		//setPassword(password);
-		//setRole(Role.EMPLOYER);
+		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.EMPLOYER).build());
 		this.organisationName = organisationName;
 		this.organisationPhone = organisationPhone;
 		if(jobOffers != null)

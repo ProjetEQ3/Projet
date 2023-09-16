@@ -28,20 +28,7 @@ public class Student extends User{
 		Long id, String firstName, String lastName, String email, String password,
 		String matricule, String department, CvFile cvFile
 	){
-		super(
-			id,
-			firstName,
-			lastName,
-			Credentials.builder()
-				.email(email)
-				.password(password)
-				.role(Role.STUDENT)
-				.build()
-		);
-		//super(id, firstName, lastName, new Credentials());
-		//setEmail(email);
-		//setPassword(password);
-		//setRole(Role.STUDENT);
+		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());
 		this.matricule = matricule;
 		this.department = Department.valueOf(department);
 		addCv(cvFile);
