@@ -25,7 +25,8 @@ public class Student extends User {
 
     public void addCv(CvFile cvFile) {
         this.cv = cvFile;
-        this.cv.setStudent(this);
+        if(cvFile != null)
+            this.cv.setStudent(this);
     }
 
 }

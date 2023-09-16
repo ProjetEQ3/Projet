@@ -34,11 +34,11 @@ public class GlucoseApplication implements CommandLineRunner {
 
 	private void createDatabase(){
 		for (Employer employer: createEmployer()) {
-			employerService.createEmployer(employer);
+			//employerService.createEmployer(employer);
 		}
 
 		for (Student student : createStudent()){
-			studentService.createStudent(student);
+			//studentService.createStudent(student);
 		}
 
 		managerService.createGestionnaire(createManager());

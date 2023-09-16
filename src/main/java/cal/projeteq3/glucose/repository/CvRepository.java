@@ -10,7 +10,7 @@ import java.util.List;
 public interface CvRepository extends JpaRepository<CvFile, Long> {
 
     CvFile findByFileName(String fileName);
-    List<CvFile> findAllByState(CvState cvState);
+    List<CvFile> findAllByCvState(CvState cvState);
     List<CvFile> findAllByStudent(Student student);
     void deleteAllByStudent(Student student);
     CvFile findByStudentAndFileName(Student student, String fileName);

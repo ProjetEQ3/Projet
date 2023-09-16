@@ -6,7 +6,6 @@ import cal.projeteq3.glucose.dto.ManagerDTO;
 import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.model.Manager;
 import cal.projeteq3.glucose.model.CvState;
-import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -87,7 +86,7 @@ public class ManagerService {
     }
 
     public List<CvFileDTO> getPendingCv(){
-        return cvRepository.findAllByState(CvState.PENDING).stream().map(CvFileDTO::new).toList();
+        return cvRepository.findAllByCvState(CvState.PENDING).stream().map(CvFileDTO::new).toList();
     }
 
     /*public CvFileDTO createCvFile(CvFile cvFile){
