@@ -83,7 +83,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Jean")
 				.lastName("Non")
-				.email("t@professionnel.com")
+				.email("terss@professionnel.com")
 				.password("Ose12345")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")

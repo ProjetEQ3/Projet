@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.validation;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
 
@@ -136,4 +137,11 @@ public final class Validation{
 		validateEmail(loginDTO.getEmail());
 		validatePassword(loginDTO.getPassword());
 	}
+
+	public static void validateRole(String role){
+		if(role.matches(Role.getAllRolesString()))
+			return;
+		exception(ValidationMessage.ROLE_MESSAGE.toString());
+	}
+
 }

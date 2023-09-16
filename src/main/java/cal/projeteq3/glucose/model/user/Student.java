@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.model.user;
 
 import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.auth.Credential;
+import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import jakarta.persistence.*;
@@ -25,10 +25,23 @@ public class Student extends User{
 
 	@Builder
 	public Student(
-		Long id, String firstName, String lastName, String email,
-		String password, String matricule, String department, CvFile cvFile
+		Long id, String firstName, String lastName, String email, String password,
+		String matricule, String department, CvFile cvFile
 	){
-		super(id, firstName, lastName, Credential.builder().email(email).password(password).role(Role.STUDENT).build());
+		super(
+			id,
+			firstName,
+			lastName,
+			Credentials.builder()
+				.email(email)
+				.password(password)
+				.role(Role.STUDENT)
+				.build()
+		);
+		//super(id, firstName, lastName, new Credentials());
+		//setEmail(email);
+		//setPassword(password);
+		//setRole(Role.STUDENT);
 		this.matricule = matricule;
 		this.department = Department.valueOf(department);
 		addCv(cvFile);

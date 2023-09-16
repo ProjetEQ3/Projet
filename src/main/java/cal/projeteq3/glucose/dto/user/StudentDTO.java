@@ -6,7 +6,8 @@ import cal.projeteq3.glucose.model.user.Student;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO extends UserDTO {

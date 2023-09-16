@@ -1,14 +1,13 @@
 package cal.projeteq3.glucose.model.user;
 
-import cal.projeteq3.glucose.model.auth.Credential;
+import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public abstract class User{
 	@Id
@@ -22,8 +21,8 @@ public abstract class User{
 	private String lastName;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "credential", referencedColumnName = "id", nullable = false)
-	private Credential<?> credentials;
+	@JoinColumn(name = "credentials", referencedColumnName = "id", nullable = false)
+	private Credentials credentials;
 
 	public String getEmail(){
 		return this.credentials.getEmail();

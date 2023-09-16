@@ -11,13 +11,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "credentials")
-public final class Credential<U extends User>{
+public final class Credentials{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "email", unique = true, nullable = false, length = 50)
+	//@Column(name = "email", unique = true, nullable = false, length = 50)
+	@Column(name = "email")
 	private String email;
 
 	@Column(name = "password", nullable = false, length = 100)
@@ -26,8 +27,5 @@ public final class Credential<U extends User>{
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false, length = 20)
 	private Role role;
-
-	@OneToOne(mappedBy = "credentials")
-	private U user;
 
 }
