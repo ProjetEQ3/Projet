@@ -20,7 +20,7 @@ public class Student extends User {
         super(firstName, lastName, email, password);
         this.matricule = matricule;
         this.department = Department.valueOf(department);
-        this.cv = cvFile;
+        addCv(cvFile);
     }
 
     public void addCv(CvFile cvFile) {
