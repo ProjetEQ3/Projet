@@ -30,7 +30,8 @@ public class Student extends User{
 	){
 		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());
 		this.matricule = matricule;
-		this.department = Department.valueOf(department);
+		if(department != null)
+			this.department = Department.valueOf(department);
 		addCv(cvFile);
 	}
 

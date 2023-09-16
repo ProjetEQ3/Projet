@@ -22,21 +22,24 @@ public class UserController{
 
     @PostMapping({"", "/"})
     public ResponseEntity<UserDTO> register(@RequestBody RegisterDTO registerDTO){
+        System.out.println("register:" + registerDTO.getEmail());
         try {
             return ResponseEntity
               .status(HttpStatus.CREATED)
               .body(this.userService.createUser(registerDTO));
         } catch (ValidationException e) {
+            System.out.println("ValidationException:" + e.getMessage());
             return ResponseEntity
               .status(e.getStatus())
               .header("X-Errors", e.getMessage())
               .body(null);
-        } catch (Exception e) {
+        } /*catch (Exception e) {
+            System.out.println("Exception:" + e.getMessage());
             return ResponseEntity
               .status(HttpStatus.INTERNAL_SERVER_ERROR)
               .header("X-Errors", e.getMessage())
               .body(null);
-        }
+        }*/
     }
 
     @PostMapping("/login")
