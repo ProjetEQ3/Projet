@@ -46,7 +46,55 @@ public class GlucoseApplication implements CommandLineRunner {
 
 	private static List<Employer> createEmployer(){
 		return List.of(
-				new Employer(
+			Employer.builder()
+				.firstName("Gabriel")
+				.lastName("Non")
+				.email("Gabriel@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build(),
+			Employer.builder()
+				.firstName("Chawki")
+				.lastName("Non")
+				.email("Chawki@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build(),
+			Employer.builder()
+				.firstName("Zakaria")
+				.lastName("Non")
+				.email("Zakaria@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build(),
+			Employer.builder()
+				.firstName("Samuel")
+				.lastName("Non")
+				.email("Samuel@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build(),
+			Employer.builder()
+				.firstName("Louis")
+				.lastName("Non")
+				.email("Louis@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build(),
+			Employer.builder()
+				.firstName("Jean")
+				.lastName("Non")
+				.email("t@professionnel.com")
+				.password("Ose12345")
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build()
+/*				new Employer(
 						"Gabriel",
 						"Non",
 						"Gabriel@professionnel.com",
@@ -93,7 +141,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						"Ose12345",
 						"Fritz",
 						"123-456-7890",
-						null)
+						null)*/
 				);
 	}
 
