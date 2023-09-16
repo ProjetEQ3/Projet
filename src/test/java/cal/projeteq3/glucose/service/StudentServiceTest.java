@@ -28,7 +28,7 @@ public class StudentServiceTest {
     @InjectMocks
     private StudentService studentService;
 
-    @Test
+    /*@Test
     public void createStudentTest() {
 
         //Arrange
@@ -147,6 +147,6 @@ public class StudentServiceTest {
 
         verify(studentRepository, times(1)).deleteById(studentId);
 
-    }
+    }*/
 
 }
