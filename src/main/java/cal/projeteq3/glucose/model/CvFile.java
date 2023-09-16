@@ -21,16 +21,23 @@ public final class CvFile{
 	@Column(name = "file_data", nullable = false, updatable = false)
 	private byte[] fileData;
 
+	@Column(name = "cv_state")
+	private CvState cvState;
+
 	@OneToOne(mappedBy = "cv", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Student student;
 
-	private State state;
-
-	public CvFile(String fileName, byte[] fileData, Student student){
+	/*public CvFile(String fileName, byte[] fileData, Student student){
 		this.fileName = fileName;
 		this.fileData = fileData;
-		this.state = State.SUBMITTED;
-		this.student = student;
+		this.state = State.SUBMITTED; //ca va pas marche car il va met state to submitted quand il prend le cv de la base de donnee
+		this.student = student; // doit pas prendre student ici
+	}*/
+
+	public CvFile(String fileName, byte[] fileData, CvState cvState){
+		this.fileName = fileName;
+		this.fileData = fileData;
+		this.cvState = cvState;
 	}
 
 }

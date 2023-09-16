@@ -63,7 +63,6 @@ public class StudentService {
     }
 
     public StudentDTO addCv(Long studentId, CvFileDTO cvFile){
-        //TODO: will be better to have two functions in Student, one to add a cv and one to update a cv
         Student student;
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);

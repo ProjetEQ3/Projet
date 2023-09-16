@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose.model;
 
-import cal.projeteq3.glucose.dto.StudentDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +21,11 @@ public class Student extends User {
         this.matricule = matricule;
         this.department = Department.valueOf(department);
         this.cv = cvFile;
+    }
+
+    public void addCv(CvFile cvFile) {
+        this.cv = cvFile;
+        this.cv.setStudent(this);
     }
 
 }

@@ -5,7 +5,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.ManagerDTO;
 import cal.projeteq3.glucose.model.CvFile;
 import cal.projeteq3.glucose.model.Manager;
-import cal.projeteq3.glucose.model.State;
+import cal.projeteq3.glucose.model.CvState;
 import cal.projeteq3.glucose.model.Student;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
@@ -87,24 +87,24 @@ public class ManagerService {
     }
 
     public List<CvFileDTO> getPendingCv(){
-        return cvRepository.findAllByState(State.PENDING).stream().map(CvFileDTO::new).toList();
+        return cvRepository.findAllByState(CvState.PENDING).stream().map(CvFileDTO::new).toList();
     }
 
-    public CvFileDTO createCvFile(CvFile cvFile){
+    /*public CvFileDTO createCvFile(CvFile cvFile){
         return new CvFileDTO(cvRepository.save(cvFile));
-    }
+    }*/
 
-    public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
+   /* public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
         return new CvFileDTO(cvRepository.save(
                 new CvFile(fileName, fileData, student))
         );
-    }
+    }*/
 
-    public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
+    /*public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
         return new CvFileDTO(cvRepository.save(
                 new CvFile(fileName, fileData, studentRepository.findByMatricule(matricule)))
         );
-    }
+    }*/
 
     public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){
         Optional<CvFile> existingCvFile = cvRepository.findById(id);
@@ -113,7 +113,7 @@ public class ManagerService {
 
             cvFile.setFileName(updatedCvFile.getFileName());
             cvFile.setFileData(updatedCvFile.getFileData());
-            cvFile.setState(updatedCvFile.getState());
+            cvFile.setCvState(updatedCvFile.getCvState());
 
             return new CvFileDTO(cvRepository.save(cvFile));
         } else {

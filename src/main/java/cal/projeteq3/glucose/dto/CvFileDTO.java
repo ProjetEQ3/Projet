@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.dto;
 
 import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.State;
+import cal.projeteq3.glucose.model.CvState;
 import lombok.*;
 
 @Data
@@ -12,17 +12,17 @@ public class CvFileDTO{
 	private Long id;
 	private String fileName;
 	private byte[] fileData;
-	private State state;
+	private CvState cvState;
 
 	public CvFileDTO(CvFile cvFile){
 		id = cvFile.getId();
 		fileName = cvFile.getFileName();
 		fileData = cvFile.getFileData();
-		state = cvFile.getState();
+		cvState = cvFile.getCvState();
 	}
 
 	public CvFile toEntity(){
-		return CvFile.builder().fileName(fileName).fileData(fileData).state(state).build();
+		return CvFile.builder().fileName(fileName).fileData(fileData).cvState(cvState).build();
 	}
 
 }
