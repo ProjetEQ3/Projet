@@ -24,7 +24,8 @@ public class EmployerController {
         this.empService = empService;
     }
 
-    @PostMapping("/register")
+    /*@PostMapping("/register")
+    //TODO DTO PLZ
     public ResponseEntity<EmployerDTO> register(@RequestBody Employer employer) {
 
         try {
@@ -36,7 +37,7 @@ public class EmployerController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
-    }
+    }*/
 
     @GetMapping("/offer/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(){
@@ -44,13 +45,25 @@ public class EmployerController {
     }
 
     @PostMapping("/offer")
-    public ResponseEntity<JobOfferDTO> addJobOffer(@RequestBody JobOffer JobOffer){
-        return ResponseEntity.accepted().body(this.empService.createJobOffer(JobOffer));
+    public ResponseEntity<JobOfferDTO> addJobOffer(@RequestBody JobOfferDTO JobOffer){
+        try{
+            return ResponseEntity.accepted().body(this.empService.createJobOffer(JobOffer));
+        }catch(ValidationException e){
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalid Operation").body(null);
+        }
     }
 
     @PutMapping("/offer/{id}")
-    public ResponseEntity<JobOfferDTO> updateJobOffer(@PathVariable Long id, @RequestBody JobOffer JobOffer){
-        return ResponseEntity.accepted().body(this.empService.updateJobOffer(id, JobOffer));
+    public ResponseEntity<JobOfferDTO> updateJobOffer(@PathVariable Long id, @RequestBody JobOfferDTO JobOffer){
+        try{
+            return ResponseEntity.accepted().body(this.empService.updateJobOffer(id, JobOffer));
+        }catch(ValidationException e){
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalid operation").body(null);
+        }
     }
 
     @DeleteMapping("/offer/{id}")

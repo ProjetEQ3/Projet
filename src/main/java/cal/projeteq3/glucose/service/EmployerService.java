@@ -64,11 +64,15 @@ public class EmployerService {
         employerRepository.deleteById(id);
     }
 
-    public JobOfferDTO createJobOffer(JobOffer jobOffer){
+    /*public JobOfferDTO createJobOffer(JobOffer jobOffer){
         return new JobOfferDTO(jobOfferRepository.save(jobOffer));
+    }*/
+
+    public JobOfferDTO createJobOffer(JobOfferDTO jobOffer){
+        return null; //TODO plz fix with DTO
     }
 
-    public JobOfferDTO updateJobOffer(Long id, JobOffer updatedJobOffer){
+   /* public JobOfferDTO updateJobOffer(Long id, JobOffer updatedJobOffer){
         Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
         if (existingJobOffer.isPresent()){
             JobOffer jobOffer = existingJobOffer.get();
@@ -87,6 +91,10 @@ public class EmployerService {
         }
 
         throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
+    }*/
+
+    public JobOfferDTO updateJobOffer(Long id, JobOfferDTO updatedJobOffer){
+        return null; //TODO plz fix with DTO
     }
 
     public void deleteJobOffer(Long id){
