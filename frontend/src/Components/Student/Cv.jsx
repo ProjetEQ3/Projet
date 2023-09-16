@@ -1,7 +1,8 @@
-import serverIp, {axiosInstance} from "../App";
-import {toast} from "react-toastify";
+import serverIp, {axiosInstance} from "../../App"
+import {toast} from "react-toastify"
 
 function Cv({user, setCv}){
+
 	const handlePdfUpload = (e) => {
 		const file = e.target.files[0]
 		if(file && file.type === 'application/pdf'){
@@ -30,14 +31,19 @@ function Cv({user, setCv}){
 	}
 
 	return (
-		<div>
-			{user.cvFile && (
+		<div className="container">
+			{user.cvFile ? (
 				<div>
 					<h2>CV:</h2>
 					<p>{user.cvFile.name}</p>
-					<button onClick={handleDeletePdf}>Delete</button>
+					<button
+						className="btn btn-danger"
+						onClick={handleDeletePdf}
+					>
+						Delete
+					</button>
 				</div>
-			) || (
+			) : (
 				<div>
 					<h1>Téléverser un CV</h1>
 					<input
@@ -49,6 +55,7 @@ function Cv({user, setCv}){
 			)}
 		</div>
 	)
+
 }
 
 export default Cv
