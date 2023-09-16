@@ -28,9 +28,10 @@ public class EmployerService {
 
     // database operations here
 
-    public EmployerDTO createEmployer(Employer employer) {
+    //TODO plz fix with DTO
+   /* public EmployerDTO createEmployer(Employer employer) {
         return new EmployerDTO(employerRepository.save(employer));
-    }
+    }*/
 
     public List<EmployerDTO> getAllEmployers() {
         List<Employer> employers = employerRepository.findAll();
@@ -101,9 +102,10 @@ public class EmployerService {
         jobOfferRepository.deleteById(id);
     }
 
-    public List<JobOffer> getAllMyJobOffers(Employer employer){
+    //TODO plz fix with DTO
+    /*public List<JobOffer> getAllMyJobOffers(Employer employer){
         return jobOfferRepository.findAllByEmployer(employer);
-    }
+    }*/
 
     public List<JobOfferDTO> getAllJobOffers() {
         List<JobOffer> jobOffers = jobOfferRepository.findAll();

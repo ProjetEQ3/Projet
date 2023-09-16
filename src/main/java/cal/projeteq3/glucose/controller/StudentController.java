@@ -19,7 +19,8 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/register")
+    //TODO DTO PLZ
+    /*@PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         try {
             Validation.validateStudent(student);
@@ -30,7 +31,7 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
 
-    }
+    }*/
 
     @PostMapping("/cv")
     public ResponseEntity<StudentDTO> addCv(@RequestBody StudentDTO student){
