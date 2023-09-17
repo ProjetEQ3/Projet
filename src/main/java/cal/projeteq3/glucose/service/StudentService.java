@@ -28,9 +28,7 @@ public class StudentService {
     // database operations here
 
     //TODO DTO PLZ
-    public StudentDTO createStudent(StudentDTO studentDto, String password) {
-        Student student = studentDto.toEntity();
-        student.getCredentials().setPassword(password);
+    public StudentDTO createStudent(Student student) {
         return new StudentDTO(studentRepository.save(student));
     }
 

@@ -20,11 +20,10 @@ public class StudentController {
 
     //TODO DTO PLZ
     @PostMapping("/register")
-    public ResponseEntity<StudentDTO> register(@RequestBody StudentDTO student, String password){
+    public ResponseEntity<StudentDTO> register(@RequestBody Student student){
         try {
             Validation.validateStudent(student);
-            Validation.validatePassword(password);
-            return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student, password));
+            return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
         } catch (ValidationException e) {
             return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
         } catch (Exception e) {
