@@ -170,6 +170,7 @@ public class ManagerService{
 		throw new JobOffreNotFoundException(id);
 	}
 
+	// TODO : En cas de refus, une justification est requise
 	public JobOfferDTO refuseJobOffer(Long id) {
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
 		if(existingJobOffer.isPresent()) {
@@ -180,7 +181,5 @@ public class ManagerService{
 
 		throw new JobOffreNotFoundException(id);
 	}
-
-
 
 }
