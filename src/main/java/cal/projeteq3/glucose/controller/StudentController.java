@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.user.Student;
