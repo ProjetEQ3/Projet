@@ -17,10 +17,10 @@ public class Student extends User{
 	@OneToOne
 	private CvFile cvFile;
 
-	@Column(name = "matricule")
+	@Column(unique = true, nullable = false)
 	private String matricule;
 
-	@Column(name = "department")
+	@Enumerated(EnumType.STRING)
 	private Department department;
 
 	@Builder

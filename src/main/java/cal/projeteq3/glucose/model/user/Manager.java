@@ -12,10 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Manager extends User{
-	@Column(name = "matricule")
+	@Column(unique = true, nullable = false)
 	private String matricule;
 
-	@Column(name = "phone_number")
 	private String phoneNumber;
 
 	@Builder

@@ -97,7 +97,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Jean")
 				.lastName("Michaud")
 				.email("jean@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000001")
 				.department("_420B0")
 				.build(),
@@ -105,7 +105,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Joe")
 				.lastName("Michaud")
 				.email("Joe@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000002")
 				.department("_420B0")
 				.build(),
@@ -113,7 +113,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Louis")
 				.lastName("Michaud")
 				.email("Louis@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000003")
 				.department("_420B0")
 				.build(),
@@ -121,7 +121,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Chawki")
 				.lastName("Michaud")
 				.email("Chawki@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000004")
 				.department("_420B0")
 				.build(),
@@ -137,7 +137,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Gabriel")
 				.lastName("Michaud")
 				.email("Gabriel@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000006")
 				.department("_420B0")
 				.build(),
@@ -145,7 +145,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Samuel")
 				.lastName("Michaud")
 				.email("Samuel@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000007")
 				.department("_420B0")
 				.build(),
@@ -153,7 +153,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Karim")
 				.lastName("Michaud")
 				.email("Karim@michaud.com")
-				.password("123-456-7890")
+				.password("Ose12345")
 				.matricule("0000008")
 				.department("_420B0")
 				.build());

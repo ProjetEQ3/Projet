@@ -14,14 +14,12 @@ public abstract class User{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(name = "first_name")
 	private String firstName;
 
-	@Column(name = "last_name")
 	private String lastName;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "credentials", referencedColumnName = "id", nullable = false)
+	@JoinColumn(referencedColumnName = "id", nullable = false)
 	private Credentials credentials;
 
 	public User(String lastName, String firstName, Credentials credentials){

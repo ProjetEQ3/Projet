@@ -19,40 +19,36 @@ public class JobOffer{
 	@GeneratedValue
 	private Long id;
 
-	@Column(name = "title", nullable = false)
+	@Column(nullable = false)
 	private String title;
 
-	@Column(name = "department", nullable = false)
+	@Column(nullable = false)
 	private String department;
 
-	@Column(name = "location", nullable = false)
+	@Column(nullable = false)
 	private String location;
 
-	@Column(name = "description", nullable = false)
+	@Column(nullable = false)
 	private String description;
 
-	@Column(name = "salary")
 	private float salary;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_date", nullable = false)
+	@Column(nullable = false)
 	private LocalDateTime startDate;
 
-	@Column(name = "duration")
 	private int duration;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "expiration_date", nullable = false)
+	@Column(nullable = false)
 	private LocalDateTime expirationDate;
 
-	@Column(name = "offre_tate", nullable = false)
+	@Column(nullable = false)
 	private String offreState;
 
-	@Column(name = "hours_per_week")
 	private int hoursPerWeek;
 
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffre
-	@JoinColumn(name = "employer")
 	private Employer employer;
 
 	@OneToMany(mappedBy = "jobOffer")

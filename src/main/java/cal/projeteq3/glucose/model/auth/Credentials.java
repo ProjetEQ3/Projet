@@ -5,26 +5,23 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "credentials")
 public final class Credentials{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "email", unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
 	private String email;
 
-	@Column(name = "password", nullable = false, length = 100)
+	@Column(nullable = false)
 	private String password;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role", nullable = false, length = 20)
+	@Column(nullable = false)
 	private Role role;
 
 }
