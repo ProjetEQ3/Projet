@@ -29,10 +29,9 @@ public class EmployerService{
 
 	// database operations here
 
-	//TODO plz fix with DTO
-   /* public EmployerDTO createEmployer(Employer employer) {
+   public EmployerDTO createEmployer(Employer employer) {
         return new EmployerDTO(employerRepository.save(employer));
-    }*/
+    }
 
 	public List<EmployerDTO> getAllEmployers(){
 		List<Employer> employers = employerRepository.findAll();

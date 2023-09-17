@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.validation;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
+import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -127,11 +128,11 @@ public final class Validation{
 		validatePhoneNumber(employer.getOrganisationPhone());
 	}
 
-	public static void validateStudent(StudentDTO student) {
+	public static void validateStudent(Student student) {
 		validateName(student.getFirstName());
 		validateName(student.getLastName());
 		validateEmail(student.getEmail());
-//		validatePassword(student.getPassword());
+		validatePassword(student.getPassword());
 		validateMatricule(student.getMatricule());
 	}
 
