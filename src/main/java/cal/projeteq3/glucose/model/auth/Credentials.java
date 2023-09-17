@@ -25,7 +25,7 @@ public final class Credentials{
 	private Role role;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(referencedColumnName = "id", nullable = false, unique = true)
+	@JoinColumn(referencedColumnName = "id", unique = true)
 	private User user;
 
 }
