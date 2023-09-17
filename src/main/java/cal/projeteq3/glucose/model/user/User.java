@@ -21,7 +21,7 @@ public abstract class User{
 	private String lastName;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(referencedColumnName = "id", nullable = false)
+	@JoinColumn(referencedColumnName = "id", nullable = false, unique = true)
 	private Credentials credentials;
 
 	public User(String lastName, String firstName, Credentials credentials){
