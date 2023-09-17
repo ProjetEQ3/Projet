@@ -148,8 +148,8 @@ const RegisterEmployerForm = () => {
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="organisationName" className="mt-3">Nom de l'organisme</label>
                         <input type="text" className={`form-control ${organisationNameValid? '': 'is-invalid'}`} id="organisationName" placeholder="Nom de l'organisme" name="organisationName" onChange={handleChanges}/>
-                        <label htmlFor="organisationPhone" className="mt-3">Numéro de l'organisme</label>
-                        <input type="text" className={`form-control ${organisationPhoneValid? '': 'is-invalid'}`} id="organisationPhone" placeholder="Numéro de l'organisme" name="organisationPhone" onChange={handleChanges}/>
+                        <label htmlFor="organisationPhone" className="mt-3">Numéro de téléphone</label>
+                        <input type="text" className={`form-control ${organisationPhoneValid? '': 'is-invalid'}`} id="organisationPhone" placeholder="Numéro de téléphone" name="organisationPhone" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Mot de passe</label>
                         <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
                         <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
