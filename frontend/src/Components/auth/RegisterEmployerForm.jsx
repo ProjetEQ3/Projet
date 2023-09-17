@@ -31,8 +31,11 @@ const RegisterEmployerForm = () => {
             {
                 lastName: formData.lastName,
                 firstName: formData.firstName,
-                email: formData.email,
-                password: formData.password,
+                credentials: {
+                    email: formData.email,
+                    password: formData.password,
+                    role: "EMPLOYER"
+                },
                 organisationName: formData.organisationName,
                 organisationPhone: formData.organisationPhone,
             }
