@@ -2,8 +2,10 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffre.JobOffer;
+import cal.projeteq3.glucose.model.jobOffre.JobOfferState;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -154,6 +157,28 @@ public class ManagerService{
 	public List<JobOfferDTO> getRefusedJobOffers() {
 		List<JobOffer> jobOffers = jobOfferRepository.findRefusedJobOffers();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
+	}
+
+	public JobOfferDTO acceptJobOffer(Long id) {
+		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
+		if(existingJobOffer.isPresent()) {
+			JobOffer jobOffer = existingJobOffer.get();
+			jobOffer.setJobOfferState(JobOfferState.ACCEPTED);
+			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
+		}
+
+		throw new JobOffreNotFoundException(id);
+	}
+
+	public JobOfferDTO refuseJobOffer(Long id) {
+		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
+		if(existingJobOffer.isPresent()) {
+			JobOffer jobOffer = existingJobOffer.get();
+			jobOffer.setJobOfferState(JobOfferState.REFUSED);
+			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
+		}
+
+		throw new JobOffreNotFoundException(id);
 	}
 
 
