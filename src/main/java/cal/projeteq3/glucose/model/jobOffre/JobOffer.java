@@ -19,6 +19,8 @@ public class JobOffer{
 	@GeneratedValue
 	private Long id;
 
+	private JobOfferState jobOfferState = JobOfferState.SUBMITTED;
+
 	@Column(nullable = false)
 	private String title;
 
