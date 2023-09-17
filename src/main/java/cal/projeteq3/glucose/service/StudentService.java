@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,9 @@ public class StudentService {
     // database operations here
 
     //TODO DTO PLZ
-    public StudentDTO createStudent(Student student) {
+    public StudentDTO createStudent(StudentDTO studentDto, String password) {
+        Student student = studentDto.toEntity();
+        student.getCredentials().setPassword(password);
         return new StudentDTO(studentRepository.save(student));
     }
 
