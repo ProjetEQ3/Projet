@@ -1,11 +1,10 @@
 import {useState} from "react"
 import {NavLink} from "react-router-dom"
 import {toast} from "react-toastify"
-import serverIp, {axiosInstance} from "../../App"
+import {axiosInstance} from "../../App"
 import User from "../../model/User";
 
-const LoginForm = ({user, setToken}) => {
-	user = new User();
+const LoginForm = ({user, setUser}) => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 
@@ -17,20 +16,24 @@ const LoginForm = ({user, setToken}) => {
 		}
 		console.log("data", data)
 		if(validateUser())
-			axiosInstance.post(serverIp + "/auth/login", data)
-			.then((response) => {
-				setToken(response.data)
-				toast.success("Vous êtes connecté")
-			})
-			.catch((error) => {
-				toast.error("Utilisateur ou mot de passe incorrect")
-			})
+			axiosInstance.post("/user/login", data)
+				.then((response) => {
+					let newUser = new User()
+					newUser.init(response.data)
+					newUser.isLoggedIn = true
+					setUser(newUser)
+					console.log("response.data", newUser)
+					toast.success("Vous êtes connecté")
+				})
+				.catch((error) => {
+					console.log("ERROR: ", error)
+					toast.error("Utilisateur ou mot de passe incorrect")
+				})
 	}
 
 	const validateUser = () => {
 		let isValid = true
 		if(!validateEmail()){
-			toast.success('Logged in as ')
 			isValid = false
 		}
 		if(!validatePassword()){
@@ -56,38 +59,42 @@ const LoginForm = ({user, setToken}) => {
 	return (
 		<>
 			{
-				user.isLoggedIn ? (
+				user?.isLoggedIn ? (
 					<p>Logged in as {user.email} <NavLink to="../logout">Logout?</NavLink></p>
 				) : (
 					<>
 						<h2>Se connecter</h2>
-						<form id="login-form">
-							<div className="form-group">
-								<label htmlFor="inputEmail1">Adresse email</label>
-								<input
-									type="email"
-									className="form-control"
-									id="inputEmail1"
-									aria-describedby="emailHelp"
-									placeholder="Entrez email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									required
-								/>
+						<form id="login-form" className="m-auto col-lg-8 p-5">
+							<div className="form-group row">
+								<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label-lg">Email</label>
+								<div className="col-sm-9">
+									<input
+										type="email"
+										className="form-control form-control-lg"
+										id="inputEmail1"
+										aria-describedby="emailHelp"
+										placeholder="Entrez email"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+										required
+									/>
+								</div>
 							</div>
-							<div className="form-group">
-								<label htmlFor="inputPassword">Mot de pass</label>
-								<input
-									type="password"
-									className="form-control"
-									id="inputPassword"
-									placeholder="Mot de pass"
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									required
-								/>
+							<div className="form-group row">
+								<label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label col-form-label-lg">Password</label>
+								<div className="col-sm-9">
+									<input
+										type="email"
+										className="form-control form-control-lg"
+										id="inputPassword"
+										placeholder="Mot de pass"
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+										required
+									/>
+								</div>
 							</div>
-							<button type="submit" className="btn btn-primary" onClick={handleSubmit}>Envoyer</button>
+							<button type="submit" className="btn btn-primary my-3 mx-auto" onClick={handleSubmit}>Envoyer</button>
 						</form>
 					</>
 				)

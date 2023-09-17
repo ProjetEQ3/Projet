@@ -1,5 +1,7 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+/*import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faTrash } from '@fortawesome/free-solid-svg-icons';*/
+//TODO: ces imports ne fonctionnent pas ou je sais pas comment les ajouter
+
 import {useState} from "react";
 const ShortJobOffer = ({ jobOffer }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -30,7 +32,7 @@ const ShortJobOffer = ({ jobOffer }) => {
                                 {jobOffer.state}
                             </div>
                         </div>
-                        <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg trash-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"/>
+                        {/*<FontAwesomeIcon icon={faTrash} className="me-2 fa-lg trash-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"/>*/}
                         <div id="deleteModal" className="modal">
                             <div className="modal-dialog">
                                 <div className="modal-content">

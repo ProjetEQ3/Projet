@@ -24,7 +24,7 @@ function App(){
 				pauseOnHover
 				theme="colored"
 			/>
-			<div className="App">
+			<div className="App container">
 				<BrowserRouter>
 					<Header user={user}/>
 					<Main user={user} setUser={setUser}/>

@@ -2,11 +2,7 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
-import cal.projeteq3.glucose.dto.ManagerDTO;
-import cal.projeteq3.glucose.model.CvFile;
-import cal.projeteq3.glucose.model.Manager;
-import cal.projeteq3.glucose.model.State;
-import cal.projeteq3.glucose.model.Student;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -15,40 +11,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ManagerService {
+public class ManagerService{
 
-    private final ManagerRepository managerRepository;
-    private final StudentRepository studentRepository;
-    private final JobOfferRepository jobOfferRepository;
-    private final CvRepository cvRepository;
+	private final ManagerRepository managerRepository;
+	private final StudentRepository studentRepository;
+	private final JobOfferRepository jobOfferRepository;
+	private final CvRepository cvRepository;
 
+	@Autowired
+	public ManagerService(
+		ManagerRepository managerRepository, StudentRepository studentRepository,
+		JobOfferRepository jobOfferRepository, CvRepository cvRepository
+	){
+		this.managerRepository = managerRepository;
+		this.studentRepository = studentRepository;
+		this.jobOfferRepository = jobOfferRepository;
+		this.cvRepository = cvRepository;
+	}
 
-    @Autowired
-    public ManagerService(ManagerRepository managerRepository, StudentRepository studentRepository, JobOfferRepository jobOfferRepository, CvRepository cvRepository) {
-        this.managerRepository = managerRepository;
-        this.studentRepository = studentRepository;
-        this.jobOfferRepository = jobOfferRepository;
-        this.cvRepository = cvRepository;
-    }
+	// database operations here
 
-    // database operations here
-
-    public ManagerDTO createGestionnaire(Manager manager) {
+   /* public ManagerDTO createGestionnaire(Manager manager) {//TODO: DTO
         return new ManagerDTO(managerRepository.save(manager));
-    }
+    }*/
 
-    public List<Manager> getAllGestionnaires() {
+    /*public List<Manager> getAllGestionnaires() {//TODO: DTO
         return managerRepository.findAll();
-    }
+    }*/
 
-    public Optional<Manager> getGestionnaireByID(Long id) {
+    /*public Optional<Manager> getGestionnaireByID(Long id) {//TODO: DTO
         return managerRepository.findById(id);
-    }
+    }*/
 
-    public Manager updateGestionnaire(Long id, Manager updatedManager) {
+    /*public Manager updateGestionnaire(Long id, Manager updatedManager) {//TODO: DTO
         Optional<Manager> existingGestionnaire = managerRepository.findById(id);
         if(existingGestionnaire.isPresent()) {
             Manager manager = existingGestionnaire.get();
@@ -62,90 +59,82 @@ public class ManagerService {
         } else {
             throw new IllegalArgumentException("Manager with ID " + id + " does not exist.");
         }
-    }
+    }*/
 
-    public void deleteGestionnaire(Long id) {
-        managerRepository.deleteById(id);
-    }
+	public void deleteGestionnaire(Long id){
+		managerRepository.deleteById(id);
+	}
 
-    public List<JobOfferDTO> getAllJobOffer() {
-        return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
-    }
+	public List<JobOfferDTO> getAllJobOffer(){
+		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+	}
 
-    public JobOfferDTO getJobOfferByID(Long id) {
-        return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
-    }
+	public JobOfferDTO getJobOfferByID(Long id){
+		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
+	}
 
+	//    CV File
+	public CvFileDTO getCvByID(Long id){
+		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
+	}
 
-//    CV File
-    public CvFileDTO getCvByID(Long id){
-        return new CvFileDTO(cvRepository.findById(id).orElseThrow());
-    }
+	public List<CvFileDTO> getAllCv(){
+		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
+	}
 
-    public List<CvFileDTO> getAllCv(){
-        return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
-    }
+	public List<CvFileDTO> getPendingCv(){
+		return cvRepository.findAllByCvState(CvState.PENDING).stream().map(CvFileDTO::new).toList();
+	}
 
-    public List<CvFileDTO> getPendingCv(){
-        return cvRepository.findAllByState(State.PENDING).stream().map(CvFileDTO::new).toList();
-    }
-
-    public CvFileDTO createCvFile(CvFile cvFile){
+    /*public CvFileDTO createCvFile(CvFile cvFile){
         return new CvFileDTO(cvRepository.save(cvFile));
-    }
+    }*/
 
-    public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
+   /* public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
         return new CvFileDTO(cvRepository.save(
                 new CvFile(fileName, fileData, student))
         );
-    }
+    }*/
 
-    public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
+    /*public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
         return new CvFileDTO(cvRepository.save(
                 new CvFile(fileName, fileData, studentRepository.findByMatricule(matricule)))
         );
-    }
+    }*/
 
-    public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){
+    /*public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){//TODO DTO
         Optional<CvFile> existingCvFile = cvRepository.findById(id);
         if(existingCvFile.isPresent()) {
             CvFile cvFile = existingCvFile.get();
 
             cvFile.setFileName(updatedCvFile.getFileName());
             cvFile.setFileData(updatedCvFile.getFileData());
-            cvFile.setState(updatedCvFile.getState());
+            cvFile.setCvState(updatedCvFile.getCvState());
 
             return new CvFileDTO(cvRepository.save(cvFile));
         } else {
             throw new IllegalArgumentException("CvFile with ID " + id + " does not exist.");
         }
-    }
+    }*/
 
-    public List<CvFileDTO> getAllCvFileByStudent(Long id){
-        return cvRepository.findAllByStudent(
-                studentRepository.findById(id).orElseThrow()
-        ).stream().map(CvFileDTO::new).toList();
-    }
+	public List<CvFileDTO> getAllCvFileByStudent(Long id){
+		return cvRepository.findAllByStudent(studentRepository.findById(id).orElseThrow()).stream().map(CvFileDTO::new).toList();
+	}
 
-    public List<CvFileDTO> getAllCvFileByStudentMatricule(String matricule){
-        return cvRepository.findAllByStudent(
-                studentRepository.findByMatricule(matricule)
-        ).stream().map(CvFileDTO::new).toList();
-    }
+	public List<CvFileDTO> getAllCvFileByStudentMatricule(String matricule){
+		return cvRepository.findAllByStudent(studentRepository.findByMatricule(matricule)).stream().map(CvFileDTO::new).toList();
+	}
 
-    public CvFileDTO getCvFileByStudentAndFileName(String matricule, String fileName){
-        return new CvFileDTO(cvRepository.findByStudentAndFileName(
-                studentRepository.findByMatricule(matricule), fileName
-        ));
-    }
+	public CvFileDTO getCvFileByStudentAndFileName(String matricule, String fileName){
+		return new CvFileDTO(cvRepository.findByStudentAndFileName(studentRepository.findByMatricule(matricule), fileName));
+	}
 
-    public void deleteCvFile(Long id){
-        cvRepository.deleteById(id);
-    }
+	public void deleteCvFile(Long id){
+		cvRepository.deleteById(id);
+	}
 
-    public void deleteAllCvFileByStudendMatricule(String matricule){
-        cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
-    }
-
+	public void deleteAllCvFileByStudendMatricule(String matricule){
+		cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
+	}
 
 }

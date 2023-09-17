@@ -1,15 +1,15 @@
-package cal.projeteq3.glucose.dto;
+package cal.projeteq3.glucose.dto.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;
     private String email;
+    private String role;
 }

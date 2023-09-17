@@ -7,7 +7,6 @@ const RegistrationForm = () => {
     const [empActive, setEmpActive] = useState(false);
     const [studActive, setStudActive] = useState(true);
 
-
     const handleButtonClick = (type) => {
         if (type === 'emp') {
             setEmpActive(true);
