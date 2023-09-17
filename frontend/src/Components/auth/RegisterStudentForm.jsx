@@ -15,7 +15,7 @@ const RegisterStudentForm = () => {
         email: '',
         password: '',
         passwordConfirm: '',
-        program: ''
+        department: ''
     });
     const [firstValid, setFirstValid] = useState(true);
     const [lastValid, setLastValid] = useState(true);
@@ -23,7 +23,7 @@ const RegisterStudentForm = () => {
     const [emailValid, setEmailValid] = useState(true);
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordConfirmValid, setPasswordConfirmValid] = useState(true);
-    const [programValid, setProgramValid] = useState(true);
+    const [departmentValid, setDepartmentValid] = useState(true);
 
     const registerStudent = async () => {
         setIsLoading(true);
@@ -34,7 +34,7 @@ const RegisterStudentForm = () => {
                 email: formData.email,
                 password: formData.password,
                 matricule: formData.matricule,
-                program: formData.program,
+                department: formData.department,
             }
         ).then(() => {
             setIsLoading(false)
@@ -58,7 +58,7 @@ const RegisterStudentForm = () => {
         setEmailValid(true);
         setPasswordValid(true);
         setPasswordConfirmValid(true);
-        setProgramValid(true);
+        setDepartmentValid(true);
 
         if(formData.firstName === ''){
             setFirstValid(false)
@@ -99,8 +99,8 @@ const RegisterStudentForm = () => {
             return;
         }
 
-        if(formData.program === ''){
-            setProgramValid(false)
+        if(formData.department === ''){
+            setDepartmentValid(false)
             alert('Vous devez choisir un programme');
             return;
         }
@@ -116,6 +116,8 @@ const RegisterStudentForm = () => {
             alert('Les deux mots de passe ne correspondent pas');
             return;
         }
+
+        console.log(formData.department);
 
         registerStudent().then(r => console.log(r));
     }
@@ -135,8 +137,8 @@ const RegisterStudentForm = () => {
                         <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
                         <label htmlFor="matricule" className="mt-3">Matricule du Cégep</label>
                         <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
-                        <label htmlFor="program" className="mt-3">Programme d'étude</label>
-                        <select className={`form-select ${programValid? '': 'is-invalid'}`} id="program" onChange={handleChanges} name="program" defaultValue="Choisir un programme">
+                        <label htmlFor="department" className="mt-3">Programme d'étude</label>
+                        <select className={`form-select ${departmentValid? '': 'is-invalid'}`} id="department" onChange={handleChanges} name="department" defaultValue="Choisir un programme">
                             <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
                             <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
                             <option value="_420B0">420.B0 - Techniques de l’informatique</option>
