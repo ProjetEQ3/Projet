@@ -27,9 +27,9 @@ public class StudentService {
     // database operations here
 
     //TODO DTO PLZ
-    /*public StudentDTO createStudent(Student student) {
+    public StudentDTO createStudent(Student student) {
         return new StudentDTO(studentRepository.save(student));
-    }*/
+    }
 
     public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();

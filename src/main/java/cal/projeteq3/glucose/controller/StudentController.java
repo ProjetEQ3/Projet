@@ -2,7 +2,10 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.service.StudentService;
+import cal.projeteq3.glucose.validation.Validation;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +20,9 @@ public class StudentController {
     }
 
     //TODO DTO PLZ
-    /*@PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody Student student){
-        System.out.println(student.getDepartment());
+        System.out.println(student);
         try {
             Validation.validateStudent(student);
             return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
@@ -29,7 +32,7 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
 
-    }*/
+    }
 
     @PostMapping("/cv")
     public ResponseEntity<StudentDTO> addCv(@RequestBody StudentDTO student){
