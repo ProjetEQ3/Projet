@@ -35,6 +35,12 @@ public class Student extends User{
 		addCv(cvFile);
 	}
 
+	public Student(String lastName, String firstName, String email, String password, String matricule, String department){
+		super(lastName, firstName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());
+		this.matricule = matricule;
+		this.department = Department.valueOf(department);
+	}
+
 	public void addCv(CvFile cvFile){
 		this.cvFile = cvFile;
 		if(cvFile != null) this.cvFile.setStudent(this);

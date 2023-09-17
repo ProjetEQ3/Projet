@@ -24,6 +24,12 @@ public abstract class User{
 	@JoinColumn(name = "credentials", referencedColumnName = "id", nullable = false)
 	private Credentials credentials;
 
+	public User(String lastName, String firstName, Credentials credentials){
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.credentials = credentials;
+	}
+
 	public String getEmail(){
 		return this.credentials.getEmail();
 	}

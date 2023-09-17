@@ -117,8 +117,6 @@ const RegisterStudentForm = () => {
             return;
         }
 
-        console.log(formData.department);
-
         registerStudent().then(r => console.log(r));
     }
 

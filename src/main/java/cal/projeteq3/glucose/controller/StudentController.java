@@ -31,7 +31,6 @@ public class StudentController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
         }
-
     }
 
     @PostMapping("/cv")
