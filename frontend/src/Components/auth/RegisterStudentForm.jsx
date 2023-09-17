@@ -31,11 +31,9 @@ const RegisterStudentForm = () => {
             {
                 lastName: formData.lastName,
                 firstName: formData.firstName,
-                credentials: {
-                    email: formData.email,
-                    password: formData.password,
-                    role: "STUDENT"
-                },
+                email: formData.email,
+                password: formData.password,
+                role: "STUDENT",
                 matricule: formData.matricule,
                 department: formData.department,
             }
