@@ -82,9 +82,6 @@ public class ManagerService{
 		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
 	}
 
-	public List<CvFileDTO> getPendingCv(){
-		return cvRepository.findAllByCvState(CvState.PENDING).stream().map(CvFileDTO::new).toList();
-	}
 
     /*public CvFileDTO createCvFile(CvFile cvFile){
         return new CvFileDTO(cvRepository.save(cvFile));
