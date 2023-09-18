@@ -64,9 +64,9 @@ public class StudentController{
 			return ResponseEntity.ok().build();
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
-		}/*catch(Exception e){
+		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
-		}*/
+		}
 	}
 
 }
