@@ -92,7 +92,9 @@ public class EmployerService{
 		Optional<Employer> employerOptional = employerRepository.findById(employerId);
 		if(employerOptional.isPresent()){
 			Employer employer = employerOptional.get();
-			employer.addJobOffer(jobOffer.toEntity());
+			JobOffer jobOfferEntity = jobOffer.toEntity();
+			employer.addJobOffer(jobOfferEntity);
+			jobOfferRepository.save(jobOfferEntity);
 			employerRepository.save(employer);
 		} else
 			throw new EmployerNotFoundException(employerId);
