@@ -2,10 +2,13 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -38,19 +41,21 @@ public class ManagerService{
 
 	// database operations here
 
-   /* public ManagerDTO createGestionnaire(Manager manager) {//TODO: DTO
+    public ManagerDTO createGestionnaire(Manager manager) {//TODO: DTO
         return new ManagerDTO(managerRepository.save(manager));
-    }*/
+    }
 
-    /*public List<Manager> getAllGestionnaires() {//TODO: DTO
-        return managerRepository.findAll();
-    }*/
+    public List<ManagerDTO> getAllGestionnaires() {//TODO: DTO
+		List<Manager> managers = managerRepository.findAll();
+        return managers.stream().map(ManagerDTO::new).collect(Collectors.toList());
+    }
 
-    /*public Optional<Manager> getGestionnaireByID(Long id) {//TODO: DTO
-        return managerRepository.findById(id);
-    }*/
+    public Optional<ManagerDTO> getGestionnaireByID(Long id) {//TODO: DTO
+        Optional<Manager> managerOptional = managerRepository.findById(id);
+		return managerOptional.map(ManagerDTO::new);
+    }
 
-    /*public Manager updateGestionnaire(Long id, Manager updatedManager) {//TODO: DTO
+    public ManagerDTO updateGestionnaire(Long id, ManagerDTO updatedManager) {//TODO: DTO
         Optional<Manager> existingGestionnaire = managerRepository.findById(id);
         if(existingGestionnaire.isPresent()) {
             Manager manager = existingGestionnaire.get();
@@ -58,13 +63,12 @@ public class ManagerService{
             manager.setFirstName(updatedManager.getFirstName());
             manager.setLastName(updatedManager.getLastName());
             manager.setEmail(updatedManager.getEmail());
-            manager.setPassword(updatedManager.getPassword());
 
-            return managerRepository.save(manager);
-        } else {
-            throw new IllegalArgumentException("Manager with ID " + id + " does not exist.");
+            return new ManagerDTO(managerRepository.save(manager));
         }
-    }*/
+
+		throw new ManagerNotFoundException(id);
+    }
 
 	public void deleteGestionnaire(Long id){
 		managerRepository.deleteById(id);
