@@ -1,19 +1,18 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,10 +20,12 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final CvFileRepository cvFileRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, CvFileRepository cvFileRepository) {
         this.studentRepository = studentRepository;
+        this.cvFileRepository = cvFileRepository;
     }
 
     // database operations here
@@ -73,7 +74,7 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public StudentDTO addCv(Long studentId, CvFileDTO cvFile){
+    public CvFileDTO addCv(Long studentId, CvFileDTO cvFile){
         Student student;
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
@@ -83,17 +84,19 @@ public class StudentService {
         CvFile cv = CvFile.builder()
 					.fileName(cvFile.getFileName())
           .fileData(cvFile.getFileData())
+          .cvState(cvFile.getCvState())
           .build();
         student.setCvFile(cv);
-        return new StudentDTO(studentRepository.save(student));
+        return new CvFileDTO(studentRepository.save(student).getCvFile());
     }
 
     public void deleteCv(Long studentId){
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         Student student = studentOptional.get();
-        student.setCvFile(null);
-        studentRepository.save(student);
+        CvFile cvExiste = student.getCvFile();
+        student.deleteCv();
+        cvFileRepository.delete(cvExiste);
     }
 
 }
