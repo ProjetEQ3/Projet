@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
@@ -31,8 +32,15 @@ public class EmployerService{
 
 	// database operations here
 
-   public EmployerDTO createEmployer(EmployerDTO employerDTO) {
-		Employer employer = employerDTO.toEntity();
+	public EmployerDTO createEmployer(RegisterEmployerDTO registerEmployerDTO) {
+		Employer employer = Employer.builder()
+				.email(registerEmployerDTO.getRegisterDTO().getEmail())
+				.password(registerEmployerDTO.getRegisterDTO().getPassword())
+				.firstName(registerEmployerDTO.getEmployerDTO().getFirstName())
+				.lastName(registerEmployerDTO.getEmployerDTO().getLastName())
+				.organisationName(registerEmployerDTO.getEmployerDTO().getOrganisationName())
+				.organisationPhone(registerEmployerDTO.getEmployerDTO().getOrganisationPhone())
+				.build();
         return new EmployerDTO(employerRepository.save(employer));
     }
 

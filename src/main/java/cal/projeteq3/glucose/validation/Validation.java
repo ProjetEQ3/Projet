@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.validation;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
@@ -119,21 +121,21 @@ public final class Validation{
 
 //	Validation of objects
 
-	public static void validateEmploye(Employer employer) {
-		validateName(employer.getFirstName());
-		validateName(employer.getLastName());
-		validateEmail(employer.getEmail());
-		validatePassword(employer.getPassword());
-		validateOrgName(employer.getOrganisationName());
-		validatePhoneNumber(employer.getOrganisationPhone());
+	public static void validateEmployer(RegisterEmployerDTO employer) {
+		validateName(employer.getEmployerDTO().getFirstName());
+		validateName(employer.getEmployerDTO().getLastName());
+		validateEmail(employer.getRegisterDTO().getEmail());
+		validatePassword(employer.getRegisterDTO().getPassword());
+		validateOrgName(employer.getEmployerDTO().getOrganisationName());
+		validatePhoneNumber(employer.getEmployerDTO().getOrganisationPhone());
 	}
 
-	public static void validateStudent(Student student) {
-		validateName(student.getFirstName());
-		validateName(student.getLastName());
-		validateEmail(student.getEmail());
-		validatePassword(student.getPassword());
-		validateMatricule(student.getMatricule());
+	public static void validateStudent(RegisterStudentDTO student) {
+		validateName(student.getStudentDTO().getFirstName());
+		validateName(student.getStudentDTO().getLastName());
+		validateEmail(student.getRegisterDTO().getEmail());
+		validatePassword(student.getRegisterDTO().getPassword());
+		validateMatricule(student.getStudentDTO().getMatricule());
 	}
 
 	public static void validateLogin(LoginDTO loginDTO) {

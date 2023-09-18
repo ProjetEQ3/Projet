@@ -29,15 +29,17 @@ const RegisterStudentForm = () => {
         setIsLoading(true);
         axiosInstance.post('/student/register',
             {
-                lastName: formData.lastName,
-                firstName: formData.firstName,
-                credentials: {
+                registerDTO: {
                     email: formData.email,
                     password: formData.password,
                     role: "STUDENT"
                 },
-                matricule: formData.matricule,
-                department: formData.department,
+                studentDTO:  {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    matricule: formData.matricule,
+                    department: formData.department
+                }
             }
         ).then(() => {
             setIsLoading(false)

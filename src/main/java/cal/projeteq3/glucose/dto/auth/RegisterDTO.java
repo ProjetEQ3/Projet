@@ -1,10 +1,10 @@
 package cal.projeteq3.glucose.dto.auth;
 
+import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class RegisterDTO{
 	private String email;
@@ -15,7 +15,7 @@ public class RegisterDTO{
 		this.email = email;
 		this.password = password;
 		this.role = role;
-		validate();
+//		validate();
 	}
 
 	public void validate(){

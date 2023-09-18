@@ -29,15 +29,17 @@ const RegisterEmployerForm = () => {
         setIsLoading(true)
         axiosInstance.post('/employer/register',
             {
-                lastName: formData.lastName,
-                firstName: formData.firstName,
-                credentials: {
-                    email: formData.email,
-                    password: formData.password,
-                    role: "EMPLOYER"
-                },
-                organisationName: formData.organisationName,
-                organisationPhone: formData.organisationPhone,
+                    registerDTO: {
+                        email: formData.email,
+                        password: formData.password,
+                        role: "EMPLOYER"
+                    },
+                    employerDTO: {
+                        firstName: formData.firstName,
+                        lastName: formData.lastName,
+                        organisationName: formData.organisationName,
+                        organisationPhone: formData.organisationPhone
+                    }
             }
         ).then(() => {
             setIsLoading(false)

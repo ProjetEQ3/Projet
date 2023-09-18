@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
@@ -27,8 +29,15 @@ public class StudentService {
 
     // database operations here
 
-    //TODO DTO PLZ
-    public StudentDTO createStudent(Student student) {
+    public StudentDTO createStudent(RegisterStudentDTO registerStudentDTO) {
+        Student student = Student.builder()
+                .email(registerStudentDTO.getRegisterDTO().getEmail())
+                .password(registerStudentDTO.getRegisterDTO().getPassword())
+                .firstName(registerStudentDTO.getStudentDTO().getFirstName())
+                .lastName(registerStudentDTO.getStudentDTO().getLastName())
+                .department(String.valueOf(registerStudentDTO.getStudentDTO().getDepartment()))
+                .matricule(registerStudentDTO.getStudentDTO().getMatricule())
+                .build();
         return new StudentDTO(studentRepository.save(student));
     }
 
