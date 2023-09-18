@@ -2,7 +2,6 @@ import React from "react";
 import ShortJobOffer from "./ShortJobOffer";
 
 const JobOffers = ({offers}) => {
-    console.log("Offre: " + offers);
     return (
         <div className="row">
             <div className="col-12">
