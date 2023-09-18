@@ -1,17 +1,17 @@
 import React from "react";
-import ShortJobOffer from "./ShortJobOffer";
+import ShortCv from "./ShortCv";
 
-const JobOffers = ({offers}) => {
+const Cvs = ({cvs}) => {
     return (
         <div className="row">
             <div className="col-12">
-                <h3 className="text-dark fw-light my-5">Les offres de stages en attente de votre réponse :</h3>
+                <h3 className="text-dark fw-light my-5">Les CVs des étudiants :</h3>
                 <div className="row justify-content-around">
                     <div className="col-12">
                         {
-                            offers.map((offer, index) => (
-                                <div key={index} onClick={() => (offer)}>
-                                    <ShortJobOffer jobOffer={offer}/>
+                            cvs.map((cv, index) => (
+                                <div key={index} onClick={() => (cv)}>
+                                    <ShortCv cv={cv}/>
                                 </div>
                             ))
                         }
@@ -21,4 +21,4 @@ const JobOffers = ({offers}) => {
         </div>
     );
 }
-export default JobOffers;
+export default Cvs;

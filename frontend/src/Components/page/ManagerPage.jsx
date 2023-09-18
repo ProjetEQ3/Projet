@@ -1,10 +1,12 @@
-import FullJobOffer from "../manager/FullJobOffer";
-import ShortJobOffer from "../manager/ShortJobOffer";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import JobOffers from "../manager/JobOffers";
+import {useState} from "react";
+import Cvs from "../manager/Cvs";
 
 const ManagerPage = ({user}) => {
-    const offersDTO = [{
+    const [tab, setTab] = useState('stages');
+    const cvsDTO = [{
+    }];
+    const offers = [{
         id: 1,
         title: "Offre de stage 1",
         state: "Submitted",
@@ -70,20 +72,16 @@ const ManagerPage = ({user}) => {
             expireDate: "2022-12-31",
         }];
     return (
-        <div className="row">
-            <div className="col-12">
-                <h3 className="text-dark fw-light my-5">Les offres de stages en attente de votre réponse :</h3>
-                <div className="row justify-content-around">
-                    <div className="col-12">
-                        {
-                            offersDTO.map((offer, index) => (
-                                <div onClick={() => (offer)}>
-                                    <ShortJobOffer jobOffer={offer} key={index}/>
-                                </div>
-                            ))
-                        }
-                    </div>
+        <div className="container">
+            <div>
+                <div className="tabs btn-group my-2 mx-auto col-12">
+                    <button className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
+                            onClick={() => setTab('stages')}>Stages</button>
+                    <button className={`btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
+                            onClick={() => setTab('cvs')}>CVs</button>
                 </div>
+                {tab === 'stages' && <JobOffers offers={offers}/>}
+                {tab === 'cvs' && <Cvs cvs={cvsDTO} />}
             </div>
         </div>
     )
