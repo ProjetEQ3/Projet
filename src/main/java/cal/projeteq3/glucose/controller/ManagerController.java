@@ -21,7 +21,7 @@ public class ManagerController {
         this.managerService = managerService;
     }
 
-    @GetMapping("/jobOffer/all")
+    @GetMapping("/jobOffers/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(){
         return ResponseEntity.ok(managerService.getAllJobOffer());
     }
@@ -31,24 +31,24 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOfferByID(id));
     }
 
-    @GetMapping("jobOffer/{employerId}")
+    @GetMapping("jobOffers/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
         System.out.println("ID: " + employerId);
 //        return ResponseEntity.ok(managerService.getJobOfferByEmployer(employerId));
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null);
     }
 
-    @GetMapping("jobOffer/submitted")
+    @GetMapping("jobOffers/submitted")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferSubmitted(){
         return ResponseEntity.ok(managerService.getSubmittedJobOffers());
     }
 
-    @GetMapping("jobOffer/accepted")
+    @GetMapping("jobOffers/accepted")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferAccepted(){
         return ResponseEntity.ok(managerService.getAcceptedJobOffers());
     }
 
-    @GetMapping("jobOffer/refused")
+    @GetMapping("jobOffers/refused")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferRefused(){
         return ResponseEntity.ok(managerService.getRefusedJobOffers());
     }
