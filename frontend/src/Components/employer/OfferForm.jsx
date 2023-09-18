@@ -1,4 +1,4 @@
-const OfferForm = () => {
+const OfferForm = ({user}) => {
     return (
         <div>
             <h1>OfferForm</h1>

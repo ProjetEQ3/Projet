@@ -27,7 +27,7 @@ const Main = ({user, setUser}) => {
                     element={<ManagerPage user={user}/>}
                 />
                 <Route
-                    path="employer/*"
+                    path="employer/"
                     element={<EmployerPage user={user}/>}
                 />
                 {<Route path="*" element={<PageNotFound/>}/>}

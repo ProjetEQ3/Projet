@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './RegistrationForm.css'
 import RegisterStudentForm from "./RegisterStudentForm";
 import RegisterEmployerForm from "./RegisterEmployerForm";
 

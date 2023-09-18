@@ -1,13 +1,16 @@
-/*import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPlus } from '@fortawesome/free-solid-svg-icons';*/
-//TODO: ces imports ne fonctionnent pas ou je sais pas comment les ajouter
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
+import {Route, Routes} from "react-router-dom";
+import LoginForm from "../auth/LoginForm";
+import RegistrationForm from "../auth/RegistrationForm";
+import PageNotFound from "./PageNotFound";
+import OfferForm from "../employer/OfferForm";
 
 const EmployerPage = ({user}) => {
-    const [selectOffer, setSelectedOffer] = useState(null);
+    const [selectedOffer, setSelectedOffer] = useState(null);
 
     const offersDTO = [{
         id: 1,
@@ -95,24 +98,28 @@ const EmployerPage = ({user}) => {
                                     ))
                                 }
                                 <div className="row m-2">
-                                   {/* <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>*/}
+                                    <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>
                                 </div>
                             </div>
                             <div className="col-6">
-                                {selectOffer === null ?
+                                {selectedOffer === null ?
                                     <div className="row m-2">
                                         <div className="col-12 bg-white rounded">
                                             <h2 className="text-dark fw-light pt-1">Sélectionnez une offre de stage</h2>
                                         </div>
                                     </div>
                                     :
-                                <FullJobOffer jobOffer={selectOffer}/>
+                                <FullJobOffer jobOffer={selectedOffer}/>
                                 }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Routes>
+                <Route path="newOffer" element={<OfferForm user={user}/>}/>
+                <Route path="*" element={<PageNotFound/>}/>
+            </Routes>
         </div>
     )
 }
