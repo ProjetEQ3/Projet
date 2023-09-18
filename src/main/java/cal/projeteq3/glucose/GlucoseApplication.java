@@ -1,16 +1,23 @@
 package cal.projeteq3.glucose;
 
+import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.service.EmployerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -28,14 +35,17 @@ public class GlucoseApplication implements CommandLineRunner {
 	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
-	StudentRepository studentRepository;
+	private StudentRepository studentRepository;
 	@Autowired
-	ManagerRepository managerRepository;
+	private ManagerRepository managerRepository;
+	@Autowired
+	private EmployerService employerService;
 
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
 		managerRepository.save(createManager());
+		createJobOffers(employerService);
 	}
 
 	private static List<Employer> createEmployer(){
@@ -169,6 +179,61 @@ public class GlucoseApplication implements CommandLineRunner {
 				.matricule("0000001")
 				.phoneNumber("123-456-7890")
 				.build();
+	}
+
+
+	private static void createJobOffers(EmployerService employerService) {
+		List<JobOffer> jobOffers = new ArrayList<>();
+		jobOffers.add(JobOffer.builder()
+			.title("Front-end developer")
+			.offerState(JobOfferState.SUBMITTED)
+			.department("_420B0")
+			.location("Montréal")
+			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+					"maintenance et à l'amélioration de nos produits logiciels.").salary(20.0f)
+			.startDate(LocalDateTime.now())
+			.duration(7)
+			.expirationDate(LocalDateTime.now())
+			.hoursPerWeek(1)
+			.build());
+		jobOffers.add(JobOffer.builder()
+			.title("Back-end developer")
+			.offerState(JobOfferState.TAKEN)
+			.department("_420B0")
+			.location("Montréal")
+			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+					"maintenance et à l'amélioration de nos produits logiciels.")
+			.salary(20.0f)
+			.startDate(LocalDateTime.now())
+			.duration(7)
+			.expirationDate(LocalDateTime.now())
+			.hoursPerWeek(1)
+			.build());
+		jobOffers.add(JobOffer.builder()
+			.title("Full-stack developer")
+			.offerState(JobOfferState.OPEN)
+			.department("_420B0")
+			.location("Montréal")
+			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+					"maintenance et à l'amélioration de nos produits logiciels.").salary(20.0f)
+			.startDate(LocalDateTime.now())
+			.duration(7)
+			.expirationDate(LocalDateTime.now())
+			.hoursPerWeek(1)
+			.build());
+		EmployerDTO employer = employerService.getEmployerByEmail("Chawki@professionnel.com");
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(0)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(1)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(2)), employer.getId());
 	}
 
 }

@@ -10,6 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f8f9fa !important;
 }
 
 code {
@@ -23,6 +24,11 @@ code {
 }
 
 .trash-btn {
+  --bs-text-opacity: 1;
+    color: var(--ose-color) !important;
+}
+
+.arrow-btn {
   --bs-text-opacity: 1;
     color: var(--ose-color) !important;
 }

@@ -4,8 +4,8 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
-import cal.projeteq3.glucose.model.jobOffre.JobOffer;
-import cal.projeteq3.glucose.model.jobOffre.JobOfferState;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.repository.CvRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
@@ -91,37 +91,6 @@ public class ManagerService{
 		return cvRepository.findAllByCvState(CvState.SUBMITTED).stream().map(CvFileDTO::new).toList();
 	}
 
-    /*public CvFileDTO createCvFile(CvFile cvFile){
-        return new CvFileDTO(cvRepository.save(cvFile));
-    }*/
-
-   /* public CvFileDTO createCvFile(String fileName, byte[] fileData, Student student){
-        return new CvFileDTO(cvRepository.save(
-                new CvFile(fileName, fileData, student))
-        );
-    }*/
-
-    /*public CvFileDTO createCvFile(String fileName, byte[] fileData, String matricule){
-        return new CvFileDTO(cvRepository.save(
-                new CvFile(fileName, fileData, studentRepository.findByMatricule(matricule)))
-        );
-    }*/
-
-    /*public CvFileDTO updateCvFile(Long id, CvFile updatedCvFile){//TODO DTO
-        Optional<CvFile> existingCvFile = cvRepository.findById(id);
-        if(existingCvFile.isPresent()) {
-            CvFile cvFile = existingCvFile.get();
-
-            cvFile.setFileName(updatedCvFile.getFileName());
-            cvFile.setFileData(updatedCvFile.getFileData());
-            cvFile.setCvState(updatedCvFile.getCvState());
-
-            return new CvFileDTO(cvRepository.save(cvFile));
-        } else {
-            throw new IllegalArgumentException("CvFile with ID " + id + " does not exist.");
-        }
-    }*/
-
 	public List<CvFileDTO> getAllCvFileByStudent(Long id){
 		return cvRepository.findAllByStudent(studentRepository.findById(id).orElseThrow()).stream().map(CvFileDTO::new).toList();
 	}
@@ -150,7 +119,7 @@ public class ManagerService{
 	}
 
 	public List<JobOfferDTO> getAcceptedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.ACCEPTED);
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.OPEN);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
@@ -163,7 +132,7 @@ public class ManagerService{
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
 		if(existingJobOffer.isPresent()) {
 			JobOffer jobOffer = existingJobOffer.get();
-			jobOffer.setJobOfferState(JobOfferState.ACCEPTED);
+			jobOffer.setJobOfferState(JobOfferState.OPEN);
 			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 		}
 

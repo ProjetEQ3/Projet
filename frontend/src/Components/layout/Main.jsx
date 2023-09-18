@@ -9,7 +9,7 @@ import NewOfferForm from "../employer/NewOfferForm";
 
 const Main = ({user, setUser}) => {
     return (
-        <main className='App-main bg-light min-vh-100'>
+        <main className='App-main bg-light min-vh-100 col-lg-8 mx-auto'>
             <Routes>
                 <Route
                     path="/"

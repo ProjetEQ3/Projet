@@ -5,12 +5,14 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.model.jobOffre.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +38,26 @@ public class EmployerService{
 	public List<EmployerDTO> getAllEmployers(){
 		List<Employer> employers = employerRepository.findAll();
 		return employers.stream().map(EmployerDTO::new).collect(Collectors.toList());
+	}
+
+	@Transactional
+	public EmployerDTO getEmployerByEmail(String email) {
+		Optional<Employer> employerOptional = employerRepository.findByCredentialsEmail(email);
+		Employer employer = employerOptional.orElseThrow(() -> new EmployerNotFoundException(0L));
+
+		employer.getJobOffers().size();
+
+		return new EmployerDTO(employer);
+	}
+
+
+	public List<JobOffer> getJobOffersByEmployerId(Long employerId) {
+		Optional<Employer> employerOptional = employerRepository.findById(employerId);
+		if (employerOptional.isPresent()) {
+			Employer employer = employerOptional.get();
+            return employer.getJobOffers();
+		}
+		return Collections.emptyList();
 	}
 
 	public Optional<EmployerDTO> getEmployerByID(Long id){
@@ -65,40 +87,16 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-    /*public JobOfferDTO createJobOffer(JobOffer jobOffer){
-        return new JobOfferDTO(jobOfferRepository.save(jobOffer));
-    }*/
-
+	@Transactional
 	public void createJobOffer(JobOfferDTO jobOffer, Long employerId){
 		Optional<Employer> employerOptional = employerRepository.findById(employerId);
 		if(employerOptional.isPresent()){
 			Employer employer = employerOptional.get();
 			employer.addJobOffer(jobOffer.toEntity());
 			employerRepository.save(employer);
-		}
-		throw new EmployerNotFoundException(employerId);
+		} else
+			throw new EmployerNotFoundException(employerId);
 	}
-
-   /* public JobOfferDTO updateJobOffer(Long id, JobOffer updatedJobOffer){
-        Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
-        if (existingJobOffer.isPresent()){
-            JobOffer jobOffer = existingJobOffer.get();
-
-            jobOffer.setState(updatedJobOffer.getState());
-            jobOffer.setTitle(updatedJobOffer.getTitle());
-            jobOffer.setDepartment(updatedJobOffer.getDepartment());
-            jobOffer.setDescription(updatedJobOffer.getDescription());
-            jobOffer.setLocation(updatedJobOffer.getLocation());
-            jobOffer.setStartDate(updatedJobOffer.getStartDate());
-            jobOffer.setHoursPerWeek(updatedJobOffer.getHoursPerWeek());
-            jobOffer.setExpirationDate(updatedJobOffer.getExpirationDate());
-            jobOffer.setSalary(updatedJobOffer.getSalary());
-            jobOffer.setEmployer(updatedJobOffer.getEmployer());
-            return new JobOfferDTO(jobOfferRepository.save(jobOffer));
-        }
-
-        throw new IllegalArgumentException("JobOffer with ID " + id + " does not exist.");
-    }*/
 
 	public JobOfferDTO updateJobOffer(JobOfferDTO updatedJobOffer){
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(updatedJobOffer.getId());
@@ -114,14 +112,8 @@ public class EmployerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	//TODO plz fix with DTO
-    /*public List<JobOffer> getAllMyJobOffers(Employer employer){
-        return jobOfferRepository.findAllByEmployer(employer);
-    }*/
-
 	public List<JobOfferDTO> getAllJobOffers(Long employerId){
 		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
-
 }

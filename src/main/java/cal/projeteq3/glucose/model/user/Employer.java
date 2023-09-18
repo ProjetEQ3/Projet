@@ -2,7 +2,7 @@ package cal.projeteq3.glucose.model.user;
 
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
-import cal.projeteq3.glucose.model.jobOffre.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class Employer extends User{
 
 	private String organisationPhone;
 
-	@OneToMany(mappedBy = "employer")//TODO check cascade on delete jobOffre
+	@OneToMany(mappedBy = "employer")//TODO check cascade on delete jobOffer
 	private List<JobOffer> jobOffers = new ArrayList<>();
 
 	@Builder

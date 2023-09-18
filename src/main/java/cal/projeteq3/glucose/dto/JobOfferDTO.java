@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.dto;
 
-import cal.projeteq3.glucose.model.jobOffre.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class JobOfferDTO{
 	private LocalDateTime startDate;
 	private int duration;
 	private LocalDateTime expirationDate;
-	private String offreState;
+	private JobOfferState offerState;
 	private int hoursPerWeek;
 
 	public JobOfferDTO(JobOffer jobOffer){
@@ -32,14 +33,14 @@ public class JobOfferDTO{
 		this.startDate = jobOffer.getStartDate();
 		this.duration = jobOffer.getDuration();
 		this.expirationDate = jobOffer.getExpirationDate();
-		this.offreState = jobOffer.getOffreState();
+		this.offerState = jobOffer.getOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 	}
 
 	public JobOffer toEntity(){
 		return JobOffer.builder()
 				.id(this.id)
-				.offreState(this.offreState)
+				.offerState(this.offerState)
 				.title(this.title)
 				.description(this.description)
 				.location(this.location)

@@ -1,10 +1,11 @@
 import {useState} from "react"
-import {NavLink} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import {toast} from "react-toastify"
 import {axiosInstance} from "../../App"
 import User from "../../model/User";
 
 const LoginForm = ({user, setUser}) => {
+	const navigate = useNavigate()
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 
@@ -60,41 +61,38 @@ const LoginForm = ({user, setUser}) => {
 		<>
 			{
 				user?.isLoggedIn ? (
-					<p>Logged in as {user.email} <NavLink to="../logout">Logout?</NavLink></p>
+					user.role === "ROLE_STUDENT" ? navigate("/student") :
+						user.role === "ROLE_EMPLOYER" ? navigate("/employer") :
+							user.role === "ROLE_MANAGER" ? navigate("/manager") :
+					navigate("/")
 				) : (
 					<>
-						<h2>Se connecter</h2>
-						<form id="login-form" className="m-auto col-lg-8 p-5">
-							<div className="form-group row">
-								<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label col-form-label-lg">Email</label>
-								<div className="col-sm-9">
-									<input
-										type="email"
-										className="form-control form-control-lg"
-										id="inputEmail1"
-										aria-describedby="emailHelp"
-										placeholder="Entrez email"
-										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-										required
+						<form id="login-form" className="m-auto">
+							<div className="form-group row mx-auto">
+								<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label">Email</label>
+								<div className="col-12">
+									<input type="email" className="form-control" id="inputEmail1"
+										   aria-describedby="emailHelp" placeholder="Entrez email" value={email}
+										   onChange={(e) => setEmail(e.target.value)}
+										   required
 									/>
 								</div>
 							</div>
-							<div className="form-group row">
-								<label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label col-form-label-lg">Password</label>
-								<div className="col-sm-9">
+							<div className="mt-2"></div>
+							<div className="form-group row mx-auto">
+								<label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label">Password</label>
+								<div className="col-12">
 									<input
-										type="email"
-										className="form-control form-control-lg"
-										id="inputPassword"
-										placeholder="Mot de pass"
-										value={password}
+										type="password" className="form-control" id="inputPassword"
+										placeholder="Mot de pass" value={password}
 										onChange={(e) => setPassword(e.target.value)}
 										required
 									/>
 								</div>
 							</div>
-							<button type="submit" className="btn btn-primary my-3 mx-auto" onClick={handleSubmit}>Envoyer</button>
+							<div className="row col-6 mx-auto">
+								<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>Se connecter</button>
+							</div>
 						</form>
 					</>
 				)

@@ -1,6 +1,6 @@
 import {useState} from "react"
 import CvFile from "../../model/CvFile"
-import Cv from "../Student/Cv"
+import Cv from "../student/Cv"
 import LoginForm from "../auth/LoginForm";
 
 const StudentPage = ({user, setUser}) => {

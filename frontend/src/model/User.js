@@ -6,6 +6,7 @@ class User{
 	password
 	isLoggedIn = false
 	cvFile
+	role
 	errors = []
 
 	constructor(){}
@@ -25,6 +26,8 @@ class User{
 		else this.isLoggedIn = false
 		if(user.cvFile) this.cvFile = user.cvFile
 		else delete this.cvFile
+		if(user.role) this.role = user.role
+		else delete this.role
 		if(user.errors?.length > 0) this.errors = user.errors
 		else delete this.errors
 	}
