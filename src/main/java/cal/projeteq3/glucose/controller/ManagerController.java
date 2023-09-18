@@ -33,6 +33,7 @@ public class ManagerController {
 
     @GetMapping("jobOffer/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
+        System.out.println("ID: " + employerId);
 //        return ResponseEntity.ok(managerService.getJobOfferByEmployer(employerId));
         return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null);
     }
