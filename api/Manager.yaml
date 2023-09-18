@@ -104,6 +104,20 @@ paths:
                   $ref: '#/components/schemas/JobOfferDTO'
         '500':
           description: Internal Server Error
+  /manager/jobOffers/taken:
+    get:
+      summary: Get taken job offers
+      responses:
+        '200':
+          description: Successfully retrieved taken job offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobOfferDTO'
+        '500':
+          description: Internal Server Error
 components:
   schemas:
     JobOfferDTO:
