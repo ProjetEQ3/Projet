@@ -36,21 +36,14 @@ function Cv({user, setCv}){
 				<div>
 					<h2>CV:</h2>
 					<p>{user.cvFile.name}</p>
-					<button
-						className="btn btn-danger"
-						onClick={handleDeletePdf}
-					>
-						Delete
-					</button>
+					<button className="btn btn-danger" onClick={handleDeletePdf}>Delete</button>
 				</div>
 			) : (
 				<div>
-					<h1>Téléverser un CV</h1>
-					<input
-						type="file"
-						accept=".pdf"
-						onChange={handlePdfUpload}
-					/>
+					<h1 className="display-6">Téléverser un CV</h1>
+					<div className="col-6 mx-auto">
+						<input value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
+					</div>
 				</div>
 			)}
 		</div>
