@@ -26,9 +26,11 @@ function App(){
 			/>
 			<div className="p-0">
 				<BrowserRouter>
-					<Header user={user}/>
-					<Main user={user} setUser={setUser}/>
-					<Footer/>
+					<div className="min-vh-100 p-0 m-0">
+						<Header user={user}/>
+						<Main user={user} setUser={setUser}/>
+						<Footer/>
+					</div>
 				</BrowserRouter>
 			</div>
 		</>

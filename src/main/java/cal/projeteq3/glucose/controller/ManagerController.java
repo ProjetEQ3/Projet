@@ -45,18 +45,8 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.SUBMITTED));
     }
 
-    @GetMapping("jobOffers/accepted")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferAccepted(){
-        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.ACCEPTED));
-    }
-
-    @GetMapping("jobOffers/refused")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferRefused(){
-        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.REFUSED));
-    }
-
-    @GetMapping("jobOffers/taken")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferTaken(){
-        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.TAKEN));
+    @GetMapping("jobOffers/{jobOfferState}")
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 }

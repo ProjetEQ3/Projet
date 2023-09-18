@@ -67,33 +67,38 @@ const LoginForm = ({user, setUser}) => {
 					navigate("/")
 				) : (
 					<>
-						<form id="login-form" className="m-auto col-10">
-							<div className="form-group row mx-auto">
-								<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label">Email</label>
-								<div className="col-12">
-									<input type="email" className="form-control" id="inputEmail1"
-										   aria-describedby="emailHelp" placeholder="Entrez email" value={email}
-										   onChange={(e) => setEmail(e.target.value)}
-										   required
-									/>
-								</div>
+						<div className="container">
+							<div className="row justify-content-center align-items-center">
+								<form id="login-form" className="col-10">
+									<h1 className="display-6 text-center mb-5">GlucOSE</h1>
+									<div className="form-group row mx-auto">
+										<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label">Email</label>
+										<div className="col-12">
+											<input type="email" className="form-control" id="inputEmail1"
+												   aria-describedby="emailHelp" placeholder="Entrez email" value={email}
+												   onChange={(e) => setEmail(e.target.value)}
+												   required
+											/>
+										</div>
+									</div>
+									<div className="mt-2"></div>
+									<div className="form-group row mx-auto">
+										<label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label">Password</label>
+										<div className="col-12">
+											<input
+												type="password" className="form-control" id="inputPassword"
+												placeholder="Mot de pass" value={password}
+												onChange={(e) => setPassword(e.target.value)}
+												required
+											/>
+										</div>
+									</div>
+									<div className="row col-6 mx-auto">
+										<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>Se connecter</button>
+									</div>
+								</form>
 							</div>
-							<div className="mt-2"></div>
-							<div className="form-group row mx-auto">
-								<label htmlFor="colFormLabelLg" className="col-sm-3 col-form-label">Password</label>
-								<div className="col-12">
-									<input
-										type="password" className="form-control" id="inputPassword"
-										placeholder="Mot de pass" value={password}
-										onChange={(e) => setPassword(e.target.value)}
-										required
-									/>
-								</div>
-							</div>
-							<div className="row col-6 mx-auto">
-								<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>Se connecter</button>
-							</div>
-						</form>
+						</div>
 					</>
 				)
 			}

@@ -62,54 +62,13 @@ paths:
           description: Employer not found
         '500':
           description: Internal Server Error
-  /manager/jobOffers/submitted:
+  /manager/jobOffers/{jobOfferState}:
     get:
-      summary: Get submitted job offers
+      summary: Get job offers depending on their state
       responses:
         '200':
-          description: Successfully retrieved submitted job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/accepted:
-    get:
-      summary: Get accepted job offers
-      responses:
-        '200':
-          description: Successfully retrieved accepted job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/refused:
-    get:
-      summary: Get refused job offers
-      responses:
-        '200':
-          description: Successfully retrieved refused job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/taken:
-    get:
-      summary: Get taken job offers
-      responses:
-        '200':
-          description: Successfully retrieved taken job offers
+          description: Successfully retrieved job offers
+            Current states are SUBMITTED, OPEN, PENDING, EXPIRED, TAKEN, REFUSED
           content:
             application/json:
               schema:

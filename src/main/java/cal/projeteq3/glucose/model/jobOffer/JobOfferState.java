@@ -6,6 +6,5 @@ public enum JobOfferState{
     PENDING,
     EXPIRED,
     TAKEN,
-    ACCEPTED,
     REFUSED
 }

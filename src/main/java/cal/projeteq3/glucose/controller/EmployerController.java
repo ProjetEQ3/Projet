@@ -25,10 +25,10 @@ public class EmployerController{
 	}
 
     @PostMapping("/register")
-    public ResponseEntity<EmployerDTO> register(@RequestBody Employer employer) {
+    public ResponseEntity<EmployerDTO> register(@RequestBody EmployerDTO employerDTO) {
         try {
-            Validation.validateEmploye(employer);
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employer));
+            Validation.validateEmploye(employerDTO.toEntity());
+            return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employerDTO));
 
         } catch (ValidationException e) {
             return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
