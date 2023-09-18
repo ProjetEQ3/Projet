@@ -149,9 +149,9 @@ const NewOfferForm = ({user}) => {
                 <div className="col-9 mx-auto">
                     <form className="form-group" onSubmit={handleSubmit}>
                         <label htmlFor="title" className="mt-3">Titre du poste</label>
-                        <input type="text" className={`form-control ${titleValid? '': 'is-invalid'}`} id="title" placeholder="Titre" name="title" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${titleValid? '': 'is-invalid'}`} id="title" placeholder="Titre" name="title" onChange={handleChanges} required/>
                         <label htmlFor="department" className="mt-3">Département</label>
-                        <select className={`form-select ${departmentValid? '': 'is-invalid'}`} id="department" name="department" defaultValue="Choisir un département" onChange={handleChanges}>
+                        <select className={`form-select ${departmentValid? '': 'is-invalid'}`} id="department" name="department" defaultValue="Choisir un département" onChange={handleChanges} required>
                             <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
                             <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
                             <option value="_420B0">420.B0 - Techniques de l’informatique</option>
@@ -169,19 +169,19 @@ const NewOfferForm = ({user}) => {
                             <option disabled={true}>Choisir un département</option>
                         </select>
                         <label htmlFor="location" className="mt-3">Lieu de travail</label>
-                        <input type="text" className={`form-control ${locationValid? '': 'is-invalid'}`} id="location" placeholder="Lieu de travail" name="location" onChange={handleChanges}/>
+                        <input type="text" className={`form-control ${locationValid? '': 'is-invalid'}`} id="location" placeholder="Lieu de travail" name="location" onChange={handleChanges} required/>
                         <label htmlFor="description" className="mt-3">Description du poste</label>
-                        <textarea className={`form-control ${descriptionValid? '': 'is-invalid'}`} id="description" rows="3" placeholder="Description du poste" name="description" onChange={handleChanges}></textarea>
+                        <textarea className={`form-control ${descriptionValid? '': 'is-invalid'}`} id="description" rows="3" placeholder="Description du poste" name="description" onChange={handleChanges} required></textarea>
                         <label htmlFor="salary" className="mt-3">Salaire horaire</label>
-                        <input type="number" step="0.01" className={`form-control ${salaryValid? '': 'is-invalid'}`} id="salary" placeholder="Salaire horaire" name="salary" onChange={handleChanges}/>
+                        <input type="number" step="0.01" className={`form-control ${salaryValid? '': 'is-invalid'}`} id="salary" placeholder="Salaire horaire" name="salary" onChange={handleChanges} required/>
                         <label htmlFor="hourPerWeek" className="mt-3">Nombre d'heures par semaine</label>
-                        <input type="number" step="0.01" className={`form-control ${hourPerWeekValid? '': 'is-invalid'}`} id="hourPerWeek" placeholder="Nombre d'heures par semaine" name="hourPerWeek" onChange={handleChanges}/>
+                        <input type="number" step="0.01" className={`form-control ${hourPerWeekValid? '': 'is-invalid'}`} id="hourPerWeek" placeholder="Nombre d'heures par semaine" name="hourPerWeek" onChange={handleChanges} required/>
                         <label htmlFor="startDate" className="mt-3">Date de début</label>
-                        <input type="date" className={`form-control ${startDateValid? '': 'is-invalid'}`} id="startDate" placeholder="Date de début" name="startDate" onChange={handleChanges}/>
+                        <input type="date" className={`form-control ${startDateValid? '': 'is-invalid'}`} id="startDate" placeholder="Date de début" name="startDate" onChange={handleChanges} required/>
                         <label htmlFor="duration"  className="mt-3">Durée du stage (en semaine)</label>
-                        <input type="number" step="0.1" className={`form-control ${durationValid? '': 'is-invalid'}`} id="duration" placeholder="Durée du stage" name="duration" onChange={handleChanges}/>
+                        <input type="number" step="0.1" className={`form-control ${durationValid? '': 'is-invalid'}`} id="duration" placeholder="Durée du stage" name="duration" onChange={handleChanges} required/>
                         <label htmlFor="expireDate" className="mt-3">Date d'expiration d'affichage</label>
-                        <input type="date" className={`form-control ${expireDateValid? '': 'is-invalid'}`} id="expireDate" placeholder="Date d'expiration" name="expireDate" onChange={handleChanges}/>
+                        <input type="date" className={`form-control ${expireDateValid? '': 'is-invalid'}`} id="expireDate" placeholder="Date d'expiration" name="expireDate" onChange={handleChanges} required/>
                         <div className="row my-4">
                             <div className="col-4 mx-auto">
                                 <button type="submit" className="btn btn-outline-ose col-12">Soumettre l'offre</button>
