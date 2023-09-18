@@ -48,8 +48,6 @@ public class UserController{
             Validation.validateLogin(loginDTO);
             return ResponseEntity
               .status(HttpStatus.ACCEPTED)
-              //TODO DELETE
-//              .body(null);
               .body(this.userService.authenticateUser(loginDTO));
         } catch (ValidationException e){
             return ResponseEntity

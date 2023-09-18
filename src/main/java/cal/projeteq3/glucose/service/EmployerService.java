@@ -31,7 +31,8 @@ public class EmployerService{
 
 	// database operations here
 
-   public EmployerDTO createEmployer(Employer employer) {
+   public EmployerDTO createEmployer(EmployerDTO employerDTO) {
+		Employer employer = employerDTO.toEntity();
         return new EmployerDTO(employerRepository.save(employer));
     }
 
