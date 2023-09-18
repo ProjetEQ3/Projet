@@ -65,10 +65,7 @@ public class UserService {
 
 		Optional<User> optUser = userRepository.findUserByCredentialsEmail(loginDTO.getEmail());
 		user = optUser.get();
-
-		System.out.println("AUTH USER: " + user);
 		if (!user.getPassword().equals(loginDTO.getPassword())) throw new ValidationException("Invalid User email or Password");
-
 
         return switch (user.getRole()){
             case STUDENT -> getStudentDto(user.getId());
