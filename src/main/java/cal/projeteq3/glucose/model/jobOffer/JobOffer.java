@@ -18,6 +18,7 @@ public class JobOffer{
 	@GeneratedValue
 	private Long id;
 
+	@Column(nullable = false)
 	private JobOfferState jobOfferState = JobOfferState.SUBMITTED;
 
 	@Column(nullable = false)
@@ -44,11 +45,9 @@ public class JobOffer{
 	@Column(nullable = false)
 	private LocalDateTime expirationDate;
 
-	@Column(nullable = false)
-	private JobOfferState offerState;
-
 	private int hoursPerWeek;
 
+	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
 
@@ -64,7 +63,7 @@ public class JobOffer{
 		this.startDate = jobOffer.getStartDate();
 		this.duration = jobOffer.getDuration();
 		this.expirationDate = jobOffer.getExpirationDate();
-		this.offerState = jobOffer.getOfferState();
+		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 	}
 
