@@ -124,44 +124,41 @@ const RegisterStudentForm = () => {
     }
 
     return (
-        <div className="row align-item-center">
+        <div className="row">
             {isLoading ? <Loading/> :
 
             <div className="col-9 mx-auto">
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="firstName" className="mt-3">Prénom</label>
-                        <input type="text" className={`form-control ${firstValid? '': 'is-invalid'}`} id="firstName" placeholder="Prénom" name="firstName" onChange={handleChanges}/>
-                        <label htmlFor="lastName" className="mt-3">Nom</label>
-                        <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="lastName" placeholder="Nom" name="lastName" onChange={handleChanges}/>
-                        <label htmlFor="email" className="mt-3">Email</label>
-                        <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
-                        <label htmlFor="matricule" className="mt-3">Matricule du Cégep</label>
-                        <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
-                        <label htmlFor="department" className="mt-3">Programme d'étude</label>
-                        <select className={`form-select ${departmentValid? '': 'is-invalid'}`} id="department" onChange={handleChanges} name="department" defaultValue="Choisir un programme">
-                            <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
-                            <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
-                            <option value="_420B0">420.B0 - Techniques de l’informatique</option>
-                            <option value="_210AA">210.AA - Techniques de laboratoire : biotechnologies</option>
-                            <option value="_144A1">144.A1 - Techniques de physiothérapie</option>
-                            <option value="_310A0">310.A0 - Techniques policières</option>
-                            <option value="_145A0">145.A0 - Techniques de santé animale</option>
-                            <option value="_388A0">388.A0 - Techniques de travail social</option>
-                            <option value="_140C0">140.C0 - Technologie d’analyses biomédicales</option>
-                            <option value="_243C0">243.C0 - Technologie de l’électronique industrielle</option>
-                            <option value="_243BA">243.BA - Technologie de l’électronique : Télécommunication</option>
-                            <option value="_241D0">241.D0 - Technologie de maintenance industrielle</option>
-                            <option value="_243A0">245.A0 - Technologie de systèmes ordinés</option>
-                            <option value="_221B0">221.B0 - Technologie du génie civil</option>
-                            <option disabled={true}>Choisir un programme</option>
-                        </select>
-                        <label htmlFor="password" className="mt-3">Mot de passe</label>
-                        <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
-                        <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
-                        <input type="password" className={`form-control ${passwordConfirmValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
-
-                    </div>
+                <form onSubmit={handleSubmit} className="form-group">
+                    <label htmlFor="firstName" className="mt-3">Prénom</label>
+                    <input type="text" className={`form-control ${firstValid? '': 'is-invalid'}`} id="firstName" placeholder="Prénom" name="firstName" onChange={handleChanges}/>
+                    <label htmlFor="lastName" className="mt-3">Nom</label>
+                    <input type="text" className={`form-control ${lastValid? '': 'is-invalid'}`} id="lastName" placeholder="Nom" name="lastName" onChange={handleChanges}/>
+                    <label htmlFor="email" className="mt-3">Email</label>
+                    <input type="email" className={`form-control ${emailValid? '': 'is-invalid'}`} id="email" placeholder="Email" name="email" onChange={handleChanges}/>
+                    <label htmlFor="matricule" className="mt-3">Matricule du Cégep</label>
+                    <input type="text" className={`form-control ${matriculeValid? '': 'is-invalid'}`} id="matricule" placeholder="Matricule du Cégep" name="matricule" onChange={handleChanges}/>
+                    <label htmlFor="department" className="mt-3">Programme d'étude</label>
+                    <select className={`form-select ${departmentValid? '': 'is-invalid'}`} id="department" onChange={handleChanges} name="department" defaultValue="Choisir un programme">
+                        <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
+                        <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
+                        <option value="_420B0">420.B0 - Techniques de l’informatique</option>
+                        <option value="_210AA">210.AA - Techniques de laboratoire : biotechnologies</option>
+                        <option value="_144A1">144.A1 - Techniques de physiothérapie</option>
+                        <option value="_310A0">310.A0 - Techniques policières</option>
+                        <option value="_145A0">145.A0 - Techniques de santé animale</option>
+                        <option value="_388A0">388.A0 - Techniques de travail social</option>
+                        <option value="_140C0">140.C0 - Technologie d’analyses biomédicales</option>
+                        <option value="_243C0">243.C0 - Technologie de l’électronique industrielle</option>
+                        <option value="_243BA">243.BA - Technologie de l’électronique : Télécommunication</option>
+                        <option value="_241D0">241.D0 - Technologie de maintenance industrielle</option>
+                        <option value="_243A0">245.A0 - Technologie de systèmes ordinés</option>
+                        <option value="_221B0">221.B0 - Technologie du génie civil</option>
+                        <option disabled={true}>Choisir un programme</option>
+                    </select>
+                    <label htmlFor="password" className="mt-3">Mot de passe</label>
+                    <input type="password" className={`form-control ${passwordValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="password" onChange={handleChanges}/>
+                    <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
+                    <input type="password" className={`form-control ${passwordConfirmValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
                     <div className="row my-4">
                         <div className="col-4 mx-auto">
                             <button type="submit" className="btn btn-outline-ose col-12">S'inscrire</button>

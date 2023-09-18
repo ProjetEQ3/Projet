@@ -17,20 +17,17 @@ const RegistrationForm = () => {
     };
 
     return (
-        <div className="bg-light">
-            <div className="m-2"></div>
-            <div className="container bg-light">
-                <div className="row">
-                    <div className="col-6 mx-auto btn-group btn-group-lg">
-                        <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
-                        <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
-                    </div>
+        <div className="container mt-2">
+            <div className="row">
+                <div className="col-6 mx-auto btn-group btn-group-lg">
+                    <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
+                    <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
                 </div>
-                {
-                    studActive ?
-                        <RegisterStudentForm/> : <RegisterEmployerForm/>
-                }
             </div>
+            {
+                studActive ?
+                    <RegisterStudentForm/> : <RegisterEmployerForm/>
+            }
         </div>
     )
 }

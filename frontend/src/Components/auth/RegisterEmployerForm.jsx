@@ -135,7 +135,7 @@ const RegisterEmployerForm = () => {
     }
 
     return (
-        <div className="row align-item-center">
+        <div className="row">
             {isLoading ? <Loading/> :
             <div className="col-9 mx-auto">
                 <form onSubmit={handleSubmit}>

@@ -5,10 +5,11 @@ import StudentPage from "../page/StudentPage";
 import ManagerPage from "../page/ManagerPage";
 import EmployerPage from "../page/EmployerPage";
 import PageNotFound from "../page/PageNotFound";
+import NewOfferForm from "../employer/NewOfferForm";
 
 const Main = ({user, setUser}) => {
     return (
-        <main className='App-main '>
+        <main className='App-main bg-light'>
             <Routes>
                 <Route
                     path="/"
@@ -27,8 +28,12 @@ const Main = ({user, setUser}) => {
                     element={<ManagerPage user={user}/>}
                 />
                 <Route
-                    path="employer/"
+                    path="employer/*"
                     element={<EmployerPage user={user}/>}
+                />
+                <Route
+                    path="employer/newOffer"
+                    element={<NewOfferForm user={user}/>}
                 />
                 {<Route path="*" element={<PageNotFound/>}/>}
             </Routes>

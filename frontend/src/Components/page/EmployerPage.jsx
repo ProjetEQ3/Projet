@@ -3,13 +3,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useState} from "react";
-import {Route, Routes} from "react-router-dom";
-import LoginForm from "../auth/LoginForm";
-import RegistrationForm from "../auth/RegistrationForm";
-import PageNotFound from "./PageNotFound";
-import OfferForm from "../employer/OfferForm";
+import {useNavigate} from "react-router-dom";
 
 const EmployerPage = ({user}) => {
+    const navigate = useNavigate();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
     const offersDTO = [{
@@ -77,6 +74,10 @@ const EmployerPage = ({user}) => {
             duration: "12 semaines",
             expireDate: "2022-12-31",
         }];
+
+    const handleNewButtonClicked = () => {
+        navigate('/employer/newOffer');
+    }
     return (
         <div className="bg-light">
             <div className="container-fluid px-5 py-2">
@@ -98,7 +99,7 @@ const EmployerPage = ({user}) => {
                                     ))
                                 }
                                 <div className="row m-2">
-                                    <button className="btn btn-outline-ose col-12"><FontAwesomeIcon icon={faPlus} /></button>
+                                    <button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}><FontAwesomeIcon icon={faPlus} /></button>
                                 </div>
                             </div>
                             <div className="col-6">
@@ -116,10 +117,6 @@ const EmployerPage = ({user}) => {
                     </div>
                 </div>
             </div>
-            <Routes>
-                <Route path="newOffer" element={<OfferForm user={user}/>}/>
-                <Route path="*" element={<PageNotFound/>}/>
-            </Routes>
         </div>
     )
 }
