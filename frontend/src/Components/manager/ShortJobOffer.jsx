@@ -34,7 +34,7 @@ const ShortJobOffer = ({ jobOffer }) => {
                             </div>
                         </div>
                         <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2 fa-lg arrow-btn" data-bs-toggle="modal" data-bs-target="#fullViewModal"/>
-                        <div id="fullViewModal" data-bs-backdrop="static" className="modal modal-lg">
+                        <div id="fullViewModal" data-bs-backdrop="static" className="modal modal-lg" aria-hidden="true">
                             <FullJobOffer jobOffer={jobOffer}/>
                         </div>
                     </div>

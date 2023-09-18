@@ -3,8 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 const FullJobOffer = ({ jobOffer }) => {
     const [isDecline, setIsDecline] = useState(false);
+    const [formData, setFormData] = useState({
+        refusalReason: '',
+    });
     const handleAccept = (e) => {
         e.preventDefault();
+        // TODO : Send acceptance to backend
         console.log("Accepting offer");
     }
 
@@ -15,7 +19,9 @@ const FullJobOffer = ({ jobOffer }) => {
 
     const confirmDecline = (e) => {
         e.preventDefault();
-
+        // TODO : Send refusal reason to backend
+        console.log("Declining offer");
+        setIsDecline(false)
     }
 
     const cancelDecline = (e) => {
@@ -45,12 +51,12 @@ const FullJobOffer = ({ jobOffer }) => {
                         <form id="refusalForm" className="form col-10 mx-auto">
                             <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
                             <input className="form-control form-text" type="text" placeholder="Raison du refus" required/>
-                            <button type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal">Confirmer</button>
+                            <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
                             <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
                         </form>) :
                         (<div>
                             <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal"><FontAwesomeIcon icon={faCheck}/></button>
-                            <button type="button" onClick={handleDecline} className="btn btn-danger" data-bs-dismiss="modal"><FontAwesomeIcon icon={faX}/></button>
+                            <button type="button" onClick={handleDecline} className="btn btn-danger"><FontAwesomeIcon icon={faX}/></button>
                         </div>)}
                 </div>
              </div>

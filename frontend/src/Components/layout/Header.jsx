@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../../logo.png";
+import {NavLink} from "react-router-dom";
 
 function Header({user}) {
     return (
@@ -7,12 +8,12 @@ function Header({user}) {
             <div className="container-fluid">
                 <div className="row">
                     <div className="d-flex align-items-center justify-content-between">
-                        <a className="text-decoration-none text-white col-2" href="/">
+                        <NavLink className="text-decoration-none text-white col-2" to="/">
                             <div className="d-flex">
                                 <img alt="Logo" className="col-4" src={logo}/>
                                 <p className="display-3 ms-2 my-3">GlucOSE</p>
                             </div>
-                        </a>
+                        </NavLink>
                         <p className="lead">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
                         {user?.isLoggedIn ?
                             <div className="m-3"><h2 className={"h2"}>{user.firstName + " " + user.lastName}</h2></div> :

@@ -51,11 +51,11 @@ public class EmployerService{
 	}
 
 
-	public List<JobOffer> getJobOffersByEmployerId(Long employerId) {
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
 		Optional<Employer> employerOptional = employerRepository.findById(employerId);
 		if (employerOptional.isPresent()) {
 			Employer employer = employerOptional.get();
-            return employer.getJobOffers();
+			return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
 		}
 		return Collections.emptyList();
 	}
