@@ -145,17 +145,17 @@ public class ManagerService{
 	//
 
 	public List<JobOfferDTO> getSubmittedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findSubmittedJobOffers();
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.SUBMITTED);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	public List<JobOfferDTO> getAcceptedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findAcceptedJobOffers();
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.ACCEPTED);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	public List<JobOfferDTO> getRefusedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findRefusedJobOffers();
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.REFUSED);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 

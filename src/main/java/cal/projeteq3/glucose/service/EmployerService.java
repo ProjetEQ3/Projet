@@ -120,7 +120,7 @@ public class EmployerService{
     }*/
 
 	public List<JobOfferDTO> getAllJobOffers(Long employerId){
-		List<JobOffer> jobOffers = jobOfferRepository.findAllByEmployer(employerId);
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
