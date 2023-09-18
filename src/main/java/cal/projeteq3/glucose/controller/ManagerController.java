@@ -45,9 +45,9 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.SUBMITTED));
     }
 
-    @GetMapping("jobOffers/accepted")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferAccepted(){
-        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.ACCEPTED));
+    @GetMapping("jobOffers/open")
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferOpen(){
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.OPEN));
     }
 
     @GetMapping("jobOffers/refused")
