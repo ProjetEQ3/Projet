@@ -23,7 +23,7 @@ code {
   color: var(--ose-color);
 }
 
-.trash-btn {
+.icon-btn {
   --bs-text-opacity: 1;
     color: var(--ose-color) !important;
 }

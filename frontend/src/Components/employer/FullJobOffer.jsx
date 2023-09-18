@@ -1,3 +1,5 @@
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 const FullJobOffer = ({ jobOffer }) => {
 
     return (
@@ -27,7 +29,25 @@ const FullJobOffer = ({ jobOffer }) => {
                         <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
                         <h6 className="text-dark fw-light mb-3">{jobOffer.hourPerWeek}h/semaine</h6>
                         <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
-
+                    </div>
+                </div>
+                <div className="text-end mb-2">
+                    <FontAwesomeIcon icon={faPenToSquare} className="icon-btn fa-lg m-2" data-bs-toggle="modal" data-bs-target="#editModal"/>
+                </div>
+                <div id="editModal" className="modal">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h3 className="modal-title">Modifier</h3>
+                            </div>
+                            <div className="modal-body">
+                                <h4>{jobOffer.title}</h4>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <button type="button" className="btn btn-success" data-bs-dismiss="modal">Modifier</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
