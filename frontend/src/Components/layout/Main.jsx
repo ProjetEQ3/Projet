@@ -8,7 +8,7 @@ import PageNotFound from "../page/PageNotFound";
 
 const Main = ({user, setUser}) => {
     return (
-        <main className='App-main '>
+        <main className='App-main min-vh-100'>
             <Routes>
                 <Route
                     path="/"
