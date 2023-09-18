@@ -38,25 +38,6 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-	/*public UserDTO authenticateUser(LoginDTO loginDTO){
-		User user;
-		if(loginDTO.getEmail() != null && loginDTO.getPassword() != null) {
-			user = studentRepository.findByEmail(loginDTO.getEmail()).orElse(null);
-			if (user == null)
-				user = employerRepository.findByEmail(loginDTO.getEmail()).orElse(null);
-			if (user == null)
-				user = managerRepository.findByEmail(loginDTO.getEmail()).orElse(null);
-			if (user == null)
-				throw new UserNotFoundException(loginDTO.getEmail());
-			if(user.getPassword().equals(loginDTO.getPassword())){
-				//return user.toDTO();
-			}
-		} else {
-			throw new IllegalArgumentException();
-		}
-		return null;
-    }*/
-
 	public UserDTO authenticateUser(LoginDTO loginDTO){
 		User user;
         Optional<Credentials> optCred = credentialRepository.findCredentialsByEmail(loginDTO.getEmail());
