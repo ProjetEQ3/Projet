@@ -40,11 +40,6 @@ public class ManagerController {
         return ResponseEntity.ok(employerService.getJobOffersDTOByEmployerId(employerId));
     }
 
-    @GetMapping("jobOffers/submitted")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferSubmitted(){
-        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.SUBMITTED));
-    }
-
     @GetMapping("jobOffers/{jobOfferState}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));

@@ -74,14 +74,6 @@ public class ManagerService{
 		managerRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getAllJobOffer(){
-		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
-	}
-
-	public JobOfferDTO getJobOfferByID(Long id){
-		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
-	}
-
 	//    CV File
 	public CvFileDTO getCvByID(Long id){
 		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
@@ -113,6 +105,16 @@ public class ManagerService{
 
 	public void deleteAllCvFileByStudendMatricule(String matricule){
 		cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
+	}
+
+//	Job Offer
+
+	public List<JobOfferDTO> getAllJobOffer(){
+		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+	}
+
+	public JobOfferDTO getJobOfferByID(Long id){
+		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
 	}
 
 	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
