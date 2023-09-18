@@ -111,40 +111,16 @@ public class ManagerService{
 		cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
 	}
 
-	//
-
-	public List<JobOfferDTO> getSubmittedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.SUBMITTED);
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(state);
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
-	public List<JobOfferDTO> getAcceptedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.OPEN);
-		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
-	}
-
-	public List<JobOfferDTO> getRefusedJobOffers() {
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.REFUSED);
-		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
-	}
-
-	public JobOfferDTO acceptJobOffer(Long id) {
+	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState) {
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
 		if(existingJobOffer.isPresent()) {
 			JobOffer jobOffer = existingJobOffer.get();
-			jobOffer.setJobOfferState(JobOfferState.OPEN);
-			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
-		}
-
-		throw new JobOffreNotFoundException(id);
-	}
-
-	// TODO : En cas de refus, une justification est requise
-	public JobOfferDTO refuseJobOffer(Long id) {
-		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
-		if(existingJobOffer.isPresent()) {
-			JobOffer jobOffer = existingJobOffer.get();
-			jobOffer.setJobOfferState(JobOfferState.REFUSED);
+			jobOffer.setJobOfferState(newState);
 			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 		}
 
