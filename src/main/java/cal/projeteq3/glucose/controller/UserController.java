@@ -49,8 +49,8 @@ public class UserController{
             return ResponseEntity
               .status(HttpStatus.ACCEPTED)
               //TODO DELETE
-              .body(null);
-              //.body(this.userService.authenticateUser(loginDTO));
+//              .body(null);
+              .body(this.userService.authenticateUser(loginDTO));
         } catch (ValidationException e){
             return ResponseEntity
               .status(e.getStatus())

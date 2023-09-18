@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("SELECT c FROM Credentials c WHERE c.email = ?1")
 	public Optional<Credentials> findCredentials(String email);
+	public Optional<User> findUserByCredentialsEmail(String email);
 
 }
