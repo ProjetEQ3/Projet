@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,16 +41,16 @@ public class ManagerController {
 
     @GetMapping("jobOffers/submitted")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferSubmitted(){
-        return ResponseEntity.ok(managerService.getSubmittedJobOffers());
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.SUBMITTED));
     }
 
     @GetMapping("jobOffers/accepted")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferAccepted(){
-        return ResponseEntity.ok(managerService.getAcceptedJobOffers());
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.ACCEPTED));
     }
 
     @GetMapping("jobOffers/refused")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferRefused(){
-        return ResponseEntity.ok(managerService.getRefusedJobOffers());
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.REFUSED));
     }
 }
