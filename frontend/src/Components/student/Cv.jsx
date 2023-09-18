@@ -2,7 +2,6 @@ import serverIp, {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 
 function Cv({user, setCv}){
-
 	const handlePdfUpload = (e) => {
 		const file = e.target.files[0]
 		if(file && file.type === 'application/pdf'){
@@ -47,6 +46,7 @@ function Cv({user, setCv}){
 				</div>
 			)}
 		</div>
+		// TODO : add Loading util
 	)
 
 }
