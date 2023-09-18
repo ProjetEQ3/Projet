@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -24,10 +25,10 @@ public class EmployerController{
 		this.empService = empService;
 	}
 
-    @PostMapping("/register")
-    public ResponseEntity<EmployerDTO> register(@RequestBody EmployerDTO employerDTO) {
+	@PostMapping("/register")
+    public ResponseEntity<EmployerDTO> register(@RequestBody RegisterEmployerDTO employerDTO) {
         try {
-            Validation.validateEmploye(employerDTO.toEntity());
+            Validation.validateEmployer(employerDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employerDTO));
 
         } catch (ValidationException e) {
