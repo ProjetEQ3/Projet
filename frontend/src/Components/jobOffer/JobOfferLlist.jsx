@@ -1,6 +1,19 @@
 import React from 'react'
+import {axiosInstance} from "../../App";
 
 function JobOfferList({jobOffers}){
+
+	// TODO: get job offers from backend de base
+	const getOffres = async () => {
+		var res = await axiosInstance.get('/manager/jobOffers/all')
+			.then((res) => {
+				return res.data;
+			})
+			.catch((err) => {
+				console.log(err);
+			})
+	}
+
 	return (
 		<div>
 			<h1>Job Offers</h1>

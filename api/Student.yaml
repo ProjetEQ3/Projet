@@ -1,0 +1,150 @@
+openapi: 3.0.0
+info:
+  title: Student Controller API
+  description: API endpoints for student management
+  version: 1.0.0
+paths:
+  /student/register:
+    post:
+      summary: Register a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '201':
+          description: Student registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /student/cv:
+    post:
+      summary: Add a CV for a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDTO'
+      responses:
+        '202':
+          description: CV added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StudentDTO'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+  /student/cv/{studentId}:
+    delete:
+      summary: Delete a student's CV
+      parameters:
+        - in: path
+          name: studentId
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: CV deleted successfully
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Student's ID
+        firstName:
+          type: string
+          description: Student's first name
+        lastName:
+          type: string
+          description: Student's last name
+        email:
+          type: string
+          description: Student's email
+        role:
+          type: string
+          description: Student's role
+        CvFileDTO:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: CV file's ID
+            fileName:
+              type: string
+              description: Name of the CV file
+            fileData:
+              type: string
+              format: byte
+              description: CV file data
+            cvState:
+              type: string
+              description: Current state of the CV file (e.g., SUBMITTED, ACCEPTED, etc.)
+        matricule:
+          type: string
+          description: Student's matricule
+        department:
+          type: string
+          description: Student's department
+
+    StudentDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Student's ID
+        firstName:
+          type: string
+          description: Student's first name
+        lastName:
+          type: string
+          description: Student's last name
+        email:
+          type: string
+          description: Student's email
+        role:
+          type: string
+          description: Student's role
+        matricule:
+          type: string
+          description: Student's matricule
+        department:
+          type: string
+          description: Student's department
+        CvFileDTO:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: CV file's ID
+            fileName:
+              type: string
+              description: Name of the CV file
+            fileData:
+              type: string
+              format: byte
+              description: CV file data
+            cvState:
+              type: string
+              description: Current state of the CV file (e.g., SUBMITTED, ACCEPTED, etc.)
+
