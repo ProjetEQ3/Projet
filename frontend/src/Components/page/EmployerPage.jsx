@@ -93,8 +93,8 @@ const EmployerPage = ({user}) => {
                             <div className="col-6">
                                 {
                                     offersDTO.map((offer, index) => (
-                                        <div key={index} onClick={() => setSelectedOffer(offer)}>
-                                            <ShortJobOffer jobOffer={offer}/>
+                                        <div onClick={() => setSelectedOffer(offer)}>
+                                            <ShortJobOffer jobOffer={offer} key={index}/>
                                         </div>
                                     ))
                                 }
