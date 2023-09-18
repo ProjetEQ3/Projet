@@ -15,7 +15,17 @@ public enum ValidationPattern{
 	CV_FILE_NAME_PATTERN("^[\\p{L}0-9-_\\s]{2,100}\\.pdf$"),
 	SERIAL_PATTERN("^[a-zA-Z0-9_-]{3,100}$"),
     ORGANISATION_NAME_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$"),
-	MATRICULE_PATTERN("^[0-9]{7}$");
+	MATRICULE_PATTERN("^[0-9]{7}$"),
+	TITLE_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$"),
+	DEPARTMENT_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$"),
+	LOCATION_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$"),
+	DESCRIPTION_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$"),
+	SALARY_PATTERN("^[0-9]{1,}$"),
+	START_DATE_PATTERN("^[0-9]{1,}$"),
+	DURATION_PATTERN("^[0-9]{1,}$"),
+	HOURS_PER_WEEK_PATTERN("^[0-9]{1,}$"),
+	EXPIRATION_DATE_PATTERN("^[0-9]{1,}$"),
+	JOB_OFFER_STATE_PATTERN("^[a-zA-Z0-9À-ÖØ-öø-ÿ_ -,.]{2,100}$");
 
 	private final String string;
 

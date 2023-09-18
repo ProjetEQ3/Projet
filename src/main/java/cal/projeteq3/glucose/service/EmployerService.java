@@ -125,6 +125,7 @@ public class EmployerService{
 
 	public List<JobOfferDTO> getAllJobOffers(Long employerId){
 		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
+		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 }

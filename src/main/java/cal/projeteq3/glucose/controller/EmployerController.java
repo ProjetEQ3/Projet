@@ -4,7 +4,6 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
-import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/employer")
@@ -39,13 +37,14 @@ public class EmployerController{
     }
 
 	@GetMapping("/offer/all")
-	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestBody Long employerId){
+	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId){
 		return ResponseEntity.ok(this.empService.getAllJobOffers(employerId));
 	}
 
 	@PostMapping("/offer")
 	public ResponseEntity<?> addJobOffer(@RequestBody JobOfferDTO JobOffer, @RequestBody Long employerId){
 		try{
+			Validation.validateJobOffer(JobOffer);
 			this.empService.createJobOffer(JobOffer, employerId);
 			return ResponseEntity.accepted().build();
 		}catch(ValidationException e){
@@ -56,9 +55,10 @@ public class EmployerController{
 		}
 	}
 
-	@PutMapping("/offer/{id}")
+	@PutMapping("/offer")
 	public ResponseEntity<JobOfferDTO> updateJobOffer(@RequestBody JobOfferDTO JobOffer){
 		try{
+			Validation.validateJobOffer(JobOffer);
 			return ResponseEntity.accepted().body(this.empService.updateJobOffer(JobOffer));
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
