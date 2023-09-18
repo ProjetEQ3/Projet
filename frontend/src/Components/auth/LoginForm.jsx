@@ -67,7 +67,7 @@ const LoginForm = ({user, setUser}) => {
 					navigate("/")
 				) : (
 					<>
-						<form id="login-form" className="m-auto">
+						<form id="login-form" className="m-auto col-10">
 							<div className="form-group row mx-auto">
 								<label htmlFor="colFormLabelSm" className="col-sm-3 col-form-label">Email</label>
 								<div className="col-12">
