@@ -2,9 +2,9 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +16,12 @@ import java.util.List;
 public class ManagerController {
 
     private final ManagerService managerService;
+    private final EmployerService employerService;
 
     @Autowired
-    public ManagerController(ManagerService managerService) {
+    public ManagerController(ManagerService managerService, EmployerService employerService) {
         this.managerService = managerService;
+        this.employerService = employerService;
     }
 
     @GetMapping("/jobOffers/all")
@@ -35,8 +37,7 @@ public class ManagerController {
     @GetMapping("jobOffers/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
         System.out.println("ID: " + employerId);
-//        return ResponseEntity.ok(managerService.getJobOfferByEmployer(employerId));
-        return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null);
+        return ResponseEntity.ok(employerService.getJobOffersDTOByEmployerId(employerId));
     }
 
     @GetMapping("jobOffers/submitted")
@@ -52,5 +53,10 @@ public class ManagerController {
     @GetMapping("jobOffers/refused")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferRefused(){
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.REFUSED));
+    }
+
+    @GetMapping("jobOffers/taken")
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferTaken(){
+        return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.TAKEN));
     }
 }

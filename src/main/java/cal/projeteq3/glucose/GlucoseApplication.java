@@ -183,57 +183,134 @@ public class GlucoseApplication implements CommandLineRunner {
 
 
 	private static void createJobOffers(EmployerService employerService) {
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.add(JobOffer.builder()
-			.title("Front-end developer")
-			.offerState(JobOfferState.SUBMITTED)
-			.department("_420B0")
-			.location("Montréal")
-			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-					"maintenance et à l'amélioration de nos produits logiciels.").salary(20.0f)
-			.startDate(LocalDateTime.now())
-			.duration(7)
-			.expirationDate(LocalDateTime.now())
-			.hoursPerWeek(1)
-			.build());
-		jobOffers.add(JobOffer.builder()
-			.title("Back-end developer")
-			.offerState(JobOfferState.TAKEN)
-			.department("_420B0")
-			.location("Montréal")
-			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-					"maintenance et à l'amélioration de nos produits logiciels.")
-			.salary(20.0f)
-			.startDate(LocalDateTime.now())
-			.duration(7)
-			.expirationDate(LocalDateTime.now())
-			.hoursPerWeek(1)
-			.build());
-		jobOffers.add(JobOffer.builder()
-			.title("Full-stack developer")
-			.offerState(JobOfferState.OPEN)
-			.department("_420B0")
-			.location("Montréal")
-			.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-					"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-					"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-					"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-					"maintenance et à l'amélioration de nos produits logiciels.").salary(20.0f)
-			.startDate(LocalDateTime.now())
-			.duration(7)
-			.expirationDate(LocalDateTime.now())
-			.hoursPerWeek(1)
-			.build());
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(
+                JobOffer.builder()
+                        .title("Front-end developer")
+                        .jobOfferState(JobOfferState.SUBMITTED)
+                        .department("_420B0")
+                        .location("Montréal")
+                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+                                "maintenance et à l'amélioration de nos produits logiciels.")
+						.salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(7)
+                        .expirationDate(LocalDateTime.now().plusDays(1))
+                        .hoursPerWeek(15)
+                        .build(),
+                JobOffer.builder()
+                        .title("Back-end developer")
+                        .jobOfferState(JobOfferState.TAKEN)
+                        .department("_420B0")
+                        .location("Montréal")
+                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+                                "maintenance et à l'amélioration de nos produits logiciels.")
+                        .salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(7)
+                        .expirationDate(LocalDateTime.now().plusDays(5))
+                        .hoursPerWeek(13)
+                        .build(),
+                JobOffer.builder()
+                        .title("Full-stack developer")
+                        .jobOfferState(JobOfferState.OPEN)
+                        .department("_420B0")
+                        .location("Montréal")
+                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+                                "maintenance et à l'amélioration de nos produits logiciels.")
+						.salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(7)
+                        .expirationDate(LocalDateTime.now().plusDays(-5))
+                        .hoursPerWeek(1)
+                        .build(),
+				JobOffer.builder()
+						.title("Développement Web Full Stack")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_420B0")
+						.location("Montréal")
+						.description("Ce stage pourrait impliquer la conception et le développement " +
+								"d'applications web interactives en utilisant diverses " +
+								"technologies front-end et back-end.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(20)
+						.build(),
+				JobOffer.builder()
+						.title("Sécurité Informatique")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_420B0")
+						.location("Montréal")
+						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
+								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(23)
+						.build(),
+				JobOffer.builder()
+						.title("Intelligence Artificielle et Apprentissage Automatique")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_420B0")
+						.location("Montréal")
+						.description("Ce stage pourrait impliquer la création de modèles " +
+								"d'apprentissage automatique, l'analyse de données, " +
+								"et le développement d'applications basées sur l'IA.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(25)
+						.build(),
+				JobOffer.builder()
+						.title("Développement Mobile")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_420B0")
+						.location("Montréal")
+						.description("Ce stage pourrait impliquer la conception et le développement " +
+								"d'applications mobiles pour Android et iOS.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(30)
+						.build(),
+				JobOffer.builder()
+						.title("Développement de Jeux Vidéo")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_420B0")
+						.location("Montréal")
+						.description("Ce stage pourrait impliquer la conception et le développement " +
+								"de jeux vidéo pour PC et consoles.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(40)
+						.build()
+        ));
 		EmployerDTO employer = employerService.getEmployerByEmail("Chawki@professionnel.com");
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(0)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(1)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(2)), employer.getId());
-	}
+
+		employer = employerService.getEmployerByEmail("Louis@professionnel.com");
+
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(3)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());}
 
 }

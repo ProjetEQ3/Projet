@@ -20,7 +20,7 @@ public class JobOfferDTO{
 	private LocalDateTime startDate;
 	private int duration;
 	private LocalDateTime expirationDate;
-	private JobOfferState offerState;
+	private JobOfferState jobOfferState;
 	private int hoursPerWeek;
 
 	public JobOfferDTO(JobOffer jobOffer){
@@ -33,14 +33,14 @@ public class JobOfferDTO{
 		this.startDate = jobOffer.getStartDate();
 		this.duration = jobOffer.getDuration();
 		this.expirationDate = jobOffer.getExpirationDate();
-		this.offerState = jobOffer.getOfferState();
+		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 	}
 
 	public JobOffer toEntity(){
 		return JobOffer.builder()
 				.id(this.id)
-				.offerState(this.offerState)
+				.jobOfferState(this.jobOfferState)
 				.title(this.title)
 				.description(this.description)
 				.location(this.location)
