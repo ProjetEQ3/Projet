@@ -1,5 +1,5 @@
 import JobOffers from "../manager/JobOffers";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Cvs from "../manager/Cvs";
 import {axiosInstance} from "../../App";
 
@@ -7,15 +7,23 @@ const ManagerPage = ({user}) => {
     const [tab, setTab] = useState('stages');
     const cvsDTO = [{
     }];
-    const offers = async () => {
-        await axiosInstance.get('manager/jobOffers/all',
-            // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
-        ).then((response) => {
-            return response.data;
-        }).catch((error) => {
-            console.log(error);
-        });
-    };
+    const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+
+    useEffect(() => {
+        const getAllOffers = async () => {
+            await axiosInstance.get('manager/jobOffers/all',
+                // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
+            ).then((response) => {
+                setOffers(response.data);
+                return response.data;
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+
+        getAllOffers()
+    }, []);
+
     return (
         <div className="container">
             <div>
