@@ -85,7 +85,7 @@ const LoginForm = ({user, setUser}) => {
 									<label htmlFor="colFormLabelSm" className="col-sm-3 mt-3">Email</label>
 									<input type="email" className="form-control" placeholder="Entrez email" name="email" onChange={handleChanges} required/>
 									<label htmlFor="colFormLabelLg" className="col-sm-3 mt-3">Password</label>
-									<input type="password" className="form-control" placeholder="Mot de pass" name="password" onChange={handleChanges} required/>
+									<input type="password" className="form-control" placeholder="Mot de passe" name="password" onChange={handleChanges} required/>
 									<div className="row col-6 mx-auto">
 										<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>Se connecter</button>
 									</div>
