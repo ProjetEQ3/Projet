@@ -3,8 +3,10 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -131,6 +133,22 @@ public class ManagerService{
 		}
 
 		throw new JobOffreNotFoundException(id);
+	}
+
+	public CvFileDTO updateCvState(Long id, CvState newState) {
+		Optional<CvFile> existingCvFile = cvRepository.findById(id);
+		if(existingCvFile.isPresent()) {
+			CvFile cvFile = existingCvFile.get();
+			cvFile.setCvState(newState);
+			return new CvFileDTO(cvRepository.save(cvFile));
+		}
+
+		throw new CvFileNotFoundException();
+	}
+
+	public List<CvFileDTO> getCvFilesWithState(CvState state) {
+		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
+		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
 	}
 
 }
