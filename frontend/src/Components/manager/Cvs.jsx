@@ -6,11 +6,7 @@ import {toast} from "react-toastify";
 const Cvs = ({cvs}) => {
 	const updateCv = (cv, state, reason) => {
 		axiosInstance
-			.post(`/manager/cv/update/`, {
-				id: cv.id,
-				state: state,
-				reason: reason
-			})
+			.post(`/manager/cv/update/${cv.id}?newCvState=${state}&reason=${reason}`)
 			.then((response) => {
 				toast.success("CV est mis à jour avec succès, state: " + state)
 			})
