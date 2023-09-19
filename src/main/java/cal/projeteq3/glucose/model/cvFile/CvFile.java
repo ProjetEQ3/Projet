@@ -24,12 +24,15 @@ public final class CvFile{
 	@OneToOne(mappedBy = "cvFile")
 	private Student student;
 
+	private String refusReason;
+
 	@Builder
-	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState){
+	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState, String refusReason){
 		setId(id);
 		setFileName(fileName);
 		setFileData(fileData);
 		setCvState(cvState);
+		setRefusReason(refusReason);
 	}
 
 	public void setFileName(String fileName){

@@ -2,6 +2,7 @@ class CvFile{
 	id
 	fileName
 	fileData
+	fileText
 	cvState
 
 	constructor(){
@@ -26,6 +27,10 @@ class CvFile{
 		this.cvState = undefined
 	}
 
+	static readBytes(fileData) {
+		const byteArray = new Uint8Array(fileData.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+		return new TextDecoder('utf-8').decode(byteArray);
+	}
 }
 
 export default CvFile;
