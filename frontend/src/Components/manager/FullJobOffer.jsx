@@ -10,7 +10,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
     });
     const handleAccept = (e) => {
         e.preventDefault();
-        axiosInstance.put(`/manager/jobOffer/${jobOffer.id}/accept`)
+        axiosInstance.put(`/manager/jobOffer/accept/${jobOffer.id}`)
             .then((res) => {
                 res.status === 200 ? toast.success("Offer accepted") : console.log("Failed to accept offer");
                 updateJobOfferList(jobOffer);
@@ -38,7 +38,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
             return;
         }
 
-        axiosInstance.put(`/manager/jobOffer/${jobOffer.id}/refuse`, formData.refusalReason)
+        axiosInstance.put(`/manager/jobOffer/refuse/${jobOffer.id}`, formData.refusalReason)
             .then((res) => {
                 res.status === 200 ? toast.success("Offer declined") : console.log("Failed to decline offer");
                 updateJobOfferList(jobOffer);

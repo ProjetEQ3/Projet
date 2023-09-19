@@ -67,12 +67,12 @@ public class ManagerController {
     }
 
 
-    @PutMapping("jobOffer/{id}/accept")
+    @PutMapping("jobOffer/accept/{id}")
     public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
         return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
     }
 
-    @PutMapping("jobOffer/{id}/refuse")
+    @PutMapping("jobOffer/refuse/{id}")
     public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
         return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
     }
