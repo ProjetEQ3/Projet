@@ -298,6 +298,32 @@ public class GlucoseApplication implements CommandLineRunner {
 						.duration(7)
 						.expirationDate(LocalDateTime.now().plusDays(30))
 						.hoursPerWeek(40)
+						.build(),
+				JobOffer.builder()
+						.title("Gestion de feu de circulation")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_310A0")
+						.location("Montréal")
+						.description("Ce stage pourrait impliquer la gestion de la circulation " +
+								"et la coordination des interventions d'urgence.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(40)
+						.build(),
+				JobOffer.builder()
+						.title("Techniques de santé animale")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department("_145A0")
+						.location("Montréal")
+						.description("Prendre soin des animaux et les aider à se rétablir " +
+								"de leurs maladies ou blessures.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(30))
+						.hoursPerWeek(40)
 						.build()
         ));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
