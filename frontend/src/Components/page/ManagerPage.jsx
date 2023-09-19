@@ -5,12 +5,12 @@ import {axiosInstance} from "../../App";
 
 const ManagerPage = ({user}) => {
     const [tab, setTab] = useState('stages');
-    const [cvs, setCvs] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
-    const [offers, setOffers] = useState([{id: 1, filename: "test", filepath: "test"}]);
+    const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
+    const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
 
     useEffect(() => {
         const getAllOffers = async () => {
-            await axiosInstance.get('manager/jobOffers/all',
+            await axiosInstance.get('manager/jobOffers/submitted',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setOffers(response.data);
@@ -19,7 +19,7 @@ const ManagerPage = ({user}) => {
                 console.log(error);
             });
         }
-
+        console.log(offers)
         getAllOffers()
     }, []);
 
@@ -39,6 +39,10 @@ const ManagerPage = ({user}) => {
         getAllCvs()
     }, []);
 
+    const updateJobOfferList = (jobOffer) => {
+        setOffers(offers.filter((offer) => offer.id !== jobOffer.id));
+    }
+
     return (
         <div className="container">
             <div>
@@ -48,7 +52,7 @@ const ManagerPage = ({user}) => {
                     <button className={`btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
                             onClick={() => setTab('cvs')}>CVs</button>
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers}/>}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} />}
             </div>
         </div>

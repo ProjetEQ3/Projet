@@ -77,6 +77,42 @@ paths:
                   $ref: '#/components/schemas/JobOfferDTO'
         '500':
           description: Internal Server Error
+  /manager/jobOffer/{id}/accept:
+    put:
+      summary: Accept job offer
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Job offer ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job offer accepted
+        '404':
+          description: Job offer not found
+        '500':
+          description: Internal Server Error
+  /manager/jobOffer/{id}/refuse:
+    put:
+      summary: Refuse job offer
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Job offer ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job offer refused
+        '404':
+          description: Job offer not found
+        '500':
+          description: Internal Server Error
+
+
 components:
   schemas:
     JobOfferDTO:

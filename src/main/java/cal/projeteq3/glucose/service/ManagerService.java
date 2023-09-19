@@ -134,11 +134,12 @@ public class ManagerService{
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
-	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState) {
+	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
 		if(existingJobOffer.isPresent()) {
 			JobOffer jobOffer = existingJobOffer.get();
 			jobOffer.setJobOfferState(newState);
+			jobOffer.setRefusReason(reason);
 			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 		}
 

@@ -22,6 +22,7 @@ public class JobOfferDTO{
 	private LocalDateTime expirationDate;
 	private JobOfferState jobOfferState;
 	private int hoursPerWeek;
+	private String refusReason;
 
 	public JobOfferDTO(JobOffer jobOffer){
 		this.id = jobOffer.getId();
@@ -50,6 +51,7 @@ public class JobOfferDTO{
 				.duration(this.duration)
 				.hoursPerWeek(this.hoursPerWeek)
 				.expirationDate(this.expirationDate)
+				.refusReason(this.refusReason)
 				.build();
 	}
 

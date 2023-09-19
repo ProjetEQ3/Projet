@@ -55,6 +55,8 @@ public class JobOffer{
 	@OneToMany(mappedBy = "jobOffer")
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
+	private String refusReason;
+
 	public void copy(JobOffer jobOffer){
 		this.title = jobOffer.getTitle();
 		this.department = jobOffer.getDepartment();

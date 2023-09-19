@@ -36,7 +36,7 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOfferByID(id));
     }
 
-    @GetMapping("jobOffers/{employerId}")
+    @GetMapping("jobOffers/employer/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
         System.out.println("ID: " + employerId);
         return ResponseEntity.ok(employerService.getJobOffersDTOByEmployerId(employerId));
@@ -60,6 +60,16 @@ public class ManagerController {
     }
 
 
+    @PutMapping("jobOffer/{id}/accept")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
+    }
+
+    @PutMapping("jobOffer/{id}/refuse")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
+    }
+
     @GetMapping("cvs/all")
     public ResponseEntity<List<CvFileDTO>> getAllCV(){
         return ResponseEntity.ok(managerService.getAllCv());
@@ -69,4 +79,5 @@ public class ManagerController {
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
         return ResponseEntity.ok(managerService.getPendingCv());
     }
+
 }
