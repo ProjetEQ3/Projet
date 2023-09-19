@@ -2,11 +2,13 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ public class ManagerController {
         this.employerService = employerService;
     }
 
+//    JobOffer
     @GetMapping("/jobOffers/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(){
         return ResponseEntity.ok(managerService.getAllJobOffer());
@@ -47,34 +50,25 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
-//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
-// (String reason va venir si ce n'est pas déjà fait)
-//    Puisque c'est un update, il faut utiliser PUT et non POST
-
-    @PostMapping("/cv/accepted/{id}")
-    public ResponseEntity<?> acceptCv(@PathVariable Long id){
-        managerService.acceptCv(id);
-        return ResponseEntity.ok().build();
-    }
-
-//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
-// (String reason va venir si ce n'est pas déjà fait)
-//    Puisque c'est un update, il faut utiliser PUT et non POST
-    @PostMapping("/cv/refused/{id}")
-    public ResponseEntity<?> refuseCv(@PathVariable Long id){
-        managerService.refuseCv(id);
-        return ResponseEntity.ok().build();
-    }
-
-
-    @PutMapping("jobOffer/{id}/accept")
+    @PutMapping("jobOffer/accept/{id}")
     public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
         return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
     }
 
-    @PutMapping("jobOffer/{id}/refuse")
+    @PutMapping("jobOffer/refuse/{id}")
     public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
         return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
+    }
+
+    @PutMapping("/cv/update/{id}")
+    public ResponseEntity<CvFileDTO> updateCvState(@PathVariable Long id, @RequestParam CvState newCvState, @RequestParam String reason){
+        try{
+            return ResponseEntity.ok(managerService.updateCvState(id, newCvState, reason));
+        }catch(ValidationException e){
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
+        }
     }
 
     @GetMapping("cvs/all")
@@ -84,7 +78,7 @@ public class ManagerController {
 
     @GetMapping("cvs/pending")
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
-        return ResponseEntity.ok(managerService.getPendingCv());
+        return ResponseEntity.ok(managerService.getSubmittedCv());
     }
 
 }

@@ -77,15 +77,15 @@ class ManagerServiceTest {
         List<CvFileDTO> actualAllCv = managerService.getAllCv();
         assertTrue(actualAllCv.isEmpty());
         assertEquals(1, managerService.getAllManagers().size());
-        assertSame(actualAllCv, managerService.getPendingCv());
+        assertSame(actualAllCv, managerService.getSubmittedCv());
     }
 
     /**
-     * Method under test: {@link ManagerService#getPendingCv()}
+     * Method under test: {@link ManagerService#getSubmittedCv()}
      */
     @Test
-    void testGetPendingCv() {
-        List<CvFileDTO> actualPendingCv = managerService.getPendingCv();
+    void testgetSubmittedCv() {
+        List<CvFileDTO> actualPendingCv = managerService.getSubmittedCv();
         assertTrue(actualPendingCv.isEmpty());
         assertSame(actualPendingCv, managerService.getAllCv());
         assertEquals(1, managerService.getAllManagers().size());
@@ -116,7 +116,7 @@ class ManagerServiceTest {
     void testGetAllCvFileByStudent2() {
         List<CvFileDTO> actualAllCvFileByStudent = managerService.getAllCvFileByStudent(7L);
         assertTrue(actualAllCvFileByStudent.isEmpty());
-        assertSame(actualAllCvFileByStudent, managerService.getPendingCv());
+        assertSame(actualAllCvFileByStudent, managerService.getSubmittedCv());
         assertEquals(1, managerService.getAllManagers().size());
     }
 
@@ -137,7 +137,7 @@ class ManagerServiceTest {
         List<CvFileDTO> actualAllCvFileByStudentMatricule = managerService.getAllCvFileByStudentMatricule("Matricule");
         assertTrue(actualAllCvFileByStudentMatricule.isEmpty());
         assertSame(actualAllCvFileByStudentMatricule, managerService.getAllCv());
-        assertSame(actualAllCvFileByStudentMatricule, managerService.getPendingCv());
+        assertSame(actualAllCvFileByStudentMatricule, managerService.getSubmittedCv());
         assertEquals(1, managerService.getAllManagers().size());
     }
 
@@ -156,7 +156,7 @@ class ManagerServiceTest {
         managerService.deleteAllCvFileByStudentMatricule("Matricule");
         List<CvFileDTO> allCv = managerService.getAllCv();
         assertTrue(allCv.isEmpty());
-        assertSame(allCv, managerService.getPendingCv());
+        assertSame(allCv, managerService.getSubmittedCv());
         assertEquals(1, managerService.getAllManagers().size());
     }
 

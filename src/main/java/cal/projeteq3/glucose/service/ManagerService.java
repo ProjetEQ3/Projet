@@ -85,7 +85,7 @@ public class ManagerService{
 		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
 	}
 
-	public List<CvFileDTO> getPendingCv(){
+	public List<CvFileDTO> getSubmittedCv(){
 		return cvRepository.findAllByCvState(CvState.SUBMITTED).stream().map(CvFileDTO::new).toList();
 	}
 
@@ -144,14 +144,6 @@ public class ManagerService{
 		}
 
 		throw new JobOffreNotFoundException(id);
-	}
-
-	public void acceptCv(Long id){
-		throw new UnsupportedOperationException();
-	}
-
-	public void refuseCv(Long id){
-		throw new UnsupportedOperationException();
 	}
 
 	public CvFileDTO updateCvState(Long id, CvState newState, String reason) {
