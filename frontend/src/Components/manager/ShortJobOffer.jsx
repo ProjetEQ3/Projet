@@ -25,10 +25,10 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                     <div className="col-4 my-auto d-flex justify-content-between">
                         <div className="mx-auto">
                             <div className={`border rounded px-2 
-                            ${jobOffer.jobOfferState === 'Open' ? 'border-success text-success':
-                                jobOffer.jobOfferState === 'Pending' ? 'border-warning text-warning':
-                                    jobOffer.jobOfferState === 'Expired' ? 'border-danger text-danger' :
-                                        jobOffer.jobOfferState === 'Taken' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
+                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
+                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
+                                    jobOffer.jobOfferState === 'EXPIRED' ? 'border-danger text-danger' :
+                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
                                 {jobOffer.jobOfferState}
                             </div>
                         </div>
