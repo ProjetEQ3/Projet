@@ -111,10 +111,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000001")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("awdawd.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Joe")
@@ -123,10 +119,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000002")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("hrdgd.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Louis")
@@ -135,10 +127,10 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000003")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("efaqfsdf.pdf")
-							.build())
+				.cvFile(CvFile.builder()
+						.fileData(new byte[]{1, 2, 3, 4, 5})
+						.fileName("awdawd.pdf")
+						.build())
 				.build(),
 			Student.builder()
 				.firstName("Chawki")
@@ -147,10 +139,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000004")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("sgsegfsg.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Zakaria")
@@ -159,10 +147,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("aaaAAA111")
 				.matricule("0000005")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("sgsefghd.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Gabriel")
@@ -171,10 +155,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000006")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("sefsef.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Samuel")
@@ -183,10 +163,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000007")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("hdrhdrgw.pdf")
-							.build())
 				.build(),
 			Student.builder()
 				.firstName("Karim")
@@ -195,10 +171,6 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000008")
 				.department("_420B0")
-					.cvFile(CvFile.builder()
-							.fileData(new byte[]{1, 2, 3, 4, 5})
-							.fileName("seghsahtr.pdf")
-							.build())
 				.build());
 	}
 
