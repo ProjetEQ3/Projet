@@ -1,4 +1,4 @@
-# Register Studen
+# Register Student
 
 # Login Student
 # Student depot CV
