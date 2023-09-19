@@ -31,8 +31,8 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                                 {jobOffer.jobOfferState}
                             </div>
                         </div>
-                        <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg icon-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"/>
-                        <div id="deleteModal" className="modal">
+                        <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg icon-btn" data-bs-toggle="modal" data-bs-target={`#delete${jobOffer.id}`}/>
+                        <div id={`delete${jobOffer.id}`} className="modal">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
