@@ -18,17 +18,17 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-8">
-                        <h4 className="text-dark fw-light pt-1">{jobOffer.title}</h4>
+                        <h5 className="text-dark fw-light pt-1">{jobOffer.title}</h5>
                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-between">
                         <div className="mx-auto">
                             <div className={`border rounded px-2 
-                            ${jobOffer.state === 'Open' ? 'border-success text-success':
-                                jobOffer.state === 'Pending' ? 'border-warning text-warning':
-                                    jobOffer.state === 'Expired' ? 'border-danger text-danger' :
-                                        jobOffer.state === 'Taken' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
-                                {jobOffer.state}
+                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
+                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
+                                    jobOffer.jobOfferState === 'EXPIRED' ? 'border-danger text-danger' :
+                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
+                                {jobOffer.jobOfferState}
                             </div>
                         </div>
                         <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg icon-btn" data-bs-toggle="modal" data-bs-target="#deleteModal"/>

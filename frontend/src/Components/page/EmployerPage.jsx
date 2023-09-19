@@ -10,7 +10,27 @@ import {toast} from "react-toastify";
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
-	const [offers, setOffers] = useState([]);
+	const [offers, setOffers] = useState([
+		{
+			id: 1,
+			title: "Développeur web",
+			department: "Informatique",
+			location: "Montréal",
+			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+				"Vivamus euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
+				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
+				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; " +
+				"Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
+				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
+				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; ",
+			salary: 20,
+			hourPerWeek: 40,
+			startDate: "2021-09-01",
+			duration: 4,
+			expireDate: "2021-08-01",
+			jobOfferState: "OPEN",
+		}
+	]);
 
 	useEffect(() => {
 		getOffers()
@@ -37,12 +57,15 @@ const EmployerPage = ({user}) => {
 				toast.error("Erreur lors de la mise à jour de l'offre de stage" + error.message);
 			})
 	}
-	const deleteOffer = (offer) => {
-		console.log("Offer"+offer.title)
+	const deleteOffer = (offerId) => {
+		console.log("Offer"+offerId)
+		console.log(offers)
+
 		axiosInstance
-			.delete(`/employer/offer/${offer.id}`)
+			.delete(`/employer/offer/${offerId}`)
 			.then((response) => {
-				setOffers(offers.filter((o) => o.id !== offer.id))
+				let updatedOffers = offers.filter((o) => o.id !== offerId)
+				setOffers(updatedOffers)
 				toast.success("Offre de stage supprimée");
 			})
 			.catch((error) => {
@@ -69,7 +92,7 @@ const EmployerPage = ({user}) => {
 								{
 									offers.map((offer, index) => (
 										<div onClick={() => setSelectedOffer(offer)}>
-											<ShortJobOffer jobOffer={offer} key={index} deleteOffer={() => deleteOffer(offer)}/>
+											<ShortJobOffer jobOffer={offer} key={offer.id} deleteOffer={() => deleteOffer(offer.id)}/>
 										</div>
 									))
 								}

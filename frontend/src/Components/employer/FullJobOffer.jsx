@@ -11,11 +11,11 @@ const FullJobOffer = ({ jobOffer }) => {
                     </div>
                     <div className="col-3 my-auto text-center">
                             <div className={`border rounded px-2 
-                            ${jobOffer.state === 'Open' ? 'border-success text-success':
-                                jobOffer.state === 'Pending' ? 'border-warning text-warning':
-                                    jobOffer.state === 'Expired' ? 'border-danger text-danger' :
-                                        jobOffer.state === 'Taken' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
-                                {jobOffer.state}
+                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
+                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
+                                    jobOffer.jobOfferState === 'EXPIRED' ? 'border-danger text-danger' :
+                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
+                                {jobOffer.jobOfferState}
                             </div>
                     </div>
                 </div>
