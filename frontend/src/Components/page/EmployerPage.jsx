@@ -10,7 +10,27 @@ import {toast} from "react-toastify";
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
-	const [offers, setOffers] = useState([]);
+	const [offers, setOffers] = useState([
+		{
+			id: 1,
+			title: "Développeur web",
+			department: "Informatique",
+			location: "Montréal",
+			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+				"Vivamus euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
+				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
+				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; " +
+				"Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
+				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
+				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; ",
+			salary: 20,
+			hourPerWeek: 40,
+			startDate: "2021-09-01",
+			duration: 4,
+			expireDate: "2021-08-01",
+			jobOfferState: "OPEN",
+		}
+	]);
 
 	useEffect(() => {
 		getOffers()
@@ -18,7 +38,7 @@ const EmployerPage = ({user}) => {
 
 	const getOffers = () => {
 		axiosInstance
-			.get('/employer/offer/all', {params: {employerId: 1}})
+			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {setOffers(response.data)})
 			.catch((error) => {console.log("Error", error)});
 	}
@@ -37,85 +57,21 @@ const EmployerPage = ({user}) => {
 				toast.error("Erreur lors de la mise à jour de l'offre de stage" + error.message);
 			})
 	}
+	const deleteOffer = (offerId) => {
+		console.log("Offer"+offerId)
+		console.log(offers)
 
-	const deleteOffer = (offer) => {
 		axiosInstance
-			.delete(`/employer/offer/${offer.id}`)
+			.delete(`/employer/offer/${offerId}`)
 			.then((response) => {
-				offers.remove(offer)
-				setOffers(offers)
+				let updatedOffers = offers.filter((o) => o.id !== offerId)
+				setOffers(updatedOffers)
 				toast.success("Offre de stage supprimée");
 			})
 			.catch((error) => {
 				toast.error("Erreur lors de la suppression de l'offre de stage" + error.message);
 			})
 	}
-
-	const offersDTO = [{
-		id: 1,
-		title: "Offre de stage 1",
-		state: "Open",
-		department: "Informatique",
-		location: "Montréal",
-		description: "Description de l'offre de stage 1",
-		salary: "20",
-		hourPerWeek: "40",
-		startDate: "2023-01-01",
-		duration: "12 semaines",
-		expireDate: "2022-12-31",
-	},
-		{
-			id: 2,
-			title: "Offre de stage 2",
-			state: "Pending",
-			department: "Informatique",
-			location: "Montréal",
-			description: "Description de l'offre de stage 1",
-			salary: "20",
-			hourPerWeek: "40",
-			startDate: "2023-01-01",
-			duration: "12 semaines",
-			expireDate: "2022-12-31",
-		},
-		{
-			id: 3,
-			title: "Offre de stage 3",
-			state: "Submitted",
-			department: "Informatique",
-			location: "Montréal",
-			description: "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite collaboration avec notre équipe de développement pour contribuer au développement, à la maintenance et à l'amélioration de nos produits logiciels.",
-			salary: "20",
-			hourPerWeek: "40",
-			startDate: "2023-01-01",
-			duration: "12 semaines",
-			expireDate: "2022-12-31",
-		},
-		{
-			id: 4,
-			title: "Offre de stage 4",
-			state: "Expired",
-			department: "Informatique",
-			location: "Montréal",
-			description: "Description de l'offre de stage 1",
-			salary: "20",
-			hourPerWeek: "40",
-			startDate: "2023-01-01",
-			duration: "12 semaines",
-			expireDate: "2022-12-31",
-		},
-		{
-			id: 5,
-			title: "Offre de stage 5",
-			state: "Taken",
-			department: "Informatique",
-			location: "Montréal",
-			description: "Description de l'offre de stage 1",
-			salary: "20",
-			hourPerWeek: "40",
-			startDate: "2023-01-01",
-			duration: "12 semaines",
-			expireDate: "2022-12-31",
-		}];
 
 	const handleNewButtonClicked = () => {
 		navigate('/employer/newOffer');
@@ -134,9 +90,9 @@ const EmployerPage = ({user}) => {
 						<div className="row justify-content-around">
 							<div className="col-6">
 								{
-									offersDTO.map((offer, index) => (
+									offers.map((offer, index) => (
 										<div onClick={() => setSelectedOffer(offer)}>
-											<ShortJobOffer jobOffer={offer} key={index}/>
+											<ShortJobOffer jobOffer={offer} key={offer.id} deleteOffer={() => deleteOffer(offer.id)}/>
 										</div>
 									))
 								}

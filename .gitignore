@@ -1,6 +1,7 @@
 # Ignore IDE files and directories
 .vscode/
 .idea/
+.obsidian/
 *.suo
 *.ntvs*
 *.njsproj

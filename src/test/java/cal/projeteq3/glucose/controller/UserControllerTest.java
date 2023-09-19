@@ -1,13 +1,6 @@
-package cal.projeteq3.glucose.Controller;
+package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.controller.UserController;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
-import cal.projeteq3.glucose.repository.CredentialRepository;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
-import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.service.UserService;
@@ -15,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;

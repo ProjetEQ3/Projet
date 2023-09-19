@@ -1,6 +1,5 @@
-package cal.projeteq3.glucose.Controller;
+package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.controller.EmployerController;
 import cal.projeteq3.glucose.service.EmployerService;
 import org.junit.jupiter.api.BeforeEach;
 

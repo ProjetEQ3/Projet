@@ -36,6 +36,7 @@ const LoginForm = ({user, setUser}) => {
 	const validateUser = () => {
 		let isValid = true
 		if(!validateEmail()){
+			toast.error('L\'adresse courriel doit être en format d\'adresse courriel');
 			isValid = false
 		}
 		if(!validatePassword()){

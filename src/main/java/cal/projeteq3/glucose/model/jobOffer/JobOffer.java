@@ -19,6 +19,7 @@ public class JobOffer{
 	private Long id;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private JobOfferState jobOfferState = JobOfferState.SUBMITTED;
 
 	@Column(nullable = false)
