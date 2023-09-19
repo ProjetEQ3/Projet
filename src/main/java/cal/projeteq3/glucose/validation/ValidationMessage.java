@@ -16,7 +16,17 @@ public enum ValidationMessage{
 	SERIAL_MESSAGE("Le numéro de série doit contenir entre 3 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets bas, des espaces et des tirets."),
   ORGANISATION_NAME_MESSAGE("Le nom de l'organisation doit contenir entre 2 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets, des apostrophes et des espaces."),
 	MATRICULE_MESSAGE("Le matricule doit être de 7 chiffres."),
-	ROLE_MESSAGE("Le rôle doit être un rôle valide.");
+	ROLE_MESSAGE("Le rôle doit être un rôle valide."),
+	TITLE_MESSAGE("Le titre doit contenir entre 2 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets, des apostrophes et des espaces."),
+	DEPARTMENT_MESSAGE("Le département doit contenir entre 2 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets, des apostrophes et des espaces."),
+	LOCATION_MESSAGE("L'emplacement doit contenir entre 2 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets, des apostrophes et des espaces."),
+	DESCRIPTION_MESSAGE("La description doit contenir entre 2 et 100 caractères et ne peut contenir que des lettres, des chiffres, des tirets, des apostrophes et des espaces."),
+	SALARY_MESSAGE("Le salaire doit être un nombre."),
+	START_DATE_MESSAGE("La date de début doit être un nombre."),
+	DURATION_MESSAGE("La durée doit être un nombre."),
+	HOURS_PER_WEEK_MESSAGE("Les heures par semaine doivent être un nombre."),
+	EXPIRATION_DATE_MESSAGE("La date d'expiration doit être un nombre."),
+	JOB_OFFER_STATE_MESSAGE("L'état de l'offre d'emploi doit être un état valide.");
 
 	private final String string;
 

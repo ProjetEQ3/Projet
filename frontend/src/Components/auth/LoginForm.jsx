@@ -19,7 +19,6 @@ const LoginForm = ({user, setUser}) => {
 			email: formData.email,
 			password: formData.password
 		}
-		console.log("data", data)
 		if(validateUser())
 			axiosInstance.post("/user/login", data)
 				.then((response) => {
@@ -27,11 +26,9 @@ const LoginForm = ({user, setUser}) => {
 					newUser.init(response.data)
 					newUser.isLoggedIn = true
 					setUser(newUser)
-					console.log("response.data", newUser)
 					toast.success("Vous êtes connecté")
 				})
 				.catch((error) => {
-					console.log("ERROR: ", error)
 					toast.error("Utilisateur ou mot de passe incorrect")
 				})
 	}

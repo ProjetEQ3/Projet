@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.validation;
 
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -147,6 +148,41 @@ public final class Validation{
 		if(role.matches(Role.getAllRolesString()))
 			return;
 		exception(ValidationMessage.ROLE_MESSAGE.toString());
+	}
+
+	public static void validateJobOffer(JobOfferDTO jobOffer){
+		if(!jobOffer.getTitle().matches(TITLE_PATTERN.toString()))
+			exception(ValidationMessage.TITLE_MESSAGE.toString());
+		if(!jobOffer.getDepartment().matches(DEPARTMENT_PATTERN.toString()))
+			exception(ValidationMessage.DEPARTMENT_MESSAGE.toString());
+		if(jobOffer.getLocation().matches(LOCATION_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.LOCATION_MESSAGE.toString());
+		if(!jobOffer.getDescription().matches(DESCRIPTION_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.DESCRIPTION_MESSAGE.toString());
+		if(jobOffer.getSalary() < 0)
+			return;
+		exception(ValidationMessage.SALARY_MESSAGE.toString());
+		if(!jobOffer.getStartDate().isAfter(jobOffer.getExpirationDate()))
+			return;
+		exception(ValidationMessage.START_DATE_MESSAGE.toString());
+		if(jobOffer.getDuration() < 0)
+			return;
+		exception(ValidationMessage.DURATION_MESSAGE.toString());
+		if(jobOffer.getHoursPerWeek() < 0)
+			return;
+		exception(ValidationMessage.HOURS_PER_WEEK_MESSAGE.toString());
+		if(!jobOffer.getExpirationDate().isAfter(jobOffer.getStartDate()))
+			return;
+		exception(ValidationMessage.EXPIRATION_DATE_MESSAGE.toString());
+		if(!jobOffer.getJobOfferState().toString().matches(JOB_OFFER_STATE_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.JOB_OFFER_STATE_MESSAGE.toString());
+		if(!jobOffer.getJobOfferState().toString().matches(JOB_OFFER_STATE_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.JOB_OFFER_STATE_MESSAGE.toString());
+
 	}
 
 }

@@ -9,14 +9,13 @@ const StudentPage = ({user, setUser}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-	  if (!user?.isLoggedIn) {
+	  if(!user?.isLoggedIn){
 		  navigate('/');
-	}
-  }, [user, navigate]);
+	}}, [user, navigate]);
+
 	const setCv = (cv) => {
-		user.cvFile = new CvFile(cv)
-		//TODO waiting for API addCv
-		console.log("TODO waiting for API addCv")
+		user.cvFile = cv
+		setUser(user)
 	}
 
 	return (
@@ -32,7 +31,7 @@ const StudentPage = ({user, setUser}) => {
 				</div>
 				{tab === 'home' && <h3>Home</h3>}
 				{tab === 'stages' && <h3>Stages</h3>}
-				{tab === 'cv' && <Cv user={user} />}
+				{tab === 'cv' && <Cv user={user} setCv={setCv} />}
 			</div>
 		</div>
 	)

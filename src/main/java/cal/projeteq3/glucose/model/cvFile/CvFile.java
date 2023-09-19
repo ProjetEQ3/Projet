@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.model.cvFile;
 
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.validation.Validation;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,21 +19,27 @@ public final class CvFile{
 	@Column(nullable = false, updatable = false)
 	private byte[] fileData;
 
-	private CvState cvState;
+	private CvState cvState = CvState.SUBMITTED;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "cvFile")
 	private Student student;
 
 	@Builder
-	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState, Student student) {
-		this.id = id;
+	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState){
+		setId(id);
+		setFileName(fileName);
+		setFileData(fileData);
+		setCvState(cvState);
+	}
+
+	public void setFileName(String fileName){
+		Validation.validateCvFileName(fileName);
 		this.fileName = fileName;
-		this.fileData = fileData;
+	}
 
-		if (cvState == null) this.cvState = CvState.SUBMITTED;
+	public void setCvState(CvState cvState){
+		if(cvState == null) this.cvState = CvState.SUBMITTED;
 		else this.cvState = cvState;
-
-		this.student = student;
 	}
 
 }

@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student extends User{
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private CvFile cvFile;
 
 	@Column(unique = true, nullable = false)
@@ -32,7 +32,7 @@ public class Student extends User{
 		this.matricule = matricule;
 		if(department != null)
 			this.department = Department.valueOf(department);
-		addCv(cvFile);
+		setCvFile(cvFile);
 	}
 
 	public Student(String lastName, String firstName, String email, String password, String matricule, String department){
@@ -41,9 +41,16 @@ public class Student extends User{
 		this.department = Department.valueOf(department);
 	}
 
-	public void addCv(CvFile cvFile){
+	public void setCvFile(CvFile cvFile){
 		this.cvFile = cvFile;
 		if(cvFile != null) this.cvFile.setStudent(this);
+	}
+
+	public void deleteCv(){
+		if(this.cvFile != null){
+			this.cvFile.setStudent(null);
+			this.cvFile = null;
+		}
 	}
 
 }
