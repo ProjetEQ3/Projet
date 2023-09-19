@@ -60,8 +60,19 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
     }
 
+    @PutMapping("cv/accept/{id}")
+    public ResponseEntity<CvFileDTO> updateAcceptedCvState(@PathVariable Long id){
+        return ResponseEntity.ok(managerService.updateCvState(id, CvState.valueOf("ACCEPTED"), null));
+    }
+
+    @PutMapping("cv/refuse/{id}")
+    public ResponseEntity<CvFileDTO> updateRefuseCvState(@PathVariable Long id, @RequestBody String reason){
+        System.out.println("ID: " + id + " REASON: " + reason);
+        return ResponseEntity.ok(managerService.updateCvState(id, CvState.valueOf("REFUSED"), reason));
+    }
+
     @PutMapping("/cv/update/{id}")
-    public ResponseEntity<CvFileDTO> updateCvState(@PathVariable Long id, @RequestParam CvState newCvState, @RequestParam String reason){
+    public ResponseEntity<CvFileDTO> updateCvState(@PathVariable Long id, @RequestParam("newCvState") CvState newCvState, @RequestParam("reason") String reason){
         try{
             return ResponseEntity.ok(managerService.updateCvState(id, newCvState, reason));
         }catch(ValidationException e){
