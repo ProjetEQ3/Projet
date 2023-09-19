@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import {useState} from "react";
-const ShortJobOffer = ({ jobOffer }) => {
+const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -45,7 +45,7 @@ const ShortJobOffer = ({ jobOffer }) => {
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Supprimer</button>
+                                        <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteOffer}>Supprimer</button>
                                     </div>
                                 </div>
                             </div>
