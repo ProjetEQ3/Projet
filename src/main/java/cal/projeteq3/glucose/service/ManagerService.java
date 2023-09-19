@@ -154,11 +154,12 @@ public class ManagerService{
 		throw new UnsupportedOperationException();
 	}
 
-	public CvFileDTO updateCvState(Long id, CvState newState) {
+	public CvFileDTO updateCvState(Long id, CvState newState, String reason) {
 		Optional<CvFile> existingCvFile = cvRepository.findById(id);
 		if(existingCvFile.isPresent()) {
 			CvFile cvFile = existingCvFile.get();
 			cvFile.setCvState(newState);
+			cvFile.setRefusReason(reason);
 			return new CvFileDTO(cvRepository.save(cvFile));
 		}
 

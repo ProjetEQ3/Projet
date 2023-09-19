@@ -22,15 +22,22 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
         setIsDecline(true);
     }
 
+    const validateReason = (e) => {
+        e.preventDefault();
+
+        setFormData({...formData, refusalReason: e.target.value});
+    }
+
     const confirmDecline = (e) => {
         e.preventDefault();
+
         if (document.getElementById('refusalForm').checkValidity() === false) {
             e.stopPropagation();
             document.getElementById('refusalForm').classList.add('was-validated');
             toast.error("Please fill in the refusal reason")
             return;
         }
-        setFormData({...formData, refusalReason: document.getElementById('refusalReason').value});
+
         axiosInstance.put(`/manager/jobOffer/${jobOffer.id}/refuse`, formData.refusalReason)
             .then((res) => {
                 res.status === 200 ? toast.success("Offer declined") : console.log("Failed to decline offer");
@@ -65,7 +72,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                     {isDecline ? (
                         <form id="refusalForm" className="form col-10 mx-auto">
                             <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
-                            <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" placeholder="Raison du refus" required/>
+                            <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder="Raison du refus" required/>
                             <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
                             <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
                         </form>) :

@@ -47,12 +47,19 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
+//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
+// (String reason va venir si ce n'est pas déjà fait)
+//    Puisque c'est un update, il faut utiliser PUT et non POST
+
     @PostMapping("/cv/accepted/{id}")
     public ResponseEntity<?> acceptCv(@PathVariable Long id){
         managerService.acceptCv(id);
         return ResponseEntity.ok().build();
     }
 
+//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
+// (String reason va venir si ce n'est pas déjà fait)
+//    Puisque c'est un update, il faut utiliser PUT et non POST
     @PostMapping("/cv/refused/{id}")
     public ResponseEntity<?> refuseCv(@PathVariable Long id){
         managerService.refuseCv(id);

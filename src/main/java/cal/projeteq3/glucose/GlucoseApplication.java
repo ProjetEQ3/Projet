@@ -53,7 +53,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Gabriel")
 				.lastName("Non")
-				.email("Gabriel@professionnel.com")
+				.email("gabriel@professionnel.com")
 				.password("Ose12345")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
@@ -61,7 +61,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Chawki")
 				.lastName("Non")
-				.email("Chawki@professionnel.com")
+				.email("chawki@professionnel.com")
 				.password("Ose12345")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
@@ -77,7 +77,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Samuel")
 				.lastName("Non")
-				.email("Samuel@professionnel.com")
+				.email("samuel@professionnel.com")
 				.password("Ose12345")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
@@ -85,7 +85,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Employer.builder()
 				.firstName("Louis")
 				.lastName("Non")
-				.email("Louis@professionnel.com")
+				.email("louis@professionnel.com")
 				.password("Ose12345")
 				.organisationName("Fritz")
 				.organisationPhone("123-456-7890")
@@ -114,7 +114,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Joe")
 				.lastName("Michaud")
-				.email("Joe@michaud.com")
+				.email("joe@michaud.com")
 				.password("Ose12345")
 				.matricule("0000002")
 				.department("_420B0")
@@ -122,7 +122,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Louis")
 				.lastName("Michaud")
-				.email("Louis@michaud.com")
+				.email("louis@michaud.com")
 				.password("Ose12345")
 				.matricule("0000003")
 				.department("_420B0")
@@ -146,7 +146,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Gabriel")
 				.lastName("Michaud")
-				.email("Gabriel@michaud.com")
+				.email("gabriel@michaud.com")
 				.password("Ose12345")
 				.matricule("0000006")
 				.department("_420B0")
@@ -154,7 +154,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Samuel")
 				.lastName("Michaud")
-				.email("Samuel@michaud.com")
+				.email("samuel@michaud.com")
 				.password("Ose12345")
 				.matricule("0000007")
 				.department("_420B0")
@@ -162,7 +162,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Karim")
 				.lastName("Michaud")
-				.email("Karim@michaud.com")
+				.email("karim@michaud.com")
 				.password("Ose12345")
 				.matricule("0000008")
 				.department("_420B0")
@@ -300,12 +300,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.hoursPerWeek(40)
 						.build()
         ));
-		EmployerDTO employer = employerService.getEmployerByEmail("Chawki@professionnel.com");
+		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(0)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(1)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(2)), employer.getId());
 
-		employer = employerService.getEmployerByEmail("Louis@professionnel.com");
+		employer = employerService.getEmployerByEmail("louis@professionnel.com");
 
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(3)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
