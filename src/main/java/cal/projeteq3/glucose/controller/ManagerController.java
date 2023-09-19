@@ -26,6 +26,8 @@ public class ManagerController {
         this.employerService = employerService;
     }
 
+//    JobOffer
+
     @GetMapping("/jobOffers/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(){
         return ResponseEntity.ok(managerService.getAllJobOffer());
@@ -47,6 +49,18 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
+    @PutMapping("jobOffer/accept/{id}")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
+    }
+
+    @PutMapping("jobOffer/refuse/{id}")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
+    }
+
+//    CV
+
 //TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
 // (String reason va venir si ce n'est pas déjà fait)
 //    Puisque c'est un update, il faut utiliser PUT et non POST
@@ -66,17 +80,6 @@ public class ManagerController {
         return ResponseEntity.ok().build();
     }
 
-
-    @PutMapping("jobOffer/accept/{id}")
-    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
-        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
-    }
-
-    @PutMapping("jobOffer/refuse/{id}")
-    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
-        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
-    }
-
     @GetMapping("cvs/all")
     public ResponseEntity<List<CvFileDTO>> getAllCV(){
         return ResponseEntity.ok(managerService.getAllCv());
@@ -84,7 +87,7 @@ public class ManagerController {
 
     @GetMapping("cvs/pending")
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
-        return ResponseEntity.ok(managerService.getPendingCv());
+        return ResponseEntity.ok(managerService.getSubmittedCv());
     }
 
 }
