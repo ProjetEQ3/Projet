@@ -16,7 +16,7 @@ const LoginForm = ({user, setUser}) => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const data = {
-			email: formData.email,
+			email: formData.email.toLowerCase(),
 			password: formData.password
 		}
 		if(validateUser())

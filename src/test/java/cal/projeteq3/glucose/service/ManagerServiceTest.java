@@ -55,23 +55,23 @@ class ManagerServiceTest {
     private StudentRepository studentRepository;
 
     /**
-     * Method under test: {@link ManagerService#updateGestionnaire(Long, ManagerDTO)}
+     * Method under test: {@link ManagerService#updateManager(Long, ManagerDTO)}
      */
     @Test
-    void testUpdateGestionnaire() {
+    void testUpdateManager() {
         assertThrows(ManagerNotFoundException.class,
-                () -> managerService.updateGestionnaire(1L, new ManagerDTO("Matricule", "6625550144")));
+                () -> managerService.updateManager(1L, new ManagerDTO("Matricule", "6625550144")));
     }
 
     /**
-     * Method under test: {@link ManagerService#deleteGestionnaire(Long)}
+     * Method under test: {@link ManagerService#deleteManager(Long)}
      */
     @Test
-    void testDeleteGestionnaire() {
-        managerService.deleteGestionnaire(1L);
+    void testDeleteManager() {
+        managerService.deleteManager(1L);
         assertTrue(managerService.getAllCv().isEmpty());
         assertEquals(8, managerService.getAllJobOffer().size());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -81,7 +81,7 @@ class ManagerServiceTest {
     void testGetAllCv() {
         List<CvFileDTO> actualAllCv = managerService.getAllCv();
         assertTrue(actualAllCv.isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
         assertSame(actualAllCv, managerService.getPendingCv());
     }
 
@@ -93,7 +93,7 @@ class ManagerServiceTest {
         List<CvFileDTO> actualPendingCv = managerService.getPendingCv();
         assertTrue(actualPendingCv.isEmpty());
         assertSame(actualPendingCv, managerService.getAllCv());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -122,7 +122,7 @@ class ManagerServiceTest {
         List<CvFileDTO> actualAllCvFileByStudent = managerService.getAllCvFileByStudent(7L);
         assertTrue(actualAllCvFileByStudent.isEmpty());
         assertSame(actualAllCvFileByStudent, managerService.getPendingCv());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -131,7 +131,7 @@ class ManagerServiceTest {
     @Test
     void testGetAllCvFileByStudent3() {
         assertTrue(managerService.getAllCvFileByStudent(8L).isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -143,7 +143,7 @@ class ManagerServiceTest {
         assertTrue(actualAllCvFileByStudentMatricule.isEmpty());
         assertSame(actualAllCvFileByStudentMatricule, managerService.getAllCv());
         assertSame(actualAllCvFileByStudentMatricule, managerService.getPendingCv());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -153,29 +153,29 @@ class ManagerServiceTest {
     void testDeleteCvFile() {
         managerService.deleteCvFile(1L);
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
      * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
      */
     @Test
-    void testDeleteAllCvFileByStudendMatricule() {
-        managerService.deleteAllCvFileByStudendMatricule("Matricule");
+    void testDeleteAllCvFileByStudentMatricule() {
+        managerService.deleteAllCvFileByStudentMatricule("Matricule");
         List<CvFileDTO> allCv = managerService.getAllCv();
         assertTrue(allCv.isEmpty());
         assertSame(allCv, managerService.getPendingCv());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
      * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
      */
     @Test
-    void testDeleteAllCvFileByStudendMatricule2() {
-        managerService.deleteAllCvFileByStudendMatricule("cal.projeteq3.glucose.model.cvFile.CvFile");
+    void testDeleteAllCvFileByStudentMatricule2() {
+        managerService.deleteAllCvFileByStudentMatricule("cal.projeteq3.glucose.model.cvFile.CvFile");
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -203,7 +203,7 @@ class ManagerServiceTest {
                 actualJobOfferByID.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
         assertEquals(8, managerService.getAllJobOffer().size());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -231,7 +231,7 @@ class ManagerServiceTest {
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
         assertEquals(8, managerService.getAllJobOffer().size());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -267,7 +267,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -294,7 +294,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -321,7 +321,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -348,7 +348,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -375,7 +375,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -403,7 +403,7 @@ class ManagerServiceTest {
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
         assertEquals(8, managerService.getAllJobOffer().size());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -430,7 +430,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -457,7 +457,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -484,7 +484,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -511,7 +511,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
     /**
@@ -538,7 +538,7 @@ class ManagerServiceTest {
                         + " logiciels.",
                 actualUpdateJobOfferStateResult.getDescription());
         assertTrue(managerService.getAllCv().isEmpty());
-        assertEquals(1, managerService.getAllGestionnaires().size());
+        assertEquals(1, managerService.getAllManagers().size());
     }
 
 }

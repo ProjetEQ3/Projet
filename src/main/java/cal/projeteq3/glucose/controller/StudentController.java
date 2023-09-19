@@ -61,7 +61,7 @@ public class StudentController{
 	public ResponseEntity<Void> deleteCv(@PathVariable Long studentId){
 		try{
 			studentService.deleteCv(studentId);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.accepted().build();
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
 		}catch(Exception e){
