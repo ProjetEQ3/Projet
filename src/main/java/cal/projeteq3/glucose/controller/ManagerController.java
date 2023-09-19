@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -47,25 +48,16 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
-//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
-// (String reason va venir si ce n'est pas déjà fait)
-//    Puisque c'est un update, il faut utiliser PUT et non POST
-
-    @PostMapping("/cv/accepted/{id}")
-    public ResponseEntity<?> acceptCv(@PathVariable Long id){
-        managerService.acceptCv(id);
-        return ResponseEntity.ok().build();
+    @PutMapping("/cv/update/")
+    public ResponseEntity<CvFileDTO> updateCvState(@RequestParam Long id, @RequestParam CvState newCvStare, @RequestParam String reason){
+        try{
+            return ResponseEntity.ok(managerService.updateCvState(id, newCvStare, reason));
+        }catch(ValidationException e){
+            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+        }catch(Exception e){
+            return ResponseEntity.status(500).header("X-Errors", e.getMessage()).body(null);
+        }
     }
-
-//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
-// (String reason va venir si ce n'est pas déjà fait)
-//    Puisque c'est un update, il faut utiliser PUT et non POST
-    @PostMapping("/cv/refused/{id}")
-    public ResponseEntity<?> refuseCv(@PathVariable Long id){
-        managerService.refuseCv(id);
-        return ResponseEntity.ok().build();
-    }
-
 
     @PutMapping("jobOffer/accept/{id}")
     public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
