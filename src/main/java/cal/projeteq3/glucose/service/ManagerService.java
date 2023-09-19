@@ -145,14 +145,14 @@ public class ManagerService{
 		throw new JobOffreNotFoundException(id);
 	}
 
-<<<<<<< HEAD
 	public void acceptCv(Long id){
 		throw new UnsupportedOperationException();
 	}
 
 	public void refuseCv(Long id){
 		throw new UnsupportedOperationException();
-=======
+	}
+
 	public CvFileDTO updateCvState(Long id, CvState newState) {
 		Optional<CvFile> existingCvFile = cvRepository.findById(id);
 		if(existingCvFile.isPresent()) {
@@ -171,7 +171,6 @@ public class ManagerService{
 
 	public void deleteJobOffer(Long id){
 		jobOfferRepository.deleteById(id);
->>>>>>> 6e9c5189c00ca0f006b412f0bc9fec40214bc919
 	}
 
 }

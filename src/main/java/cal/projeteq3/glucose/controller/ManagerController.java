@@ -47,7 +47,6 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
-<<<<<<< HEAD
     @PostMapping("/cv/accepted/{id}")
     public ResponseEntity<?> acceptCv(@PathVariable Long id){
         managerService.acceptCv(id);
@@ -60,7 +59,7 @@ public class ManagerController {
         return ResponseEntity.ok().build();
     }
 
-=======
+
     @GetMapping("cvs/all")
     public ResponseEntity<List<CvFileDTO>> getAllCV(){
         return ResponseEntity.ok(managerService.getAllCv());
@@ -70,5 +69,4 @@ public class ManagerController {
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
         return ResponseEntity.ok(managerService.getPendingCv());
     }
->>>>>>> 6e9c5189c00ca0f006b412f0bc9fec40214bc919
 }
