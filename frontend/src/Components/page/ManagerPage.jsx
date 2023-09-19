@@ -5,9 +5,8 @@ import {axiosInstance} from "../../App";
 
 const ManagerPage = ({user}) => {
     const [tab, setTab] = useState('stages');
-    const cvsDTO = [{
-    }];
-    const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+    const [cvs, setCvs] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+    const [offers, setOffers] = useState([{id: 1, filename: "test", filepath: "test"}]);
 
     useEffect(() => {
         const getAllOffers = async () => {
@@ -24,6 +23,22 @@ const ManagerPage = ({user}) => {
         getAllOffers()
     }, []);
 
+    useEffect(() => {
+        const getAllCvs = async () => {
+            await axiosInstance.get('manager/cvs/pending',
+                // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
+            ).then((response) => {
+                setCvs(response.data);
+                console.log(response.data);
+                return response.data;
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+
+        getAllCvs()
+    }, []);
+
     return (
         <div className="container">
             <div>
@@ -34,7 +49,7 @@ const ManagerPage = ({user}) => {
                             onClick={() => setTab('cvs')}>CVs</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers}/>}
-                {tab === 'cvs' && <Cvs cvs={cvsDTO} />}
+                {tab === 'cvs' && <Cvs cvs={cvs} />}
             </div>
         </div>
     )

@@ -13,16 +13,18 @@ public class CvFileDTO{
 	private String fileName;
 	private byte[] fileData;
 	private CvState cvState;
+	private String refusReason;
 
 	public CvFileDTO(CvFile cvFile){
 		id = cvFile.getId();
 		fileName = cvFile.getFileName();
 		fileData = cvFile.getFileData();
 		cvState = cvFile.getCvState();
+		refusReason = cvFile.getRefusReason();
 	}
 
 	public CvFile toEntity(){
-		return CvFile.builder().fileName(fileName).fileData(fileData).cvState(cvState).build();
+		return CvFile.builder().fileName(fileName).fileData(fileData).cvState(cvState).refusReason(refusReason).build();
 	}
 
 }
