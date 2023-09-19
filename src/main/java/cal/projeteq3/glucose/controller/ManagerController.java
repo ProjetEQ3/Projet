@@ -27,6 +27,7 @@ public class ManagerController {
         this.employerService = employerService;
     }
 
+//    JobOffer
     @GetMapping("/jobOffers/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(){
         return ResponseEntity.ok(managerService.getAllJobOffer());
@@ -48,6 +49,18 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
 
+    @PutMapping("jobOffer/accept/{id}")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
+    }
+
+    @PutMapping("jobOffer/refuse/{id}")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
+    }
+
+//    CV
+
     @PutMapping("/cv/update/")
     public ResponseEntity<CvFileDTO> updateCvState(@RequestBody Long id, @RequestBody CvState newCvStare, @RequestBody String reason){
         try{
@@ -57,16 +70,6 @@ public class ManagerController {
         }catch(Exception e){
             return ResponseEntity.status(500).header("X-Errors", e.getMessage()).body(null);
         }
-    }
-
-    @PutMapping("jobOffer/accept/{id}")
-    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
-        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
-    }
-
-    @PutMapping("jobOffer/refuse/{id}")
-    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
-        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
     }
 
     @GetMapping("cvs/all")
