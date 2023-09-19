@@ -59,16 +59,6 @@ public class EmployerService{
 		return new EmployerDTO(employer);
 	}
 
-
-	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
-		Optional<Employer> employerOptional = employerRepository.findById(employerId);
-		if (employerOptional.isPresent()) {
-			Employer employer = employerOptional.get();
-			return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
-		}
-		return Collections.emptyList();
-	}
-
 	public Optional<EmployerDTO> getEmployerByID(Long id){
 		Optional<Employer> employerOptional = employerRepository.findById(id);
 		return employerOptional.map(EmployerDTO::new);
@@ -94,6 +84,16 @@ public class EmployerService{
 
 	public void deleteEmployer(Long id){
 		employerRepository.deleteById(id);
+	}
+
+
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
+		Optional<Employer> employerOptional = employerRepository.findById(employerId);
+		if (employerOptional.isPresent()) {
+			Employer employer = employerOptional.get();
+			return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
+		}
+		return Collections.emptyList();
 	}
 
 	@Transactional
