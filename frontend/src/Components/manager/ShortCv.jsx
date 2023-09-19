@@ -16,14 +16,8 @@ const ShortCv = ({cv, index}) => {
     const handleAccept = (e) => {
         e.preventDefault();
 
-        axiosInstance
-            .post(`/manager/cv/accept/${cv.id}`)
-            .then((response) => {
-                toast.success("CV accepté")
-            })
-            .catch((error) => {
-                toast.error("Erreur lors de l'acceptation du CV" + error.message)
-            })
+        cv.cvState = 'ACCEPTED';
+        updateCv(cv, cv.cvState, formData.refusalReason)
     }
 
     const handleDecline = (e) => {
@@ -46,14 +40,9 @@ const ShortCv = ({cv, index}) => {
             return;
         }
 
-        axiosInstance
-            .post(`/manager/cv/refused/${cv.id}`)
-            .then((response) => {
-                toast.success("CV refusé")
-            })
-            .catch((error) => {
-                toast.error("Erreur lors du refus du CV" + error.message)
-            })
+        cv.cvState = 'REFUSED';
+
+        updateCv(cv, cv.cvState, formData.refusalReason)
 
         setIsDecline(false)
     }
@@ -61,6 +50,17 @@ const ShortCv = ({cv, index}) => {
     const cancelDecline = (e) => {
         e.preventDefault();
         setIsDecline(false);
+    }
+
+    const updateCv = (cv, state, reason) => {
+        axiosInstance
+            .post(`/manager/cv/update/${cv.id}?newCvState=${state}&reason=${reason}`)
+            .then((response) => {
+                    toast.success("CV est mis à jour avec succès, state: " + state)
+                })
+                    .catch((error) => {
+                        toast.error("Erreur lors de la mis à jour du CV: " + error.message)
+                    })
     }
 
     const OpenCv = () => {
