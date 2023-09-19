@@ -49,7 +49,7 @@ public class ManagerController {
     }
 
     @PutMapping("/cv/update/")
-    public ResponseEntity<CvFileDTO> updateCvState(@RequestParam Long id, @RequestParam CvState newCvStare, @RequestParam String reason){
+    public ResponseEntity<CvFileDTO> updateCvState(@RequestBody Long id, @RequestBody CvState newCvStare, @RequestBody String reason){
         try{
             return ResponseEntity.ok(managerService.updateCvState(id, newCvStare, reason));
         }catch(ValidationException e){
