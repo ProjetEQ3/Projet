@@ -1,15 +1,15 @@
-import serverIp, { axiosInstance } from "../../App"
-import { toast } from "react-toastify"
-import { useState } from "react"
+import {axiosInstance} from "../../App"
+import {toast} from "react-toastify"
+import {useState} from "react"
 import Loading from "../util/Loading"
 
-function Cv({user, setCv}) {
+function Cv({user, setCv}){
 	const [isLoading, setIsLoading] = useState(false)
 
 	const handlePdfUpload = (e) => {
 		setIsLoading(true)
 		const file = e.target.files[0]
-		if (file && file.type === "application/pdf") {
+		if(file && file.type === "application/pdf"){
 			const formData = new FormData()
 			formData.append("file", file)
 			formData.append("studentId", user.id)
@@ -25,7 +25,7 @@ function Cv({user, setCv}) {
 					toast.error("Erreur lors du téléversement du CV: " + error.message)
 					setIsLoading(false)
 				})
-		} else {
+		}else{
 			alert("Veuillez sélectionner un fichier PDF valide.")
 			setIsLoading(false)
 		}
@@ -48,36 +48,26 @@ function Cv({user, setCv}) {
 
 	const handleViewPdf = () => {
 		const pdfData = atob(user.cvFile.fileData)
-		const pdfBlob = new Blob([pdfData], { type: "application/pdf" })
-
-		// Create a URL for viewing the PDF
+		const pdfBlob = new Blob([pdfData], {type: "application/pdf"})
 		const url = URL.createObjectURL(pdfBlob)
-
-		// Open the PDF in a new tab
 		window.open(url, "_blank")
 	}
 
 	const handleDownloadPdf = () => {
 		const pdfData = atob(user.cvFile.fileData)
-		const pdfBlob = new Blob([pdfData], { type: "application/pdf" })
-
-		// Create a URL for downloading the PDF
+		const pdfBlob = new Blob([pdfData], {type: "application/pdf"})
 		const url = URL.createObjectURL(pdfBlob)
-
-		// Create an anchor element to trigger the download
 		const anchor = document.createElement("a")
 		anchor.href = url
-		anchor.download = "cv.pdf" // You can specify the desired filename here
+		anchor.download = "cv.pdf"
 		anchor.click()
-
-		// Clean up the URL.createObjectURL
 		URL.revokeObjectURL(url)
 	}
 
 	return (
 		<div className="container">
 			{isLoading ? (
-				<Loading />
+				<Loading/>
 			) : user.cvFile ? (
 				<div>
 					<h2>CV: {user.cvFile.fileName}</h2>
