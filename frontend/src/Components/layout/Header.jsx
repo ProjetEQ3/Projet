@@ -16,7 +16,10 @@ function Header({user}) {
                         </NavLink>
                         <p className="lead">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
                         {user?.isLoggedIn ?
-                            <div className="m-3"><h2 className={"h2"}>{user.firstName + " " + user.lastName}</h2></div> :
+                            <div className="m-3 text-center">
+                                <a className="text-light text-decoration-none m-2 h6" href="/">Se Déconnecter</a>
+                                <h2 className={"h2"}>{user.firstName + " " + user.lastName}</h2>
+                            </div> :
                             <div className="align-self-start d-flex m-3">
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/login">Connexion</a>
                                 <div className="vr"></div>
