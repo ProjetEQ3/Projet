@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
@@ -43,5 +45,15 @@ public class ManagerController {
     @GetMapping("jobOffers/{jobOfferState}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
+    }
+
+    @GetMapping("cvs/all")
+    public ResponseEntity<List<CvFileDTO>> getAllCV(){
+        return ResponseEntity.ok(managerService.getAllCv());
+    }
+
+    @GetMapping("cvs/pending")
+    public ResponseEntity<List<CvFileDTO>> getCVByState(){
+        return ResponseEntity.ok(managerService.getPendingCv());
     }
 }

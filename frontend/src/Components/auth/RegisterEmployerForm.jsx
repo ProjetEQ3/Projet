@@ -30,7 +30,7 @@ const RegisterEmployerForm = () => {
         axiosInstance.post('/employer/register',
             {
                     registerDTO: {
-                        email: formData.email,
+                        email: formData.email.toLowerCase(),
                         password: formData.password,
                         role: "EMPLOYER"
                     },

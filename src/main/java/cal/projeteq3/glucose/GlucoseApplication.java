@@ -130,7 +130,7 @@ public class GlucoseApplication implements CommandLineRunner {
 			Student.builder()
 				.firstName("Chawki")
 				.lastName("Michaud")
-				.email("Chawki@michaud.com")
+				.email("chawki@michaud.com")
 				.password("Ose12345")
 				.matricule("0000004")
 				.department("_420B0")

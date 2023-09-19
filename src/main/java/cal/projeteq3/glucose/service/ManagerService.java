@@ -43,24 +43,24 @@ public class ManagerService{
 
 	// database operations here
 
-    public ManagerDTO createGestionnaire(Manager manager) {//TODO: DTO
-        return new ManagerDTO(managerRepository.save(manager));
+    public ManagerDTO createManager(ManagerDTO managerDTO) {
+        return new ManagerDTO(managerRepository.save(managerDTO.toEntity()));
     }
 
-    public List<ManagerDTO> getAllGestionnaires() {//TODO: DTO
+    public List<ManagerDTO> getAllManagers() {
 		List<Manager> managers = managerRepository.findAll();
         return managers.stream().map(ManagerDTO::new).collect(Collectors.toList());
     }
 
-    public Optional<ManagerDTO> getGestionnaireByID(Long id) {//TODO: DTO
+    public Optional<ManagerDTO> getManagerByID(Long id) {
         Optional<Manager> managerOptional = managerRepository.findById(id);
 		return managerOptional.map(ManagerDTO::new);
     }
 
-    public ManagerDTO updateGestionnaire(Long id, ManagerDTO updatedManager) {//TODO: DTO
-        Optional<Manager> existingGestionnaire = managerRepository.findById(id);
-        if(existingGestionnaire.isPresent()) {
-            Manager manager = existingGestionnaire.get();
+    public ManagerDTO updateManager(Long id, ManagerDTO updatedManager) {
+        Optional<Manager> existingManager = managerRepository.findById(id);
+        if(existingManager.isPresent()) {
+            Manager manager = existingManager.get();
 
             manager.setFirstName(updatedManager.getFirstName());
             manager.setLastName(updatedManager.getLastName());
@@ -72,11 +72,11 @@ public class ManagerService{
 		throw new ManagerNotFoundException(id);
     }
 
-	public void deleteGestionnaire(Long id){
+	public void deleteManager(Long id){
 		managerRepository.deleteById(id);
 	}
 
-	//    CV File
+//    CV File
 	public CvFileDTO getCvByID(Long id){
 		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
 	}
@@ -105,10 +105,20 @@ public class ManagerService{
 		cvRepository.deleteById(id);
 	}
 
-	public void deleteAllCvFileByStudendMatricule(String matricule){
+	public void deleteAllCvFileByStudentMatricule(String matricule){
 		cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
 	}
 
+	public CvFileDTO rejectCv(Long id, String reason) {
+		Optional<CvFile> existingCvFile = cvRepository.findById(id);
+		if(existingCvFile.isPresent()) {
+			CvFile cvFile = existingCvFile.get();
+			cvFile.setCvState(CvState.REFUSED);
+			cvFile.setRefusReason(reason);
+			return new CvFileDTO(cvRepository.save(cvFile));
+		}
+		throw new JobOffreNotFoundException(id);
+	}
 //	Job Offer
 
 	public List<JobOfferDTO> getAllJobOffer(){
@@ -149,6 +159,10 @@ public class ManagerService{
 	public List<CvFileDTO> getCvFilesWithState(CvState state) {
 		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
 		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
+	}
+
+	public void deleteJobOffer(Long id){
+		jobOfferRepository.deleteById(id);
 	}
 
 }
