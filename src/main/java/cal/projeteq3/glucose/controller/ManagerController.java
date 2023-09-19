@@ -76,7 +76,7 @@ public class ManagerController {
 
     @GetMapping("cvs/pending")
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
-        return ResponseEntity.ok(managerService.getPendingCv());
+        return ResponseEntity.ok(managerService.getSubmittedCv());
     }
 
 }

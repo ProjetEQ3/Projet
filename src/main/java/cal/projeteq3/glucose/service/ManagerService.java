@@ -85,7 +85,7 @@ public class ManagerService{
 		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
 	}
 
-	public List<CvFileDTO> getPendingCv(){
+	public List<CvFileDTO> getSubmittedCv(){
 		return cvRepository.findAllByCvState(CvState.SUBMITTED).stream().map(CvFileDTO::new).toList();
 	}
 
