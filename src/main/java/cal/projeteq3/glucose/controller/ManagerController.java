@@ -44,4 +44,17 @@ public class ManagerController {
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
     }
+
+    @PostMapping("/cv/accepted/{id}")
+    public ResponseEntity<?> acceptCv(@PathVariable Long id){
+        managerService.acceptCv(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/cv/refused/{id}")
+    public ResponseEntity<?> refuseCv(@PathVariable Long id){
+        managerService.refuseCv(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
