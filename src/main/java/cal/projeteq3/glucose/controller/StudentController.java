@@ -49,6 +49,7 @@ public class StudentController{
 			cvFileDTO.setFileName(file.getOriginalFilename());
 			cvFileDTO.setCvState(CvState.SUBMITTED);
 			cvFileDTO.setFileData(fileData);
+			System.out.println("fileData: " + fileData.length);
 			return ResponseEntity.accepted().body(studentService.addCv(studentId, cvFileDTO));
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
