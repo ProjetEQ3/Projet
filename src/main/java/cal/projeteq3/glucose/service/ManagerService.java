@@ -134,22 +134,32 @@ public class ManagerService{
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
-	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState) {
+	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
 		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
 		if(existingJobOffer.isPresent()) {
 			JobOffer jobOffer = existingJobOffer.get();
 			jobOffer.setJobOfferState(newState);
+			jobOffer.setRefusReason(reason);
 			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 		}
 
 		throw new JobOffreNotFoundException(id);
 	}
 
-	public CvFileDTO updateCvState(Long id, CvState newState) {
+	public void acceptCv(Long id){
+		throw new UnsupportedOperationException();
+	}
+
+	public void refuseCv(Long id){
+		throw new UnsupportedOperationException();
+	}
+
+	public CvFileDTO updateCvState(Long id, CvState newState, String reason) {
 		Optional<CvFile> existingCvFile = cvRepository.findById(id);
 		if(existingCvFile.isPresent()) {
 			CvFile cvFile = existingCvFile.get();
 			cvFile.setCvState(newState);
+			cvFile.setRefusReason(reason);
 			return new CvFileDTO(cvRepository.save(cvFile));
 		}
 

@@ -3,9 +3,8 @@ import {faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 
 import {useState} from "react";
 import FullJobOffer from "./FullJobOffer";
-const ShortJobOffer = ({ jobOffer }) => {
+const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const [selectedOffer, setSelectedOffer] = useState(null);
 
     const handleMouseEnter = () => {
         setIsHovered(true);
@@ -26,16 +25,16 @@ const ShortJobOffer = ({ jobOffer }) => {
                     <div className="col-4 my-auto d-flex justify-content-between">
                         <div className="mx-auto">
                             <div className={`border rounded px-2 
-                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
-                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
-                                    jobOffer.jobOfferState === 'EXPIRED' ? 'border-danger text-danger' :
-                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
+                            ${jobOffer.jobOfferState === 'Open' ? 'border-success text-success':
+                                jobOffer.jobOfferState === 'Pending' ? 'border-warning text-warning':
+                                    jobOffer.jobOfferState === 'Expired' ? 'border-danger text-danger' :
+                                        jobOffer.jobOfferState === 'Taken' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
                                 {jobOffer.jobOfferState}
                             </div>
                         </div>
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2 fa-lg arrow-btn" data-bs-toggle="modal" data-bs-target="#fullViewModal"/>
-                        <div id="fullViewModal" data-bs-backdrop="static" className="modal modal-lg" aria-hidden="true">
-                            <FullJobOffer jobOffer={jobOffer}/>
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2 fa-lg arrow-btn" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}/>
+                        <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
+                            <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
                         </div>
                     </div>
                 </div>

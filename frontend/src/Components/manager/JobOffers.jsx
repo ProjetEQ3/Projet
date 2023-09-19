@@ -1,7 +1,7 @@
 import React from "react";
 import ShortJobOffer from "./ShortJobOffer";
 
-const JobOffers = ({offers}) => {
+const JobOffers = ({offers, updateJobOfferList}) => {
     return (
         <div className="row">
             <div className="col-12">
@@ -11,7 +11,7 @@ const JobOffers = ({offers}) => {
                         {
                             offers.map((offer, index) => (
                                 <div key={index} onClick={() => (offer)}>
-                                    <ShortJobOffer jobOffer={offer}/>
+                                    <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index}/>
                                 </div>
                             ))
                         }

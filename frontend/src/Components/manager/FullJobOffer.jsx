@@ -1,15 +1,20 @@
 import {useState} from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
-const FullJobOffer = ({ jobOffer }) => {
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
+const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
     const [isDecline, setIsDecline] = useState(false);
     const [formData, setFormData] = useState({
         refusalReason: '',
     });
     const handleAccept = (e) => {
         e.preventDefault();
-        // TODO : Send acceptance to backend
-        console.log("Accepting offer");
+        axiosInstance.put(`/manager/jobOffer/${jobOffer.id}/accept`)
+            .then((res) => {
+                res.status === 200 ? toast.success("Offer accepted") : console.log("Failed to accept offer");
+                updateJobOfferList(jobOffer);
+            })
     }
 
     const handleDecline = (e) => {
@@ -17,10 +22,27 @@ const FullJobOffer = ({ jobOffer }) => {
         setIsDecline(true);
     }
 
+    const validateReason = (e) => {
+        e.preventDefault();
+
+        setFormData({...formData, refusalReason: e.target.value});
+    }
+
     const confirmDecline = (e) => {
         e.preventDefault();
-        // TODO : Send refusal reason to backend
-        console.log("Declining offer");
+
+        if (document.getElementById('refusalForm').checkValidity() === false) {
+            e.stopPropagation();
+            document.getElementById('refusalForm').classList.add('was-validated');
+            toast.error("Please fill in the refusal reason")
+            return;
+        }
+
+        axiosInstance.put(`/manager/jobOffer/${jobOffer.id}/refuse`, formData.refusalReason)
+            .then((res) => {
+                res.status === 200 ? toast.success("Offer declined") : console.log("Failed to decline offer");
+                updateJobOfferList(jobOffer);
+            })
         setIsDecline(false)
     }
 
@@ -50,7 +72,7 @@ const FullJobOffer = ({ jobOffer }) => {
                     {isDecline ? (
                         <form id="refusalForm" className="form col-10 mx-auto">
                             <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
-                            <input className="form-control form-text" type="text" placeholder="Raison du refus" required/>
+                            <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder="Raison du refus" required/>
                             <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
                             <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
                         </form>) :

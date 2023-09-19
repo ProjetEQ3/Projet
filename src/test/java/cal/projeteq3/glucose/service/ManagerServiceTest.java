@@ -1,14 +1,9 @@
 package cal.projeteq3.glucose.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
@@ -156,9 +151,6 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
-     */
     @Test
     void testDeleteAllCvFileByStudentMatricule() {
         managerService.deleteAllCvFileByStudentMatricule("Matricule");
@@ -168,9 +160,6 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#deleteAllCvFileByStudendMatricule(String)}
-     */
     @Test
     void testDeleteAllCvFileByStudentMatricule2() {
         managerService.deleteAllCvFileByStudentMatricule("cal.projeteq3.glucose.model.cvFile.CvFile");
@@ -207,11 +196,11 @@ class ManagerServiceTest {
     }
 
     /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
+     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState, String)}
      */
     @Test
     void testUpdateJobOfferState() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -234,21 +223,15 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState2() {
         assertThrows(JobOffreNotFoundException.class,
-                () -> managerService.updateJobOfferState(9L, JobOfferState.SUBMITTED));
+                () -> managerService.updateJobOfferState(9L, JobOfferState.SUBMITTED, null));
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState3() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -270,12 +253,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState4() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -297,12 +277,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState5() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED,null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -324,12 +301,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState6() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -351,12 +325,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState7() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED, "RefusReason");
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -378,12 +349,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState8() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -406,12 +374,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState9() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -433,12 +398,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState10() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -460,12 +422,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState11() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -487,12 +446,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState12() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN, null);
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
@@ -514,12 +470,9 @@ class ManagerServiceTest {
         assertEquals(1, managerService.getAllManagers().size());
     }
 
-    /**
-     * Method under test: {@link ManagerService#updateJobOfferState(Long, JobOfferState)}
-     */
     @Test
     void testUpdateJobOfferState13() {
-        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED);
+        JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED, "RefusReason");
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());

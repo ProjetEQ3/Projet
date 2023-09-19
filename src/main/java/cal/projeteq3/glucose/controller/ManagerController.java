@@ -36,7 +36,7 @@ public class ManagerController {
         return ResponseEntity.ok(managerService.getJobOfferByID(id));
     }
 
-    @GetMapping("jobOffers/{employerId}")
+    @GetMapping("jobOffers/employer/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
         System.out.println("ID: " + employerId);
         return ResponseEntity.ok(employerService.getJobOffersDTOByEmployerId(employerId));
@@ -45,6 +45,36 @@ public class ManagerController {
     @GetMapping("jobOffers/{jobOfferState}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
         return ResponseEntity.ok(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
+    }
+
+//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
+// (String reason va venir si ce n'est pas déjà fait)
+//    Puisque c'est un update, il faut utiliser PUT et non POST
+
+    @PostMapping("/cv/accepted/{id}")
+    public ResponseEntity<?> acceptCv(@PathVariable Long id){
+        managerService.acceptCv(id);
+        return ResponseEntity.ok().build();
+    }
+
+//TODO: Utiliser la fonction updateCvState(Long id, CvState newState, String reason)
+// (String reason va venir si ce n'est pas déjà fait)
+//    Puisque c'est un update, il faut utiliser PUT et non POST
+    @PostMapping("/cv/refused/{id}")
+    public ResponseEntity<?> refuseCv(@PathVariable Long id){
+        managerService.refuseCv(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PutMapping("jobOffer/{id}/accept")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("OPEN"), null));
+    }
+
+    @PutMapping("jobOffer/{id}/refuse")
+    public ResponseEntity<JobOfferDTO> updateJobOfferState(@PathVariable Long id, @RequestBody String reason){
+        return ResponseEntity.ok(managerService.updateJobOfferState(id, JobOfferState.valueOf("REFUSED"), reason));
     }
 
     @GetMapping("cvs/all")
@@ -56,4 +86,5 @@ public class ManagerController {
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
         return ResponseEntity.ok(managerService.getPendingCv());
     }
+
 }
