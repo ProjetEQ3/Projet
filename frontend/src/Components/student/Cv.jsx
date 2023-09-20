@@ -108,10 +108,10 @@ function Cv({user, setCv}){
 					<button className="btn btn-danger m-2" onClick={handleDeletePdf}>
 						Delete
 					</button>
-					<button className="btn btn-primary m-2" onClick={handleViewPdf}>
+					<button disabled className="btn btn-primary m-2" onClick={handleViewPdf}>
 						View
 					</button>
-					<button className="btn btn-success m-2" onClick={handleDownloadPdf}>
+					<button disabled className="btn btn-success m-2" onClick={handleDownloadPdf}>
 						Download
 					</button>
 				</>
