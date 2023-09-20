@@ -33,3 +33,7 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 *  Les responses success doivent être correspondant à la tâche effectuée dans la fonction (Created or Accepted)
 *  Mettre un body du type de retour ( Null dans le cas qu'on retourne rien (En cas d'erreur principalement))
   
+# Points d'action
+
+- Ne pas toucher une tâche qui nous n'est pas assignée. (in progress)
+- Limiter le temps de discussion et ne pas se perdre dans les détails inutiles (ex. 15 min pour une daily)
