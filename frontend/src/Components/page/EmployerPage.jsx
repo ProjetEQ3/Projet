@@ -38,9 +38,6 @@ const EmployerPage = ({user}) => {
 			})
 	}
 	const deleteOffer = (offerId) => {
-		console.log("Offer"+offerId)
-		console.log(offers)
-
 		axiosInstance
 			.delete(`/employer/offer/${offerId}`)
 			.then((response) => {

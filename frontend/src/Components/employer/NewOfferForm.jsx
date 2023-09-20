@@ -46,7 +46,7 @@ const NewOfferForm = ({user}) => {
                 "refusReason": null
             })
             .then((response) =>{
-                toast.success("OFfre créée avec succès")
+                toast.success("Offre créée avec succès")
                 setIsLoading(false);
                 navigate('/employer');
             })
