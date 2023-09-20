@@ -1,7 +1,5 @@
 import React from "react";
 import ShortCv from "./ShortCv";
-import {axiosInstance} from "../../App";
-import {toast} from "react-toastify";
 
 const Cvs = ({cvs}) => {
 	return (

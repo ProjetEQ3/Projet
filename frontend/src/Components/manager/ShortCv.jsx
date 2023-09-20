@@ -3,7 +3,6 @@ import JsPDF from 'jspdf';
 import CvFile from '../../model/CvFile'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-svg-icons';
-import FullJobOffer from "./FullJobOffer";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 
@@ -54,7 +53,12 @@ const ShortCv = ({cv, index}) => {
 
     const updateCv = (cv, state, reason) => {
         axiosInstance
-            .post(`/manager/cv/update/${cv.id}?newCvState=${state}&reason=${reason}`)
+            .put(`/manager/cv/update/${cv.id}`, {
+                params: {
+                    newCvState: state,
+                    reason: reason
+                }
+            }, )
             .then((response) => {
                     toast.success("CV est mis à jour avec succès, state: " + state)
                 })

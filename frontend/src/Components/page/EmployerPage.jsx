@@ -10,27 +10,7 @@ import {toast} from "react-toastify";
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
-	const [offers, setOffers] = useState([
-		{
-			id: 1,
-			title: "Développeur web",
-			department: "Informatique",
-			location: "Montréal",
-			description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
-				"Vivamus euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
-				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
-				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; " +
-				"Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, " +
-				"non ultricies nisl nunc vitae nisl. Nulla facilisi. " +
-				"Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; ",
-			salary: 20,
-			hourPerWeek: 40,
-			startDate: "2021-09-01",
-			duration: 4,
-			expireDate: "2021-08-01",
-			jobOfferState: "OPEN",
-		}
-	]);
+	const [offers, setOffers] = useState([]);
 
 	useEffect(() => {
 		getOffers()
