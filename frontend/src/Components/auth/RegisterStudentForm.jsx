@@ -44,7 +44,7 @@ const RegisterStudentForm = () => {
         ).then(() => {
             setIsLoading(false)
             toast.success('Votre compte a été créé avec succès');
-            navigate('/')
+            navigate('/auth/login')
         }).catch(() =>
             setIsLoading(false)
         )
