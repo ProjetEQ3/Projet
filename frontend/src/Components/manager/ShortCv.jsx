@@ -5,7 +5,7 @@ import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-sv
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 
-const ShortCv = ({cv, index}) => {
+const ShortCv = ({cv, index, updateCvList}) => {
     const [isDecline, setIsDecline] = React.useState(false);
     const [formData, setFormData] = React.useState({
         refusalReason: '',
@@ -13,7 +13,6 @@ const ShortCv = ({cv, index}) => {
 
     const handleAccept = (e) => {
         e.preventDefault();
-
         updateCv(cv, 'ACCEPTED',null)
     }
 
@@ -109,7 +108,7 @@ const ShortCv = ({cv, index}) => {
                                     <div className="modal-footer">
                                         {isDecline ? (
                                                 <form id="refusalForm" className="form col-10 mx-auto">
-                                                    <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
+                                                    <p>Êtes-vous sûr de vouloir refuser ce CV ?</p>
                                                     <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder="Raison du refus" required/>
                                                     <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
                                                     <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
