@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Loading from "../util/Loading";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
 
 const NewOfferForm = ({user}) => {
     const navigate = useNavigate();
@@ -28,10 +30,20 @@ const NewOfferForm = ({user}) => {
 
     const saveOffer = async () => {
         setIsLoading(true);
-        console.log(formData);
-        setIsLoading(false);
-        navigate('/employer');
+        axiosInstance
+            .post(`/employer/offer?employerId=${user.id}`, formData)
+            .then((response) =>{
+                toast.success("OFfre créée avec succès")
+                setIsLoading(false);
+                navigate('/employer');
+            })
+            .catch((error) => {
+                toast.error("Erreur lors de la création de l'offre")
+                setIsLoading(false);
+            }
+        )
     }
+
     const handleChanges = (e) => {
         const {name, value} = e.target;
         setFormData({...formData, [name]: value.trim()});

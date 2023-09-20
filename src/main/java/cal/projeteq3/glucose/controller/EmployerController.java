@@ -41,8 +41,8 @@ public class EmployerController{
 		return ResponseEntity.ok(this.empService.getAllJobOffers(employerId));
 	}
 
-	@PostMapping("/offer")
-	public ResponseEntity<?> addJobOffer(@RequestBody JobOfferDTO JobOffer, @RequestBody Long employerId){
+	@PostMapping("/offer{employerId}")
+	public ResponseEntity<?> addJobOffer(@RequestBody JobOfferDTO JobOffer, @PathVariable Long employerId){
 		try{
 			Validation.validateJobOffer(JobOffer);
 			this.empService.createJobOffer(JobOffer, employerId);
