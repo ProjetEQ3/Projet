@@ -13,7 +13,7 @@ const NewOfferForm = ({user}) => {
         location: '',
         description: '',
         salary: '',
-        hourPerWeek: '',
+        hoursPerWeek: '',
         startDate: '',
         duration: '',
         expirationDate: '',
@@ -23,7 +23,7 @@ const NewOfferForm = ({user}) => {
     const [locationValid, setLocationValid] = useState(true);
     const [descriptionValid, setDescriptionValid] = useState(true);
     const [salaryValid, setSalaryValid] = useState(true);
-    const [hourPerWeekValid, setHourPerWeekValid] = useState(true);
+    const [hoursPerWeekValid, setHourPerWeekValid] = useState(true);
     const [startDateValid, setStartDateValid] = useState(true);
     const [durationValid, setDurationValid] = useState(true);
     const [expirationDateValid, setExpirationDateValid] = useState(true);
@@ -33,15 +33,17 @@ const NewOfferForm = ({user}) => {
         console.log(formData)
         axiosInstance
             .post(`/employer/offer?employerId=${user.id}`, {
-                title: formData.title,
-                department: formData.department,
-                location: formData.location,
-                description: formData.description,
-                salary: formData.salary,
-                hourPerWeek: formData.hourPerWeek,
-                startDate: formData.startDate + 'T00:00:00',
-                duration: formData.duration,
-                expirationDate: formData.expirationDate + 'T00:00:00',
+                "title": formData.title,
+                "department": formData.department,
+                "location": formData.location,
+                "description": formData.description,
+                "salary": formData.salary,
+                "startDate": formData.startDate + 'T00:00:00',
+                "duration": formData.duration,
+                "expirationDate": formData.expirationDate + 'T00:00:00',
+                "jobOfferState": "SUBMITTED",
+                "hoursPerWeek": formData.hoursPerWeek,
+                "refusReason": null
             })
             .then((response) =>{
                 toast.success("OFfre créée avec succès")
@@ -107,12 +109,12 @@ const NewOfferForm = ({user}) => {
             return;
         }
 
-        if (formData.hourPerWeek === '') {
+        if (formData.hoursPerWeek === '') {
             setHourPerWeekValid(false);
             alert('Le nombre d\'heures par semaine est obligatoire');
             return;
         }
-        else if (formData.hourPerWeek <= 0) {
+        else if (formData.hoursPerWeek <= 0) {
             setHourPerWeekValid(false);
             alert('Le nombre d\'heures par semaine doit être positif');
             return;
@@ -197,8 +199,8 @@ const NewOfferForm = ({user}) => {
                         <textarea className={`form-control ${descriptionValid? '': 'is-invalid'}`} id="description" rows="3" placeholder="Description du poste" name="description" onChange={handleChanges} required></textarea>
                         <label htmlFor="salary" className="mt-3">Salaire horaire</label>
                         <input type="number" step="0.01" className={`form-control ${salaryValid? '': 'is-invalid'}`} id="salary" placeholder="Salaire horaire" name="salary" onChange={handleChanges} required/>
-                        <label htmlFor="hourPerWeek" className="mt-3">Nombre d'heures par semaine</label>
-                        <input type="number" step="0.01" className={`form-control ${hourPerWeekValid? '': 'is-invalid'}`} id="hourPerWeek" placeholder="Nombre d'heures par semaine" name="hourPerWeek" onChange={handleChanges} required/>
+                        <label htmlFor="hoursPerWeek" className="mt-3">Nombre d'heures par semaine</label>
+                        <input type="number" step="0.01" className={`form-control ${hoursPerWeekValid? '': 'is-invalid'}`} id="hoursPerWeek" placeholder="Nombre d'heures par semaine" name="hoursPerWeek" onChange={handleChanges} required/>
                         <label htmlFor="startDate" className="mt-3">Date de début</label>
                         <input type="date" className={`form-control ${startDateValid? '': 'is-invalid'}`} id="startDate" placeholder="Date de début" name="startDate" onChange={handleChanges} required/>
                         <label htmlFor="duration"  className="mt-3">Durée du stage (en semaine)</label>
