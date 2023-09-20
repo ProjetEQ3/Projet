@@ -92,42 +92,7 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.InvalidDataAccessApiUsageException: detached entity passed to persist: cal.projeteq3.glucose.model.auth.Credentials
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   org.hibernate.PersistentObjectException: detached entity passed to persist: cal.projeteq3.glucose.model.auth.Credentials
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.persist(DefaultPersistEventListener.java:88)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:77)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138)
-        //       at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:797)
-        //       at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:745)
-        //       at org.hibernate.engine.spi.CascadingActions$7.cascade(CascadingActions.java:290)
-        //       at org.hibernate.engine.spi.CascadingActions$7.cascade(CascadingActions.java:280)
-        //       at org.hibernate.engine.internal.Cascade.cascadeToOne(Cascade.java:513)
-        //       at org.hibernate.engine.internal.Cascade.cascadeAssociation(Cascade.java:434)
-        //       at org.hibernate.engine.internal.Cascade.cascadeProperty(Cascade.java:220)
-        //       at org.hibernate.engine.internal.Cascade.cascade(Cascade.java:153)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.cascadeBeforeSave(AbstractSaveEventListener.java:459)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:275)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:180)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:136)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:175)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.persist(DefaultPersistEventListener.java:93)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:77)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:54)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:755)
-        //       at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:739)
-        //       at jdk.proxy5.$Proxy163.persist(null)
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
+
 
         employerService.updateEmployer(1L, new EmployerDTO());
     }
@@ -146,36 +111,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:248)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:143)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:221)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:90)
-        //       at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:38)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1412)
-        //       at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:485)
-        //       at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2301)
-        //       at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1966)
-        //       at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-        //       at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         EmployerDTO updatedEmployer = new EmployerDTO();
         updatedEmployer.setId(1L);
@@ -188,14 +123,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer4() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.dto.user.EmployerDTO.getId()" because "updatedEmployer" is null
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:85)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         employerService.updateEmployer(1L, null);
     }
@@ -206,36 +133,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer5() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:248)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:143)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:221)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:90)
-        //       at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:38)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1412)
-        //       at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:485)
-        //       at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2301)
-        //       at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1966)
-        //       at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-        //       at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         EmployerDTO updatedEmployer = new EmployerDTO();
         updatedEmployer.setId(1L);
@@ -248,36 +145,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer6() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.auth.Credentials.email
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:248)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:143)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:221)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:90)
-        //       at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:38)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1412)
-        //       at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:485)
-        //       at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2301)
-        //       at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1966)
-        //       at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-        //       at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-        //       at jdk.proxy5.$Proxy166.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         EmployerDTO updatedEmployer = new EmployerDTO();
         updatedEmployer.setId(7L);
@@ -290,28 +157,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateEmployer7() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: cal.projeteq3.glucose.model.user.Employer.jobOffers: could not initialize proxy - no Session
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.throwLazyInitializationException(AbstractPersistentCollection.java:635)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.withTemporarySessionIfNeeded(AbstractPersistentCollection.java:218)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.initialize(AbstractPersistentCollection.java:615)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.read(AbstractPersistentCollection.java:136)
-        //       at org.hibernate.collection.spi.PersistentBag.iterator(PersistentBag.java:371)
-        //       at java.util.Spliterators$IteratorSpliterator.estimateSize(Spliterators.java:1865)
-        //       at java.util.Spliterator.getExactSizeIfKnown(Spliterator.java:414)
-        //       at java.util.stream.AbstractPipeline.exactOutputSizeIfKnown(AbstractPipeline.java:470)
-        //       at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:574)
-        //       at java.util.stream.AbstractPipeline.evaluateToArrayNode(AbstractPipeline.java:260)
-        //       at java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:616)
-        //       at java.util.stream.ReferencePipeline.toArray(ReferencePipeline.java:622)
-        //       at java.util.stream.ReferencePipeline.toList(ReferencePipeline.java:627)
-        //       at cal.projeteq3.glucose.dto.user.EmployerDTO.<init>(EmployerDTO.java:29)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateEmployer(EmployerService.java:92)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateEmployer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         EmployerDTO updatedEmployer = new EmployerDTO();
         updatedEmployer.setEmail("jane.doe@example.org");
@@ -319,14 +164,31 @@ public class EmployerServiceTest {
         employerService.updateEmployer(1L, updatedEmployer);
     }
 
-    /*@Test
+    @Test
     public void getAllEmployersTest() {
 
         //Arrange
 
         List<Employer> employers = new ArrayList<>();
-        Employer employer1 = new Employer("michel1", "michaud1", "test1@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
-        Employer employer2 = new Employer("michel2", "michaud2", "test2@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
+
+        Employer employer1 =
+                Employer.builder()
+                .firstName("michel1")
+                .lastName("michaud1")
+                .email("test1@test.com")
+                .password("Ose12asd3")
+                .organisationName("Fritz")
+                .organisationPhone("123-456-7890")
+                .build();
+        Employer employer2 = Employer.builder()
+                .firstName("michel2")
+                .lastName("michaud2")
+                .email("test2@test.com")
+                .password("Ose12asd3")
+                .organisationName("Fritz")
+                .organisationPhone("123-456-7890")
+                .build();
+
         employers.add(employer1);
         employers.add(employer2);
 
@@ -341,15 +203,22 @@ public class EmployerServiceTest {
         assertEquals(2, employerList.size());
         verify(employerRepository, times(1)).findAll();
 
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void getEmployerByIDTest() {
 
         //Arrange
 
         Long id = 1L;
-        Employer employer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
+        Employer employer = Employer.builder()
+                .firstName("michel")
+                .lastName("michaud")
+                .email("test@test.com")
+                .password("Ose12asd3")
+                .organisationName("Fritz")
+                .organisationPhone("123-456-7890")
+                .build();
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
         //Act
@@ -361,7 +230,7 @@ public class EmployerServiceTest {
         assertTrue(employerDTO.isPresent());
         verify(employerRepository, times(1)).findById(id);
 
-    }*/
+    }
 
     @Test
     public void updateEmployerTest() {
@@ -410,38 +279,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testCreateJobOffer() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at jdk.proxy5.$Proxy171.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.createJobOffer(EmployerService.java:105)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.createJobOffer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.action.internal.AbstractEntityInsertAction.nullifyTransientReferencesIfNotAlready(AbstractEntityInsertAction.java:124)
-        //       at org.hibernate.action.internal.AbstractEntityInsertAction.makeEntityManaged(AbstractEntityInsertAction.java:133)
-        //       at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:299)
-        //       at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:272)
-        //       at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:259)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:376)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:277)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:180)
-        //       at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:136)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.entityIsTransient(DefaultPersistEventListener.java:175)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.persist(DefaultPersistEventListener.java:93)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:77)
-        //       at org.hibernate.event.internal.DefaultPersistEventListener.onPersist(DefaultPersistEventListener.java:54)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.firePersist(SessionImpl.java:755)
-        //       at org.hibernate.internal.SessionImpl.persist(SessionImpl.java:739)
-        //       at jdk.proxy5.$Proxy163.persist(null)
-        //       at jdk.proxy5.$Proxy171.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.createJobOffer(EmployerService.java:105)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.createJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         employerService.createJobOffer(new JobOfferDTO(), 1L);
     }
@@ -452,32 +289,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testCreateJobOffer2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.createJobOffer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:248)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:143)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:221)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:90)
-        //       at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:38)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1412)
-        //       at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:485)
-        //       at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2301)
-        //       at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1966)
-        //       at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-        //       at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.createJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         JobOfferDTO jobOffer = new JobOfferDTO();
         jobOffer.setId(1L);
@@ -490,15 +301,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testCreateJobOffer3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.dto.JobOfferDTO.toEntity()" because "jobOffer" is null
-        //       at cal.projeteq3.glucose.service.EmployerService.createJobOffer(EmployerService.java:103)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.createJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
-
         employerService.createJobOffer(null, 1L);
     }
 
@@ -516,19 +318,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateJobOffer() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.InvalidDataAccessApiUsageException: The given id must not be null
-        //       at jdk.proxy5.$Proxy171.findById(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateJobOffer(EmployerService.java:112)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateJobOffer(<generated>)
-        //   java.lang.IllegalArgumentException: The given id must not be null
-        //       at jdk.proxy5.$Proxy171.findById(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateJobOffer(EmployerService.java:112)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         employerService.updateJobOffer(new JobOfferDTO());
     }
@@ -539,36 +328,6 @@ public class EmployerServiceTest {
     @Test
     @Disabled("TODO: Complete this test")
     void testUpdateJobOffer2() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.dao.DataIntegrityViolationException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at jdk.proxy5.$Proxy171.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateJobOffer(EmployerService.java:116)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateJobOffer(<generated>)
-        //   org.hibernate.PropertyValueException: not-null property references a null or transient value : cal.projeteq3.glucose.model.jobOffer.JobOffer.department
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:109)
-        //       at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:54)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.scheduleUpdate(DefaultFlushEntityEventListener.java:248)
-        //       at org.hibernate.event.internal.DefaultFlushEntityEventListener.onFlushEntity(DefaultFlushEntityEventListener.java:143)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEntities(AbstractFlushingEventListener.java:221)
-        //       at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:90)
-        //       at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:38)
-        //       at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)
-        //       at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1412)
-        //       at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:485)
-        //       at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2301)
-        //       at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1966)
-        //       at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)
-        //       at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)
-        //       at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
-        //       at jdk.proxy5.$Proxy171.save(null)
-        //       at cal.projeteq3.glucose.service.EmployerService.updateJobOffer(EmployerService.java:116)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         JobOfferDTO updatedJobOffer = new JobOfferDTO();
         updatedJobOffer.setId(1L);
