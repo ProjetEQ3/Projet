@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,12 +42,12 @@ public class EmployerController{
 		return ResponseEntity.ok(this.empService.getAllJobOffers(employerId));
 	}
 
-	@PostMapping("/offer{employerId}")
-	public ResponseEntity<?> addJobOffer(@RequestBody JobOfferDTO JobOffer, @PathVariable Long employerId){
+	@PostMapping("/offer")
+	public ResponseEntity<JobOfferDTO> addJobOffer(@RequestBody JobOfferDTO JobOffer, @RequestParam Long employerId){
 		try{
 			Validation.validateJobOffer(JobOffer);
-			this.empService.createJobOffer(JobOffer, employerId);
-			return ResponseEntity.accepted().build();
+
+			return ResponseEntity.accepted().body(this.empService.createJobOffer(JobOffer, employerId));
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){

@@ -31,14 +31,24 @@ const NewOfferForm = ({user}) => {
     const saveOffer = async () => {
         setIsLoading(true);
         axiosInstance
-            .post(`/employer/offer?employerId=${user.id}`, formData)
+            .post(`/employer/offer?employerId=${user.id}`, {
+                title: formData.title,
+                department: formData.department,
+                location: formData.location,
+                description: formData.description,
+                salary: formData.salary,
+                hourPerWeek: formData.hourPerWeek,
+                startDate: formData.startDate.toString() + 'T00:00:00',
+                duration: formData.duration,
+                expireDate: formData.expireDate.toString() + 'T00:00:00',
+            })
             .then((response) =>{
                 toast.success("OFfre créée avec succès")
                 setIsLoading(false);
                 navigate('/employer');
             })
             .catch((error) => {
-                toast.error("Erreur lors de la création de l'offre")
+                toast.error("Erreur lors de la création de l'offre: " + error.response.data.message)
                 setIsLoading(false);
             }
         )

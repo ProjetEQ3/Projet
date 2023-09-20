@@ -97,14 +97,16 @@ public class EmployerService{
 	}
 
 	@Transactional
-	public void createJobOffer(JobOfferDTO jobOffer, Long employerId){
+	public JobOfferDTO createJobOffer(JobOfferDTO jobOffer, Long employerId){
 		Optional<Employer> employerOptional = employerRepository.findById(employerId);
 		if(employerOptional.isPresent()){
 			Employer employer = employerOptional.get();
 			JobOffer jobOfferEntity = jobOffer.toEntity();
 			employer.addJobOffer(jobOfferEntity);
-			jobOfferRepository.save(jobOfferEntity);
+			JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity)) ;
 			employerRepository.save(employer);
+
+			return result;
 		} else
 			throw new EmployerNotFoundException(employerId);
 	}
