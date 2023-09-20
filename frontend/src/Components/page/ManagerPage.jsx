@@ -19,10 +19,6 @@ const ManagerPage = ({user}) => {
                 console.log(error);
             });
         }
-        getAllOffers()
-    }, []);
-
-    useEffect(() => {
         const getAllCvs = async () => {
             await axiosInstance.get('manager/cvs/pending',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
@@ -36,6 +32,7 @@ const ManagerPage = ({user}) => {
         }
 
         getAllCvs()
+        getAllOffers()
     }, []);
 
     const updateJobOfferList = (jobOffer) => {
@@ -43,7 +40,7 @@ const ManagerPage = ({user}) => {
     }
 
     const updateCvList = (cv) => {
-        setCvs(cvs.filter((cv) => cv.id !== cv.id));
+        setCvs(cvs.filter((i) => i.id !== cv.id));
     }
 
     return (
