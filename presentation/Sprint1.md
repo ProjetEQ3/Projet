@@ -2,6 +2,7 @@
 Cliquer sur Inscription
 cliquer sur l'onglet étudiant
 Remplir le formulaire
+
 Cas d'erreurs:
 - Num dans prenom
 - Num dans nom
@@ -19,6 +20,7 @@ Cas d'erreurs:
 Cliquer sur Inscription
 cliquer sur l'onglet employeur
 Remplir le formulaire
+
 Cas d'erreurs:
 - Num dans prenom
 - Num dans nom
@@ -36,8 +38,11 @@ Cas d'erreurs:
 Cliquer sur connexion
 Entrez Email et mot de passe
 doit être un Utilisateur créé
+
 * email: jean@michaud.com
 * password: Ose12345
+
+
 Cas d'erreur:
 - email non existant
 - mot de passe incorrect
@@ -47,8 +52,11 @@ Cas d'erreur:
 Cliquer sur connexion
 Entrez Email et mot de passe
 doit être un Utilisateur créé
+
 * email: terss@professionnel.com
 * password: Ose12345
+
+
 Cas d'erreur:
 - email non existant
 - mot de passe incorrect
@@ -59,6 +67,7 @@ Se connecter à un utilisateur Employeur
 Cliquer sur le bouton "+"
 Remplir le formulaire
 Cliquer sur le bouton "Envoyer"
+
 Cas d'erreur:
 - Titre vide
 - Description vide
@@ -78,6 +87,7 @@ Choisir un fichier de votre ordinateur
 Cliquer sur le bouton "Envoyer"
 Le CV est maintenant déposé
 Si on veut le retirer, appuyer sur le bouton "Delete"
+
 Cas d'erreur:
 - Fichier non valide
 - Fichier non choisi

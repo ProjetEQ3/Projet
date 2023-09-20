@@ -10,17 +10,18 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
+import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.repository.CvRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
@@ -35,19 +36,40 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 class ManagerServiceTest {
     @MockBean
-    private CvRepository cvRepository;
-
-    @MockBean
-    private JobOfferRepository jobOfferRepository;
-
-    @MockBean
     private ManagerRepository managerRepository;
 
     @Autowired
     private ManagerService managerService;
+    private LocalDateTime inTenDaysDate;
+    private LocalTime inTenDays;
 
-    @MockBean
-    private StudentRepository studentRepository;
+    @BeforeEach
+    void setUp() {
+        inTenDaysDate = LocalDateTime.now().plusDays(10);
+        inTenDays = inTenDaysDate.toLocalTime();
+        Manager manager = new Manager();
+        manager.setId(1L);
+        manager.setCredentials(new Credentials());
+        manager.setPhoneNumber("6625550144");
+
+        JobOfferDTO jobOfferDTO = new JobOfferDTO();
+        jobOfferDTO.setId(1L);
+        jobOfferDTO.setDepartment("_420B0");
+        jobOfferDTO.setTitle("Front-end developer");
+        jobOfferDTO.setSalary(20.0f);
+        jobOfferDTO.setStartDate(inTenDaysDate);
+        jobOfferDTO.setLocation("Montréal");
+        jobOfferDTO.setJobOfferState(JobOfferState.SUBMITTED);
+        jobOfferDTO.setHoursPerWeek(15);
+        jobOfferDTO.setDuration(7);
+        jobOfferDTO.setExpirationDate(inTenDaysDate);
+        jobOfferDTO.setDescription("En tant que stagiaire en développement logiciel...");
+
+        // Mock managerRepository behaviors
+        Mockito.when(managerRepository.findById(1L)).thenReturn(Optional.of(manager));
+        Mockito.when(managerRepository.findById(9L)).thenReturn(Optional.empty());
+    }
+
 
     /**
      * Method under test: {@link ManagerService#updateManager(Long, ManagerDTO)}
@@ -176,13 +198,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualJobOfferByID.getDepartment());
         assertEquals("Front-end developer", actualJobOfferByID.getTitle());
         assertEquals(20.0f, actualJobOfferByID.getSalary());
-        assertEquals("11:13:38.716623", actualJobOfferByID.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualJobOfferByID.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualJobOfferByID.getLocation());
         assertEquals(JobOfferState.SUBMITTED, actualJobOfferByID.getJobOfferState());
         assertEquals(1L, actualJobOfferByID.getId().longValue());
         assertEquals(15, actualJobOfferByID.getHoursPerWeek());
         assertEquals(7, actualJobOfferByID.getDuration());
-        assertEquals("11:13:38.716623", actualJobOfferByID.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualJobOfferByID.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -204,13 +226,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.SUBMITTED, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -235,13 +257,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.OPEN, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -259,13 +281,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.PENDING, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -283,13 +305,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.EXPIRED, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -307,13 +329,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.TAKEN, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
@@ -331,13 +353,13 @@ class ManagerServiceTest {
         assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
         assertEquals("Montréal", actualUpdateJobOfferStateResult.getLocation());
         assertEquals(JobOfferState.REFUSED, actualUpdateJobOfferStateResult.getJobOfferState());
         assertEquals(1L, actualUpdateJobOfferStateResult.getId().longValue());
         assertEquals(15, actualUpdateJobOfferStateResult.getHoursPerWeek());
         assertEquals(7, actualUpdateJobOfferStateResult.getDuration());
-        assertEquals("11:13:53.481444", actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
+        assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getExpirationDate().toLocalTime().toString());
         assertEquals(
                 "En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez l'opportunité"
                         + " de participer à des projets passionnants et innovants tout en acquérant une expérience précieuse dans"
