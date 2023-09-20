@@ -12,7 +12,7 @@ Cas d'erreur:
     - 1 chiffre
 
 # Login Student
-Utilisateur créé 
+Utilisateur créé
 
 * email: jean@michaud.com
 * password: Ose12345
@@ -26,11 +26,11 @@ Cas d'erreur:
 - email sans @
 - email déjà utilisé: terss@professionnel.com
 - num cell: de type: 000-000-0000
-- Mot de passe 
-  - 8 charactères
-  - 1 majuscule
-  - 1 minuscule
-  - 1 chiffre
+- Mot de passe
+    - 8 charactères
+    - 1 majuscule
+    - 1 minuscule
+    - 1 chiffre
 
 # Login Employer
 utilisateur créé
