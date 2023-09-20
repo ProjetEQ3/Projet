@@ -1,5 +1,8 @@
 # Register Student
-Cas d'erreur:
+Cliquer sur Inscription
+cliquer sur l'onglet étudiant
+Remplir le formulaire
+Cas d'erreurs:
 - Num dans prenom
 - Num dans nom
 - email sans @
@@ -11,82 +14,109 @@ Cas d'erreur:
     - 1 minuscule
     - 1 chiffre
 
-# Login Student
-Utilisateur créé
-
-* email: jean@michaud.com
-* password: Ose12345
-
-# Student depot CV
 
 # Register Employer
-Cas d'erreur:
+Cliquer sur Inscription
+cliquer sur l'onglet employeur
+Remplir le formulaire
+Cas d'erreurs:
 - Num dans prenom
 - Num dans nom
 - email sans @
 - email déjà utilisé: terss@professionnel.com
 - num cell: de type: 000-000-0000
 - Mot de passe
-    - 8 charactères
-    - 1 majuscule
-    - 1 minuscule
-    - 1 chiffre
+  - 8 charactères
+  - 1 majuscule
+  - 1 minuscule
+  - 1 chiffre
+
+
+# Login Student
+Cliquer sur connexion
+Entrez Email et mot de passe
+doit être un Utilisateur créé
+* email: jean@michaud.com
+* password: Ose12345
+Cas d'erreur:
+- email non existant
+- mot de passe incorrect
+
 
 # Login Employer
-utilisateur créé
-
+Cliquer sur connexion
+Entrez Email et mot de passe
+doit être un Utilisateur créé
 * email: terss@professionnel.com
 * password: Ose12345
+Cas d'erreur:
+- email non existant
+- mot de passe incorrect
+
 
 # Employer depot Offre de stage
+Se connecter à un utilisateur Employeur
+Cliquer sur le bouton "+"
+Remplir le formulaire
+Cliquer sur le bouton "Envoyer"
+Cas d'erreur:
+- Titre vide
+- Description vide
+- Date de début vide
+- Durée vide
+- Date de début plus petite que la date d'aujourd'hui
+- Durée plus petite que 8 semaines
+
+
+
+
+# Student dépose et retire CV
+Se connecter à un utilisateur Étudiant
+Aller sur l'onglet CV
+Cliquer sur le bouton "choisir un fichier" si aucun CV n'est déposé
+Choisir un fichier de votre ordinateur
+Cliquer sur le bouton "Envoyer"
+Le CV est maintenant déposé
+Si on veut le retirer, appuyer sur le bouton "Delete"
+Cas d'erreur:
+- Fichier non valide
+- Fichier non choisi
+
 
 # Login Manager
 * email: michel@michaud.com
 * password: Ose12345
 
+
+# Manager voit Offre de stage
+Connectez vous en tant que manager
+Allez dans l'onglet "stage"
+
+
+# Manager approuve Offre de stage
+Connectez vous en tant que manager
+Allez dans l'onglet "stage"
+Cliquez sur le bouton "Aggrandir" de l'offre de stage que vous voulez approuver
+Cliquez sur le bouton "Approuver"
+
+
+# Manager refuse Offre de stage
+Connectez vous en tant que manager
+Allez dans l'onglet "stage"
+Cliquez sur le bouton "Aggrandir" de l'offre de stage que vous voulez refuser
+Cliquez sur le bouton "Refuser"
+Entrez une raison de refus
+Cliquez sur le bouton "Envoyer"
+
+
 # Manager voit CV
-Prérequis :
+Connectez vous en tant que manager
+Allez dans l'onglet "CV"
+Vous pouvez cliquer sur le nom d'un CV pour en avoir un Preview avec une option d'installation
 
-Assurez-vous que l'entreprise a soumis une offre de stage.
-
-Assurez-vous d'être connecté en tant que gestionnaire de stage.
-
-Étape 1 : Accès à la liste des offres en attente de vérification
-
-Connectez-vous à l'interface de gestionnaire de stage.
-
-Accédez à la section "Liste d'attente des offres".
-
-Expliquez que cette liste contient les offres de stage soumises par les entreprises en attente d'approbation.
-
-Étape 2 : Sélection d'une offre à examiner
-
-Choisissez une offre de stage dans la liste.
-
-Cliquez sur l'offre pour afficher les détails.
-
-Étape 3 : Examen de l'offre de stage
-
-Affichez les informations de l'offre de stage, y compris le nom de l'entreprise, la description du stage, les compétences requises, etc.
-
-Indiquez que le gestionnaire peut examiner attentivement les détails de l'offre pour prendre une décision éclairée.
 
 # Manager approuve CV
+Connectez vous en tant que manager
+Allez dans l'onglet "CV"
+Cliquez sur le bouton "Approuver"
 
-Étape 4 : Approbation de l'offre de stage
-
-Si l'offre de stage répond à tous les critères et est acceptable, approuvez-la.
-
-Expliquez que l'offre approuvée sera ensuite visible pour les étudiants.
-
-Montrez comment l'offre approuvée est déplacée vers la liste des offres de stage approuvées.
-
-Étape 5 : Refus de l'offre de stage
-
-Si l'offre de stage ne répond pas aux critères ou doit être refusée pour d'autres raisons, expliquez comment cela peut être fait.
-
-Montrez comment une justification doit être fournie pour le refus.
-
-Expliquez que l'entreprise recevra une notification du refus avec la justification.
-# Manager voit Offre de stage
-# Manager approuve Offre de stage

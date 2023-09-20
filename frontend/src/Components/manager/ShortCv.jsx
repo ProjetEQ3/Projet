@@ -53,6 +53,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
             .put(`/manager/cv/update/${cv.id}?newCvState=${cvState}&reason=${reason}`,)
             .then((response) => {
                 toast.success("CV est bien mis à jour avec l'état: " + cvState)
+                updateCvList(cv)
             })
             .catch((error) => {
                 toast.error("Erreur lors de la mis à jour du CV: " + error.message)
