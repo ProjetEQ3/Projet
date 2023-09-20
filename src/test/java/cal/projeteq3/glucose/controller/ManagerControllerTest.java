@@ -13,11 +13,7 @@ import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.repository.CvRepository;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 
@@ -78,7 +74,7 @@ class ManagerControllerTest {
 
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class), mock(JobOfferRepository.class),
-                        mock(CvRepository.class)),
+                        mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertEquals(jobOffers, actualJobOfferByEmploye.getBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -140,7 +136,7 @@ class ManagerControllerTest {
 
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                        mock(JobOfferRepository.class), mock(CvRepository.class)),
+                        mock(JobOfferRepository.class), mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertEquals(jobOffers, actualJobOfferByEmploye.getBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -249,7 +245,7 @@ class ManagerControllerTest {
 
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                        mock(JobOfferRepository.class), mock(CvRepository.class)),
+                        mock(JobOfferRepository.class), mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertTrue(actualJobOfferByEmploye.hasBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -393,7 +389,7 @@ class ManagerControllerTest {
 
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                        mock(JobOfferRepository.class), mock(CvRepository.class)),
+                        mock(JobOfferRepository.class), mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertTrue(actualJobOfferByEmploye.hasBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -437,7 +433,7 @@ class ManagerControllerTest {
 
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                        mock(JobOfferRepository.class), mock(CvRepository.class)),
+                        mock(JobOfferRepository.class), mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertTrue(actualJobOfferByEmploye.hasBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -473,7 +469,7 @@ class ManagerControllerTest {
         //   See https://diff.blue/R013 to resolve this issue.
 
         (new ManagerController(new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                mock(JobOfferRepository.class), mock(CvRepository.class)), null)).getJobOfferByEmploye(1L);
+                mock(JobOfferRepository.class), mock(CvFileRepository.class)), null)).getJobOfferByEmploye(1L);
     }
 
     /**
@@ -498,7 +494,7 @@ class ManagerControllerTest {
         when(employerService.getJobOffersDTOByEmployerId(Mockito.<Long>any())).thenReturn(new ArrayList<>());
         ResponseEntity<List<JobOfferDTO>> actualJobOfferByEmploye = (new ManagerController(
                 new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                        mock(JobOfferRepository.class), mock(CvRepository.class)),
+                        mock(JobOfferRepository.class), mock(CvFileRepository.class)),
                 employerService)).getJobOfferByEmploye(1L);
         assertTrue(actualJobOfferByEmploye.hasBody());
         assertEquals(200, actualJobOfferByEmploye.getStatusCodeValue());
@@ -525,7 +521,7 @@ class ManagerControllerTest {
         //   See https://diff.blue/R013 to resolve this issue.
 
         ManagerService managerService = new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                mock(JobOfferRepository.class), mock(CvRepository.class));
+                mock(JobOfferRepository.class), mock(CvFileRepository.class));
 
         (new ManagerController(managerService,
                 new EmployerService(mock(EmployerRepository.class), mock(JobOfferRepository.class))))
@@ -551,7 +547,7 @@ class ManagerControllerTest {
         //   See https://diff.blue/R013 to resolve this issue.
 
         ManagerService managerService = new ManagerService(mock(ManagerRepository.class), mock(StudentRepository.class),
-                mock(JobOfferRepository.class), mock(CvRepository.class));
+                mock(JobOfferRepository.class), mock(CvFileRepository.class));
 
         (new ManagerController(managerService,
                 new EmployerService(mock(EmployerRepository.class), mock(JobOfferRepository.class))))

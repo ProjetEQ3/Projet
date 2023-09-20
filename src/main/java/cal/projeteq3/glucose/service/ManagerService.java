@@ -11,7 +11,7 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.repository.CvRepository;
+import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
@@ -28,12 +28,12 @@ public class ManagerService{
 	private final ManagerRepository managerRepository;
 	private final StudentRepository studentRepository;
 	private final JobOfferRepository jobOfferRepository;
-	private final CvRepository cvRepository;
+	private final CvFileRepository cvRepository;
 
 	@Autowired
 	public ManagerService(
 		ManagerRepository managerRepository, StudentRepository studentRepository,
-		JobOfferRepository jobOfferRepository, CvRepository cvRepository
+		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository
 	){
 		this.managerRepository = managerRepository;
 		this.studentRepository = studentRepository;
