@@ -19,7 +19,7 @@ const RegistrationForm = () => {
     return (
         <div className="container mt-2">
             <div className="row">
-                <div className="col-6 mx-auto btn-group btn-group-lg">
+                <div className="col-md-6 col-12 mx-auto btn-group btn-group-lg">
                     <button className={`btn btn-outline-ose text-ose ${studActive ? 'active' : ''}`} onClick={() => handleButtonClick('stud')}>Étudiant</button>
                     <button className={`btn btn-outline-ose text-ose ${empActive ? 'active' : ''}`} onClick={() => handleButtonClick('emp')}>Employeur</button>
                 </div>

@@ -77,7 +77,7 @@ public class ManagerService{
 	}
 
 //    CV File
-	public CvFileDTO getCvByID(Long id){
+	public CvFileDTO getCvById(Long id){
 		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
 	}
 

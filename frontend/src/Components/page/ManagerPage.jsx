@@ -19,7 +19,6 @@ const ManagerPage = ({user}) => {
                 console.log(error);
             });
         }
-        console.log(offers)
         getAllOffers()
     }, []);
 
@@ -43,6 +42,10 @@ const ManagerPage = ({user}) => {
         setOffers(offers.filter((offer) => offer.id !== jobOffer.id));
     }
 
+    const updateCvList = (cv) => {
+        setCvs(cvs.filter((cv) => cv.id !== cv.id));
+    }
+
     return (
         <div className="container">
             <div>
@@ -53,7 +56,7 @@ const ManagerPage = ({user}) => {
                             onClick={() => setTab('cvs')}>CVs</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}/>}
-                {tab === 'cvs' && <Cvs cvs={cvs} />}
+                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} />}
             </div>
         </div>
     )

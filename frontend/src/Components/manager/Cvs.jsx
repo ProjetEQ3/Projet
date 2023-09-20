@@ -1,7 +1,7 @@
 import React from "react";
 import ShortCv from "./ShortCv";
 
-const Cvs = ({cvs}) => {
+const Cvs = ({cvs, updateCvList}) => {
 	return (
 		<div className="row">
 			<div className="col-12">
@@ -11,7 +11,7 @@ const Cvs = ({cvs}) => {
 						{
 							cvs.map((cv, index) => (
 								<div key={index} onClick={() => (cv)}>
-									<ShortCv cv={cv}/>
+									<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
 								</div>
 							))
 						}

@@ -1,12 +1,11 @@
 import React from "react";
-import JsPDF from 'jspdf';
 import CvFile from '../../model/CvFile'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 
-const ShortCv = ({cv, index}) => {
+const ShortCv = ({cv, index, updateCvList}) => {
     const [isDecline, setIsDecline] = React.useState(false);
     const [formData, setFormData] = React.useState({
         refusalReason: '',
@@ -14,9 +13,7 @@ const ShortCv = ({cv, index}) => {
 
     const handleAccept = (e) => {
         e.preventDefault();
-
-        cv.cvState = 'ACCEPTED';
-        updateCv(cv, cv.cvState, formData.refusalReason)
+        updateCv(cv, 'ACCEPTED',null)
     }
 
     const handleDecline = (e) => {
@@ -39,9 +36,7 @@ const ShortCv = ({cv, index}) => {
             return;
         }
 
-        cv.cvState = 'REFUSED';
-
-        updateCv(cv, cv.cvState, formData.refusalReason)
+        updateCv(cv, 'REFUSED', formData.refusalReason)
 
         setIsDecline(false)
     }
@@ -51,27 +46,22 @@ const ShortCv = ({cv, index}) => {
         setIsDecline(false);
     }
 
-    const updateCv = (cv, state, reason) => {
+
+    const updateCv = (cv,cvState, reason) => {
+        cv.cvState = cvState
         axiosInstance
-            .put(`/manager/cv/update/${cv.id}`, {
-                params: {
-                    newCvState: state,
-                    reason: reason
-                }
-            }, )
+            .put(`/manager/cv/update/${cv.id}?newCvState=${cvState}&reason=${reason}`,)
             .then((response) => {
-                    toast.success("CV est mis à jour avec succès, state: " + state)
-                })
-                    .catch((error) => {
-                        toast.error("Erreur lors de la mis à jour du CV: " + error.message)
-                    })
+                toast.success("CV est bien mis à jour avec l'état: " + cvState)
+            })
+            .catch((error) => {
+                toast.error("Erreur lors de la mis à jour du CV: " + error.message)
+            })
     }
 
     const OpenCv = () => {
         if (cv.fileData) {
-            const pdf = new JsPDF();
-            pdf.text(CvFile.readBytes(cv.fileData), 10, 10);
-            const pdfBlob = pdf.output('blob');
+            const pdfBlob = new Blob([CvFile.readBytes(cv.fileData)], {type: 'application/pdf'});
             const pdfUrl = URL.createObjectURL(pdfBlob);
             const pdfIframe = document.createElement('iframe');
             pdfIframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; z-index:1000');
@@ -118,7 +108,7 @@ const ShortCv = ({cv, index}) => {
                                     <div className="modal-footer">
                                         {isDecline ? (
                                                 <form id="refusalForm" className="form col-10 mx-auto">
-                                                    <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
+                                                    <p>Êtes-vous sûr de vouloir refuser ce CV ?</p>
                                                     <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder="Raison du refus" required/>
                                                     <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
                                                     <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>

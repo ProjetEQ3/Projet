@@ -1,9 +1,11 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
@@ -11,23 +13,26 @@ import cal.projeteq3.glucose.repository.EmployerRepository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import static org.mockito.Mockito.when;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -39,6 +44,11 @@ public class EmployerServiceTest {
 
     @InjectMocks
     private EmployerService employerService;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void createEmployerTest() {
@@ -569,18 +579,14 @@ public class EmployerServiceTest {
      * Method under test: {@link EmployerService#updateJobOffer(JobOfferDTO)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testUpdateJobOffer3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.dto.JobOfferDTO.getId()" because "updatedJobOffer" is null
-        //       at cal.projeteq3.glucose.service.EmployerService.updateJobOffer(EmployerService.java:112)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.updateJobOffer(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
+        // Arrange
+        JobOfferDTO nullJobOfferDTO = null;
 
-        employerService.updateJobOffer(null);
+        // Act and Assert
+        assertThrows(NullPointerException.class, () -> {
+            employerService.updateJobOffer(nullJobOfferDTO);
+        });
     }
 
     /**
@@ -638,29 +644,20 @@ public class EmployerServiceTest {
      */
     @Test
     @Disabled("TODO: Complete this test")
-    void testGetJobOffersDTOByEmployerId() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.hibernate.LazyInitializationException: failed to lazily initialize a collection of role: cal.projeteq3.glucose.model.user.Employer.jobOffers: could not initialize proxy - no Session
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.throwLazyInitializationException(AbstractPersistentCollection.java:635)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.withTemporarySessionIfNeeded(AbstractPersistentCollection.java:218)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.initialize(AbstractPersistentCollection.java:615)
-        //       at org.hibernate.collection.spi.AbstractPersistentCollection.read(AbstractPersistentCollection.java:136)
-        //       at org.hibernate.collection.spi.PersistentBag.iterator(PersistentBag.java:371)
-        //       at java.util.Spliterators$IteratorSpliterator.estimateSize(Spliterators.java:1865)
-        //       at java.util.Spliterator.getExactSizeIfKnown(Spliterator.java:414)
-        //       at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:508)
-        //       at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
-        //       at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-        //       at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-        //       at java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-        //       at cal.projeteq3.glucose.service.EmployerService.getJobOffersDTOByEmployerId(EmployerService.java:75)
-        //       at cal.projeteq3.glucose.service.EmployerService$$SpringCGLIB$$0.getJobOffersDTOByEmployerId(<generated>)
-        //   See https://diff.blue/R013 to resolve this issue.
+    void testGetJobOffersDTOByEmployerId(){
+        // Arrange
+        Long employerId = 1L;
+        List<JobOfferDTO> jobOffers = new ArrayList<>();
+        jobOffers.add(new JobOfferDTO());
+        when(employerRepository.findById(employerId)).thenReturn(Optional.of(new Employer()));
+        when(employerService.getJobOffersDTOByEmployerId(employerId)).thenReturn(jobOffers);
 
-        employerService.getJobOffersDTOByEmployerId(1L);
+        // Act
+        List<JobOfferDTO> jobOfferDTOs = employerService.getJobOffersDTOByEmployerId(employerId);
+
+        // Assert
+        assertNotNull(jobOfferDTOs);
+        assertFalse(jobOfferDTOs.isEmpty());
     }
 
     /**
@@ -671,4 +668,53 @@ public class EmployerServiceTest {
         assertTrue(employerService.getJobOffersDTOByEmployerId(7L).isEmpty());
     }
 
+    @Test
+    public void testCreateEmployer() {
+        RegisterEmployerDTO registerEmployerDTO = new RegisterEmployerDTO();
+        when(employerRepository.save(any(Employer.class))).thenReturn(new Employer());
+        EmployerDTO employerDTO = employerService.createEmployer(registerEmployerDTO);
+        assertNotNull(employerDTO);
+    }
+
+    @Test
+    public void testGetAllEmployers() {
+        List<Employer> employers = new ArrayList<>();
+        when(employerRepository.findAll()).thenReturn(employers);
+        List<EmployerDTO> employerDTOs = employerService.getAllEmployers();
+        assertNotNull(employerDTOs);
+        assertTrue(employerDTOs.isEmpty());
+    }
+
+    @Test
+    public void testGetEmployerByEmail() {
+        String email = "test@example.com";
+        Optional<Employer> employerOptional = Optional.of(new Employer());
+        when(employerRepository.findByCredentialsEmail(email)).thenReturn(employerOptional);
+        EmployerDTO employerDTO = employerService.getEmployerByEmail(email);
+        assertNotNull(employerDTO);
+    }
+
+    @Test
+    public void testGetEmployerByEmailNotFound() {
+        String email = "test@example.com";
+        when(employerRepository.findByCredentialsEmail(email)).thenReturn(Optional.empty());
+        assertThrows(EmployerNotFoundException.class, () -> employerService.getEmployerByEmail(email));
+    }
+
+    @Test
+    public void testGetEmployerByID() {
+        Long id = 1L;
+        Optional<Employer> employerOptional = Optional.of(new Employer());
+        when(employerRepository.findById(id)).thenReturn(employerOptional);
+        Optional<EmployerDTO> employerDTOOptional = employerService.getEmployerByID(id);
+        assertTrue(employerDTOOptional.isPresent());
+    }
+
+    @Test
+    public void testGetEmployerByIDNotFound() {
+        Long id = 1L;
+        when(employerRepository.findById(id)).thenReturn(Optional.empty());
+        Optional<EmployerDTO> employerDTOOptional = employerService.getEmployerByID(id);
+        assertFalse(employerDTOOptional.isPresent());
+    }
 }

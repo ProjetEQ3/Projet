@@ -1,121 +1,236 @@
-openapi: 3.0.0
+swagger: '2.0'
 info:
   title: Manager Controller API
-  description: API endpoints for managing job offers
+  description: API documentation for the Manager Controller
   version: 1.0.0
+basePath: /v1  # Replace with your actual API version and base path
+schemes:
+  - http
+  - https
 paths:
   /manager/jobOffers/all:
     get:
+      tags:
+        - Manager
       summary: Get all job offers
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Successfully retrieved job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JobOfferDTO'
+        500:
           description: Internal Server Error
+          schema:
+            type: string
+
   /manager/jobOffer/{id}:
     get:
-      summary: Get job offer by ID
+      tags:
+        - Manager
+      summary: Get a job offer by ID
       parameters:
         - in: path
           name: id
+          description: ID of the job offer to retrieve
           required: true
-          description: Job offer ID
-          schema:
-            type: integer
+          type: integer
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Successfully retrieved job offer
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '404':
-          description: Job offer not found
-        '500':
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/JobOfferDTO'
+        404:
+          description: Not Found
+          schema:
+            type: string
+        500:
           description: Internal Server Error
-  /manager/jobOffers/{employerId}:
+          schema:
+            type: string
+
+  /manager/jobOffers/employer/{employerId}:
     get:
+      tags:
+        - Manager
       summary: Get job offers by employer ID
       parameters:
         - in: path
           name: employerId
+          description: ID of the employer
           required: true
-          description: Employer ID
-          schema:
-            type: integer
+          type: integer
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Successfully retrieved job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '404':
-          description: Employer not found
-        '500':
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JobOfferDTO'
+        500:
           description: Internal Server Error
+          schema:
+            type: string
+
   /manager/jobOffers/{jobOfferState}:
     get:
-      summary: Get job offers depending on their state
+      tags:
+        - Manager
+      summary: Get job offers by state
+      parameters:
+        - in: path
+          name: jobOfferState
+          description: Job offer state (e.g., OPEN, REFUSED)
+          required: true
+          type: string
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Successfully retrieved job offers
-            Current states are SUBMITTED, OPEN, PENDING, EXPIRED, TAKEN, REFUSED
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/JobOfferDTO'
+        500:
           description: Internal Server Error
-  /manager/jobOffer/{id}/accept:
+          schema:
+            type: string
+
+  /manager/jobOffer/accept/{id}:
     put:
-      summary: Accept job offer
+      tags:
+        - Manager
+      summary: Accept a job offer by ID
       parameters:
         - in: path
           name: id
+          description: ID of the job offer to accept
           required: true
-          description: Job offer ID
-          schema:
-            type: integer
+          type: integer
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Job offer accepted
-        '404':
-          description: Job offer not found
-        '500':
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/JobOfferDTO'
+        500:
           description: Internal Server Error
-  /manager/jobOffer/{id}/refuse:
+          schema:
+            type: string
+
+  /manager/jobOffer/refuse/{id}:
     put:
-      summary: Refuse job offer
+      tags:
+        - Manager
+      summary: Refuse a job offer by ID
       parameters:
         - in: path
           name: id
+          description: ID of the job offer to refuse
           required: true
-          description: Job offer ID
-          schema:
-            type: integer
+          type: integer
+        - in: body
+          name: reason
+          description: Reason for refusing the job offer
+          required: true
+          type: string
+      produces:
+        - application/json
       responses:
-        '200':
-          description: Job offer refused
-        '404':
-          description: Job offer not found
-        '500':
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/JobOfferDTO'
+        500:
           description: Internal Server Error
+          schema:
+            type: string
 
+  /manager/cv/update/{id}:
+    put:
+      tags:
+        - Manager
+      summary: Update CV state by ID
+      parameters:
+        - in: path
+          name: id
+          description: ID of the CV to update
+          required: true
+          type: integer
+        - in: query
+          name: newCvState
+          description: New CV state (e.g., SUBMITTED, ACCEPTED)
+          required: true
+          type: string
+        - in: query
+          name: reason
+          description: Reason for updating the CV state
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/CvFileDTO'
+        400:
+          description: Bad Request
+          schema:
+            type: string
+        500:
+          description: Internal Server Error
+          schema:
+            type: string
 
-components:
-  schemas:
-    JobOfferDTO:
+  /manager/cvs/all:
+    get:
+      tags:
+        - Manager
+      summary: Get all CVs
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CvFileDTO'
+        500:
+          description: Internal Server Error
+          schema:
+            type: string
+
+  /manager/cvs/pending:
+    get:
+      tags:
+        - Manager
+      summary: Get pending CVs
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CvFileDTO'
+        500:
+          description: Internal Server Error
+          schema:
+            type: string
+definitions:
+  JobOfferDTO:
       type: object
       properties:
         id:
@@ -155,3 +270,22 @@ components:
         hoursPerWeek:
           type: integer
           description: Job Offer's hours per week
+  CvFileDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: CV File's ID
+      fileName:
+        type: string
+        description: CV File's name
+      fileData:
+        type: string
+        format: binary
+        description: CV File's binary data
+      cvState:
+        type: string
+        description: CV File's state
+      refusReason:
+        type: string
+        description: Reason for CV refusal

@@ -1,198 +1,106 @@
-openapi: 3.0.0
+swagger: '2.0'
 info:
   title: Student Controller API
-  description: API endpoints for student management
+  description: API endpoints for student operations
   version: 1.0.0
+basePath: /student
+schemes:
+  - http
+host: localhost:3000  # Update with your actual host and port
+produces:
+  - application/json
 paths:
-  /student/register:
+  /register:
     post:
       summary: Register a student
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Student'
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: student
+          schema:
+            $ref: '#/definitions/RegisterStudentDTO'
       responses:
         '201':
           description: Student registered successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StudentDTO'
+          schema:
+            $ref: '#/definitions/StudentDTO'
         '400':
           description: Bad Request
         '500':
           description: Internal Server Error
-  /student/cv:
+
+  /cv/{studentId}:
     post:
-      summary: Add a CV for a student
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/StudentDTO'
+      summary: Upload a CV for a student
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: path
+          name: studentId
+          required: true
+          type: integer
+        - in: formData
+          name: file
+          type: file
+          required: true
       responses:
         '202':
-          description: CV added successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StudentDTO'
+          description: CV uploaded successfully
+          schema:
+            $ref: '#/definitions/CvFileDTO'
         '400':
           description: Bad Request
         '500':
           description: Internal Server Error
-  /student/cv/{studentId}:
+
     delete:
       summary: Delete a student's CV
       parameters:
         - in: path
           name: studentId
           required: true
-          schema:
-            type: integer
+          type: integer
       responses:
-        '200':
+        '202':
           description: CV deleted successfully
         '400':
           description: Bad Request
         '500':
           description: Internal Server Error
-  /api/cv/{studentId}:
-    post:
-      summary: Add CV for a student
-      description: Uploads a CV file for a student.
-      parameters:
-        - in: path
-          name: studentId
-          required: true
-          schema:
-            type: integer
-          description: Student ID
-        - in: formData
-          name: file
-          required: true
-          type: file
-          description: CV file to upload
-      responses:
-        '202':
-          description: CV file uploaded successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CvFileDTO'
-        '400':
-          description: Invalid operation
-          headers:
-            X-Errors:
-              description: Error message
-              schema:
-                type: string
-        '4XX':
-          description: Bad request
-        '5XX':
-          description: Server error
 
-components:
-  schemas:
-    CvFileDTO:
-      type: object
-      properties:
-        fileName:
-          type: string
-          description: Name of the CV file
-        cvState:
-          type: string
-          description: CV state
-        fileData:
-          type: string
-          format: byte
-          description: Binary data of the CV file
-    Student:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Student's ID
-        firstName:
-          type: string
-          description: Student's first name
-        lastName:
-          type: string
-          description: Student's last name
-        email:
-          type: string
-          description: Student's email
-        role:
-          type: string
-          description: Student's role
-        CvFileDTO:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int64
-              description: CV file's ID
-            fileName:
-              type: string
-              description: Name of the CV file
-            fileData:
-              type: string
-              format: byte
-              description: CV file data
-            cvState:
-              type: string
-              description: Current state of the CV file (e.g., SUBMITTED, ACCEPTED, etc.)
-        matricule:
-          type: string
-          description: Student's matricule
-        department:
-          type: string
-          description: Student's department
+definitions:
+  RegisterStudentDTO:
+    type: object
+    properties:
+      email:
+        type: string
+        description: Student's email
+      password:
+        type: string
+        description: Student's password
+      role:
+        type: string
+        description: Student's role
 
-    StudentDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: Student's ID
-        firstName:
-          type: string
-          description: Student's first name
-        lastName:
-          type: string
-          description: Student's last name
-        email:
-          type: string
-          description: Student's email
-        role:
-          type: string
-          description: Student's role
-        matricule:
-          type: string
-          description: Student's matricule
-        department:
-          type: string
-          description: Student's department
-        CvFileDTO:
-          type: object
-          properties:
-            id:
-              type: integer
-              format: int64
-              description: CV file's ID
-            fileName:
-              type: string
-              description: Name of the CV file
-            fileData:
-              type: string
-              format: byte
-              description: CV file data
-            cvState:
-              type: string
-              description: Current state of the CV file (e.g., SUBMITTED, ACCEPTED, etc.)
+  StudentDTO:
+    type: object
+    properties:
+    # Define your StudentDTO properties here
 
+  CvFileDTO:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: CV File's ID
+      fileName:
+        type: string
+        description: CV File's name
+      fileData:
+        type: string
+        format: binary
+        description: CV File's binary data
+      cvState:
+        type: string
+        description: CV File's state

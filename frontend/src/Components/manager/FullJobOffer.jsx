@@ -12,8 +12,11 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
         e.preventDefault();
         axiosInstance.put(`/manager/jobOffer/accept/${jobOffer.id}`)
             .then((res) => {
-                res.status === 200 ? toast.success("Offer accepted") : console.log("Failed to accept offer");
+                toast.success("Offer accepted")
                 updateJobOfferList(jobOffer);
+            })
+            .catch((error) => {
+                toast.error("Failed to accept offer: " + error.message)
             })
     }
 
@@ -40,8 +43,11 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
 
         axiosInstance.put(`/manager/jobOffer/refuse/${jobOffer.id}`, formData.refusalReason)
             .then((res) => {
-                res.status === 200 ? toast.success("Offer declined") : console.log("Failed to decline offer");
+                toast.success("Offer declined")
                 updateJobOfferList(jobOffer);
+            })
+            .catch((error) => {
+                toast.error("Failed to decline offer: " + error.message)
             })
         setIsDecline(false)
     }

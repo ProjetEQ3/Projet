@@ -162,7 +162,7 @@ const RegisterStudentForm = () => {
                     <label htmlFor="password" className="mt-3">Confirmer le mot de passe</label>
                     <input type="password" className={`form-control ${passwordConfirmValid? '': 'is-invalid'}`} id="password" placeholder="Mot de passe" name="passwordConfirm" onChange={handleChanges}/>
                     <div className="row my-4">
-                        <div className="col-4 mx-auto">
+                        <div className="col-12 col-md-4 mx-auto">
                             <button type="submit" className="btn btn-outline-ose col-12">S'inscrire</button>
                         </div>
                     </div>
