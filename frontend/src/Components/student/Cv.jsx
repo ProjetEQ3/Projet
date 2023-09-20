@@ -1,6 +1,6 @@
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
-import {useState} from "react"
+import React, {useState} from "react"
 import Loading from "../util/Loading"
 
 function Cv({user, setCv}){
@@ -11,6 +11,7 @@ function Cv({user, setCv}){
 		const file = e.target.files[0]
 		if(file && file.type === "application/pdf"){
 			const formData = new FormData()
+			console.log(file)
 			formData.append("file", file)
 			formData.append("studentId", user.id)
 			axiosInstance
@@ -69,18 +70,51 @@ function Cv({user, setCv}){
 			{isLoading ? (
 				<Loading/>
 			) : user.cvFile ? (
-				<div>
-					<h2>CV: {user.cvFile.fileName}</h2>
-					<button className="btn btn-danger" onClick={handleDeletePdf}>
+				<>
+					<div className="row bg-white rounded">
+						<div className="col-8">
+							<h2>CV: {user.cvFile.fileName}</h2>
+						</div>
+						<div className="col-4 d-flex my-auto justify-content-around">
+							<div className={`my-auto border rounded px-2 ${user.cvFile.cvState === 'ACCEPTED' ? 'border-success text-success':
+								user.cvFile.cvState === 'SUBMITTED' ? 'border-secondary text-secondary': 'border-danger text-danger'}`}>{user.cvFile.cvState}
+							</div>
+							{/*Ajouter la raison du refus du CV pour l'étudiant (le CV n'est pas load de la base de donnée)*/}
+							{/*{user.cvFile.cvState === 'REFUSED' && (*/}
+							{/*	<>*/}
+							{/*		<div className="mx-2 my-auto text-decoration-underline"  data-bs-toggle="modal" data-bs-target="#refusedCV">*/}
+							{/*			Raison du refus {user.cvFile.reason}*/}
+							{/*		</div>*/}
+							{/*		<div id="refusedCV" className="modal">*/}
+							{/*			<div className="modal-dialog">*/}
+							{/*				<div className="modal-content">*/}
+							{/*					<div className="modal-header">*/}
+							{/*						<h3 className="modal-title">Raison du refus</h3>*/}
+							{/*					</div>*/}
+							{/*					<div className="modal-body">*/}
+							{/*						<p className="text-dark fw-light pt-1">{user.cvFile.reason}</p>*/}
+							{/*					</div>*/}
+							{/*					<div className="modal-footer">*/}
+							{/*						<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>*/}
+							{/*					</div>*/}
+							{/*				</div>*/}
+							{/*			</div>*/}
+							{/*		</div>*/}
+							{/*	</>*/}
+							{/*)}*/}
+
+						</div>
+					</div>
+					<button className="btn btn-danger m-2" onClick={handleDeletePdf}>
 						Delete
 					</button>
-					<button className="btn btn-primary" onClick={handleViewPdf}>
+					<button className="btn btn-primary m-2" onClick={handleViewPdf}>
 						View
 					</button>
-					<button className="btn btn-success" onClick={handleDownloadPdf}>
+					<button className="btn btn-success m-2" onClick={handleDownloadPdf}>
 						Download
 					</button>
-				</div>
+				</>
 			) : (
 				<div>
 					<h1 className="display-6">Téléverser un CV</h1>
