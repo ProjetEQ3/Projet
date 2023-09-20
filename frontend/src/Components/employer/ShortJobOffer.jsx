@@ -26,8 +26,8 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                             <div className={`border rounded px-2 
                             ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
                                 jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
-                                    jobOffer.jobOfferState === 'EXPIRED' ? 'border-danger text-danger' :
-                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-secondary text-secondary'} `}>
+                                    jobOffer.jobOfferState === 'SUBMITTED' ? 'border-secondary text-secondary' :
+                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-danger text-danger'} `}>
                                 {jobOffer.jobOfferState}
                             </div>
                         </div>

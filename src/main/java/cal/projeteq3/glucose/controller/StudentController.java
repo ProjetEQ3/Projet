@@ -27,6 +27,7 @@ public class StudentController{
 
 	@PostMapping("/register")
 	public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student){
+//		System.out.print(student);
 		try{
 			Validation.validateStudent(student);
 			return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));

@@ -64,33 +64,33 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
-    /**
-     * Method under test: {@link UserService#authenticateUser(LoginDTO)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testAuthenticateUser() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.model.auth.Credentials.getRole()" because "this.credentials" is null
-        //       at cal.projeteq3.glucose.model.user.User.getRole(User.java:43)
-        //       at cal.projeteq3.glucose.service.UserService.authenticateUser(UserService.java:52)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Credentials credentials = new Credentials();
-        credentials.setEmail("jane.doe@example.org");
-        credentials.setId(1L);
-        credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
-        credentials.setUser(new Employer());
-        Optional<Credentials> ofResult = Optional.of(credentials);
-        when(credentialRepository.findCredentialsByEmail(Mockito.<String>any())).thenReturn(ofResult);
-        Optional<User> ofResult2 = Optional.of(new Employer());
-        when(userRepository.findUserByCredentialsEmail(Mockito.<String>any())).thenReturn(ofResult2);
-        userService.authenticateUser(new LoginDTO("jane.doe@example.org", "iloveyou"));
-    }
+//    /**
+//     * Method under test: {@link UserService#authenticateUser(LoginDTO)}
+//     */
+//    @Test
+//    @Disabled("TODO: Complete this test")
+//    void testAuthenticateUser() {
+//        // TODO: Complete this test.
+//        //   Reason: R013 No inputs found that don't throw a trivial exception.
+//        //   Diffblue Cover tried to run the arrange/act section, but the method under
+//        //   test threw
+//        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.model.auth.Credentials.getRole()" because "this.credentials" is null
+//        //       at cal.projeteq3.glucose.model.user.User.getRole(User.java:43)
+//        //       at cal.projeteq3.glucose.service.UserService.authenticateUser(UserService.java:52)
+//        //   See https://diff.blue/R013 to resolve this issue.
+//
+//        Credentials credentials = new Credentials();
+//        credentials.setEmail("jane.doe@example.org");
+//        credentials.setId(1L);
+//        credentials.setPassword("iloveyou");
+//        credentials.setRole(Role.ADMIN);
+//        credentials.setUser(new Employer());
+//        Optional<Credentials> ofResult = Optional.of(credentials);
+//        when(credentialRepository.findCredentialsByEmail(Mockito.<String>any())).thenReturn(ofResult);
+//        Optional<User> ofResult2 = Optional.of(new Employer());
+//        when(userRepository.findUserByCredentialsEmail(Mockito.<String>any())).thenReturn(ofResult2);
+//        userService.authenticateUser(new LoginDTO("jane.doe@example.org", "iloveyou"));
+//    }
 
     /**
      * Method under test: {@link UserService#authenticateUser(LoginDTO)}
@@ -437,30 +437,30 @@ public class UserServiceTest {
         verify(userRepository).findCredentials(Mockito.<String>any());
     }
 
-    /**
-     * Method under test: {@link UserService#createUser(RegisterDTO)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testCreateUser3() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.dto.auth.RegisterDTO.getEmail()" because "registerDTO" is null
-        //       at cal.projeteq3.glucose.service.UserService.createUser(UserService.java:61)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Credentials credentials = new Credentials();
-        credentials.setEmail("jane.doe@example.org");
-        credentials.setId(1L);
-        credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
-        credentials.setUser(new Employer());
-        Optional<Credentials> ofResult = Optional.of(credentials);
-        when(userRepository.findCredentials(Mockito.<String>any())).thenReturn(ofResult);
-        userService.createUser(null);
-    }
+//    /**
+//     * Method under test: {@link UserService#createUser(RegisterDTO)}
+//     */
+//    @Test
+//    @Disabled("TODO: Complete this test")
+//    void testCreateUser3() {
+//        // TODO: Complete this test.
+//        //   Reason: R013 No inputs found that don't throw a trivial exception.
+//        //   Diffblue Cover tried to run the arrange/act section, but the method under
+//        //   test threw
+//        //   java.lang.NullPointerException: Cannot invoke "cal.projeteq3.glucose.dto.auth.RegisterDTO.getEmail()" because "registerDTO" is null
+//        //       at cal.projeteq3.glucose.service.UserService.createUser(UserService.java:61)
+//        //   See https://diff.blue/R013 to resolve this issue.
+//
+//        Credentials credentials = new Credentials();
+//        credentials.setEmail("jane.doe@example.org");
+//        credentials.setId(1L);
+//        credentials.setPassword("iloveyou");
+//        credentials.setRole(Role.ADMIN);
+//        credentials.setUser(new Employer());
+//        Optional<Credentials> ofResult = Optional.of(credentials);
+//        when(userRepository.findCredentials(Mockito.<String>any())).thenReturn(ofResult);
+//        userService.createUser(null);
+//    }
 
     /**
      * Method under test: {@link UserService#createUser(RegisterDTO)}
@@ -474,24 +474,23 @@ public class UserServiceTest {
         verify(userRepository).findCredentials(Mockito.<String>any());
     }
 
-    /**
-     * Method under test: {@link UserService#createUser(RegisterDTO)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testCreateUser5() {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.NullPointerException: Cannot invoke "String.hashCode()" because "<local3>" is null
-        //       at cal.projeteq3.glucose.service.UserService.createUser(UserService.java:63)
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        Optional<Credentials> emptyResult = Optional.empty();
-        when(userRepository.findCredentials(Mockito.<String>any())).thenReturn(emptyResult);
-        userService.createUser(new RegisterDTO());
-    }
-
+//    /**
+//     * Method under test: {@link UserService#createUser(RegisterDTO)}
+//     */
+//    @Test
+//    @Disabled("TODO: Complete this test")
+//    void testCreateUser5() {
+//        // TODO: Complete this test.
+//        //   Reason: R013 No inputs found that don't throw a trivial exception.
+//        //   Diffblue Cover tried to run the arrange/act section, but the method under
+//        //   test threw
+//        //   java.lang.NullPointerException: Cannot invoke "String.hashCode()" because "<local3>" is null
+//        //       at cal.projeteq3.glucose.service.UserService.createUser(UserService.java:63)
+//        //   See https://diff.blue/R013 to resolve this issue.
+//
+//        Optional<Credentials> emptyResult = Optional.empty();
+//        when(userRepository.findCredentials(Mockito.<String>any())).thenReturn(emptyResult);
+//        userService.createUser(new RegisterDTO());
+//    }
 
 }
