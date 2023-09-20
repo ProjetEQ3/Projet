@@ -1,14 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import Header from "./Components/layout/Header"
+import axios from "axios"
+import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'
+import {useState} from "react";
+import User from "./model/User";
+import Footer from "./Components/layout/Footer";
+import Main from "./Components/layout/Main";
+import {BrowserRouter} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-    </div>
-  );
+function App(){
+	const [user, setUser] = useState(new User())
+	return (
+		<>
+			<ToastContainer
+				position="top-left"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				pauseOnHover
+				theme="colored"
+			/>
+			<div className="p-0">
+				<BrowserRouter>
+					<div className="min-vh-100 p-0 m-0">
+						<Header user={user}/>
+						<Main user={user} setUser={setUser}/>
+						<Footer/>
+					</div>
+				</BrowserRouter>
+			</div>
+		</>
+	)
 }
 
-export default App;
+export default App
+
+export const baseURL = "http://localhost:8080"
+
+export const axiosInstance = axios.create({
+	baseURL: baseURL,
+	headers: {
+		'Content-Type': 'application/json',
+		'Accept': 'application/json'
+	}
+})
