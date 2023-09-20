@@ -10,11 +10,11 @@ function Header({user}) {
                     <div className="d-flex align-items-center justify-content-between">
                         <NavLink className="text-decoration-none text-white col-2" to="/">
                             <div className="d-flex">
-                                <img alt="Logo" className="col-4" src={logo}/>
+                                <img alt="Logo" className="col-4 d-none d-md-block" src={logo}/>
                                 <p className="display-3 ms-2 my-3">GlucOSE</p>
                             </div>
                         </NavLink>
-                        <p className="lead">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
+                        <p className="lead d-none d-md-block">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 text-center lh-1">
                                 <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
