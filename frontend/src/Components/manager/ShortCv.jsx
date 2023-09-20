@@ -1,9 +1,7 @@
 import React from "react";
-import JsPDF from 'jspdf';
 import CvFile from '../../model/CvFile'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-svg-icons';
-import FullJobOffer from "./FullJobOffer";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 
@@ -64,9 +62,7 @@ const ShortCv = ({cv, index}) => {
 
     const OpenCv = () => {
         if (cv.fileData) {
-            const pdf = new JsPDF();
-            pdf.text(CvFile.readBytes(cv.fileData), 10, 10);
-            const pdfBlob = pdf.output('blob');
+            const pdfBlob = new Blob([CvFile.readBytes(cv.fileData)], {type: 'application/pdf'});
             const pdfUrl = URL.createObjectURL(pdfBlob);
             const pdfIframe = document.createElement('iframe');
             pdfIframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; z-index:1000');

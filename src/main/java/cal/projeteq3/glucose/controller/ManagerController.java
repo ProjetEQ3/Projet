@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,5 +81,16 @@ public class ManagerController {
     public ResponseEntity<List<CvFileDTO>> getCVByState(){
         return ResponseEntity.ok(managerService.getSubmittedCv());
     }
+
+//    @GetMapping("cv/{id}")
+//    public ResponseEntity<CvFileDTO> getCVById(@PathVariable Long id){
+//        CvFileDTO cv = managerService.getCvById(id);
+//        if(cv == null) return ResponseEntity.notFound().build();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + cv.getFileName());
+//        headers.set(HttpHeaders.CONTENT_TYPE, "application/pdf");
+//        headers.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(cv.getFileData().length));
+//        return new ResponseEntity<>(cv, headers, HttpStatus.OK);
+//    }
 
 }
