@@ -16,7 +16,7 @@ const NewOfferForm = ({user}) => {
         hourPerWeek: '',
         startDate: '',
         duration: '',
-        expireDate: '',
+        expirationDate: '',
     });
     const [titleValid, setTitleValid] = useState(true);
     const [departmentValid, setDepartmentValid] = useState(true);
@@ -26,10 +26,11 @@ const NewOfferForm = ({user}) => {
     const [hourPerWeekValid, setHourPerWeekValid] = useState(true);
     const [startDateValid, setStartDateValid] = useState(true);
     const [durationValid, setDurationValid] = useState(true);
-    const [expireDateValid, setExpireDateValid] = useState(true);
+    const [expirationDateValid, setExpirationDateValid] = useState(true);
 
     const saveOffer = async () => {
         setIsLoading(true);
+        console.log(formData)
         axiosInstance
             .post(`/employer/offer?employerId=${user.id}`, {
                 title: formData.title,
@@ -38,9 +39,9 @@ const NewOfferForm = ({user}) => {
                 description: formData.description,
                 salary: formData.salary,
                 hourPerWeek: formData.hourPerWeek,
-                startDate: formData.startDate.toString() + 'T00:00:00',
+                startDate: formData.startDate + 'T00:00:00',
                 duration: formData.duration,
-                expireDate: formData.expireDate.toString() + 'T00:00:00',
+                expirationDate: formData.expirationDate + 'T00:00:00',
             })
             .then((response) =>{
                 toast.success("OFfre créée avec succès")
@@ -69,7 +70,7 @@ const NewOfferForm = ({user}) => {
         setHourPerWeekValid(true);
         setStartDateValid(true);
         setDurationValid(true);
-        setExpireDateValid(true);
+        setExpirationDateValid(true);
 
         if (formData.title === '') {
             setTitleValid(false);
@@ -144,18 +145,18 @@ const NewOfferForm = ({user}) => {
             return;
         }
 
-        if (formData.expireDate === '') {
-            setExpireDateValid(false);
+        if (formData.expirationDate === '') {
+            setExpirationDateValid(false);
             alert('La date d\'expiration est obligatoire');
             return;
         }
-        else if (formData.expireDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.expireDate)) {
-            setExpireDateValid(false);
+        else if (formData.expirationDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.expirationDate)) {
+            setExpirationDateValid(false);
             alert('La date d\'expiration doit être en format YYYY-MM-DD');
             return;
         }
-        else if (formData.expireDate && new Date(formData.expireDate) < new Date()) {
-            setExpireDateValid(false);
+        else if (formData.expirationDate && new Date(formData.expirationDate) < new Date()) {
+            setExpirationDateValid(false);
             alert('La date d\'expiration ne doit pas déjà être passée');
             return;
         }
@@ -202,8 +203,8 @@ const NewOfferForm = ({user}) => {
                         <input type="date" className={`form-control ${startDateValid? '': 'is-invalid'}`} id="startDate" placeholder="Date de début" name="startDate" onChange={handleChanges} required/>
                         <label htmlFor="duration"  className="mt-3">Durée du stage (en semaine)</label>
                         <input type="number" step="0.1" className={`form-control ${durationValid? '': 'is-invalid'}`} id="duration" placeholder="Durée du stage" name="duration" onChange={handleChanges} required/>
-                        <label htmlFor="expireDate" className="mt-3">Date d'expiration d'affichage</label>
-                        <input type="date" className={`form-control ${expireDateValid? '': 'is-invalid'}`} id="expireDate" placeholder="Date d'expiration" name="expireDate" onChange={handleChanges} required/>
+                        <label htmlFor="expirationDate" className="mt-3">Date d'expiration d'affichage</label>
+                        <input type="date" className={`form-control ${expirationDateValid? '': 'is-invalid'}`} id="expirationDate" placeholder="Date d'expiration" name="expirationDate" onChange={handleChanges} required/>
                         <div className="row my-4">
                             <div className="col-4 mx-auto">
                                 <button type="submit" className="btn btn-outline-ose col-12">Soumettre l'offre</button>
