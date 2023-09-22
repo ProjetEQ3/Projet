@@ -2,6 +2,8 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import React, {useState} from "react"
 import Loading from "../util/Loading"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
 function Cv({user, setCv}){
 	const [isLoading, setIsLoading] = useState(false)
@@ -11,7 +13,6 @@ function Cv({user, setCv}){
 		const file = e.target.files[0]
 		if(file && file.type === "application/pdf"){
 			const formData = new FormData()
-			console.log(file)
 			formData.append("file", file)
 			formData.append("studentId", user.id)
 			axiosInstance
@@ -75,10 +76,22 @@ function Cv({user, setCv}){
 						<div className="col-8">
 							<h2>CV: {user.cvFile.fileName}</h2>
 						</div>
-						<div className="col-4 d-flex my-auto justify-content-around">
-							<div className={`my-auto border rounded px-2 ${user.cvFile.cvState === 'ACCEPTED' ? 'border-success text-success':
-								user.cvFile.cvState === 'SUBMITTED' ? 'border-secondary text-secondary': 'border-danger text-danger'}`}>{user.cvFile.cvState}
-							</div>
+						<div className="col-4 d-flex my-auto justify-content-between">
+							{
+								user.cvFile.cvState === 'ACCEPTED' ?
+									<div className="my-auto px-2 rounded border border-success text-success">
+										Accepté
+									</div>:
+								user.cvFile.cvState === 'REFUSED' ?
+									<div className="my-auto px-2 border rounded border-danger text-danger">
+										Refusé
+									</div>:
+									<div className="my-auto px-2 border rounded border-secondary text-secondary">
+										Attente d'approbation
+									</div>
+							}
+							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover" onClick={handleDeletePdf}/>
+
 							{/*Ajouter la raison du refus du CV pour l'étudiant (le CV n'est pas load de la base de donnée)*/}
 							{/*{user.cvFile.cvState === 'REFUSED' && (*/}
 							{/*	<>*/}
@@ -105,15 +118,6 @@ function Cv({user, setCv}){
 
 						</div>
 					</div>
-					<button className="btn btn-danger m-2" onClick={handleDeletePdf}>
-						Delete
-					</button>
-					<button disabled className="btn btn-primary m-2" onClick={handleViewPdf}>
-						View
-					</button>
-					<button disabled className="btn btn-success m-2" onClick={handleDownloadPdf}>
-						Download
-					</button>
 				</>
 			) : (
 				<div>
@@ -128,7 +132,8 @@ function Cv({user, setCv}){
 						/>
 					</div>
 				</div>
-			)}
+			)
+			}
 		</div>
 	)
 }

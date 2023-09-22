@@ -28,6 +28,11 @@ code {
     color: var(--ose-color) !important;
 }
 
+.dark-hover:hover{
+  --bs-text-opacity: 1;
+   color: #212529 !important;
+}
+
 .arrow-btn {
   --bs-text-opacity: 1;
     color: var(--ose-color) !important;
