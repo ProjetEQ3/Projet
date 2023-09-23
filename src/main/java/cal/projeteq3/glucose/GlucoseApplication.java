@@ -2,6 +2,7 @@ package cal.projeteq3.glucose;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -192,7 +193,7 @@ public class GlucoseApplication implements CommandLineRunner {
                 JobOffer.builder()
                         .title("Front-end developer")
                         .jobOfferState(JobOfferState.SUBMITTED)
-                        .department("_420B0")
+                        .department(Department._420B0)
                         .location("Montréal")
                         .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
                                 "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -208,7 +209,7 @@ public class GlucoseApplication implements CommandLineRunner {
                 JobOffer.builder()
                         .title("Back-end developer")
                         .jobOfferState(JobOfferState.TAKEN)
-                        .department("_420B0")
+                        .department(Department._420B0)
                         .location("Montréal")
                         .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
                                 "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -224,7 +225,7 @@ public class GlucoseApplication implements CommandLineRunner {
                 JobOffer.builder()
                         .title("Full-stack developer")
                         .jobOfferState(JobOfferState.OPEN)
-                        .department("_420B0")
+                        .department(Department._420B0)
                         .location("Montréal")
                         .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
                                 "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -240,7 +241,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications web interactives en utilisant diverses " +
@@ -254,7 +255,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Sécurité Informatique")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
@@ -267,7 +268,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la création de modèles " +
 								"d'apprentissage automatique, l'analyse de données, " +
@@ -281,7 +282,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement Mobile")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
@@ -294,7 +295,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
@@ -307,7 +308,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_310A0")
+						.department(Department._310A0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
@@ -320,7 +321,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Techniques de santé animale")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_145A0")
+						.department(Department._145A0)
 						.location("Montréal")
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
@@ -333,7 +334,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Front-end developer")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -349,7 +350,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Back-end developer")
 						.jobOfferState(JobOfferState.TAKEN)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -365,7 +366,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Full-stack developer")
 						.jobOfferState(JobOfferState.OPEN)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -381,7 +382,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications web interactives en utilisant diverses " +
@@ -395,7 +396,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Sécurité Informatique")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
@@ -408,7 +409,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la création de modèles " +
 								"d'apprentissage automatique, l'analyse de données, " +
@@ -422,7 +423,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement Mobile")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
@@ -435,7 +436,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_420B0")
+						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
@@ -448,7 +449,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_310A0")
+						.department(Department._310A0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
@@ -461,7 +462,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				JobOffer.builder()
 						.title("Techniques de santé animale")
 						.jobOfferState(JobOfferState.SUBMITTED)
-						.department("_145A0")
+						.department(Department._145A0)
 						.location("Montréal")
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
