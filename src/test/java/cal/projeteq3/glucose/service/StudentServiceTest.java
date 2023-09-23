@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -263,7 +264,75 @@ public class StudentServiceTest {
         assertEquals(3, jobOffers.size());
         verify(jobOfferRepository, times(1)).findJobOffersByDepartment(Department._420B0);
 
-
     }
 
+    @Test
+    public void getOpenJobOffersByDepartmentTest() {
+
+        // Arrange
+        Student student1 = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@test.com")
+                .password("Test1234")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
+        List<JobOffer> jobOffers_420B0 = new ArrayList<>(
+                List.of(
+                        JobOffer.builder()
+                                .title("JobOffer1")
+                                .description("Description1")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.OPEN)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now())
+                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .build(),
+                        JobOffer.builder()
+                                .title("JobOffer2")
+                                .description("Description2")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.SUBMITTED)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now())
+                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .build(),
+                        JobOffer.builder()
+                                .title("JobOffer3")
+                                .description("Description3")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.EXPIRED)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now().minusDays(60))
+                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .build()
+                )
+        );
+
+        when(jobOfferRepository
+                .findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN))
+                .thenReturn(jobOffers_420B0.stream()
+                        .filter(jobOffer -> jobOffer.getJobOfferState()
+                                .equals(JobOfferState.OPEN))
+                        .collect(Collectors.toList()));
+
+//        Act
+        List<JobOfferDTO> jobOffers = studentService.getOpenJobOffersByDepartment(Department._420B0);
+
+//        Assert
+        assertEquals(1, jobOffers.size());
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN);
+
+    }
 }

@@ -19,5 +19,6 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     List<JobOffer> findJobOfferByJobOfferState(JobOfferState jobOfferState);
 
     List<JobOffer> findJobOffersByDepartment(Department department);
+    List<JobOffer> findJobOffersByDepartmentAndJobOfferState(Department department, JobOfferState jobOfferState);
 
 }
