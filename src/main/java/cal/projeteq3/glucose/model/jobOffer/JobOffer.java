@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Employer;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +27,7 @@ public class JobOffer{
 	private String title;
 
 	@Column(nullable = false)
-	private String department;
+	private Department department;
 
 	@Column(nullable = false)
 	private String location;
