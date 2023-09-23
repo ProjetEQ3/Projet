@@ -108,8 +108,9 @@ public class StudentService {
     }
 
     public List<JobOfferDTO> getJobOffersByDepartment(Department department){
-        List<Student> students = jobOfferRepository.f(department);
-        return students.stream().map(Student::getJobOffers).flatMap(List::stream).map(JobOfferDTO::new).collect(Collectors.toList());
+        return jobOfferRepository.findJobOffersByDepartment(department)
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
     }
 
 }
