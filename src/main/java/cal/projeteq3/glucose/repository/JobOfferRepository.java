@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.repository;
 
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -16,5 +17,7 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     List<JobOffer> findJobOffersByEmployer(Employer employer);
 
     List<JobOffer> findJobOfferByJobOfferState(JobOfferState jobOfferState);
+
+    List<JobOffer> findJobOffersByDepartment(Department department);
 
 }
