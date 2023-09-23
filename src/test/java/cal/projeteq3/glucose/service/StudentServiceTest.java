@@ -1,10 +1,14 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +31,8 @@ public class StudentServiceTest {
 
     @Mock
     private StudentRepository studentRepository;
+    @Mock
+    private JobOfferRepository jobOfferRepository;
 
     @InjectMocks
     private StudentService studentService;
@@ -38,19 +45,21 @@ public class StudentServiceTest {
                 new RegisterStudentDTO(
                     new RegisterDTO(
                             "test@tester.com",
-                            "test",
-                            "ROLE_STUDENT"),
-                    new StudentDTO(
-                            "1234567",
-                            Department._420B0,
-                            null)
+                            "Test1234",
+                            "STUDENT"),
+                    StudentDTO.builder()
+                            .firstName("Michel")
+                            .lastName("Michaud")
+                            .matricule("1234567")
+                            .department("_420B0")
+                            .build()
                 );
 
         Student student = Student.builder()
                 .firstName("Michel")
                 .lastName("Michaud")
                 .email("test@tester.com")
-                .password("test")
+                .password("Test1234")
                 .matricule("1234567")
                 .department("_420B0")
                 .build();
@@ -58,21 +67,20 @@ public class StudentServiceTest {
 
         when(studentRepository.save(student))
                 .thenReturn(Student.builder()
+                    .id(1L)
                     .firstName("Michel")
                     .lastName("Michaud")
                     .email("test@tester.com")
-                    .password("test")
+                    .password("Test1234")
                     .matricule("1234567")
                     .department("_420B0")
                     .build()
         );
 
         //Act
-
         studentService.createStudent(registerStudentDTO);
 
         //Assert
-
         verify(studentRepository, times(1)).save(student);
 
     }
@@ -81,13 +89,12 @@ public class StudentServiceTest {
     public void getAllStudentsTest() {
 
         //Arrange
-
         List<Student> students = new ArrayList<>();
         Student student1 = Student.builder()
                 .firstName("Michel")
                 .lastName("Michaud")
                 .email("test@tester.com")
-                .password("test")
+                .password("Test1234")
                 .matricule("1234567")
                 .department("_420B0")
                 .build();
@@ -96,7 +103,7 @@ public class StudentServiceTest {
                 .firstName("Michel")
                 .lastName("Michaud")
                 .email("test@tester.com")
-                .password("test")
+                .password("Test1234")
                 .matricule("1234567")
                 .department("_420B0")
                 .build();
@@ -107,11 +114,9 @@ public class StudentServiceTest {
         when(studentRepository.findAll()).thenReturn(students);
 
         //Act
-
         List<StudentDTO> studentList = studentService.getAllStudents();
 
         //Assert
-
         assertEquals(2, studentList.size());
         verify(studentRepository, times(1)).findAll();
 
@@ -126,7 +131,7 @@ public class StudentServiceTest {
                 .firstName("Michel")
                 .lastName("Michaud")
                 .email("test@tester.com")
-                .password("test")
+                .password("Test1234")
                 .matricule("1234567")
                 .department("_420B0")
                 .build();
@@ -195,6 +200,70 @@ public class StudentServiceTest {
 
     }
 
+    @Test
+    public void getJobOffersByDepartmentTest() {
 
+        // Arrange
+        Student student1 = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@test.com")
+                .password("Test1234")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
+        List<JobOffer> jobOffers_420B0 = new ArrayList<>(
+                List.of(
+                        JobOffer.builder()
+                                .title("JobOffer1")
+                                .description("Description1")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.OPEN)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now())
+                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .build(),
+                        JobOffer.builder()
+                                .title("JobOffer2")
+                                .description("Description2")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.SUBMITTED)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now())
+                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .build(),
+                        JobOffer.builder()
+                                .title("JobOffer3")
+                                .description("Description3")
+                                .location("Location1")
+                                .department(Department._420B0)
+                                .jobOfferState(JobOfferState.EXPIRED)
+                                .duration(6)
+                                .hoursPerWeek(40)
+                                .salary(20.0f)
+                                .startDate(LocalDateTime.now().minusDays(60))
+                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .build()
+                )
+        );
+
+        when(jobOfferRepository.findJobOffersByDepartment(Department._420B0)).thenReturn(jobOffers_420B0);
+
+//        Act
+        List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0);
+
+//        Assert
+        assertEquals(3, jobOffers.size());
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartment(Department._420B0);
+
+
+    }
 
 }

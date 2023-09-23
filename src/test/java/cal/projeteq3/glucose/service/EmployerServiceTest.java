@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -359,9 +360,9 @@ public class EmployerServiceTest {
     void testUpdateJobOffer4() {
         LocalDateTime startDate = LocalDate.of(1970, 1, 1).atStartOfDay();
         JobOfferDTO actualUpdateJobOfferResult = employerService.updateJobOffer(
-                new JobOfferDTO(1L, "Dr", "Department", "Location", "The characteristics of someone or something", 10.0f,
+                new JobOfferDTO(1L, "Dr", Department._420B0, "Location", "The characteristics of someone or something", 10.0f,
                         startDate, 1, LocalDate.of(1970, 1, 1).atStartOfDay(), JobOfferState.SUBMITTED, 1, "Just cause"));
-        assertEquals("Department", actualUpdateJobOfferResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferResult.getDepartment());
         assertEquals("Dr", actualUpdateJobOfferResult.getTitle());
         assertEquals(10.0f, actualUpdateJobOfferResult.getSalary());
         assertEquals("00:00", actualUpdateJobOfferResult.getStartDate().toLocalTime().toString());
