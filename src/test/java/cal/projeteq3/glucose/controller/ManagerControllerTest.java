@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -200,7 +201,7 @@ class ManagerControllerTest {
         employer.setRole(Role.ADMIN);
 
         JobOffer jobOffer = new JobOffer();
-        jobOffer.setDepartment("Department");
+        jobOffer.setDepartment(Department._145A0);
         jobOffer.setDescription("The characteristics of someone or something");
         jobOffer.setDuration(1);
         jobOffer.setEmployer(employer);
@@ -309,7 +310,7 @@ class ManagerControllerTest {
         employer.setRole(Role.ADMIN);
 
         JobOffer jobOffer = new JobOffer();
-        jobOffer.setDepartment("Department");
+        jobOffer.setDepartment(Department._145A0);
         jobOffer.setDescription("The characteristics of someone or something");
         jobOffer.setDuration(1);
         jobOffer.setEmployer(employer);
@@ -343,7 +344,7 @@ class ManagerControllerTest {
         employer2.setRole(Role.MANAGER);
 
         JobOffer jobOffer2 = new JobOffer();
-        jobOffer2.setDepartment("cal.projeteq3.glucose.model.jobOffer.JobOffer");
+        jobOffer2.setDepartment(Department._145A0);
         jobOffer2.setDescription("Description");
         jobOffer2.setDuration(0);
         jobOffer2.setEmployer(employer2);

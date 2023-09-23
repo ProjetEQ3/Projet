@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.auth.RegisterDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Student;
@@ -28,17 +30,46 @@ public class StudentServiceTest {
     @InjectMocks
     private StudentService studentService;
 
-    /*@Test
+    @Test
     public void createStudentTest() {
 
         //Arrange
+        RegisterStudentDTO registerStudentDTO =
+                new RegisterStudentDTO(
+                    new RegisterDTO(
+                            "test@tester.com",
+                            "test",
+                            "ROLE_STUDENT"),
+                    new StudentDTO(
+                            "1234567",
+                            Department._420B0,
+                            null)
+                );
 
-        Student student = new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null);
-        when(studentRepository.save(student)).thenReturn(new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null));
+        Student student = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@tester.com")
+                .password("test")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
+
+        when(studentRepository.save(student))
+                .thenReturn(Student.builder()
+                    .firstName("Michel")
+                    .lastName("Michaud")
+                    .email("test@tester.com")
+                    .password("test")
+                    .matricule("1234567")
+                    .department("_420B0")
+                    .build()
+        );
 
         //Act
 
-        //studentService.createStudent(student);
+        studentService.createStudent(registerStudentDTO);
 
         //Assert
 
@@ -52,8 +83,24 @@ public class StudentServiceTest {
         //Arrange
 
         List<Student> students = new ArrayList<>();
-        Student student1 = new Student("Michel1", "Michaud1", "T@T1.com", "Ose12asd3", "12345671", "_420B0", null);
-        Student student2 = new Student("Michel2", "Michaud2", "T@T2.com", "Ose12asd3", "12345672", "_420B0", null);
+        Student student1 = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@tester.com")
+                .password("test")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
+        Student student2 = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@tester.com")
+                .password("test")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
         students.add(student1);
         students.add(student2);
 
@@ -74,17 +121,22 @@ public class StudentServiceTest {
     public void getStudentByIDTest() {
 
         //Arrange
-
         Long id = 1L;
-        Student student = new Student("Michel", "Michaud", "T@T.com", "Ose12asd3", "1234567", "_420B0", null);
+        Student student = Student.builder()
+                .firstName("Michel")
+                .lastName("Michaud")
+                .email("test@tester.com")
+                .password("test")
+                .matricule("1234567")
+                .department("_420B0")
+                .build();
+
         when(studentRepository.findById(id)).thenReturn(Optional.of(student));
 
         //Act
-
         Optional<StudentDTO> studentDTO = studentService.getStudentByID(id);
 
         //Assert
-
         assertTrue(studentDTO.isPresent());
         verify(studentRepository, times(1)).findById(id);
 
@@ -94,7 +146,6 @@ public class StudentServiceTest {
     public void updateStudentTest() {
 
         // Arrange
-
         Long studentId = 1L;
         StudentDTO updatedStudent = new StudentDTO();
         updatedStudent.setId(studentId);
@@ -116,11 +167,9 @@ public class StudentServiceTest {
         when(studentRepository.save(any(Student.class))).thenReturn(existingStudent);
 
         // Act
-
         StudentDTO updatedDTO = studentService.updateStudent(studentId, updatedStudent);
 
         // Assert
-
         assertNotNull(updatedDTO);
         assertEquals(updatedStudent.getId(), updatedDTO.getId());
         assertEquals(updatedStudent.getFirstName(), updatedDTO.getFirstName());
@@ -135,19 +184,16 @@ public class StudentServiceTest {
     public void deleteStudentTest() {
 
         // Arrange
-
         Long studentId = 1L;
         doNothing().when(studentRepository).deleteById(studentId);
 
         // Act
-
         studentService.deleteStudent(studentId);
 
         // Assert
-
         verify(studentRepository, times(1)).deleteById(studentId);
 
-    }*/
+    }
 
 
 
