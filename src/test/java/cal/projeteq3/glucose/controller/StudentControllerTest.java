@@ -34,19 +34,12 @@ public class StudentControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
-    private StudentRepository studentRepository;
-
-    @Mock
-    private JobOfferRepository jobOfferRepository;
-
     @MockBean
-//    @InjectMocks
     private StudentService studentService;
 
 
     @Test
-    public void testGetJobOffersByDepartment() throws Exception {
+    public void GetJobOffersByDepartment_Valid() throws Exception {
 //        Arrange
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
@@ -101,7 +94,19 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void testGetOpenJobOffersByDepartment() throws Exception {
+    public void GetJobOffersByDepartment_InvalidDep() throws Exception {
+//        Arrange
+//        Rien à arranger
+
+//        Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
+                .andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
+                .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+    }
+
+    @Test
+    public void GetOpenJobOffersByDepartment_Valid() throws Exception {
 //        Arrange
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
@@ -155,5 +160,17 @@ public class StudentControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("JobOffer1"));
+    }
+
+    @Test
+    public void GetOpenJobOffersByDepartment_InvalidDep() throws Exception {
+//        Arrange
+//        Rien à arranger
+
+//        Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
+                .andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
+                .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
     }
 }
