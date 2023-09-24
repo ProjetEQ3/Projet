@@ -32,6 +32,10 @@ code {
   --bs-text-opacity: 1;
    color: #212529 !important;
 }
+.danger-hover:hover{
+  --bs-text-opacity: 1;
+   color: #dc3545 !important;
+}
 
 .arrow-btn {
   --bs-text-opacity: 1;

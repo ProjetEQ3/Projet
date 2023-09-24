@@ -74,8 +74,7 @@ const EmployerPage = ({user}) => {
 									))
 								}
 								<div className="row m-2">
-									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}><FontAwesomeIcon
-										icon={faPlus}/></button>
+									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter</button>
 								</div>
 							</div>
 							<div className="col-6">

@@ -21,6 +21,11 @@ const ShortCv = ({cv, index, updateCvList}) => {
         setIsDecline(true);
     }
 
+    const handleClose = (e) => {
+        e.preventDefault();
+        setIsDecline(false);
+    }
+
     const validateReason = (e) => {
         e.preventDefault();
 
@@ -92,16 +97,33 @@ const ShortCv = ({cv, index, updateCvList}) => {
                         <h4 className="text-dark fw-light m-0 p-3">Nom du fichier : <a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-between">
-                        <div className="mx-auto">
-                        <div className={`border rounded px-2 ${cv.cvState === 'ACCEPTED' ? 'border-success text-success':
-                            cv.cvState === 'SUBMITTED' ? 'border-secondary text-secondary': 'border-danger text-danger'}`}>{cv.cvState}</div>
+                        <div className="my-auto mx-auto">
+                            {
+                                cv.cvState === 'ACCEPTED' ?
+                                    <div className="border rounded px-2 border-success text-success">
+                                        Accepté
+                                    </div>
+                                    :
+                                    cv.cvState === 'REFUSED' ?
+                                    <div className="border rounded px-2 border-danger text-danger">
+                                        Refusé
+                                    </div>
+                                    :
+                                    cv.cvState === 'SUBMITTED' ?
+                                    <div className="border rounded px-2 border-secondary text-secondary">
+                                        Attente d'approbation
+                                    </div>
+                                    :
+                                    ""
+                            }
                         </div>
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="me-2 fa-lg arrow-btn" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}/>
+                        <div className="btn btn-outline-ose" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                             <div className="modal-dialog">
                                 <div className="modal-content">
                                     <div className="modal-header">
                                         <h3 className="modal-title">Autorisation du CV</h3>
+                                        <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                                     </div>
                                     <div className="modal-body">
                                         <h3 className="text-dark fw-light mb-3">{cv.fileName}</h3>
@@ -115,8 +137,8 @@ const ShortCv = ({cv, index, updateCvList}) => {
                                                     <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
                                                 </form>) :
                                             (<div>
-                                                <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal"><FontAwesomeIcon icon={faCheck}/></button>
-                                                <button type="button" onClick={handleDecline} className="btn btn-danger"><FontAwesomeIcon icon={faX}/></button>
+                                                <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">Accepter</button>
+                                                <button type="button" onClick={handleDecline} className="btn btn-danger">Refuser</button>
                                             </div>)}
                                     </div>
                                 </div>

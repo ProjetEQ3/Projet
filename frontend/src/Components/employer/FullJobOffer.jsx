@@ -6,17 +6,44 @@ const FullJobOffer = ({ jobOffer }) => {
         <div className="row my-2">
             <div className="col-12 bg-white rounded">
                 <div className="row justify-content-between">
-                    <div className="col-9">
-                        <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
+                    <div className="col-8">
+                        <h3 className="text-dark fw-light pt-1">{jobOffer.title}</h3>
                     </div>
-                    <div className="col-3 my-auto text-center">
-                            <div className={`border rounded px-2 
-                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
-                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
-                                    jobOffer.jobOfferState === 'SUBMITTED' ? 'border-secondary text-secondary' :
-                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-danger text-danger'} `}>
-                                {jobOffer.jobOfferState}
-                            </div>
+                    <div className="col-4 my-auto text-center">
+                        {
+                            jobOffer.jobOfferState === 'OPEN' ?
+                                <div className="border rounded px-2 border-success text-success">
+                                    Applicable
+                                </div>
+                                :
+                                jobOffer.jobOfferState === 'SUBMITTED' ?
+                                    <div className="border rounded px-2 border-secondary text-secondary">
+                                        Attente d'approbation
+                                    </div>
+                                    :
+                                    jobOffer.jobOfferState === 'REFUSED' ?
+                                        <div className="border rounded px-2 border-danger text-danger">
+                                            Refusé
+                                        </div>
+                                        :
+                                        jobOffer.jobOfferState === 'TAKEN' ?
+                                            <div className="border rounded px-2 border-primary text-primary">
+                                                Pris
+                                            </div>
+                                            :
+
+                                            jobOffer.jobOfferState === 'PENDING' ?
+                                                <div className="border rounded px-2 border-warning text-warning">
+                                                    En attente
+                                                </div>
+                                                :
+                                                jobOffer.jobOfferState === 'EXPIRED' ?
+                                                    <div className="border rounded px-2 border-danger text-danger">
+                                                        Expiré
+                                                    </div>
+                                                    :
+                                                    ""
+                        }
                     </div>
                 </div>
                 <div className="row">

@@ -60,8 +60,8 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                                     ""
                             }
                         </div>
-                        <button type="button" className="btn btn-outline-ose" data-bs-dismiss="modal" data-bs-target={"#fullViewModal" + index}>Détails</button>
-                        <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
+                        <div className="btn btn-outline-ose" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
+                        <div id={"fullViewModal" + index} className="modal modal-lg">
                             <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
                         </div>
                     </div>

@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import Loading from "../util/Loading";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 
 const NewOfferForm = ({user}) => {
     const navigate = useNavigate();
@@ -209,7 +211,7 @@ const NewOfferForm = ({user}) => {
                         <input type="date" className={`form-control ${expirationDateValid? '': 'is-invalid'}`} id="expirationDate" placeholder="Date d'expiration" name="expirationDate" onChange={handleChanges} required/>
                         <div className="row my-4">
                             <div className="col-4 mx-auto">
-                                <button type="submit" className="btn btn-outline-ose col-12">Soumettre l'offre</button>
+                                <button type="submit" className="btn btn-outline-ose col-12">Soumettre l'offre <FontAwesomeIcon icon={faPaperPlane}/></button>
                             </div>
                         </div>
                     </form>
