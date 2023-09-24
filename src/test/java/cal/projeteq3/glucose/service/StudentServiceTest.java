@@ -5,6 +5,8 @@ import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -165,7 +167,12 @@ public class StudentServiceTest {
         existingStudent.setId(studentId);
         existingStudent.setFirstName("OriginalFirstName");
         existingStudent.setLastName("OriginalLastName");
-        existingStudent.setEmail("original@example.com");
+        existingStudent.setCredentials(
+                Credentials.builder()
+                        .email("original@example.com")
+                        .password("OriginalPassword")
+                        .role(Role.STUDENT)
+                        .build());
         existingStudent.setMatricule("OriginalMatricule");
         existingStudent.setDepartment(Department._410B0);
 
@@ -202,17 +209,9 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getJobOffersByDepartmentTest() {
+    public void GetJobOffersByDepartment_Valid() {
 
         // Arrange
-        Student student1 = Student.builder()
-                .firstName("Michel")
-                .lastName("Michaud")
-                .email("test@test.com")
-                .password("Test1234")
-                .matricule("1234567")
-                .department("_420B0")
-                .build();
 
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
@@ -267,17 +266,9 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getOpenJobOffersByDepartmentTest() {
+    public void GetOpenJobOffersByDepartment_Valid() {
 
         // Arrange
-        Student student1 = Student.builder()
-                .firstName("Michel")
-                .lastName("Michaud")
-                .email("test@test.com")
-                .password("Test1234")
-                .matricule("1234567")
-                .department("_420B0")
-                .build();
 
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
