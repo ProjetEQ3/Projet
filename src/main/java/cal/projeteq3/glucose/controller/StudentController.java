@@ -78,8 +78,6 @@ public class StudentController{
 	public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department){
 		try{
 			return ResponseEntity.accepted().body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
 		}
@@ -89,8 +87,6 @@ public class StudentController{
 	public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department){
 		try{
 			return ResponseEntity.accepted().body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
 		}
