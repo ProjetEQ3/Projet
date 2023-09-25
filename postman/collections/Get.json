@@ -53,7 +53,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/jobOffer/1",
+							"raw": "localhost:8080/manager/jobOffer/:id",
 							"host": [
 								"localhost"
 							],
@@ -61,7 +61,13 @@
 							"path": [
 								"manager",
 								"jobOffer",
-								"1"
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -77,7 +83,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/jobOffers/1",
+							"raw": "localhost:8080/manager/jobOffers/employer/:employerId",
 							"host": [
 								"localhost"
 							],
@@ -85,7 +91,14 @@
 							"path": [
 								"manager",
 								"jobOffers",
-								"1"
+								"employer",
+								":employerId"
+							],
+							"variable": [
+								{
+									"key": "employerId",
+									"value": "2"
+								}
 							]
 						}
 					},
@@ -101,7 +114,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/jobOffers/submitted",
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
 							"host": [
 								"localhost"
 							],
@@ -109,14 +122,20 @@
 							"path": [
 								"manager",
 								"jobOffers",
-								"submitted"
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "submitted"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Accepted",
+					"name": "Open",
 					"id": "f127cab3-7d5b-4efc-a9d1-b70a3ba00ae1",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -125,7 +144,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/jobOffers/accepted",
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
 							"host": [
 								"localhost"
 							],
@@ -133,7 +152,13 @@
 							"path": [
 								"manager",
 								"jobOffers",
-								"accepted"
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "OPEN"
+								}
 							]
 						}
 					},
@@ -149,7 +174,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/jobOffers/refused",
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
 							"host": [
 								"localhost"
 							],
@@ -157,7 +182,13 @@
 							"path": [
 								"manager",
 								"jobOffers",
-								"refused"
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "refused"
+								}
 							]
 						}
 					},

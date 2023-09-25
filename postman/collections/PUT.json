@@ -7,10 +7,10 @@
 	},
 	"item": [
 		{
-			"name": "New Folder",
+			"name": "CVs",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Update State",
 					"id": "1550c1da-c663-49d3-a326-091a7119e6a3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -19,7 +19,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/manager/cv/update/9?newCvState=REFUSED&reason=aWDwadw",
+							"raw": "localhost:8080/manager/cv/update/:cvId?newCvState=REFUSED&reason=aWDwadw",
 							"host": [
 								"localhost"
 							],
@@ -28,7 +28,7 @@
 								"manager",
 								"cv",
 								"update",
-								"9"
+								":cvId"
 							],
 							"query": [
 								{
@@ -39,40 +39,12 @@
 									"key": "reason",
 									"value": "aWDwadw"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"id": "43349eaf-6c4e-4892-8d51-67ef20aeaa52",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"REASON\": \"ThisIsMyReason\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:8080/manager/cv/refuse/9",
-							"host": [
-								"localhost"
 							],
-							"port": "8080",
-							"path": [
-								"manager",
-								"cv",
-								"refuse",
-								"9"
+							"variable": [
+								{
+									"key": "cvId",
+									"value": "1"
+								}
 							]
 						}
 					},

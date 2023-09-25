@@ -74,7 +74,7 @@
 					"response": []
 				},
 				{
-					"name": "ValidLogin",
+					"name": "Login Student",
 					"id": "64fe5bce-3972-4e57-93a7-705d58085e78",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -106,7 +106,39 @@
 					"response": []
 				},
 				{
-					"name": "ValidLogin Manager",
+					"name": "Login Employer",
+					"id": "c4db28c0-aa24-4e33-a8cb-662ae6b2bcb9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"louis@professionnel.com\",\r\n    \"password\":\"Ose12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Manager",
 					"id": "13129bc9-3b84-4987-9a9d-e66834e6c2e3",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -208,8 +240,23 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/tamer/Documents/tout/Document/Travail/ForgetLouis-Philippe_CurriculumVitae2022.pdf"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "localhost:8080/student/cv/14",
+							"raw": "localhost:8080/student/cv/:studentId",
 							"host": [
 								"localhost"
 							],
@@ -217,7 +264,13 @@
 							"path": [
 								"student",
 								"cv",
-								"14"
+								":studentId"
+							],
+							"variable": [
+								{
+									"key": "studentId",
+									"value": "14"
+								}
 							]
 						}
 					},
@@ -240,7 +293,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 123456789,\r\n  \"title\": \"Software Engineer\",\r\n  \"department\": \"Engineering\",\r\n  \"location\": \"New York\",\r\n  \"description\": \"We are looking for a talented software engineer to join our team.\",\r\n  \"salary\": 80000.0,\r\n  \"startDate\": \"2023-10-01T09:00:00\",\r\n  \"duration\": 12,\r\n  \"expirationDate\": \"2023-10-15T23:59:59\",\r\n  \"jobOfferState\": \"SUBMITTED\",\r\n  \"hoursPerWeek\": 40,\r\n  \"refusReason\": null\r\n}\r\n",
+							"raw": "{\r\n  \"title\": \"Software Engineer\",\r\n  \"department\": \"_420B0\",\r\n  \"location\": \"New York\",\r\n  \"description\": \"We are looking for a talented software engineer to join our team.\",\r\n  \"salary\": 80000.0,\r\n  \"startDate\": \"2023-10-01T09:00:00\",\r\n  \"duration\": 12,\r\n  \"expirationDate\": \"2023-10-15T23:59:59\",\r\n  \"jobOfferState\": \"SUBMITTED\",\r\n  \"hoursPerWeek\": 40,\r\n  \"refusReason\": null\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -248,14 +301,20 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/employer/offer5",
+							"raw": "localhost:8080/employer/offer?employerId=5",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"employer",
-								"offer5"
+								"offer"
+							],
+							"query": [
+								{
+									"key": "employerId",
+									"value": "5"
+								}
 							]
 						}
 					},

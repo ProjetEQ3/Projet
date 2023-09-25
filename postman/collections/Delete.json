@@ -19,7 +19,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/student/cv/1",
+							"raw": "localhost:8080/student/cv/:studentId",
 							"host": [
 								"localhost"
 							],
@@ -27,7 +27,13 @@
 							"path": [
 								"student",
 								"cv",
-								"1"
+								":studentId"
+							],
+							"variable": [
+								{
+									"key": "studentId",
+									"value": "9"
+								}
 							]
 						}
 					},
