@@ -1,0 +1,268 @@
+{
+	"info": {
+		"_postman_id": "ebcecd6c-f6e2-4f08-8037-9ce79ab1aa83",
+		"name": "Post",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "27002892-ebcecd6c-f6e2-4f08-8037-9ce79ab1aa83"
+	},
+	"item": [
+		{
+			"name": "Register&Login",
+			"item": [
+				{
+					"name": "RegisterEtudiant",
+					"id": "c87eff4f-7673-46e0-b36c-5fb33c03a40a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registerDTO\": {\r\n        \"email\": \"etudiant@etudiant.com\",\r\n        \"password\": \"tesT12345\",\r\n        \"role\": \"STUDENT\"\r\n    },\r\n    \"studentDTO\": {\r\n        \"firstName\": \"Louis\",\r\n        \"lastName\": \"Louis\",\r\n        \"matricule\": \"1111111\",\r\n        \"department\": \"_420B0\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/student/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterEmp",
+					"id": "ec551606-870f-4c27-9b91-1cdfdacef1d3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registerDTO\": {\r\n        \"email\": \"Test@mail.com\",\r\n        \"password\": \"Ose12345\",\r\n        \"role\": \"EMPLOYE\"\r\n    },\r\n    \"employerDTO\": {\r\n        \"firstName\": \"Louis\",\r\n        \"lastName\": \"Louis\",\r\n        \"organisationName\": \"Fritz\",\r\n        \"organisationPhone\": \"123-456-7890\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/employer/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employer",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ValidLogin",
+					"id": "64fe5bce-3972-4e57-93a7-705d58085e78",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"louis@michaud.com\",\r\n    \"password\":\"Ose12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ValidLogin Manager",
+					"id": "13129bc9-3b84-4987-9a9d-e66834e6c2e3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"michel@michaud.com\",\r\n    \"password\":\"Ose12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvalidLogin",
+					"id": "bd187ad8-45a2-48cd-b26d-641242bebfd4",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": null,\r\n    \"password\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "7caf31e0-4eed-4504-977a-f833f5ad220a"
+		},
+		{
+			"name": "CV tests",
+			"item": [
+				{
+					"name": "get CV",
+					"id": "8374629e-ef3d-46e7-ab67-065497b80ba3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/cvs/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"cvs",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post CV",
+					"id": "4cbd0ad9-4572-4c0f-a4d2-e4e4518d3a40",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/student/cv/14",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								"cv",
+								"14"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "eecde7c6-00e6-42a0-8d5c-e4cad60c5fc2"
+		},
+		{
+			"name": "JobOffer",
+			"item": [
+				{
+					"name": "New jobOffer",
+					"id": "3377a4ef-8e13-4abf-8734-889c8376c293",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 123456789,\r\n  \"title\": \"Software Engineer\",\r\n  \"department\": \"Engineering\",\r\n  \"location\": \"New York\",\r\n  \"description\": \"We are looking for a talented software engineer to join our team.\",\r\n  \"salary\": 80000.0,\r\n  \"startDate\": \"2023-10-01T09:00:00\",\r\n  \"duration\": 12,\r\n  \"expirationDate\": \"2023-10-15T23:59:59\",\r\n  \"jobOfferState\": \"SUBMITTED\",\r\n  \"hoursPerWeek\": 40,\r\n  \"refusReason\": null\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/employer/offer5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employer",
+								"offer5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "c316a461-1814-4949-b8ca-37a7c578f6e2"
+		}
+	]
+}

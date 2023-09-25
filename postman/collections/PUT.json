@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "8b1847b4-f12c-46d6-b297-c34a90bfa12c",
+		"name": "PUT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "27002892-8b1847b4-f12c-46d6-b297-c34a90bfa12c"
+	},
+	"item": [
+		{
+			"name": "New Folder",
+			"item": [
+				{
+					"name": "New Request",
+					"id": "1550c1da-c663-49d3-a326-091a7119e6a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/cv/update/9?newCvState=REFUSED&reason=aWDwadw",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"cv",
+								"update",
+								"9"
+							],
+							"query": [
+								{
+									"key": "newCvState",
+									"value": "REFUSED"
+								},
+								{
+									"key": "reason",
+									"value": "aWDwadw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"id": "43349eaf-6c4e-4892-8d51-67ef20aeaa52",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"REASON\": \"ThisIsMyReason\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/manager/cv/refuse/9",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"cv",
+								"refuse",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "d3950763-19dd-4bc8-8988-e8d323241cb1"
+		}
+	]
+}

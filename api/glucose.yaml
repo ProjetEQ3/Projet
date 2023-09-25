@@ -1,514 +1,514 @@
 openapi: 3.0.0
 info:
-  title: GlucOSE API
-  version: 1.0.0
+    title: GlucOSE API
+    version: 1.0.0
 paths:
-  /user/login:
-    post:
-      summary: User login
-      description: Authenticate a user.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LoginDTO'
-      responses:
-        '202':
-          description: User authenticated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-  /student/register:
-    post:
-      summary: Register a student
-      description: Register a student.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterStudentDTO'
-      responses:
-        '201':
-          description: Student registered successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StudentDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-  /student/cv/{studentId}:
-    post:
-      summary: Upload a CV for a student
-      description: Upload a CV for a student.
-      parameters:
-        - name: studentId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
-      responses:
-        '202':
-          description: CV uploaded successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CvFileDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
+    /user/login:
+        post:
+            summary: User login
+            description: Authenticate a user.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/LoginDTO"
+            responses:
+                "202":
+                    description: User authenticated successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+    /student/register:
+        post:
+            summary: Register a student
+            description: Register a student.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/RegisterStudentDTO"
+            responses:
+                "201":
+                    description: Student registered successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/StudentDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
     /student/cv/{studentId}:
-    delete:
-      summary: Delete a student's CV
-      description: Delete a student's CV.
-      parameters:
-        - name: studentId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '202':
-          description: CV deleted successfully
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/all:
-    get:
-      summary: Get all job offers
-      description: Get a list of all job offers.
-      responses:
-        '200':
-          description: List of job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffer/{id}:
-    get:
-      summary: Get a job offer by ID
-      description: Get a job offer by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Job offer details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '404':
-          description: Job offer not found
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/employer/{employerId}:
-    get:
-      summary: Get job offers by employer
-      description: Get a list of job offers by employer ID.
-      parameters:
-        - name: employerId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: List of job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffers/{jobOfferState}:
-    get:
-      summary: Get job offers by state
-      description: Get a list of job offers by their state.
-      parameters:
-        - name: jobOfferState
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: List of job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /manager/jobOffer/accept/{id}:
-    put:
-      summary: Accept a job offer
-      description: Accept a job offer by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Job offer accepted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '404':
-          description: Job offer not found
-        '500':
-          description: Internal Server Error
-  /manager/jobOffer/refuse/{id}:
-    put:
-      summary: Refuse a job offer
-      description: Refuse a job offer by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          text/plain:
-            schema:
-              type: string
-      responses:
-        '200':
-          description: Job offer refused
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '404':
-          description: Job offer not found
-        '500':
-          description: Internal Server Error
-  /manager/cv/update/{id}:
-    put:
-      summary: Update CV state
-      description: Update the state of a CV by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        required: true
-        content:
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                newCvState:
-                  type: string
-                reason:
-                  type: string
-      responses:
-        '200':
-          description: CV state updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CvFileDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-  /manager/cvs/all:
-    get:
-      summary: Get all CVs
-      description: Get a list of all CVs.
-      responses:
-        '200':
-          description: List of CVs
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CvFileDTO'
-        '500':
-          description: Internal Server Error
-  /manager/cvs/pending:
-    get:
-      summary: Get pending CVs
-      description: Get a list of pending CVs.
-      responses:
-        '200':
-          description: List of CVs
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CvFileDTO'
-        '500':
-          description: Internal Server Error
-  /employer/register:
-    post:
-      summary: Register an employer
-      description: Register an employer.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RegisterEmployerDTO'
-      responses:
-        '201':
-          description: Employer registered successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmployerDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-  /employer/offer/all:
-    get:
-      summary: Get all job offers by employer
-      description: Get a list of job offers by employer ID.
-      parameters:
-        - name: employerId
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: List of job offers
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobOfferDTO'
-        '500':
-          description: Internal Server Error
-  /employer/offer:
-    post:
-      summary: Create a new job offer
-      description: Create a new job offer for an employer.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/JobOfferDTO'
-      parameters:
-        - name: employerId
-          in: query
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '202':
-          description: Job offer created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-#  /employer/offer:
-#    put:
-#      summary: Update a job offer
-#      description: Update a job offer for an employer.
-#      requestBody:
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/JobOfferDTO'
-#      responses:
-#        '200':
-#          description: Job offer updated successfully
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/JobOfferDTO'
-#        '400':
-#          description: Bad Request
-#        '500':
-#          description: Internal Server Error
-  /employer/offer/{id}:
-    delete:
-      summary: Delete a job offer
-      description: Delete a job offer by its ID.
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '202':
-          description: Job offer deleted successfully
-        '404':
-          description: Job offer not found
-        '500':
-          description: Internal Server Error
+        post:
+            summary: Upload a CV for a student
+            description: Upload a CV for a student.
+            parameters:
+                - name: studentId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                file:
+                                    type: string
+                                    format: binary
+            responses:
+                "202":
+                    description: CV uploaded successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CvFileDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+        /student/cv/{studentId}:
+        delete:
+            summary: Delete a student's CV
+            description: Delete a student's CV.
+            parameters:
+                - name: studentId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "202":
+                    description: CV deleted successfully
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffers/all:
+        get:
+            summary: Get all job offers
+            description: Get a list of all job offers.
+            responses:
+                "200":
+                    description: List of job offers
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/JobOfferDTO"
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffer/{id}:
+        get:
+            summary: Get a job offer by ID
+            description: Get a job offer by its ID.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "200":
+                    description: Job offer details
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/JobOfferDTO"
+                "404":
+                    description: Job offer not found
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffers/employer/{employerId}:
+        get:
+            summary: Get job offers by employer
+            description: Get a list of job offers by employer ID.
+            parameters:
+                - name: employerId
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "200":
+                    description: List of job offers
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/JobOfferDTO"
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffers/{jobOfferState}:
+        get:
+            summary: Get job offers by state
+            description: Get a list of job offers by their state.
+            parameters:
+                - name: jobOfferState
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: List of job offers
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/JobOfferDTO"
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffer/accept/{id}:
+        put:
+            summary: Accept a job offer
+            description: Accept a job offer by its ID.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "200":
+                    description: Job offer accepted
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/JobOfferDTO"
+                "404":
+                    description: Job offer not found
+                "500":
+                    description: Internal Server Error
+    /manager/jobOffer/refuse/{id}:
+        put:
+            summary: Refuse a job offer
+            description: Refuse a job offer by its ID.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                required: true
+                content:
+                    text/plain:
+                        schema:
+                            type: string
+            responses:
+                "200":
+                    description: Job offer refused
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/JobOfferDTO"
+                "404":
+                    description: Job offer not found
+                "500":
+                    description: Internal Server Error
+    /manager/cv/update/{id}:
+        put:
+            summary: Update CV state
+            description: Update the state of a CV by its ID.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            requestBody:
+                required: true
+                content:
+                    application/x-www-form-urlencoded:
+                        schema:
+                            type: object
+                            properties:
+                                newCvState:
+                                    type: string
+                                reason:
+                                    type: string
+            responses:
+                "200":
+                    description: CV state updated
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CvFileDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+    /manager/cvs/all:
+        get:
+            summary: Get all CVs
+            description: Get a list of all CVs.
+            responses:
+                "200":
+                    description: List of CVs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/CvFileDTO"
+                "500":
+                    description: Internal Server Error
+    /manager/cvs/pending:
+        get:
+            summary: Get pending CVs
+            description: Get a list of pending CVs.
+            responses:
+                "200":
+                    description: List of CVs
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/CvFileDTO"
+                "500":
+                    description: Internal Server Error
+    /employer/register:
+        post:
+            summary: Register an employer
+            description: Register an employer.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/RegisterEmployerDTO"
+            responses:
+                "201":
+                    description: Employer registered successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/EmployerDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+    /employer/offer/all:
+        get:
+            summary: Get all job offers by employer
+            description: Get a list of job offers by employer ID.
+            parameters:
+                - name: employerId
+                  in: query
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "200":
+                    description: List of job offers
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/JobOfferDTO"
+                "500":
+                    description: Internal Server Error
+    /employer/offer:
+        post:
+            summary: Create a new job offer
+            description: Create a new job offer for an employer.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/JobOfferDTO"
+            parameters:
+                - name: employerId
+                  in: query
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "202":
+                    description: Job offer created successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/JobOfferDTO"
+                "400":
+                    description: Bad Request
+                "500":
+                    description: Internal Server Error
+    #  /employer/offer:
+    #    put:
+    #      summary: Update a job offer
+    #      description: Update a job offer for an employer.
+    #      requestBody:
+    #        required: true
+    #        content:
+    #          application/json:
+    #            schema:
+    #              $ref: '#/components/schemas/JobOfferDTO'
+    #      responses:
+    #        '200':
+    #          description: Job offer updated successfully
+    #          content:
+    #            application/json:
+    #              schema:
+    #                $ref: '#/components/schemas/JobOfferDTO'
+    #        '400':
+    #          description: Bad Request
+    #        '500':
+    #          description: Internal Server Error
+    /employer/offer/{id}:
+        delete:
+            summary: Delete a job offer
+            description: Delete a job offer by its ID.
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: integer
+                      format: int64
+            responses:
+                "202":
+                    description: Job offer deleted successfully
+                "404":
+                    description: Job offer not found
+                "500":
+                    description: Internal Server Error
 components:
-  schemas:
-    UserDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        role:
-          type: string
-    RegisterStudentDTO:
-      type: object
-      properties:
-        registerDTO:
-          $ref: '#/components/schemas/RegisterDTO'
-        studentDTO:
-          $ref: '#/components/schemas/StudentDTO'
+    schemas:
+        UserDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                email:
+                    type: string
+                role:
+                    type: string
+        RegisterStudentDTO:
+            type: object
+            properties:
+                registerDTO:
+                    $ref: "#/components/schemas/RegisterDTO"
+                studentDTO:
+                    $ref: "#/components/schemas/StudentDTO"
 
-    RegisterEmployerDTO:
-      type: object
-      properties:
-        registerDTO:
-          $ref: '#/components/schemas/RegisterDTO'
-        employerDTO:
-          $ref: '#/components/schemas/EmployerDTO'
+        RegisterEmployerDTO:
+            type: object
+            properties:
+                registerDTO:
+                    $ref: "#/components/schemas/RegisterDTO"
+                employerDTO:
+                    $ref: "#/components/schemas/EmployerDTO"
 
-    RegisterDTO:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-        role:
-          type: string
+        RegisterDTO:
+            type: object
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
+                role:
+                    type: string
 
-    LoginDTO:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
+        LoginDTO:
+            type: object
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
 
-    JobOfferDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
-        department:
-          type: string
-        location:
-          type: string
-        description:
-          type: string
-        salary:
-          type: number
-        startDate:
-          type: string
-          format: date-time
-        duration:
-          type: integer
-        expirationDate:
-          type: string
-          format: date-time
-        jobOfferState:
-          type: string
-        hoursPerWeek:
-          type: integer
-        refusReason:
-          type: string
+        JobOfferDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                title:
+                    type: string
+                department:
+                    type: string
+                location:
+                    type: string
+                description:
+                    type: string
+                salary:
+                    type: number
+                startDate:
+                    type: string
+                    format: date-time
+                duration:
+                    type: integer
+                expirationDate:
+                    type: string
+                    format: date-time
+                jobOfferState:
+                    type: string
+                hoursPerWeek:
+                    type: integer
+                refusReason:
+                    type: string
 
-    CvFileDTO:
-      type: object
-      properties:
-        id:
-          type: integer
-        fileName:
-          type: string
-        fileData:
-          type: string
-        cvState:
-          type: string
-        refusReason:
-          type: string
+        CvFileDTO:
+            type: object
+            properties:
+                id:
+                    type: integer
+                fileName:
+                    type: string
+                fileData:
+                    type: string
+                cvState:
+                    type: string
+                refusReason:
+                    type: string
 
-    EmployerDTO:
-      type: object
-      properties:
-        organisationName:
-          type: string
-        organisationPhone:
-          type: string
-        jobOffers:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobOfferDTO'
+        EmployerDTO:
+            type: object
+            properties:
+                organisationName:
+                    type: string
+                organisationPhone:
+                    type: string
+                jobOffers:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/JobOfferDTO"
 
-    StudentDTO:
-      type: object
-      properties:
-        matricule:
-          type: string
-        department:
-          type: string
-        cvFile:
-          $ref: '#/components/schemas/CvFileDTO'
+        StudentDTO:
+            type: object
+            properties:
+                matricule:
+                    type: string
+                department:
+                    type: string
+                cvFile:
+                    $ref: "#/components/schemas/CvFileDTO"
