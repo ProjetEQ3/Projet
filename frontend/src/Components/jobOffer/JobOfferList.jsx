@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import ShortJobOffer from "../student/ShortJobOffer";
 import FullJobOffer from "../student/FullJobOffer";
-import {translate} from "../../App";
 
 function JobOfferList({jobOffers}){
 
@@ -14,7 +13,7 @@ function JobOfferList({jobOffers}){
 					jobOffers.length === 0 ?
 						<div className="row m-2">
 							<div className="col-12 bg-white rounded">
-								<h2 className="text-dark fw-light pt-1">{translate('student.jobOffer.noJobOffer')}</h2>
+								<h2 className="text-dark fw-light pt-1">Aucune offre de stage Ouverte pour le moment</h2>
 							</div>
 						</div> :
 
@@ -29,7 +28,7 @@ function JobOfferList({jobOffers}){
 				{selectedOffer === null ?
 					<div className="row m-2">
 						<div className="col-12 bg-white rounded">
-							<h2 className="text-dark fw-light pt-1">{translate('student.jobOffer.selectJobOffer')}</h2>
+							<h2 className="text-dark fw-light pt-1">Sélectionner une offre de stage</h2>
 						</div>
 					</div>
 					:

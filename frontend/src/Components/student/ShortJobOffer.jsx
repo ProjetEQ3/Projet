@@ -1,8 +1,6 @@
 import {useState} from "react";
-import { useTranslation } from 'react-i18next';
 const ShortJobOffer = ({jobOffer}) => {
     const [isHovered, setIsHovered] = useState(false);
-    const { t } = useTranslation();
 
     const handleMouseEnter = () => {
         setIsHovered(true);
