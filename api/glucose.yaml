@@ -359,27 +359,27 @@ paths:
           description: Bad Request
         '500':
           description: Internal Server Error
-  /employer/offer:
-    put:
-      summary: Update a job offer
-      description: Update a job offer for an employer.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/JobOfferDTO'
-      responses:
-        '200':
-          description: Job offer updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobOfferDTO'
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
+#  /employer/offer:
+#    put:
+#      summary: Update a job offer
+#      description: Update a job offer for an employer.
+#      requestBody:
+#        required: true
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/JobOfferDTO'
+#      responses:
+#        '200':
+#          description: Job offer updated successfully
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/JobOfferDTO'
+#        '400':
+#          description: Bad Request
+#        '500':
+#          description: Internal Server Error
   /employer/offer/{id}:
     delete:
       summary: Delete a job offer
