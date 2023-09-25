@@ -1,8 +1,6 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
-
 import {useState} from "react";
 import FullJobOffer from "./FullJobOffer";
+import State from "../util/State";
 const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -24,41 +22,8 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
 
-                        <div className="mx-auto my-auto d-none d-lg-block">
-                            {
-                                jobOffer.jobOfferState === 'OPEN' ?
-                                    <div className="border rounded px-2 border-success text-success">
-                                        Applicable
-                                    </div>
-                                    :
-                                jobOffer.jobOfferState === 'SUBMITTED' ?
-                                    <div className="border rounded px-2 border-secondary text-secondary">
-                                        Attente d'approbation
-                                    </div>
-                                    :
-                                jobOffer.jobOfferState === 'REFUSED' ?
-                                    <div className="border rounded px-2 border-danger text-danger">
-                                        Refusé
-                                    </div>
-                                    :
-                                jobOffer.jobOfferState === 'TAKEN' ?
-                                    <div className="border rounded px-2 border-primary text-primary">
-                                        Pris
-                                    </div>
-                                    :
-
-                                jobOffer.jobOfferState === 'PENDING' ?
-                                    <div className="border rounded px-2 border-warning text-warning">
-                                        En attente
-                                    </div>
-                                    :
-                                jobOffer.jobOfferState === 'EXPIRED' ?
-                                    <div className="border rounded px-2 border-danger text-danger">
-                                        Expiré
-                                    </div>
-                                    :
-                                    ""
-                            }
+                        <div className="d-none d-lg-block mx-auto my-auto">
+                            <State state={jobOffer.jobOfferState}/>
                         </div>
                         <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg">

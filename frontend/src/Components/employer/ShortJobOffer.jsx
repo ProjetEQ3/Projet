@@ -2,6 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash, faX} from '@fortawesome/free-solid-svg-icons';
 
 import {useState} from "react";
+import State from "../util/State";
 const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -21,41 +22,8 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                         <h5 className="text-dark fw-light pt-1">{jobOffer.title}</h5>
                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     </div>
-                    <div className="col-4 my-auto text-center d-none d-sm-block">
-                        {
-                            jobOffer.jobOfferState === 'OPEN' ?
-                                <div className="border rounded px-2 border-success text-success">
-                                    Ouverte au candidature
-                                </div>
-                                :
-                                jobOffer.jobOfferState === 'SUBMITTED' ?
-                                <div className="border rounded px-2 border-secondary text-secondary">
-                                    Attente d'approbation
-                                </div>
-                                :
-                                jobOffer.jobOfferState === 'REFUSED' ?
-                                <div className="border rounded px-2 border-danger text-danger">
-                                    Refusé
-                                </div>
-                                :
-                                jobOffer.jobOfferState === 'TAKEN' ?
-                                    <div className="border rounded px-2 border-primary text-primary">
-                                        Pris ou Pourvue
-                                    </div>
-                                :
-
-                                jobOffer.jobOfferState === 'PENDING' ?
-                                    <div className="border rounded px-2 border-warning text-warning">
-                                        En attente
-                                    </div>
-                                :
-                                jobOffer.jobOfferState === 'EXPIRED' ?
-                                    <div className="border rounded px-2 border-danger text-danger">
-                                        Expiré
-                                    </div>
-                                :
-                                ""
-                        }
+                    <div className="col-4 my-auto text-center">
+                        <State state={jobOffer.jobOfferState}/>
                     </div>
                     <div className="col-4 col-sm-2 my-auto text-end">
                         <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg icon-btn dark-hover" data-bs-toggle="modal" data-bs-target={`#delete${jobOffer.id}`}/>

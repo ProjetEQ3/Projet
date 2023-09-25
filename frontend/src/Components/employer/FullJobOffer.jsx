@@ -1,5 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import State from "../util/State";
 const FullJobOffer = ({ jobOffer }) => {
 
     return (
@@ -10,40 +11,7 @@ const FullJobOffer = ({ jobOffer }) => {
                         <h3 className="text-dark fw-light pt-1">{jobOffer.title}</h3>
                     </div>
                     <div className="col-6 col-md-4 my-auto text-center pt-2">
-                        {
-                            jobOffer.jobOfferState === 'OPEN' ?
-                                <div className="border rounded px-2 border-success text-success">
-                                    Applicable
-                                </div>
-                                :
-                                jobOffer.jobOfferState === 'SUBMITTED' ?
-                                    <div className="border rounded px-2 border-secondary text-secondary">
-                                        Attente d'approbation
-                                    </div>
-                                    :
-                                    jobOffer.jobOfferState === 'REFUSED' ?
-                                        <div className="border rounded px-2 border-danger text-danger">
-                                            Refusé
-                                        </div>
-                                        :
-                                        jobOffer.jobOfferState === 'TAKEN' ?
-                                            <div className="border rounded px-2 border-primary text-primary">
-                                                Pris ou Pourvue
-                                            </div>
-                                            :
-
-                                            jobOffer.jobOfferState === 'PENDING' ?
-                                                <div className="border rounded px-2 border-warning text-warning">
-                                                    En attente
-                                                </div>
-                                                :
-                                                jobOffer.jobOfferState === 'EXPIRED' ?
-                                                    <div className="border rounded px-2 border-danger text-danger">
-                                                        Expiré
-                                                    </div>
-                                                    :
-                                                    ""
-                        }
+                        <State state={jobOffer.jobOfferState}/>
                     </div>
                 </div>
                 <div className="row">

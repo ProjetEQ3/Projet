@@ -4,6 +4,7 @@ import React, {useState} from "react"
 import Loading from "../util/Loading"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import State from "../util/State";
 
 function Cv({user, setCv}){
 	const [isLoading, setIsLoading] = useState(false)
@@ -78,19 +79,7 @@ function Cv({user, setCv}){
 						</div>
 						<div className="col-4 d-flex my-auto justify-content-end justify-content-md-between">
 							<div className="d-none d-md-block">
-							{
-								user.cvFile.cvState === 'ACCEPTED' ?
-									<div className="my-auto px-2 rounded border border-success text-success">
-										Accepté
-									</div>:
-								user.cvFile.cvState === 'REFUSED' ?
-									<div className="my-auto px-2 border rounded border-danger text-danger">
-										Refusé
-									</div>:
-									<div className="my-auto px-2 border rounded border-secondary text-secondary">
-										Attente d'approbation
-									</div>
-							}
+							<State state={user.cvFile.state}/>
 							</div>
 							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover" onClick={handleDeletePdf}/>
 						</div>

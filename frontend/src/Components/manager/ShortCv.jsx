@@ -4,6 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import State from "../util/State";
 
 const ShortCv = ({cv, index, updateCvList}) => {
     const [isDecline, setIsDecline] = React.useState(false);
@@ -98,24 +99,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
                         <div className="my-auto mx-auto d-none d-lg-block">
-                            {
-                                cv.cvState === 'ACCEPTED' ?
-                                    <div className="border rounded px-2 border-success text-success">
-                                        Accepté
-                                    </div>
-                                    :
-                                    cv.cvState === 'REFUSED' ?
-                                    <div className="border rounded px-2 border-danger text-danger">
-                                        Refusé
-                                    </div>
-                                    :
-                                    cv.cvState === 'SUBMITTED' ?
-                                    <div className="border rounded px-2 border-secondary text-secondary">
-                                        Attente d'approbation
-                                    </div>
-                                    :
-                                    ""
-                            }
+                            <State state={cv.cvState}/>
                         </div>
                         <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
