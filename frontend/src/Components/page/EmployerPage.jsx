@@ -63,9 +63,10 @@ const EmployerPage = ({user}) => {
 				</div>
 				<div className="row">
 					<div className="col-12">
-						<h3 className="text-dark fw-light">Vos offres de stages</h3>
+						<h3 className="text-dark fw-light d-none d-lg-block">Vos offres de stages</h3>
 						<div className="row justify-content-around">
-							<div className="col-6">
+							<div className="order-2 order-lg-1 col-12 col-lg-6">
+								<h3 className="fw-light d-lg-none d-block text-ose">Liste de vos offres</h3>
 								{
 									offers.map((offer, index) => (
 										<div onClick={() => setSelectedOffer(offer)}>
@@ -77,7 +78,8 @@ const EmployerPage = ({user}) => {
 									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter</button>
 								</div>
 							</div>
-							<div className="col-6">
+							<div className="order-1 order-lg-2 col-12 col-lg-6">
+								<h3 className="fw-light d-lg-none d-block text-ose">Détails de l'offre</h3>
 								{selectedOffer === null ?
 									<div className="row m-2">
 										<div className="col-12 bg-white rounded">

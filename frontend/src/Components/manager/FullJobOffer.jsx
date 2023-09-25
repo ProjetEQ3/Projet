@@ -72,6 +72,42 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                 </div>
                 <div className="modal-body">
                     <h3 className="text-dark fw-light mb-3">{jobOffer.title}</h3>
+                    <div className="d-flex m-2">
+                    {
+                        jobOffer.jobOfferState === 'OPEN' ?
+                            <div className="border rounded px-2 border-success text-success">
+                                Applicable
+                            </div>
+                            :
+                            jobOffer.jobOfferState === 'SUBMITTED' ?
+                                <div className="border rounded px-2 border-secondary text-secondary">
+                                    Attente d'approbation
+                                </div>
+                                :
+                                jobOffer.jobOfferState === 'REFUSED' ?
+                                    <div className="border rounded px-2 border-danger text-danger">
+                                        Refusé
+                                    </div>
+                                    :
+                                    jobOffer.jobOfferState === 'TAKEN' ?
+                                        <div className="border rounded px-2 border-primary text-primary">
+                                            Pris
+                                        </div>
+                                        :
+
+                                        jobOffer.jobOfferState === 'PENDING' ?
+                                            <div className="border rounded px-2 border-warning text-warning">
+                                                En attente
+                                            </div>
+                                            :
+                                            jobOffer.jobOfferState === 'EXPIRED' ?
+                                                <div className="border rounded px-2 border-danger text-danger">
+                                                    Expiré
+                                                </div>
+                                                :
+                                                ""
+                    }
+                    </div>
                     <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.location}</p>
                     { jobOffer.startDate !== undefined &&

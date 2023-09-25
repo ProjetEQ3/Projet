@@ -96,8 +96,8 @@ const ShortCv = ({cv, index, updateCvList}) => {
                     <div className="col-8">
                         <h4 className="text-dark fw-light m-0 p-3">Nom du fichier : <a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
                     </div>
-                    <div className="col-4 my-auto d-flex justify-content-between">
-                        <div className="my-auto mx-auto">
+                    <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
+                        <div className="my-auto mx-auto d-none d-lg-block">
                             {
                                 cv.cvState === 'ACCEPTED' ?
                                     <div className="border rounded px-2 border-success text-success">
@@ -117,7 +117,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
                                     ""
                             }
                         </div>
-                        <div className="btn btn-outline-ose" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
+                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                             <div className="modal-dialog">
                                 <div className="modal-content">

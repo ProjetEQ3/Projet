@@ -76,7 +76,8 @@ function Cv({user, setCv}){
 						<div className="col-8">
 							<h2>CV: {user.cvFile.fileName}</h2>
 						</div>
-						<div className="col-4 d-flex my-auto justify-content-between">
+						<div className="col-4 d-flex my-auto justify-content-end justify-content-md-between">
+							<div className="d-none d-md-block">
 							{
 								user.cvFile.cvState === 'ACCEPTED' ?
 									<div className="my-auto px-2 rounded border border-success text-success">
@@ -90,32 +91,8 @@ function Cv({user, setCv}){
 										Attente d'approbation
 									</div>
 							}
+							</div>
 							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover" onClick={handleDeletePdf}/>
-
-							{/*Ajouter la raison du refus du CV pour l'étudiant (le CV n'est pas load de la base de donnée)*/}
-							{/*{user.cvFile.cvState === 'REFUSED' && (*/}
-							{/*	<>*/}
-							{/*		<div className="mx-2 my-auto text-decoration-underline"  data-bs-toggle="modal" data-bs-target="#refusedCV">*/}
-							{/*			Raison du refus {user.cvFile.reason}*/}
-							{/*		</div>*/}
-							{/*		<div id="refusedCV" className="modal">*/}
-							{/*			<div className="modal-dialog">*/}
-							{/*				<div className="modal-content">*/}
-							{/*					<div className="modal-header">*/}
-							{/*						<h3 className="modal-title">Raison du refus</h3>*/}
-							{/*					</div>*/}
-							{/*					<div className="modal-body">*/}
-							{/*						<p className="text-dark fw-light pt-1">{user.cvFile.reason}</p>*/}
-							{/*					</div>*/}
-							{/*					<div className="modal-footer">*/}
-							{/*						<button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>*/}
-							{/*					</div>*/}
-							{/*				</div>*/}
-							{/*			</div>*/}
-							{/*		</div>*/}
-							{/*	</>*/}
-							{/*)}*/}
-
 						</div>
 					</div>
 				</>

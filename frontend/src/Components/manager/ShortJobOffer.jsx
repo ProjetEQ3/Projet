@@ -22,9 +22,9 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                         <h4 className="text-dark fw-light pt-1">{jobOffer.title}</h4>
                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     </div>
-                    <div className="col-4 my-auto d-flex justify-content-between">
+                    <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
 
-                        <div className="mx-auto my-auto">
+                        <div className="mx-auto my-auto d-none d-lg-block">
                             {
                                 jobOffer.jobOfferState === 'OPEN' ?
                                     <div className="border rounded px-2 border-success text-success">
@@ -60,7 +60,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                                     ""
                             }
                         </div>
-                        <div className="btn btn-outline-ose" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
+                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg">
                             <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
                         </div>
