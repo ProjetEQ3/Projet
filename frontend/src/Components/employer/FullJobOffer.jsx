@@ -28,7 +28,7 @@ const FullJobOffer = ({ jobOffer }) => {
                                         :
                                         jobOffer.jobOfferState === 'TAKEN' ?
                                             <div className="border rounded px-2 border-primary text-primary">
-                                                Pris
+                                                Pris ou Pourvue
                                             </div>
                                             :
 

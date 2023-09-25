@@ -75,7 +75,7 @@ const EmployerPage = ({user}) => {
 									))
 								}
 								<div className="row m-2">
-									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter</button>
+									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter une offre de stage</button>
 								</div>
 							</div>
 							<div className="order-1 order-lg-2 col-12 col-lg-6">

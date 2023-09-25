@@ -25,7 +25,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                         {
                             jobOffer.jobOfferState === 'OPEN' ?
                                 <div className="border rounded px-2 border-success text-success">
-                                    Applicable
+                                    Ouverte au candidature
                                 </div>
                                 :
                                 jobOffer.jobOfferState === 'SUBMITTED' ?
@@ -40,7 +40,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                                 :
                                 jobOffer.jobOfferState === 'TAKEN' ?
                                     <div className="border rounded px-2 border-primary text-primary">
-                                        Pris
+                                        Pris ou Pourvue
                                     </div>
                                 :
 
