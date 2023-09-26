@@ -53,4 +53,3 @@ class JobOffer{
 }
 
 export default JobOffer
-
