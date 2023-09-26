@@ -2,7 +2,6 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
@@ -24,10 +23,8 @@ public class JobOfferService{
 	// EQ3-13
 	@Transactional
 	public void apply(Long jobOfferId, Long studentId){
-		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
-			.orElseThrow(JobOfferNotFoundException::new);
-		Student student = studentRepository.findById(studentId)
-			.orElseThrow(StudentNotFoundException::new);
+		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
+		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
 		jobOffer.apply(student);
 		jobOfferRepository.save(jobOffer);
 	}
