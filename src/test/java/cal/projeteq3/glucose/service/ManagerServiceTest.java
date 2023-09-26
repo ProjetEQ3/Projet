@@ -10,6 +10,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -54,7 +55,7 @@ class ManagerServiceTest {
 
         JobOfferDTO jobOfferDTO = new JobOfferDTO();
         jobOfferDTO.setId(1L);
-        jobOfferDTO.setDepartment("_420B0");
+        jobOfferDTO.setDepartment(Department.valueOf("_420B0"));
         jobOfferDTO.setTitle("Front-end developer");
         jobOfferDTO.setSalary(20.0f);
         jobOfferDTO.setStartDate(inTenDaysDate);
