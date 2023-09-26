@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.exception.request.RoleNotHandled;
 import cal.projeteq3.glucose.exception.request.UserAlreadyExistsException;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.exception.request.ValidationException;
@@ -53,7 +54,7 @@ public class UserService {
             case STUDENT -> getStudentDto(user.getId());
             case EMPLOYER -> getEmployerDto(user.getId());
             case MANAGER -> getManagerDto(user.getId());
-            default -> throw new UserNotFoundException("No such role is known");
+            default -> throw new RoleNotHandled("Role not handled in authentication");
         };
     }
 

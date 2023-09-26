@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
+import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -171,4 +172,20 @@ public class UserServiceTest {
             userService.authenticateUser(loginDTO);
         });
     }
+
+    @Test
+    public void authenticateAny_userNotFound() {
+        // Arrange
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("manager@example.com");
+        loginDTO.setPassword("password");
+
+        when(credentialRepository.findCredentialsByEmail(loginDTO.getEmail())).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(UserNotFoundException.class, () -> {
+            userService.authenticateUser(loginDTO);
+        });
+    }
+
 }
