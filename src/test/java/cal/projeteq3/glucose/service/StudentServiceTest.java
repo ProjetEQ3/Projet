@@ -91,7 +91,6 @@ public class StudentServiceTest {
 
         //Assert
         verify(studentRepository, times(1)).save(student);
-
     }
 
     @Test
@@ -230,6 +229,7 @@ public class StudentServiceTest {
         assertEquals(updatedStudent.getEmail(), updatedDTO.getEmail());
         assertEquals(updatedStudent.getMatricule(), updatedDTO.getMatricule());
         assertEquals(updatedStudent.getDepartment(), updatedDTO.getDepartment());
+        verify(studentRepository, times(1)).findById(studentId);
     }
 
     @Test
@@ -244,6 +244,7 @@ public class StudentServiceTest {
         assertThrows(StudentNotFoundException.class, () -> {
             studentService.updateStudent(nonExistentStudentId, updatedStudent);
         });
+        verify(studentRepository, times(1)).findById(nonExistentStudentId);
     }
 
     @Test
@@ -256,6 +257,7 @@ public class StudentServiceTest {
         assertThrows(StudentNotFoundException.class, () -> {
             studentService.updateStudent(invalidStudentId, updatedStudent);
         });
+        verify(studentRepository, times(1)).findById(invalidStudentId);
     }
 
     @Test
@@ -437,6 +439,7 @@ public class StudentServiceTest {
         assertThrows(StudentNotFoundException.class, () -> {
             studentService.addCv(nonExistentStudentId, cvFileDTO);
         });
+        verify(studentRepository, times(1)).findById(nonExistentStudentId);
     }
 
     @Test
@@ -454,6 +457,7 @@ public class StudentServiceTest {
         assertThrows(StudentHasAlreadyCVException.class, () -> {
             studentService.addCv(studentId, cvFileDTO);
         });
+        verify(studentRepository, times(1)).findById(studentId);
     }
 
     @Test
@@ -485,5 +489,6 @@ public class StudentServiceTest {
         assertThrows(StudentNotFoundException.class, () -> {
             studentService.deleteCv(nonExistentStudentId);
         });
+        verify(studentRepository, times(1)).findById(nonExistentStudentId);
     }
 }

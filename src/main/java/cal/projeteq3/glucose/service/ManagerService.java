@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
+import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -52,24 +53,20 @@ public class ManagerService{
         return managers.stream().map(ManagerDTO::new).collect(Collectors.toList());
     }
 
-    public Optional<ManagerDTO> getManagerByID(Long id) {
-        Optional<Manager> managerOptional = managerRepository.findById(id);
-		return managerOptional.map(ManagerDTO::new);
+    public ManagerDTO getManagerByID(Long id) {
+		return new ManagerDTO(managerRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(id)));
     }
 
     public ManagerDTO updateManager(Long id, ManagerDTO updatedManager) {
-        Optional<Manager> existingManager = managerRepository.findById(id);
-        if(existingManager.isPresent()) {
-            Manager manager = existingManager.get();
+        Manager manager = managerRepository.findById(id)
+				.orElseThrow(() -> new ManagerNotFoundException(id));
 
-            manager.setFirstName(updatedManager.getFirstName());
-            manager.setLastName(updatedManager.getLastName());
-            manager.setEmail(updatedManager.getEmail());
+		manager.setFirstName(updatedManager.getFirstName());
+		manager.setLastName(updatedManager.getLastName());
+		manager.setEmail(updatedManager.getEmail());
 
-            return new ManagerDTO(managerRepository.save(manager));
-        }
-
-		throw new ManagerNotFoundException(id);
+		return new ManagerDTO(managerRepository.save(manager));
     }
 
 	public void deleteManager(Long id){
@@ -135,27 +132,19 @@ public class ManagerService{
 	}
 
 	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
-		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(id);
-		if(existingJobOffer.isPresent()) {
-			JobOffer jobOffer = existingJobOffer.get();
-			jobOffer.setJobOfferState(newState);
-			jobOffer.setRefusReason(reason);
-			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
-		}
-
-		throw new JobOffreNotFoundException(id);
+		JobOffer jobOffer = jobOfferRepository.findById(id)
+				.orElseThrow(() -> new JobOffreNotFoundException(id));
+		jobOffer.setJobOfferState(newState);
+		jobOffer.setRefusReason(reason);
+		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
 
 	public CvFileDTO updateCvState(Long id, CvState newState, String reason) {
-		Optional<CvFile> existingCvFile = cvRepository.findById(id);
-		if(existingCvFile.isPresent()) {
-			CvFile cvFile = existingCvFile.get();
-			cvFile.setCvState(newState);
-			cvFile.setRefusReason(reason);
-			return new CvFileDTO(cvRepository.save(cvFile));
-		}
-
-		throw new CvFileNotFoundException();
+		CvFile cvFile = cvRepository.findById(id)
+				.orElseThrow(CvFileNotFoundException::new);
+		cvFile.setCvState(newState);
+		cvFile.setRefusReason(reason);
+		return new CvFileDTO(cvRepository.save(cvFile));
 	}
 
 	public List<CvFileDTO> getCvFilesWithState(CvState state) {

@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
@@ -86,6 +87,7 @@ public class UserServiceTest {
         assertEquals(user.getId(), userDTO.getId());
         assertEquals(user.getEmail(), userDTO.getEmail());
         assertEquals(user.getCredentials().getRole().toString(), userDTO.getRole());
+        verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 
     @Test
@@ -119,6 +121,7 @@ public class UserServiceTest {
         assertTrue(userDTO instanceof ManagerDTO);
         assertEquals(user.getId(), userDTO.getId());
         assertEquals(user.getEmail(), userDTO.getEmail());
+        verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 
     @Test
@@ -152,6 +155,7 @@ public class UserServiceTest {
         assertTrue(userDTO instanceof EmployerDTO);
         assertEquals(user.getId(), userDTO.getId());
         assertEquals(user.getEmail(), userDTO.getEmail());
+        verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 
     @Test
@@ -171,6 +175,7 @@ public class UserServiceTest {
         assertThrows(ValidationException.class, () -> {
             userService.authenticateUser(loginDTO);
         });
+        verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 
     @Test
@@ -186,6 +191,7 @@ public class UserServiceTest {
         assertThrows(UserNotFoundException.class, () -> {
             userService.authenticateUser(loginDTO);
         });
+        verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 
 }
