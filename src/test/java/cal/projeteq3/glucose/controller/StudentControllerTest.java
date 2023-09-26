@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -15,11 +16,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -171,5 +175,48 @@ public class StudentControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is5xxServerError())
                 .andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
                 .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+    }
+
+    @Test
+    public void AddCv_Valid() throws Exception {
+//        Arrange
+        byte[] fileData = new byte[100];
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 1L)
+                        .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                )
+                .andExpect(MockMvcResultMatchers.status().isAccepted());
+    }
+
+    @Test
+    public void AddCv_Invalid() throws Exception {
+//        Arrange
+//        Rien à arranger
+        mockMvc.perform(MockMvcRequestBuilders.post("/student/cv/{studentId}", 1L)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .content("".getBytes())
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void DeleteCv_Valid() throws Exception {
+//        Arrange
+//        Rien à arranger
+        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 1L)
+        )
+                .andExpect(MockMvcResultMatchers.status().isAccepted());
+    }
+
+    @Test
+    public void DeleteCv_Invalid() throws Exception {
+//        Arrange
+        when(studentService.deleteCv(239486723L)).thenThrow(new StudentNotFoundException(239486723L));
+//        Rien à arranger
+        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 239486723L)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .content("".getBytes())
+        )
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

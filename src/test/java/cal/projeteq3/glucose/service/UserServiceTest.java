@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
+import cal.projeteq3.glucose.exception.request.RoleNotHandled;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.auth.Credentials;
@@ -23,6 +24,7 @@ import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -193,5 +195,4 @@ public class UserServiceTest {
         });
         verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
-
 }

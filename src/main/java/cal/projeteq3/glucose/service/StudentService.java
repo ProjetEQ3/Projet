@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;

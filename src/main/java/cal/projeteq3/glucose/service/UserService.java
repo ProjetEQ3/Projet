@@ -54,7 +54,6 @@ public class UserService {
             case STUDENT -> getStudentDto(user.getId());
             case EMPLOYER -> getEmployerDto(user.getId());
             case MANAGER -> getManagerDto(user.getId());
-            default -> throw new RoleNotHandled("Role not handled in authentication");
         };
     }
 
