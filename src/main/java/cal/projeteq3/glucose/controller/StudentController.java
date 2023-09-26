@@ -1,9 +1,11 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -68,6 +71,24 @@ public class StudentController{
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
+		}
+	}
+
+	@GetMapping("/jobOffers/{department}")
+	public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department){
+		try{
+			return ResponseEntity.accepted().body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
+		}
+	}
+
+	@GetMapping("/jobOffers/open/{department}")
+	public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department){
+		try{
+			return ResponseEntity.accepted().body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
 		}
 	}
 

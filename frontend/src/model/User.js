@@ -7,6 +7,7 @@ class User{
 	isLoggedIn = false
 	cvFile
 	role
+	department
 	errors = []
 
 	constructor(){}
@@ -28,6 +29,8 @@ class User{
 		else delete this.cvFile
 		if(user.role) this.role = user.role
 		else delete this.role
+		if(user.department) this.department = user.department
+		else delete this.department
 		if(user.errors?.length > 0) this.errors = user.errors
 		else delete this.errors
 	}

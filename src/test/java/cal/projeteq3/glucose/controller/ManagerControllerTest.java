@@ -201,7 +201,7 @@ class ManagerControllerTest {
         employer.setRole(Role.ADMIN);
 
         JobOffer jobOffer = new JobOffer();
-        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setDepartment(Department._145A0);
         jobOffer.setDescription("The characteristics of someone or something");
         jobOffer.setDuration(1);
         jobOffer.setEmployer(employer);
@@ -310,7 +310,7 @@ class ManagerControllerTest {
         employer.setRole(Role.ADMIN);
 
         JobOffer jobOffer = new JobOffer();
-        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setDepartment(Department._145A0);
         jobOffer.setDescription("The characteristics of someone or something");
         jobOffer.setDuration(1);
         jobOffer.setEmployer(employer);
@@ -344,7 +344,7 @@ class ManagerControllerTest {
         employer2.setRole(Role.MANAGER);
 
         JobOffer jobOffer2 = new JobOffer();
-        jobOffer2.setDepartment(Department._420B0);
+        jobOffer2.setDepartment(Department._145A0);
         jobOffer2.setDescription("Description");
         jobOffer2.setDuration(0);
         jobOffer2.setEmployer(employer2);

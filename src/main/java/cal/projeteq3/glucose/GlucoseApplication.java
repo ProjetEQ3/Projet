@@ -52,127 +52,127 @@ public class GlucoseApplication implements CommandLineRunner {
 
 	private static List<Employer> createEmployer(){
 		return List.of(
-			Employer.builder()
-				.firstName("Gabriel")
-				.lastName("Non")
-				.email("gabriel@professionnel.com")
-				.password("Ose12345")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build(),
-			Employer.builder()
-				.firstName("Chawki")
-				.lastName("Non")
-				.email("chawki@professionnel.com")
-				.password("Ose12345")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build(),
-			Employer.builder()
-				.firstName("Zakaria")
-				.lastName("Non")
-				.email("e@zaka.se")
-				.password("aaaAAA111")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build(),
-			Employer.builder()
-				.firstName("Samuel")
-				.lastName("Non")
-				.email("samuel@professionnel.com")
-				.password("Ose12345")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build(),
-			Employer.builder()
-				.firstName("Louis")
-				.lastName("Non")
-				.email("louis@professionnel.com")
-				.password("Ose12345")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build(),
-			Employer.builder()
-				.firstName("Jean")
-				.lastName("Non")
-				.email("terss@professionnel.com")
-				.password("Ose12345")
-				.organisationName("Fritz")
-				.organisationPhone("123-456-7890")
-				.build()
-				);
+				Employer.builder()
+						.firstName("Gabriel")
+						.lastName("Non")
+						.email("gabriel@professionnel.com")
+						.password("Ose12345")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build(),
+				Employer.builder()
+						.firstName("Chawki")
+						.lastName("Non")
+						.email("chawki@professionnel.com")
+						.password("Ose12345")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build(),
+				Employer.builder()
+						.firstName("Zakaria")
+						.lastName("Non")
+						.email("e@zaka.se")
+						.password("aaaAAA111")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build(),
+				Employer.builder()
+						.firstName("Samuel")
+						.lastName("Non")
+						.email("samuel@professionnel.com")
+						.password("Ose12345")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build(),
+				Employer.builder()
+						.firstName("Louis")
+						.lastName("Non")
+						.email("louis@professionnel.com")
+						.password("Ose12345")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build(),
+				Employer.builder()
+						.firstName("Jean")
+						.lastName("Non")
+						.email("terss@professionnel.com")
+						.password("Ose12345")
+						.organisationName("Fritz")
+						.organisationPhone("123-456-7890")
+						.build()
+		);
 	}
 
 	private static List<Student> createStudent(){
 		return List.of(
-			Student.builder()
-				.firstName("Jean")
-				.lastName("Michaud")
-				.email("jean@michaud.com")
-				.password("Ose12345")
-				.matricule("0000001")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Joe")
-				.lastName("Michaud")
-				.email("joe@michaud.com")
-				.password("Ose12345")
-				.matricule("0000002")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Louis")
-				.lastName("Michaud")
-				.email("louis@michaud.com")
-				.password("Ose12345")
-				.matricule("0000003")
-				.department("_420B0")
-				.cvFile(CvFile.builder()
-						.fileData(new byte[]{1, 2, 3, 4, 5})
-						.fileName("awdawd.pdf")
-						.build())
-				.build(),
-			Student.builder()
-				.firstName("Chawki")
-				.lastName("Michaud")
-				.email("chawki@michaud.com")
-				.password("Ose12345")
-				.matricule("0000004")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Zakaria")
-				.lastName("Michaud")
-				.email("s@zaka.se")
-				.password("aaaAAA111")
-				.matricule("0000005")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Gabriel")
-				.lastName("Michaud")
-				.email("gabriel@michaud.com")
-				.password("Ose12345")
-				.matricule("0000006")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Samuel")
-				.lastName("Michaud")
-				.email("samuel@michaud.com")
-				.password("Ose12345")
-				.matricule("0000007")
-				.department("_420B0")
-				.build(),
-			Student.builder()
-				.firstName("Karim")
-				.lastName("Michaud")
-				.email("karim@michaud.com")
-				.password("Ose12345")
-				.matricule("0000008")
-				.department("_420B0")
-				.build());
+				Student.builder()
+						.firstName("Jean")
+						.lastName("Michaud")
+						.email("jean@michaud.com")
+						.password("Ose12345")
+						.matricule("0000001")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Joe")
+						.lastName("Michaud")
+						.email("joe@michaud.com")
+						.password("Ose12345")
+						.matricule("0000002")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Louis")
+						.lastName("Michaud")
+						.email("louis@michaud.com")
+						.password("Ose12345")
+						.matricule("0000003")
+						.department("_420B0")
+						.cvFile(CvFile.builder()
+								.fileData(new byte[]{1, 2, 3, 4, 5})
+								.fileName("awdawd.pdf")
+								.build())
+						.build(),
+				Student.builder()
+						.firstName("Chawki")
+						.lastName("Michaud")
+						.email("chawki@michaud.com")
+						.password("Ose12345")
+						.matricule("0000004")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Zakaria")
+						.lastName("Michaud")
+						.email("s@zaka.se")
+						.password("aaaAAA111")
+						.matricule("0000005")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Gabriel")
+						.lastName("Michaud")
+						.email("gabriel@michaud.com")
+						.password("Ose12345")
+						.matricule("0000006")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Samuel")
+						.lastName("Michaud")
+						.email("samuel@michaud.com")
+						.password("Ose12345")
+						.matricule("0000007")
+						.department("_420B0")
+						.build(),
+				Student.builder()
+						.firstName("Karim")
+						.lastName("Michaud")
+						.email("karim@michaud.com")
+						.password("Ose12345")
+						.matricule("0000008")
+						.department("_420B0")
+						.build());
 	}
 
 	private static List<Manager> createManager(){
@@ -199,55 +199,55 @@ public class GlucoseApplication implements CommandLineRunner {
 
 
 	private static void createJobOffers(EmployerService employerService) {
-        List<JobOffer> jobOffers = new ArrayList<>(List.of(
-                JobOffer.builder()
-                        .title("Front-end developer")
-                        .jobOfferState(JobOfferState.SUBMITTED)
-                        .department(Department._420B0)
-                        .location("Montréal")
-                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-                                "maintenance et à l'amélioration de nos produits logiciels.")
+		List<JobOffer> jobOffers = new ArrayList<>(List.of(
+				JobOffer.builder()
+						.title("Front-end developer")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+								"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-                        .startDate(LocalDateTime.now())
-                        .duration(7)
-                        .expirationDate(LocalDateTime.now().plusDays(1))
-                        .hoursPerWeek(15)
-                        .build(),
-                JobOffer.builder()
-                        .title("Back-end developer")
-                        .jobOfferState(JobOfferState.TAKEN)
-                        .department(Department._420B0)
-                        .location("Montréal")
-                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-                                "maintenance et à l'amélioration de nos produits logiciels.")
-                        .salary(20.0f)
-                        .startDate(LocalDateTime.now())
-                        .duration(7)
-                        .expirationDate(LocalDateTime.now().plusDays(5))
-                        .hoursPerWeek(13)
-                        .build(),
-                JobOffer.builder()
-                        .title("Full-stack developer")
-                        .jobOfferState(JobOfferState.OPEN)
-                        .department(Department._420B0)
-                        .location("Montréal")
-                        .description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-                                "l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-                                "expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-                                "collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-                                "maintenance et à l'amélioration de nos produits logiciels.")
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(1))
+						.hoursPerWeek(15)
+						.build(),
+				JobOffer.builder()
+						.title("Back-end developer")
+						.jobOfferState(JobOfferState.TAKEN)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+								"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-                        .startDate(LocalDateTime.now())
-                        .duration(7)
-                        .expirationDate(LocalDateTime.now().plusDays(-5))
-                        .hoursPerWeek(1)
-                        .build(),
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(5))
+						.hoursPerWeek(13)
+						.build(),
+				JobOffer.builder()
+						.title("Full-stack developer")
+						.jobOfferState(JobOfferState.OPEN)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+								"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+								"maintenance et à l'amélioration de nos produits logiciels.")
+						.salary(20.0f)
+						.startDate(LocalDateTime.now())
+						.duration(7)
+						.expirationDate(LocalDateTime.now().plusDays(-5))
+						.hoursPerWeek(1)
+						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
 						.jobOfferState(JobOfferState.SUBMITTED)
@@ -391,7 +391,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
@@ -405,7 +405,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
@@ -482,7 +482,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDateTime.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build()
-        ));
+		));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(0)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(1)), employer.getId());

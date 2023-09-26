@@ -55,7 +55,7 @@ class ManagerServiceTest {
 
         JobOfferDTO jobOfferDTO = new JobOfferDTO();
         jobOfferDTO.setId(1L);
-        jobOfferDTO.setDepartment(Department.valueOf("_420B0"));
+        jobOfferDTO.setDepartment(Department._420B0);
         jobOfferDTO.setTitle("Front-end developer");
         jobOfferDTO.setSalary(20.0f);
         jobOfferDTO.setStartDate(inTenDaysDate);
@@ -196,7 +196,7 @@ class ManagerServiceTest {
     @Test
     void testGetJobOfferByID() {
         JobOfferDTO actualJobOfferByID = managerService.getJobOfferByID(1L);
-        assertEquals("_420B0", actualJobOfferByID.getDepartment());
+        assertEquals(Department._420B0, actualJobOfferByID.getDepartment());
         assertEquals("Front-end developer", actualJobOfferByID.getTitle());
         assertEquals(20.0f, actualJobOfferByID.getSalary());
         assertEquals(inTenDays.toString(), actualJobOfferByID.getStartDate().toLocalTime().toString());
@@ -224,7 +224,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -255,7 +255,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState3() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -279,7 +279,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState4() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -303,7 +303,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState5() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED,null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -327,7 +327,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState6() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -351,7 +351,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState7() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED, "RefusReason");
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals(inTenDays.toString(), actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -375,7 +375,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState8() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.SUBMITTED, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -400,7 +400,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState9() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.OPEN, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -424,7 +424,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState10() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.PENDING, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -448,7 +448,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState11() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.EXPIRED, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -472,7 +472,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState12() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.TAKEN, null);
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
@@ -496,7 +496,7 @@ class ManagerServiceTest {
     @Test
     void testUpdateJobOfferState13() {
         JobOfferDTO actualUpdateJobOfferStateResult = managerService.updateJobOfferState(1L, JobOfferState.REFUSED, "RefusReason");
-        assertEquals("_420B0", actualUpdateJobOfferStateResult.getDepartment());
+        assertEquals(Department._420B0, actualUpdateJobOfferStateResult.getDepartment());
         assertEquals("Front-end developer", actualUpdateJobOfferStateResult.getTitle());
         assertEquals(20.0f, actualUpdateJobOfferStateResult.getSalary());
         assertEquals("11:18:11.632352", actualUpdateJobOfferStateResult.getStartDate().toLocalTime().toString());
