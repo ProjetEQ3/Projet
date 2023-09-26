@@ -1,13 +1,14 @@
 class JobOffer{
 	id
-	PositionTitle
-	Department
-	Location
-	Description
-	Salary
-	Formation
+	title
+	positionTitle
+	department
+	location
+	description
+	salary
+	formation
 	dueDate
-	ExpirationDate
+	expirationDate
 
 	constructor(){
 		this.reset()
@@ -16,34 +17,37 @@ class JobOffer{
 	init(jobOffer){
 		if(jobOffer.id) this.id = jobOffer.id
 		else delete this.id
-		if(jobOffer.PositionTitle) this.PositionTitle = jobOffer.PositionTitle
-		else delete this.PositionTitle
-		if(jobOffer.Department) this.Department = jobOffer.Department
-		else delete this.Department
-		if(jobOffer.Location) this.Location = jobOffer.Location
-		else delete this.Location
-		if(jobOffer.Description) this.Description = jobOffer.Description
-		else delete this.Description
-		if(jobOffer.Salary) this.Salary = jobOffer.Salary
-		else delete this.Salary
-		if(jobOffer.Formation) this.Formation = jobOffer.Formation
-		else delete this.Formation
+		if(jobOffer.title) this.title = jobOffer.title
+		else delete this.title
+		if(jobOffer.positionTitle) this.positionTitle = jobOffer.positionTitle
+		else delete this.positionTitle
+		if(jobOffer.department) this.department = jobOffer.department
+		else delete this.department
+		if(jobOffer.Location) this.location = jobOffer.Location
+		else delete this.location
+		if(jobOffer.description) this.description = jobOffer.description
+		else delete this.description
+		if(jobOffer.salary) this.salary = jobOffer.salary
+		else delete this.salary
+		if(jobOffer.formation) this.formation = jobOffer.formation
+		else delete this.formation
 		if(jobOffer.dueDate) this.dueDate = jobOffer.dueDate
 		else delete this.dueDate
-		if(jobOffer.ExpirationDate) this.ExpirationDate = jobOffer.ExpirationDate
-		else delete this.ExpirationDate
+		if(jobOffer.expirationDate) this.expirationDate = jobOffer.expirationDate
+		else delete this.expirationDate
 	}
 
 	reset(){
 		this.id = undefined
-		this.PositionTitle = undefined
-		this.Department = undefined
-		this.Location = undefined
-		this.Description = undefined
-		this.Salary = undefined
-		this.Formation = undefined
+		this.title = undefined
+		this.positionTitle = undefined
+		this.department = undefined
+		this.location = undefined
+		this.description = undefined
+		this.salary = undefined
+		this.formation = undefined
 		this.dueDate = undefined
-		this.ExpirationDate = undefined
+		this.expirationDate = undefined
 	}
 
 }
