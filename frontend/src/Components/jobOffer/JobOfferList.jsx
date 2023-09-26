@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import ShortJobOffer from "../student/ShortJobOffer";
 import FullJobOffer from "../student/FullJobOffer";
 
-function JobOfferList({jobOffers}){
-
+function JobOfferList({jobOffers, user}){
 	const [selectedOffer, setSelectedOffer] = useState(null);
 
 	return (
@@ -16,12 +15,13 @@ function JobOfferList({jobOffers}){
 								<h2 className="text-dark fw-light pt-1">Aucune offre de stage Ouverte pour le moment</h2>
 							</div>
 						</div> :
-
-					jobOffers.map((offer, index) => (
-						<div onClick={() => setSelectedOffer(offer)}>
-							<ShortJobOffer jobOffer={offer} key={offer.id}/>
-						</div>
-					))
+						jobOffers.map((offer, index) => (
+							offer.isApproved ? (
+								<div onClick={() => setSelectedOffer(offer)}>
+									<ShortJobOffer jobOffer={offer} key={offer.id}/>
+								</div>
+							) : null
+						))
 				}
 			</div>
 			<div className="col-6">
@@ -32,7 +32,7 @@ function JobOfferList({jobOffers}){
 						</div>
 					</div>
 					:
-					<FullJobOffer jobOffer={selectedOffer}/>
+					<FullJobOffer jobOffer={selectedOffer} user={user}/>
 				}
 			</div>
 		</div>
