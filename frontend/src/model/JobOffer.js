@@ -27,7 +27,7 @@ class JobOffer{
 		else delete this.location
 		if(jobOffer.description) this.description = jobOffer.description
 		else delete this.description
-		if(jobOffer.Salary) this.salary = jobOffer.Salary
+		if(jobOffer.salary) this.salary = jobOffer.salary
 		else delete this.salary
 		if(jobOffer.formation) this.formation = jobOffer.formation
 		else delete this.formation
