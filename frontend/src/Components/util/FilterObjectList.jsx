@@ -50,7 +50,7 @@ const FilterObjectList = ({items, attributes, renderItem}) => {
 FilterObjectList.defaultProps = {
 	items: [],
 	attributes: [],
-	renderItem: () => null
+	renderItem: () => {return (<>No items</>)}
 }
 
 export default FilterObjectList
