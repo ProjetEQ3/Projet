@@ -4,12 +4,14 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -24,9 +26,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,13 +35,15 @@ public class StudentServiceTest {
     @Mock
     private StudentRepository studentRepository;
     @Mock
+    private CvFileRepository cvFileRepository;
+    @Mock
     private JobOfferRepository jobOfferRepository;
 
     @InjectMocks
     private StudentService studentService;
 
     @Test
-    public void createStudentTest() {
+    public void createStudent_Valid() {
 
         //Arrange
         RegisterStudentDTO registerStudentDTO =
@@ -89,7 +91,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getAllStudentsTest() {
+    public void getAllStudents_() {
 
         //Arrange
         List<Student> students = new ArrayList<>();
@@ -126,9 +128,8 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getStudentByIDTest() {
-
-        //Arrange
+    public void getStudentByID_valid_id() {
+        // Arrange
         Long id = 1L;
         Student student = Student.builder()
                 .firstName("Michel")
@@ -141,17 +142,52 @@ public class StudentServiceTest {
 
         when(studentRepository.findById(id)).thenReturn(Optional.of(student));
 
-        //Act
-        Optional<StudentDTO> studentDTO = studentService.getStudentByID(id);
+        // Act
+        StudentDTO studentDTO = studentService.getStudentByID(id);
 
-        //Assert
-        assertTrue(studentDTO.isPresent());
+        // Assert
+
+        assertEquals(student.getId(), studentDTO.getId());
+        assertEquals(student.getFirstName(), studentDTO.getFirstName());
+        assertEquals(student.getLastName(), studentDTO.getLastName());
+        assertEquals(student.getEmail(), studentDTO.getEmail());
+        assertEquals(student.getMatricule(), studentDTO.getMatricule());
+        assertEquals(student.getDepartment(), studentDTO.getDepartment());
+
         verify(studentRepository, times(1)).findById(id);
-
     }
 
     @Test
-    public void updateStudentTest() {
+    public void getStudentByID_nonExistent_id() {
+        // Arrange
+        Long nonExistentId = 999L;
+        when(studentRepository.findById(nonExistentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getStudentByID(nonExistentId);
+        });
+
+        verify(studentRepository, times(1)).findById(nonExistentId);
+    }
+
+    @Test
+    public void getStudentByID_invalid_negative_id() {
+        // Arrange
+        Long negativeId = -1L;
+        when(studentRepository.findById(negativeId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getStudentByID(negativeId);
+        });
+
+        verify(studentRepository, times(1)).findById(negativeId);
+    }
+
+
+    @Test
+    public void updateStudent_valid() {
 
         // Arrange
         Long studentId = 1L;
@@ -190,11 +226,36 @@ public class StudentServiceTest {
         assertEquals(updatedStudent.getEmail(), updatedDTO.getEmail());
         assertEquals(updatedStudent.getMatricule(), updatedDTO.getMatricule());
         assertEquals(updatedStudent.getDepartment(), updatedDTO.getDepartment());
-
     }
 
     @Test
-    public void deleteStudentTest() {
+    public void updateStudent_nonExistentStudent() {
+        // Arrange
+        Long nonExistentStudentId = 999L;
+        StudentDTO updatedStudent = null;
+
+        when(studentRepository.findById(nonExistentStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.updateStudent(nonExistentStudentId, updatedStudent);
+        });
+    }
+
+    @Test
+    public void updateStudent_invalidStudentId() {
+        // Arrange
+        Long invalidStudentId = -1L;
+        StudentDTO updatedStudent = null;
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.updateStudent(invalidStudentId, updatedStudent);
+        });
+    }
+
+    @Test
+    public void deleteStudent_existing() {
 
         // Arrange
         Long studentId = 1L;
