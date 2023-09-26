@@ -36,24 +36,11 @@ class ManagerControllerTest {
      */
     @Test
     void testGetJobOfferByEmploye() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalStateException: Ambiguous handler methods mapped for '/manager/jobOffers/1': {public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByEmploye(java.lang.Long), public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByState(java.lang.String)}
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   java.lang.IllegalStateException: Ambiguous handler methods mapped for '/manager/jobOffers/1': {public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByEmploye(java.lang.Long), public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByState(java.lang.String)}
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Credentials credentials = new Credentials();
         credentials.setEmail("jane.doe@example.org");
         credentials.setId(1L);
         credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
+        credentials.setRole(Role.MANAGER);
         credentials.setUser(new Employer());
 
         Employer employer = new Employer();
@@ -67,7 +54,7 @@ class ManagerControllerTest {
         employer.setOrganisationName("Organisation Name");
         employer.setOrganisationPhone("6625550144");
         employer.setPassword("iloveyou");
-        employer.setRole(Role.ADMIN);
+        employer.setRole(Role.MANAGER);
         Optional<Employer> ofResult = Optional.of(employer);
         EmployerRepository employerRepository = mock(EmployerRepository.class);
         when(employerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -88,24 +75,12 @@ class ManagerControllerTest {
      */
     @Test
     void testGetJobOfferByEmploye2() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalStateException: Ambiguous handler methods mapped for '/manager/jobOffers/1': {public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByEmploye(java.lang.Long), public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByState(java.lang.String)}
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   java.lang.IllegalStateException: Ambiguous handler methods mapped for '/manager/jobOffers/1': {public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByEmploye(java.lang.Long), public org.springframework.http.ResponseEntity cal.projeteq3.glucose.controller.ManagerController.getJobOfferByState(java.lang.String)}
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         Credentials credentials = new Credentials();
         credentials.setEmail("jane.doe@example.org");
         credentials.setId(1L);
         credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
+        credentials.setRole(Role.MANAGER);
         credentials.setUser(new Employer());
         Employer employer = mock(Employer.class);
         when(employer.getJobOffers()).thenReturn(new ArrayList<>());
@@ -129,7 +104,7 @@ class ManagerControllerTest {
         employer.setOrganisationName("Organisation Name");
         employer.setOrganisationPhone("6625550144");
         employer.setPassword("iloveyou");
-        employer.setRole(Role.ADMIN);
+        employer.setRole(Role.MANAGER);
         Optional<Employer> ofResult = Optional.of(employer);
         EmployerRepository employerRepository = mock(EmployerRepository.class);
         when(employerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -178,14 +153,14 @@ class ManagerControllerTest {
         credentials.setEmail("jane.doe@example.org");
         credentials.setId(1L);
         credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
+        credentials.setRole(Role.MANAGER);
         credentials.setUser(new Employer());
 
         Credentials credentials2 = new Credentials();
         credentials2.setEmail("jane.doe@example.org");
         credentials2.setId(1L);
         credentials2.setPassword("iloveyou");
-        credentials2.setRole(Role.ADMIN);
+        credentials2.setRole(Role.MANAGER);
         credentials2.setUser(new Employer());
 
         Employer employer = new Employer();
@@ -198,7 +173,7 @@ class ManagerControllerTest {
         employer.setOrganisationName("Organisation Name");
         employer.setOrganisationPhone("6625550144");
         employer.setPassword("iloveyou");
-        employer.setRole(Role.ADMIN);
+        employer.setRole(Role.MANAGER);
 
         JobOffer jobOffer = new JobOffer();
         jobOffer.setDepartment(Department._145A0);
@@ -238,7 +213,7 @@ class ManagerControllerTest {
         employer2.setOrganisationName("Organisation Name");
         employer2.setOrganisationPhone("6625550144");
         employer2.setPassword("iloveyou");
-        employer2.setRole(Role.ADMIN);
+        employer2.setRole(Role.MANAGER);
         Optional<Employer> ofResult = Optional.of(employer2);
         EmployerRepository employerRepository = mock(EmployerRepository.class);
         when(employerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
@@ -287,14 +262,14 @@ class ManagerControllerTest {
         credentials.setEmail("jane.doe@example.org");
         credentials.setId(1L);
         credentials.setPassword("iloveyou");
-        credentials.setRole(Role.ADMIN);
+        credentials.setRole(Role.MANAGER);
         credentials.setUser(new Employer());
 
         Credentials credentials2 = new Credentials();
         credentials2.setEmail("jane.doe@example.org");
         credentials2.setId(1L);
         credentials2.setPassword("iloveyou");
-        credentials2.setRole(Role.ADMIN);
+        credentials2.setRole(Role.MANAGER);
         credentials2.setUser(new Employer());
 
         Employer employer = new Employer();
@@ -307,7 +282,7 @@ class ManagerControllerTest {
         employer.setOrganisationName("Organisation Name");
         employer.setOrganisationPhone("6625550144");
         employer.setPassword("iloveyou");
-        employer.setRole(Role.ADMIN);
+        employer.setRole(Role.MANAGER);
 
         JobOffer jobOffer = new JobOffer();
         jobOffer.setDepartment(Department._145A0);
@@ -382,7 +357,7 @@ class ManagerControllerTest {
         employer3.setOrganisationName("Organisation Name");
         employer3.setOrganisationPhone("6625550144");
         employer3.setPassword("iloveyou");
-        employer3.setRole(Role.ADMIN);
+        employer3.setRole(Role.MANAGER);
         Optional<Employer> ofResult = Optional.of(employer3);
         EmployerRepository employerRepository = mock(EmployerRepository.class);
         when(employerRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
