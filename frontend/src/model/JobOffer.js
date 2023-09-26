@@ -39,6 +39,7 @@ class JobOffer{
 
 	reset(){
 		this.id = undefined
+		this.title = undefined
 		this.positionTitle = undefined
 		this.department = undefined
 		this.location = undefined
