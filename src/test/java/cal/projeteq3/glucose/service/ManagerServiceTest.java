@@ -59,7 +59,7 @@ class ManagerServiceTest {
     private ManagerService managerService;
 
     @Test
-    public void createManager_valid() {
+    void createManager_valid() {
         // Arrange
         ManagerDTO managerDTO = new ManagerDTO();
         managerDTO.setFirstName("John");
@@ -80,7 +80,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getAllManagers_valid() {
+    void getAllManagers_valid() {
         // Arrange
         Manager manager = Manager.builder()
                 .firstName("John")
@@ -104,7 +104,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getManagerByID_managerNotFound() {
+    void getManagerByID_managerNotFound() {
         // Arrange
         Long id = 1L;
 
@@ -118,7 +118,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getManagerByID_valid() {
+    void getManagerByID_valid() {
         // Arrange
         Long id = 1L;
         Manager manager = Manager.builder()
@@ -142,7 +142,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void updateManager_valid() {
+    void updateManager_valid() {
         // Arrange
         Long id = 1L;
         ManagerDTO updatedManager = new ManagerDTO();
@@ -173,7 +173,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void updateManager_managerNotFound() {
+    void updateManager_managerNotFound() {
         // Arrange
         Long id = 1L;
         ManagerDTO updatedManager = new ManagerDTO();
@@ -191,7 +191,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void deleteManager_valid() {
+    void deleteManager_valid() {
         // Arrange
         Long id = 1L;
 
@@ -205,7 +205,7 @@ class ManagerServiceTest {
 //    -------------- CV File --------------
 
     @Test
-    public void getCvById_valid() {
+    void getCvById_valid() {
         // Arrange
         Long id = 1L;
         CvFile cvFile = createCvFile(id, "1234567");
@@ -224,7 +224,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getAllCvs_valid(){
+    void getAllCvs_valid(){
         // Arrange
         List<CvFile> cvFiles = new ArrayList<>();
         cvFiles.add(createCvFile(1L, "1234567"));
@@ -242,7 +242,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getAllSubmittedCv_valid(){
+    void getAllSubmittedCv_valid(){
 //        Arrange
         List<CvFile> cvFiles = new ArrayList<>();
         cvFiles.addAll(List.of(
@@ -281,7 +281,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getAllCvFileByStudent_valid() {
+    void getAllCvFileByStudent_valid() {
         // Arrange
         Long studentId = 1L;
 
@@ -303,7 +303,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getAllCvFileByStudentMatricule_valid() {
+    void getAllCvFileByStudentMatricule_valid() {
         // Arrange
         String matricule = "1234567";
 
@@ -325,7 +325,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getCvFileByStudentAndFileName_valid() {
+    void getCvFileByStudentAndFileName_valid() {
         // Arrange
         String matricule = "1234567";
         String fileName = "example_cv.pdf";
@@ -347,7 +347,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void deleteCvFile_valid() {
+    void deleteCvFile_valid() {
         // Arrange
         Long cvFileId = 1L;
 
@@ -359,7 +359,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void deleteAllCvFileByStudentMatricule_valid() {
+    void deleteAllCvFileByStudentMatricule_valid() {
         // Arrange
         String matricule = "1234567";
 
@@ -371,7 +371,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void rejectCv_valid() {
+    void rejectCv_valid() {
         // Arrange
         Long cvFileId = 1L;
         String reason = "Rejected for some reason";
@@ -393,7 +393,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void rejectCv_NotFound() {
+    void rejectCv_NotFound() {
         // Arrange
         Long cvFileId = 1L;
 
@@ -408,7 +408,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getCvFilesWithState_valid() {
+    void getCvFilesWithState_valid() {
         // Arrange
         CvState state = CvState.SUBMITTED;
 
@@ -428,7 +428,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void updateCvState_valid() {
+    void updateCvState_valid() {
         // Arrange
         Long id = 1L;
         CvState newState = CvState.ACCEPTED;
@@ -453,7 +453,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void updateCvState_cvFileNotFound() {
+    void updateCvState_cvFileNotFound() {
         // Arrange
         Long id = 1L;
         CvState newState = CvState.ACCEPTED;
@@ -471,7 +471,7 @@ class ManagerServiceTest {
 //    -------------- Job Offer --------------
 
     @Test
-    public void getAllJobOffer_valid(){
+    void getAllJobOffer_valid(){
 //        Arrange
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.add(JobOffer.builder()
@@ -497,7 +497,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOfferByID_valid(){
+    void getJobOfferByID_valid(){
 //        Arrange
         Long id = 1L;
         JobOffer jobOffer = JobOffer.builder()
@@ -521,7 +521,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOfferByID_jobOfferNotFound(){
+    void getJobOfferByID_jobOfferNotFound(){
 //        Arrange
         Long id = 1L;
 
@@ -535,7 +535,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Submitted(){
+    void getJobOffersWithState_Submitted(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>();
@@ -589,7 +589,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Open(){
+    void getJobOffersWithState_Open(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>();
@@ -643,7 +643,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Pending(){
+    void getJobOffersWithState_Pending(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>();
@@ -697,7 +697,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Expired(){
+    void getJobOffersWithState_Expired(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>();
@@ -751,7 +751,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Taken(){
+    void getJobOffersWithState_Taken(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>(List.of(
@@ -802,7 +802,7 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void getJobOffersWithState_Refused(){
+    void getJobOffersWithState_Refused(){
 //        Arrange
 
         List<JobOffer> jobOffers = new ArrayList<>();
@@ -856,7 +856,37 @@ class ManagerServiceTest {
     }
 
     @Test
-    public void updateJobOfferState_jobOfferNotFound() {
+    void updateJobOfferState_jobOfferFound() {
+        // Arrange
+
+        Long id = 1L;
+        JobOfferState newState = JobOfferState.OPEN;
+
+        JobOffer jobOffer = JobOffer.builder()
+                .title("Job Offer 1")
+                .description("Description 1")
+                .jobOfferState(JobOfferState.SUBMITTED)
+                .build();
+
+        when(jobOfferRepository.findById(id)).thenReturn(Optional.of(jobOffer));
+        when(jobOfferRepository.save(any())).thenReturn(jobOffer);
+
+        // Act
+        JobOfferDTO jobOfferDTO = managerService.updateJobOfferState(id, newState, null);
+
+        // Assert
+
+        assertNotNull(jobOfferDTO);
+        assertEquals(jobOffer.getId(), jobOfferDTO.getId());
+        assertEquals(jobOffer.getTitle(), jobOfferDTO.getTitle());
+        assertEquals(jobOffer.getDescription(), jobOfferDTO.getDescription());
+        assertEquals(newState, jobOffer.getJobOfferState());
+        assertNull(jobOffer.getRefusReason());
+        verify(jobOfferRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void updateJobOfferState_jobOfferNotFound() {
         // Arrange
         Long id = 1L;
         JobOfferState newState = JobOfferState.OPEN;
@@ -869,6 +899,23 @@ class ManagerServiceTest {
             managerService.updateJobOfferState(id, newState, reason);
         });
         verify(jobOfferRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void deleteJobOffer_valid(){
+//        Arrange
+        Long id = 1L;
+        JobOffer.builder()
+                .title("Job Offer 1")
+                .description("Description 1")
+                .jobOfferState(JobOfferState.SUBMITTED)
+                .build();
+
+//        Act
+        managerService.deleteJobOffer(id);
+
+//        Assert
+        verify(jobOfferRepository, times(1)).deleteById(id);
     }
 
 
