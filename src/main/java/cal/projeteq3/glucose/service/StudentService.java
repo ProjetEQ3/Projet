@@ -1,13 +1,17 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,16 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
+    private final JobOfferRepository jobOfferRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, CvFileRepository cvFileRepository) {
+    public StudentService(
+            StudentRepository studentRepository,
+            CvFileRepository cvFileRepository,
+            JobOfferRepository jobOfferRepository) {
         this.studentRepository = studentRepository;
         this.cvFileRepository = cvFileRepository;
+        this.jobOfferRepository = jobOfferRepository;
     }
 
     // database operations here
@@ -97,6 +106,18 @@ public class StudentService {
         CvFile cvExiste = student.getCvFile();
         student.deleteCv();
         cvFileRepository.delete(cvExiste);
+    }
+
+    public List<JobOfferDTO> getJobOffersByDepartment(Department department){
+        return jobOfferRepository.findJobOffersByDepartment(department)
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department){
+        return jobOfferRepository.findJobOffersByDepartmentAndJobOfferState(department, JobOfferState.OPEN)
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
     }
 
 }

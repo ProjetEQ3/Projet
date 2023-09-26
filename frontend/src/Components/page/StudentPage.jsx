@@ -1,17 +1,37 @@
 import {useEffect, useState} from "react"
-import CvFile from "../../model/CvFile"
 import Cv from "../student/Cv"
 import {useNavigate} from "react-router-dom"
+import JobOfferList from "../jobOffer/JobOfferList";
+import {axiosInstance} from "../../App";
+import JobOffer from "../../model/JobOffer";
 
 const StudentPage = ({user, setUser}) => {
   const [tab, setTab] = useState('home');
+  const [jobOffers, setJobOffers] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
 	  if(!user?.isLoggedIn){
 		  navigate('/');
-	}}, [user, navigate]);
+	  }
+
+	  async function fetchStudentJobOffers() {
+		  await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
+			  .then((response) => {
+				  response.data.forEach((jobOffer) => {
+					  const newJobOffer = new JobOffer();
+					  newJobOffer.init(jobOffer)
+					  jobOffers.push(newJobOffer);
+				  });
+				  // setJobOffers(response.data);
+			  }).catch((error) => {
+				  console.log("Fetch error: "+ error);
+			  });
+	  }
+
+	  fetchStudentJobOffers();
+  }, [user, navigate]);
 
 	const setCv = (cv) => {
 		user.cvFile = cv
@@ -30,7 +50,7 @@ const StudentPage = ({user, setUser}) => {
 						onClick={() => setTab('cv')}>CV</button>
 				</div>
 				{tab === 'home' && <h3>Home</h3>}
-				{tab === 'stages' && <h3>Stages</h3>}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} />  }
 				{tab === 'cv' && <Cv user={user} setCv={setCv} />}
 			</div>
 		</div>
