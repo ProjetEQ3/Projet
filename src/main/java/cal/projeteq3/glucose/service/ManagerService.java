@@ -107,36 +107,16 @@ public class ManagerService{
 	}
 
 	public CvFileDTO rejectCv(Long id, String reason) {
-		Optional<CvFile> existingCvFile = cvRepository.findById(id);
-		if(existingCvFile.isPresent()) {
-			CvFile cvFile = existingCvFile.get();
-			cvFile.setCvState(CvState.REFUSED);
-			cvFile.setRefusReason(reason);
-			return new CvFileDTO(cvRepository.save(cvFile));
-		}
-		throw new JobOffreNotFoundException(id);
-	}
-//	Job Offer
-
-	public List<JobOfferDTO> getAllJobOffer(){
-		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+		CvFile cvFile = cvRepository.findById(id)
+				.orElseThrow(CvFileNotFoundException::new);
+		cvFile.setCvState(CvState.REFUSED);
+		cvFile.setRefusReason(reason);
+		return new CvFileDTO(cvRepository.save(cvFile));
 	}
 
-	public JobOfferDTO getJobOfferByID(Long id){
-		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow());
-	}
-
-	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferState(state);
-		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
-	}
-
-	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
-		JobOffer jobOffer = jobOfferRepository.findById(id)
-				.orElseThrow(() -> new JobOffreNotFoundException(id));
-		jobOffer.setJobOfferState(newState);
-		jobOffer.setRefusReason(reason);
-		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
+	public List<CvFileDTO> getCvFilesWithState(CvState state) {
+		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
+		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
 	}
 
 	public CvFileDTO updateCvState(Long id, CvState newState, String reason) {
@@ -147,9 +127,28 @@ public class ManagerService{
 		return new CvFileDTO(cvRepository.save(cvFile));
 	}
 
-	public List<CvFileDTO> getCvFilesWithState(CvState state) {
-		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
-		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
+//	Job Offer
+
+	public List<JobOfferDTO> getAllJobOffer(){
+		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+	}
+
+	public JobOfferDTO getJobOfferByID(Long id){
+		return new JobOfferDTO(jobOfferRepository.findById(id)
+				.orElseThrow(() -> new JobOffreNotFoundException(id)));
+	}
+
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
+		return jobOfferRepository.findJobOfferByJobOfferState(state)
+				.stream().map(JobOfferDTO::new).collect(Collectors.toList());
+	}
+
+	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
+		JobOffer jobOffer = jobOfferRepository.findById(id)
+				.orElseThrow(() -> new JobOffreNotFoundException(id));
+		jobOffer.setJobOfferState(newState);
+		jobOffer.setRefusReason(reason);
+		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
 
 	public void deleteJobOffer(Long id){
