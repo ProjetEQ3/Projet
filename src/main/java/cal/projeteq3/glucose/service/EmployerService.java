@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -130,4 +131,16 @@ public class EmployerService{
 		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
+
+	//EQ3-16
+	public List<StudentDTO> getStudentsByJobOfferId(Long jobOfferId){
+		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
+			.orElseThrow(() -> new JobOffreNotFoundException(jobOfferId));
+		if(jobOffer.getJobApplications() != null)
+			return jobOffer.getJobApplications().stream()
+				.map(jobApplication -> new StudentDTO(jobApplication.getStudent()))
+				.collect(Collectors.toList());
+		return Collections.emptyList();
+	}
+
 }
