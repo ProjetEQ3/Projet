@@ -25,7 +25,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="text"
 						id="PositionTitle"
 						name="PositionTitle"
-						value={formData.PositionTitle}
+						value={formData.positionTitle}
 						onChange={handleChange}
 						required
 					/>
@@ -36,7 +36,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="text"
 						id="Department"
 						name="Department"
-						value={formData.Department}
+						value={formData.department}
 						onChange={handleChange}
 						required
 					/>
@@ -47,7 +47,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="text"
 						id="Location"
 						name="Location"
-						value={formData.Location}
+						value={formData.location}
 						onChange={handleChange}
 						required
 					/>
@@ -57,7 +57,7 @@ function AddJobOffer({onAddJobOffer}){
 					<textarea
 						id="Description"
 						name="Description"
-						value={formData.Description}
+						value={formData.description}
 						onChange={handleChange}
 						required
 					/>
@@ -68,7 +68,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="text"
 						id="Salary"
 						name="Salary"
-						value={formData.Salary}
+						value={formData.salary}
 						onChange={handleChange}
 						required
 					/>
@@ -79,7 +79,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="text"
 						id="Formation"
 						name="Formation"
-						value={formData.Formation}
+						value={formData.formation}
 						onChange={handleChange}
 						required
 					/>
@@ -101,7 +101,7 @@ function AddJobOffer({onAddJobOffer}){
 						type="date"
 						id="ExpirationDate"
 						name="ExpirationDate"
-						value={formData.ExpirationDate}
+						value={formData.expirationDate}
 						onChange={handleChange}
 						required
 					/>
