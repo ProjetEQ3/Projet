@@ -3,19 +3,17 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.service.JobOfferService;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -23,9 +21,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class StudentController{
 	private final StudentService studentService;
+	private final JobOfferService jobOfferService;
 
-	public StudentController(StudentService studentService){
+	public StudentController(StudentService studentService, JobOfferService jobOfferService){
 		this.studentService = studentService;
+		this.jobOfferService = jobOfferService;
 	}
 
 	@PostMapping("/register")
@@ -34,7 +34,7 @@ public class StudentController{
 		try{
 			Validation.validateStudent(student);
 			return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
-		}catch(ValidationException e){
+		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
@@ -55,7 +55,7 @@ public class StudentController{
 			cvFileDTO.setFileData(fileData);
 			System.out.println("fileData: " + fileData.length);
 			return ResponseEntity.accepted().body(studentService.addCv(studentId, cvFileDTO));
-		}catch(ValidationException e){
+		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").body(null);
@@ -67,7 +67,7 @@ public class StudentController{
 		try{
 			studentService.deleteCv(studentId);
 			return ResponseEntity.accepted().build();
-		}catch(ValidationException e){
+		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
@@ -89,6 +89,19 @@ public class StudentController{
 			return ResponseEntity.accepted().body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
+		}
+	}
+
+	// EQ3-13
+	@PostMapping("/jobOffers/{studentId}/{jobOfferId}")
+	public ResponseEntity<Void> applyForJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
+		try{
+			jobOfferService.apply(jobOfferId, studentId);
+			return ResponseEntity.accepted().build();
+		}catch(APIException e){
+			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").build();
 		}
 	}
 

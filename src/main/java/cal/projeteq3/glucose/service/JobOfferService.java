@@ -23,16 +23,13 @@ public class JobOfferService{
 
 	// EQ3-13
 	@Transactional
-	public JobApplication apply(Long jobOfferId, Long studentId){
+	public void apply(Long jobOfferId, Long studentId){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(JobOfferNotFoundException::new);
 		Student student = studentRepository.findById(studentId)
 			.orElseThrow(StudentNotFoundException::new);
-
-		JobApplication jobApplication = jobOffer.apply(student);
+		jobOffer.apply(student);
 		jobOfferRepository.save(jobOffer);
-
-		return jobApplication;
 	}
 
 }

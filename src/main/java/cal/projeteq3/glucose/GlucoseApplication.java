@@ -374,9 +374,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.hoursPerWeek(13)
 						.build(),
 				JobOffer.builder()
-						.title("Full-stack developer")
-						.jobOfferState(JobOfferState.OPEN)
-						.department(Department._420B0)
+						.title("Java developer")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._144A1)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -418,7 +418,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la création de modèles " +
