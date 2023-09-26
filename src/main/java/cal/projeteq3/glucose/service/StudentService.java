@@ -98,13 +98,14 @@ public class StudentService {
         return new CvFileDTO(studentRepository.save(student).getCvFile());
     }
 
-    public void deleteCv(Long studentId){
+    public boolean deleteCv(Long studentId){
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         Student student = studentOptional.get();
         CvFile cvExiste = student.getCvFile();
         student.deleteCv();
         cvFileRepository.delete(cvExiste);
+        return true;
     }
 
     public List<JobOfferDTO> getJobOffersByDepartment(Department department){
