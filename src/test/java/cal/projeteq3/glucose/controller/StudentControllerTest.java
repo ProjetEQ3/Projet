@@ -150,9 +150,8 @@ public class StudentControllerTest {
         );
 
         when(studentService.getOpenJobOffersByDepartment(Department._420B0))
-                .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).filter(jobOfferDTO -> {
-                    return jobOfferDTO.getJobOfferState().equals(JobOfferState.OPEN);
-                }).collect(Collectors.toList()));
+                .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).filter(jobOfferDTO ->
+                        jobOfferDTO.getJobOfferState().equals(JobOfferState.OPEN)).collect(Collectors.toList()));
 
 //        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B0"))

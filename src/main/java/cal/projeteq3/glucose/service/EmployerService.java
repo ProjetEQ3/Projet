@@ -66,21 +66,18 @@ public class EmployerService{
 	}
 
 	public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer){
-		Optional<Employer> existingEmployer = employerRepository.findById(id);
-		if(existingEmployer.isPresent()){
-			Employer employer = existingEmployer.get();
+		Employer employer = employerRepository.findById(id)
+				.orElseThrow(() -> new EmployerNotFoundException(id));
 
-			employer.setId(updatedEmployer.getId());
-			employer.setFirstName(updatedEmployer.getFirstName());
-			employer.setLastName(updatedEmployer.getLastName());
-			employer.setEmail(updatedEmployer.getEmail());
-			employer.setOrganisationName(updatedEmployer.getOrganisationName());
-			employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
+		employer.setId(updatedEmployer.getId());
+		employer.setFirstName(updatedEmployer.getFirstName());
+		employer.setLastName(updatedEmployer.getLastName());
+		employer.setEmail(updatedEmployer.getEmail());
+		employer.setOrganisationName(updatedEmployer.getOrganisationName());
+		employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
-			return new EmployerDTO(employerRepository.save(employer));
-		}
+		return new EmployerDTO(employerRepository.save(employer));
 
-		throw new EmployerNotFoundException(id);
 	}
 
 	public void deleteEmployer(Long id){
@@ -89,12 +86,9 @@ public class EmployerService{
 
 
 	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
-		Optional<Employer> employerOptional = employerRepository.findById(employerId);
-		if (employerOptional.isPresent()) {
-			Employer employer = employerOptional.get();
-			return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
-		}
-		return Collections.emptyList();
+		Employer employer = employerRepository.findById(employerId)
+				.orElseThrow(() -> new EmployerNotFoundException(employerId));
+		return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	@Transactional
