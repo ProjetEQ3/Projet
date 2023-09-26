@@ -12,7 +12,7 @@ const FullJobOffer = ({jobOffer, user, applyForJobOffer}) => {
 							{user.cvFile.isApproved ? (
 								<button onClick={() => applyForJobOffer(jobOffer)}>Apply</button>
 							) : (
-								<p>CV not approved yet</p>
+								<p>CV pas encore approuvé</p>
 							)}
 						</div>
 					</div>
