@@ -381,7 +381,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la conception et le développement " +
@@ -395,7 +395,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
