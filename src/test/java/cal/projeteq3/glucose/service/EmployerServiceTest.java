@@ -445,80 +445,83 @@ public class EmployerServiceTest {
     }
 
     @Test
-    void getJobOffersDTOByEmployerId_ExpiredJobOffers(){
+    public void CreateJobOffer_valid() {
+        // Arrange
+        Long employerId = 1L;
+        Employer employer = Employer.builder()
+                .id(employerId)
+                .email("test@test.com")
+                .password("Testestest1")
+                .firstName("Test")
+                .lastName("Test")
+                .organisationName("Test")
+                .organisationPhone("111-111-1111")
+                .build();
 
+
+        JobOfferDTO jobOfferDTO = new JobOfferDTO(
+                1L,
+                "JobOffer1",
+                Department._420B0,
+                "Location1",
+                "Description1",
+                20.0f,
+                LocalDateTime.now(),
+                6,
+                LocalDateTime.now().plusDays(30),
+                JobOfferState.OPEN,
+                40,
+                null
+        );
+
+        when(employerRepository.findById(employerId)).thenReturn(Optional.of(employer));
+        when(jobOfferRepository.save(any())).thenReturn(jobOfferDTO.toEntity());
+
+        // Act
+        JobOfferDTO result = employerService.createJobOffer(jobOfferDTO, employerId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(jobOfferDTO.getTitle(), result.getTitle());
+        assertEquals(jobOfferDTO.getDepartment(), result.getDepartment());
+        assertEquals(jobOfferDTO.getLocation(), result.getLocation());
+        assertEquals(jobOfferDTO.getDescription(), result.getDescription());
+        assertEquals(jobOfferDTO.getSalary(), result.getSalary());
+        assertEquals(jobOfferDTO.getStartDate(), result.getStartDate());
+        assertEquals(jobOfferDTO.getDuration(), result.getDuration());
+        assertEquals(jobOfferDTO.getExpirationDate(), result.getExpirationDate());
+        assertEquals(jobOfferDTO.getJobOfferState(), result.getJobOfferState());
+        assertEquals(jobOfferDTO.getHoursPerWeek(), result.getHoursPerWeek());
+        assertEquals(jobOfferDTO.getRefusReason(), result.getRefusReason());
+        verify(employerRepository, times(1)).findById(employerId);
+        verify(jobOfferRepository, times(1)).save(any());
     }
 
+    @Test
+    public void UpdateJobOffer_valid() {
+        // Arrange
+        Long jobOfferId = 1L;
+        JobOfferDTO updatedJobOffer = new JobOfferDTO();
+        updatedJobOffer.setId(jobOfferId);
 
-//    @Test
-//    public void CreateJobOffer_valid() {
-//        // Arrange
-//        Long employerId = 1L;
-//        Employer employer = Employer.builder()
-//                .id(employerId)
-//                .email("test@test.com")
-//                .password("Testestest1")
-//                .firstName("Test")
-//                .lastName("Test")
-//                .organisationName("Test")
-//                .organisationPhone("111-111-1111")
-//                .build();
-//
-//
-//        JobOfferDTO jobOfferDTO = new JobOfferDTO(
-//                1L,
-//                "JobOffer1",
-//                Department._420B0,
-//                "Location1",
-//                "Description1",
-//                20.0f,
-//                LocalDateTime.now(),
-//                6,
-//                LocalDateTime.now().plusDays(30),
-//                JobOfferState.OPEN,
-//                40,
-//                null
-//        );
-//
-//        when(employerRepository.findById(employerId)).thenReturn(Optional.of(employer));
-//        when(jobOfferRepository.save(any())).thenReturn(new JobOffer());
-//
-//        // Act
-//        JobOfferDTO result = employerService.createJobOffer(jobOfferDTO, employerId);
-//
-//        // Assert
-//        assertNotNull(result);
-//        assertEquals(jobOfferDTO.getTitle(), result.getTitle());
-//        assertEquals(jobOfferDTO.getDepartment(), result.getDepartment());
-//        assertEquals(jobOfferDTO.getLocation(), result.getLocation());
-//        assertEquals(jobOfferDTO.getDescription(), result.getDescription());
-//        assertEquals(jobOfferDTO.getSalary(), result.getSalary());
-//        assertEquals(jobOfferDTO.getStartDate(), result.getStartDate());
-//        assertEquals(jobOfferDTO.getDuration(), result.getDuration());
-//        assertEquals(jobOfferDTO.getExpirationDate(), result.getExpirationDate());
-//        assertEquals(jobOfferDTO.getJobOfferState(), result.getJobOfferState());
-//        assertEquals(jobOfferDTO.getHoursPerWeek(), result.getHoursPerWeek());
-//        assertEquals(jobOfferDTO.getRefusReason(), result.getRefusReason());
-//    }
-//
-//    @Test
-//    public void UpdateJobOffer_valid() {
-//        // Arrange
-//        Long jobOfferId = 1L;
-//        JobOfferDTO updatedJobOffer = new JobOfferDTO();
-//        updatedJobOffer.setId(jobOfferId);
-//
-//        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(new JobOffer()));
-//        when(jobOfferRepository.save(any())).thenReturn(new JobOffer());
-//
-//        // Act
-//        JobOfferDTO result = employerService.updateJobOffer(updatedJobOffer);
-//
-//        // Assert
-//        assertNotNull(result);
-//        assertEquals(jobOfferId, result.getId());
-//
-//    }
+        JobOffer returnedJobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .build();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(returnedJobOffer));
+        when(jobOfferRepository.save(any())).thenReturn(returnedJobOffer);
+
+        // Act
+        JobOfferDTO result = employerService.updateJobOffer(updatedJobOffer);
+
+        System.out.println(result);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(jobOfferId, result.getId());
+        verify(jobOfferRepository, times(1)).findById(jobOfferId);
+        verify(jobOfferRepository, times(1)).save(any());
+    }
 
     @Test
     public void DeleteJobOffer_valid() {
@@ -533,7 +536,7 @@ public class EmployerServiceTest {
     }
 
     @Test
-    public void GetAllJobOffers_valid() {
+    public void GetAllJobOffers_Empty() {
         // Arrange
         Long employerId = 1L;
         when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(Collections.emptyList());
@@ -544,6 +547,60 @@ public class EmployerServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+    }
+
+    @Test
+    public void GetAllJobOffers_List() {
+        // Arrange
+        Long employerId = 1L;
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(
+                JobOffer.builder()
+                        .title("JobOffer1")
+                        .department(Department._420B0)
+                        .location("Location1")
+                        .description("Description1")
+                        .salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(6)
+                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .jobOfferState(JobOfferState.OPEN)
+                        .hoursPerWeek(40)
+                        .build(),
+                JobOffer.builder()
+                        .title("JobOffer2")
+                        .department(Department._420B0)
+                        .location("Location1")
+                        .description("Description1")
+                        .salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(6)
+                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .jobOfferState(JobOfferState.OPEN)
+                        .hoursPerWeek(40)
+                        .build(),
+                JobOffer.builder()
+                        .title("JobOffer3")
+                        .department(Department._420B0)
+                        .location("Location1")
+                        .description("Description1")
+                        .salary(20.0f)
+                        .startDate(LocalDateTime.now())
+                        .duration(6)
+                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .jobOfferState(JobOfferState.OPEN)
+                        .hoursPerWeek(40)
+                        .build()
+        ));
+        when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(jobOffers);
+
+        // Act
+        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(3, result.size());
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
     }
 
 }
