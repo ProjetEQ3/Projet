@@ -45,8 +45,8 @@ public class EmployerService{
     }
 
 	public List<EmployerDTO> getAllEmployers(){
-		List<Employer> employers = employerRepository.findAll();
-		return employers.stream().map(EmployerDTO::new).collect(Collectors.toList());
+		return employerRepository.findAll()
+				.stream().map(EmployerDTO::new).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -59,9 +59,10 @@ public class EmployerService{
 		return new EmployerDTO(employer);
 	}
 
-	public Optional<EmployerDTO> getEmployerByID(Long id){
-		Optional<Employer> employerOptional = employerRepository.findById(id);
-		return employerOptional.map(EmployerDTO::new);
+	public EmployerDTO getEmployerByID(Long id){
+		return new EmployerDTO(employerRepository.findById(id).orElseThrow(
+				() -> new EmployerNotFoundException(id)
+		));
 	}
 
 	public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer){
