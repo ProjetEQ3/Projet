@@ -1,13 +1,17 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -386,5 +390,100 @@ public class StudentServiceTest {
         assertEquals(1, jobOffers.size());
         verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN);
 
+    }
+
+    @Test
+    public void addCv_valid() {
+        // Arrange
+        Long studentId = 1L;
+        CvFileDTO cvFileDTO = new CvFileDTO(
+                1L,
+                "cv.pdf",
+                new byte[]{1,1,1,1,1,1,1,1,1,1,1},
+                CvState.SUBMITTED,
+                null);
+
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+        Student studentWithCv = Student.builder()
+                .id(studentId)
+                .cvFile(cvFileDTO.toEntity())
+                .build();
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        when(studentRepository.save(any(Student.class))).thenReturn(studentWithCv);
+
+        // Act
+        CvFileDTO addedCv = studentService.addCv(studentId, cvFileDTO);
+
+        // Assert
+        assertNotNull(addedCv);
+        assertEquals(cvFileDTO.getFileName(), addedCv.getFileName());
+        assertEquals(cvFileDTO.getFileData(), addedCv.getFileData());
+        assertEquals(cvFileDTO.getCvState(), addedCv.getCvState());
+        assertEquals(cvFileDTO.getRefusReason(), addedCv.getRefusReason());
+    }
+
+    @Test
+    public void addCv_studentNotFound() {
+        // Arrange
+        Long nonExistentStudentId = 999L;
+        CvFileDTO cvFileDTO = new CvFileDTO();
+
+        when(studentRepository.findById(nonExistentStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.addCv(nonExistentStudentId, cvFileDTO);
+        });
+    }
+
+    @Test
+    public void addCv_studentAlreadyHasCv() {
+        // Arrange
+        Long studentId = 1L;
+        CvFileDTO cvFileDTO = new CvFileDTO();
+
+        Student student = new Student();
+        student.setCvFile(new CvFile());
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(StudentHasAlreadyCVException.class, () -> {
+            studentService.addCv(studentId, cvFileDTO);
+        });
+    }
+
+    @Test
+    public void deleteCv_valid() {
+        // Arrange
+        Long studentId = 1L;
+        Student student = new Student();
+        CvFile cvFile = new CvFile();
+        student.setCvFile(cvFile);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+        studentService.deleteCv(studentId);
+
+        // Assert
+        assertNull(student.getCvFile());
+        verify(cvFileRepository, times(1)).delete(cvFile);
+    }
+
+    @Test
+    public void deleteCv_studentNotFound() {
+        // Arrange
+        Long nonExistentStudentId = 999L;
+
+        when(studentRepository.findById(nonExistentStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.deleteCv(nonExistentStudentId);
+        });
     }
 }
