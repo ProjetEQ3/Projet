@@ -5,6 +5,8 @@ import Loading from "../util/Loading"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import State from "../util/State";
+import PDFPreview from "../util/PDFPreview";
+import CVFile from "../../model/CvFile";
 
 function Cv({user, setCv}){
 	const [isLoading, setIsLoading] = useState(false)
@@ -13,8 +15,9 @@ function Cv({user, setCv}){
 		setIsLoading(true)
 		const file = e.target.files[0]
 		if(file && file.type === "application/pdf"){
+			const sentFile = new File([file], "cv_" + user.firstName.toLowerCase() + "_" + user.lastName.toLowerCase() + ".pdf", {type: "application/pdf"})
 			const formData = new FormData()
-			formData.append("file", file)
+			formData.append("file", sentFile)
 			formData.append("studentId", user.id)
 			axiosInstance
 				.post(`/student/cv/${user.id}`, formData, {headers: {"Content-Type": "multipart/form-data"}})
@@ -75,7 +78,7 @@ function Cv({user, setCv}){
 				<>
 					<div className="row bg-white rounded">
 						<div className="col-8">
-							<h2>CV: {user.cvFile.fileName}</h2>
+							<h2 className="mx-auto">{user.cvFile.fileName}</h2>
 						</div>
 						<div className="col-4 d-flex my-auto justify-content-end justify-content-md-between">
 							<div className="d-none d-md-block">
@@ -83,19 +86,14 @@ function Cv({user, setCv}){
 							</div>
 							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover" onClick={handleDeletePdf}/>
 						</div>
+						<PDFPreview file={CVFile.readBytes(user.cvFile.fileData)}/>
 					</div>
 				</>
 			) : (
 				<div>
 					<h1 className="display-6">Téléverser un CV</h1>
 					<div className="col-6 mx-auto">
-						<input
-							value=""
-							className="form-control"
-							type="file"
-							accept=".pdf"
-							onChange={handlePdfUpload}
-						/>
+						<input value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
 					</div>
 				</div>
 			)
