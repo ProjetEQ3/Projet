@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,11 @@ import java.util.List;
 @RequestMapping("/employer")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EmployerController{
-	private final EmployerService empService;
+	private final EmployerService employerService;
 
-	public EmployerController(EmployerService empService){
-		this.empService = empService;
+	@Autowired
+	public EmployerController(EmployerService employerService){
+		this.employerService = employerService;
 	}
 
 	@PostMapping("/register")
@@ -27,14 +29,14 @@ public class EmployerController{
 		Validation.validateEmployer(employerDTO);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.empService.createEmployer(employerDTO));
+				.body(this.employerService.createEmployer(employerDTO));
 	}
 
 	@GetMapping("/offer/all")
 	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.empService.getAllJobOffers(employerId));
+				.body(this.employerService.getAllJobOffers(employerId));
 	}
 
 	@PostMapping("/offer")
@@ -42,7 +44,7 @@ public class EmployerController{
 		Validation.validateJobOffer(JobOffer);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.empService.createJobOffer(JobOffer, employerId));
+				.body(this.employerService.createJobOffer(JobOffer, employerId));
 	}
 
 	@PutMapping("/offer")
@@ -50,12 +52,12 @@ public class EmployerController{
 		Validation.validateJobOffer(JobOffer);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.empService.updateJobOffer(JobOffer));
+				.body(this.employerService.updateJobOffer(JobOffer));
 	}
 
 	@DeleteMapping("/offer/{id}")
 	public ResponseEntity<?> deleteJobOffer(@PathVariable Long id){
-		this.empService.deleteJobOffer(id);
+		this.employerService.deleteJobOffer(id);
 		return ResponseEntity.accepted()
 				.build();
 	}

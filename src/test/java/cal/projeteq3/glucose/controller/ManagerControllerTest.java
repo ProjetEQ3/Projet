@@ -24,7 +24,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {ManagerController.class, ManagerService.class})
+@SpringJUnitConfig(classes = {ManagerController.class, ManagerService.class, CustomExceptionHandler.class})
 @WebMvcTest(ManagerController.class)
 public class ManagerControllerTest {
     @Autowired

@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 ;
 
-@SpringJUnitConfig(classes = {UserController.class, UserService.class})
+@SpringJUnitConfig(classes = {UserController.class, UserService.class, CustomExceptionHandler.class})
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 

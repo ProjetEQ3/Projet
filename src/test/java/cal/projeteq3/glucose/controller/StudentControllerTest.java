@@ -13,7 +13,9 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -34,13 +36,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {StudentController.class, StudentService.class})
+@SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class})
 @WebMvcTest(StudentController.class)
 public class StudentControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private StudentService studentService;
+
+    @BeforeEach
+    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     public void Register_Valid() throws Exception {
@@ -139,10 +146,8 @@ public class StudentControllerTest {
 //        Rien à arranger
 
 //        Act & Assert
-        assertThrows(ServletException.class, () -> {
-            mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
-                    .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-        });
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
     }
 
     @Test
@@ -207,21 +212,21 @@ public class StudentControllerTest {
 //        Rien à arranger
 
 //        Act & Assert
-        assertThrows(ServletException.class, () -> {
-            mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
-                    .andExpect(MockMvcResultMatchers.status().is5xxServerError());
-        });
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
+                .andExpect(MockMvcResultMatchers.status().is5xxServerError());
     }
 
     @Test
     public void AddCv_Valid() throws Exception {
 //        Arrange
+        Long studentId = 1L;
         byte[] fileData = new byte[100];
         mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 1L)
                         .file(new MockMultipartFile("file", "filename.pdf", "text/plain", fileData))
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
-                .andExpect(MockMvcResultMatchers.status().isAccepted());
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -242,14 +247,11 @@ public class StudentControllerTest {
         when(studentService.addCv(23L, new CvFileDTO())).thenThrow(new StudentNotFoundException(23L));
 
 //      Act and Assert
-        assertThrows(ServletException.class, () -> {
-                    mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 23L)
-                                    .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
-                                    .contentType(MediaType.MULTIPART_FORM_DATA)
-                            )
-                            .andExpect(MockMvcResultMatchers.status().isBadRequest());
-                }
-        );
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 23L)
+                        .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                )
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
     @Test
