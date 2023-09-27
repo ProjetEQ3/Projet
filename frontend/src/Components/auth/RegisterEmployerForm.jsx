@@ -3,9 +3,11 @@ import {axiosInstance} from "../../App";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import Loading from "../util/Loading";
+import {useTranslation} from "react-i18next";
 
 
 const RegisterEmployerForm = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -120,116 +122,41 @@ const RegisterEmployerForm = () => {
                 <div className="col-9 mx-auto">
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="firstName" className="mt-3">
-                                Prénom
-                            </label>
-                            <input
-                                type="text"
-                                className={`form-control ${
-                                    warnings.firstName ? "is-invalid" : ""
-                                }`}
-                                id="firstName"
-                                placeholder="Prénom"
-                                name="firstName"
-                                onChange={handleChanges}
-                            />
+                            <label htmlFor="firstName" className="mt-3">{t('firstName')}</label>
+                            <input type="text" className={`form-control ${warnings.firstName ? "is-invalid" : ""}`}
+                                   id="firstName" placeholder={t('placeHolderFirstName')} name="firstName" onChange={handleChanges}/>
                             <div className="text-danger">{warnings.firstName}</div>
-                            <label htmlFor="lastName" className="mt-3">
-                                Nom
-                            </label>
-                            <input
-                                type="text"
-                                className={`form-control ${
-                                    warnings.lastName ? "is-invalid" : ""
-                                }`}
-                                id="lastName"
-                                placeholder="Nom"
-                                name="lastName"
-                                onChange={handleChanges}
-                            />
+                            <label htmlFor="lastName" className="mt-3">{t('lastName')}</label>
+                            <input type="text" className={`form-control ${warnings.lastName ? "is-invalid" : ""}`}
+                                   id="lastName" placeholder={t('placeHolderLastName')} name="lastName" onChange={handleChanges}/>
                             <div className="text-danger">{warnings.lastName}</div>
-                            <label htmlFor="email" className="mt-3">
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                className={`form-control ${
-                                    warnings.email ? "is-invalid" : ""
-                                }`}
-                                id="email"
-                                placeholder="Email"
-                                name="email"
-                                onChange={handleChanges}
-                            />
+                            <label htmlFor="email" className="mt-3">{t('email')}</label>
+                            <input type="email" className={`form-control ${warnings.email ? "is-invalid" : ""}`}
+                                   id="email" placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges}/>
                             <div className="text-danger">{warnings.email}</div>
-                            <label htmlFor="organisationName" className="mt-3">
-                                Nom de l'organisme
-                            </label>
-                            <input
-                                type="text"
-                                className={`form-control ${
-                                    warnings.organisationName ? "is-invalid" : ""
-                                }`}
-                                id="organisationName"
-                                placeholder="Nom de l'organisme"
-                                name="organisationName"
-                                onChange={handleChanges}
-                            />
-                            <div className="text-danger">
-                                {warnings.organisationName}
-                            </div>
-                            <label htmlFor="organisationPhone" className="mt-3">
-                                Numéro de téléphone
-                            </label>
-                            <input
-                                type="text"
-                                className={`form-control ${
-                                    warnings.organisationPhone ? "is-invalid" : ""
-                                }`}
-                                id="organisationPhone"
-                                placeholder="Numéro de téléphone"
-                                name="organisationPhone"
-                                onChange={handleChanges}
-                            />
-                            <div className="text-danger">
-                                {warnings.organisationPhone}
-                            </div>
-                            <label htmlFor="password" className="mt-3">
-                                Mot de passe
-                            </label>
-                            <input
-                                type="password"
-                                className={`form-control ${
-                                    warnings.password ? "is-invalid" : ""
-                                }`}
-                                id="password"
-                                placeholder="Mot de passe"
-                                name="password"
-                                onChange={handleChanges}
-                            />
+                            <label htmlFor="organisationName" className="mt-3">{t('organisationName')}</label>
+                            <input type="text" className={`form-control ${warnings.organisationName ? "is-invalid":""}`}
+                                   id="organisationName" placeholder={t('placeHolderOrganisationName')} name="organisationName"
+                                   onChange={handleChanges}/>
+                            <div className="text-danger">{warnings.organisationName}</div>
+                            <label htmlFor="organisationPhone" className="mt-3">{t('organisationPhone')}</label>
+                            <input type="text" className={`form-control ${warnings.organisationPhone ? "is-invalid":""}`}
+                                   id="organisationPhone" placeholder={t('placeHolderOrganisationPhone')} name="organisationPhone"
+                                   onChange={handleChanges}/>
+                            <div className="text-danger">{warnings.organisationPhone}</div>
+                            <label htmlFor="password" className="mt-3">{t('password')}</label>
+                            <input type="password" className={`form-control ${warnings.password ? "is-invalid" : ""}`}
+                                   id="password" placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges}/>
                             <div className="text-danger">{warnings.password}</div>
-                            <label htmlFor="passwordConfirm" className="mt-3">
-                                Confirmer le mot de passe
-                            </label>
-                            <input
-                                type="password"
-                                className={`form-control ${
-                                    warnings.passwordConfirm ? "is-invalid" : ""
-                                }`}
-                                id="passwordConfirm"
-                                placeholder="Confirmer le mot de passe"
-                                name="passwordConfirm"
-                                onChange={handleChanges}
-                            />
-                            <div className="text-danger">
-                                {warnings.passwordConfirm}
-                            </div>
+                            <label htmlFor="passwordConfirm" className="mt-3">{t('passwordConfirm')}</label>
+                            <input type="password" className={`form-control ${warnings.passwordConfirm ? "is-invalid":""}`}
+                                   id="passwordConfirm" placeholder={t('placeHolderPasswordConfirm')} name="passwordConfirm"
+                                   onChange={handleChanges}/>
+                            <div className="text-danger">{warnings.passwordConfirm}</div>
                         </div>
                         <div className="row my-4">
                             <div className="col-12 col-md-4 mx-auto">
-                                <button type="submit" className="btn btn-outline-ose col-12">
-                                    S'inscrire
-                                </button>
+                                <button type="submit" className="btn btn-outline-ose col-12">{t('registerSubmit')}</button>
                             </div>
                         </div>
                     </form>

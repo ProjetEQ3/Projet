@@ -4,8 +4,10 @@ import {toast} from "react-toastify"
 import {axiosInstance} from "../../App"
 import User from "../../model/User";
 import Loading from "../util/Loading";
+import {useTranslation} from "react-i18next";
 
 const LoginForm = ({user, setUser}) => {
+	const {t} = useTranslation()
 	const navigate = useNavigate()
 	const [isLoading, setIsLoading] = useState(false)
 	const [formData, setFormData] = useState({
@@ -26,24 +28,21 @@ const LoginForm = ({user, setUser}) => {
 					newUser.init(response.data)
 					newUser.isLoggedIn = true
 					setUser(newUser)
-					toast.success("Vous êtes connecté")
+					toast.success(t('successLogin'))
 				})
 				.catch((error) => {
-					toast.error("Utilisateur ou mot de passe incorrect")
+					toast.error(t('errorLogin'))
 				})
 	}
 
 	const validateUser = () => {
 		let isValid = true
 		if(!validateEmail()){
-			toast.error('L\'adresse courriel doit être en format d\'adresse courriel');
+			toast.error(t('wrongEmail'))
 			isValid = false
 		}
 		if(!validatePassword()){
-			toast.error("Mot de passe invalide. " +
-				"Le mot de passe doit comporter au moins 8 caractères " +
-				"et contenir au moins une lettre majuscule, une lettre minuscule et un chiffre"
-			)
+			toast.error(t('wrongPassword'))
 			isValid = false
 		}
 		return isValid
@@ -80,12 +79,12 @@ const LoginForm = ({user, setUser}) => {
 							<div className="row">
 								<div className="col-9 mx-auto">
 								<form id="login-form" className="form-group">
-									<label htmlFor="colFormLabelSm" className="col-sm-3 mt-3">Email</label>
-									<input type="email" className="form-control" placeholder="Entrez email" name="email" onChange={handleChanges} required/>
-									<label htmlFor="colFormLabelLg" className="col-sm-3 mt-3">Password</label>
-									<input type="password" className="form-control" placeholder="Mot de passe" name="password" onChange={handleChanges} required/>
+									<label htmlFor="colFormLabelSm" className="col-sm-3 mt-3">{t('email')}</label>
+									<input type="email" className="form-control" placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges} required/>
+									<label htmlFor="colFormLabelLg" className="col-sm-3 mt-3">{t('password')}</label>
+									<input type="password" className="form-control" placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges} required/>
 									<div className="row col-6 mx-auto">
-										<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>Se connecter</button>
+										<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>{t('loginSubmit')}</button>
 									</div>
 								</form>
 								</div>

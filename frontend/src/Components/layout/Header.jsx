@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../../logo.png";
 import {NavLink} from "react-router-dom";
+import LngSelector from "../util/LngSelector";
 
 function Header({user}) {
     return (
@@ -17,10 +18,12 @@ function Header({user}) {
                         <p className="lead d-none d-md-block">Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 text-center lh-1">
+                                <LngSelector/>
                                 <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
                                 <a className="text-light text-decoration-none h6" href="/">Se Déconnecter</a>
                             </div> :
                             <div className="align-self-start d-flex m-3">
+                                <LngSelector/>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/login">Connexion</a>
                                 <div className="vr"></div>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/register">Inscription</a>
