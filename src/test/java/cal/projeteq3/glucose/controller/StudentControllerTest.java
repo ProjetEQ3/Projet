@@ -215,7 +215,7 @@ public class StudentControllerTest {
 //        Arrange
         byte[] fileData = new byte[100];
         mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 1L)
-                        .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
+                        .file(new MockMultipartFile("file", "filename.pdf", "text/plain", fileData))
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(MockMvcResultMatchers.status().isAccepted());

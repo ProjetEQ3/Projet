@@ -48,6 +48,7 @@ public class StudentController{
 	){
 		if(file.isEmpty()) return ResponseEntity.badRequest().build();
 		try{
+			Validation.validateCvFileName(file.getOriginalFilename());
 			byte[] fileData = file.getBytes();
 			CvFileDTO cvFileDTO = new CvFileDTO();
 			cvFileDTO.setFileName(file.getOriginalFilename());
@@ -55,8 +56,10 @@ public class StudentController{
 			cvFileDTO.setFileData(fileData);
 			CvFileDTO cvFileRes = studentService.addCv(studentId, cvFileDTO);
 			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(cvFileRes);
+		}catch(ValidationException e) {
+			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
-			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").body(null);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
 		}
 	}
 
@@ -66,7 +69,7 @@ public class StudentController{
 			studentService.deleteCv(studentId);
 			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
-			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").build();
 		}
 	}
 
