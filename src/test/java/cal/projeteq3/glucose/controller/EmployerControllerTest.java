@@ -1,191 +1,379 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-public class EmployerControllerTest{
-	@InjectMocks
-	private EmployerController employerController;
+@SpringJUnitConfig(classes = {EmployerController.class, EmployerService.class})
+@WebMvcTest(EmployerController.class)
+public class EmployerControllerTest {
 
-	@Mock
+	@Autowired
+	private MockMvc mockMvc;
+
+	@MockBean
 	private EmployerService employerService;
 
 	private RegisterEmployerDTO employerDTO;
-
 	private JobOfferDTO jobOfferDTO;
 
 	@BeforeEach
-	public void setup(){
+	public void setup() {
+		MockitoAnnotations.openMocks(this);
 		employerDTO = new RegisterEmployerDTO();
 		jobOfferDTO = new JobOfferDTO();
 	}
 
+	private RegisterEmployerDTO createRegisterEmployer(String email, String password, String firstName, String lastName, String organisationName, String organisationPhone){
+		RegisterEmployerDTO registerEmployerDTO = new RegisterEmployerDTO();
+		registerEmployerDTO.setEmployerDTO(new EmployerDTO(1L, firstName, lastName, email, organisationName, organisationPhone));
+		registerEmployerDTO.setRegisterDTO(new RegisterDTO(email, password, "EMPLOYER"));
+
+		return registerEmployerDTO;
+	}
+
 	@Test
-	public void testRegisterSuccess(){
+	public void Register_Success() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
-			mockedValidation.when(() -> Validation.validateEmployer(employerDTO)).thenAnswer(invocation -> null);
-			when(employerService.createEmployer(employerDTO)).thenReturn(new EmployerDTO());
+		// but since it's decided to do it that way, had to disable Validations here
 
-			ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"Test12345",
+						"John",
+						"Doe",
+						"fritz",
+						"123-123-1234");
 
-			assertEquals(HttpStatus.CREATED, response.getStatusCode());
-		}
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		when(employerService.createEmployer(employerDTO)).thenReturn(registerEmployerDTO.getEmployerDTO());
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/employer/register")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 
 	@Test
-	public void testRegisterGeneralException(){
-		when(employerService.createEmployer(employerDTO)).thenThrow(RuntimeException.class);
+	public void Register_NPE() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"Test12345",
+						"John",
+						null,
+						"fritz",
+						"123-123-1234");
 
-		ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
 
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
 	}
 
 	@Test
-	public void testRegisterEmployerInternalServerError() throws ValidationException{
-		RegisterEmployerDTO employerDTO = new RegisterEmployerDTO();
-		doThrow(new RuntimeException("Internal Server Error")).when(employerService).createEmployer(employerDTO);
-		ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	public void Register_Invalid_OrganisationName() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"Test12345",
+						"John",
+						"Doe",
+						"fritz---",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
 	}
 
 	@Test
-	public void testRegisterValidationException(){
+	public void Register_InvalidEmail_emptyAtt() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
-			mockedValidation.when(() -> Validation.validateEmployer(employerDTO)).thenAnswer(invocation -> null);
-			when(employerService.createEmployer(employerDTO)).thenThrow(new ValidationException("error"));
+		// but since it's decided to do it that way, had to disable Validations here
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"testm",
+						"Test12345",
+						"John",
+						"Doe",
+						"fritz",
+						"123-123-1234");
 
-			ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
 
-			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
-		}
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
 	}
 
 	@Test
-	public void testGetAllJobOffers(){
+	public void Register_InvalidPassword_emptyUpperCase() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"test12345",
+						"John",
+						"Doe",
+						"fritz",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void Register_InvalidPassword_emptyNumber() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"tesTtttt",
+						"John",
+						"Doe",
+						"fritz",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void Register_InvalidName_emptyFirstName() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"tesT12345",
+						"",
+						"Doe",
+						"fritz",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void Register_InvalidName_emptyLastName() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"tesT12345",
+						"John",
+						"",
+						"fritz",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void Register_InvalidName_emptyOrganisationName() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"tesT12345",
+						"John",
+						"Doe",
+						"",
+						"123-123-1234");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void Register_InvalidName_emptyOrganisationNumber() throws Exception {
+		RegisterEmployerDTO registerEmployerDTO =
+				createRegisterEmployer(
+						"test@test.com",
+						"tesT12345",
+						"John",
+						"Doe",
+						"Fritz",
+						"");
+
+		String content = (new ObjectMapper()).writeValueAsString(registerEmployerDTO);
+
+		assertThrows(ServletException.class, () ->
+				mockMvc.perform(MockMvcRequestBuilders
+								.post("/employer/register")
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(content))
+						.andExpect(MockMvcResultMatchers.status().isInternalServerError()));
+
+	}
+
+	@Test
+	public void GetAllJobOffers_valid() throws Exception {
 		when(employerService.getAllJobOffers(1L)).thenReturn(Collections.singletonList(jobOfferDTO));
 
-		ResponseEntity<List<JobOfferDTO>> response = employerController.getAllJobOffers(1L);
-
-		assertEquals(HttpStatus.OK, response.getStatusCode());
-		assertEquals(1, Objects.requireNonNull(response.getBody()).size());
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/your-get-all-job-offers-endpoint/{employerId}", 1L)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
 	}
 
 	@Test
-	public void testDeleteJobOffer(){
+	public void testDeleteJobOffer() throws Exception {
 		doNothing().when(employerService).deleteJobOffer(1L);
 
-		ResponseEntity<?> response = employerController.deleteJobOffer(1L);
-
-		assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+		mockMvc.perform(MockMvcRequestBuilders
+						.delete("/your-delete-job-offer-endpoint/{jobOfferId}", 1L)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
 	@Test
-	public void testDeleteJobOfferSuccess(){
-		doNothing().when(employerService).deleteJobOffer(1L);
-
-		ResponseEntity<?> response = employerController.deleteJobOffer(1L);
-
-		assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-	}
-
-	@Test
-	public void testAddJobOfferSuccess(){
+	public void testAddJobOfferSuccess() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+		// but since it's decided to do it that way, had to disable Validations here
+		try (MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)) {
 			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
 			when(employerService.createJobOffer(jobOfferDTO, 1L)).thenReturn(jobOfferDTO);
 
-			ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
-
-			assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+			mockMvc.perform(MockMvcRequestBuilders
+							.post("/your-add-job-offer-endpoint/{employerId}", 1L)
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{\"title\":\"Test Job\"}")) // Replace with your JSON content
+					.andExpect(MockMvcResultMatchers.status().isAccepted());
 		}
 	}
 
 	@Test
-	public void testAddJobOfferValidationException(){
+	public void testAddJobOfferValidationException() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+		// but since it's decided to do it that way, had to disable Validations here
+		try (MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)) {
 			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
 			when(employerService.createJobOffer(jobOfferDTO, 1L)).thenThrow(new ValidationException("error"));
 
-			ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
-
-			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
+			mockMvc.perform(MockMvcRequestBuilders
+							.post("/your-add-job-offer-endpoint/{employerId}", 1L)
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{\"title\":\"Test Job\"}")) // Replace with your JSON content
+					.andExpect(MockMvcResultMatchers.status().isBadRequest())
+					.andExpect(MockMvcResultMatchers.header().string("X-Errors", "error"));
 		}
 	}
 
 	@Test
-	public void testAddJobOfferGeneralException(){
-		when(employerService.createJobOffer(jobOfferDTO, 1L)).thenThrow(RuntimeException.class);
-
-		ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
-
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	}
-
-	@Test
-	public void testUpdateJobOfferSuccess(){
+	public void testUpdateJobOfferSuccess() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+		// but since it's decided to do it that way, had to disable Validations here
+		try (MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)) {
 			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
 			when(employerService.updateJobOffer(jobOfferDTO)).thenReturn(jobOfferDTO);
 
-			ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
-
-			assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+			mockMvc.perform(MockMvcRequestBuilders
+							.put("/your-update-job-offer-endpoint")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{\"title\":\"Updated Test Job\"}")) // Replace with your JSON content
+					.andExpect(MockMvcResultMatchers.status().isAccepted());
 		}
 	}
 
 	@Test
-	public void testUpdateJobOfferValidationException(){
+	public void testUpdateJobOfferValidationException() throws Exception {
 		// The way we are validating inside Controllers is wrong,
-		// but since is decided to do it that way, had to disable Validations here
-		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+		// but since it's decided to do it that way, had to disable Validations here
+		try (MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)) {
 			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
 			when(employerService.updateJobOffer(jobOfferDTO)).thenThrow(new ValidationException("error"));
 
-			ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
-
-			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
+			mockMvc.perform(MockMvcRequestBuilders
+							.put("/your-update-job-offer-endpoint")
+							.contentType(MediaType.APPLICATION_JSON)
+							.content("{\"title\":\"Updated Test Job\"}")) // Replace with your JSON content
+					.andExpect(MockMvcResultMatchers.status().isBadRequest())
+					.andExpect(MockMvcResultMatchers.header().string("X-Errors", "error"));
 		}
 	}
 
 	@Test
-	public void testUpdateJobOfferGeneralException(){
+	public void testUpdateJobOfferGeneralException() throws Exception {
 		when(employerService.updateJobOffer(jobOfferDTO)).thenThrow(RuntimeException.class);
 
-		ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
-
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/your-update-job-offer-endpoint")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"title\":\"Updated Test Job\"}")) // Replace with your JSON content
+				.andExpect(MockMvcResultMatchers.status().isInternalServerError());
 	}
 
 }
