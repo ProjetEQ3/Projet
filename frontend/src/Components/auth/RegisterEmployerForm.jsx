@@ -66,45 +66,48 @@ const RegisterEmployerForm = () => {
         const validationErrors = {};
 
         if(formData.firstName === ''){
-            validationErrors.firstName = "Le prénom est obligatoire";
+            validationErrors.firstName = t('firstNameRequired');
         }
         else if (!/^[a-zA-Z-]+$/.test(formData.firstName)) {
-            validationErrors.firstName = "Le prénom doit contenir seulement des lettres";
+            validationErrors.firstName = t('firstNameInvalid');
         }
 
         if(formData.lastName === ''){
-            validationErrors.lastName = "Le nom est obligatoire";
+            validationErrors.lastName = t('lastNameRequired');
         }
         else if(formData.lastName && !/^[a-zA-Z-]+$/.test(formData.lastName)){
-            validationErrors.lastName = "Le nom doit contenir seulement des lettres";
+            validationErrors.lastName = t('lastNameInvalid');
         }
 
         if(formData.email === ''){
-            validationErrors.email = "L'email est obligatoire";
+            validationErrors.email = t('emailRequired');
         }
         else if(formData.email && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(formData.email)){
-            validationErrors.email = "L'adresse courriel doit être en format d'adresse courriel";
+            validationErrors.email = t('emailInvalid');
         }
 
         if(formData.organisationName === ''){
-            validationErrors.organisationName = "Le nom de l'organisme est obligatoire";
+            validationErrors.organisationName = t('organisationNameRequired');
         }
         else if(!/^[a-zA-Z0-9-. ]+$/.test(formData.organisationName)){
-            validationErrors.organisationName = "Le nom de l'organisme doit être en format alphanumérique";
+            validationErrors.organisationName = t('organisationNameInvalid');
         }
 
         if(formData.organisationPhone === ''){
-            validationErrors.organisationPhone = "Le numéro de l'organisme est obligatoire";
+            validationErrors.organisationPhone = t('organisationPhoneRequired');
         }
         else if(!/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(formData.organisationPhone)){
-            validationErrors.organisationPhone = "Le numéro de l'organisme doit suivre un format de numéro de téléphone. Exemple: 514-123-4567";
+            validationErrors.organisationPhone = t('organisationPhoneInvalid');
         }
 
-        if(formData.password.length < 8){
-            validationErrors.password = "Le mot de passe doit contenir au moins 8 caractères";
+        if(formData.password === ''){
+            validationErrors.password = t('passwordRequired');
+        }
+        else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)) {
+            validationErrors.password = t('passwordInvalid');
         }
         else if (formData.password !== formData.passwordConfirm) {
-            validationErrors.passwordConfirm = "Les deux mots de passe ne correspondent pas";
+            validationErrors.passwordConfirm = t('passwordConfirmInvalid');
         }
 
         setWarnings(validationErrors);

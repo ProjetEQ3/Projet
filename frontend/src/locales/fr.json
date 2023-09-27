@@ -1,8 +1,6 @@
 {
   "successLogin": "Connexion réussie.",
   "errorLogin": "Utilisateur ou mot de passe incorrect.",
-  "wrongEmail": "Adresse email invalide.",
-  "wrongPassword": "Mot de passe invalide. Il doit contenir au moins 8 caractères dont une majuscule, une minuscule et un chiffre.",
   "email": "Adresse courriel",
   "placeHolderEmail": "Entrez votre adresse courriel",
   "password": "Mot de passe",
@@ -20,6 +18,19 @@
   "registerSubmit": "S'inscrire",
   "departmentStudent": "Programme d'étude",
   "placeHolderDepartmentStudent": "Sélectionnez votre programme d'étude",
+
+  "firstNameRequired": "Le prénom est obligatoire.",
+  "lastNameRequired": "Le nom est obligatoire.",
+  "matriculeRequired": "Le matricule est obligatoire.",
+  "emailRequired": "L'adresse courriel est obligatoire.",
+  "passwordRequired": "Le mot de passe est obligatoire.",
+  "departmentStudentRequired": "Le programme d'étude est obligatoire.",
+  "firstNameInvalid": "Le prénom doit contenir seulement des lettres.",
+  "lastNameInvalid": "Le nom doit contenir seulement des lettres.",
+  "matriculeInvalid": "Le matricule doit contenir seulement des chiffres.",
+  "emailInvalid": "L'adresse courriel doit être valide.",
+  "passwordInvalid": "Le mot de passe doit contenir au moins 8 caractères, dont au moins une lettre et un chiffre.",
+  "passwordConfirmInvalid": "Les mots de passe ne correspondent pas.",
 
   "_410B0": "410.B0 - Techniques de comptabilité et de gestion",
   "_241A1": "241.A1 - Techniques de génie mécanique",
@@ -42,5 +53,9 @@
   "organisationName": "Nom de l'organisation",
   "placeHolderOrganisationName": "Entrez le nom de l'organisation",
   "organisationPhone": "Téléphone de l'organisation",
-  "placeHolderOrganisationPhone": "Entrez le numéro de téléphone de l'organisation"
+  "placeHolderOrganisationPhone": "Entrez le numéro de téléphone de l'organisation",
+  "organisationNameRequired": "Le nom de l'organisation est obligatoire.",
+  "organisationPhoneRequired": "Le numéro de téléphone de l'organisation est obligatoire.",
+  "organisationNameInvalid": "Le nom de l'organisation doit être en format alphanumérique.",
+  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567"
 }

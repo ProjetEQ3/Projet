@@ -66,35 +66,39 @@ const RegisterStudentForm = () => {
         const validationErrors = {};
 
         if (formData.firstName === '') {
-            validationErrors.firstName = "Le prénom est obligatoire";
+            validationErrors.firstName = t('firstNameRequired');
         } else if (!/^[a-zA-Z- ]+$/.test(formData.firstName)) {
-            validationErrors.firstName = "Le prénom doit contenir seulement des lettres";
+            validationErrors.firstName = t('firstNameInvalid');
         }
 
         if (formData.lastName === '') {
-            validationErrors.lastName = "Le nom est obligatoire";
+            validationErrors.lastName = t('lastNameRequired');
         } else if (!/^[a-zA-Z- ]+$/.test(formData.lastName)) {
-            validationErrors.lastName = "Le nom doit contenir seulement des lettres";
+            validationErrors.lastName = t('lastNameInvalid');
         }
 
-        if (formData.matricule !== '' && !/^\d+$/.test(formData.matricule)) {
-            validationErrors.matricule = "Le matricule doit contenir seulement des chiffres";
+        if (formData.matricule === '') {
+            validationErrors.matricule = t('matriculeRequired');
+        } else if (!/^\d+$/.test(formData.matricule)) {
+            validationErrors.matricule = t('matriculeInvalid');
         }
 
         if (formData.email === '') {
-            validationErrors.email = "L'email est obligatoire";
+            validationErrors.email = t('emailRequired');
         } else if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}$/.test(formData.email)) {
-            validationErrors.email = "L'adresse courriel doit être en format d'adresse courriel";
+            validationErrors.email = t('emailInvalid');
         }
 
         if (formData.department === '') {
-            validationErrors.department = "Vous devez choisir un programme";
+            validationErrors.department = t('departmentRequired');
         }
 
-        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)) {
-            validationErrors.password = "Le mot de passe doit contenir au moins 8 caractères incluant une majuscule et un chiffre";
+        if (formData.password === '') {
+            validationErrors.password = t('passwordRequired');
+        } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(formData.password)) {
+            validationErrors.password = t('passwordInvalid');
         } else if (formData.password !== formData.passwordConfirm) {
-            validationErrors.passwordConfirm = "Les deux mots de passe ne correspondent pas";
+            validationErrors.passwordConfirm = t('passwordConfirmInvalid');
         }
 
         setWarnings(validationErrors);
