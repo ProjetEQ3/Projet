@@ -31,64 +31,51 @@ public class StudentController{
 
 	@PostMapping("/register")
 	public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student){
-		try{
-			Validation.validateStudent(student);
-			return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(studentService.createStudent(student));
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
-		}
+		Validation.validateStudent(student);
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(studentService.createStudent(student));
 	}
 
 	@PostMapping("/cv/{studentId}")
 	public ResponseEntity<CvFileDTO> addCv(
 		@PathVariable Long studentId,
 		@RequestParam("file") MultipartFile file
-	){
+	) throws IOException {
 		if(file.isEmpty()) return ResponseEntity.badRequest().build();
-		try{
-			Validation.validateCvFileName(file.getOriginalFilename());
-			byte[] fileData = file.getBytes();
-			CvFileDTO cvFileDTO = new CvFileDTO();
-			cvFileDTO.setFileName(file.getOriginalFilename());
-			cvFileDTO.setCvState(CvState.SUBMITTED);
-			cvFileDTO.setFileData(fileData);
-			CvFileDTO cvFileRes = studentService.addCv(studentId, cvFileDTO);
-			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(cvFileRes);
-		}catch(ValidationException e) {
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
-		}
+
+		Validation.validateCvFileName(file.getOriginalFilename());
+
+		byte[] fileData = file.getBytes();
+		CvFileDTO cvFileDTO = new CvFileDTO();
+		cvFileDTO.setFileName(file.getOriginalFilename());
+		cvFileDTO.setCvState(CvState.SUBMITTED);
+		cvFileDTO.setFileData(fileData);
+		CvFileDTO cvFileRes = studentService.addCv(studentId, cvFileDTO);
+
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON).body(cvFileRes);
 	}
 
 	@DeleteMapping("/cv/{studentId}")
 	public ResponseEntity<Void> deleteCv(@PathVariable Long studentId){
-		try{
-			studentService.deleteCv(studentId);
-			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).build();
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").build();
-		}
+		studentService.deleteCv(studentId);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON).build();
 	}
 
 	@GetMapping("/jobOffers/{department}")
 	public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department){
-		try{
-			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
-		}
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
 	}
 
 	@GetMapping("/jobOffers/open/{department}")
 	public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department){
-		try{
-			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
-		}
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
 	}
 
 }
