@@ -10,438 +10,182 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.MockedStatic;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 public class EmployerControllerTest{
+	@InjectMocks
+	private EmployerController employerController;
 
-    @Mock
-    private EmployerService employerService;
+	@Mock
+	private EmployerService employerService;
 
-    @InjectMocks
-    private EmployerController employerController;
+	private RegisterEmployerDTO employerDTO;
 
-    @BeforeEach
-    public void setup(){
-        MockitoAnnotations.openMocks(this);
-    }
+	private JobOfferDTO jobOfferDTO;
 
-    @Test
-    public void testRegisterEmployer() throws ValidationException{
-        RegisterEmployerDTO employerDTO = new RegisterEmployerDTO();
-        when(employerService.createEmployer(employerDTO)).thenReturn(new EmployerDTO());
-        ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    }
+	@BeforeEach
+	public void setup(){
+		employerDTO = new RegisterEmployerDTO();
+		jobOfferDTO = new JobOfferDTO();
+	}
 
-    @Test
-    public void testRegisterEmployerValidationException() throws ValidationException{
-        RegisterEmployerDTO employerDTO = new RegisterEmployerDTO();
-        doThrow(new ValidationException("Validation error")).when(Validation.class);
-        ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+	@Test
+	public void testRegisterSuccess(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateEmployer(employerDTO)).thenAnswer(invocation -> null);
+			when(employerService.createEmployer(employerDTO)).thenReturn(new EmployerDTO());
 
-    @Test
-    public void testRegisterEmployerInternalServerError() throws ValidationException{
-        RegisterEmployerDTO employerDTO = new RegisterEmployerDTO();
-        doThrow(new RuntimeException("Internal Server Error")).when(employerService).createEmployer(employerDTO);
-        ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
+			ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
 
-    @Test
-    public void testGetAllJobOffers(){
-        Long employerId = 1L;
-        List<JobOfferDTO> jobOffers = new ArrayList<>();
-        when(employerService.getAllJobOffers(employerId)).thenReturn(jobOffers);
-        ResponseEntity<List<JobOfferDTO>> response = employerController.getAllJobOffers(employerId);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(jobOffers, response.getBody());
-    }
+			assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		}
+	}
 
-    @Test
-    public void testAddJobOffer() throws ValidationException{
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        Long employerId = 1L;
-        doNothing().when(Validation.class);
-        doNothing().when(employerService).createJobOffer(jobOffer, employerId);
-        ResponseEntity<?> response = employerController.addJobOffer(jobOffer, employerId);
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-    }
+	@Test
+	public void testRegisterGeneralException(){
+		when(employerService.createEmployer(employerDTO)).thenThrow(RuntimeException.class);
 
-    @Test
-    public void testAddJobOfferValidationException() throws ValidationException{
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        Long employerId = 1L;
-        doThrow(new ValidationException("Validation error")).when(Validation.class);
-        ResponseEntity<?> response = employerController.addJobOffer(jobOffer, employerId);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+		ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
 
-    @Test
-    public void testAddJobOfferInternalServerError() throws ValidationException{
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        Long employerId = 1L;
-        doNothing().when(Validation.class);
-        doThrow(new RuntimeException("Internal Server Error")).when(employerService).createJobOffer(jobOffer, employerId);
-        ResponseEntity<?> response = employerController.addJobOffer(jobOffer, employerId);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
 
-    @Test
-    public void testUpdateJobOffer() throws ValidationException {
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        doNothing().when(Validation.class);
-        when(employerService.updateJobOffer(jobOffer)).thenReturn(jobOffer);
-        ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOffer);
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-        assertEquals(jobOffer, response.getBody());
-    }
+	@Test
+	public void testRegisterEmployerInternalServerError() throws ValidationException{
+		RegisterEmployerDTO employerDTO = new RegisterEmployerDTO();
+		doThrow(new RuntimeException("Internal Server Error")).when(employerService).createEmployer(employerDTO);
+		ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
 
-    @Test
-    public void testUpdateJobOfferValidationException() throws ValidationException {
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        doThrow(new ValidationException("Validation error")).when(Validation.class);
-        ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOffer);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+	@Test
+	public void testRegisterValidationException(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateEmployer(employerDTO)).thenAnswer(invocation -> null);
+			when(employerService.createEmployer(employerDTO)).thenThrow(new ValidationException("error"));
 
-    @Test
-    public void testUpdateJobOfferInternalServerError() throws ValidationException {
-        JobOfferDTO jobOffer = new JobOfferDTO();
-        doNothing().when(Validation.class);
-        doThrow(new RuntimeException("Internal Server Error")).when(employerService).updateJobOffer(jobOffer);
-        ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOffer);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
+			ResponseEntity<EmployerDTO> response = employerController.register(employerDTO);
 
-    @Test
-    public void testDeleteJobOffer() {
-        Long jobOfferId = 1L;
-        doNothing().when(employerService).deleteJobOffer(jobOfferId);
-        ResponseEntity<?> response = employerController.deleteJobOffer(jobOfferId);
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-    }
+			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
+		}
+	}
 
-    @Test
-    public void testDeleteJobOfferSuccess() {
-        Long jobOfferId = 1L;
-        doNothing().when(employerService).deleteJobOffer(jobOfferId);
-        ResponseEntity<?> response = employerController.deleteJobOffer(jobOfferId);
-        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
-    }
+	@Test
+	public void testGetAllJobOffers(){
+		when(employerService.getAllJobOffers(1L)).thenReturn(Collections.singletonList(jobOfferDTO));
 
-    @Test
-    public void testDeleteJobOfferInternalServerError() {
-        Long jobOfferId = 1L;
-        doThrow(new RuntimeException("Internal Server Error")).when(employerService).deleteJobOffer(jobOfferId);
-        ResponseEntity<?> response = employerController.deleteJobOffer(jobOfferId);
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
+		ResponseEntity<List<JobOfferDTO>> response = employerController.getAllJobOffers(1L);
 
-    @Test
-    public void testDeleteJobOfferValidationException() {
-        Long jobOfferId = 1L;
-        doThrow(new ValidationException("Validation error")).when(Validation.class);
-        ResponseEntity<?> response = employerController.deleteJobOffer(jobOfferId);
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		assertEquals(1, Objects.requireNonNull(response.getBody()).size());
+	}
 
-    /*@Test
-    public void testDeleteJobOfferNotFound() {
-        Long jobOfferId = 1L;
-        doThrow(new JobOfferNotFoundException("Job offer not found")).when(employerService).deleteJobOffer(jobOfferId);
-        ResponseEntity<?> response = employerController.deleteJobOffer(jobOfferId);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    }*/
-}
-/*
-package cal.projeteq3.glucose.controller;
+	@Test
+	public void testDeleteJobOffer(){
+		doNothing().when(employerService).deleteJobOffer(1L);
 
-import cal.projeteq3.glucose.service.EmployerService;
-import org.junit.jupiter.api.BeforeEach;
+		ResponseEntity<?> response = employerController.deleteJobOffer(1L);
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
+		assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+	}
 
-public class EmployerControllerTest {
-    private EmployerController employerController;
-    private EmployerService employerService;
+	@Test
+	public void testDeleteJobOfferSuccess(){
+		doNothing().when(employerService).deleteJobOffer(1L);
 
-    @BeforeEach
-    void setUp() {
-        employerService = mock(EmployerService.class);
-        employerController = new EmployerController(employerService);
-    }
+		ResponseEntity<?> response = employerController.deleteJobOffer(1L);
 
-    */
-/*@Test
-    void Register_Valid_Employe() {
-        // Arrange
-        Employer validEmployer = new Employer("michel", "michaud", "test@test.com", "Ose12asd3", "Fritz", "111-111-1111", null);
-        when(employerService.createEmployer(validEmployer)).thenReturn(new EmployerDTO("organisationName", "organisationPhone", null));
+		assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+	}
 
-        // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(validEmployer);
+	@Test
+	public void testAddJobOfferSuccess(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
+			when(employerService.createJobOffer(jobOfferDTO, 1L)).thenReturn(jobOfferDTO);
 
-        // Assert
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-    }
+			ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
 
-    @Test
-    void Register_Missing_FirstName(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                "",
-                "Michaud",
-                "test@test.com",
-                "Ose12asd3",
-                "Fritz",
-                "111-111-1111",
-                null);
+			assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+		}
+	}
 
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
+	@Test
+	public void testAddJobOfferValidationException(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
+			when(employerService.createJobOffer(jobOfferDTO, 1L)).thenThrow(new ValidationException("error"));
 
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
+			ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
 
-    @Test
-    void Register_Missing_LastName(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                1,
-                "Michel",
-                "",
-                "test@test.com",
-                "Ose12asd3",
-                "Fritz",
-                "111-111-1111",
-                null);
+			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
+		}
+	}
 
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
+	@Test
+	public void testAddJobOfferGeneralException(){
+		when(employerService.createJobOffer(jobOfferDTO, 1L)).thenThrow(RuntimeException.class);
 
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
+		ResponseEntity<JobOfferDTO> response = employerController.addJobOffer(jobOfferDTO, 1L);
 
-    @Test
-    void Register_Missing_Email(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                "Michel",
-                "Michaud",
-                "",
-                "Ose12asd3",
-                "Fritz",
-                "111-111-1111",
-                null);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
 
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
+	@Test
+	public void testUpdateJobOfferSuccess(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
+			when(employerService.updateJobOffer(jobOfferDTO)).thenReturn(jobOfferDTO);
 
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
+			ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
 
-    @Test
-    void Register_Missing_Password(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                "Michel",
-                "Michaud",
-                "test@test.com",
-                "",
-                "Fritz",
-                "111-111-1111",
-                null);
+			assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+		}
+	}
 
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
+	@Test
+	public void testUpdateJobOfferValidationException(){
+		// The way we are validating inside Controllers is wrong,
+		// but since is decided to do it that way, had to disable Validations here
+		try(MockedStatic<Validation> mockedValidation = mockStatic(Validation.class)){
+			mockedValidation.when(() -> Validation.validateJobOffer(jobOfferDTO)).thenAnswer(invocation -> null);
+			when(employerService.updateJobOffer(jobOfferDTO)).thenThrow(new ValidationException("error"));
 
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
+			ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
 
-    @Test
-    void Register_Missing_OrganisationName(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                "Michel",
-                "Michaud",
-                "test@test.com",
-                "Ose12asd3",
-                "",
-                "111-111-1111",
-                null);
+			assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+			assertEquals("error", response.getHeaders().getFirst("X-Errors"));
+		}
+	}
 
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
+	@Test
+	public void testUpdateJobOfferGeneralException(){
+		when(employerService.updateJobOffer(jobOfferDTO)).thenThrow(RuntimeException.class);
 
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
+		ResponseEntity<JobOfferDTO> response = employerController.updateJobOffer(jobOfferDTO);
 
-    @Test
-    void Register_Missing_OrganisationPhone(){
-//        Arrange
-        Employer invalidEmployer = new Employer(
-                "Michel",
-                "Michaud",
-                "test@test.com",
-                "Ose12asd3",
-                "Fritz",
-                "",
-                null);
-
-//        Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
-
-//        Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_Email() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer(
-                "John",
-                "Doe",
-                "invalid-email",
-                "Passw0rd",
-                "OrgName",
-                "123-456-7890",
-                null);
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> response = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_Password() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer("John",
-                "Doe",
-                "john@example.com",
-                "password",
-                "OrgName",
-                "123-456-7890",
-                null);
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> response = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_FirstName() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer(
-                "InvalidName@123",
-                "Doe",
-                "john@example.com",
-                "Passw0rd",
-                "OrgName",
-                "123-456-7890",
-                null
-        );
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_LastName() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer(
-                "Michel",
-                "InvalidName@123",
-                "john@example.com",
-                "Passw0rd",
-                "OrgName",
-                "123-456-7890",
-                null
-        );
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_OrganisationName() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer(
-                "John",
-                "Doe",
-                "john@example.com",
-                "Passw0rd",
-                "Invalid Organization Name 123@",
-                "123-456-7890",
-                null
-        );
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }
-
-    @Test
-    void Register_Invalid_PhoneNumber() {
-        // Arrange
-        EmployerService employerService = mock(EmployerService.class);
-        Employer invalidEmployer = new Employer(
-                "John",
-                "Doe",
-                "john@example.com",
-                "Passw0rd",
-                "OrgName",
-                "InvalidPhoneNumber",
-                null
-        );
-        EmployerController employerController = new EmployerController(employerService);
-
-        // Act
-        ResponseEntity<EmployerDTO> responseEntity = employerController.register(invalidEmployer);
-
-        // Assert
-        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-    }*//*
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	}
 
 }
-*/

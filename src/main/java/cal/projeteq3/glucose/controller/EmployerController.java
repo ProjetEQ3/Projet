@@ -3,21 +3,18 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
-import jakarta.websocket.server.PathParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/employer")
 @CrossOrigin(origins = "http://localhost:3000")
 public class EmployerController{
-
 	private final EmployerService empService;
 
 	public EmployerController(EmployerService empService){
@@ -25,17 +22,16 @@ public class EmployerController{
 	}
 
 	@PostMapping("/register")
-    public ResponseEntity<EmployerDTO> register(@RequestBody RegisterEmployerDTO employerDTO) {
-        try {
-            Validation.validateEmployer(employerDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employerDTO));
-
-        } catch (ValidationException e) {
-            return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
-        }
-    }
+	public ResponseEntity<EmployerDTO> register(@RequestBody RegisterEmployerDTO employerDTO){
+		try{
+			Validation.validateEmployer(employerDTO);
+			return ResponseEntity.status(HttpStatus.CREATED).body(this.empService.createEmployer(employerDTO));
+		}catch(APIException e){
+			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
+		}
+	}
 
 	@GetMapping("/offer/all")
 	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId){
@@ -46,13 +42,11 @@ public class EmployerController{
 	public ResponseEntity<JobOfferDTO> addJobOffer(@RequestBody JobOfferDTO JobOffer, @RequestParam Long employerId){
 		try{
 			Validation.validateJobOffer(JobOffer);
-
 			return ResponseEntity.accepted().body(this.empService.createJobOffer(JobOffer, employerId));
-		}catch(ValidationException e){
+		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.header("X-Errors", "Invalid Operation").body(null);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalid Operation").body(null);
 		}
 	}
 
@@ -61,11 +55,10 @@ public class EmployerController{
 		try{
 			Validation.validateJobOffer(JobOffer);
 			return ResponseEntity.accepted().body(this.empService.updateJobOffer(JobOffer));
-		}catch(ValidationException e){
+		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-				.header("X-Errors", "Invalid operation").body(null);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalid operation").body(null);
 		}
 	}
 
