@@ -44,8 +44,8 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                                     </div>
                                     <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                         <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteOffer}>Supprimer</button>
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                     </div>
                                 </div>
                             </div>
