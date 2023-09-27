@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.StudentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -25,6 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
@@ -37,31 +39,41 @@ public class StudentControllerTest {
     @MockBean
     private StudentService studentService;
 
-//    @Test
-//    public void Register_Valid() throws Exception {
-//        Arrange
-//        RegisterStudentDTO registerStudentDTO = new RegisterStudentDTO();
-//        registerStudentDTO.setRegisterDTO(new RegisterDTO("blabla@example.ca", "Ose12345", "STUDENT"));
-//        registerStudentDTO.setStudentDTO(new StudentDTO());
-//        when(studentService.createStudent(registerStudentDTO)).thenReturn(new StudentDTO());
-//        mockMvc.perform(MockMvcRequestBuilders.post("/student/register")
-//                        .requestAttr("student", registerStudentDTO)
-//                )
-//                .andExpect(MockMvcResultMatchers.status().isCreated());
-//    }
+    @Test
+    public void Register_Valid() throws Exception {
+        StudentDTO returnedStudent =
+                new StudentDTO(1L, "asd", "asd", "blabla@example.ca", "STUDENT", "1231231", "_420B0");
 
-//    @Test
-//    public void Register_InvalidPassword() throws Exception {
+        RegisterStudentDTO validDTO = new RegisterStudentDTO();
+        validDTO.setRegisterDTO(new RegisterDTO("blabla@example.ca", "Ose12345", "STUDENT"));
+        validDTO.setStudentDTO(new StudentDTO("Test", "Test", "1231231", Department._420B0));
+
+        when(studentService.createStudent(validDTO)).thenReturn(returnedStudent);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String validDTOJson = objectMapper.writeValueAsString(validDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/student/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(validDTOJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void Register_InvalidPassword() throws Exception {
 //        Arrange
-//        RegisterStudentDTO registerStudentDTO = new RegisterStudentDTO();
-//        registerStudentDTO.setRegisterDTO(new RegisterDTO("blabla@example.ca", "123456", "STUDENT"));
-//        registerStudentDTO.setStudentDTO(new StudentDTO());
-//        when(studentService.createStudent(registerStudentDTO)).thenThrow(new InvalidEmailOrPasswordException());
-//        mockMvc.perform(MockMvcRequestBuilders.post("/student/register")
-//                        .requestAttr("student", registerStudentDTO)
-//                )
-//                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
-//    }
+        RegisterStudentDTO registerStudentDTO = new RegisterStudentDTO();
+        registerStudentDTO.setRegisterDTO(new RegisterDTO("blabla@example.ca", "12345", "STUDENT"));
+        registerStudentDTO.setStudentDTO(new StudentDTO("Test", "Test", "1231231", Department._420B0));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/student/register")
+                        .requestAttr("student", registerStudentDTO)
+                )
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 
     @Test
     public void GetJobOffersByDepartment_Valid() throws Exception {

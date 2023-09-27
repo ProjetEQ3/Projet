@@ -10,6 +10,7 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class StudentController{
 	public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student){
 		try{
 			Validation.validateStudent(student);
-			return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
+			return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(studentService.createStudent(student));
 		}catch(ValidationException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){
@@ -53,7 +54,7 @@ public class StudentController{
 			cvFileDTO.setCvState(CvState.SUBMITTED);
 			cvFileDTO.setFileData(fileData);
 			CvFileDTO cvFileRes = studentService.addCv(studentId, cvFileDTO);
-			return ResponseEntity.accepted().body(cvFileRes);
+			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(cvFileRes);
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").body(null);
 		}
@@ -63,7 +64,7 @@ public class StudentController{
 	public ResponseEntity<Void> deleteCv(@PathVariable Long studentId){
 		try{
 			studentService.deleteCv(studentId);
-			return ResponseEntity.accepted().build();
+			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).build();
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
 		}
@@ -72,7 +73,7 @@ public class StudentController{
 	@GetMapping("/jobOffers/{department}")
 	public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department){
 		try{
-			return ResponseEntity.accepted().body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
+			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(studentService.getJobOffersByDepartment(Department.valueOf(department)));
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
 		}
@@ -81,7 +82,7 @@ public class StudentController{
 	@GetMapping("/jobOffers/open/{department}")
 	public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department){
 		try{
-			return ResponseEntity.accepted().body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
+			return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").body(null);
 		}
