@@ -30,7 +30,6 @@ public class StudentController{
 
 	@PostMapping("/register")
 	public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student){
-//		System.out.print(student);
 		try{
 			Validation.validateStudent(student);
 			return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
@@ -53,10 +52,8 @@ public class StudentController{
 			cvFileDTO.setFileName(file.getOriginalFilename());
 			cvFileDTO.setCvState(CvState.SUBMITTED);
 			cvFileDTO.setFileData(fileData);
-			System.out.println("fileData: " + fileData.length);
-			return ResponseEntity.accepted().body(studentService.addCv(studentId, cvFileDTO));
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
+			CvFileDTO cvFileRes = studentService.addCv(studentId, cvFileDTO);
+			return ResponseEntity.accepted().body(cvFileRes);
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").body(null);
 		}
@@ -67,8 +64,6 @@ public class StudentController{
 		try{
 			studentService.deleteCv(studentId);
 			return ResponseEntity.accepted().build();
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
 		}catch(Exception e){
 			return ResponseEntity.status(400).header("X-Errors", "Invalide operation").build();
 		}

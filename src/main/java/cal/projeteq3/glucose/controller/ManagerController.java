@@ -41,8 +41,7 @@ public class ManagerController {
     }
 
     @GetMapping("jobOffers/employer/{employerId}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmploye(@PathVariable Long employerId){
-        System.out.println("ID: " + employerId);
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId){
         return ResponseEntity.ok(employerService.getJobOffersDTOByEmployerId(employerId));
     }
 
@@ -78,19 +77,19 @@ public class ManagerController {
     }
 
     @GetMapping("cvs/pending")
-    public ResponseEntity<List<CvFileDTO>> getCVByState(){
+    public ResponseEntity<List<CvFileDTO>> getCvsPending(){
         return ResponseEntity.ok(managerService.getSubmittedCv());
     }
 
-//    @GetMapping("cv/{id}")
-//    public ResponseEntity<CvFileDTO> getCVById(@PathVariable Long id){
-//        CvFileDTO cv = managerService.getCvById(id);
-//        if(cv == null) return ResponseEntity.notFound().build();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + cv.getFileName());
-//        headers.set(HttpHeaders.CONTENT_TYPE, "application/pdf");
-//        headers.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(cv.getFileData().length));
-//        return new ResponseEntity<>(cv, headers, HttpStatus.OK);
-//    }
+//     @GetMapping("cv/{id}")
+//     public ResponseEntity<CvFileDTO> getCVById(@PathVariable Long id){
+//         CvFileDTO cv = managerService.getCvById(id);
+//         if(cv == null) return ResponseEntity.notFound().build();
+//         HttpHeaders headers = new HttpHeaders();
+//         headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + cv.getFileName());
+//         headers.set(HttpHeaders.CONTENT_TYPE, "application/pdf");
+//         headers.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(cv.getFileData().length));
+//         return new ResponseEntity<>(cv, headers, HttpStatus.OK);
+//     }
 
 }
