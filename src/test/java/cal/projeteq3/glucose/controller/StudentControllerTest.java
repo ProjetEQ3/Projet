@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,6 +30,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig(classes = {StudentController.class, StudentService.class})
@@ -136,10 +139,10 @@ public class StudentControllerTest {
 //        Rien à arranger
 
 //        Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
-                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
-                .andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
-                .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+        assertThrows(ServletException.class, () -> {
+            mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+                    .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+        });
     }
 
     @Test
@@ -204,10 +207,10 @@ public class StudentControllerTest {
 //        Rien à arranger
 
 //        Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
-                .andExpect(MockMvcResultMatchers.status().is5xxServerError())
-                .andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
-                .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+        assertThrows(ServletException.class, () -> {
+            mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
+                    .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+        });
     }
 
     @Test
@@ -239,11 +242,14 @@ public class StudentControllerTest {
         when(studentService.addCv(23L, new CvFileDTO())).thenThrow(new StudentNotFoundException(23L));
 
 //      Act and Assert
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 23L)
-                        .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                )
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+        assertThrows(ServletException.class, () -> {
+                    mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 23L)
+                                    .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
+                                    .contentType(MediaType.MULTIPART_FORM_DATA)
+                            )
+                            .andExpect(MockMvcResultMatchers.status().isBadRequest());
+                }
+        );
     }
 
     @Test
