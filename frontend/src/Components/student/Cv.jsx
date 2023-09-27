@@ -52,24 +52,6 @@ function Cv({user, setCv}){
 			})
 	}
 
-	const handleViewPdf = () => {
-		const pdfData = atob(user.cvFile.fileData)
-		const pdfBlob = new Blob([pdfData], {type: "application/pdf"})
-		const url = URL.createObjectURL(pdfBlob)
-		window.open(url, "_blank")
-	}
-
-	const handleDownloadPdf = () => {
-		const pdfData = atob(user.cvFile.fileData)
-		const pdfBlob = new Blob([pdfData], {type: "application/pdf"})
-		const url = URL.createObjectURL(pdfBlob)
-		const anchor = document.createElement("a")
-		anchor.href = url
-		anchor.download = "cv.pdf"
-		anchor.click()
-		URL.revokeObjectURL(url)
-	}
-
 	return (
 		<div className="container">
 			{isLoading ? (
