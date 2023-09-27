@@ -4,22 +4,16 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
-import cal.projeteq3.glucose.validation.Validation;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,13 +22,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {EmployerController.class, CustomExceptionHandler.class})
+@SpringJUnitConfig(classes = {EmployerController.class, EmployerService.class, CustomExceptionHandler.class})
 @WebMvcTest(EmployerController.class)
 public class EmployerControllerTest {
 
@@ -290,7 +283,19 @@ public class EmployerControllerTest {
 						.param("employerId", employerId.toString())
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(employerId));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(employerId))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].title").value("Test Job"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].department").value(Department._420B0.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].location").value("MTL"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].description").value("Test Job Description"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].salary").value(1.0f))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].startDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].duration").value(10))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].expirationDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].jobOfferState").value(JobOfferState.OPEN.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].hoursPerWeek").value(30))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].refusReason").doesNotExist())
+				;
 	}
 
 	@Test
@@ -301,7 +306,8 @@ public class EmployerControllerTest {
 		mockMvc.perform(MockMvcRequestBuilders
 						.delete("/employer/offer/{id}", id)
 						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isAccepted());
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+		;
 	}
 
 	@Test
@@ -319,8 +325,8 @@ public class EmployerControllerTest {
 				LocalDateTime.now(), 12, LocalDateTime.now().plusDays(3),
 				JobOfferState.SUBMITTED, 40, null);
 
-		String content ="""
-    	{
+		String content = """
+					{
 				"title": "Software Engineer",
 				"department": "_420B0",
 				"location": "New York",
@@ -343,7 +349,19 @@ public class EmployerControllerTest {
 						.param("employerId", employerId.toString())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
-				.andExpect(MockMvcResultMatchers.status().isAccepted());
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Software Engineer"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.department").value(Department._420B0.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.location").value("New York"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("We are looking for a talented software engineer to join our team."))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(80000.0f))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.startDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.duration").value(12))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.expirationDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.jobOfferState").value(JobOfferState.SUBMITTED.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.hoursPerWeek").value(40))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.refusReason").doesNotExist())
+				;
 
 	}
 
@@ -351,17 +369,17 @@ public class EmployerControllerTest {
 	public void AddJobOffer_ValidationException() throws Exception {
 		// The way we are validating inside Controllers is wrong,
 		// but since it's decided to do it that way, had to disable Validations here
-		Long employerId = 1L;
+		long employerId = 1L;
 
 		String content ="""
-    	{
+					{
 				"title": "Software Engineer",
 				"department": "_420B0",
 				"location": "New York",
 				"description": "We are looking for a talented software engineer to join our team.",
 				"salary": 80000.0,
 				"startDate": "2023-10-01T09:00:00",
-				"duration": 12,
+				"duration": -12,
 				"expirationDate": "2023-10-15T23:59:59",
 				"jobOfferState": "SUBMITTED",
 				"hoursPerWeek": 40,
@@ -370,10 +388,10 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/employer/offer")
-						.param("employerId", employerId.toString())
+						.param("employerId", Long.toString(employerId))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
-				.andExpect(MockMvcResultMatchers.status().isAccepted());
+				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
 	@Test
@@ -381,7 +399,7 @@ public class EmployerControllerTest {
 		// The way we are validating inside Controllers is wrong,
 		// but since it's decided to do it that way, had to disable Validations here
 		String content ="""
-    	{
+					{
 				"title": "Software Engineer",
 				"department": "_420B0",
 				"location": "New York",
@@ -400,7 +418,19 @@ public class EmployerControllerTest {
 						.put("/employer/offer")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
-				.andExpect(MockMvcResultMatchers.status().isAccepted());
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.title").value("Software Engineer"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.department").value(Department._420B0.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.location").value("New York"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.description").value("We are looking for a talented software engineer to join our team."))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(80000.0f))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.startDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.duration").value(12))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.expirationDate").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.jobOfferState").value(JobOfferState.SUBMITTED.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.hoursPerWeek").value(40))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.refusReason").doesNotExist())
+		;
 	}
 
 	@Test
@@ -408,7 +438,7 @@ public class EmployerControllerTest {
 		// The way we are validating inside Controllers is wrong,
 		// but since it's decided to do it that way, had to disable Validations here
 		String content ="""
-    	{
+					{
 				"title": "",
 				"department": "_420B0",
 				"location": "New York",
@@ -434,7 +464,7 @@ public class EmployerControllerTest {
 		// The way we are validating inside Controllers is wrong,
 		// but since it's decided to do it that way, had to disable Validations here
 		String content ="""
-    	{
+					{
 				"title": "awdaf",
 				"department": "_420B1",
 				"location": "New York",
