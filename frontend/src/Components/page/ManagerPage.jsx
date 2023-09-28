@@ -31,16 +31,16 @@ const ManagerPage = ({user}) => {
             });
         }
 
-        getAllCvs()
-        getAllOffers()
+        getAllCvs().then(r => console.log(r));
+        getAllOffers().then(r => console.log(r));
     }, []);
 
-    const updateJobOfferList = (jobOffer) => {
-        setOffers(offers.filter((offer) => offer.id !== jobOffer.id));
+    const updateJobOfferList = () => {
+        setOffers(offers);
     }
 
-    const updateCvList = (cv) => {
-        setCvs(cvs.filter((i) => i.id !== cv.id));
+    const updateCvList = () => {
+        setCvs(cvs);
     }
 
     return (
