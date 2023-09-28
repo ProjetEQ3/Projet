@@ -23,13 +23,14 @@ const Cvs = ({cvs, updateCvList}) => {
 				<div className="row justify-content-around">
 					<FilterObjectList
 						items={cvs}
-						attributes={['fileName']}
+						attributes={['fileName:Nom de fichier','cvState.select:Status']}
 						renderItem={renderFilteredCvs}
+						selectOptions={{cvState: ['SUBMITTED', 'ACCEPTED', 'REFUSED']}}
 					/>
 				</div>
 			</div>
 		</div>
-	);
+	)
 
 }
 
