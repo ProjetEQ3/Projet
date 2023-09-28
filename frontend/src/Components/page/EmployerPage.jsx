@@ -24,13 +24,21 @@ const EmployerPage = ({user}) => {
 	}
 
 	const updateOffer = (offer) => {
+		console.log("updateOffer")
+		console.log(offer)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {
-				offers.map((o) => {
-					if(o.id === offer.id){o = offer}
+				const offerIndex = offers.findIndex((o) => o.id === offer.id)
+				const updatedOffers = offers.map((element, index) => {
+					if (index === offerIndex) {
+						return offer
+					} else {
+						return element
+					}
 				})
-				setOffers(offers)
+				setOffers(updatedOffers)
+				setSelectedOffer(offer)
 				toast.success("Offre de stage mise à jour");
 			})
 			.catch((error) => {
@@ -43,6 +51,7 @@ const EmployerPage = ({user}) => {
 			.then((response) => {
 				let updatedOffers = offers.filter((o) => o.id !== offerId)
 				setOffers(updatedOffers)
+				setSelectedOffer(null)
 				toast.success("Offre de stage supprimée");
 			})
 			.catch((error) => {
@@ -86,7 +95,7 @@ const EmployerPage = ({user}) => {
 										</div>
 									</div>
 									:
-									<FullJobOffer jobOffer={selectedOffer}/>
+									<FullJobOffer jobOffer={selectedOffer} updateOffer={() => updateOffer(selectedOffer)}/>
 								}
 							</div>
 						</div>

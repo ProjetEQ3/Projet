@@ -2,9 +2,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare, faX} from '@fortawesome/free-solid-svg-icons';
 import React, {useState} from "react";
 import Loading from "../util/Loading";
-const FullJobOffer = ({ jobOffer }) => {
+const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
+    const [isModified, setIsModified] = useState(false);
     const [formData, setFormData] = useState({
         title: jobOffer.title,
         department: jobOffer.department,
@@ -59,8 +59,8 @@ const FullJobOffer = ({ jobOffer }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(jobOffer.startDate);
-        console.log(formData.startDate)
+        formData.startDate = formData.startDate.split('T')[0];
+        formData.expirationDate = formData.expirationDate.split('T')[0];
 
         const validationErrors = {};
 
@@ -93,8 +93,8 @@ const FullJobOffer = ({ jobOffer }) => {
         setWarnings(validationErrors);
 
         if (Object.keys(validationErrors).length === 0) {
-            console.log(formData);
-            setIsEditing(false);
+            updateOffer(formData);
+            setIsModified(true);
         }
     }
 
@@ -132,14 +132,13 @@ const FullJobOffer = ({ jobOffer }) => {
                             </div>
                         </div>
                         <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <button className="btn btn-outline-ose my-auto" onClick={() => setIsEditing(true)}>
+                            <button className="btn btn-outline-ose my-auto" onClick={() => setIsModified(false)}>
                                 Modifier
                                 <FontAwesomeIcon icon={faPenToSquare} className="ms-2"/>
                             </button>
                         </div>
                     </>
                 )}
-                {isEditing && (
                 <div id="editModal" className="modal">
                     <div className="modal-dialog">
                         <div className="modal-content">
@@ -231,17 +230,22 @@ const FullJobOffer = ({ jobOffer }) => {
                                             </div>
                                         )}
                                     </div>
+                                    {!isModified ? (
                                     <div className="text-end">
                                         <button type="submit" className="btn btn-success me-2">Modifier</button>
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Annuler</button>
                                     </div>
+                                    ) : (
+                                        <div className="text-end">
+                                            <button type="submit" className="btn btn-success me-2" disabled>Modifié</button>
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Fermer</button>
+                                        </div>
+                                    )}
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
-                    )}
             </div>
         </div>
     );
