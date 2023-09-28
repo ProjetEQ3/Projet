@@ -79,9 +79,10 @@ function Cv({user, setCv}){
 						</div>
 						<div className="col-4 d-flex my-auto justify-content-end justify-content-md-between">
 							<div className="d-none d-md-block">
-							<State state={user.cvFile.state}/>
+								<State state={user.cvFile.state}/>
 							</div>
-							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover" onClick={handleDeletePdf}/>
+							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
+							                 onClick={handleDeletePdf}/>
 						</div>
 					</div>
 				</>

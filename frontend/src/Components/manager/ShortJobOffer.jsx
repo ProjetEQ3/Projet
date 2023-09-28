@@ -1,16 +1,17 @@
-import {useState} from "react";
-import FullJobOffer from "./FullJobOffer";
-import State from "../util/State";
+import {useState} from "react"
+import FullJobOffer from "./FullJobOffer"
+import State from "../util/State"
+
 const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
-    const [isHovered, setIsHovered] = useState(false);
+    const [isHovered, setIsHovered] = useState(false)
 
     const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
+        setIsHovered(true)
+    }
 
     const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
+        setIsHovered(false)
+    }
 
     return (
         <div className={`row ${!isHovered? 'm-2':'m-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -21,7 +22,6 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                         <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     </div>
                     <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
-
                         <div className="d-none d-lg-block mx-auto my-auto">
                             <State state={jobOffer.jobOfferState}/>
                         </div>
@@ -33,7 +33,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default ShortJobOffer;
+export default ShortJobOffer

@@ -9,6 +9,7 @@ class JobOffer{
 	formation
 	dueDate
 	expirationDate
+	jobOfferState
 
 	constructor(){
 		this.reset()
@@ -35,6 +36,8 @@ class JobOffer{
 		else delete this.dueDate
 		if(jobOffer.expirationDate) this.expirationDate = jobOffer.expirationDate
 		else delete this.expirationDate
+		if(jobOffer.jobOfferState) this.jobOfferState = jobOffer.jobOfferState
+		else delete this.jobOfferState
 	}
 
 	reset(){
@@ -48,9 +51,9 @@ class JobOffer{
 		this.formation = undefined
 		this.dueDate = undefined
 		this.expirationDate = undefined
+		this.jobOfferState = undefined
 	}
 
 }
 
 export default JobOffer
-
