@@ -5,9 +5,8 @@
 
   "disconnect": "Se Déconnecter",
   "login": "Connecter",
-  "register": "S'inscrire",
 
-  "welcome": "Bienvenue sur",
+  "welcome": "Bienvenue sur ",
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",
 
@@ -69,5 +68,27 @@
   "organisationNameRequired": "Le nom de l'organisation est obligatoire.",
   "organisationPhoneRequired": "Le numéro de téléphone de l'organisation est obligatoire.",
   "organisationNameInvalid": "Le nom de l'organisation doit être en format alphanumérique.",
-  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567"
+  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
+
+  "hello": "Bonjour ",
+  "yourInternship": "Vos offres de stages",
+  "internshipList": "Liste de vos offres",
+
+  "submitted": "Attente d'approbation",
+  "open": "Ouvert aux candidatures",
+  "pending": "En attente de réponse",
+  "expired": "Expiré",
+  "taken": "Pris",
+  "refused": "Refusé",
+
+  "department": "Département",
+  "internshipTitle": "Titre de l'offre",
+  "intershipDetails": "Détails de l'offre",
+  "addInternship": "Ajouter une offre de stage",
+  "selectIntership": "Sélectionnez une offre de stage",
+
+  "updateInternshipSuccess": "Offre de stage mise à jour",
+  "updateInternshipError": "Erreur lors de la mise à jour de l'offre de stage",
+  "deleteInternshipSuccess": "Offre de stage supprimée",
+  "deleteInternshipError": "Erreur lors de la suppression de l'offre de stage"
 }

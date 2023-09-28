@@ -7,8 +7,10 @@ import {useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import FilterObjectList from "../util/FilterObjectList";
+import {useTranslation} from "react-i18next";
 
 const EmployerPage = ({user}) => {
+	const {t} = useTranslation();
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
 	const [offers, setOffers] = useState([]);
@@ -32,10 +34,10 @@ const EmployerPage = ({user}) => {
 					if(o.id === offer.id){o = offer}
 				})
 				setOffers(offers)
-				toast.success("Offre de stage mise à jour");
+				toast.success(t('updateInternshipSuccess'));
 			})
 			.catch((error) => {
-				toast.error("Erreur lors de la mise à jour de l'offre de stage" + error.message);
+				toast.error(t('updateInternshipError') + error.message);
 			})
 	}
 	const deleteOffer = (offerId) => {
@@ -44,10 +46,10 @@ const EmployerPage = ({user}) => {
 			.then((response) => {
 				let updatedOffers = offers.filter((o) => o.id !== offerId)
 				setOffers(updatedOffers)
-				toast.success("Offre de stage supprimée");
+				toast.success(t('deleteInternshipSuccess'));
 			})
 			.catch((error) => {
-				toast.error("Erreur lors de la suppression de l'offre de stage" + error.message);
+				toast.error(t('deleteInternshipError') + error.message);
 			})
 	}
 
@@ -72,20 +74,22 @@ const EmployerPage = ({user}) => {
 			<div className="container-fluid px-5 py-2">
 				<div className="row text-center">
 					<div className="col-12">
-						<h2 className="text-dark fw-light">Bonjour {user.firstName + " " + user.lastName} !</h2>
+						<h2 className="text-dark fw-light">{t('hello') + user.firstName + " " + user.lastName} !</h2>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-12">
-						<h3 className="text-dark fw-light d-none d-lg-block">Vos offres de stages</h3>
+						<h3 className="text-dark fw-light d-none d-lg-block">{t('yourInternship')}</h3>
 						<div className="row justify-content-around">
 							<div className="order-2 order-lg-1 col-12 col-lg-6">
-								<h3 className="fw-light d-lg-none d-block text-ose">Liste de vos offres</h3>
+								<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipList')}</h3>
 								<FilterObjectList
 									items={offers}
-									attributes={['title:Titre de l\'offre', 'department:Department', 'jobOfferState.select:Status']}
+									attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
 									renderItem={renderFilteredOffers}
-									selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
+									selectOptions={{jobOfferState: [
+										t('submitted'), t('open'), t('pending'),
+											t('expired'), t('taken'), t('refused')]}}
 								/>
 								{/*{
 									offers.map((offer, index) => (
@@ -95,15 +99,15 @@ const EmployerPage = ({user}) => {
 									))
 								}*/}
 								<div className="row m-2">
-									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter une offre de stage</button>
+									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>{t('addInternship')}</button>
 								</div>
 							</div>
 							<div className="order-1 order-lg-2 col-12 col-lg-6">
-								<h3 className="fw-light d-lg-none d-block text-ose">Détails de l'offre</h3>
+								<h3 className="fw-light d-lg-none d-block text-ose">{t('intershipDetails')}</h3>
 								{selectedOffer === null ?
 									<div className="row m-2">
 										<div className="col-12 bg-white rounded">
-											<h2 className="text-dark fw-light pt-1">Sélectionnez une offre de stage</h2>
+											<h2 className="text-dark fw-light pt-1">{t('selectIntership')}</h2>
 										</div>
 									</div>
 									:

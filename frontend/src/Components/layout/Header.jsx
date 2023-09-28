@@ -28,7 +28,7 @@ function Header({user}) {
                                 <LngSelector/>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/login">{t('login')}</a>
                                 <div className="vr"></div>
-                                <a className="text-light text-decoration-none m-2 h6" href="/auth/register">{t('register')}</a>
+                                <a className="text-light text-decoration-none m-2 h6" href="/auth/register">{t('registerSubmit')}</a>
                             </div>
                         }
                     </div>
