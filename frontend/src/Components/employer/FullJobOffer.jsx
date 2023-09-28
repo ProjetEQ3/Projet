@@ -2,8 +2,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
-import {t} from "i18next";
 const FullJobOffer = ({ jobOffer }) => {
+    const [t, i18n] = useTranslation();
 
     return (
         <div className="row my-2">

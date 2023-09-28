@@ -3,7 +3,9 @@ import {faTrash, faX} from '@fortawesome/free-solid-svg-icons';
 
 import {useState} from "react";
 import State from "../util/State";
+import {useTranslation} from "react-i18next";
 const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
+    const [t, i18n] = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
     const handleMouseEnter = () => {
@@ -20,7 +22,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                 <div className="row">
                     <div className="col-8 col-sm-6">
                         <h5 className="text-dark fw-light pt-1">{jobOffer.title}</h5>
-                        <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
+                        <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
                     </div>
                     <div className="col-4 my-auto text-center">
                         <State state={jobOffer.jobOfferState}/>

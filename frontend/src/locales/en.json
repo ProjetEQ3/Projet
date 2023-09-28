@@ -98,6 +98,12 @@
   "of": "of",
   "choose": "Choose an option",
   "next": "Next",
-  "noData": "No data available"
+  "noData": "No data available",
+
+  "week": " week",
+  "duration": "Duration: ",
+  "update": "Update",
+  "cancel": "Cancel",
+  "startDate": "Start Date: "
 
 }
