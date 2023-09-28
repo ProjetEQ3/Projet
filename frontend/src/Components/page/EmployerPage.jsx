@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import FilterObjectList from "../util/FilterObjectList";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
@@ -53,6 +54,19 @@ const EmployerPage = ({user}) => {
 	const handleNewButtonClicked = () => {
 		navigate('/employer/newOffer');
 	}
+
+	const renderFilteredOffers = (filteredOffers) => {
+		return (
+			<div className="col-12">
+				{filteredOffers.map((offer, index) => (
+					<div key={index} onClick={() => setSelectedOffer(offer)}>
+						<ShortJobOffer jobOffer={offer} updateJobOfferList={updateOffer} deleteOffer={() => deleteOffer(offer.id)}/>
+					</div>
+				))}
+			</div>
+		)
+	}
+
 	return (
 		<div className="bg-light">
 			<div className="container-fluid px-5 py-2">
@@ -67,13 +81,19 @@ const EmployerPage = ({user}) => {
 						<div className="row justify-content-around">
 							<div className="order-2 order-lg-1 col-12 col-lg-6">
 								<h3 className="fw-light d-lg-none d-block text-ose">Liste de vos offres</h3>
-								{
+								<FilterObjectList
+									items={offers}
+									attributes={['title:Titre de l\'offre', 'department:Department', 'jobOfferState.select:Status']}
+									renderItem={renderFilteredOffers}
+									selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
+								/>
+								{/*{
 									offers.map((offer, index) => (
 										<div onClick={() => setSelectedOffer(offer)}>
 											<ShortJobOffer jobOffer={offer} key={offer.id} deleteOffer={() => deleteOffer(offer.id)}/>
 										</div>
 									))
-								}
+								}*/}
 								<div className="row m-2">
 									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter une offre de stage</button>
 								</div>
