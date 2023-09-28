@@ -1,6 +1,7 @@
 {
   "glucoseFullAcronym": "Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.",
-  "copyRights": "Tous droits réservés.",
+  "glucoseAcronym": "GlucOSE",
+  "copyRights": "© 2023 - Tous droits réservés.",
 
   "disconnect": "Se Déconnecter",
   "login": "Connecter",
@@ -9,7 +10,6 @@
   "welcome": "Bienvenue sur",
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",
-
 
   "successLogin": "Connexion réussie.",
   "errorLogin": "Utilisateur ou mot de passe incorrect.",

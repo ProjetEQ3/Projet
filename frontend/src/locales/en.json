@@ -1,4 +1,16 @@
 {
+  "glucoseFullAcronym": "Global Learning Opportunities for Undergraduate Students.",
+  "glucoseAcronym": "GLOUS",
+  "copyRights": "© 2023 - All rights reserved.",
+
+  "disconnect": "Disconnect",
+  "login": "Login",
+  "register": "Register",
+
+  "welcome": "Welcome to",
+  "descTitle": "Your internship management application",
+  "description": "GlucOSE is a web application for managing student internships.",
+
   "successLogin": "Successful login.",
   "errorLogin": "Incorrect username or password.",
   "email": "Email Address",
