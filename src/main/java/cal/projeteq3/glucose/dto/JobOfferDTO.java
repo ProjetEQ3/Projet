@@ -6,7 +6,9 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +20,9 @@ public class JobOfferDTO{
 	private String location;
 	private String description;
 	private float salary;
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 	private int duration;
-	private LocalDateTime expirationDate;
+	private LocalDate expirationDate;
 	private JobOfferState jobOfferState;
 	private int hoursPerWeek;
 	private String refusReason;

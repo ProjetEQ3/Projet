@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -280,7 +280,7 @@ public class EmployerControllerTest {
 		List<JobOfferDTO> jobOfferDTOs = new ArrayList<>(List.of(
 				new JobOfferDTO(1L, "Test Job", Department._420B0,
 						"MTL", "Test Job Description", 1.0f,
-						LocalDateTime.now(), 10, LocalDateTime.now().plusDays(3),
+						LocalDate.now(), 10, LocalDate.now().plusDays(3),
 						JobOfferState.OPEN, 30, null)
 		));
 
@@ -325,12 +325,12 @@ public class EmployerControllerTest {
 		Long employerId = 1L;
 		JobOfferDTO jobOfferDTO = new JobOfferDTO(employerId, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
-				LocalDateTime.now(), 12, LocalDateTime.now().plusDays(3),
+				LocalDate.now(), 12, LocalDate.now().plusDays(3),
 				JobOfferState.SUBMITTED, 40, null);
 
 		JobOfferDTO post = new JobOfferDTO(null, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
-				LocalDateTime.now(), 12, LocalDateTime.now().plusDays(3),
+				LocalDate.now(), 12, LocalDate.now().plusDays(3),
 				JobOfferState.SUBMITTED, 40, null);
 
 		String content = """
