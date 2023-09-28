@@ -1,4 +1,10 @@
 {
+  "glucoseFullAcronym": "Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.",
+  "copyRights": "Tous droits réservés.",
+  "disconnect": "Se Déconnecter",
+  "login": "Connecter",
+  "register": "S'inscrire",
+
   "successLogin": "Connexion réussie.",
   "errorLogin": "Utilisateur ou mot de passe incorrect.",
   "email": "Adresse courriel",

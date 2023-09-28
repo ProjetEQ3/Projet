@@ -1,17 +1,20 @@
 import React from 'react';
+import {useTranslation} from "react-i18next";
 
 function Footer() {
+    const {t} = useTranslation()
+
     return (
         <footer className="App-footer col-12">
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 d-none d-md-block text-center">
-                        <p className="lead">GlucOSE - Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</p>
-                        <p className="lead">© 2023 - Tous droits réservés.</p>
+                        <p className="lead">GlucOSE - {t('glucoseFullAcronym')}</p>
+                        <p className="lead">© 2023 - {t('copyRights')}</p>
                     </div>
                     <div className="col-12 d-block d-md-none text-center">
-                        <p className="lead"><small>GlucOSE - Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.</small></p>
-                        <p className="lead"><small>© 2023 - Tous droits réservés.</small></p>
+                        <p className="lead"><small>GlucOSE - {t('glucoseFullAcronym')}</small></p>
+                        <p className="lead"><small>© 2023 - {t('copyRights')}</small></p>
                     </div>
                 </div>
             </div>
