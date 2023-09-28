@@ -19,6 +19,12 @@ public class EmployerDTO extends UserDTO {
     private String organisationPhone;
     private List<JobOfferDTO> jobOffers = new ArrayList<>();
 
+    public EmployerDTO(Long id, String firstName, String lastName, String email, String organisationName, String organisationPhone) {
+        super(id, firstName, lastName, email, "EMPLOYER");
+        this.organisationName = organisationName;
+        this.organisationPhone = organisationPhone;
+    }
+
     public EmployerDTO(Employer employer){
         super(
           employer.getId(), employer.getFirstName(), employer.getLastName(),
