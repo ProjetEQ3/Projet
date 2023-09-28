@@ -98,5 +98,10 @@
   "of": "de",
   "choose": "Choose an option",
   "next": "Suivant",
-  "noData": "Aucune donnée disponible"
+  "noData": "Aucune donnée disponible",
+
+  "week": "semaine",
+  "duration": "Durée: ",
+  "update": "Modifier",
+  "cancel": "Annuler"
 }
