@@ -51,14 +51,12 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	return (
 		<div className="mb-3">
 			<h5 className="mb-2">Filter by:</h5>
-
 			<div className="d-flex align-items-center mb-2 col-6">
 				<select className="form-select me-2 flex-grow-1" value={selectedAttribute} onChange={handleAttributeChange}>
 					{attributes.map(attr => (
 						<option key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
 					))}
 				</select>
-
 				{isSelectAttribute ? (
 					<select className="form-control me-2 flex-grow-1" value={query} onChange={handleInputChange}>
 						<option value="">Choose an option</option>
@@ -75,7 +73,6 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 						onChange={handleInputChange}
 					/>
 				)}
-
 				<select className="form-select" value={itemsPerPage} onChange={handleItemsPerPageChange}>
 					{[10, 20, 50, 100].map(number => (
 						<option key={number} value={number}>
@@ -84,7 +81,6 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					))}
 				</select>
 			</div>
-
 			<div className="d-flex justify-content-between align-items-center mb-2 col-6">
 				<div className="pagination-controls">
 					<button className="btn btn-outline-secondary me-2" onClick={goToPreviousPage} disabled={currentPage === 1}>
@@ -96,13 +92,11 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					</button>
 				</div>
 			</div>
-
 			<div className="mt-3">
 				{renderItem(displayedItems)}
 			</div>
 		</div>
 	)
-
 
 }
 
