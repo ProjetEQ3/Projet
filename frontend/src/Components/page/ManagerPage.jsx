@@ -20,7 +20,7 @@ const ManagerPage = ({user}) => {
             });
         }
         const getAllCvs = async () => {
-            await axiosInstance.get('manager/cvs/pending',
+            await axiosInstance.get('manager/cvs/all',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setCvs(response.data);
