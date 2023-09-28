@@ -13,7 +13,7 @@ import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -325,8 +325,8 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .id(2L)
@@ -338,8 +338,8 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .id(3L)
@@ -351,8 +351,8 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
                                 .build()
                 )
         );
@@ -466,9 +466,9 @@ public class EmployerServiceTest {
                 "Location1",
                 "Description1",
                 20.0f,
-                LocalDateTime.now(),
+                LocalDate.now(),
                 6,
-                LocalDateTime.now().plusDays(30),
+                LocalDate.now().plusDays(30),
                 JobOfferState.OPEN,
                 40,
                 null
@@ -561,9 +561,9 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
                         .build(),
@@ -573,9 +573,9 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
                         .build(),
@@ -585,9 +585,9 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
                         .build()

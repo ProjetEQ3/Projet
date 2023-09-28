@@ -19,6 +19,7 @@ const NewOfferForm = ({user}) => {
         startDate: '',
         duration: '',
         expirationDate: '',
+        jobOfferState: 'SUBMITTED',
     });
     const [warnings, setWarnings] = useState({
         title: '',
@@ -36,19 +37,21 @@ const NewOfferForm = ({user}) => {
         setIsLoading(true);
         console.log(formData)
         axiosInstance
-            .post(`/employer/offer?employerId=${user.id}`, {
-                "title": formData.title,
-                "department": formData.department,
-                "location": formData.location,
-                "description": formData.description,
-                "salary": formData.salary,
-                "startDate": formData.startDate + 'T00:00:00',
-                "duration": formData.duration,
-                "expirationDate": formData.expirationDate + 'T00:00:00',
-                "jobOfferState": "SUBMITTED",
-                "hoursPerWeek": formData.hoursPerWeek,
-                "refusReason": null
-            })
+            .post(`/employer/offer?employerId=${user.id}`, formData
+            //     {
+            //     "title": formData.title,
+            //     "department": formData.department,
+            //     "location": formData.location,
+            //     "description": formData.description,
+            //     "salary": formData.salary,
+            //     "startDate": formData.startDate,
+            //     "duration": formData.duration,
+            //     "expirationDate": formData.expirationDate,
+            //     "jobOfferState": "SUBMITTED",
+            //     "hoursPerWeek": formData.hoursPerWeek,
+            //     "refusReason": null
+            // }
+            )
             .then((response) =>{
                 toast.success("Offre créée avec succès")
                 setIsLoading(false);
