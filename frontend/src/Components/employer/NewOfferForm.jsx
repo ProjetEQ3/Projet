@@ -37,21 +37,7 @@ const NewOfferForm = ({user}) => {
         setIsLoading(true);
         console.log(formData)
         axiosInstance
-            .post(`/employer/offer?employerId=${user.id}`, formData
-            //     {
-            //     "title": formData.title,
-            //     "department": formData.department,
-            //     "location": formData.location,
-            //     "description": formData.description,
-            //     "salary": formData.salary,
-            //     "startDate": formData.startDate,
-            //     "duration": formData.duration,
-            //     "expirationDate": formData.expirationDate,
-            //     "jobOfferState": "SUBMITTED",
-            //     "hoursPerWeek": formData.hoursPerWeek,
-            //     "refusReason": null
-            // }
-            )
+            .post(`/employer/offer?employerId=${user.id}`, formData)
             .then((response) =>{
                 toast.success("Offre créée avec succès")
                 setIsLoading(false);
