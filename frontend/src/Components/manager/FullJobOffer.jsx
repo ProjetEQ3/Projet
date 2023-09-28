@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import State from "../util/State";
+
 const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
     const [isDecline, setIsDecline] = useState(false);
     const [formData, setFormData] = useState({
@@ -12,17 +14,22 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
         e.preventDefault();
         axiosInstance.put(`/manager/jobOffer/accept/${jobOffer.id}`)
             .then((res) => {
-                toast.success("Offer accepted")
+                toast.success("Offre acceptée")
                 updateJobOfferList(jobOffer);
             })
             .catch((error) => {
-                toast.error("Failed to accept offer: " + error.message)
+                toast.error("Impossible d'accepter l'offre: " + error.message)
             })
     }
 
     const handleDecline = (e) => {
         e.preventDefault();
         setIsDecline(true);
+    }
+
+    const handleClose = (e) => {
+        e.preventDefault();
+        setIsDecline(false);
     }
 
     const validateReason = (e) => {
@@ -62,16 +69,24 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
             <div className="modal-content">
                 <div className="modal-header">
                     <h3 className="modal-title">Autorisation de l'offre</h3>
+                    <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                 </div>
                 <div className="modal-body">
                     <h3 className="text-dark fw-light mb-3">{jobOffer.title}</h3>
+                    <div className="d-flex m-2">
+                        <State state={jobOffer.jobOfferState}/>
+                    </div>
                     <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.location}</p>
-                    <p className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate}</p>
-                    <p className="text-dark fw-light mb-3">Durée: {jobOffer.duration}</p>
-                    <p className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expireDate}</p>
+                    { jobOffer.startDate !== undefined &&
+                        (<p className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate.split('T')[0]}</p>)
+                    }
+                    <p className="text-dark fw-light mb-3">Durée: {jobOffer.duration} semaine(s)</p>
+                    { jobOffer.expirationDate !== undefined &&
+                        (<p className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expirationDate.split('T')[0]}</p>)
+                    }
                     <p className="text-dark fw-light mb-3">{jobOffer.salary}$/h</p>
-                    <p className="text-dark fw-light mb-3">{jobOffer.hourPerWeek}h/semaine</p>
+                    <p className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
                 </div>
                 <div className="modal-footer">
@@ -83,8 +98,8 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                             <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
                         </form>) :
                         (<div>
-                            <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal"><FontAwesomeIcon icon={faCheck}/></button>
-                            <button type="button" onClick={handleDecline} className="btn btn-danger"><FontAwesomeIcon icon={faX}/></button>
+                            <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">Accepter</button>
+                            <button type="button" onClick={handleDecline} className="btn btn-danger">Refuser</button>
                         </div>)}
                 </div>
              </div>
