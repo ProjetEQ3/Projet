@@ -37,6 +37,14 @@ class JobOffer{
 		else delete this.expirationDate
 		if(jobOffer.jobOfferState) this.jobOfferState = jobOffer.jobOfferState
 		else delete this.jobOfferState
+		if(jobOffer.hoursPerWeek) this.hoursPerWeek = jobOffer.hoursPerWeek
+		else delete this.hoursPerWeek
+		if(jobOffer.startDate) this.startDate = jobOffer.startDate
+		else delete this.startDate
+		if(jobOffer.duration) this.duration = jobOffer.duration
+		else delete this.duration
+		if(jobOffer.formation) this.formation = jobOffer.formation
+		else delete this.formation
 	}
 
 	reset(){
