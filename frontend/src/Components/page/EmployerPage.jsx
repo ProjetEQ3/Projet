@@ -24,8 +24,8 @@ const EmployerPage = ({user}) => {
 	}
 
 	const updateOffer = (offer) => {
-		console.log("updateOffer")
 		console.log(offer)
+		setSelectedOffer(offer)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {
@@ -95,7 +95,7 @@ const EmployerPage = ({user}) => {
 										</div>
 									</div>
 									:
-									<FullJobOffer jobOffer={selectedOffer} updateOffer={() => updateOffer(selectedOffer)}/>
+									<FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
 								}
 							</div>
 						</div>

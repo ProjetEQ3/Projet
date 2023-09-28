@@ -5,7 +5,9 @@ import Loading from "../util/Loading";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isModified, setIsModified] = useState(false);
-    const [formData, setFormData] = useState({
+    const [newOffer, setNewOffer] = useState({
+        id: jobOffer.id,
+        refusReason: jobOffer.refusReason,
         title: jobOffer.title,
         department: jobOffer.department,
         location: jobOffer.location,
@@ -33,16 +35,16 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         e.preventDefault();
         const {name, value} = e.target;
         if(value.trim() !== '') {
-            setFormData({...formData, [name]: value.trim()});
+            setNewOffer({...newOffer, [name]: value.trim()});
         }
         else {
-            setFormData({...formData, [name]: jobOffer[name]});
+            setNewOffer({...newOffer, [name]: jobOffer[name]});
         }
     }
 
     const handleClose = (e) => {
         e.preventDefault();
-        setFormData(
+        setNewOffer(
             {
                 title: jobOffer.title,
                 department: jobOffer.department,
@@ -59,41 +61,41 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        formData.startDate = formData.startDate.split('T')[0];
-        formData.expirationDate = formData.expirationDate.split('T')[0];
+        newOffer.startDate = newOffer.startDate.split('T')[0];
+        newOffer.expirationDate = newOffer.expirationDate.split('T')[0];
 
         const validationErrors = {};
 
-        if (formData.salary <= 0) {
+        if (newOffer.salary <= 0) {
             validationErrors.salary = "Le salaire doit être positif";
         }
 
-        if (formData.hoursPerWeek <= 0) {
+        if (newOffer.hoursPerWeek <= 0) {
             validationErrors.hoursPerWeek = "Le nombre d'heures par semaine doit être positif";
         }
 
-        if (formData.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.startDate)) {
+        if (newOffer.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(newOffer.startDate)) {
             validationErrors.startDate = "La date de début doit être en format YYYY-MM-DD";
         }
-        else if (formData.startDate && new Date(formData.startDate) < new Date()) {
+        else if (newOffer.startDate && new Date(newOffer.startDate) < new Date()) {
             validationErrors.startDate = "La date de début ne doit pas déjà être passée";
         }
 
-        if (formData.duration && formData.duration < 1) {
+        if (newOffer.duration && newOffer.duration < 1) {
             validationErrors.duration = "La durée du stage doit être d'au moins 1 semaine";
         }
 
-        if (formData.expirationDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.expirationDate)) {
+        if (newOffer.expirationDate && !/^\d{4}-\d{2}-\d{2}$/.test(newOffer.expirationDate)) {
             validationErrors.expirationDate = "La date d'expiration doit être en format YYYY-MM-DD";
         }
-        else if (formData.expirationDate && new Date(formData.expirationDate) < new Date()) {
+        else if (newOffer.expirationDate && new Date(newOffer.expirationDate) < new Date()) {
             validationErrors.expirationDate = "La date d'expiration ne doit pas déjà être passée";
         }
 
         setWarnings(validationErrors);
 
         if (Object.keys(validationErrors).length === 0) {
-            updateOffer(formData);
+            updateOffer(newOffer);
             setIsModified(true);
         }
     }
@@ -223,7 +225,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="description" className="mt-3">Description</label>
-                                        <textarea className={`form-control ${warnings.description ? 'is-invalid' : ''}`} id="description" placeholder={jobOffer.description} onChange={handleChange} name="descrption"/>
+                                        <textarea className={`form-control ${warnings.description ? 'is-invalid' : ''}`} id="description" placeholder={jobOffer.description} onChange={handleChange} name="description"/>
                                         {warnings.description && (
                                             <div className="invalid-feedback">
                                                 {warnings.description}
@@ -237,7 +239,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                     </div>
                                     ) : (
                                         <div className="text-end">
-                                            <button type="submit" className="btn btn-success me-2" disabled>Modifié</button>
+                                            <div className="text-success me-2 text-center">Modifié</div>
                                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Fermer</button>
                                         </div>
                                     )}
