@@ -14,5 +14,7 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     Optional<Contract> findByStudentIdAndSupervisorId(Long studentId, Long supervisorId);
     Optional<Contract> findByEmployerIdAndSupervisorId(Long employerId, Long supervisorId);
     Optional<Contract> findByStudentIdAndEmployerIdAndSupervisorId(Long studentId, Long employerId, Long supervisorId);
-    Optional<Contract> findBySignature(Signature signature);
+    Optional<Contract> findContractByEmployerSignatureId(Long employerSignatureId);
+    Optional<Contract> findContractByStudentSignatureId(Long studentSignatureId);
+    Optional<Contract> findContractByDirectorSignatureId(Long managerSignatureId);
 }

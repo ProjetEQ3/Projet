@@ -27,15 +27,19 @@ public class Contract {
     private Long id;
 
     @ManyToOne
+    @Column(nullable = false)
     private Employer employer;
 
     @ManyToOne
+    @Column(nullable = false)
     private Employer supervisor;
 
     @ManyToOne
+    @Column(nullable = false)
     private Address workAddress;
 
     @ManyToOne
+    @Column(nullable = false)
     private Student student;
 
     @Column(nullable = false)
