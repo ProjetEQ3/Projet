@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {useTranslation} from "react-i18next";
 
 const Home = ({ user }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,9 +30,9 @@ const Home = ({ user }) => {
             {user?.isLoggedIn ? (<div></div>
             ) : (
                 <div className="Home text-center">
-                    <h1>Bienvenue sur GlucOSE</h1>
-                    <h3>Votre application de gestion de stage</h3>
-                    <p>GlucOSE est une application web qui permet de gérer les stages des étudiants.</p>
+                    <h1>{t('welcome')} GlucOSE</h1>
+                    <h3>{t('descTitle')}</h3>
+                    <p>{t('description')}</p>
                 </div>
             )}
         </>
