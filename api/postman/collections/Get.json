@@ -1,0 +1,270 @@
+{
+	"info": {
+		"_postman_id": "3ebb1ba9-016d-46bc-8737-13629ed9a783",
+		"name": "Get",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "27002892-3ebb1ba9-016d-46bc-8737-13629ed9a783"
+	},
+	"item": [
+		{
+			"name": "JobOffer",
+			"item": [
+				{
+					"name": "All",
+					"id": "1dcd7929-afb4-46dc-8271-fcdb3dcba58d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoZWxAbWljaGF1ZC5jb20iLCJpYXQiOjE2OTU2NzI0NDIsImV4cCI6MTY5NTc1ODg0Mn0.TYnGnZN2xk7ycLk4r5qTQNVc-n24lu3fi_BJLbloqbo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffers/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffers",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "By ID",
+					"id": "4b8a2bb1-5914-4ea1-8423-b8859123d37e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffer/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffer",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "By Employer ID",
+					"id": "979aca7c-8236-41f9-bd4d-1dff41fa6f13",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffers/employer/:employerId",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffers",
+								"employer",
+								":employerId"
+							],
+							"variable": [
+								{
+									"key": "employerId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submitted",
+					"id": "2578bc6e-6549-48b7-8a0a-8a3ba9da9e6d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffers",
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "submitted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open",
+					"id": "f127cab3-7d5b-4efc-a9d1-b70a3ba00ae1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffers",
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "OPEN"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refused",
+					"id": "67851438-7dc0-409c-b8d5-94142d0f8497",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/manager/jobOffers/:jobOfferState",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"manager",
+								"jobOffers",
+								":jobOfferState"
+							],
+							"variable": [
+								{
+									"key": "jobOfferState",
+									"value": "refused"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ByDepartment",
+					"id": "51e75147-c472-435b-a720-9f4c314285f1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldHVkaWFudEBldHVkaWFudC5jb20iLCJpYXQiOjE2OTU2NzE5NzksImV4cCI6MTY5NTc1ODM3OX0.wL2XhP6ls8DZiCjyfxEwWxk2-W0qGl_fDOSY5C-uX0M",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/student/jobOffers/_420B0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								"jobOffers",
+								"_420B0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open By Department",
+					"id": "fdfe00ef-8b90-48e8-8126-a37f949f04fb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJldHVkaWFudEBldHVkaWFudC5jb20iLCJpYXQiOjE2OTU2NzE3NzgsImV4cCI6MTY5NjI3NjU3OH0.3lESTdovIFoeLkD3z6kRdYFSflGn5n8-A6pEXVjEBYM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/student/jobOffers/open/_420B0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"student",
+								"jobOffers",
+								"open",
+								"_420B0"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "3fe57a76-ac5c-4f2f-89ce-c70c865302f5"
+		}
+	]
+}

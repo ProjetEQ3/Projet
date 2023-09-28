@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.dto;
 
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class JobOfferDTO{
 	private Long id;
 	private String title;
-	private String department;
+	private Department department;
 	private String location;
 	private String description;
 	private float salary;

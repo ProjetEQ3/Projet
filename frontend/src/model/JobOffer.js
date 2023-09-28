@@ -1,15 +1,16 @@
 class JobOffer{
 	id
 	title
-	positionTitle
 	department
 	location
 	description
 	salary
-	formation
-	dueDate
+	startDate
+	duration
 	expirationDate
 	jobOfferState
+	hoursPerWeek
+	dueDate
 
 	constructor(){
 		this.reset()
@@ -24,14 +25,12 @@ class JobOffer{
 		else delete this.positionTitle
 		if(jobOffer.department) this.department = jobOffer.department
 		else delete this.department
-		if(jobOffer.Location) this.location = jobOffer.Location
+		if(jobOffer.location) this.location = jobOffer.Location
 		else delete this.location
 		if(jobOffer.description) this.description = jobOffer.description
 		else delete this.description
 		if(jobOffer.salary) this.salary = jobOffer.salary
 		else delete this.salary
-		if(jobOffer.formation) this.formation = jobOffer.formation
-		else delete this.formation
 		if(jobOffer.dueDate) this.dueDate = jobOffer.dueDate
 		else delete this.dueDate
 		if(jobOffer.expirationDate) this.expirationDate = jobOffer.expirationDate
@@ -57,3 +56,4 @@ class JobOffer{
 }
 
 export default JobOffer
+

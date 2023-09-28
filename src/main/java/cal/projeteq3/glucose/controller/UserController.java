@@ -19,16 +19,13 @@ public class UserController{
 		this.userService = userService;
 	}
 
-	@PostMapping("/login")
-	public ResponseEntity<UserDTO> Login(@RequestBody LoginDTO loginDTO){
-		try{
-			Validation.validateLogin(loginDTO);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(this.userService.authenticateUser(loginDTO));
-		}catch(ValidationException e){
-			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
-		}catch(Exception e){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", e.getMessage()).body(null);
-		}
-	}
+    @PostMapping("/login")
+    public ResponseEntity<UserDTO> Login(@RequestBody LoginDTO loginDTO){
+        Validation.validateLogin(loginDTO);
+
+        return ResponseEntity.accepted()
+                .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                .body(this.userService.authenticateUser(loginDTO));
+    }
 
 }

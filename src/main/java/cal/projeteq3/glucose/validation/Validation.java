@@ -153,8 +153,6 @@ public final class Validation{
 	public static void validateJobOffer(JobOfferDTO jobOffer){
 		if(!jobOffer.getTitle().matches(TITLE_PATTERN.toString()))
 			exception(ValidationMessage.TITLE_MESSAGE.toString());
-		if(!jobOffer.getDepartment().matches(DEPARTMENT_PATTERN.toString()))
-			exception(ValidationMessage.DEPARTMENT_MESSAGE.toString());
 		if(jobOffer.getLocation().matches(LOCATION_PATTERN.toString()))
 			return;
 		exception(ValidationMessage.LOCATION_MESSAGE.toString());
