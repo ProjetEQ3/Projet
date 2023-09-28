@@ -92,7 +92,7 @@
   "deleteInternshipSuccess": "Offre de stage supprimée",
   "deleteInternshipError": "Erreur lors de la suppression de l'offre de stage",
 
-  "filterBy": "Filtrer par",
+  "filterBy": "Filtrer par ",
   "perPage": "par page",
   "previous": "Précédent",
   "of": "de",
@@ -103,5 +103,6 @@
   "week": "semaine",
   "duration": "Durée: ",
   "update": "Modifier",
-  "cancel": "Annuler"
+  "cancel": "Annuler",
+  "startDate": "Date de début: "
 }

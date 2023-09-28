@@ -7,10 +7,9 @@ import {useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import FilterObjectList from "../util/FilterObjectList";
-import {useTranslation} from "react-i18next";
+import {t} from "i18next";
 
 const EmployerPage = ({user}) => {
-	const {t} = useTranslation();
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
 	const [offers, setOffers] = useState([]);

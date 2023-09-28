@@ -18,10 +18,10 @@ const FullJobOffer = ({ jobOffer }) => {
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
+                        <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>
                         <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
                         { jobOffer.startDate !== null &&
-                            (<h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate}</h6>)
+                            (<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>)
                         }
                         <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
                         { jobOffer.expirationDate !== null &&

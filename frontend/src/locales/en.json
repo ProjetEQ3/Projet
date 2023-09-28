@@ -92,7 +92,7 @@
   "deleteInternshipSuccess": "Internship offer deleted",
   "deleteInternshipError": "Error deleting internship offer",
 
-  "filterBy": "Filter By",
+  "filterBy": "Filter By ",
   "perPage": "per page",
   "previous": "Previous",
   "of": "of",
