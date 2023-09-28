@@ -9,7 +9,7 @@ const LngSelector = () => {
     return (
         <form className="w-25" action="">
             <div className="form-group">
-                <select className="form-control" id="lng-selector" onChange={(e) => changeLanguage(e.target.value)}>
+                <select className="form-control" id="lng-selector" onChange={(e) => changeLanguage(e.target.value)} defaultValue="fr">
                     <option value="en">EN</option>
                     <option value="fr">FR</option>
                 </select>

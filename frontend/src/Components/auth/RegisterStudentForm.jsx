@@ -133,7 +133,7 @@ const RegisterStudentForm = () => {
                         <div className="text-danger">{warnings.matricule}</div>
                         <label htmlFor="department" className="mt-3">{t('departmentStudent')}</label>
                         <select className={`form-select ${warnings.department ? "is-invalid" : ""}`} id="department"
-                                onChange={handleChanges} name="department" defaultValue={t('placeHolderDepartmentStudent')}>
+                                onChange={handleChanges} name="department" defaultValue="default">
                             <option value="_410B0">{t('_410B0')}</option>
                             <option value="_241A1">{t('_241A1')}</option>
                             <option value="_420B0">{t('_420B0')}</option>
@@ -148,7 +148,7 @@ const RegisterStudentForm = () => {
                             <option value="_241D0">{t('_241D0')}</option>
                             <option value="_243A0">{t('_243A0')}</option>
                             <option value="_221B0">{t('_221B0')}</option>
-                            <option disabled={true}>{t('placeHolderDepartmentStudent')}</option>
+                            <option value="default" disabled={true}>{t('placeHolderDepartmentStudent')}</option>
                         </select>
                         <div className="text-danger">{warnings.department}</div>
                         <label htmlFor="password" className="mt-3">{t('password')}</label>
