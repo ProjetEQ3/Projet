@@ -22,21 +22,14 @@ const JobOffers = ({ offers, updateJobOfferList }) => {
         <div className="row justify-content-around">
           <FilterObjectList
             items={offers}
-            attributes={['title', 'department', 'jobOfferState.select']}
+            attributes={['title:Titre de l\'offre', 'department:Department', 'jobOfferState.select:Status']}
             renderItem={renderFilteredOffers}
-            selectOptions={{
-              jobOfferState: ['Open', 'Closed', 'Pending']
-            }}
+            selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
           />
-          {/*<FilterObjectList
-            items={offers}
-            attributes={['title', 'department', 'jobOfferState']}
-            renderItem={renderFilteredOffers}
-          />*/}
         </div>
       </div>
     </div>
   )
 }
 
-export default JobOffers;
+export default JobOffers
