@@ -74,12 +74,12 @@
   "yourInternship": "Your internship offers",
   "internshipList": "List of your offers",
 
-  "submitted": "Awaiting Approval",
-  "open": "Open to Applications",
-  "pending": "Pending Response",
-  "expired": "Expired",
-  "taken": "Taken",
-  "refused": "Refused",
+  "SUBMITTED": "Awaiting Approval",
+  "OPEN": "Open to Applications",
+  "PENDING": "Pending Response",
+  "EXPIRED": "Expired",
+  "TAKEN": "Taken",
+  "REFUSED": "Refused",
 
   "department": "Department",
   "internshipTitle": "Offer Title",
@@ -90,5 +90,14 @@
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",
   "deleteInternshipSuccess": "Internship offer deleted",
-  "deleteInternshipError": "Error deleting internship offer"
+  "deleteInternshipError": "Error deleting internship offer",
+
+  "filterBy": "Filter By",
+  "perPage": "per page",
+  "previous": "Previous",
+  "of": "of",
+  "choose": "Choose an option",
+  "next": "Next",
+  "noData": "No data available"
+
 }

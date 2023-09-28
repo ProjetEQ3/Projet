@@ -74,12 +74,12 @@
   "yourInternship": "Vos offres de stages",
   "internshipList": "Liste de vos offres",
 
-  "submitted": "Attente d'approbation",
-  "open": "Ouvert aux candidatures",
-  "pending": "En attente de réponse",
-  "expired": "Expiré",
-  "taken": "Pris",
-  "refused": "Refusé",
+  "SUBMITTED": "Attente d'approbation",
+  "OPEN": "Ouvert aux candidatures",
+  "PENDING": "En attente de réponse",
+  "EXPIRED": "Expiré",
+  "TAKEN": "Pris",
+  "REFUSED": "Refusé",
 
   "department": "Département",
   "internshipTitle": "Titre de l'offre",
@@ -90,5 +90,13 @@
   "updateInternshipSuccess": "Offre de stage mise à jour",
   "updateInternshipError": "Erreur lors de la mise à jour de l'offre de stage",
   "deleteInternshipSuccess": "Offre de stage supprimée",
-  "deleteInternshipError": "Erreur lors de la suppression de l'offre de stage"
+  "deleteInternshipError": "Erreur lors de la suppression de l'offre de stage",
+
+  "filterBy": "Filtrer par",
+  "perPage": "par page",
+  "previous": "Précédent",
+  "of": "de",
+  "choose": "Choose an option",
+  "next": "Suivant",
+  "noData": "Aucune donnée disponible"
 }

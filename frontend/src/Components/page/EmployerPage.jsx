@@ -87,9 +87,7 @@ const EmployerPage = ({user}) => {
 									items={offers}
 									attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
 									renderItem={renderFilteredOffers}
-									selectOptions={{jobOfferState: [
-										t('submitted'), t('open'), t('pending'),
-											t('expired'), t('taken'), t('refused')]}}
+									selectOptions={{jobOfferState: [ "SUBMITTED", "OPEN", "PENDING", "EXPIRED", "TAKEN", "REFUSED"]}}
 								/>
 								{/*{
 									offers.map((offer, index) => (
