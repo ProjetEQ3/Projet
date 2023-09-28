@@ -10,7 +10,7 @@ const ManagerPage = ({user}) => {
 
     useEffect(() => {
         const getAllOffers = async () => {
-            await axiosInstance.get('manager/jobOffers/submitted',
+            await axiosInstance.get('manager/jobOffers/all',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setOffers(response.data);
