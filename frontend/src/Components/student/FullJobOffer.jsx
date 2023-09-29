@@ -16,7 +16,7 @@ const FullJobOffer = ({ jobOffer }) => {
                     <div className="col-12">
                         <h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
                         <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-                        <h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate.split("T")[0]}</h6>
+                        <h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate}</h6>
                         <h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration} semaines</h6>
                         <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
                         <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</h6>

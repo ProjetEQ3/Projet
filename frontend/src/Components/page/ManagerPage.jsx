@@ -10,7 +10,7 @@ const ManagerPage = ({user}) => {
 
     useEffect(() => {
         const getAllOffers = async () => {
-            await axiosInstance.get('manager/jobOffers/submitted',
+            await axiosInstance.get('manager/jobOffers/all',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setOffers(response.data);
@@ -20,7 +20,7 @@ const ManagerPage = ({user}) => {
             });
         }
         const getAllCvs = async () => {
-            await axiosInstance.get('manager/cvs/pending',
+            await axiosInstance.get('manager/cvs/all',
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setCvs(response.data);
@@ -31,16 +31,16 @@ const ManagerPage = ({user}) => {
             });
         }
 
-        getAllCvs()
-        getAllOffers()
+        getAllCvs().then(r => console.log(r));
+        getAllOffers().then(r => console.log(r));
     }, []);
 
-    const updateJobOfferList = (jobOffer) => {
-        setOffers(offers.filter((offer) => offer.id !== jobOffer.id));
+    const updateJobOfferList = () => {
+        setOffers(offers);
     }
 
-    const updateCvList = (cv) => {
-        setCvs(cvs.filter((i) => i.id !== cv.id));
+    const updateCvList = () => {
+        setCvs(cvs);
     }
 
     return (

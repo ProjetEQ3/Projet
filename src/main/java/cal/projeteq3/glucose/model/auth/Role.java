@@ -5,20 +5,14 @@ import java.util.List;
 import java.util.Set;
 
 public enum Role{
-	ADMIN("ROLE_ADMIN"),
 	MANAGER("ROLE_MANAGER"),
 	EMPLOYER("ROLE_EMPLOYER"),
-	STUDENT("ROLE_STUDENT"),
-	USER("ROLE_USER");
+	STUDENT("ROLE_STUDENT");
 
 	private final String string;
 	private final Set<Role> managedRoles = new HashSet<>();
 
 	static{
-		ADMIN.managedRoles.add(MANAGER);
-		ADMIN.managedRoles.add(EMPLOYER);
-		ADMIN.managedRoles.add(STUDENT);
-		ADMIN.managedRoles.add(USER);
 		MANAGER.managedRoles.add(EMPLOYER);
 		MANAGER.managedRoles.add(STUDENT);
 	}

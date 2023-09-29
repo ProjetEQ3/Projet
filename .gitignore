@@ -2,6 +2,7 @@
 .vscode/
 .idea/
 .obsidian/
+.postman/
 *.suo
 *.ntvs*
 *.njsproj

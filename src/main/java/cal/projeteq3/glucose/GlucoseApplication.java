@@ -46,7 +46,7 @@ public class GlucoseApplication implements CommandLineRunner {
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
-		managerRepository.save(createManager());
+		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
 	}
 
@@ -175,16 +175,26 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build());
 	}
 
-	private static Manager createManager(){
+	private static List<Manager> createManager(){
 		return
+			List.of(
 				Manager.builder()
-						.firstName("Michel")
-						.lastName("Michaud")
-						.email("michel@michaud.com")
-						.password("Ose12345")
-						.matricule("0000001")
-						.phoneNumber("123-456-7890")
-						.build();
+				.firstName("Zaka")
+				.lastName("Gn")
+				.email("m@zaka.se")
+				.password("aaaAAA111")
+				.matricule("0000000")
+				.phoneNumber("123-456-7890")
+				.build(),
+			Manager.builder()
+				.firstName("Michel")
+				.lastName("Michaud")
+				.email("michel@michaud.com")
+				.password("Ose12345")
+				.matricule("0000001")
+				.phoneNumber("123-456-7890")
+				.build()
+			);
 	}
 
 

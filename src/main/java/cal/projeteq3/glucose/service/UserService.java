@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.exception.request.RoleNotHandled;
 import cal.projeteq3.glucose.exception.request.UserAlreadyExistsException;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.exception.request.ValidationException;
@@ -53,26 +54,25 @@ public class UserService {
             case STUDENT -> getStudentDto(user.getId());
             case EMPLOYER -> getEmployerDto(user.getId());
             case MANAGER -> getManagerDto(user.getId());
-            default -> throw new UserNotFoundException("No such role is known");
         };
     }
 
-	public UserDTO createUser(RegisterDTO registerDTO){
-		if(userRepository.findCredentials(registerDTO.getEmail()).isPresent())
-			throw new UserAlreadyExistsException(registerDTO.getEmail());
-		User user = switch(registerDTO.getRole()){
-			case "STUDENT" -> Student.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-			case "EMPLOYER" -> Employer.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-			case "MANAGER" -> Manager.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-			default -> throw new IllegalArgumentException();
-		};
-		User savedUser = userRepository.save(user);
-		UserDTO userDTO = new UserDTO();
-		userDTO.setId(savedUser.getId());
-		userDTO.setEmail(savedUser.getEmail());
-		userDTO.setRole(savedUser.getCredentials().getRole().toString());
-		return userDTO;
-	}
+//	public UserDTO createUser(RegisterDTO registerDTO){
+//		if(userRepository.findCredentials(registerDTO.getEmail()).isPresent())
+//			throw new UserAlreadyExistsException(registerDTO.getEmail());
+//		User user = switch(registerDTO.getRole()){
+//			case "STUDENT" -> Student.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
+//			case "EMPLOYER" -> Employer.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
+//			case "MANAGER" -> Manager.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
+//			default -> throw new IllegalArgumentException();
+//		};
+//		User savedUser = userRepository.save(user);
+//		UserDTO userDTO = new UserDTO();
+//		userDTO.setId(savedUser.getId());
+//		userDTO.setEmail(savedUser.getEmail());
+//		userDTO.setRole(savedUser.getCredentials().getRole().toString());
+//		return userDTO;
+//	}
 
 	private ManagerDTO getManagerDto(Long id) {
 		Optional<Manager> optManager = managerRepository.findById(id);
