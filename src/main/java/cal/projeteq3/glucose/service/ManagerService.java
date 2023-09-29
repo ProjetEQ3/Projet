@@ -155,4 +155,10 @@ public class ManagerService{
 		jobOfferRepository.deleteById(id);
 	}
 
+
+
+//	Contract
+
+
+
 }

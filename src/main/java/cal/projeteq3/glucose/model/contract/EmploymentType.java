@@ -19,4 +19,18 @@ public enum EmploymentType {
     ;
 
     private String other;
+
+    public String toString() {
+        return switch (this) {
+            case FULL_TIME -> "Full time";
+            case PART_TIME -> "Part time";
+            case INTERNSHIP -> "Internship";
+            case APPRENTICESHIP -> "Apprenticeship";
+            case FIXED_TERM_CONTRACT -> "Fixed term contract";
+            case PERMANENT_CONTRACT -> "Permanent contract";
+            case FREELANCE -> "Freelance";
+            case OTHER -> other;
+            default -> "";
+        };
+    }
 }

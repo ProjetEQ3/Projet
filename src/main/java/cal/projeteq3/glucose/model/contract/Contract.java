@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model.contract;
 
+import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisitNotMet;
 import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static java.time.DayOfWeek.*;
@@ -27,16 +29,19 @@ public class Contract {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Employer employer;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Employer supervisor;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     private Address workAddress;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Student student;
 
     @Column(nullable = false)
@@ -67,9 +72,11 @@ public class Contract {
     private float hoursPerDay;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private EmploymentType employmentType = EmploymentType.FULL_TIME;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     Set<DayOfWeek> workDays = Set.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY);
 
     @Column(nullable = false)
@@ -82,5 +89,38 @@ public class Contract {
     @OneToOne
     private Signature directorSignature;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime creationDate = LocalDateTime.now();
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime lastModificationDate = LocalDateTime.now();
+
+
+    public void setEmployerSignature(Signature employerSignature) {
+        if (this.employerSignature != null)
+            throw new IllegalStateException("Employer signature already set");
+
+        this.employerSignature = employerSignature;
+        lastModificationDate = LocalDateTime.now();
+    }
+
+    public void setStudentSignature(Signature studentSignature) {
+        if (this.studentSignature != null)
+            throw new IllegalStateException("Student signature already set");
+        if (this.employerSignature == null)
+            throw new SignaturePrerequisitNotMet();
+
+        this.studentSignature = studentSignature;
+        lastModificationDate = LocalDateTime.now();
+    }
+
+    public void setDirectorSignature(Signature directorSignature) {
+        if (this.directorSignature != null)
+            throw new IllegalStateException("Director signature already set");
+        if (this.employerSignature == null || this.studentSignature == null)
+            throw new SignaturePrerequisitNotMet();
+
+        this.directorSignature = directorSignature;
+        lastModificationDate = LocalDateTime.now();
+    }
 }

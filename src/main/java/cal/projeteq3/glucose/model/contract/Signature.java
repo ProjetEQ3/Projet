@@ -9,12 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 public class Signature {
     @Id
@@ -34,5 +34,5 @@ public class Signature {
     private String jobTitle;
 
     @Column(nullable = false)
-    private LocalDateTime signatureDate;
+    private LocalDate signatureDate;
 }

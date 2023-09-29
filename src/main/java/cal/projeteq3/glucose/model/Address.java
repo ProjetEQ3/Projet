@@ -19,10 +19,10 @@ public class Address {
     @Column(nullable = false)
     private String street;
 
-    private String addressNumber; // numero: Appartement, Unité, Bureau
 
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
+    private String addressNumber; // numero: Appartement, Unité, Bureau
 
     @Column(nullable = false)
     private String city;
@@ -40,5 +40,31 @@ public class Address {
         APARTMENT,
         UNIT,
         BUILDING
+        ;
+
+        @Override
+        public String toString() {
+            return switch (this) {
+                case APARTMENT -> "Apartment";
+                case UNIT -> "Unit";
+                case BUILDING -> "Building";
+                default -> "";
+            };
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (addressType == null) {
+
+            return street + " " + "\n" +
+                    city + ", " + state + ", " + zipCode + "\n" +
+                    country;
+        } else {
+
+            return street + " " + addressType + ": " + addressNumber + "\n" +
+                    city + ", " + state + ", " + zipCode + "\n" +
+                    country;
+        }
     }
 }
