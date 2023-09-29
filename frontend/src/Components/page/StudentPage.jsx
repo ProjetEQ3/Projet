@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom"
 import JobOfferList from "../jobOffer/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
+import MyApplications from "../student/MyApplications";
 
 const StudentPage = ({user, setUser}) => {
   const [tab, setTab] = useState('home');
@@ -47,10 +48,13 @@ const StudentPage = ({user, setUser}) => {
 						onClick={() => setTab('stages')}>Stages</button>
 					<button className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
 						onClick={() => setTab('cv')}>CV</button>
+					<button className={`btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
+							onClick={() => setTab('my_applications')}>Mes applications</button>
 				</div>
 				{tab === 'home' && <h3>Home</h3>}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} />  }
 				{tab === 'cv' && <Cv user={user} setCv={setCv} />}
+				{tab === 'my_applications' && <MyApplications user={user}/>}
 			</div>
 		</div>
 	)
