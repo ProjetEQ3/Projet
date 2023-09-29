@@ -6,6 +6,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isModified, setIsModified] = useState(false);
     const [newOffer, setNewOffer] = useState({
+        jobOfferState: 'SUBMITTED',
         id: jobOffer.id,
         refusReason: jobOffer.refusReason,
         title: jobOffer.title,
