@@ -44,6 +44,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .path(request.getRequestURI())
                 .build();
 
-        return ResponseEntity.status(500).body(response);
+        return ResponseEntity.status(673).body(response);
     }
 }
