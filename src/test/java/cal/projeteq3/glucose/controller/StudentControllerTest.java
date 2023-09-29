@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,8 +52,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -64,8 +64,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -76,8 +76,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
                                 .build()
                 )
         );
@@ -119,8 +119,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -131,8 +131,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -143,8 +143,8 @@ public class StudentControllerTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
                                 .build()
                 )
         );
