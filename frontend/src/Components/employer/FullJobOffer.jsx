@@ -1,8 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare, faX} from '@fortawesome/free-solid-svg-icons';
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import Loading from "../util/Loading";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
+    const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false);
     const [isModified, setIsModified] = useState(false);
     const [newOffer, setNewOffer] = useState({
@@ -47,6 +48,9 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         e.preventDefault();
         setNewOffer(
             {
+                jobOfferState: jobOffer.jobOfferState,
+                refusReason: jobOffer.refusReason,
+                id: jobOffer.id,
                 title: jobOffer.title,
                 department: jobOffer.department,
                 location: jobOffer.location,
@@ -58,6 +62,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                 expirationDate: jobOffer.expirationDate,
             }
         )
+        formRef.current.reset();
     }
 
     const handleSubmit = (e) => {
@@ -150,7 +155,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                             </div>
                             <div className="modal-body">
-                                <form onSubmit={handleSubmit}>
+                                <form ref={formRef} onSubmit={handleSubmit}>
                                     <div className="mb-3">
                                         <label htmlFor="title" className="mt-3">Titre</label>
                                         <input type="text" className={`form-control ${warnings.title ? 'is-invalid' : ''}`} id="title" placeholder={jobOffer.title} onChange={handleChange} name="title"/>
