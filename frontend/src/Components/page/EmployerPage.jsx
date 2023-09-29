@@ -96,13 +96,6 @@ const EmployerPage = ({user}) => {
 									renderItem={renderFilteredOffers}
 									selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
 								/>
-								{/*{
-									offers.map((offer, index) => (
-										<div onClick={() => setSelectedOffer(offer)}>
-											<ShortJobOffer jobOffer={offer} key={offer.id} deleteOffer={() => deleteOffer(offer.id)}/>
-										</div>
-									))
-								}*/}
 								<div className="row m-2">
 									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>Ajouter une offre de stage</button>
 								</div>

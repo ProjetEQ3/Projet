@@ -1,7 +1,8 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import {faTrash, faX} from '@fortawesome/free-solid-svg-icons';
 
 import {useState} from "react";
+import State from "../util/State";
 const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
     const [isHovered, setIsHovered] = useState(false);
 
