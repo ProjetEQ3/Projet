@@ -4,6 +4,8 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -12,6 +14,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -325,5 +328,25 @@ public class StudentServiceTest {
         assertEquals(1, jobOffers.size());
         verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN);
 
+    }
+
+    @Test
+    void testApplyJobOffer_JobOfferNotFound() {
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(JobOfferNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void testApplyJobOffer_StudentNotFound() {
+        JobOffer jobOffer = new JobOffer();
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(StudentNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
     }
 }

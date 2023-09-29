@@ -7,7 +7,6 @@ import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
-import cal.projeteq3.glucose.service.JobOfferService;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.http.HttpStatus;
@@ -21,11 +20,9 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class StudentController{
 	private final StudentService studentService;
-	private final JobOfferService jobOfferService;
 
-	public StudentController(StudentService studentService, JobOfferService jobOfferService){
+	public StudentController(StudentService studentService){
 		this.studentService = studentService;
-		this.jobOfferService = jobOfferService;
 	}
 
 	@PostMapping("/register")
@@ -93,10 +90,10 @@ public class StudentController{
 	}
 
 	// EQ3-13
-	@PostMapping("/jobOffers/{studentId}/{jobOfferId}")
-	public ResponseEntity<Void> applyForJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
+	@PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
+	public ResponseEntity<Void> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
 		try{
-			jobOfferService.apply(jobOfferId, studentId);
+			studentService.applyJobOffer(jobOfferId, studentId);
 			return ResponseEntity.accepted().build();
 		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
