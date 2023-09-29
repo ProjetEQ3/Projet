@@ -1,18 +1,12 @@
 package cal.projeteq3.glucose.model.contract;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,6 +15,9 @@ public class Signature {
     @GeneratedValue
     private Long id;
 
+    @ManyToOne
+    private Credentials credentials;
+
     @Column(nullable = false)
     private String firstName;
 
@@ -28,11 +25,9 @@ public class Signature {
     private String lastName;
 
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private String jobTitle;
 
     @Column(nullable = false)
     private LocalDate signatureDate;
+
 }

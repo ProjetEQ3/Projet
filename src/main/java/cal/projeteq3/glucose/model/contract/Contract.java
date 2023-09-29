@@ -34,7 +34,7 @@ public class Contract {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Employer supervisor;
+    private Employer supervisor; // Make Supervisor
 
     @ManyToOne
     @JoinColumn(nullable = false)
