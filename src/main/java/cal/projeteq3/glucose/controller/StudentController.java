@@ -10,6 +10,7 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,10 +28,11 @@ public class StudentController{
 
 	@PostMapping("/register")
 	public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student){
-//		System.out.print(student);
 		try{
 			Validation.validateStudent(student);
-			return ResponseEntity.status(HttpStatus.CREATED).body(studentService.createStudent(student));
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.contentType(MediaType.APPLICATION_JSON)
+					.body(studentService.createStudent(student));
 		}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).body(null);
 		}catch(Exception e){

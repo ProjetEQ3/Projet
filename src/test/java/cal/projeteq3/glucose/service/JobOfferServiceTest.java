@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class JobOfferTest {
+class JobOfferServiceTest {
 
 	private JobOffer jobOffer;
 	private Student student;
