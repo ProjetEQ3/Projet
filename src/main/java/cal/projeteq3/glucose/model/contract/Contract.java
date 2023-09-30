@@ -4,11 +4,9 @@ import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisi
 import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.Supervisor;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -18,7 +16,7 @@ import java.util.Set;
 
 import static java.time.DayOfWeek.*;
 
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,19 +27,15 @@ public class Contract {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Employer employer;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
-    private Employer supervisor; // Make Supervisor
+    private Supervisor supervisor;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Address workAddress;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Student student;
 
     @Column(nullable = false)

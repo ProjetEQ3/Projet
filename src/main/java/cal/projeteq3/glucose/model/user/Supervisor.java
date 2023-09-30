@@ -1,11 +1,9 @@
 package cal.projeteq3.glucose.model.user;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +22,5 @@ public class Supervisor extends User{
 
     @Column(nullable = false)
     private String jobTitle;
-
-    @Column(nullable = false)
-    @JoinColumn(nullable = false, table = "employer")
-    private Long employerId;
 
 }
