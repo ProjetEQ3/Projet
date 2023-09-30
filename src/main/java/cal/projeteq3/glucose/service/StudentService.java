@@ -4,15 +4,18 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -118,6 +121,15 @@ public class StudentService {
         return jobOfferRepository.findJobOffersByDepartmentAndJobOfferState(department, JobOfferState.OPEN)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    // EQ3-13
+    @Transactional
+    public void applyJobOffer(Long jobOfferId, Long studentId){
+        JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+        jobOffer.apply(student);
+        jobOfferRepository.save(jobOffer);
     }
 
 }

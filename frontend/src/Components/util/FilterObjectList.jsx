@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 
+<<<<<<< HEAD
 const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
@@ -42,12 +43,32 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	const handleAttributeChange = (e) => {
 		setSelectedAttribute(e.target.value)
 		setQuery('')
+=======
+const FilterObjectList = ({items, attributes, renderItem}) => {
+	const [selectedAttribute, setSelectedAttribute] = useState()
+	const [query, setQuery] = useState('')
+
+	useEffect(() => {
+		if(!items || !items.length)
+			return
+		if(!attributes || !attributes.length)
+			return
+		if(!selectedAttribute)
+			return
+		if(!attributes.includes(selectedAttribute) && attributes.length > 0)
+			setSelectedAttribute(attributes[0])
+	}, [])
+
+	const handleAttributeChange = (e) => {
+		setSelectedAttribute(e.target.value)
+>>>>>>> origin/EQ3-13
 	}
 
 	const handleInputChange = (e) => {
 		setQuery(e.target.value)
 	}
 
+<<<<<<< HEAD
 	return (
 		<div className="mb-3">
 			<div className="d-flex align-items-center justify-content-between mb-2 col-12">
@@ -103,6 +124,28 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					</button>
 				</div>
 			</div>
+=======
+	const filteredItems = items.filter(item =>
+		String(item[selectedAttribute]).toLowerCase().includes(query.toLowerCase())
+	)
+
+	return (
+		<div>
+			<select value={selectedAttribute} onChange={handleAttributeChange}>
+				{attributes.map(attr => (
+					<option key={attr} value={attr}>{attr}</option>
+				))}
+			</select>
+
+			<input
+				type="text"
+				placeholder={`Filter by ${selectedAttribute}...`}
+				value={query}
+				onChange={handleInputChange}
+			/>
+
+			{renderItem(filteredItems)}
+>>>>>>> origin/EQ3-13
 		</div>
 	)
 }
@@ -110,10 +153,14 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 FilterObjectList.defaultProps = {
 	items: [],
 	attributes: [],
+<<<<<<< HEAD
 	renderItem: () => {
 		return (<>No items</>)
 	},
 	selectOptions: {}
+=======
+	renderItem: () => {return (<>No items</>)}
+>>>>>>> origin/EQ3-13
 }
 
 export default FilterObjectList

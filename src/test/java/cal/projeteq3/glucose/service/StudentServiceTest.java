@@ -5,8 +5,13 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+<<<<<<< HEAD
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
+=======
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+>>>>>>> origin/EQ3-13
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -18,6 +23,7 @@ import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -395,6 +401,7 @@ public class StudentServiceTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void addCv_valid() {
         // Arrange
         Long studentId = 1L;
@@ -490,5 +497,24 @@ public class StudentServiceTest {
             studentService.deleteCv(nonExistentStudentId);
         });
         verify(studentRepository, times(1)).findById(nonExistentStudentId);
+=======
+    void testApplyJobOffer_JobOfferNotFound() {
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(JobOfferNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void testApplyJobOffer_StudentNotFound() {
+        JobOffer jobOffer = new JobOffer();
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(StudentNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+>>>>>>> origin/EQ3-13
     }
 }
