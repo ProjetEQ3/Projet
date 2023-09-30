@@ -197,5 +197,14 @@ public class ManagerService{
 		return new ContractDTO(contractRepository.save(contract));
 	}
 
+	public ContractDTO studentSignContract(SignatureDTO signatureDTO, LoginDTO loginDTO) {
+		Contract contract = contractRepository.findById(signatureDTO.getContractId())
+				.orElseThrow(() -> new ContractNotFoundException(signatureDTO.getContractId()));
+
+		contract.setEmployerSignature(signatureDTO.toEntity(loginDTO, Role.EMPLOYER));
+
+		return new ContractDTO(contractRepository.save(contract));
+	}
+
 
 }

@@ -19,7 +19,6 @@ public class Address {
     @Column(nullable = false)
     private String street;
 
-
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
     private String addressNumber; // numero: Appartement, Unité, Bureau
