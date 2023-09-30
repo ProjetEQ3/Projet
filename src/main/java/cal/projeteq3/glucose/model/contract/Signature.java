@@ -30,4 +30,8 @@ public class Signature {
     @Column(nullable = false)
     private LocalDate signatureDate;
 
+    @JoinColumn(nullable = false)
+    @OneToOne
+    private Contract contract;
+
 }
