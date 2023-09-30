@@ -7,7 +7,6 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
-import cal.projeteq3.glucose.validation.Validation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,7 +100,7 @@ public class EmployerControllerTest {
 						.post("/employer/register")
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
-				.andExpect(MockMvcResultMatchers.status().isInternalServerError());
+				.andExpect(MockMvcResultMatchers.status().is(673));
 	}
 
 	@Test
