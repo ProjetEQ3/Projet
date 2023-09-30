@@ -2,7 +2,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useEffect} from "react"
 
-const FullJobOffer = ({jobOffer, user}) => {
+const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 
 	useEffect(() => {
 		console.log("user", user)
@@ -12,8 +12,14 @@ const FullJobOffer = ({jobOffer, user}) => {
 	const applyForJobOffer = (jobOfferID, studentId) => {
 		axiosInstance
 			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
-			.then((res) => {toast.success("Vous avez postulé avec succès")})
-			.catch((err) => {toast.error(err.response.data.message)})
+			.then((ressponse) => {
+				updatedOffer(ressponse.data)
+				toast.success("Vous avez postulé avec succès")}
+			)
+			.catch((err) => {
+				console.log("err: ", err)
+				toast.error(err.response.data.message)}
+			)
 	}
 
 	return (

@@ -87,4 +87,8 @@ public class JobOffer{
 		return jobApplication;
 	}
 
+	public boolean hasApplied(Long studentId){
+		return this.jobApplications.stream().anyMatch(jobApplication -> jobApplication.getStudent().getId().equals(studentId));
+	}
+
 }

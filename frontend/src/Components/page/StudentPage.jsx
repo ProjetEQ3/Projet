@@ -72,7 +72,7 @@ const StudentPage = ({user, setUser}) => {
 					</button>
 				</div>
 				{tab === 'home' && <h3>Home</h3>}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} applyForJobOffer={applyForJobOffer}/>}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} applyForJobOffer={applyForJobOffer}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 			</div>
 		</div>
