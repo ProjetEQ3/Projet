@@ -54,7 +54,8 @@ public class UserService {
             case STUDENT -> getStudentDto(user.getId());
             case EMPLOYER -> getEmployerDto(user.getId());
             case MANAGER -> getManagerDto(user.getId());
-        };
+			case DIRECTOR -> null;
+		};
     }
 
 //	public UserDTO createUser(RegisterDTO registerDTO){

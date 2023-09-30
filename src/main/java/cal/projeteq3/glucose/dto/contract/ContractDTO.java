@@ -1,7 +1,11 @@
 package cal.projeteq3.glucose.dto.contract;
 
+import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.EmploymentType;
+import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.Supervisor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,8 +59,12 @@ public class ContractDTO {
         this.hourlyRate = contract.getHourlyRate();
     }
 
-    public Contract toEntity(){
+    public Contract toEntity(Employer employer, Supervisor supervisor, Student student, Address workAddress){
         return Contract.builder()
+                .employer(employer)
+                .supervisor(supervisor)
+                .workAddress(workAddress)
+                .student(student)
                 .jobTitle(this.jobTitle)
                 .responsibilities(this.responsibilities)
                 .startDate(this.startDate)

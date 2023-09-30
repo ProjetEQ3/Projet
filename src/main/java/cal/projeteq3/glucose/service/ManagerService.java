@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
@@ -7,14 +8,17 @@ import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.SignatureDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.*;
+import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.contract.Contract;
-import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.Supervisor;
 import cal.projeteq3.glucose.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,20 +31,24 @@ public class ManagerService{
 
 	private final ManagerRepository managerRepository;
 	private final StudentRepository studentRepository;
+	private final EmployerRepository employerRepository;
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
 	private final ContractRepository contractRepository;
+	private final SupervisorRepository supervisorRepository;
 
 	@Autowired
 	public ManagerService(
-		ManagerRepository managerRepository, StudentRepository studentRepository,
-		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository,
-		ContractRepository contractRepository){
+			ManagerRepository managerRepository, StudentRepository studentRepository,
+			JobOfferRepository jobOfferRepository, CvFileRepository cvRepository,
+			ContractRepository contractRepository, EmployerRepository employerRepository, SupervisorRepository supervisorRepository){
 		this.managerRepository = managerRepository;
 		this.studentRepository = studentRepository;
 		this.jobOfferRepository = jobOfferRepository;
 		this.cvRepository = cvRepository;
 		this.contractRepository = contractRepository;
+		this.employerRepository = employerRepository;
+		this.supervisorRepository = supervisorRepository;
 	}
 
 	// database operations here
@@ -159,9 +167,20 @@ public class ManagerService{
 
 
 //	Contract
+//private Long employerId;
+//	private Long supervisorId;
+//	private Long workAddressId;
+//	private Long studentId;
 
-	public ContractDTO createContract(ContractDTO contractDTO) {
-		return new ContractDTO(contractRepository.save(contractDTO.toEntity()));
+	public ContractDTO createContract(ContractDTO contractDTO, AddressDTO addressDTO) {
+		Employer employer = employerRepository.findById(contractDTO.getEmployerId())
+				.orElseThrow(() -> new EmployerNotFoundException(contractDTO.getEmployerId()));
+		Supervisor supervisor = supervisorRepository.findById(contractDTO.getSupervisorId())
+				.orElseThrow(() -> new SupervisorNotFoundException(contractDTO.getSupervisorId()));
+		Student student = studentRepository.findById(contractDTO.getStudentId())
+				.orElseThrow(() -> new StudentNotFoundException(contractDTO.getStudentId()));
+
+		return new ContractDTO(contractRepository.save(contractDTO.toEntity(employer, supervisor, student, addressDTO.toEntity())));
 	}
 
 	public List<ContractDTO> getAllContracts() {
