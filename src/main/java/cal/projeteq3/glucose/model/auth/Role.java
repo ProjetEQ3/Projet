@@ -7,7 +7,9 @@ import java.util.Set;
 public enum Role{
 	MANAGER("ROLE_MANAGER"),
 	EMPLOYER("ROLE_EMPLOYER"),
-	STUDENT("ROLE_STUDENT");
+	STUDENT("ROLE_STUDENT"),
+	DIRECTOR("ROLE_DIRECTOR"),
+	;
 
 	private final String string;
 	private final Set<Role> managedRoles = new HashSet<>();

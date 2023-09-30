@@ -2,25 +2,24 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.contract.SignatureDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
-import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
-import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
-import cal.projeteq3.glucose.exception.request.UserNotFoundException;
+import cal.projeteq3.glucose.exception.request.*;
+import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,16 +29,18 @@ public class ManagerService{
 	private final StudentRepository studentRepository;
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
+	private final ContractRepository contractRepository;
 
 	@Autowired
 	public ManagerService(
 		ManagerRepository managerRepository, StudentRepository studentRepository,
-		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository
-	){
+		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository,
+		ContractRepository contractRepository){
 		this.managerRepository = managerRepository;
 		this.studentRepository = studentRepository;
 		this.jobOfferRepository = jobOfferRepository;
 		this.cvRepository = cvRepository;
+		this.contractRepository = contractRepository;
 	}
 
 	// database operations here
@@ -159,6 +160,23 @@ public class ManagerService{
 
 //	Contract
 
+	public ContractDTO createContract(ContractDTO contractDTO) {
+		return new ContractDTO(contractRepository.save(contractDTO.toEntity()));
+	}
+
+	public List<ContractDTO> getAllContracts() {
+		return contractRepository.findAll().stream().map(ContractDTO::new)
+				.collect(Collectors.toList());
+	}
+
+	public ContractDTO directorSignContract(SignatureDTO signatureDTO, LoginDTO loginDTO) {
+		Contract contract = contractRepository.findById(signatureDTO.getContractId())
+				.orElseThrow(() -> new ContractNotFoundException(signatureDTO.getContractId()));
+
+		contract.setDirectorSignature(signatureDTO.toEntity(loginDTO, Role.DIRECTOR));
+
+		return new ContractDTO(contractRepository.save(contract));
+	}
 
 
 }

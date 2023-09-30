@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class Signature {
     @Id
