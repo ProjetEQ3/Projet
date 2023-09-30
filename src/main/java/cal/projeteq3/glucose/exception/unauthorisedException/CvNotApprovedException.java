@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.exception.unauthorisedException;
 
-public class CvNotApprovedException extends UnauthorisedException{
+import cal.projeteq3.glucose.exception.unauthorizedException.UnauthorizedException;
+
+public class CvNotApprovedException extends UnauthorizedException {
 	public CvNotApprovedException(){
 		super("Student must have an approved CV");
 	}

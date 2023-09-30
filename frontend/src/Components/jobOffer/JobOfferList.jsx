@@ -15,14 +15,6 @@ function JobOfferList({jobOffers, user}){
 								<h2 className="text-dark fw-light pt-1">Aucune offre de stage Ouverte pour le moment</h2>
 							</div>
 						</div> :
-<<<<<<< HEAD
-
-					jobOffers.map((offer, index) => (
-						<div key={offer.id} onClick={() => setSelectedOffer(offer)}>
-							<ShortJobOffer jobOffer={offer} key={offer.id}/>
-						</div>
-					))
-=======
 						jobOffers.map((offer, index) => (
 							offer.isApproved ? (
 								<div onClick={() => setSelectedOffer(offer)}>
@@ -30,7 +22,6 @@ function JobOfferList({jobOffers, user}){
 								</div>
 							) : null
 						))
->>>>>>> origin/EQ3-13
 				}
 			</div>
 			<div className="col-6">

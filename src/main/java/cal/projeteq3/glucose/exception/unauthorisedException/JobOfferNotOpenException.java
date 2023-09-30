@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.exception.unauthorisedException;
 
-public class JobOfferNotOpenException extends UnauthorisedException{
+import cal.projeteq3.glucose.exception.unauthorizedException.UnauthorizedException;
+
+public class JobOfferNotOpenException extends UnauthorizedException {
 	public JobOfferNotOpenException(){
 		super("Job offer is not open");
 	}

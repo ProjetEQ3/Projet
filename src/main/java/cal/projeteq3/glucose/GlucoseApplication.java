@@ -18,6 +18,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -211,9 +212,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(1))
+						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.build(),
 				JobOffer.builder()
@@ -227,9 +228,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(5))
+						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.build(),
 				JobOffer.builder()
@@ -243,9 +244,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(-5))
+						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
 						.build(),
 				JobOffer.builder()
@@ -257,9 +258,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'applications web interactives en utilisant diverses " +
 								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
 						.build(),
 				JobOffer.builder()
@@ -270,9 +271,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
 						.build(),
 				JobOffer.builder()
@@ -284,9 +285,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'apprentissage automatique, l'analyse de données, " +
 								"et le développement d'applications basées sur l'IA.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
 						.build(),
 				JobOffer.builder()
@@ -297,9 +298,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
 						.build(),
 				JobOffer.builder()
@@ -310,9 +311,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build(),
 				JobOffer.builder()
@@ -323,9 +324,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build(),
 				JobOffer.builder()
@@ -336,9 +337,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build(),
 				JobOffer.builder()
@@ -352,9 +353,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(1))
+						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.build(),
 				JobOffer.builder()
@@ -368,9 +369,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(5))
+						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.build(),
 				JobOffer.builder()
@@ -384,9 +385,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(-5))
+						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
 						.build(),
 				JobOffer.builder()
@@ -398,9 +399,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'applications web interactives en utilisant diverses " +
 								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
 						.build(),
 				JobOffer.builder()
@@ -411,9 +412,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
 						.build(),
 				JobOffer.builder()
@@ -425,9 +426,9 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'apprentissage automatique, l'analyse de données, " +
 								"et le développement d'applications basées sur l'IA.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
 						.build(),
 				JobOffer.builder()
@@ -438,9 +439,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
 						.build(),
 				JobOffer.builder()
@@ -451,9 +452,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build(),
 				JobOffer.builder()
@@ -464,9 +465,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build(),
 				JobOffer.builder()
@@ -477,9 +478,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.build()
 		));
