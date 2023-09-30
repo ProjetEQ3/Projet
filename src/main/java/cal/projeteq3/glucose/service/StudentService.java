@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -19,6 +20,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,7 +30,6 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
-
     @Autowired
     public StudentService(
             StudentRepository studentRepository,
@@ -131,5 +132,12 @@ public class StudentService {
         jobOffer.apply(student);
         jobOfferRepository.save(jobOffer);
     }
+
+    // EQ3-14
+	public List<JobOfferDTO> getAppliedJobOfferByStudentId(Long studentId){
+		return jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)
+            .stream().map(JobOfferDTO::new)
+            .collect(Collectors.toList());
+	}
 
 }

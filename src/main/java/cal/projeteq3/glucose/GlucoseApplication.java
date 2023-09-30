@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -13,6 +14,8 @@ import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.ManagerService;
+import cal.projeteq3.glucose.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,16 +28,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class GlucoseApplication implements CommandLineRunner {
-	public static void main(String[] args) {
-		SpringApplication.run(GlucoseApplication.class, args);
-		System.out.println("Hello World!");
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		createDatabase();
-	}
-
 	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
@@ -43,12 +36,33 @@ public class GlucoseApplication implements CommandLineRunner {
 	private ManagerRepository managerRepository;
 	@Autowired
 	private EmployerService employerService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private ManagerService managerService;
+	public static void main(String[] args) {
+		SpringApplication.run(GlucoseApplication.class, args);
+		System.out.println("Hello World!");
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		createDatabase();
+		System.out.println(studentService.getAppliedJobOfferByStudentId(7L));
+	}
 
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
+		createApplication();
+	}
+
+	private void createApplication(){
+		managerService.updateCvState(1L, CvState.ACCEPTED, null);
+		studentService.applyJobOffer(3L, 9L);
+		studentService.applyJobOffer(9L, 9L);
 	}
 
 	private static List<Employer> createEmployer(){
@@ -507,6 +521,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());}
-
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
+	}
 }
