@@ -5,6 +5,7 @@ import JobOfferList from "../jobOffer/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
 import {toast} from "react-toastify";
+import MyApplications from "../student/MyApplications";
 
 const StudentPage = ({user, setUser}) => {
 	const [tab, setTab] = useState('home');
@@ -70,10 +71,17 @@ const StudentPage = ({user, setUser}) => {
 					>
 						CV
 					</button>
+					<button
+						className={`btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
+						onClick={() => setTab('my_applications')}
+					>
+						Mes applications
+					</button>
 				</div>
 				{tab === 'home' && <h3>Home</h3>}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} applyForJobOffer={applyForJobOffer}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
+				{tab === 'my_applications' && <MyApplications user={user}/>}
 			</div>
 		</div>
 	)
