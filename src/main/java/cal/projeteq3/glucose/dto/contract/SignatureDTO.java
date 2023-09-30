@@ -16,6 +16,4 @@ public class SignatureDTO {
     private String jobTitle;
     private LocalDate signatureDate;
     private Long contractId;
-
-    // Constructors, getters, and setters as needed
 }
