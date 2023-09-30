@@ -3,6 +3,12 @@ import {toast} from "react-toastify"
 import {useEffect} from "react"
 
 const FullJobOffer = ({jobOffer, user}) => {
+
+	useEffect(() => {
+		console.log("user", user)
+		console.log("jobOffer", jobOffer)
+	}, [])
+
 	const applyForJobOffer = (jobOfferID, studentId) => {
 		axiosInstance
 			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
