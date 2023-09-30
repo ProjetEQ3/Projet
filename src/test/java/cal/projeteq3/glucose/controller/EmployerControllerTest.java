@@ -7,7 +7,6 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
-import cal.projeteq3.glucose.validation.Validation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +27,7 @@ import java.util.List;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {EmployerController.class, EmployerService.class, CustomExceptionHandler.class})
+@SpringJUnitConfig(classes = {EmployerController.class, CustomExceptionHandler.class})
 @WebMvcTest(EmployerController.class)
 public class EmployerControllerTest {
 
@@ -421,6 +420,13 @@ public class EmployerControllerTest {
 				"refusReason": null
 		}""";
 
+		when(employerService.updateJobOffer(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
+				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
+				LocalDate.now(), 12, LocalDate.now().plusDays(3),
+				JobOfferState.SUBMITTED, 40, null))).thenReturn(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
+				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
+				LocalDate.now(), 12, LocalDate.now().plusDays(3),
+				JobOfferState.SUBMITTED, 40, null));
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")
