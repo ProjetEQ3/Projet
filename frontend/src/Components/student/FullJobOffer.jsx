@@ -1,4 +1,14 @@
-const FullJobOffer = ({jobOffer, user, applyForJobOffer}) => {
+import {axiosInstance} from "../../App"
+import {toast} from "react-toastify"
+import {useEffect} from "react"
+
+const FullJobOffer = ({jobOffer, user}) => {
+	const applyForJobOffer = (jobOfferID, studentId) => {
+		axiosInstance
+			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
+			.then((res) => {toast.success("Vous avez postulé avec succès")})
+			.catch((err) => {toast.error(err.response.data.message)})
+	}
 
 	return (
 		<div className="row my-2">
@@ -10,7 +20,7 @@ const FullJobOffer = ({jobOffer, user, applyForJobOffer}) => {
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
 							{user.cvFile.isApproved ? (
-								<button onClick={() => applyForJobOffer(jobOffer)}>Apply</button>
+								<button className={"btn btn-primary"} onClick={() => applyForJobOffer(jobOffer.id, user.id)}>Apply</button>
 							) : (
 								<p>CV pas encore approuvé</p>
 							)}
