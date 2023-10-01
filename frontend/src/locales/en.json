@@ -82,6 +82,7 @@
   "EXPIRED": "Expired",
   "TAKEN": "Taken",
   "REFUSED": "Refused",
+  "ACCEPTED": "Accepted",
 
   "department": "Department",
   "internshipTitle": "Job Offer Title",
