@@ -5,6 +5,7 @@ import JobOfferList from "../jobOffer/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 const StudentPage = ({user, setUser}) => {
   const {t} = useTranslation();
@@ -28,7 +29,8 @@ const StudentPage = ({user, setUser}) => {
 				  });
 				  // setJobOffers(response.data);
 			  }).catch((error) => {
-				  console.log("Fetch error: "+ error);
+				  toast.error(t('fetchError') + error);
+				  console.log(t('fetchError') + error);
 			  });
 	  }
 

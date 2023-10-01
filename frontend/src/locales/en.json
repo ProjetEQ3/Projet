@@ -106,8 +106,15 @@
   "cancel": "Cancel",
   "startDate": "Start Date: ",
 
+  "fetchError": "Error fetching data: ",
+  "pushingError": "Error pushing data: ",
+  "uploadedCV": "CV is uploaded",
+  "PDFError": "Please select a valid PDF file",
+  "deleteCV": "CV is deleted",
+
   "home": "Home",
   "internship": "Job Offers",
+  "uploadCV": "Upload a CV",
   "noOpenInternship": "No open Job offers"
 
 }

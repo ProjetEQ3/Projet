@@ -106,8 +106,15 @@
   "cancel": "Annuler",
   "startDate": "Date de début: ",
 
+  "fetchError": "Erreur lors de la récupération des données: ",
+  "pushingError": "Erreur lors de l'envoi des données: ",
+  "uploadedCV": "CV est téléversé",
+  "PDFError": "Veuillez sélectionner un fichier PDF valide.",
+  "deleteCV": "CV est supprimé",
+
   "home": "Accueil",
   "internship": "Offres de stage",
+  "uploadCV": "Téléverser un CV",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment"
 
 }

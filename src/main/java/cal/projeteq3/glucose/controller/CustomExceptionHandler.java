@@ -39,11 +39,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<CustomErrorResponse> handleOtherException(Exception ex) {
         CustomErrorResponse response = CustomErrorResponse.builder()
                 .timestamp(LocalDateTime.now().toString())
-                .status(500)
+                .status(673)
                 .error(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
 
-        return ResponseEntity.status(500).body(response);
+        return ResponseEntity.status(673).body(response);
     }
 }
