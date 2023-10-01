@@ -19,7 +19,7 @@ function JobOfferList({jobOffers}){
 						</div> :
 
 					jobOffers.map((offer, index) => (
-						<div onClick={() => setSelectedOffer(offer)}>
+						<div key={offer.id} onClick={() => setSelectedOffer(offer)}>
 							<ShortJobOffer jobOffer={offer} key={offer.id}/>
 						</div>
 					))

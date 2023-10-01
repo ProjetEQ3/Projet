@@ -1,5 +1,7 @@
+import {useTranslation} from "react-i18next";
 
 const FullJobOffer = ({ jobOffer }) => {
+    const { t } = useTranslation();
 
     return (
         <div className="row my-2">
@@ -16,10 +18,10 @@ const FullJobOffer = ({ jobOffer }) => {
                     <div className="col-12">
                         <h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
                         <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-                        <h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate.split("T")[0]}</h6>
-                        <h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration} semaines</h6>
+                        <h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>
+                        <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
                         <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                        <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</h6>
+                        <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
                         <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
                     </div>
                 </div>
