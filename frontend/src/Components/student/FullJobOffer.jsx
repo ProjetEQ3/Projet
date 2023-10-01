@@ -31,11 +31,15 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					</div>
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
-							{user.cvFile.isApproved ? (
-								<button className={"btn btn-primary"} onClick={() => applyForJobOffer(jobOffer.id, user.id)}>Apply</button>
-							) : (
-								<p>CV pas encore approuvé</p>
-							)}
+							<button className={"btn btn-primary"} onClick={!user.cvFile.isApproved ?
+								() => toast.error("CV pas encore approuvé") :
+								() => applyForJobOffer(jobOffer.id, user.id)}>Apply</button>
+
+							{/*{user.cvFile.isApproved ? (*/}
+							{/*	<button className={"btn btn-primary"} onClick={() => applyForJobOffer(jobOffer.id, user.id)}>Apply</button>*/}
+							{/*) : (*/}
+							{/*	<p>CV pas encore approuvé</p>*/}
+							{/*)}*/}
 						</div>
 					</div>
 				</div>
