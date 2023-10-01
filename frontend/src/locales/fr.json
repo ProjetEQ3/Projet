@@ -127,6 +127,17 @@
 
   "allInternship": "Toutes les offres de stage: ",
   "authorizeOffer": "Autorisation de l'offre",
-  "refusalReason": "Raison de refus"
+  "refusalReason": "Raison de refus",
+
+  "fileName": "Nom du fichier",
+  "studentCV": "Les CVs des étudiants : ",
+
+  "updatedCV": "CV mis à jour avec l'état: ",
+  "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
+  "probation": "Approbation",
+  "cvAuthorisation": "Autorisation du CV",
+  "confirmRefusal": "Êtes-vous sûr de vouloir refuser ce CV ?",
+  "confirm": "Confirmer",
+  "refuse": "Refuser"
 
 }

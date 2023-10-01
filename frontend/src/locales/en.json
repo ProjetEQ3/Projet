@@ -127,6 +127,17 @@
 
   "allInternship": "All Job Offers: ",
   "authorizeOffer": "Authorize Job Offer",
-  "refusalReason": "reason for refusal"
+  "refusalReason": "reason for refusal",
+
+  "fileName": "File Name",
+  "studentCV": "Student CVs",
+
+  "updatedCV": "CV updated with state: ",
+  "errorUpdateCV": "Update on CV error: ",
+  "probation": "Approbation",
+  "cvAuthorisation": "CV Authorisation",
+  "confirmRefusal": "Are you sure you want to refuse this offer?",
+  "confirm": "Confirm",
+  "refuse": "Refuse"
 
 }
