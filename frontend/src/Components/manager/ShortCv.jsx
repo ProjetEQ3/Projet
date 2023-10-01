@@ -95,7 +95,11 @@ const ShortCv = ({cv, index, updateCvList}) => {
                                             <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                                         </div>
                                         <div className="modal-body">
-                                            <h3 className="text-dark fw-light mb-3">{cv.fileName}</h3>
+                                            <h3 className="text-dark fw-light mb-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h3>
+                                            {/*<h3 className="text-dark fw-light mb-3">{cv.fileName}</h3>*/}
+                                            {isDisplay ? (
+                                                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
+                                            ) : null}
                                         </div>
                                         <div className="modal-footer">
                                             {isDecline ? (
