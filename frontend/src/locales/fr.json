@@ -106,7 +106,9 @@
   "duration": "Durée: ",
   "update": "Modifier",
   "cancel": "Annuler",
+  "accept": "Accepter",
   "startDate": "Date de début: ",
+  "endDate": "Date d'expiration: ",
 
   "fetchError": "Erreur lors de la récupération des données: ",
   "pushingError": "Erreur lors de l'envoi des données: ",
@@ -114,13 +116,17 @@
   "PDFError": "Veuillez sélectionner un fichier PDF valide.",
   "deleteCV": "CV est supprimé",
 
-
+  "acceptedOffer": "Offre acceptée",
+  "refusedOffer": "Offre refusée",
+  "addRefusalReason": "Veuillez ajouter une raison de refus",
 
   "home": "Accueil",
   "internship": "Offres de stage",
   "uploadCV": "Téléverser un CV",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
 
-  "allInternship": "Toutes les offres de stage: "
+  "allInternship": "Toutes les offres de stage: ",
+  "authorizeOffer": "Autorisation de l'offre",
+  "refusalReason": "Raison de refus"
 
 }

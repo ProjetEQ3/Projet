@@ -106,7 +106,9 @@
   "duration": "Duration: ",
   "update": "Update",
   "cancel": "Cancel",
+  "accept": "Accept",
   "startDate": "Start Date: ",
+  "endDate": "Expiration Date: ",
 
   "fetchError": "Error fetching data: ",
   "pushingError": "Error pushing data: ",
@@ -114,8 +116,17 @@
   "PDFError": "Please select a valid PDF file",
   "deleteCV": "CV is deleted",
 
+  "acceptedOffer": "Accepted Offer",
+  "refusedOffer": "Offer Refused",
+  "addRefusalReason": "Please add a reason for refusal",
+
   "home": "Home",
   "internship": "Job Offers",
   "uploadCV": "Upload a CV",
-  "noOpenInternship": "No open Job offers"
+  "noOpenInternship": "No open Job offers",
+
+  "allInternship": "All Job Offers: ",
+  "authorizeOffer": "Authorize Job Offer",
+  "refusalReason": "reason for refusal"
+
 }
