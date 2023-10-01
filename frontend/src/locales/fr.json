@@ -114,10 +114,13 @@
   "PDFError": "Veuillez sélectionner un fichier PDF valide.",
   "deleteCV": "CV est supprimé",
 
+
+
   "home": "Accueil",
   "internship": "Offres de stage",
   "uploadCV": "Téléverser un CV",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
 
   "allInternship": "Toutes les offres de stage: "
+
 }
