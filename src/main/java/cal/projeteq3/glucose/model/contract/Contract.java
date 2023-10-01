@@ -12,6 +12,8 @@ import java.sql.Time;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static java.time.DayOfWeek.*;
@@ -41,8 +43,8 @@ public class Contract {
     @Column(nullable = false)
     private String jobTitle;
 
-    @Column(nullable = false, length = 2000)
-    private String responsibilities;
+    @ElementCollection
+    private List<String> responsibilities = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDate startDate;

@@ -38,7 +38,8 @@ public class Address {
     public enum AddressType {
         APARTMENT,
         UNIT,
-        BUILDING
+        BUILDING,
+        HOUSE
         ;
 
         @Override

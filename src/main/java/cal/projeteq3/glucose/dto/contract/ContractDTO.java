@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.sql.Time;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -27,7 +28,7 @@ public class ContractDTO {
     private Long workAddressId;
     private Long studentId;
     private String jobTitle;
-    private String responsibilities;
+    private List<String> responsibilities;
     private LocalDate startDate;
     private LocalDate endDate;
     private int duration;
@@ -35,7 +36,7 @@ public class ContractDTO {
     private Time startShiftTime;
     private Time endShiftTime;
     private float hoursPerDay;
-    private String employmentType;
+    private EmploymentType employmentType;
     private Set<DayOfWeek> workDays;
     private double hourlyRate;
 
@@ -54,7 +55,7 @@ public class ContractDTO {
         this.startShiftTime = contract.getStartShiftTime();
         this.endShiftTime = contract.getEndShiftTime();
         this.hoursPerDay = contract.getHoursPerDay();
-        this.employmentType = contract.getEmploymentType().toString();
+        this.employmentType = contract.getEmploymentType();
         this.workDays = contract.getWorkDays();
         this.hourlyRate = contract.getHourlyRate();
     }
@@ -74,7 +75,7 @@ public class ContractDTO {
                 .startShiftTime(this.startShiftTime)
                 .EndShiftTime(this.endShiftTime)
                 .hoursPerDay(this.hoursPerDay)
-                .employmentType(EmploymentType.valueOf(this.employmentType))
+                .employmentType(this.employmentType)
                 .workDays(this.workDays)
                 .hourlyRate(this.hourlyRate)
                 .build();

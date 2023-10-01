@@ -4,22 +4,24 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
-import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
-import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
-import cal.projeteq3.glucose.exception.request.UserNotFoundException;
+import cal.projeteq3.glucose.exception.request.*;
+import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.contract.EmploymentType;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.Supervisor;
 import cal.projeteq3.glucose.repository.*;
 
 import java.sql.Time;
@@ -48,6 +50,10 @@ class ManagerServiceTest {
     private ManagerRepository managerRepository;
     @Mock
     private StudentRepository studentRepository;
+    @Mock
+    private EmployerRepository employerRepository;
+    @Mock
+    private SupervisorRepository supervisorRepository;
     @Mock
     private JobOfferRepository jobOfferRepository;
     @Mock
@@ -919,40 +925,198 @@ class ManagerServiceTest {
     }
 
 
-
-//    Contract
-//    private Long employerId;
-//    private Long supervisorId;
-//    private Long workAddressId;
-//    private Long studentId;
-//    private String jobTitle;
-//    private String responsibilities;
-//    private LocalDate startDate;
-//    private LocalDate endDate;
-//    private int duration;
-//    private float hoursPerWeek;
-//    private Time startShiftTime;
-//    private Time endShiftTime;
-//    private float hoursPerDay;
-//    private String employmentType;
-//    private Set<DayOfWeek> workDays;
-//    private double hourlyRate;
+//    -------------- Contract --------------
 
     @Test
     void createContract_valid(){
 //        Arrange
         ContractDTO contractDTO = new ContractDTO(
-
+                1L,
+                1L,
+                1L,
+                1L,
+                1L,
+                "This is a job title",
+                List.of("responsibility 1", "responsibility 2"),
+                LocalDate.now(),
+                LocalDate.now(),
+                1,
+                1,
+                Time.valueOf("08:00:00"),
+                Time.valueOf("16:00:00"),
+                1,
+                EmploymentType.APPRENTICESHIP,
+                Set.of(DayOfWeek.MONDAY),
+                1
         );
+        AddressDTO addressDTO = new AddressDTO(
+                1L,
+                "123 IDK Street",
+                Address.AddressType.HOUSE,
+                "123",
+                "Dorval",
+                "1z1 z1z",
+                "Quebec",
+                "Canada"
+        );
+
+        when(contractRepository.save(any())).thenReturn(contractDTO.toEntity(new Employer(), new Supervisor(), new Student(), addressDTO.toEntity()));
+        when(employerRepository.findById(any())).thenReturn(Optional.of(new Employer()));
+        when(supervisorRepository.findById(any())).thenReturn(Optional.of(new Supervisor()));
+        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
 //        Act
+        ContractDTO createdContractDTO = managerService.createContract(contractDTO, addressDTO);
 
 //        Assert
+        assertNotNull(createdContractDTO);
+        assertEquals(contractDTO.getJobTitle(), createdContractDTO.getJobTitle());
+        assertEquals(contractDTO.getResponsibilities(), createdContractDTO.getResponsibilities());
+        assertEquals(contractDTO.getStartDate(), createdContractDTO.getStartDate());
+        assertEquals(contractDTO.getEndDate(), createdContractDTO.getEndDate());
+        assertEquals(contractDTO.getHoursPerDay(), createdContractDTO.getHoursPerDay());
+        assertEquals(contractDTO.getWorkDays(), createdContractDTO.getWorkDays());
+        assertEquals(contractDTO.getEmploymentType(), createdContractDTO.getEmploymentType());
+        assertEquals(contractDTO.getHourlyRate(), createdContractDTO.getHourlyRate());
+        assertEquals(contractDTO.getDuration(), createdContractDTO.getDuration());
+        assertEquals(contractDTO.getHoursPerWeek(), createdContractDTO.getHoursPerWeek());
+        assertEquals(contractDTO.getStartShiftTime(), createdContractDTO.getStartShiftTime());
+        assertEquals(contractDTO.getEndShiftTime(), createdContractDTO.getEndShiftTime());
+        assertEquals(contractDTO.getWorkAddressId(), createdContractDTO.getWorkAddressId());
+
+        verify(contractRepository, times(1)).save(any());
     }
 
     @Test
-    void getAllContracts_valid(){
+    void createContract_EmployeNotFound(){
+//        Arrange
+        ContractDTO contractDTO = new ContractDTO(
+                1L,
+                1L,
+                1L,
+                1L,
+                1L,
+                "This is a job title",
+                List.of("responsibility 1", "responsibility 2"),
+                LocalDate.now(),
+                LocalDate.now(),
+                1,
+                1,
+                Time.valueOf("08:00:00"),
+                Time.valueOf("16:00:00"),
+                1,
+                EmploymentType.APPRENTICESHIP,
+                Set.of(DayOfWeek.MONDAY),
+                1
+        );
+        AddressDTO addressDTO = new AddressDTO(
+                1L,
+                "123 IDK Street",
+                Address.AddressType.HOUSE,
+                "123",
+                "Dorval",
+                "1z1 z1z",
+                "Quebec",
+                "Canada"
+        );
 
+        when(contractRepository.save(any())).thenReturn(contractDTO.toEntity(new Employer(), new Supervisor(), new Student(), new Address()));
+        when(employerRepository.findById(any())).thenReturn(Optional.empty());
+        when(supervisorRepository.findById(any())).thenReturn(Optional.of(new Supervisor()));
+        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
+//        Act & Assert
+        assertThrows(EmployerNotFoundException.class, () -> {
+            managerService.createContract(contractDTO, addressDTO);
+        });
     }
+
+    @Test
+    void createContract_SupervisorNotFound(){
+//        Arrange
+        ContractDTO contractDTO = new ContractDTO(
+                1L,
+                1L,
+                1L,
+                1L,
+                1L,
+                "This is a job title",
+                List.of("responsibility 1", "responsibility 2"),
+                LocalDate.now(),
+                LocalDate.now(),
+                1,
+                1,
+                Time.valueOf("08:00:00"),
+                Time.valueOf("16:00:00"),
+                1,
+                EmploymentType.APPRENTICESHIP,
+                Set.of(DayOfWeek.MONDAY),
+                1
+        );
+        AddressDTO addressDTO = new AddressDTO(
+                1L,
+                "123 IDK Street",
+                Address.AddressType.HOUSE,
+                "123",
+                "Dorval",
+                "1z1 z1z",
+                "Quebec",
+                "Canada"
+        );
+
+        when(contractRepository.save(any())).thenReturn(contractDTO.toEntity(new Employer(), new Supervisor(), new Student(), new Address()));
+        when(employerRepository.findById(any())).thenReturn(Optional.of(new Employer()));
+        when(supervisorRepository.findById(any())).thenReturn(Optional.empty());
+        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
+
+//        Act & Assert
+        assertThrows(SupervisorNotFoundException.class, () -> {
+            managerService.createContract(contractDTO, addressDTO);
+        });
+    }
+
+    @Test
+    void createContract_StudentNotFound(){
+        //        Arrange
+        ContractDTO contractDTO = new ContractDTO(
+                1L,
+                1L,
+                1L,
+                1L,
+                1L,
+                "This is a job title",
+                List.of("responsibility 1", "responsibility 2"),
+                LocalDate.now(),
+                LocalDate.now(),
+                1,
+                1,
+                Time.valueOf("08:00:00"),
+                Time.valueOf("16:00:00"),
+                1,
+                EmploymentType.APPRENTICESHIP,
+                Set.of(DayOfWeek.MONDAY),
+                1
+        );
+        AddressDTO addressDTO = new AddressDTO(
+                1L,
+                "123 IDK Street",
+                Address.AddressType.HOUSE,
+                "123",
+                "Dorval",
+                "1z1 z1z",
+                "Quebec",
+                "Canada"
+        );
+
+        when(contractRepository.save(any())).thenReturn(contractDTO.toEntity(new Employer(), new Supervisor(), new Student(), new Address()));
+        when(employerRepository.findById(any())).thenReturn(Optional.of(new Employer()));
+        when(supervisorRepository.findById(any())).thenReturn(Optional.of(new Supervisor()));
+        when(studentRepository.findById(any())).thenReturn(Optional.empty());
+
+//        Act & Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            managerService.createContract(contractDTO, addressDTO);
+        });
+    }
+
 
 
 //  ---------------------------------------------

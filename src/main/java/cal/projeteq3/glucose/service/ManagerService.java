@@ -167,44 +167,30 @@ public class ManagerService{
 
 
 //	Contract
-//private Long employerId;
-//	private Long supervisorId;
-//	private Long workAddressId;
-//	private Long studentId;
 
 	public ContractDTO createContract(ContractDTO contractDTO, AddressDTO addressDTO) {
-		Employer employer = employerRepository.findById(contractDTO.getEmployerId())
-				.orElseThrow(() -> new EmployerNotFoundException(contractDTO.getEmployerId()));
-		Supervisor supervisor = supervisorRepository.findById(contractDTO.getSupervisorId())
-				.orElseThrow(() -> new SupervisorNotFoundException(contractDTO.getSupervisorId()));
-		Student student = studentRepository.findById(contractDTO.getStudentId())
-				.orElseThrow(() -> new StudentNotFoundException(contractDTO.getStudentId()));
+		Employer employer = getEmployerDyId(contractDTO.getEmployerId());
+		Supervisor supervisor = getSupervisorDyId(contractDTO.getSupervisorId());
+		Student student = getStudentDyId(contractDTO.getStudentId());
 
 		return new ContractDTO(contractRepository.save(contractDTO.toEntity(employer, supervisor, student, addressDTO.toEntity())));
 	}
 
-	public List<ContractDTO> getAllContracts() {
-		return contractRepository.findAll().stream().map(ContractDTO::new)
-				.collect(Collectors.toList());
+
+//	----------- Getters ----------
+
+	private Employer getEmployerDyId(Long id) {
+		return employerRepository.findById(id)
+				.orElseThrow(() -> new EmployerNotFoundException(id));
 	}
 
-	public ContractDTO directorSignContract(SignatureDTO signatureDTO, LoginDTO loginDTO) {
-		Contract contract = contractRepository.findById(signatureDTO.getContractId())
-				.orElseThrow(() -> new ContractNotFoundException(signatureDTO.getContractId()));
-
-		contract.setDirectorSignature(signatureDTO.toEntity(loginDTO, Role.DIRECTOR));
-
-		return new ContractDTO(contractRepository.save(contract));
+	private Supervisor getSupervisorDyId(Long id) {
+		return supervisorRepository.findById(id)
+				.orElseThrow(() -> new SupervisorNotFoundException(id));
 	}
 
-	public ContractDTO studentSignContract(SignatureDTO signatureDTO, LoginDTO loginDTO) {
-		Contract contract = contractRepository.findById(signatureDTO.getContractId())
-				.orElseThrow(() -> new ContractNotFoundException(signatureDTO.getContractId()));
-
-		contract.setEmployerSignature(signatureDTO.toEntity(loginDTO, Role.EMPLOYER));
-
-		return new ContractDTO(contractRepository.save(contract));
+	private Student getStudentDyId(Long id) {
+		return studentRepository.findById(id)
+				.orElseThrow(() -> new StudentNotFoundException(id));
 	}
-
-
 }

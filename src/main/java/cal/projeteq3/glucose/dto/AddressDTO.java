@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class AddressDTO {
     private Long id;
     private String street;
-    private String addressType;
+    private Address.AddressType addressType;
     private String addressNumber;
     private String city;
     private String zipCode;
@@ -23,7 +23,7 @@ public class AddressDTO {
     public AddressDTO(Address address){
         this.id = address.getId();
         this.street = address.getStreet();
-        this.addressType = String.valueOf(address.getAddressType());
+        this.addressType = address.getAddressType();
         this.addressNumber = address.getAddressNumber();
         this.city = address.getCity();
         this.zipCode = address.getZipCode();
@@ -35,7 +35,7 @@ public class AddressDTO {
         return Address.builder()
                 .id(this.id)
                 .street(this.street)
-                .addressType(Address.AddressType.valueOf(this.addressType))
+                .addressType(this.addressType)
                 .addressNumber(this.addressNumber)
                 .city(this.city)
                 .zipCode(this.zipCode)
