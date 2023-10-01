@@ -10,6 +10,8 @@
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",
 
+  "pageNotFound": "Page non trouvée",
+
   "successLogin": "Connexion réussie.",
   "errorLogin": "Utilisateur ou mot de passe incorrect.",
   "email": "Adresse courriel",

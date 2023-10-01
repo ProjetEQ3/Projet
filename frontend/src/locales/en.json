@@ -10,6 +10,8 @@
   "descTitle": "Your internship management application",
   "description": "GlucOSE is a web application for managing student internships.",
 
+  "pageNotFound": "Page not found",
+
   "successLogin": "Login successful.",
   "errorLogin": "Incorrect username or password.",
   "email": "Email Address",
