@@ -104,5 +104,10 @@
   "duration": "Durée: ",
   "update": "Modifier",
   "cancel": "Annuler",
-  "startDate": "Date de début: "
+  "startDate": "Date de début: ",
+
+  "home": "Accueil",
+  "internship": "Offres de stage",
+  "noOpenInternship": "Aucune offre de stage Ouverte pour le moment"
+
 }

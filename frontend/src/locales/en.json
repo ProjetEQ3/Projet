@@ -104,6 +104,10 @@
   "duration": "Duration: ",
   "update": "Update",
   "cancel": "Cancel",
-  "startDate": "Start Date: "
+  "startDate": "Start Date: ",
+
+  "home": "Home",
+  "internship": "Job Offers",
+  "noOpenInternship": "No open Job offers"
 
 }
