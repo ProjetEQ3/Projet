@@ -1,7 +1,9 @@
 import FilterObjectList from "../util/FilterObjectList"
 import ShortJobOffer from "./ShortJobOffer"
+import {useTranslation} from "react-i18next";
 
 const JobOffers = ({ offers, updateJobOfferList }) => {
+  const { t } = useTranslation()
 
   const renderFilteredOffers = (filteredOffers) => {
     return (
@@ -18,11 +20,11 @@ const JobOffers = ({ offers, updateJobOfferList }) => {
   return (
     <div className="row">
       <div className="col-12">
-        <h3 className="text-dark fw-light my-5">Les offres de stages :</h3>
+        <h3 className="text-dark fw-light my-5">{t('allInternship')}</h3>
         <div className="row justify-content-around">
           <FilterObjectList
             items={offers}
-            attributes={['title:Titre de l\'offre', 'department:Department', 'jobOfferState.select:Status']}
+            attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
             renderItem={renderFilteredOffers}
             selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
           />

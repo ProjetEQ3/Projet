@@ -117,5 +117,7 @@
   "home": "Accueil",
   "internship": "Offres de stage",
   "uploadCV": "Téléverser un CV",
-  "noOpenInternship": "Aucune offre de stage Ouverte pour le moment"
+  "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
+
+  "allInternship": "Toutes les offres de stage: "
 }

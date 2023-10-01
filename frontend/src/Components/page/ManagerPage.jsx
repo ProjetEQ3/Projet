@@ -2,8 +2,10 @@ import JobOffers from "../manager/JobOffers";
 import {useEffect, useState} from "react";
 import Cvs from "../manager/Cvs";
 import {axiosInstance} from "../../App";
+import {useTranslation} from "react-i18next";
 
 const ManagerPage = ({user}) => {
+    const {t} = useTranslation();
     const [tab, setTab] = useState('stages');
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
@@ -24,7 +26,6 @@ const ManagerPage = ({user}) => {
                 // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setCvs(response.data);
-                console.log(response.data);
                 return response.data;
             }).catch((error) => {
                 console.log(error);
@@ -48,7 +49,7 @@ const ManagerPage = ({user}) => {
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
                     <button className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
-                            onClick={() => setTab('stages')}>Stages</button>
+                            onClick={() => setTab('stages')}>{t('internship')}</button>
                     <button className={`btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
                             onClick={() => setTab('cvs')}>CVs</button>
                 </div>
