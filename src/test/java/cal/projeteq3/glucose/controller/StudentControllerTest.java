@@ -147,7 +147,7 @@ public class StudentControllerTest {
 
 //        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+                .andExpect(MockMvcResultMatchers.status().is(673));
     }
 
     @Test
@@ -213,7 +213,7 @@ public class StudentControllerTest {
 
 //        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
-                .andExpect(MockMvcResultMatchers.status().is5xxServerError());
+                .andExpect(MockMvcResultMatchers.status().is(673));
     }
 
     @Test
