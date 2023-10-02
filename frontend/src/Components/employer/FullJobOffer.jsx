@@ -2,6 +2,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
+import Loading from "../util/Loading";
 const FullJobOffer = ({ jobOffer }) => {
     const [t, i18n] = useTranslation();
 
