@@ -530,7 +530,6 @@ public class StudentServiceTest {
         // Arrange
         Long notFoundStudentId = 999L;
 
-
         when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
 
         // Act and Assert
