@@ -103,4 +103,11 @@ public class StudentController{
 		}*/
 	}
 
+	@GetMapping("/appliedJobOffer/{studentId}")
+	public ResponseEntity<List<JobOfferDTO>> getAppliedJobOfferByStudentId(@PathVariable Long studentId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(studentService.getAppliedJobOfferByStudentId(studentId));
+	}
+
 }
