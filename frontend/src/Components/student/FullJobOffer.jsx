@@ -32,7 +32,7 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
 							<button className={"btn btn-primary"} onClick={!user.cvFile.isApproved ?
-								() => toast.error("Votre CV n'est pas approuvé") :
+								() => toast.error("EDIT: Votre CV n'est pas approuvé") :
 								() => applyForJobOffer(jobOffer.id, user.id)}>Appliquer</button>
 						</div>
 					</div>
@@ -41,10 +41,10 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					<div className="col-12">
 						<h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
 						<h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-						<h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate.split("T")[0]}</h6>
-						<h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration} semaines</h6>
+						<h6 className="text-dark fw-light mb-3">EDIT: Date de début: {jobOffer.startDate.split("T")[0]}</h6>
+						<h6 className="text-dark fw-light mb-3">EDIT: Durée: {jobOffer.duration} semaines</h6>
 						<h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-						<h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</h6>
+						<h6 className="text-dark fw-light mb-3">EDIT: {jobOffer.hoursPerWeek}h/semaine</h6>
 						<p className="text-dark fw-light mb-3">{jobOffer.description}</p>
 					</div>
 				</div>
