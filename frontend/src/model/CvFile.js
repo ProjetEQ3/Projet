@@ -4,7 +4,6 @@ class CvFile{
 	fileData
 	fileText
 	cvState
-	isApproved
 
 	constructor(){
 		this.reset()
@@ -19,8 +18,6 @@ class CvFile{
 		else this.fileData = undefined
 		if(cvFile.cvState) this.cvState = cvFile.cvState
 		else this.cvState = undefined
-		if(cvFile.isApproved !== undefined) this.isApproved = cvFile.isApproved;
-		else this.isApproved = this.calculateApproval(cvFile)
 	}
 
 	reset(){
@@ -28,7 +25,6 @@ class CvFile{
 		this.fileName = undefined
 		this.fileData = undefined
 		this.cvState = undefined
-		this.isApproved = false
 	}
 
 	static readBytes(fileData) {
@@ -42,11 +38,5 @@ class CvFile{
 
 		return uint8Array;
 	}
-
-	calculateApproval(cvFile){
-		return cvFile.cvState === "ACCEPTED";
-	}
-
 }
-
 export default CvFile;
