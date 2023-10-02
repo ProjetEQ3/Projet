@@ -48,8 +48,6 @@ public class GlucoseApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		createDatabase();
-		System.out.println(studentService.getAppliedJobOfferByStudentId(9L));
-		System.out.println(studentService.getAppliedJobOfferByStudentId(7L));
 	}
 
 	private void createDatabase(){
@@ -57,14 +55,8 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
-		createApplication();
 	}
 
-	private void createApplication(){
-		managerService.updateCvState(1L, CvState.ACCEPTED, null);
-		studentService.applyJobOffer(3L, 9L);
-		studentService.applyJobOffer(9L, 9L);
-	}
 
 	private static List<Employer> createEmployer(){
 		return List.of(
