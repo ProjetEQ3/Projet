@@ -47,7 +47,7 @@ const RegisterEmployerForm = () => {
             }
         ).then(() => {
             setIsLoading(false)
-            toast.success('Votre compte a été créé avec succès');
+            toast.success(t('successRegister'));
             navigate('/auth/login')
         }).catch(() =>
                 setIsLoading(false)

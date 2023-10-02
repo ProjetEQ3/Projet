@@ -1,21 +1,24 @@
 import React from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslationContext } from "./TranslationContext";
 
 const LngSelector = () => {
-    const {i18n} = useTranslation()
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng)
-    }
+    const { langue, changeLanguage } = useTranslationContext();
+
+    const handleLanguageChange = (e) => {
+        const selectedLanguage = e.target.value;
+        changeLanguage(selectedLanguage);
+    };
+
     return (
-        <form className="w-25" action="">
+        <form className="w-25">
             <div className="form-group">
-                <select className="form-control" id="lng-selector" onChange={(e) => changeLanguage(e.target.value)} defaultValue="fr">
+                <select className="form-control" id="lng-selector" onChange={handleLanguageChange} value={langue}>
                     <option value="en">EN</option>
                     <option value="fr">FR</option>
                 </select>
             </div>
         </form>
-    )
-}
+    );
+};
 
 export default LngSelector;

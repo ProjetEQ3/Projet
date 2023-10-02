@@ -1,6 +1,6 @@
 {
   "glucoseFullAcronym": "Global Learning Opportunities for Undergraduate Students.",
-  "glucoseAcronym": "GLOUS",
+  "glucoseAcronym": "GlucOSE",
   "copyRights": "© 2023 - All rights reserved.",
 
   "disconnect": "Disconnect",
@@ -14,6 +14,7 @@
 
   "successLogin": "Login successful.",
   "errorLogin": "Incorrect username or password.",
+  "successRegister": "Your account has been created successfully.",
   "email": "Email Address",
   "placeHolderEmail": "Enter your email address",
   "password": "Password",
@@ -140,5 +141,4 @@
   "confirmRefusal": "Are you sure you want to refuse this offer?",
   "confirm": "Confirm",
   "refuse": "Refuse"
-
 }
