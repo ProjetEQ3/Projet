@@ -199,7 +199,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000001")
 				.phoneNumber("123-456-7890")
-				.build(),
+				.build()
 		);
 	}
 
