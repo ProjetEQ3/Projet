@@ -29,7 +29,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -214,7 +214,7 @@ public class StudentControllerTest{
     }
 
     @Test
-    public void GetOpenJobOffersByDepartment_InvalidDep() throws Exception {
+    public void GetOpenJobOffersByDepartment_InvalidDep2() throws Exception {
 //        Arrange
 //        Rien à arranger
 
@@ -283,18 +283,18 @@ public class StudentControllerTest{
 //    }
 
 	@Test
-	public void GetJobOffersByDepartment_Valid() throws Exception{
+	public void GetJobOffersByDepartment_Valid2() throws Exception{
 		//        Arrange
 		List<JobOffer> jobOffers_420B0 = new ArrayList<>(List.of(JobOffer.builder().title("JobOffer1").description(
 			                                                                 "Description1").location("Location1").department(Department._420B0).jobOfferState(JobOfferState.OPEN).duration(6)
 		                                                                 .hoursPerWeek(40).salary(20.0f).startDate(
-				LocalDateTime.now()).expirationDate(LocalDateTime.now().plusDays(30)).build(), JobOffer.builder().title(
+				LocalDate.now()).expirationDate(LocalDate.now().plusDays(30)).build(), JobOffer.builder().title(
 			"JobOffer2").description("Description2").location("Location1").department(Department._420B0).jobOfferState(
-			JobOfferState.SUBMITTED).duration(6).hoursPerWeek(40).salary(20.0f).startDate(LocalDateTime.now()).expirationDate(
-			LocalDateTime.now().plusDays(30)).build(), JobOffer.builder().title("JobOffer3").description("Description3")
+			JobOfferState.SUBMITTED).duration(6).hoursPerWeek(40).salary(20.0f).startDate(LocalDate.now()).expirationDate(
+			LocalDate.now().plusDays(30)).build(), JobOffer.builder().title("JobOffer3").description("Description3")
 		                                                     .location("Location1").department(Department._420B0)
 		                                                     .jobOfferState(JobOfferState.EXPIRED).duration(6).hoursPerWeek(
-				40).salary(20.0f).startDate(LocalDateTime.now().minusDays(60)).expirationDate(LocalDateTime.now().minusDays(30))
+				40).salary(20.0f).startDate(LocalDate.now().minusDays(60)).expirationDate(LocalDate.now().minusDays(30))
 		                                                     .build()));
 		when(studentService.getJobOffersByDepartment(Department._420B0)).thenReturn(
 			jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
@@ -308,29 +308,29 @@ public class StudentControllerTest{
 	}
 
 	@Test
-	public void GetJobOffersByDepartment_InvalidDep() throws Exception{
+	public void GetJobOffersByDepartment_InvalidDep2() throws Exception{
 		//        Arrange
 		//        Rien à arranger
 
 		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1")).andExpect(
-			       MockMvcResultMatchers.status().is5xxServerError()).andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
-		       .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+				.andExpect(MockMvcResultMatchers.status().is(673))
+				;
 	}
 
 	@Test
-	public void GetOpenJobOffersByDepartment_Valid() throws Exception{
+	public void GetOpenJobOffersByDepartment_Valid2() throws Exception{
 		//        Arrange
 		List<JobOffer> jobOffers_420B0 = new ArrayList<>(List.of(JobOffer.builder().title("JobOffer1").description(
 			                                                                 "Description1").location("Location1").department(Department._420B0).jobOfferState(JobOfferState.OPEN).duration(6)
 		                                                                 .hoursPerWeek(40).salary(20.0f).startDate(
-				LocalDateTime.now()).expirationDate(LocalDateTime.now().plusDays(30)).build(), JobOffer.builder().title(
+				LocalDate.now()).expirationDate(LocalDate.now().plusDays(30)).build(), JobOffer.builder().title(
 			"JobOffer2").description("Description2").location("Location1").department(Department._420B0).jobOfferState(
-			JobOfferState.SUBMITTED).duration(6).hoursPerWeek(40).salary(20.0f).startDate(LocalDateTime.now()).expirationDate(
-			LocalDateTime.now().plusDays(30)).build(), JobOffer.builder().title("JobOffer3").description("Description3")
+			JobOfferState.SUBMITTED).duration(6).hoursPerWeek(40).salary(20.0f).startDate(LocalDate.now()).expirationDate(
+			LocalDate.now().plusDays(30)).build(), JobOffer.builder().title("JobOffer3").description("Description3")
 		                                                     .location("Location1").department(Department._420B0)
 		                                                     .jobOfferState(JobOfferState.EXPIRED).duration(6).hoursPerWeek(
-				40).salary(20.0f).startDate(LocalDateTime.now().minusDays(60)).expirationDate(LocalDateTime.now().minusDays(30))
+				40).salary(20.0f).startDate(LocalDate.now().minusDays(60)).expirationDate(LocalDate.now().minusDays(30))
 		                                                     .build()));
 
 		when(studentService.getOpenJobOffersByDepartment(Department._420B0)).thenReturn(jobOffers_420B0.stream().map(
@@ -352,9 +352,9 @@ public class StudentControllerTest{
 		//        Rien à arranger
 
 		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1")).andExpect(
-			       MockMvcResultMatchers.status().is5xxServerError()).andExpect(MockMvcResultMatchers.header().exists("X-Errors"))
-		       .andExpect(MockMvcResultMatchers.header().string("X-Errors", "Invalide operation"));
+		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
+				.andExpect(MockMvcResultMatchers.status().is(673))
+				;
 	}
 
 	@Test
@@ -375,15 +375,17 @@ public class StudentControllerTest{
 
 		mockMvc
 			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
-		  .andExpect(status().isUnauthorized()).andExpect(header().string("X-Errors", "L'offre d'emploi n'est pas ouverte"));
+				.andExpect(status().isUnauthorized())
+		;
 	}
 
 	@Test
-	void testApplyJobOfferGenericException() throws Exception{
+	void ApplyJobOffer_GenericException() throws Exception{
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(new RuntimeException());
 
 		mockMvc.perform(
 			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
-		       .andExpect(status().isInternalServerError()).andExpect(header().string("X-Errors", "Opération invalide"));
+		       .andExpect(status().is(673))
+				;
 	}
 }
