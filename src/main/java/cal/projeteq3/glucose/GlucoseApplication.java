@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -143,11 +144,16 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Zakaria")
-						.lastName("Michaud")
+						.lastName("Gn")
 						.email("s@zaka.se")
 						.password("aaaAAA111")
 						.matricule("0000005")
 						.department("_420B0")
+					.cvFile(CvFile.builder()
+							.fileData(new byte[]{1, 2, 3, 4, 5})
+							.fileName("CV.pdf")
+			        .cvState(CvState.ACCEPTED)
+							.build())
 						.build(),
 				Student.builder()
 						.firstName("Gabriel")
@@ -193,8 +199,8 @@ public class GlucoseApplication implements CommandLineRunner {
 				.password("Ose12345")
 				.matricule("0000001")
 				.phoneNumber("123-456-7890")
-				.build()
-			);
+				.build(),
+		);
 	}
 
 
@@ -374,9 +380,9 @@ public class GlucoseApplication implements CommandLineRunner {
 						.hoursPerWeek(13)
 						.build(),
 				JobOffer.builder()
-						.title("Full-stack developer")
-						.jobOfferState(JobOfferState.OPEN)
-						.department(Department._420B0)
+						.title("Java developer")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._144A1)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -418,7 +424,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la création de modèles " +

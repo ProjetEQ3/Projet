@@ -3,7 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -14,9 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -76,6 +73,12 @@ public class StudentController{
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department)));
+	}
+
+	// EQ3-13
+	@PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
+	public ResponseEntity<JobOfferDTO> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
+		return ResponseEntity.accepted().body(studentService.applyJobOffer(jobOfferId, studentId));
 	}
 
 }

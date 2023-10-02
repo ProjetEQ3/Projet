@@ -5,6 +5,14 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
@@ -18,6 +26,8 @@ import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +41,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,6 +56,16 @@ public class StudentServiceTest {
 
     @InjectMocks
     private StudentService studentService;
+
+    private JobOffer jobOffer;
+
+    private Student student;
+
+    @BeforeEach
+    void setUp() {
+        jobOffer = new JobOffer();
+        student = mock(Student.class);
+    }
 
     @Test
     public void createStudent_Valid() {
@@ -395,6 +416,62 @@ public class StudentServiceTest {
     }
 
     @Test
+    void testApplyJobOffer_JobOfferNotFound() {
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(JobOfferNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void testApplyJobOffer_StudentNotFound() {
+        JobOffer jobOffer = new JobOffer();
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(StudentNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void apply_withApprovedCVAndOpenJobOffer_returnsJobApplication() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        JobApplication result = jobOffer.apply(student);
+
+        assertNotNull(result);
+        assertEquals(student, result.getStudent());
+        assertEquals(jobOffer, result.getJobOffer());
+    }
+
+    @Test
+    void apply_withNonApprovedCV_throwsCvNotApprovedException() {
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withClosedJobOffer_throwsJobOfferNotOpenException() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(JobOfferNotOpenException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withNonApprovedCVAndClosedJobOffer_throwsCvNotApprovedException() {
+        // We're prioritizing the CV check first as per the `apply` method logic.
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
+    }
+
     public void addCv_valid() {
         // Arrange
         Long studentId = 1L;

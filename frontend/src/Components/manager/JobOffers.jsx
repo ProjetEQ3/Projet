@@ -1,5 +1,6 @@
-import FilterObjectList from "../util/FilterObjectList"
-import ShortJobOffer from "./ShortJobOffer"
+import React from "react";
+import ShortJobOffer from "./ShortJobOffer";
+
 
 const JobOffers = ({ offers, updateJobOfferList }) => {
 
@@ -32,4 +33,4 @@ const JobOffers = ({ offers, updateJobOfferList }) => {
   )
 }
 
-export default JobOffers
+export default JobOffers;

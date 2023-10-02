@@ -4,12 +4,15 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 
 import java.time.LocalDate;
@@ -26,6 +29,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +38,7 @@ import static org.mockito.Mockito.when;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +55,13 @@ public class EmployerServiceTest {
     @InjectMocks
     private EmployerService employerService;
 
+    @MockBean
+    private JobOfferRepository jobOfferRepository;
+
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void createEmployer_valid(){
@@ -597,7 +609,7 @@ public class EmployerServiceTest {
         // Act
         List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
 
-        // Assert
+      // Assert
         assertNotNull(result);
         assertEquals(3, result.size());
         verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);

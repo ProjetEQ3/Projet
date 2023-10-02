@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,14 +25,10 @@ public class Student extends User{
 	private Department department;
 
 	@Builder
-	public Student(
-		Long id, String firstName, String lastName, String email, String password,
-		String matricule, String department, CvFile cvFile
-	){
+	public Student(Long id, String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile){
 		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());
 		this.matricule = matricule;
-		if(department != null)
-			this.department = Department.valueOf(department);
+		if(department != null) this.department = Department.valueOf(department);
 		setCvFile(cvFile);
 	}
 
@@ -51,6 +48,11 @@ public class Student extends User{
 			this.cvFile.setStudent(null);
 			this.cvFile = null;
 		}
+	}
+
+	// EQ3-13
+	public boolean hasApprovedCv(){
+		return this.cvFile != null && this.cvFile.getCvState() == CvState.ACCEPTED;
 	}
 
 }

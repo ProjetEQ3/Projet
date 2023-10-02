@@ -1,7 +1,10 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
+import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,7 +54,7 @@ public class JobOffer{
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
 
-	@OneToMany(mappedBy = "jobOffer")
+	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
 	private String refusReason;
@@ -69,6 +72,21 @@ public class JobOffer{
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 	}
 
+	// EQ3-13
+	public JobApplication apply(Student student){
+		if(!student.hasApprovedCv()) throw new CvNotApprovedException();
+		if(getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
+
+		JobApplication jobApplication = new JobApplication();
+		jobApplication.setStudent(student);
+		jobApplication.setJobOffer(this);
+		this.jobApplications.add(jobApplication);
+
+		return jobApplication;
+	}
+
+	public boolean hasApplied(Long studentId){
+		return this.jobApplications.stream().anyMatch(jobApplication -> jobApplication.getStudent().getId().equals(studentId));
+	}
 
 }
-

@@ -39,29 +39,36 @@ class JobOffer{
 		else delete this.jobOfferState
 		if(jobOffer.hoursPerWeek) this.hoursPerWeek = jobOffer.hoursPerWeek
 		else delete this.hoursPerWeek
-		if(jobOffer.startDate) this.startDate = jobOffer.startDate
+    if(jobOffer.startDate) this.startDate = jobOffer.startDate
 		else delete this.startDate
 		if(jobOffer.duration) this.duration = jobOffer.duration
 		else delete this.duration
 		if(jobOffer.formation) this.formation = jobOffer.formation
 		else delete this.formation
+		if(jobOffer.isApproved !== undefined) this.isApproved = jobOffer.isApproved
+		else this.isApproved = this.calculateApproval(jobOffer)
 	}
 
 	reset(){
-		this.id = undefined
-		this.title = undefined
-		this.positionTitle = undefined
-		this.department = undefined
-		this.location = undefined
-		this.description = undefined
-		this.salary = undefined
-		this.formation = undefined
-		this.dueDate = undefined
-		this.expirationDate = undefined
-		this.jobOfferState = undefined
+		this.id = 0
+		this.title = ''
+		this.department = ''
+		this.location = ''
+		this.description = ''
+		this.salary = 0
+		this.startDate = ''
+		this.duration = 0
+		this.expirationDate = ''
+		this.jobOfferState = ''
+		this.hoursPerWeek = 0
+		this.isApproved = false
+	}
+
+	calculateApproval(jobOffer){
+		const currentDate = new Date();
+		return jobOffer.jobOfferState === "OPEN" && new Date(jobOffer.expirationDate) > currentDate;		
 	}
 
 }
 
 export default JobOffer
-
