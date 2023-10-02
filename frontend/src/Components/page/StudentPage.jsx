@@ -44,7 +44,7 @@ const StudentPage = ({user, setUser}) => {
 	const applyForJobOffer = (jobOffer) => {
 		axiosInstance.post(`/student/jobOffers/apply/${user.id}/${jobOffer.id}`)
 			.then((response) => {
-				toast.success("Candidature envoyée") // TODO: EDIT
+				toast.success(t('appliedJobOffer'))
 			}).catch((error) => {
 				toast.error(t('pushingError') + error.response.data.message)
 			})
