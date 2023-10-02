@@ -1,22 +1,26 @@
 {
-	"glucoseFullAcronym": "Global Learning Opportunities for Undergraduate Students.",
-	"glucoseAcronym": "GlucOSE",
-	"copyRights": "© 2023 - All rights reserved.",
+  "glucoseFullAcronym": "Free, Useful, and Collaborative Student Internship Management.",
+  "glucoseAcronym": "GlucOSE",
+  "copyRights": "© 2023 - All rights reserved.",
 
-	"disconnect": "Disconnect",
-	"login": "Log In",
+  "disconnect": "Disconnect",
+  "login": "Log In",
 
-	"welcome": "Welcome to ",
-	"descTitle": "Your internship management application",
-	"description": "GlucOSE is a web application for managing student internships.",
+  "welcome": "Welcome to ",
+  "descTitle": "Your internship management application",
+  "description": "GlucOSE is a web application for managing student internships.",
 
-	"successLogin": "Login successful.",
-	"errorLogin": "Incorrect username or password.",
-	"email": "Email Address",
-	"placeHolderEmail": "Enter your email address",
-	"password": "Password",
-	"placeHolderPassword": "Enter your password",
-	"loginSubmit": "Log In",
+  "successLogin": "Login successful.",
+  "errorLogin": "Incorrect username or password.",
+  "email": "Email Address",
+  "placeHolderEmail": "Enter your email address",
+  "password": "Password",
+  "placeHolderPassword": "Enter your password",
+  "loginSubmit": "Log In",
+
+  "pageNotFound": "Page not found",
+
+  "successRegister": "Your account has been created successfully.",
 
   "firstName": "First Name",
   "placeHolderFirstName": "Enter your first name",
@@ -128,7 +132,7 @@
   "authorizeOffer": "Authorize Job Offer",
   "refusalReason": "reason for refusal",
 
-  "cvNotApproved": "Cv not approved",
+  "cvNotApproved": "CV not approved",
   "apply": "Apply",
   "appliedJobOffer": "You have applied to this job offer",
   "fileName": "File Name",
@@ -136,8 +140,8 @@
 
   "updatedCV": "CV updated with state: ",
   "errorUpdateCV": "Update on CV error: ",
-  "probation": "Approbation",
-  "cvAuthorisation": "CV Authorisation",
+  "probation": "Approval",
+  "cvAuthorisation": "CV Authorization",
   "confirmRefusal": "Are you sure you want to refuse this offer?",
   "confirm": "Confirm",
   "refuse": "Refuse"
