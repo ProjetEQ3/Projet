@@ -7,8 +7,10 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import State from "../util/State";
 import PDFPreview from "../util/PDFPreview";
 import CVFile from "../../model/CvFile";
+import {useTranslation} from "react-i18next";
 
 function Cv({user, setCv}){
+	const {t} = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const handlePdfUpload = (e) => {
@@ -22,17 +24,17 @@ function Cv({user, setCv}){
 			axiosInstance
 				.post(`/student/cv/${user.id}`, formData, {headers: {"Content-Type": "multipart/form-data"}})
 				.then((response) => {
-					toast.success("CV téléversé")
+					toast.success(t('uploadedCV'))
 					console.log(response)
 					setCv(response.data)
 					setIsLoading(false)
 				})
 				.catch((error) => {
-					toast.error("Erreur lors du téléversement du CV: " + error.message)
+					toast.error(t('pushingError') + error.message)
 					setIsLoading(false)
 				})
 		}else{
-			alert("Veuillez sélectionner un fichier PDF valide.")
+			alert(t('PDFError'))
 			setIsLoading(false)
 		}
 	}
@@ -42,12 +44,12 @@ function Cv({user, setCv}){
 		axiosInstance
 			.delete(`/student/cv/${user.id}`)
 			.then(() => {
-				toast.success("CV supprimé")
+				toast.success(t('deleteCV'))
 				setCv(null)
 				setIsLoading(false)
 			})
 			.catch((error) => {
-				toast.error("Erreur lors de la suppression du CV" + error.message)
+				toast.error(t('pushingError') + error.message)
 				setIsLoading(false)
 			})
 	}
@@ -74,7 +76,7 @@ function Cv({user, setCv}){
 				</>
 			) : (
 				<div>
-					<h1 className="display-6">Téléverser un CV</h1>
+					<h1 className="display-6">{t('uploadCV')}</h1>
 					<div className="col-6 mx-auto">
 						<input value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
 					</div>

@@ -4,9 +4,11 @@ import {useNavigate} from "react-router-dom"
 import JobOfferList from "../jobOffer/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
+import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
 const StudentPage = ({user, setUser}) => {
+  const {t} = useTranslation();
   const [tab, setTab] = useState('home');
   const [jobOffers, setJobOffers] = useState([]);
 
@@ -26,7 +28,8 @@ const StudentPage = ({user, setUser}) => {
 					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
 			  }).catch((error) => {
-				  console.log("Fetch error: "+ error);
+				  toast.error(t('fetchError') + error);
+				  console.log(t('fetchError') + error);
 			  });
 	  }
 
@@ -41,9 +44,9 @@ const StudentPage = ({user, setUser}) => {
 	const applyForJobOffer = (jobOffer) => {
 		axiosInstance.post(`/student/jobOffers/apply/${user.id}/${jobOffer.id}`)
 			.then((response) => {
-				toast.success("Candidature envoyée")
+				toast.success("Candidature envoyée") // TODO: EDIT
 			}).catch((error) => {
-				toast.error("Erreur lors de l'envoi de la candidature. " + error.response.data.message)
+				toast.error(t('pushingError') + error.response.data.message)
 			})
 	}
 
@@ -51,28 +54,16 @@ const StudentPage = ({user, setUser}) => {
 		<div className="container">
 			<div>
 				<div className="tabs btn-group my-2 mx-auto col-12">
-					<button
-						className={`btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
-						onClick={() => setTab('home')}
-					>
-						Accueil
-					</button>
-					<button
-						className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
-						onClick={() => setTab('stages')}
-					>
-						Stages
-					</button>
-					<button
-						className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
-						onClick={() => setTab('cv')}
-					>
-						CV
-					</button>
+					<button className={`btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
+						onClick={() => setTab('home')}>{t('home')}</button>
+					<button className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
+						onClick={() => setTab('stages')}>{t('internship')}</button>
+					<button className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
+						onClick={() => setTab('cv')}>CV</button>
 				</div>
-				{tab === 'home' && <h3>Home</h3>}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} applyForJobOffer={applyForJobOffer}/>}
-				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
+				{tab === 'home' && <h3>{t('home')}</h3>}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} />  }
+				{tab === 'cv' && <Cv user={user} setCv={setCv} />}
 			</div>
 		</div>
 	)

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import ShortJobOffer from "../student/ShortJobOffer";
 import FullJobOffer from "../student/FullJobOffer";
+import {useTranslation} from "react-i18next";
 
 function JobOfferList({jobOffers, user, setJobOffers}){
-	const [selectedOffer, setSelectedOffer] = useState(null);
+    const {t} = useTranslation();
+    const [selectedOffer, setSelectedOffer] = useState(null);
 
 	useEffect(() => {
 		console.log("user", user)
@@ -23,7 +25,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 					jobOffers.length === 0 ?
 						<div className="row m-2">
 							<div className="col-12 bg-white rounded">
-								<h2 className="text-dark fw-light pt-1">Aucune offre de stage Ouverte pour le moment</h2>
+								<h2 className="text-dark fw-light pt-1">{t('noOpenInternship')}</h2>
 							</div>
 						</div> :
 						jobOffers.map((offer, index) => (
@@ -36,15 +38,14 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 				}
 			</div>
 			<div className="col-6">
-				{
-					selectedOffer === null ?
-						<div className="row m-2">
-							<div className="col-12 bg-white rounded">
-								<h2 className="text-dark fw-light pt-1">Sélectionner une offre de stage</h2>
-							</div>
+				{selectedOffer === null ?
+					<div className="row m-2">
+						<div className="col-12 bg-white rounded">
+							<h2 className="text-dark fw-light pt-1">{t('selectIntership')}</h2>
 						</div>
-						:
-						<FullJobOffer jobOffer={selectedOffer} user={user} updatedOffer={updatedOffer}/>
+					</div>
+					:
+					<FullJobOffer jobOffer={selectedOffer}/>
 				}
 			</div>
 		</div>

@@ -1,8 +1,10 @@
 import {useState} from "react"
 import FullJobOffer from "./FullJobOffer"
 import State from "../util/State"
+import {useTranslation} from "react-i18next";
 
 const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
+    const {t} = useTranslation()
     const [isHovered, setIsHovered] = useState(false)
 
     const handleMouseEnter = () => {
@@ -25,7 +27,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                         <div className="d-none d-lg-block mx-auto my-auto">
                             <State state={jobOffer.jobOfferState}/>
                         </div>
-                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Détails</div>
+                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('intershipDetails')}</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg">
                             <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
                         </div>

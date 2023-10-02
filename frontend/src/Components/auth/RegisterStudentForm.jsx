@@ -47,7 +47,7 @@ const RegisterStudentForm = () => {
             }
         ).then(() => {
             setIsLoading(false)
-            toast.success('Votre compte a été créé avec succès');
+            toast.success(t('successRegister'));
             navigate('/auth/login')
         }).catch(() =>
             setIsLoading(false)
@@ -90,7 +90,7 @@ const RegisterStudentForm = () => {
         }
 
         if (formData.department === '') {
-            validationErrors.department = t('departmentRequired');
+            validationErrors.department = t('departmentStudentRequired');
         }
 
         if (formData.password === '') {

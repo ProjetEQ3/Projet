@@ -66,9 +66,10 @@ class JobOffer{
 
 	calculateApproval(jobOffer){
 		const currentDate = new Date();
-		return jobOffer.jobOfferState === "OPEN" && new Date(jobOffer.expirationDate) > currentDate;		
+		return jobOffer.jobOfferState === "OPEN" && new Date(jobOffer.expirationDate) > currentDate;
 	}
 
 }
 
 export default JobOffer
+
