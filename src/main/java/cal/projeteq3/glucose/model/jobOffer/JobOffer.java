@@ -54,6 +54,8 @@ public class JobOffer{
 	@OneToMany(mappedBy = "jobOffer")
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
+	private Long acceptedJobApplicationId;
+
 	private String refusReason;
 
 	public void copy(JobOffer jobOffer){

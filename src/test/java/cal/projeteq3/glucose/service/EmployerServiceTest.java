@@ -3,53 +3,49 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
-
 import java.time.LocalDate;
-import java.time.LocalDate;
-
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import static org.mockito.Mockito.when;
-
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.mockito.MockitoAnnotations;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployerServiceTest {
-
     @Mock
     private JobOfferRepository jobOfferRepository;
     @Mock
     private EmployerRepository employerRepository;
+    @Mock
+    private StudentRepository studentRepository;
+
+    @Mock
+    private JobApplicationRepository jobApplicationRepository;
 
     @InjectMocks
     private EmployerService employerService;
-
 
     @Test
     void createEmployer_valid(){
@@ -602,5 +598,61 @@ public class EmployerServiceTest {
         assertEquals(3, result.size());
         verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
     }
+
+    @Test
+    public void testAcceptApplication() {
+        Long applicationId = 1L;
+        Student student = Student
+          .builder()
+          .id(1L)
+          .email("studentmeail@student.st")
+          .password("studentpassword")
+          .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setId(1L);
+        mockJobOffer.setJobOfferState(JobOfferState.OPEN);
+        mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.getJobApplications().add(mockApplication);
+        mockApplication.setJobOffer(mockJobOffer);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
+        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
+
+        JobApplicationDTO result = employerService.acceptApplication(applicationId);
+        verify(jobApplicationRepository, times(1)).save(mockApplication);
+        assertNotNull(result);
+    }
+
+    @Test
+    public void testRefuseApplication() {
+        Long applicationId = 1L;
+        String reason = "Test Reason";
+        Student student = Student
+          .builder()
+          .id(1L)
+          .email("studentmeail@student.st")
+          .password("studentpassword")
+          .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setId(1L);
+        mockJobOffer.setJobOfferState(JobOfferState.OPEN);
+        mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.getJobApplications().add(mockApplication);
+        mockApplication.setJobOffer(mockJobOffer);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
+        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
+
+        JobApplicationDTO result = employerService.refuseApplication(applicationId, reason);
+        verify(jobApplicationRepository, times(1)).save(mockApplication);
+        assertNotNull(result);
+    }
+
 
 }

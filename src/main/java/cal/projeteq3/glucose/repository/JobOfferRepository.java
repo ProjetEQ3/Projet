@@ -8,9 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
+
+    Optional<JobOffer> findJById(Long id);
 
     List<JobOffer> findJobOfferByEmployer_Id(Long employerId);
 
@@ -20,5 +23,4 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
 
     List<JobOffer> findJobOffersByDepartment(Department department);
     List<JobOffer> findJobOffersByDepartmentAndJobOfferState(Department department, JobOfferState jobOfferState);
-
 }
