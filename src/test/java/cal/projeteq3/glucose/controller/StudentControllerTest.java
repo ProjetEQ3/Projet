@@ -265,7 +265,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void getAppliedJobOfferByStudent_valid() throws Exception {
+    public void getAppliedJobOfferByStudent_Valid() throws Exception {
         //        Arrange
         Long studentId = 1L;
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
@@ -278,6 +278,22 @@ public class StudentControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()));
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
+        Long wrongStudentId = -1L;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", wrongStudentId))
+                .andExpect(MockMvcResultMatchers.status().is(202));
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudent_InvalidNullId() throws Exception {
+        Long nullStudentId = null;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", nullStudentId))
+                .andExpect(MockMvcResultMatchers.status().is(404));
     }
 
 //    @Test
