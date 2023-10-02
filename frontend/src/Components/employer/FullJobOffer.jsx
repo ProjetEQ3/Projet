@@ -1,10 +1,113 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {faPenToSquare, faX} from '@fortawesome/free-solid-svg-icons';
+import React, {useRef, useState} from "react";
+import Loading from "../util/Loading";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
-import Loading from "../util/Loading";
-const FullJobOffer = ({ jobOffer }) => {
-    const [t, i18n] = useTranslation();
+const FullJobOffer = ({ jobOffer, updateOffer}) => {
+    const {t} = useTranslation();
+    const formRef = useRef(null)
+    const [isLoading, setIsLoading] = useState(false);
+    const [isModified, setIsModified] = useState(false);
+    const [newOffer, setNewOffer] = useState({
+        jobOfferState: 'SUBMITTED',
+        id: jobOffer.id,
+        refusReason: jobOffer.refusReason,
+        title: jobOffer.title,
+        department: jobOffer.department,
+        location: jobOffer.location,
+        description: jobOffer.description,
+        salary: jobOffer.salary,
+        hoursPerWeek: jobOffer.hoursPerWeek,
+        startDate: jobOffer.startDate,
+        duration: jobOffer.duration,
+        expirationDate: jobOffer.expirationDate,
+    })
+
+    const [warnings, setWarnings] = useState({
+        title: '',
+        department: '',
+        location: '',
+        description: '',
+        salary: '',
+        hoursPerWeek: '',
+        startDate: '',
+        duration: '',
+        expirationDate: '',
+    })
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        const {name, value} = e.target;
+        if(value.trim() !== '') {
+            setNewOffer({...newOffer, [name]: value.trim()});
+        }
+        else {
+            setNewOffer({...newOffer, [name]: jobOffer[name]});
+        }
+    }
+
+    const handleClose = (e) => {
+        e.preventDefault();
+        setNewOffer(
+            {
+                jobOfferState: jobOffer.jobOfferState,
+                refusReason: jobOffer.refusReason,
+                id: jobOffer.id,
+                title: jobOffer.title,
+                department: jobOffer.department,
+                location: jobOffer.location,
+                description: jobOffer.description,
+                salary: jobOffer.salary,
+                hoursPerWeek: jobOffer.hoursPerWeek,
+                startDate: jobOffer.startDate,
+                duration: jobOffer.duration,
+                expirationDate: jobOffer.expirationDate,
+            }
+        )
+        formRef.current.reset();
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        newOffer.startDate = newOffer.startDate.split('T')[0];
+        newOffer.expirationDate = newOffer.expirationDate.split('T')[0];
+
+        const validationErrors = {};
+
+        if (newOffer.salary <= 0) {
+            validationErrors.salary = "Le salaire doit être positif";
+        }
+
+        if (newOffer.hoursPerWeek <= 0) {
+            validationErrors.hoursPerWeek = "Le nombre d'heures par semaine doit être positif";
+        }
+
+        if (newOffer.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(newOffer.startDate)) {
+            validationErrors.startDate = "La date de début doit être en format YYYY-MM-DD";
+        }
+        else if (newOffer.startDate && new Date(newOffer.startDate) < new Date()) {
+            validationErrors.startDate = "La date de début ne doit pas déjà être passée";
+        }
+
+        if (newOffer.duration && newOffer.duration < 1) {
+            validationErrors.duration = "La durée du stage doit être d'au moins 1 semaine";
+        }
+
+        if (newOffer.expirationDate && !/^\d{4}-\d{2}-\d{2}$/.test(newOffer.expirationDate)) {
+            validationErrors.expirationDate = "La date d'expiration doit être en format YYYY-MM-DD";
+        }
+        else if (newOffer.expirationDate && new Date(newOffer.expirationDate) < new Date()) {
+            validationErrors.expirationDate = "La date d'expiration ne doit pas déjà être passée";
+        }
+
+        setWarnings(validationErrors);
+
+        if (Object.keys(validationErrors).length === 0) {
+            updateOffer(newOffer);
+            setIsModified(true);
+        }
+    }
 
     return (
         <div className="row my-2">
@@ -17,25 +120,23 @@ const FullJobOffer = ({ jobOffer }) => {
                             <div className="col-9">
                                 <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
                             </div>
-                            <div className="col-3 my-auto text-center">
-                                    <div className={`border rounded px-2 
-                                    ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
-                                        jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
-                                            jobOffer.jobOfferState === 'SUBMITTED' ? 'border-secondary text-secondary' :
-                                                jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-danger text-danger'} `}>
-                                        {jobOffer.jobOfferState}
-                                    </div>
+                            <div className="col-3 my-auto text-center pt-2">
+                                    <State state={jobOffer.jobOfferState}/>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
+                                <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>
                                 <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-                                <h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate}</h6>
-                                <h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration}</h6>
-                                <h6 className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expirationDate}</h6>
+                                { jobOffer.startDate !== null &&
+                                    (<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>)
+                                }
+                                <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
+                                { jobOffer.expirationDate !== null &&
+                                    (<h6 className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expirationDate}</h6>)
+                                }
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                                <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</h6>
+                                <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
                                 <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
                             </div>
                         </div>
@@ -47,38 +148,11 @@ const FullJobOffer = ({ jobOffer }) => {
                         </div>
                     </>
                 )}
-                <div className="row justify-content-between">
-                    <div className="col-6 col-md-8">
-                        <h3 className="text-dark fw-light pt-1">{jobOffer.title}</h3>
-                    </div>
-                    <div className="col-6 col-md-4 my-auto text-center pt-2">
-                        <State state={jobOffer.jobOfferState}/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12">
-                        <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>
-                        <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-                        { jobOffer.startDate !== null &&
-                            (<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>)
-                        }
-                        <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
-                        { jobOffer.expirationDate !== null &&
-                            (<h6 className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expirationDate}</h6>)
-                        }
-                        <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                        <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
-                        <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
-                    </div>
-                </div>
-                <div className="text-end mb-2">
-                    <FontAwesomeIcon icon={faPenToSquare} className="icon-btn fa-lg m-2" data-bs-toggle="modal" data-bs-target="#editModal"/>
-                </div>
                 <div id="editModal" className="modal">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h3 className="modal-title"><br/>{t('update')}</h3>
+                                <h3 className="modal-title">Modifier<br/>{jobOffer.title}</h3>
                                 <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                             </div>
                             <div className="modal-body">
