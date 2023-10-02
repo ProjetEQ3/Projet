@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -261,6 +262,22 @@ public class StudentControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 1L)
         )
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudent_valid() throws Exception {
+        //        Arrange
+        Long studentId = 1L;
+        List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
+
+        when(studentService.getAppliedJobOfferByStudentId(studentId)).thenReturn(jobOffers);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", studentId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()));
     }
 
 //    @Test
