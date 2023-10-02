@@ -8,6 +8,7 @@ import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
+import StudentList from "../employer/StudentList";
 
 const EmployerPage = ({user}) => {
 	const [t, i18n] = useTranslation();
@@ -57,11 +58,29 @@ const EmployerPage = ({user}) => {
 		navigate('/employer/newOffer');
 	}
 
+	const handleSelectOffer = (offer) => {
+		if (offer.jobOfferState === "OPEN") {
+			axiosInstance.get(`/employer/offer/${offer.id}/students`)
+				.then((response) => {
+					offer.students = response.data
+					console.log(offer.students)
+				})
+				.catch((error) => {
+					toast.error(t('getStudentsError') + error.message);
+				})
+		}
+		offers.map((o) => {
+			if(o.id === offer.id){o = offer}
+		})
+		setOffers(offers)
+		setSelectedOffer(offer)
+	}
+
 	const renderFilteredOffers = (filteredOffers) => {
 		return (
 			<div className="col-12">
 				{filteredOffers.map((offer, index) => (
-					<div key={index} onClick={() => setSelectedOffer(offer)}>
+					<div key={index} onClick={() => handleSelectOffer(offer)}>
 						<ShortJobOffer jobOffer={offer} updateJobOfferList={updateOffer} deleteOffer={() => deleteOffer(offer.id)}/>
 					</div>
 				))}
@@ -102,8 +121,18 @@ const EmployerPage = ({user}) => {
 										</div>
 									</div>
 									:
-									<FullJobOffer jobOffer={selectedOffer}/>
+									<>
+										<FullJobOffer jobOffer={selectedOffer}/>
+										{
+											selectedOffer.jobOfferState === "OPEN" ?
+												selectedOffer.students != null && selectedOffer.students.length > 0 ?
+													<StudentList students={selectedOffer.students}/> :
+													<div><p className="display-6">{t('noStudent')}</p></div>
+												: null
+										}
+									</>
 								}
+
 							</div>
 						</div>
 					</div>

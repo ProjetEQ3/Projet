@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -497,6 +498,27 @@ public class EmployerControllerTest {
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
+	}
+
+	@Test
+	public void getStudentsByJobOffer() throws Exception {
+		// Arrange
+		StudentDTO studentDTO = new StudentDTO("John", "Doe", "1234567", Department._420B0);
+		List<StudentDTO> studentDTOs = new ArrayList<>(List.of(studentDTO));
+		Long jobOfferId = 1L;
+
+		when(employerService.getStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
+
+		// Act & Assert
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/offer/{id}/students", jobOfferId)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].firstName").value("John"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].lastName").value("Doe"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].matricule").value("1234567"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].department").value(Department._420B0.toString()));
 	}
 
 }

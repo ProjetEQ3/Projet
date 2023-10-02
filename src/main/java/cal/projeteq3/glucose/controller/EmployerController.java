@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -60,6 +61,13 @@ public class EmployerController{
 		this.employerService.deleteJobOffer(id);
 		return ResponseEntity.accepted()
 				.build();
+	}
+
+	@GetMapping("/offer/{id}/students")
+	public ResponseEntity<List<StudentDTO>> getStudentsByJobOffer(@PathVariable Long id){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getStudentsByJobOfferId(id));
 	}
 
 }

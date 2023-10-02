@@ -136,6 +136,8 @@
 
   "fileName": "Nom du fichier",
   "studentCV": "Les CVs des étudiants : ",
+  "noStudent": "Aucun étudiant n'a postulé pour le moment",
+  "getStudentError": "Erreur lors de la récupération des étudiants: ",
 
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
