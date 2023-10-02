@@ -1,8 +1,10 @@
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useEffect} from "react"
+import {useTranslation} from "react-i18next";
 
 const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
+	const {t} = useTranslation()
 
 	useEffect(() => {
 		console.log("user", user)
@@ -14,11 +16,11 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
 			.then((ressponse) => {
 				updatedOffer(ressponse.data)
-				toast.success("Vous avez postulé avec succès")}
+				toast.success(t('appliedJobOffer'))}
 			)
 			.catch((err) => {
 				console.log("err: ", err)
-				toast.error(err.response.data.message)}
+				toast.error(t('pushingError') + err.response.data.message)}
 			)
 	}
 
@@ -32,8 +34,8 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
 							<button className={"btn btn-primary"} onClick={!user.cvFile.isApproved ?
-								() => toast.error("EDIT: Votre CV n'est pas approuvé") :
-								() => applyForJobOffer(jobOffer.id, user.id)}>Appliquer</button>
+								() => toast.error(t('cvNotApproved')) :
+								() => applyForJobOffer(jobOffer.id, user.id)}>{t('apply')}</button>
 						</div>
 					</div>
 				</div>
@@ -41,10 +43,10 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					<div className="col-12">
 						<h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
 						<h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-						<h6 className="text-dark fw-light mb-3">EDIT: Date de début: {jobOffer.startDate.split("T")[0]}</h6>
-						<h6 className="text-dark fw-light mb-3">EDIT: Durée: {jobOffer.duration} semaines</h6>
+						<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>
+						<h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
 						<h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-						<h6 className="text-dark fw-light mb-3">EDIT: {jobOffer.hoursPerWeek}h/semaine</h6>
+						<h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
 						<p className="text-dark fw-light mb-3">{jobOffer.description}</p>
 					</div>
 				</div>

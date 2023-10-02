@@ -117,6 +117,8 @@
 	"uploadCV": "Téléverser un CV",
 	"noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
 	"cvNotApproved": "Votre CV n'est pas approuvé",
-	"apply": "Postuler"
+	"apply": "Postuler",
+	"appliedJobOffer": "Vous avez postulé avec succès",
+
 
 }
