@@ -93,15 +93,14 @@ public class StudentController{
 
 	// EQ3-13
 	@PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
-	public ResponseEntity<Void> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
-		try{
-			studentService.applyJobOffer(jobOfferId, studentId);
-			return ResponseEntity.accepted().build();
-		}catch(APIException e){
+	public ResponseEntity<JobOfferDTO> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId){
+		/*try{*/
+			return ResponseEntity.accepted().body(studentService.applyJobOffer(jobOfferId, studentId));
+		/*}catch(APIException e){
 			return ResponseEntity.status(e.getStatus()).header("X-Errors", e.getMessage()).build();
 		}catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("X-Errors", "Invalide operation").build();
-		}
+		}*/
 	}
 
 }

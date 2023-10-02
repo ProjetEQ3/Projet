@@ -54,7 +54,7 @@ public class JobOffer{
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
 
-	@OneToMany(mappedBy = "jobOffer")
+	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
 	private String refusReason;
@@ -83,6 +83,10 @@ public class JobOffer{
 		this.jobApplications.add(jobApplication);
 
 		return jobApplication;
+	}
+
+	public boolean hasApplied(Long studentId){
+		return this.jobApplications.stream().anyMatch(jobApplication -> jobApplication.getStudent().getId().equals(studentId));
 	}
 
 }

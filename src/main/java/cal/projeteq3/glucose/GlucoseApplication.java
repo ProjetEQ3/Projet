@@ -163,6 +163,11 @@ public class GlucoseApplication implements CommandLineRunner {
 						.password("aaaAAA111")
 						.matricule("0000005")
 						.department("_420B0")
+					.cvFile(CvFile.builder()
+							.fileData(new byte[]{1, 2, 3, 4, 5})
+							.fileName("CV.pdf")
+			        .cvState(CvState.ACCEPTED)
+							.build())
 						.build(),
 				Student.builder()
 						.firstName("Gabriel")
