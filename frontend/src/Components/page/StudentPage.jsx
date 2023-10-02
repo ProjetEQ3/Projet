@@ -51,7 +51,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	return (
-		<div className="container">
+		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>
 				<div className="tabs btn-group my-2 mx-auto col-12">
 					<button className={`btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}

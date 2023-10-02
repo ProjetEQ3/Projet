@@ -19,8 +19,8 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 	}
 
 	return (
-		<div className="row justify-content-around">
-			<div className="col-6">
+		<div className="row justify-content-around mx-2">
+			<div className="col-lg-6 col-12 order-2 order-lg-1">
 				{
 					jobOffers.length === 0 ?
 						<div className="row m-2">
@@ -37,7 +37,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						))
 				}
 			</div>
-			<div className="col-6">
+			<div className="col-lg-6 col-12 order-1 order-lg-2">
 				{selectedOffer === null ?
 					<div className="row m-2">
 						<div className="col-12 bg-white rounded">
