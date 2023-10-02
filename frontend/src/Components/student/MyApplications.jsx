@@ -35,11 +35,11 @@ function MyApplications({ user }) {
             {myApplications.length === 0 ? (
                 <p>Vous n'avez pas d'applications.</p>
             ) : (
-                <ul>
+                <div>
                     {myApplications.map((offer, index) => (
                         <ShortJobOffer jobOffer={offer} key={offer.id}/>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
