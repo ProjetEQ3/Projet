@@ -34,6 +34,12 @@ public class StudentDTO extends UserDTO {
         this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
     }
 
+    public StudentDTO(String firstName, String lastName, String matricule, Department department){
+        super(firstName, lastName, "STUDENT");
+        this.matricule = matricule;
+        this.department = department;
+    }
+
     public Student toEntity() {
         return Student.builder()
             .id(this.getId())

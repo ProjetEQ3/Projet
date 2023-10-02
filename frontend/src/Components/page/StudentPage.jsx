@@ -23,9 +23,8 @@ const StudentPage = ({user, setUser}) => {
 				  response.data.forEach((jobOffer) => {
 					  const newJobOffer = new JobOffer();
 					  newJobOffer.init(jobOffer)
-					  jobOffers.push(newJobOffer);
+					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
-				  // setJobOffers(response.data);
 			  }).catch((error) => {
 				  console.log("Fetch error: "+ error);
 			  });

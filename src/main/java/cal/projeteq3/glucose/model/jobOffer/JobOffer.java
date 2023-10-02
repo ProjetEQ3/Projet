@@ -8,7 +8,7 @@ import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,15 +40,13 @@ public class JobOffer{
 
 	private float salary;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 
 	private int duration;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime expirationDate;
+	private LocalDate expirationDate;
 
 	private int hoursPerWeek;
 

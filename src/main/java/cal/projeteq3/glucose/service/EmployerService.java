@@ -46,8 +46,8 @@ public class EmployerService{
     }
 
 	public List<EmployerDTO> getAllEmployers(){
-		List<Employer> employers = employerRepository.findAll();
-		return employers.stream().map(EmployerDTO::new).collect(Collectors.toList());
+		return employerRepository.findAll()
+				.stream().map(EmployerDTO::new).collect(Collectors.toList());
 	}
 
 	@Transactional
@@ -60,27 +60,25 @@ public class EmployerService{
 		return new EmployerDTO(employer);
 	}
 
-	public Optional<EmployerDTO> getEmployerByID(Long id){
-		Optional<Employer> employerOptional = employerRepository.findById(id);
-		return employerOptional.map(EmployerDTO::new);
+	public EmployerDTO getEmployerByID(Long id){
+		return new EmployerDTO(employerRepository.findById(id).orElseThrow(
+				() -> new EmployerNotFoundException(id)
+		));
 	}
 
 	public EmployerDTO updateEmployer(Long id, EmployerDTO updatedEmployer){
-		Optional<Employer> existingEmployer = employerRepository.findById(id);
-		if(existingEmployer.isPresent()){
-			Employer employer = existingEmployer.get();
+		Employer employer = employerRepository.findById(id)
+				.orElseThrow(() -> new EmployerNotFoundException(id));
 
-			employer.setId(updatedEmployer.getId());
-			employer.setFirstName(updatedEmployer.getFirstName());
-			employer.setLastName(updatedEmployer.getLastName());
-			employer.setEmail(updatedEmployer.getEmail());
-			employer.setOrganisationName(updatedEmployer.getOrganisationName());
-			employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
+		employer.setId(updatedEmployer.getId());
+		employer.setFirstName(updatedEmployer.getFirstName());
+		employer.setLastName(updatedEmployer.getLastName());
+		employer.setEmail(updatedEmployer.getEmail());
+		employer.setOrganisationName(updatedEmployer.getOrganisationName());
+		employer.setOrganisationPhone(updatedEmployer.getOrganisationPhone());
 
-			return new EmployerDTO(employerRepository.save(employer));
-		}
+		return new EmployerDTO(employerRepository.save(employer));
 
-		throw new EmployerNotFoundException(id);
 	}
 
 	public void deleteEmployer(Long id){
@@ -89,37 +87,31 @@ public class EmployerService{
 
 
 	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
-		Optional<Employer> employerOptional = employerRepository.findById(employerId);
-		if (employerOptional.isPresent()) {
-			Employer employer = employerOptional.get();
-			return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
-		}
-		return Collections.emptyList();
+		Employer employer = employerRepository.findById(employerId)
+				.orElseThrow(() -> new EmployerNotFoundException(employerId));
+		return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	@Transactional
 	public JobOfferDTO createJobOffer(JobOfferDTO jobOffer, Long employerId){
-		Optional<Employer> employerOptional = employerRepository.findById(employerId);
-		if(employerOptional.isPresent()){
-			Employer employer = employerOptional.get();
-			JobOffer jobOfferEntity = jobOffer.toEntity();
-			employer.addJobOffer(jobOfferEntity);
-			JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity)) ;
-			employerRepository.save(employer);
+		Employer employer = employerRepository.findById(employerId)
+				.orElseThrow(() -> new EmployerNotFoundException(employerId));
 
-			return result;
-		} else
-			throw new EmployerNotFoundException(employerId);
+		JobOffer jobOfferEntity = jobOffer.toEntity();
+		employer.addJobOffer(jobOfferEntity);
+		JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity));
+		employerRepository.save(employer);
+
+		return result;
+
 	}
 
 	public JobOfferDTO updateJobOffer(JobOfferDTO updatedJobOffer){
-		Optional<JobOffer> existingJobOffer = jobOfferRepository.findById(updatedJobOffer.getId());
-		if(existingJobOffer.isPresent()){
-			JobOffer jobOffer = existingJobOffer.get();
-			jobOffer.copy(updatedJobOffer.toEntity());
-			return new JobOfferDTO(jobOfferRepository.save(jobOffer));
-		}
-		throw new JobOffreNotFoundException(updatedJobOffer.getId());
+		JobOffer jobOffer = jobOfferRepository.findById(updatedJobOffer.getId())
+				.orElseThrow(() -> new JobOffreNotFoundException(updatedJobOffer.getId()));
+
+		jobOffer.copy(updatedJobOffer.toEntity());
+		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
 
 	public void deleteJobOffer(Long id){

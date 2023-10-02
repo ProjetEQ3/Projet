@@ -1,33 +1,32 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import State from "../util/State";
 const FullJobOffer = ({ jobOffer }) => {
 
     return (
         <div className="row my-2">
             <div className="col-12 bg-white rounded">
                 <div className="row justify-content-between">
-                    <div className="col-9">
-                        <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
+                    <div className="col-6 col-md-8">
+                        <h3 className="text-dark fw-light pt-1">{jobOffer.title}</h3>
                     </div>
-                    <div className="col-3 my-auto text-center">
-                            <div className={`border rounded px-2 
-                            ${jobOffer.jobOfferState === 'OPEN' ? 'border-success text-success':
-                                jobOffer.jobOfferState === 'PENDING' ? 'border-warning text-warning':
-                                    jobOffer.jobOfferState === 'SUBMITTED' ? 'border-secondary text-secondary' :
-                                        jobOffer.jobOfferState === 'TAKEN' ? 'border-primary text-primary': 'border-danger text-danger'} `}>
-                                {jobOffer.jobOfferState}
-                            </div>
+                    <div className="col-6 col-md-4 my-auto text-center pt-2">
+                        <State state={jobOffer.jobOfferState}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12">
                         <h5 className="text-dark fw-light mb-3">{jobOffer.department}</h5>
                         <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
-                        <h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate}</h6>
-                        <h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration}</h6>
-                        <h6 className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expireDate}</h6>
+                        { jobOffer.startDate !== null &&
+                            (<h6 className="text-dark fw-light mb-3">Date de début: {jobOffer.startDate.split('T')[0]}</h6>)
+                        }
+                        <h6 className="text-dark fw-light mb-3">Durée: {jobOffer.duration} semaine(s)</h6>
+                        { jobOffer.expirationDate !== null &&
+                            (<h6 className="text-dark fw-light mb-3">Date d'expiration: {jobOffer.expirationDate.split('T')[0]}</h6>)
+                        }
                         <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                        <h6 className="text-dark fw-light mb-3">{jobOffer.hourPerWeek}h/semaine</h6>
+                        <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/semaine</h6>
                         <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
                     </div>
                 </div>

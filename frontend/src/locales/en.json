@@ -116,6 +116,6 @@
 	"internship": "Job Offers",
 	"uploadCV": "Upload a CV",
 	"noOpenInternship": "No open Job offers",
-	"cv_not_approved": "CV not approved"
-
+	"cvNotApproved": "Cv not approved",
+	"apply": "Apply"
 }
