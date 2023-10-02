@@ -1,20 +1,21 @@
-import React from 'react'
+import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
 
-const StudentList = (students) => {
+const StudentList = ({ offer }) => {
+    console.log(offer);
     return (
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    {students.map((student, index) => (
+                    {offer.students.map((student, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={student}/>
+                            <ShortStudentInfo student={student} />
                         </div>
                     ))}
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default StudentList
+export default StudentList;

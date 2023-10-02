@@ -63,7 +63,6 @@ const EmployerPage = ({user}) => {
 			axiosInstance.get(`/employer/offer/${offer.id}/students`)
 				.then((response) => {
 					offer.students = response.data
-					console.log(offer.students)
 				})
 				.catch((error) => {
 					toast.error(t('getStudentsError') + error.message);
@@ -126,7 +125,7 @@ const EmployerPage = ({user}) => {
 										{
 											selectedOffer.jobOfferState === "OPEN" ?
 												selectedOffer.students != null && selectedOffer.students.length > 0 ?
-													<StudentList students={selectedOffer.students}/> :
+													<StudentList offer={selectedOffer}/> :
 													<div><p className="display-6">{t('noStudent')}</p></div>
 												: null
 										}
