@@ -42,6 +42,11 @@ code {
     color: var(--ose-color) !important;
 }
 
+.danger-hover:hover{
+  --bs-text-opacity: 1;
+    color: #dc3545 !important;
+}
+
 .bg-ose {
   background-color: var(--ose-color);
 }

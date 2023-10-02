@@ -30,11 +30,17 @@ const EmployerPage = ({user}) => {
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {
-				offers.map((o) => {
-					if(o.id === offer.id){o = offer}
+				const offerIndex = offers.findIndex((o) => o.id === offer.id)
+				const updatedOffers = offers.map((element, index) => {
+					if (index === offerIndex) {
+						return offer
+					} else {
+						return element
+					}
 				})
-				setOffers(offers)
 				toast.success(t('updateInternshipSuccess'));
+				setOffers(updatedOffers)
+				setSelectedOffer(offer)
 			})
 			.catch((error) => {
 				toast.error(t('updateInternshipError') + error.message);
@@ -47,6 +53,7 @@ const EmployerPage = ({user}) => {
 				let updatedOffers = offers.filter((o) => o.id !== offerId)
 				setOffers(updatedOffers)
 				toast.success(t('deleteInternshipSuccess'));
+				setSelectedOffer(null)
 			})
 			.catch((error) => {
 				toast.error(t('deleteInternshipError') + error.message);
@@ -89,6 +96,13 @@ const EmployerPage = ({user}) => {
 									renderItem={renderFilteredOffers}
 									selectOptions={{jobOfferState: [ "SUBMITTED", "OPEN", "PENDING", "EXPIRED", "TAKEN", "REFUSED"]}}
 								/>
+								{/*{
+									offers.map((offer, index) => (
+										<div onClick={() => setSelectedOffer(offer)}>
+											<ShortJobOffer jobOffer={offer} key={offer.id} deleteOffer={() => deleteOffer(offer.id)}/>
+										</div>
+									))
+								}*/}
 								<div className="row m-2">
 									<button className="btn btn-outline-ose col-12" onClick={handleNewButtonClicked}>{t('addInternship')}</button>
 								</div>
@@ -102,7 +116,7 @@ const EmployerPage = ({user}) => {
 										</div>
 									</div>
 									:
-									<FullJobOffer jobOffer={selectedOffer}/>
+									<FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
 								}
 							</div>
 						</div>
