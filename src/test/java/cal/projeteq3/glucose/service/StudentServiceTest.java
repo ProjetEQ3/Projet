@@ -512,8 +512,6 @@ public class StudentServiceTest {
 
         when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)).thenReturn(List.of(jobOffer));
 
-
-
         jobOfferRepository.save(jobOffer);
 
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
@@ -525,5 +523,21 @@ public class StudentServiceTest {
         // Assert
         assertEquals(jobOffer.getId(), appliedOffers.get(0).toEntity().getId());
         verify(studentRepository, times(1)).findById(studentId);
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudentId_studentNotFound() {
+        // Arrange
+        Long notFoundStudentId = 999L;
+
+
+        when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getAppliedJobOfferByStudentId(notFoundStudentId);
+        });
+        verify(studentRepository, times(1)).findById(notFoundStudentId);
+
     }
 }
