@@ -60,9 +60,9 @@ public class StudentService {
         return students.stream().map(StudentDTO::new).collect(Collectors.toList());
     }
 
-    public Optional<StudentDTO> getStudentByID(Long id) {
-        Optional<Student> studentOptional = studentRepository.findById(id);
-        return studentOptional.map(StudentDTO::new);
+    public StudentDTO getStudentByID(Long id) {
+        Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        return new StudentDTO(student);
     }
 
     public StudentDTO updateStudent(Long id, StudentDTO updatedStudent) {
