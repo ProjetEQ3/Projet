@@ -3,7 +3,7 @@ import {toast} from "react-toastify"
 import {useEffect} from "react"
 import {useTranslation} from "react-i18next";
 
-const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
+const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	const {t} = useTranslation()
 
 	useEffect(() => {
@@ -33,9 +33,10 @@ const FullJobOffer = ({jobOffer, user, updatedOffer}) => {
 					</div>
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
-							<button className={"btn btn-primary"} onClick={!user.cvFile.isApproved ?
-								() => toast.error(t('cvNotApproved')) :
-								() => applyForJobOffer(jobOffer.id, user.id)}>{t('apply')}</button>
+							<button className={"btn btn-primary"} onClick={user.cvFile === "ACCEPTED" ?
+								() => applyForJobOffer(jobOffer.id, user.id) :
+								() => toast.error(t('cvNotApproved'))}
+							>{t('apply')}</button>
 						</div>
 					</div>
 				</div>

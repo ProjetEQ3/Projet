@@ -29,7 +29,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 							</div>
 						</div> :
 						jobOffers.map((offer, index) => (
-							offer.isApproved ? ( //TODO: check if student already applied for this offer
+							offer.jobOfferState === "OPEN" ? ( //TODO: check if student already applied for this offer
 								<div onClick={() => setSelectedOffer(offer)}>
 									<ShortJobOffer jobOffer={offer} key={offer.id}/>
 								</div>
@@ -45,7 +45,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						</div>
 					</div>
 					:
-					<FullJobOffer jobOffer={selectedOffer}/>
+					<FullJobOffer user={user} jobOffer={selectedOffer}/>
 				}
 			</div>
 		</div>
