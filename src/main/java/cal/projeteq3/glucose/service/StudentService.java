@@ -6,6 +6,8 @@ import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
@@ -15,6 +17,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -30,18 +33,16 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
+    private final JobApplicationRepository jobApplicationRepository;
 
     @Autowired
-    public StudentService(
-            StudentRepository studentRepository,
-            CvFileRepository cvFileRepository,
-            JobOfferRepository jobOfferRepository) {
+    public StudentService(StudentRepository studentRepository, CvFileRepository cvFileRepository,
+            JobOfferRepository jobOfferRepository, JobApplicationRepository jobApplicationRepository) {
         this.studentRepository = studentRepository;
         this.cvFileRepository = cvFileRepository;
         this.jobOfferRepository = jobOfferRepository;
+        this.jobApplicationRepository = jobApplicationRepository;
     }
-
-    // database operations here
 
     public StudentDTO createStudent(RegisterStudentDTO registerStudentDTO) {
         Student student = Student.builder()
@@ -130,9 +131,17 @@ public class StudentService {
     public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId){
         JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+
         if(jobOffer.hasApplied(studentId)) throw new StudentHasAlreadyAppliedException();
-        jobOffer.apply(student);
+        if(!student.hasApprovedCv()) throw new CvNotApprovedException();
+        if(jobOffer.getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+        jobOffer.getJobApplications().add(jobApplication);
+
+        jobApplicationRepository.save(jobOffer.getJobApplications().get(jobOffer.getJobApplications().size()-1));
         return new JobOfferDTO(jobOfferRepository.save(jobOffer));
     }
-
 }

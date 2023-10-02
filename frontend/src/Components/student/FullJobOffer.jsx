@@ -14,13 +14,12 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	const applyForJobOffer = (jobOfferID, studentId) => {
 		axiosInstance
 			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
-			.then((ressponse) => {
-				updatedOffer(ressponse.data)
+			.then(() => {
 				toast.success(t('appliedJobOffer'))}
 			)
 			.catch((err) => {
 				console.log("err: ", err)
-				toast.error(t('pushingError') + err.response.data.message)}
+				toast.error(t('pushingError') + err.response.data.error)}
 			)
 	}
 
@@ -33,7 +32,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 					</div>
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
-							<button className={"btn btn-primary"} onClick={user.cvFile === "ACCEPTED" ?
+							<button className={"btn btn-primary"} onClick={user.cvFile.cvState === "ACCEPTED" ?
 								() => applyForJobOffer(jobOffer.id, user.id) :
 								() => toast.error(t('cvNotApproved'))}
 							>{t('apply')}</button>
