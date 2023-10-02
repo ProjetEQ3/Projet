@@ -284,8 +284,10 @@ public class StudentControllerTest {
     public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
         Long wrongStudentId = -1L;
 
+        when(studentService.getAppliedJobOfferByStudentId(wrongStudentId)).thenThrow(new StudentNotFoundException(wrongStudentId));
+
         mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", wrongStudentId))
-                .andExpect(MockMvcResultMatchers.status().is(202));
+                .andExpect(MockMvcResultMatchers.status().is(406));
     }
 
     @Test
@@ -295,16 +297,4 @@ public class StudentControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", nullStudentId))
                 .andExpect(MockMvcResultMatchers.status().is(404));
     }
-
-//    @Test
-//    public void DeleteCv_Invalid() throws Exception {
-////        Arrange
-//        when(studentService.deleteCv(239486723L)).thenThrow(new StudentNotFoundException(239486723L));
-////        Rien à arranger
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 239486723L)
-//                .contentType(MediaType.MULTIPART_FORM_DATA)
-//                .content("".getBytes())
-//        )
-//                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-//    }
 }

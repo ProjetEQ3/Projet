@@ -528,7 +528,7 @@ public class StudentServiceTest {
     @Test
     public void getAppliedJobOfferByStudentId_studentNotFound() {
         // Arrange
-        Long notFoundStudentId = 999L;
+        Long notFoundStudentId = -1L;
 
         when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
 
