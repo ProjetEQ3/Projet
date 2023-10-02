@@ -71,7 +71,7 @@ const EmployerPage = ({user}) => {
 
 	return (
 		<div className="bg-light">
-			<div className="container-fluid px-5 py-2">
+			<div className="container-fluid px-lg-5 px-2 py-2">
 				<div className="row text-center">
 					<div className="col-12">
 						<h2 className="text-dark fw-light">{t('hello') + user.firstName + " " + user.lastName} !</h2>
