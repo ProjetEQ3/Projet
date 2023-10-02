@@ -131,6 +131,7 @@ public class StudentService {
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
         jobOffer.apply(student);
         jobOfferRepository.save(jobOffer);
+        System.out.println("saved");
     }
 
     // EQ3-14
