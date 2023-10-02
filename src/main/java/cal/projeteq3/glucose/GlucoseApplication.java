@@ -48,6 +48,7 @@ public class GlucoseApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		createDatabase();
+		System.out.println(studentService.getAppliedJobOfferByStudentId(9L));
 		System.out.println(studentService.getAppliedJobOfferByStudentId(7L));
 	}
 

@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.exception.unauthorisedException;
 
-public class StudentHasAlreadyAppliedException extends UnauthorisedException{
+import cal.projeteq3.glucose.exception.unauthorizedException.UnauthorizedException;
+
+public class StudentHasAlreadyAppliedException extends UnauthorizedException {
 	public StudentHasAlreadyAppliedException(){
 		super("Student has already applied to this job offer");
 	}

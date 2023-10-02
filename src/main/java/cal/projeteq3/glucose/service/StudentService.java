@@ -7,10 +7,9 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyAppliedException;
-import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -135,4 +134,10 @@ public class StudentService {
         return new JobOfferDTO(jobOfferRepository.save(jobOffer));
     }
 
+
+    public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId) {
+        return jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
+    }
 }
