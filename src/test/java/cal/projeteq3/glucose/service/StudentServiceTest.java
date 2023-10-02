@@ -6,15 +6,19 @@ import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,9 +31,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +45,16 @@ public class StudentServiceTest {
 
     @InjectMocks
     private StudentService studentService;
+
+    private JobOffer jobOffer;
+
+    private Student student;
+
+    @BeforeEach
+    void setUp() {
+        jobOffer = new JobOffer();
+        student = mock(Student.class);
+    }
 
     @Test
     public void createStudentTest() {
@@ -349,4 +362,42 @@ public class StudentServiceTest {
             studentService.applyJobOffer(1L, 1L);
         });
     }
+
+    @Test
+    void apply_withApprovedCVAndOpenJobOffer_returnsJobApplication() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        JobApplication result = jobOffer.apply(student);
+
+        assertNotNull(result);
+        assertEquals(student, result.getStudent());
+        assertEquals(jobOffer, result.getJobOffer());
+    }
+
+    @Test
+    void apply_withNonApprovedCV_throwsCvNotApprovedException() {
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withClosedJobOffer_throwsJobOfferNotOpenException() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(JobOfferNotOpenException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withNonApprovedCVAndClosedJobOffer_throwsCvNotApprovedException() {
+        // We're prioritizing the CV check first as per the `apply` method logic.
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
+    }
+
 }
