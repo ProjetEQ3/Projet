@@ -138,8 +138,7 @@ public class StudentService {
 
     public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId) {
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
-        student.getJobApplications().stream().map(JobOfferDTO::new).collect(Collectors.toList());
-        return jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)
+        return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId())
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }

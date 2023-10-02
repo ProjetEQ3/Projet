@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -490,5 +491,39 @@ public class StudentServiceTest {
             studentService.deleteCv(nonExistentStudentId);
         });
         verify(studentRepository, times(1)).findById(nonExistentStudentId);
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudentId_valid() {
+        // Arrange
+        Long studentId = 1L;
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+
+        JobApplication jobApplication = JobApplication.builder()
+                .student(student)
+                .build();
+
+        JobOffer jobOffer = JobOffer.builder()
+                .id(1L)
+                .jobApplications(List.of(jobApplication))
+                .build();
+
+        when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)).thenReturn(List.of(jobOffer));
+
+
+
+        jobOfferRepository.save(jobOffer);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+
+        List<JobOfferDTO> appliedOffers = studentService.getAppliedJobOfferByStudentId(studentId);
+
+        // Assert
+        assertEquals(jobOffer.getId(), appliedOffers.get(0).toEntity().getId());
+        verify(studentRepository, times(1)).findById(studentId);
     }
 }
