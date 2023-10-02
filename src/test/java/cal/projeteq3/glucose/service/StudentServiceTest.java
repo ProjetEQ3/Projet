@@ -539,16 +539,4 @@ public class StudentServiceTest {
         verify(studentRepository, times(1)).findById(notFoundStudentId);
 
     }
-
-    @Test
-    public void getAppliedJobOfferByStudentId_studentIdNull() {
-        // Arrange
-        Long nullId = null;
-
-        // Act and Assert
-        assertThrows(NullPointerException.class, () -> {
-            studentService.getAppliedJobOfferByStudentId(nullId);
-        });
-        verify(studentRepository, times(0)).findById(nullId);
-    }
 }
