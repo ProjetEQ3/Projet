@@ -4,12 +4,15 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 
 import java.time.LocalDate;
@@ -601,6 +604,33 @@ public class EmployerServiceTest {
         assertNotNull(result);
         assertEquals(3, result.size());
         verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+    }
+
+    @Test
+    public void testGetStudentsByJobOfferId() {
+        Long testJobOfferId = 1L;
+
+        // Arrange the mock objects
+        JobOffer mockJobOffer = new JobOffer();
+        JobApplication mockJobApplication = new JobApplication();
+        Student mockStudent = new Student();
+        mockStudent.setFirstName("John");
+        mockStudent.setLastName("Doe");
+        mockJobApplication.setStudent(mockStudent);
+        mockJobOffer.setJobApplications(List.of(mockJobApplication));
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
+
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+
+        // Assert the results
+        assertNotNull(result);
+        assertEquals(1, result.size());
+
+        StudentDTO returnedStudent = result.get(0);
+        assertEquals("John", returnedStudent.getFirstName());
+
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
 
 }
