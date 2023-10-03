@@ -168,6 +168,7 @@ public class ManagerService{
 
 //	Contract
 
+//	TODO: Supprimer la fonction et utiliser celle de l'employer
 	public ContractDTO createContract(ContractDTO contractDTO) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
