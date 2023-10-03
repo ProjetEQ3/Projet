@@ -57,5 +57,6 @@
   "organisationNameRequired": "Organization name is required.",
   "organisationPhoneRequired": "Organization phone number is required.",
   "organisationNameInvalid": "Organization name should be alphanumeric.",
-  "organisationPhoneInvalid": "Organization phone number should follow a standard phone format. Example: 514-123-4567"
+  "organisationPhoneInvalid": "Organization phone number should follow a standard phone format. Example: 514-123-4567",
+  "contract_created_successfully": "Contract created successfully."
 }
