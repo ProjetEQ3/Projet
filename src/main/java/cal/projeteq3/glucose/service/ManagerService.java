@@ -168,34 +168,9 @@ public class ManagerService{
 
 //	Contract
 
-//	Needed:
-//	- Supervisor
-//	- Address
-//	- responsibilities
-//	- startDate
-//	- endDate
-//	- duration
-//	- startShiftTime
-//	- EndShiftTime
-//	- hoursPerDay
-//	- startShiftTime
-//	- endShiftTime
-//	- hoursPerDay
-//	- employementType
-//	- workDays
-
 	public ContractDTO createContract(ContractDTO contractDTO) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
-
-	// commented by Zaka; c'est oas correcte de recevoir un contractDTO et un addressDTO pour fair la fusion dans service
-	/*public ContractDTO createContract(ContractDTO contractDTO, AddressDTO addressDTO) {
-		Employer employer = getEmployerDyId(contractDTO.getEmployerId());
-		Supervisor supervisor = getSupervisorDyId(contractDTO.getSupervisorId());
-		Student student = getStudentDyId(contractDTO.getStudentId());
-
-		return new ContractDTO(contractRepository.save(contractDTO.toEntity(employer, supervisor, student, addressDTO.toEntity())));
-	}*/
 
 
 //	----------- Getters ----------
