@@ -2,11 +2,15 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.model.contract.EmploymentType;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -18,11 +22,18 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitConfig(classes = {ManagerController.class, ManagerService.class, CustomExceptionHandler.class})
 @WebMvcTest(ManagerController.class)
@@ -35,6 +46,28 @@ public class ManagerControllerTest {
     private StudentService studentService;
     @MockBean
     private EmployerService employerService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private ContractDTO contractDTO;
+
+    @BeforeEach
+    public void setUp() {
+        contractDTO = new ContractDTO();
+        contractDTO.setEmployerId(1L);
+        contractDTO.setSupervisorId(2L);
+        contractDTO.setWorkAddressId(3L);
+        contractDTO.setStudentId(4L);
+        contractDTO.setJobTitle("Software Engineer");
+        contractDTO.setStartDate(LocalDate.now());
+        contractDTO.setEndDate(LocalDate.now().plusMonths(6));
+        contractDTO.setHoursPerWeek(40);
+        contractDTO.setEmploymentType(EmploymentType.FULL_TIME);
+        contractDTO.setResponsibilities(List.of("Develop software", "Test software", "Collaborate with team"));
+        contractDTO.setWorkDays(
+          Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
+    }
 
     @Test
     public void getAllJobOffer_valid() throws Exception {
@@ -218,5 +251,17 @@ public class ManagerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].fileName").value(cv2.getFileName()));
     }
 
-}
+    @Test
+    public void createContractTest() throws Exception {
+        when(managerService.createContract(any(ContractDTO.class))).thenReturn(contractDTO);
 
+        mockMvc
+            .perform(post("/manager/contract/create")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(contractDTO)))
+            .andExpect(status().isOk());
+
+        verify(managerService, times(1)).createContract(any(ContractDTO.class));
+    }
+
+}
