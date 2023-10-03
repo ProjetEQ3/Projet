@@ -101,11 +101,11 @@ const EmployerPage = ({user}) => {
 								</div>
 							</div>
 							<div className="order-1 order-lg-2 col-12 col-lg-6">
-								<h3 className="fw-light d-lg-none d-block text-ose">{t('intershipDetails')}</h3>
+								<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipDetails')}</h3>
 								{selectedOffer === null ?
 									<div className="row m-2">
 										<div className="col-12 bg-white rounded">
-											<h2 className="text-dark fw-light pt-1">{t('selectIntership')}</h2>
+											<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
 										</div>
 									</div>
 									:

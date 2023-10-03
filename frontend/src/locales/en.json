@@ -57,6 +57,7 @@
   "_241D0": "241.D0 - Industrial Maintenance Technology",
   "_243A0": "245.A0 - Ordered Systems Technology",
   "_221B0": "221.B0 - Civil Engineering Technology",
+  "chooseADepartment": "Choose a department",
 
   "student": "Student",
   "employer": "Employer",
@@ -70,6 +71,24 @@
   "organisationNameInvalid": "Organization name must be in alphanumeric format.",
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
 
+  "newInternshipCreation": "New Internship Creation",
+
+  "titleRequired": "Internship title is required.",
+  "departmentRequired": "Department is required.",
+  "locationRequired": "Location is required.",
+  "descriptionRequired": "Description is required.",
+  "salaryRequired": "Salary is required.",
+  "salaryMustBePositive": "The salary has to be positive.",
+  "hoursPerWeekRequired": "Hours per week is required.",
+  "hoursPerWeekMustBePositive": "The number of hours per week has to be positive.",
+  "startDateRequired": "Start date is required.",
+  "startDateFormat": "The start date must be in the following format: YYYY-MM-DD",
+  "startDateNotPassed": "The start date can't be in the past.",
+  "endDateFormat": "The end date must be in the following format: YYYY-MM-DD",
+  "endDateNotPassed": "The end date can't be in the past.",
+  "durationRequired": "Duration is required.",
+  "minimumDuration": "The duration of the internship has to be at least 1 week.",
+
   "hello": "Hello ",
   "yourInternship": "Your internship offers",
   "internshipList": "List of your offers",
@@ -82,16 +101,26 @@
   "REFUSED": "Refused",
   "ACCEPTED": "Accepted",
 
+  "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
+
+  "salary": "Salary",
+  "location": "Work location",
   "department": "Department",
   "internshipTitle": "Job Offer Title",
-  "intershipDetails": "Job Offer Details",
+  "internshipDescription": "Internship Description",
+  "internshipDetails": "Job Offer Details",
   "addInternship": "Add an internship offer",
-  "selectIntership": "Select an internship offer",
+  "selectInternship": "Select an internship offer",
+
+  "newInternshipSubmit": "Submit offer",
+
 
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",
   "deleteInternshipSuccess": "Internship offer deleted",
   "deleteInternshipError": "Error deleting internship offer",
+  "createInternshipSuccess": "Internship offer created",
+  "createInternshipError": "Error creating internship offer",
 
   "filterBy": "Filter By ",
   "perPage": "per page",
@@ -102,12 +131,17 @@
   "noData": "No data available",
 
   "week": " week",
-  "duration": "Duration: ",
+  "duration": "Internship duration (week): ",
+  "edit": "Edit",
+  "edited": "Edited",
+  "delete": "Delete",
   "update": "Update",
   "cancel": "Cancel",
   "accept": "Accept",
+  "close": "Close",
   "startDate": "Start Date: ",
   "endDate": "Expiration Date: ",
+  "hoursPerWeek": "Hours per week: ",
 
   "fetchError": "Error fetching data: ",
   "pushingError": "Error pushing data: ",

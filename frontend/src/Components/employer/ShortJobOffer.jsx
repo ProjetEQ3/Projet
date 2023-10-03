@@ -34,17 +34,17 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                         <div className="modal-dialog">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h3 className="modal-title">Supprimer</h3>
+                                    <h3 className="modal-title">{t('delete')}</h3>
                                     <FontAwesomeIcon icon={faX} className="fa-lg danger-hover pe-2" data-bs-dismiss="modal"/>
                                 </div>
                                 <div className="modal-body">
-                                    <p className="text-dark fw-light pt-1">Êtes-vous sûr de vouloir supprimer l'offre de stage ci-dessous:</p>
+                                    <p className="text-dark fw-light pt-1">{t('confirmationOfferDelete')}</p>
                                     <h4 className="text-dark fw-light mb-3">{jobOffer.title}</h4>
-                                    <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
+                                    <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteOffer}>Supprimer</button>
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{t('cancel')}</button>
+                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteOffer}>{t('delete')}</button>
                                 </div>
                             </div>
                         </div>
