@@ -1,7 +1,9 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.exception.request.ValidationException;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -104,5 +106,10 @@ public class ManagerController {
 //         headers.set(HttpHeaders.CONTENT_LENGTH, String.valueOf(cv.getFileData().length));
 //         return new ResponseEntity<>(cv, headers, HttpStatus.OK);
 //     }
+
+    @PostMapping("/contract/create")
+    public ContractDTO createContract(@RequestBody ContractDTO contractDTO){
+        return managerService.createContract(contractDTO);
+    }
 
 }
