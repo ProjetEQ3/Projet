@@ -1,10 +1,12 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.CreateContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.SupervisorDTO;
 import cal.projeteq3.glucose.exception.request.AddressNotFoundException;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
@@ -163,5 +165,13 @@ public class EmployerService{
 						.workDays(createContractDTO.getWorkDays())
 						.hourlyRate(jobOffer.getSalary())
 				.build()));
+	}
+
+	public SupervisorDTO createSupervisor(SupervisorDTO supervisorDTO){
+		return new SupervisorDTO(supervisorRepository.save(supervisorDTO.toEntity()));
+	}
+
+	public AddressDTO createAddress(AddressDTO addressDTO){
+		return new AddressDTO(addressRepository.save(addressDTO.toEntity()));
 	}
 }

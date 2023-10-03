@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.model.user;
 
+import cal.projeteq3.glucose.model.auth.Credentials;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,6 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 public class Supervisor extends User{
     @Id
@@ -23,4 +23,12 @@ public class Supervisor extends User{
     @Column(nullable = false)
     private String jobTitle;
 
+    @Builder
+    public Supervisor(Long id, String firstName, String lastName, Credentials credentials, String organisationName, String organisationPhone, String jobTitle) {
+        super(id, firstName, lastName, credentials);
+        this.id = id;
+        this.organisationName = organisationName;
+        this.organisationPhone = organisationPhone;
+        this.jobTitle = jobTitle;
+    }
 }
