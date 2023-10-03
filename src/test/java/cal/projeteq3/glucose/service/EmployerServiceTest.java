@@ -607,17 +607,20 @@ public class EmployerServiceTest {
     }
 
 
-    // Zakaria
     @Test
-    public void testGetStudentsByJobOfferId() {
+    public void testGetStudentsByJobOfferId_full() {
         Long testJobOfferId = 1L;
 
         // Arrange the mock objects
         JobOffer mockJobOffer = new JobOffer();
         JobApplication mockJobApplication = new JobApplication();
-        Student mockStudent = new Student();
-        mockStudent.setFirstName("John");
-        mockStudent.setLastName("Doe");
+        Student mockStudent = Student.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("doe@john.com")
+                .password("password")
+                .build();
         mockJobApplication.setStudent(mockStudent);
         mockJobOffer.setJobApplications(List.of(mockJobApplication));
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
@@ -635,4 +638,20 @@ public class EmployerServiceTest {
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
 
+    @Test
+    void testGetStudentsByJobOfferId_empty(){
+        // Arrange
+        Long testJobOfferId = 1L;
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setJobApplications(Collections.emptyList());
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
+
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(0, result.size());
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
 }
