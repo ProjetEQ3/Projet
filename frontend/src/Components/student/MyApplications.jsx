@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../App";
 import JobOffer from "../../model/JobOffer";
 import ShortJobOffer from "./ShortJobOffer";
+import FilterObjectList from "../util/FilterObjectList";
 
 function MyApplications({ user }) {
     const [myApplications, setMyApplications] = useState([]);
@@ -36,9 +37,18 @@ function MyApplications({ user }) {
                 <p>Vous n'avez pas d'applications.</p>
             ) : (
                 <div>
-                    {myApplications.map((offer, index) => (
-                        <ShortJobOffer jobOffer={offer} key={offer.id}/>
-                    ))}
+                    <FilterObjectList
+                        items={myApplications}
+                        attributes={["title", "companyName", "location", "jobOfferState.select:Status"]}
+                        selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
+                        renderItem={(filteredJobOffers) => (
+                            <div>
+                                {filteredJobOffers.map((offer, index) => (
+                                    <ShortJobOffer jobOffer={offer} key={offer.id}/>
+                                ))}
+                            </div>
+                        )}
+                    />
                 </div>
             )}
         </div>
