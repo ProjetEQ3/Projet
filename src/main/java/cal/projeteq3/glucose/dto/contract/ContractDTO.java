@@ -73,7 +73,7 @@ public class ContractDTO {
                 .duration(this.duration)
                 .hoursPerWeek(this.hoursPerWeek)
                 .startShiftTime(this.startShiftTime)
-                .EndShiftTime(this.endShiftTime)
+                .endShiftTime(this.endShiftTime)
                 .hoursPerDay(this.hoursPerDay)
                 .employmentType(this.employmentType)
                 .workDays(this.workDays)

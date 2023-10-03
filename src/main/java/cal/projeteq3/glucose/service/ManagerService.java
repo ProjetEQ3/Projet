@@ -168,6 +168,22 @@ public class ManagerService{
 
 //	Contract
 
+//	Needed:
+//	- Supervisor
+//	- Address
+//	- responsibilities
+//	- startDate
+//	- endDate
+//	- duration
+//	- startShiftTime
+//	- EndShiftTime
+//	- hoursPerDay
+//	- startShiftTime
+//	- endShiftTime
+//	- hoursPerDay
+//	- employementType
+//	- workDays
+
 	public ContractDTO createContract(ContractDTO contractDTO) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}

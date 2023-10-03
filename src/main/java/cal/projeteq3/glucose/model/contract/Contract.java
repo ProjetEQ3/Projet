@@ -62,7 +62,7 @@ public class Contract {
     private Time startShiftTime;
 
     @Column(nullable = false)
-    private Time EndShiftTime;
+    private Time endShiftTime;
 
     @Column(nullable = false)
     private float hoursPerDay;

@@ -20,4 +20,7 @@ public class JobApplication {
 
     @ManyToOne(optional = false)
     private JobOffer jobOffer;
+
+    private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
+
 }
