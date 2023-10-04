@@ -177,6 +177,11 @@
   "noStudent": "Aucun étudiant n'a postulé pour le moment",
   "getStudentError": "Erreur lors de la récupération des étudiants: ",
   "studentAlreadyApplied" : "Vous avez déjà postulé pour cette offre de stage.",
+  "acceptStudentSuccess" : "Étudiant accepté",
+  "acceptStudentError" : "Erreur lors de l'acceptation de l'étudiant: ",
+  "declineStudentSuccess" : "Étudiant refusé",
+  "declineStudentError" : "Erreur lors du refus de l'étudiant: ",
+
 
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",

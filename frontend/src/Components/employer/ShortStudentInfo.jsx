@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import PDFPreview from "../util/PDFPreview";
 import CvFile from "../../model/CvFile";
+import {axiosInstance} from "../../App";
 
 const ShortStudentInfo = ({ student }) => {
     const {t} = useTranslation();
@@ -10,11 +11,24 @@ const ShortStudentInfo = ({ student }) => {
 
     const handleAccept = (e) => {
         e.preventDefault();
-
+        axiosInstance.put('/employer/offer/accept/{jobApplicationId}', student.jobApplications[0].id)
+            .then((response) => {
+                toast.success(t('acceptStudentSuccess'));
+            })
+            .catch((error) => {
+                toast.error(t('acceptStudentError') + error.message);
+            })
     }
 
     const handleDecline = (e) => {
         e.preventDefault();
+        axiosInstance.put('/employer/offer/decline/{jobApplicationId}', student.jobApplications[0].id)
+            .then((response) => {
+                toast.success(t('declineStudentSuccess'));
+            })
+            .catch((error) => {
+                toast.error(t('declineStudentError') + error.message);
+            })
     }
 
     const handlePreview = (e) => {
