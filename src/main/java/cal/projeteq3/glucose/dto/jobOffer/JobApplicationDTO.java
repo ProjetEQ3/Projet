@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.dto.jobOffer;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +17,13 @@ public final class JobApplicationDTO{
 	private Long id;
 	private StudentDTO student;
 	private JobOfferDTO jobOffer;
+	private JobApplicationState jobApplicationState;
 
 	public JobApplicationDTO(JobApplication jobApplication){
 		this.id = jobApplication.getId();
 		this.student = new StudentDTO(jobApplication.getStudent());
 		this.jobOffer = new JobOfferDTO(jobApplication.getJobOffer());
+		this.jobApplicationState = jobApplication.getJobApplicationState();
 	}
 
 	public JobApplication toEntity(){
@@ -28,6 +31,7 @@ public final class JobApplicationDTO{
 				.id(id)
 				.student(student.toEntity())
 				.jobOffer(jobOffer.toEntity())
+				.jobApplicationState(jobApplicationState)
 				.build();
 	}
 
