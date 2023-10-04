@@ -614,6 +614,8 @@ public class EmployerServiceTest {
         // Arrange the mock objects
         JobOffer mockJobOffer = new JobOffer();
         JobApplication mockJobApplication = new JobApplication();
+        mockJobApplication.setId(1L);
+
         Student mockStudent = Student.builder()
                 .id(1L)
                 .firstName("John")

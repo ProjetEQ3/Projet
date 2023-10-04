@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Student;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +17,7 @@ public class StudentDTO extends UserDTO {
     private String matricule;
     private Department department;
     private CvFileDTO cvFile;
-    private List<Long> jobApplications;
+    private List<Long> jobApplications = new ArrayList<>();
 
     @Builder
     public StudentDTO(
