@@ -141,10 +141,7 @@ public class EmployerService{
 		JobApplication application = jobApplicationRepository
 			.findById(applicationId)
 			.orElseThrow(JobApplicationNotFoundException::new);
-//		Student student = studentRepository
-//			.findById(application.getStudent().getId())
-//			.orElseThrow(StudentNotFoundException::new);
-//		application.acceptApplication();
+		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
@@ -152,22 +149,9 @@ public class EmployerService{
 	public JobApplicationDTO refuseApplication(Long applicationId){
 		JobApplication application = jobApplicationRepository
 				.findById(applicationId)
-				.orElseThrow(() -> new JobOffreNotFoundException(applicationId));
+				.orElseThrow(JobApplicationNotFoundException::new);
 		application.setJobApplicationState(JobApplicationState.REJECTED);
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
-
-//	public JobApplicationDTO refuseApplication(Long applicationId, String reason){
-//		JobApplication application = jobApplicationRepository
-//			.findById(applicationId)
-//			.orElseThrow(() -> new JobOffreNotFoundException(applicationId));
-//		Student student = studentRepository
-//			.findById(application.getStudent().getId())
-//			.orElseThrow(() -> new StudentNotFoundException(application.getStudent().getId()));
-//		application.refuseApplication(reason);
-//		jobApplicationRepository.save(application);
-//		return new JobApplicationDTO(application);
-//	}
-
 }

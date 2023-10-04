@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -623,6 +624,7 @@ public class EmployerServiceTest {
         JobApplicationDTO result = employerService.acceptApplication(applicationId);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertNotNull(result);
+        assertEquals(JobApplicationState.ACCEPTED, result.getJobApplicationState());
     }
 
     @Test
@@ -651,6 +653,7 @@ public class EmployerServiceTest {
         JobApplicationDTO result = employerService.refuseApplication(applicationId);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertNotNull(result);
+        assertEquals(JobApplicationState.REJECTED, result.getJobApplicationState());
     }
 
 
