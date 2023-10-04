@@ -57,5 +57,11 @@
   "organisationNameRequired": "Le nom de l'organisation est obligatoire.",
   "organisationPhoneRequired": "Le numéro de téléphone de l'organisation est obligatoire.",
   "organisationNameInvalid": "Le nom de l'organisation doit être en format alphanumérique.",
-  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567"
+  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
+
+  "home": "Accueil",
+  "jobOffers": "Stages",
+  "CV": "CV",
+  "myApplications": "Mes applications",
+  "noJobOffers": "Vous n'avez pas d'applications."
 }
