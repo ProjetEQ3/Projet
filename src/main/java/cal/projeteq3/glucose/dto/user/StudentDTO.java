@@ -5,6 +5,9 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Student;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -14,6 +17,7 @@ public class StudentDTO extends UserDTO {
     private String matricule;
     private Department department;
     private CvFileDTO cvFile;
+    private List<Long> jobApplications = new ArrayList<>();
 
     @Builder
     public StudentDTO(
@@ -32,6 +36,17 @@ public class StudentDTO extends UserDTO {
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
         this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
+    }
+
+    public StudentDTO(Student student, Long jobApplicationId) {
+        super(
+          student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(),
+          student.getCredentials().getRole().toString()
+        );
+        this.matricule = student.getMatricule();
+        this.department = student.getDepartment();
+        this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
+        this.jobApplications.add(jobApplicationId);
     }
 
     public StudentDTO(String firstName, String lastName, String matricule, Department department){

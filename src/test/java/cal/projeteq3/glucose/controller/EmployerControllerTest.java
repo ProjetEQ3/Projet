@@ -513,7 +513,7 @@ public class EmployerControllerTest {
 
 		// Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders
-						.get("/employer/offer/{id}/students", jobOfferId)
+						.get("/employer/offer/students/{id}", jobOfferId)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))

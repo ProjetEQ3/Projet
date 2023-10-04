@@ -161,9 +161,7 @@ public class EmployerService{
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
 		return jobOffer.getJobApplications().stream()
-			.map(jobApplication -> new StudentDTO(jobApplication.getStudent()))
+			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
 			.collect(Collectors.toList());
-
 	}
-
 }

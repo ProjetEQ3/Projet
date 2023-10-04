@@ -1,8 +1,16 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
+import {useTranslation} from "react-i18next";
+import {Axios} from "axios";
+import {axiosInstance} from "../../App";
 
 const StudentList = ({ offer }) => {
-    console.log(offer);
+    const { t } = useTranslation();
+    const handleAccept = (e) => {
+        e.preventDefault();
+        axiosInstance.post('/employer/offer/accept/{jobApplicationId}', offer)
+    }
+
     return (
         <div className="container">
             <div className="row">
