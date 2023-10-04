@@ -11,12 +11,12 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 		console.log("user", user)
 		console.log("jobOffers", jobOffers)
 	}, [])
-
-	const updatedOffer = (jobOffer) => {
-		setSelectedOffer(jobOffer)
-		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
-		setJobOffers(updatedOffers);
-	}
+// TODO: Zaka needs to check why not used
+//	const updatedOffer = (jobOffer) => {
+//		setSelectedOffer(jobOffer)
+//		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
+//		setJobOffers(updatedOffers);
+//	}
 
 	return (
 		<div className="row justify-content-around mx-2">
@@ -29,7 +29,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 							</div>
 						</div> :
 						jobOffers.map((offer, index) => (
-							offer.jobOfferState === "OPEN" ? ( //TODO: check if student already applied for this offer
+							offer.jobOfferState === "OPEN" ? (
 								<div onClick={() => setSelectedOffer(offer)}>
 									<ShortJobOffer jobOffer={offer} key={offer.id}/>
 								</div>
