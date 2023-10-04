@@ -16,8 +16,9 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
-	boolean refused = false;
-	String refusReason;
+//	boolean refused = false;
+//	String refusReason;
+	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
 	@ManyToOne
 	private Student student;
@@ -25,19 +26,19 @@ public class JobApplication{
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private JobOffer jobOffer;
 
-	public void acceptApplication(){
-		if(this.jobOffer.getJobOfferState() != JobOfferState.OPEN)
-			throw new JobOfferNotOpenedVException();
-		this.jobOffer.setJobOfferState(JobOfferState.TAKEN);
-		this.jobOffer.setAcceptedJobApplicationId(this.id);
-	}
-
-	public void refuseApplication(String reason){
-		if(this.jobOffer.getJobOfferState() != JobOfferState.OPEN)
-			throw new JobOfferNotOpenedVException();
-		setRefused(true);
-		setRefusReason(reason);
-	}
+//	public void acceptApplication(){
+//		if(this.jobOffer.getJobOfferState() != JobOfferState.OPEN)
+//			throw new JobOfferNotOpenedVException();
+//		this.jobOffer.setJobOfferState(JobOfferState.TAKEN);
+//		this.jobOffer.setAcceptedJobApplicationId(this.id);
+//	}
+//
+//	public void refuseApplication(String reason){
+//		if(this.jobOffer.getJobOfferState() != JobOfferState.OPEN)
+//			throw new JobOfferNotOpenedVException();
+//		setRefused(true);
+//		setRefusReason(reason);
+//	}
 
 	public Student getStudent(){
 		if(this.student == null) throw new StudentNotFoundException();

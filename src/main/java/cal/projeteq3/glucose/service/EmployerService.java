@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Student;
@@ -140,24 +141,33 @@ public class EmployerService{
 		JobApplication application = jobApplicationRepository
 			.findById(applicationId)
 			.orElseThrow(JobApplicationNotFoundException::new);
-		Student student = studentRepository
-			.findById(application.getStudent().getId())
-			.orElseThrow(StudentNotFoundException::new);
-		application.acceptApplication();
+//		Student student = studentRepository
+//			.findById(application.getStudent().getId())
+//			.orElseThrow(StudentNotFoundException::new);
+//		application.acceptApplication();
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
 
-	public JobApplicationDTO refuseApplication(Long applicationId, String reason){
+	public JobApplicationDTO refuseApplication(Long applicationId){
 		JobApplication application = jobApplicationRepository
-			.findById(applicationId)
-			.orElseThrow(() -> new JobOffreNotFoundException(applicationId));
-		Student student = studentRepository
-			.findById(application.getStudent().getId())
-			.orElseThrow(() -> new StudentNotFoundException(application.getStudent().getId()));
-		application.refuseApplication(reason);
+				.findById(applicationId)
+				.orElseThrow(() -> new JobOffreNotFoundException(applicationId));
+		application.setJobApplicationState(JobApplicationState.REJECTED);
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
+
+//	public JobApplicationDTO refuseApplication(Long applicationId, String reason){
+//		JobApplication application = jobApplicationRepository
+//			.findById(applicationId)
+//			.orElseThrow(() -> new JobOffreNotFoundException(applicationId));
+//		Student student = studentRepository
+//			.findById(application.getStudent().getId())
+//			.orElseThrow(() -> new StudentNotFoundException(application.getStudent().getId()));
+//		application.refuseApplication(reason);
+//		jobApplicationRepository.save(application);
+//		return new JobApplicationDTO(application);
+//	}
 
 }

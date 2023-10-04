@@ -619,7 +619,6 @@ public class EmployerServiceTest {
         mockApplication.setJobOffer(mockJobOffer);
 
         when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
-        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
 
         JobApplicationDTO result = employerService.acceptApplication(applicationId);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
@@ -629,7 +628,6 @@ public class EmployerServiceTest {
     @Test
     public void testRefuseApplication() {
         Long applicationId = 1L;
-        String reason = "Test Reason";
         Student student = Student
           .builder()
           .id(1L)
@@ -639,7 +637,9 @@ public class EmployerServiceTest {
         JobApplication mockApplication = new JobApplication();
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
+
         JobOffer mockJobOffer = new JobOffer();
+
         mockJobOffer.setId(1L);
         mockJobOffer.setJobOfferState(JobOfferState.OPEN);
         mockJobOffer.setJobApplications(new ArrayList<>());
@@ -647,9 +647,8 @@ public class EmployerServiceTest {
         mockApplication.setJobOffer(mockJobOffer);
 
         when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
-        when(studentRepository.findById(any())).thenReturn(Optional.of(new Student()));
 
-        JobApplicationDTO result = employerService.refuseApplication(applicationId, reason);
+        JobApplicationDTO result = employerService.refuseApplication(applicationId);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertNotNull(result);
     }
