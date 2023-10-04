@@ -1,9 +1,6 @@
 package cal.projeteq3.glucose.dto.contract;
 
-import cal.projeteq3.glucose.dto.AddressDTO;
-import cal.projeteq3.glucose.model.Address;
 import cal.projeteq3.glucose.model.contract.EmploymentType;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +19,7 @@ public class CreateContractDTO {
     private Long jobOfferId;
     private Long workAddressId;
     private Long supervisorId;
-    private final List<String> responsibilities = new ArrayList<>();
+    private List<String> responsibilities = new ArrayList<>();
     private LocalDate startDate;
     private LocalDate endDate;
     private int duration;
