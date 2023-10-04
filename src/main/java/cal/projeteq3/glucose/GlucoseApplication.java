@@ -501,6 +501,18 @@ public class GlucoseApplication implements CommandLineRunner {
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.build(),
+				JobOffer.builder()
+						.title("Développement COBOL")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("COBOL is life.")
+						.salary(20.0f)
+						.startDate(LocalDate.now())
+						.duration(7)
+						.expirationDate(LocalDate.now().plusDays(30))
+						.hoursPerWeek(40)
 						.build()
 		));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
@@ -527,5 +539,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(20)), employer.getId());
 	}
 }
