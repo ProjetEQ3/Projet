@@ -6,12 +6,13 @@ import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 
 const ShortStudentInfo = ({ student }) => {
+    console.log(student)
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
 
     const handleAccept = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/accept/{jobApplicationId}', student.jobApplications[0].id)
+        axiosInstance.put('/employer/offer/accept/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('acceptStudentSuccess'));
             })
@@ -22,7 +23,7 @@ const ShortStudentInfo = ({ student }) => {
 
     const handleDecline = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/decline/{jobApplicationId}', student.jobApplications[0].id)
+        axiosInstance.put('/employer/offer/refuse/', student.jobApplications[0])
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
             })
