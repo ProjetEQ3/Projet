@@ -6,7 +6,7 @@ import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -16,16 +16,12 @@ import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 
 import cal.projeteq3.glucose.repository.JobOfferRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -35,10 +31,6 @@ import java.util.List;
 import java.util.Optional;
 import static org.mockito.Mockito.when;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -607,4 +599,64 @@ public class EmployerServiceTest {
         verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
     }
 
+
+    @Test
+    public void testGetStudentsByJobOfferId_full() {
+        Long testJobOfferId = 1L;
+
+        // Arrange the mock objects
+        JobOffer mockJobOffer = new JobOffer();
+        JobApplication mockJobApplication = new JobApplication();
+        Student mockStudent = Student.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("doe@john.com")
+                .password("password")
+                .build();
+        mockJobApplication.setStudent(mockStudent);
+        mockJobOffer.setJobApplications(List.of(mockJobApplication));
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
+
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+
+        // Assert the results
+        assertNotNull(result);
+        assertEquals(1, result.size());
+
+        StudentDTO returnedStudent = result.get(0);
+        assertEquals("John", returnedStudent.getFirstName());
+
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
+
+    @Test
+    void testGetStudentsByJobOfferId_empty(){
+        // Arrange
+        Long testJobOfferId = 1L;
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setJobApplications(Collections.emptyList());
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
+
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(0, result.size());
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
+
+    @Test
+    void testGetStudentsByJobOfferId_NotFound(){
+        // Arrange
+        Long testJobOfferId = 99L;
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(JobOfferNotFoundException.class, () ->
+                employerService.getStudentsByJobOfferId(testJobOfferId));
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
 }

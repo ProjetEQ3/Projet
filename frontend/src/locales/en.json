@@ -3,8 +3,8 @@
   "glucoseAcronym": "GlucOSE",
   "copyRights": "© 2023 - All rights reserved.",
 
-  "disconnect": "Disconnect",
-  "login": "Log In",
+	"disconnect": "Disconnect",
+	"login": "Log In",
 
   "welcome": "Welcome to ",
   "descTitle": "Your internship management application",
@@ -17,6 +17,10 @@
   "password": "Password",
   "placeHolderPassword": "Enter your password",
   "loginSubmit": "Log In",
+
+  "pageNotFound": "Page not found",
+
+  "successRegister": "Your account has been created successfully.",
 
   "firstName": "First Name",
   "placeHolderFirstName": "Enter your first name",
@@ -57,7 +61,6 @@
   "_241D0": "241.D0 - Industrial Maintenance Technology",
   "_243A0": "245.A0 - Ordered Systems Technology",
   "_221B0": "221.B0 - Civil Engineering Technology",
-  "chooseADepartment": "Choose a department",
 
   "student": "Student",
   "employer": "Employer",
@@ -70,7 +73,6 @@
   "organisationPhoneRequired": "Organization phone number is required.",
   "organisationNameInvalid": "Organization name should be alphanumeric.",
 
-  "home": "Home",
   "jobOffers": "Job offers",
   "CV": "CV",
   "myApplications": "My applications",
@@ -160,6 +162,7 @@
   "refusedOffer": "Offer Refused",
   "addRefusalReason": "Please add a reason for refusal",
 
+  "home": "Home",
   "internship": "Job Offers",
   "uploadCV": "Upload a CV",
   "noOpenInternship": "No open Job offers",
@@ -168,7 +171,7 @@
   "authorizeOffer": "Authorize Job Offer",
   "refusalReason": "reason for refusal",
 
-  "cvNotApproved": "Cv not approved",
+  "cvNotApproved": "CV not approved",
   "apply": "Apply",
   "appliedJobOffer": "You have applied to this job offer",
   "fileName": "File Name",
@@ -176,8 +179,8 @@
 
   "updatedCV": "CV updated with state: ",
   "errorUpdateCV": "Update on CV error: ",
-  "probation": "Approbation",
-  "cvAuthorisation": "CV Authorisation",
+  "probation": "Approval",
+  "cvAuthorisation": "CV Authorization",
   "confirmRefusal": "Are you sure you want to refuse this offer?",
   "confirm": "Confirm",
   "refuse": "Refuse"

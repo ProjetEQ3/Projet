@@ -42,15 +42,6 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
-	const applyForJobOffer = (jobOffer) => {
-		axiosInstance.post(`/student/jobOffers/apply/${user.id}/${jobOffer.id}`)
-			.then((response) => {
-				toast.success(t('appliedJobOffer'))
-			}).catch((error) => {
-				toast.error(t('pushingError') + error.response.data.message)
-			})
-	}
-
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>

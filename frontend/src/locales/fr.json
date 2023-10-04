@@ -169,16 +169,17 @@
 
   "fileName": "Nom du fichier",
   "studentCV": "Les CVs des étudiants : ",
-  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
 
-  "home": "Accueil",
   "jobOffers": "Stages",
   "CV": "CV",
   "myApplications": "Mes applications",
   "noJobOffers": "Vous n'avez pas d'applications.",
+  "noStudent": "Aucun étudiant n'a postulé pour le moment",
+  "getStudentError": "Erreur lors de la récupération des étudiants: ",
 
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
+  "cvNotApproved": "CV non approuvé",
   "probation": "Approbation",
   "cvAuthorisation": "Autorisation du CV",
   "confirmRefusal": "Êtes-vous sûr de vouloir refuser ce CV ?",

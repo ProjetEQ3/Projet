@@ -5,7 +5,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
@@ -108,7 +108,7 @@ public class EmployerService{
 
 	public JobOfferDTO updateJobOffer(JobOfferDTO updatedJobOffer){
 		JobOffer jobOffer = jobOfferRepository.findById(updatedJobOffer.getId())
-				.orElseThrow(() -> new JobOffreNotFoundException(updatedJobOffer.getId()));
+				.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
@@ -127,12 +127,11 @@ public class EmployerService{
 	//EQ3-16
 	public List<StudentDTO> getStudentsByJobOfferId(Long jobOfferId){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
-			.orElseThrow(() -> new JobOffreNotFoundException(jobOfferId));
-		if(jobOffer.getJobApplications() != null)
-			return jobOffer.getJobApplications().stream()
-				.map(jobApplication -> new StudentDTO(jobApplication.getStudent()))
-				.collect(Collectors.toList());
-		return Collections.emptyList();
+			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
+		return jobOffer.getJobApplications().stream()
+			.map(jobApplication -> new StudentDTO(jobApplication.getStudent()))
+			.collect(Collectors.toList());
+
 	}
 
 }
