@@ -69,18 +69,25 @@ const EmployerPage = ({user}) => {
 		if (offer.jobOfferState === "OPEN") {
 			axiosInstance.get(`/employer/offer/students/${offer.id}`)
 				.then((response) => {
-					offer.students = response.data
+					offer.students = response.data;
+
+					const updatedOffers = offers.map((o) => {
+						if (o.id === offer.id) {
+							return offer;
+						} else {
+							return o;
+						}
+					});
+
+					setOffers(updatedOffers);
 				})
 				.catch((error) => {
 					toast.error(t('getStudentsError') + error.message);
-				})
+				});
 		}
-		offers.map((o) => {
-			if(o.id === offer.id){o = offer}
-		})
-		setOffers(offers)
-		setSelectedOffer(offer)
-	}
+
+		setSelectedOffer(offer);
+	};
 
 	const renderFilteredOffers = (filteredOffers) => {
 		return (
