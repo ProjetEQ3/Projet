@@ -4,10 +4,11 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 
 # Définition de Done
 
+*  Pas d'erreurs de compilation
+*  Tous les tests passent
 *  80 % de coverage minimum (Road to 100%)
 *  Même nom dans le front-end et back-end (Anglais partout)
-*  Tous les tests passent
-*  Pas d'erreurs de compilation
+* Retirer tout console.log() et print()
 
 ## Front-end
 
@@ -19,12 +20,12 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 *  Messages d'erreurs dans le Form doit être en dessous du Input
 *  Les filtres sont implémentés si des listes sont affichées
 *  Les boutons sont clairs (avec des noms ou un Bubble qui les explique)
+* Utiliser des models lorsqu'on utilise des objets ou formulaires
   
-
 ## Back-end
 
-*  ?????
 *  Pas de WTF
+* Ajout de donnée de statique dans GlucoseApplication.java -> commandLineRunner()
 
 ## API
 
@@ -37,3 +38,5 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 
 - Ne pas toucher une tâche qui nous n'est pas assignée. (in progress)
 - Limiter le temps de discussion et ne pas se perdre dans les détails inutiles (ex. 15 min pour une daily)
+* Respecter la définition de DONE mis dans le README.md avant de mettre en review
+* Arrêter de coder trop en avance pour éviter le YAGNI
