@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
@@ -13,6 +14,7 @@ import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -523,16 +525,29 @@ public class EmployerControllerTest {
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
+//	@Test
+//	public void createContractTest() throws Exception {
+//		when(managerService.createContract(any(ContractDTO.class))).thenReturn(contractDTO);
+//
+//		mockMvc
+//			.perform(post("/manager/contract/create")
+//				         .contentType(MediaType.APPLICATION_JSON)
+//				         .content(objectMapper.writeValueAsString(contractDTO)))
+//			.andExpect(status().isOk());
+//
+//		verify(managerService, times(1)).createContract(any(ContractDTO.class));
+//	}
+
 	@Test
-	public void createContractTest() throws Exception {
-		when(managerService.createContract(any(ContractDTO.class))).thenReturn(contractDTO);
+	public void createContractTest_valid() throws Exception {
+		objectMapper.registerModule(new JavaTimeModule());
+		when(employerService.createContract(any(ContractCreationDTO.class))).thenReturn(contractDTO);
 
-		mockMvc
-			.perform(post("/manager/contract/create")
-				         .contentType(MediaType.APPLICATION_JSON)
-				         .content(objectMapper.writeValueAsString(contractDTO)))
-			.andExpect(status().isOk());
+		mockMvc.perform(post("/employer/contract/create")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(contractDTO)))
+				.andExpect(status().isAccepted());
 
-		verify(managerService, times(1)).createContract(any(ContractDTO.class));
+		verify(employerService, times(1)).createContract(any(ContractCreationDTO.class));
 	}
 }

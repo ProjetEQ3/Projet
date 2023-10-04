@@ -66,8 +66,9 @@ public class EmployerController{
 
 	// je change a employer, mais je suis pas d'accord avec toi, la story dit: le system
 	@PostMapping("/contract/create")
-	public ContractDTO createContract(@RequestBody ContractCreationDTO contractCreationDTO){
-		return employerService.createContract(contractCreationDTO);
+	public ResponseEntity<ContractDTO> createContract(@RequestBody ContractCreationDTO contractCreationDTO){
+		return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+				.body(employerService.createContract(contractCreationDTO));
 	}
 
 }
