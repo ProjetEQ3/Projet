@@ -160,6 +160,8 @@ public class EmployerService{
 	public List<StudentDTO> getStudentsByJobOfferId(Long jobOfferId){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
+		List<JobApplication> jobApplications = jobOffer.getJobApplications();
+		if(jobApplications.isEmpty()) return Collections.emptyList();
 		return jobOffer.getJobApplications().stream()
 			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
 			.collect(Collectors.toList());

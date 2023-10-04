@@ -67,7 +67,7 @@ const EmployerPage = ({user}) => {
 
 	const handleSelectOffer = (offer) => {
 		if (offer.jobOfferState === "OPEN") {
-			axiosInstance.get(`/employer/offer//students/${offer.id}`)
+			axiosInstance.get(`/employer/offer/students/${offer.id}`)
 				.then((response) => {
 					offer.students = response.data
 				})
