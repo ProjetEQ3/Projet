@@ -11,12 +11,12 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 		console.log("user", user)
 		console.log("jobOffers", jobOffers)
 	}, [])
-// TODO: Zaka needs to check why not used
-//	const updatedOffer = (jobOffer) => {
-//		setSelectedOffer(jobOffer)
-//		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
-//		setJobOffers(updatedOffers);
-//	}
+
+	const updatedOffer = (jobOffer) => {
+		setSelectedOffer(jobOffer)
+		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
+		setJobOffers(updatedOffers);
+	}
 
 	return (
 		<div className="row justify-content-around mx-2">
@@ -45,7 +45,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						</div>
 					</div>
 					:
-					<FullJobOffer user={user} jobOffer={selectedOffer}/>
+					<FullJobOffer user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
 				}
 			</div>
 		</div>

@@ -14,13 +14,13 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	const applyForJobOffer = (jobOfferID, studentId) => {
 		axiosInstance
 			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
-			.then((ressponse) => {
-				updatedOffer(ressponse.data)
+			.then((response) => {
+				updatedOffer(response.data)
 				toast.success(t('appliedJobOffer'))}
 			)
 			.catch((err) => {
 				console.log("err: ", err)
-				toast.error(t('pushingError') + err.message)}
+				toast.error(t('pushingError') + t(err.response.data.error))}
 			)
 	}
 

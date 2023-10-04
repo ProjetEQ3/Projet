@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.exception.unauthorizedException.UnauthorizedExcepti
 
 public class StudentHasAlreadyAppliedException extends UnauthorizedException {
 	public StudentHasAlreadyAppliedException(){
-		super("Student has already applied to this job offer");
+		super("studentAlreadyApplied");
 	}
 
 }

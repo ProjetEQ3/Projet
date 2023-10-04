@@ -27,7 +27,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                         <div className="d-none d-lg-block mx-auto my-auto">
                             <State state={jobOffer.jobOfferState}/>
                         </div>
-                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('intershipDetails')}</div>
+                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('internshipDetails')}</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg">
                             <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
                         </div>
