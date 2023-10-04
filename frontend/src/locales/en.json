@@ -1,22 +1,22 @@
 {
-	"glucoseFullAcronym": "Global Learning Opportunities for Undergraduate Students.",
-	"glucoseAcronym": "GlucOSE",
-	"copyRights": "© 2023 - All rights reserved.",
+  "glucoseFullAcronym": "Global Learning Opportunities for Undergraduate Students.",
+  "glucoseAcronym": "GlucOSE",
+  "copyRights": "© 2023 - All rights reserved.",
 
-	"disconnect": "Disconnect",
-	"login": "Log In",
+  "disconnect": "Disconnect",
+  "login": "Log In",
 
-	"welcome": "Welcome to ",
-	"descTitle": "Your internship management application",
-	"description": "GlucOSE is a web application for managing student internships.",
+  "welcome": "Welcome to ",
+  "descTitle": "Your internship management application",
+  "description": "GlucOSE is a web application for managing student internships.",
 
-	"successLogin": "Login successful.",
-	"errorLogin": "Incorrect username or password.",
-	"email": "Email Address",
-	"placeHolderEmail": "Enter your email address",
-	"password": "Password",
-	"placeHolderPassword": "Enter your password",
-	"loginSubmit": "Log In",
+  "successLogin": "Login successful.",
+  "errorLogin": "Incorrect username or password.",
+  "email": "Email Address",
+  "placeHolderEmail": "Enter your email address",
+  "password": "Password",
+  "placeHolderPassword": "Enter your password",
+  "loginSubmit": "Log In",
 
   "firstName": "First Name",
   "placeHolderFirstName": "Enter your first name",
@@ -69,15 +69,13 @@
   "organisationNameRequired": "Organization name is required.",
   "organisationPhoneRequired": "Organization phone number is required.",
   "organisationNameInvalid": "Organization name should be alphanumeric.",
-  "organisationPhoneInvalid": "Organization phone number should follow a standard phone format. Example: 514-123-4567",
 
   "home": "Home",
   "jobOffers": "Job offers",
   "CV": "CV",
   "myApplications": "My applications",
-  "noJobOffers": "You do not have any applications."
+  "noJobOffers": "You do not have any applications.",
 
-  "organisationNameInvalid": "Organization name must be in alphanumeric format.",
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
 
   "newInternshipCreation": "New Internship Creation",
@@ -162,7 +160,6 @@
   "refusedOffer": "Offer Refused",
   "addRefusalReason": "Please add a reason for refusal",
 
-  "home": "Home",
   "internship": "Job Offers",
   "uploadCV": "Upload a CV",
   "noOpenInternship": "No open Job offers",

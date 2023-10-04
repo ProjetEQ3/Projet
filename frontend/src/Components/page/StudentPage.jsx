@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom"
 import JobOfferList from "../jobOffer/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
-import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import MyApplications from "../student/MyApplications";
 import {useTranslation} from "react-i18next";
