@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -60,6 +62,12 @@ public class EmployerController{
 		this.employerService.deleteJobOffer(id);
 		return ResponseEntity.accepted()
 				.build();
+	}
+
+	// je change a employer, mais je suis pas d'accord avec toi, la story dit: le system
+	@PostMapping("/contract/create")
+	public ContractDTO createContract(@RequestBody ContractCreationDTO contractCreationDTO){
+		return employerService.createContract(contractCreationDTO);
 	}
 
 }

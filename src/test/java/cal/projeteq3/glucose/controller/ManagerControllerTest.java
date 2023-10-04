@@ -47,28 +47,6 @@ public class ManagerControllerTest {
     @MockBean
     private EmployerService employerService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private ContractDTO contractDTO;
-
-    @BeforeEach
-    public void setUp() {
-        contractDTO = new ContractDTO();
-        contractDTO.setEmployerId(1L);
-        contractDTO.setSupervisorId(2L);
-        contractDTO.setWorkAddressId(3L);
-        contractDTO.setStudentId(4L);
-        contractDTO.setJobTitle("Software Engineer");
-        contractDTO.setStartDate(LocalDate.now());
-        contractDTO.setEndDate(LocalDate.now().plusMonths(6));
-        contractDTO.setHoursPerWeek(40);
-        contractDTO.setEmploymentType(EmploymentType.FULL_TIME);
-        contractDTO.setResponsibilities(List.of("Develop software", "Test software", "Collaborate with team"));
-        contractDTO.setWorkDays(
-          Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY));
-    }
-
     @Test
     public void getAllJobOffer_valid() throws Exception {
         // Arrange
@@ -249,19 +227,6 @@ public class ManagerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].fileName").value(cv1.getFileName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(cv2.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].fileName").value(cv2.getFileName()));
-    }
-
-    @Test
-    public void createContractTest() throws Exception {
-        when(managerService.createContract(any(ContractDTO.class))).thenReturn(contractDTO);
-
-        mockMvc
-            .perform(post("/manager/contract/create")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(contractDTO)))
-            .andExpect(status().isOk());
-
-        verify(managerService, times(1)).createContract(any(ContractDTO.class));
     }
 
 }

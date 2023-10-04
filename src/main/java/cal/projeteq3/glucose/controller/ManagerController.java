@@ -107,9 +107,4 @@ public class ManagerController {
 //         return new ResponseEntity<>(cv, headers, HttpStatus.OK);
 //     }
 
-    @PostMapping("/contract/create")
-    public ContractDTO createContract(@RequestBody ContractDTO contractDTO){
-        return managerService.createContract(contractDTO);
-    }
-
 }

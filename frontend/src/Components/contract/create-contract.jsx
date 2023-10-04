@@ -7,7 +7,7 @@ const createContract = (addContract) => {
 
 	const postContract = ({contract}) => {
 		axiosInstance
-			.post("manager/contract/create", contract)
+			.post("employer/contract/create", contract)
 			.then((res) => {
 				toast.success(t("contract_created_successfully"))
 				addContract(res.data);
