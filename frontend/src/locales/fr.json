@@ -169,6 +169,13 @@
 
   "fileName": "Nom du fichier",
   "studentCV": "Les CVs des étudiants : ",
+  "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
+
+  "home": "Accueil",
+  "jobOffers": "Stages",
+  "CV": "CV",
+  "myApplications": "Mes applications",
+  "noJobOffers": "Vous n'avez pas d'applications.",
 
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",

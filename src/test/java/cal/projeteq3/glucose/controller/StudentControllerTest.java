@@ -32,6 +32,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -44,18 +45,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class})
 @WebMvcTest(StudentController.class)
-public class StudentControllerTest{
-
-	@Autowired
-	private MockMvc mockMvc;
-
-	@MockBean
-	private StudentService studentService;
+public class StudentControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @MockBean
+    private StudentService studentService;
 
 	private final Long validStudentId = 1L;
 
 	private final Long validJobOfferId = 1L;
-  
+
       @Test
     public void Register_Valid() throws Exception {
         StudentDTO returnedStudent =
@@ -270,17 +269,39 @@ public class StudentControllerTest{
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
     }
 
-//    @Test
-//    public void DeleteCv_Invalid() throws Exception {
-////        Arrange
-//        when(studentService.deleteCv(239486723L)).thenThrow(new StudentNotFoundException(239486723L));
-////        Rien à arranger
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 239486723L)
-//                .contentType(MediaType.MULTIPART_FORM_DATA)
-//                .content("".getBytes())
-//        )
-//                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-//    }
+    @Test
+    public void getAppliedJobOfferByStudent_Valid() throws Exception {
+        //        Arrange
+        Long studentId = 1L;
+        List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
+
+        when(studentService.getAppliedJobOfferByStudentId(studentId)).thenReturn(jobOffers);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", studentId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()));
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
+        Long wrongStudentId = -1L;
+
+        when(studentService.getAppliedJobOfferByStudentId(wrongStudentId)).thenThrow(new StudentNotFoundException(wrongStudentId));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", wrongStudentId))
+                .andExpect(MockMvcResultMatchers.status().is(406));
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudent_InvalidNullId() throws Exception {
+        Long nullStudentId = null;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", nullStudentId))
+                .andExpect(MockMvcResultMatchers.status().is(404));
+    }
 
 	@Test
 	public void GetJobOffersByDepartment_Valid2() throws Exception{

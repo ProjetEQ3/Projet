@@ -68,6 +68,15 @@
   "placeHolderOrganisationPhone": "Enter the organization phone number",
   "organisationNameRequired": "Organization name is required.",
   "organisationPhoneRequired": "Organization phone number is required.",
+  "organisationNameInvalid": "Organization name should be alphanumeric.",
+  "organisationPhoneInvalid": "Organization phone number should follow a standard phone format. Example: 514-123-4567",
+
+  "home": "Home",
+  "jobOffers": "Job offers",
+  "CV": "CV",
+  "myApplications": "My applications",
+  "noJobOffers": "You do not have any applications."
+
   "organisationNameInvalid": "Organization name must be in alphanumeric format.",
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
 

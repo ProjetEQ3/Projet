@@ -14,12 +14,15 @@ import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.ManagerService;
+import cal.projeteq3.glucose.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +46,32 @@ public class GlucoseApplication implements CommandLineRunner {
 	private ManagerRepository managerRepository;
 	@Autowired
 	private EmployerService employerService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private ManagerService managerService;
+	public static void main(String[] args) {
+		SpringApplication.run(GlucoseApplication.class, args);
+		System.out.println("Hello World!");
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		createDatabase();
+	}
 
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
+		createApplication();
+	}
+
+	private void createApplication(){
+		managerService.updateCvState(1L, CvState.ACCEPTED, null);
+		studentService.applyJobOffer(3L, 9L);
+		studentService.applyJobOffer(9L, 9L);
 	}
 
 	private static List<Employer> createEmployer(){
@@ -512,6 +535,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());}
-
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
+	}
 }

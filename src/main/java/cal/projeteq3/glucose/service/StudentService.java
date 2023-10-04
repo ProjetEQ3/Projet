@@ -4,13 +4,13 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
+
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
@@ -103,14 +104,13 @@ public class StudentService {
         return new CvFileDTO(studentRepository.save(student).getCvFile());
     }
 
-    public boolean deleteCv(Long studentId){
+    public void deleteCv(Long studentId){
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         Student student = studentOptional.get();
         CvFile cvExiste = student.getCvFile();
         student.deleteCv();
         cvFileRepository.delete(cvExiste);
-        return true;
     }
 
     public List<JobOfferDTO> getJobOffersByDepartment(Department department){
@@ -135,4 +135,11 @@ public class StudentService {
         return new JobOfferDTO(jobOfferRepository.save(jobOffer));
     }
 
+
+    public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+        return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId())
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
+    }
 }
