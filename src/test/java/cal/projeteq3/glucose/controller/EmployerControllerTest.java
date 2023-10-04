@@ -3,7 +3,9 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.exception.request.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -499,4 +501,33 @@ public class EmployerControllerTest {
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
+	@Test
+	public void AcceptJobApplication_valid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		when(employerService.acceptApplication(applicationId)).thenReturn(jobApplicationDTO);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/accept/{jobApplicationDTO}", applicationId)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(jobApplicationDTO.getId()))
+		;
+	}
+
+	@Test
+	public void AcceptJobApplication_invalid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		when(employerService.acceptApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/accept/{jobApplicationDTO}", applicationId)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+	}
 }
