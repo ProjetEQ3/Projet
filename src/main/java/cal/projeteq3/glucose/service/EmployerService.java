@@ -3,7 +3,7 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.CreateContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.SupervisorDTO;
@@ -137,7 +137,7 @@ public class EmployerService{
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
-	public ContractDTO createContract(CreateContractDTO createContractDTO){
+	public ContractDTO createContract(ContractCreationDTO createContractDTO){
 		JobOffer jobOffer = jobOfferRepository.findById(createContractDTO.getJobOfferId())
 				.orElseThrow(() -> new JobOffreNotFoundException(createContractDTO.getJobOfferId()));
 

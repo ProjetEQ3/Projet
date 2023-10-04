@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.CreateContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.request.AddressNotFoundException;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
@@ -615,7 +615,7 @@ public class EmployerServiceTest {
         Long supervisorId = 1L;
         Long addressId = 1L;
 
-        CreateContractDTO createContractDTO = new CreateContractDTO(
+        ContractCreationDTO createContractDTO = new ContractCreationDTO(
                 jobOfferId,
                 addressId,
                 supervisorId,
@@ -687,7 +687,7 @@ public class EmployerServiceTest {
         Long supervisorId = 1L;
         Long addressId = 1L;
 
-        CreateContractDTO createContractDTO = new CreateContractDTO(
+        ContractCreationDTO createContractDTO = new ContractCreationDTO(
                 jobOfferId,
                 addressId,
                 supervisorId,
@@ -721,7 +721,7 @@ public class EmployerServiceTest {
         Long supervisorId = 1L;
         Long addressId = 1L;
 
-        CreateContractDTO createContractDTO = new CreateContractDTO(
+        ContractCreationDTO createContractDTO = new ContractCreationDTO(
                 jobOfferId,
                 addressId,
                 supervisorId,
@@ -767,7 +767,7 @@ public class EmployerServiceTest {
         Long supervisorId = 1L;
         Long addressId = 1L;
 
-        CreateContractDTO createContractDTO = new CreateContractDTO(
+        ContractCreationDTO createContractDTO = new ContractCreationDTO(
                 jobOfferId,
                 addressId,
                 supervisorId,
@@ -814,7 +814,7 @@ public class EmployerServiceTest {
         Long supervisorId = 1L;
         Long addressId = 1L;
 
-        CreateContractDTO createContractDTO = new CreateContractDTO(
+        ContractCreationDTO createContractDTO = new ContractCreationDTO(
                 jobOfferId,
                 addressId,
                 supervisorId,

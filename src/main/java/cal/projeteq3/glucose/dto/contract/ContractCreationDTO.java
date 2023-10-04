@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateContractDTO {
+public class ContractCreationDTO {
     private Long jobOfferId;
     private Long workAddressId;
     private Long supervisorId;
