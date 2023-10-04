@@ -128,8 +128,8 @@ const EmployerPage = ({user}) => {
 									</div>
 									:
 									<>
-                                        <FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
-                                        {
+										<FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
+										{
 											selectedOffer.jobOfferState === "OPEN" ?
 												selectedOffer.students != null && selectedOffer.students.length > 0 ?
 													<StudentList offer={selectedOffer}/> :
