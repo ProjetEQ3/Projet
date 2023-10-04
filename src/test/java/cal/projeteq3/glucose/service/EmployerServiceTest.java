@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -653,7 +654,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(JobOffreNotFoundException.class, () ->
+        assertThrows(JobOfferNotFoundException.class, () ->
                 employerService.getStudentsByJobOfferId(testJobOfferId));
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
