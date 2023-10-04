@@ -10,6 +10,9 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 *  Même nom dans le front-end et back-end (Anglais partout)
 * Retirer tout console.log() et print()
 
+## Plan de démo
+* 
+
 ## Front-end
 
 *  Respecte les normes et les couleurs du site Web
