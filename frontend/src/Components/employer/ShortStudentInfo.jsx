@@ -23,7 +23,7 @@ const ShortStudentInfo = ({ student }) => {
 
     const handleDecline = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/refuse/', student.jobApplications[0])
+        axiosInstance.put('/employer/offer/refuse/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
             })
