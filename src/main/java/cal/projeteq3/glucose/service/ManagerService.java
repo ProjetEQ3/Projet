@@ -172,22 +172,4 @@ public class ManagerService{
 	public ContractDTO createContract(ContractDTO contractDTO) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
-
-
-//	----------- Getters ----------
-
-	private Employer getEmployerDyId(Long id) {
-		return employerRepository.findById(id)
-				.orElseThrow(() -> new EmployerNotFoundException(id));
-	}
-
-	private Supervisor getSupervisorDyId(Long id) {
-		return supervisorRepository.findById(id)
-				.orElseThrow(() -> new SupervisorNotFoundException(id));
-	}
-
-	private Student getStudentDyId(Long id) {
-		return studentRepository.findById(id)
-				.orElseThrow(() -> new StudentNotFoundException(id));
-	}
 }
