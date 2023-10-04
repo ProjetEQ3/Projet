@@ -1,15 +1,23 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +29,22 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmployerService{
-
 	private final JobOfferRepository jobOfferRepository;
 	private final EmployerRepository employerRepository;
+	private final StudentRepository studentRepository;
+	private final JobApplicationRepository jobApplicationRepository;
 
 	@Autowired
-	public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository){
+	public EmployerService(
+		EmployerRepository employerRepository,
+		JobOfferRepository jobOfferRepository,
+		StudentRepository studentRepository,
+		JobApplicationRepository jobApplicationRepository
+	){
 		this.jobOfferRepository = jobOfferRepository;
 		this.employerRepository = employerRepository;
+		this.studentRepository = studentRepository;
+		this.jobApplicationRepository = jobApplicationRepository;
 	}
 
 	// database operations here
@@ -85,30 +101,28 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-
 	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
-		Employer employer = employerRepository.findById(employerId)
-				.orElseThrow(() -> new EmployerNotFoundException(employerId));
+		Employer employer = employerRepository
+			.findById(employerId)
+			.orElseThrow(() -> new EmployerNotFoundException(employerId));
 		return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	@Transactional
 	public JobOfferDTO createJobOffer(JobOfferDTO jobOffer, Long employerId){
-		Employer employer = employerRepository.findById(employerId)
-				.orElseThrow(() -> new EmployerNotFoundException(employerId));
-
+		Employer employer = employerRepository
+			.findById(employerId)
+			.orElseThrow(() -> new EmployerNotFoundException(employerId));
 		JobOffer jobOfferEntity = jobOffer.toEntity();
 		employer.addJobOffer(jobOfferEntity);
 		JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity));
 		employerRepository.save(employer);
-
 		return result;
-
 	}
 
 	public JobOfferDTO updateJobOffer(JobOfferDTO updatedJobOffer){
 		JobOffer jobOffer = jobOfferRepository.findById(updatedJobOffer.getId())
-				.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
+			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
@@ -122,6 +136,24 @@ public class EmployerService{
 		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
 		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
+	}
+
+	public JobApplicationDTO acceptApplication(Long applicationId){
+		JobApplication application = jobApplicationRepository
+			.findById(applicationId)
+			.orElseThrow(JobApplicationNotFoundException::new);
+		application.setJobApplicationState(JobApplicationState.ACCEPTED);
+		jobApplicationRepository.save(application);
+		return new JobApplicationDTO(application);
+	}
+
+	public JobApplicationDTO refuseApplication(Long applicationId){
+		JobApplication application = jobApplicationRepository
+				.findById(applicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+		application.setJobApplicationState(JobApplicationState.REJECTED);
+		jobApplicationRepository.save(application);
+		return new JobApplicationDTO(application);
 	}
 
 	//EQ3-16

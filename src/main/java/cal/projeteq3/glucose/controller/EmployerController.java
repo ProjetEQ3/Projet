@@ -2,9 +2,11 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +62,22 @@ public class EmployerController{
 	public ResponseEntity<?> deleteJobOffer(@PathVariable Long id){
 		this.employerService.deleteJobOffer(id);
 		return ResponseEntity.accepted()
+				.build();
+	}
+
+	@PutMapping("/offer/accept/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> acceptJobApplication(@PathVariable Long jobApplicationId){
+		this.employerService.acceptApplication(jobApplicationId);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.build();
+	}
+
+	@PutMapping("/offer/refuse/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> refuseJobApplication(@PathVariable Long jobApplicationId){
+		this.employerService.refuseApplication(jobApplicationId);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
 				.build();
 	}
 

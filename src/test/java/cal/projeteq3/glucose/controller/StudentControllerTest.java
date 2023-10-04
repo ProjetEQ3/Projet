@@ -214,10 +214,6 @@ public class StudentControllerTest {
 
     @Test
     public void GetOpenJobOffersByDepartment_InvalidDep2() throws Exception {
-//        Arrange
-//        Rien à arranger
-
-//        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
                 .andExpect(MockMvcResultMatchers.status().is(673));
     }
@@ -262,8 +258,6 @@ public class StudentControllerTest {
 
     @Test
     public void DeleteCv_Valid() throws Exception {
-//        Arrange
-//        Rien à arranger
         mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 1L)
         )
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
@@ -368,17 +362,6 @@ public class StudentControllerTest {
 	}
 
 	@Test
-	public void GetOpenJobOffersByDepartment_InvalidDep() throws Exception{
-		//        Arrange
-		//        Rien à arranger
-
-		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
-				.andExpect(MockMvcResultMatchers.status().is(673))
-				;
-	}
-
-	@Test
 	void testApplyJobOfferSuccess() throws Exception{
 		JobOfferDTO mockDto = new JobOfferDTO();
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenReturn(mockDto);
@@ -406,7 +389,6 @@ public class StudentControllerTest {
 
 		mockMvc.perform(
 			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
-		       .andExpect(status().is(673))
-				;
+		       .andExpect(status().is(673));
 	}
 }

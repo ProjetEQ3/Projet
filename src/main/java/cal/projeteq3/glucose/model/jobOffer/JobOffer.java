@@ -57,6 +57,8 @@ public class JobOffer{
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
+	private Long acceptedJobApplicationId;
+
 	private String refusReason;
 
 	public void copy(JobOffer jobOffer){

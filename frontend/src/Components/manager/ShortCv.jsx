@@ -33,7 +33,6 @@ const ShortCv = ({cv, index, updateCvList}) => {
 
     const validateReason = (e) => {
         e.preventDefault();
-
         setFormData({...formData, refusalReason: e.target.value});
     }
 

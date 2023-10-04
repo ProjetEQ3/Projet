@@ -10,4 +10,7 @@ public class StudentNotFoundException extends BadRequestException{
 		super("Student does not exist.");
 	}
 
+    public StudentNotFoundException(){
+        super("L'étudiant n'existe pas");
+    }
 }
