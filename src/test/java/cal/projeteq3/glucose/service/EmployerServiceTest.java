@@ -654,4 +654,16 @@ public class EmployerServiceTest {
         assertEquals(0, result.size());
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
+
+    @Test
+    void testGetStudentsByJobOfferId_NotFound(){
+        // Arrange
+        Long testJobOfferId = 99L;
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(JobOffreNotFoundException.class, () ->
+                employerService.getStudentsByJobOfferId(testJobOfferId));
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
 }
