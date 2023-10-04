@@ -473,6 +473,7 @@ public class StudentServiceTest {
         assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
     }
 
+    @Test
     public void addCv_valid() {
         // Arrange
         Long studentId = 1L;
@@ -537,6 +538,8 @@ public class StudentServiceTest {
         });
         verify(studentRepository, times(1)).findById(studentId);
     }
+
+
 
     @Test
     public void deleteCv_valid() {
