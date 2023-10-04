@@ -5,6 +5,7 @@ import JobOffer from "../../model/JobOffer";
 import ShortJobOffer from "./ShortJobOffer";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 function MyApplications({ user }) {
     const {t} = useTranslation();
@@ -26,6 +27,7 @@ function MyApplications({ user }) {
                 });
                 setMyApplications(jobOffers);
             } catch (error) {
+                toast.error(t('fetchError') + error.message);
                 console.log("Fetch error: " + error);
             }
         }
