@@ -3,7 +3,9 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.exception.request.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -499,4 +501,71 @@ public class EmployerControllerTest {
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 	}
 
+	@Test
+	public void AcceptJobApplication_valid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		when(employerService.acceptApplication(applicationId)).thenReturn(jobApplicationDTO);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/accept/{jobApplicationId}", applicationId)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(jobApplicationDTO.getId()))
+		;
+	}
+
+	@Test
+	public void AcceptJobApplication_invalid() throws Exception {
+		Long applicationId = -1L;
+		when(employerService.acceptApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/accept/{jobApplicationId}", applicationId))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void AcceptJobApplication_null() throws Exception {
+		Long nullId = null;
+		when(employerService.acceptApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/accept/{jobApplicationId}", nullId))
+				.andExpect(MockMvcResultMatchers.status().is(404));
+	}
+
+	@Test
+	public void RefuseJobApplication_valid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		when(employerService.refuseApplication(applicationId)).thenReturn(jobApplicationDTO);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/refuse/{jobApplicationId}", applicationId)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(jobApplicationDTO.getId()))
+		;
+	}
+
+	@Test
+	public void RefuseJobApplication_invalid() throws Exception {
+		Long applicationId = -1L;
+		when(employerService.refuseApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/refuse/{jobApplicationId}", applicationId))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void RefuseJobApplication_null() throws Exception {
+		Long nullId = null;
+		when(employerService.refuseApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
+
+		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/refuse/{jobApplicationDTO}", nullId))
+				.andExpect(MockMvcResultMatchers.status().is(404));
+	}
 }

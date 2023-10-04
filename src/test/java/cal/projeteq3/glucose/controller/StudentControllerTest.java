@@ -263,15 +263,5 @@ public class StudentControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
     }
 
-//    @Test
-//    public void DeleteCv_Invalid() throws Exception {
-////        Arrange
-//        when(studentService.deleteCv(239486723L)).thenThrow(new StudentNotFoundException(239486723L));
-////        Rien à arranger
-//        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 239486723L)
-//                .contentType(MediaType.MULTIPART_FORM_DATA)
-//                .content("".getBytes())
-//        )
-//                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-//    }
+
 }
