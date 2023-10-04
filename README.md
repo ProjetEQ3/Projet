@@ -11,7 +11,9 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 * Retirer tout console.log() et print()
 
 ## Plan de démo
-* 
+* Tester le plan de démo
+* Ajouter quelques cas d'erreur
+* Montrer les features
 
 ## Front-end
 
