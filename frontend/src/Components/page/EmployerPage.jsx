@@ -108,6 +108,7 @@ const EmployerPage = ({user}) => {
 									</div>
 									:
 									<FullJobOffer jobOffer={selectedOffer}/>
+
 								}
 							</div>
 						</div>

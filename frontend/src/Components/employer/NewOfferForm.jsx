@@ -5,8 +5,10 @@ import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import {useTranslation} from "react-i18next";
 
 const NewOfferForm = ({user}) => {
+    const [t, i18n] = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
@@ -39,12 +41,12 @@ const NewOfferForm = ({user}) => {
         axiosInstance
             .post(`/employer/offer?employerId=${user.id}`, formData)
             .then((response) =>{
-                toast.success("Offre créée avec succès")
+                toast.success(t('createInternshipSuccess'))
                 setIsLoading(false);
                 navigate('/employer');
             })
             .catch((error) => {
-                toast.error("Erreur lors de la création de l'offre: " + error.response.data.message)
+                toast.error(t('createIternshipError') + error.response.data.message)
                 setIsLoading(false);
             }
         )
@@ -62,60 +64,60 @@ const NewOfferForm = ({user}) => {
         const validationErrors = {};
 
         if (formData.title === '') {
-            validationErrors.title = "Le titre est obligatoire";
+            validationErrors.title = t('titleRequired');
         }
 
         if (formData.department === '') {
-            validationErrors.department = "Le département est obligatoire";
+            validationErrors.department = t('departmentRequired');
         }
 
         if (formData.location === '') {
-            validationErrors.location = "Le lieu de travail est obligatoire";
+            validationErrors.location = t('locationRequired');
         }
 
         if (formData.description === '') {
-            validationErrors.description = "La description est obligatoire";
+            validationErrors.description = t('descriptionRequired');
         }
 
         if (formData.salary === '') {
-            validationErrors.salary = "Le salaire est obligatoire";
+            validationErrors.salary = t('salaryRequired');
         }
         else if (formData.salary <= 0) {
-            validationErrors.salary = "Le salaire doit être positif";
+            validationErrors.salary = t('salaryMustBePositive');
         }
 
         if (formData.hoursPerWeek === '') {
-            validationErrors.hoursPerWeek = "Le nombre d'heures par semaine est obligatoire";
+            validationErrors.hoursPerWeek = t('hoursPerWeekRequired');
         }
         else if (formData.hoursPerWeek <= 0) {
-            validationErrors.hoursPerWeek = "Le nombre d'heures par semaine doit être positif";
+            validationErrors.hoursPerWeek = t('hoursPerWeekMustBePositive');
         }
 
         if (formData.startDate === '') {
-            validationErrors.startDate = "La date de début est obligatoire";
+            validationErrors.startDate = t('startDateRequired');
         }
         else if (formData.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.startDate)) {
-            validationErrors.startDate = "La date de début doit être en format YYYY-MM-DD";
+            validationErrors.startDate = t('startDateFormat');
         }
         else if (formData.startDate && new Date(formData.startDate) < new Date()) {
-            validationErrors.startDate = "La date de début ne doit pas déjà être passée";
+            validationErrors.startDate = t('startDateNotPassed');
         }
 
         if (formData.duration === '') {
-            validationErrors.duration = "La durée du stage est obligatoire";
+            validationErrors.duration = t('durationRequired');
         }
         else if (formData.duration && formData.duration < 1) {
-            validationErrors.duration = "La durée du stage doit être d'au moins 1 semaine";
+            validationErrors.duration = t('minimumDuration');
         }
 
         if (formData.expirationDate === '') {
-            validationErrors.expirationDate = "La date d'expiration est obligatoire";
+            validationErrors.expirationDate = t('endDateRequired');
         }
         else if (formData.expirationDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.expirationDate)) {
-            validationErrors.expirationDate = "La date d'expiration doit être en format YYYY-MM-DD";
+            validationErrors.expirationDate = t('endDateFormat');
         }
         else if (formData.expirationDate && new Date(formData.expirationDate) < new Date()) {
-            validationErrors.expirationDate = "La date d'expiration ne doit pas déjà être passée";
+            validationErrors.expirationDate = t('endDateNotPassed');
         }
 
         setWarnings(validationErrors);
@@ -127,7 +129,7 @@ const NewOfferForm = ({user}) => {
 
     return (
         <div className="container">
-            <h1 className="text-center fw-light">Création d'une nouvelle offre</h1>
+            <h1 className="text-center fw-light">{t('newInternshipCreation')}</h1>
             {isLoading ? (
                 <Loading />
             ) : (
@@ -135,14 +137,14 @@ const NewOfferForm = ({user}) => {
                     <div className="col-9 mx-auto">
                         <form className="form-group" onSubmit={handleSubmit}>
                             <div className="mb-3">
-                                <label htmlFor="title">Titre du poste</label>
+                                <label htmlFor="title">{t('internshipTitle')}</label>
                                 <input
                                     type="text"
                                     className={`form-control ${
                                         warnings.title ? 'is-invalid' : ''
                                     }`}
                                     id="title"
-                                    placeholder="Titre"
+                                    placeholder={t('internshipTitle')}
                                     name="title"
                                     onChange={handleChanges}
                                     required
@@ -155,32 +157,32 @@ const NewOfferForm = ({user}) => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="department">Département</label>
+                                <label htmlFor="department">{t('department')}</label>
                                 <select
                                     className={`form-select ${
                                         warnings.department ? 'is-invalid' : ''
                                     }`}
                                     id="department"
                                     name="department"
-                                    defaultValue="Choisir un département"
+                                    defaultValue={t('chooseADepartment')}
                                     onChange={handleChanges}
                                     required
                                 >
-                                    <option value="_410B0">410.B0 - Techniques de comptabilité et de gestion</option>
-                                    <option value="_241A1">241.A1 - Techniques de génie mécanique</option>
-                                    <option value="_420B0">420.B0 - Techniques de l’informatique</option>
-                                    <option value="_210AA">210.AA - Techniques de laboratoire : biotechnologies</option>
-                                    <option value="_144A1">144.A1 - Techniques de physiothérapie</option>
-                                    <option value="_310A0">310.A0 - Techniques policières</option>
-                                    <option value="_145A0">145.A0 - Techniques de santé animale</option>
-                                    <option value="_388A0">388.A0 - Techniques de travail social</option>
-                                    <option value="_140C0">140.C0 - Technologie d’analyses biomédicales</option>
-                                    <option value="_243C0">243.C0 - Technologie de l’électronique industrielle</option>
-                                    <option value="_243BA">243.BA - Technologie de l’électronique : Télécommunication</option>
-                                    <option value="_241D0">241.D0 - Technologie de maintenance industrielle</option>
-                                    <option value="_243A0">245.A0 - Technologie de systèmes ordinés</option>
-                                    <option value="_221B0">221.B0 - Technologie du génie civil</option>
-                                    <option disabled={true}>Choisir un département</option>
+                                    <option value="_410B0">{t('_410B0')}</option>
+                                    <option value="_241A1">{t('_241A1')}</option>
+                                    <option value="_420B0">{t('_420B0')}</option>
+                                    <option value="_210AA">{t('_210AA')}</option>
+                                    <option value="_144A1">{t('_144A1')}</option>
+                                    <option value="_310A0">{t('_310A0')}</option>
+                                    <option value="_145A0">{t('_145A0')}</option>
+                                    <option value="_388A0">{t('_388A0')}</option>
+                                    <option value="_140C0">{t('_140C0')}</option>
+                                    <option value="_243C0">{t('_243C0')}</option>
+                                    <option value="_243BA">{t('_243BA')}</option>
+                                    <option value="_241D0">{t('_241D0')}</option>
+                                    <option value="_243A0">{t('_243A0')}</option>
+                                    <option value="_221B0">{t('_221B0')}</option>
+                                    <option disabled={true}>{t('chooseADepartment')}</option>
                                 </select>
                                 {warnings.department && (
                                     <div className="invalid-feedback">
@@ -190,14 +192,14 @@ const NewOfferForm = ({user}) => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="location">Lieu de travail</label>
+                                <label htmlFor="location">{t('location')}</label>
                                 <input
                                     type="text"
                                     className={`form-control ${
                                         warnings.location ? 'is-invalid' : ''
                                     }`}
                                     id="location"
-                                    placeholder="Lieu de travail"
+                                    placeholder={t('location')}
                                     name="location"
                                     onChange={handleChanges}
                                     required
@@ -211,7 +213,7 @@ const NewOfferForm = ({user}) => {
 
                             <div className="mb-3">
                                 <label htmlFor="description">
-                                    Description du poste
+                                    {t('internshipDescription')}
                                 </label>
                                 <textarea
                                     className={`form-control ${
@@ -219,7 +221,7 @@ const NewOfferForm = ({user}) => {
                                     }`}
                                     id="description"
                                     rows="3"
-                                    placeholder="Description du poste"
+                                    placeholder={t('internshipDescription')}
                                     name="description"
                                     onChange={handleChanges}
                                     required
@@ -232,7 +234,7 @@ const NewOfferForm = ({user}) => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="salary">Salaire horaire</label>
+                                <label htmlFor="salary">{t('salary')}</label>
                                 <input
                                     type="number"
                                     step="0.01"
@@ -240,7 +242,7 @@ const NewOfferForm = ({user}) => {
                                         warnings.salary ? 'is-invalid' : ''
                                     }`}
                                     id="salary"
-                                    placeholder="Salaire horaire"
+                                    placeholder={t('salary')}
                                     name="salary"
                                     onChange={handleChanges}
                                     required
@@ -254,7 +256,7 @@ const NewOfferForm = ({user}) => {
 
                             <div className="mb-3">
                                 <label htmlFor="hoursPerWeek">
-                                    Nombre d'heures par semaine
+                                    {t('hoursPerWeek')}
                                 </label>
                                 <input
                                     type="number"
@@ -263,7 +265,7 @@ const NewOfferForm = ({user}) => {
                                         warnings.hoursPerWeek ? 'is-invalid' : ''
                                     }`}
                                     id="hoursPerWeek"
-                                    placeholder="Nombre d'heures par semaine"
+                                    placeholder={t('hoursPerWeek')}
                                     name="hoursPerWeek"
                                     onChange={handleChanges}
                                     required
@@ -276,14 +278,14 @@ const NewOfferForm = ({user}) => {
                             </div>
 
                             <div className="mb-3">
-                                <label htmlFor="startDate">Date de début</label>
+                                <label htmlFor="startDate">{t('startDate')}</label>
                                 <input
                                     type="date"
                                     className={`form-control ${
                                         warnings.startDate ? 'is-invalid' : ''
                                     }`}
                                     id="startDate"
-                                    placeholder="Date de début"
+                                    placeholder={t('startDate')}
                                     name="startDate"
                                     onChange={handleChanges}
                                     required
@@ -297,7 +299,7 @@ const NewOfferForm = ({user}) => {
 
                             <div className="mb-3">
                                 <label htmlFor="duration">
-                                    Durée du stage (en semaine)
+                                    {t('duration')}
                                 </label>
                                 <input
                                     type="number"
@@ -306,7 +308,7 @@ const NewOfferForm = ({user}) => {
                                         warnings.duration ? 'is-invalid' : ''
                                     }`}
                                     id="duration"
-                                    placeholder="Durée du stage"
+                                    placeholder={t('duration')}
                                     name="duration"
                                     onChange={handleChanges}
                                     required
@@ -320,7 +322,7 @@ const NewOfferForm = ({user}) => {
 
                             <div className="mb-3">
                                 <label htmlFor="expirationDate">
-                                    Date d'expiration d'affichage
+                                    {t('endDate')}
                                 </label>
                                 <input
                                     type="date"
@@ -330,7 +332,7 @@ const NewOfferForm = ({user}) => {
                                             : ''
                                     }`}
                                     id="expirationDate"
-                                    placeholder="Date d'expiration"
+                                    placeholder={t('endDate')}
                                     name="expirationDate"
                                     onChange={handleChanges}
                                     required
@@ -348,7 +350,7 @@ const NewOfferForm = ({user}) => {
                                         type="submit"
                                         className="btn btn-outline-ose col-12"
                                     >
-                                        Soumettre l'offre{' '}
+                                        {t('newInternshipSubmit')}{' '}
                                         <FontAwesomeIcon icon={faPaperPlane} />
                                     </button>
                                 </div>
