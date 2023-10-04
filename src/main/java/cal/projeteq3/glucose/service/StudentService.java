@@ -129,7 +129,6 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    // EQ3-13
     @Transactional
     public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId){
         JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);

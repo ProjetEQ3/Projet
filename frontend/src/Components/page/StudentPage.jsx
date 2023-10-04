@@ -59,22 +59,22 @@ const StudentPage = ({user, setUser}) => {
 						{t('jobOffers')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
-						onClick={() => setTab('cv')}
-					>
-						{t('CV')}
-					</button>
-					<button
 						className={`btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
 						onClick={() => setTab('my_applications')}
 					>
 						{t('myApplications')}
 					</button>
+					<button
+						className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
+						onClick={() => setTab('cv')}
+					>
+						{t('CV')}
+					</button>
 				</div>
 				{tab === 'home' && <h3>{t('home')}</h3>}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} applyForJobOffer={applyForJobOffer}/>}
-				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}
 				{tab === 'my_applications' && <MyApplications user={user}/>}
+				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 			</div>
 		</div>
 	)

@@ -41,7 +41,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 				{selectedOffer === null ?
 					<div className="row m-2">
 						<div className="col-12 bg-white rounded">
-							<h2 className="text-dark fw-light pt-1">{t('selectIntership')}</h2>
+							<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
 						</div>
 					</div>
 					:
