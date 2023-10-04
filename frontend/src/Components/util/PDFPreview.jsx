@@ -10,7 +10,7 @@ const PDFPreview = ({file, setIsDisplay}) => {
     return (
         <div className="row">
             <div className="col-12">
-                <iframe src={pdfUrl} className="mx-auto w-100 rounded vh-100"/>
+                <embed src={pdfUrl} className="mx-auto w-100 rounded vh-100"/>
             </div>
         </div>
     );

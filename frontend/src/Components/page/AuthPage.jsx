@@ -2,7 +2,6 @@ import {Route, Routes} from "react-router-dom";
 import LoginForm from "../auth/LoginForm";
 import RegistrationForm from "../auth/RegistrationForm";
 import PageNotFound from "./PageNotFound";
-import RegisterForm from "../auth/RegisterForm";
 
 const AuthPage = ({user, setUser}) => {
 	return (
