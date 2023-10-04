@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -135,7 +134,7 @@ public class ManagerService{
 
 	public JobOfferDTO getJobOfferByID(Long id){
 		return new JobOfferDTO(jobOfferRepository.findById(id)
-				.orElseThrow(() -> new JobOffreNotFoundException(id)));
+				.orElseThrow(() -> new JobOfferNotFoundException(id)));
 	}
 
 	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
@@ -145,7 +144,7 @@ public class ManagerService{
 
 	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
 		JobOffer jobOffer = jobOfferRepository.findById(id)
-				.orElseThrow(() -> new JobOffreNotFoundException(id));
+				.orElseThrow(() -> new JobOfferNotFoundException(id));
 		jobOffer.setJobOfferState(newState);
 		jobOffer.setRefusReason(reason);
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));

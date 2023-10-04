@@ -8,11 +8,9 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
+import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.ManagerNotFoundException;
 import cal.projeteq3.glucose.exception.request.UserNotFoundException;
-import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -23,25 +21,17 @@ import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import cal.projeteq3.glucose.repository.StudentRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -528,7 +518,7 @@ class ManagerServiceTest {
         when(jobOfferRepository.findById(id)).thenReturn(Optional.empty());
 
 //        Act and Assert
-        assertThrows(JobOffreNotFoundException.class, () -> {
+        assertThrows(JobOfferNotFoundException.class, () -> {
             managerService.getJobOfferByID(id);
         });
         verify(jobOfferRepository, times(1)).findById(id);
@@ -895,7 +885,7 @@ class ManagerServiceTest {
         when(jobOfferRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act and Assert
-        assertThrows(JobOffreNotFoundException.class, () -> {
+        assertThrows(JobOfferNotFoundException.class, () -> {
             managerService.updateJobOfferState(id, newState, reason);
         });
         verify(jobOfferRepository, times(1)).findById(id);
