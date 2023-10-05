@@ -142,8 +142,8 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "accept": "Accepter",
-  "startDate": "Date de début: ",
-  "endDate": "Date d'expiration: ",
+  "startDate": "Date de début du stage: ",
+  "endDate": "Date d'expiration de l'offre de stage: ",
   "hoursPerWeek": "Heures par semaine: ",
 
   "fetchError": "Erreur lors de la récupération des données: ",
