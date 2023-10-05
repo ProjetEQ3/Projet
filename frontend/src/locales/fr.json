@@ -95,7 +95,7 @@
 
   "hello": "Bonjour ",
   "yourInternship": "Vos offres de stages",
-  "internshipList": "Liste de vos offres",
+  "internshipList": "Liste de vos offres de stage",
 
   "SUBMITTED": "Attente d'approbation",
   "OPEN": "Ouvert aux candidatures",
@@ -110,13 +110,13 @@
   "salary": "Salaire",
   "department": "Département",
   "location": "Lieu de travail",
-  "internshipTitle": "Titre de l'offre",
-  "internshipDescription": "Description de l'offre",
-  "internshipDetails": "Détails de l'offre",
+  "internshipTitle": "Titre de l'offre de stage",
+  "internshipDescription": "Description de l'offre de stage",
+  "internshipDetails": "Détails de l'offre de stage",
   "addInternship": "Ajouter une offre de stage",
   "selectInternship": "Sélectionnez une offre de stage",
 
-  "newInternshipSubmit": "Soumettre l'offre",
+  "newInternshipSubmit": "Soumettre l'offre de stage",
 
   "updateInternshipSuccess": "Offre de stage mise à jour",
   "updateInternshipError": "Erreur lors de la mise à jour de l'offre de stage",
@@ -152,8 +152,8 @@
   "PDFError": "Veuillez sélectionner un fichier PDF valide.",
   "deleteCV": "CV est supprimé",
 
-  "acceptedOffer": "Offre acceptée",
-  "refusedOffer": "Offre refusée",
+  "acceptedOffer": "offre de stage acceptée",
+  "refusedOffer": "offre de stage refusée",
   "addRefusalReason": "Veuillez ajouter une raison de refus",
 
   "home": "Accueil",
@@ -164,7 +164,7 @@
   "appliedJobOffer": "Vous avez postulé avec succès",
 
   "allInternship": "Toutes les offres de stage: ",
-  "authorizeOffer": "Autorisation de l'offre",
+  "authorizeOffer": "Autorisation de l'offre de stage",
   "refusalReason": "Raison de refus",
 
   "fileName": "Nom du fichier",
