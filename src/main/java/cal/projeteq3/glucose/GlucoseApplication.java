@@ -56,7 +56,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
-		createApplication();
 	}
 
 	private void createApplication(){
