@@ -56,9 +56,9 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
-		createApplication();
 	}
 
+	//Ajouter CV propre
 	private void createApplication(){
 		managerService.updateCvState(1L, CvState.ACCEPTED, null);
 		studentService.applyJobOffer(3L, 9L);
