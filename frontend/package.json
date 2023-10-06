@@ -20,6 +20,7 @@
     "react-fontawesome": "^1.7.1",
     "react-i18next": "^13.2.2",
     "react-icons": "^4.8.0",
+    "react-pdf": "^7.5.0",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",

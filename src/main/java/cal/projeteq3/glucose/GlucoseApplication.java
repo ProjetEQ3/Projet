@@ -28,7 +28,6 @@ import java.util.List;
 
 @SpringBootApplication
 public class GlucoseApplication implements CommandLineRunner {
-
 	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
@@ -56,7 +55,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
-		createApplication();
 	}
 
 	private void createApplication(){
