@@ -143,7 +143,7 @@
   "close": "Close",
   "accept": "Accept",
   "startDate": "Start Date of the internship: ",
-  "endDate": "End Date of the offer: ",
+  "expirationDate": "End Date of the offer: ",
   "endDateInternship": "End Date of the internship: ",
   "hoursPerWeek": "Hours per Week: ",
 

@@ -148,7 +148,7 @@
   "accept": "Accepter",
   "preview": "Aperçu",
   "startDate": "Date de début du stage: ",
-  "endDate": "Date d'expiration de l'offre de stage: ",
+  "expirationDate": "Date d'expiration de l'offre de stage: ",
   "endDateInternship": "Date de fin du stage: ",
   "hoursPerWeek": "Heures par semaine: ",
 

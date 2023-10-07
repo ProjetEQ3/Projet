@@ -85,7 +85,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                     }
                     <p className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</p>
                     { jobOffer.expirationDate !== undefined &&
-                        (<p className="text-dark fw-light mb-3">{t('endDate') + jobOffer.expirationDate}</p>)
+                        (<p className="text-dark fw-light mb-3">{t('expirationDate') + jobOffer.expirationDate}</p>)
                     }
                     <p className="text-dark fw-light mb-3">{jobOffer.salary}$/h</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</p>
