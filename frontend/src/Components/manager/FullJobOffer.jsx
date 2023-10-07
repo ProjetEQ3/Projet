@@ -78,7 +78,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                     <div className="d-flex m-2">
                         <State state={jobOffer.jobOfferState}/>
                     </div>
-                    <p className="text-dark fw-light mb-3">{jobOffer.department}</p>
+                    <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.location}</p>
                     { jobOffer.startDate !== undefined &&
                         (<p className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</p>)
@@ -94,14 +94,14 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                 <div className="modal-footer">
                     {isDecline ? (
                         <form id="refusalForm" className="form col-10 mx-auto">
-                            <p>Êtes-vous sûr de vouloir refuser cette offre?</p>
+                            <p>{t('confirmRefusal')}</p>
                             <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder={t('refusalReason')} required/>
-                            <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
+                            <button type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal">{t('confirm')}</button>
                             <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">{t('cancel')}</button>
                         </form>) :
                         (<div>
                             <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
-                            <button type="button" onClick={handleDecline} className="btn btn-danger">Refuser</button>
+                            <button type="button" onClick={handleDecline} className="btn btn-danger">{t('refuse')}</button>
                         </div>)}
                 </div>
              </div>
