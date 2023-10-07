@@ -208,7 +208,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="nbOfCandidates">{t('nbOfCandidates')}</label>
-                                        <input type="number" min="0" max="10" className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''}`} id="nbOfCandidates" placeholder={jobOffer.nbOfCandidates} name="nbOfCandidates" onChange={handleChange} required/>
+                                        <input type="number" min="0" max="10" className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''}`} id="nbOfCandidates" placeholder={jobOffer.nbOfCandidates} name="nbOfCandidates" onChange={handleChange}/>
                                         {warnings.nbOfCandidates && (
                                             <div className="invalid-feedback">
                                                 {warnings.nbOfCandidates}
