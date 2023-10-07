@@ -5,10 +5,14 @@ import Loading from "../util/Loading";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
+    const loadCalculateEndDate = () => {
+        return new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    }
     const {t} = useTranslation();
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false);
     const [isModified, setIsModified] = useState(false);
+    const [estimateEndDate, setEstimateEndDate] = useState(loadCalculateEndDate);
     const [newOffer, setNewOffer] = useState({
         jobOfferState: 'SUBMITTED',
         id: jobOffer.id,
@@ -38,6 +42,10 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         nbOfCandidates: ''
     })
 
+    const calculateEndDate = (startDate, duration) => {
+        setEstimateEndDate(new Date(new Date(startDate).getTime() + duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+    }
+
     const handleChange = (e) => {
         e.preventDefault();
         const {name, value} = e.target;
@@ -47,6 +55,9 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         else {
             setNewOffer({...newOffer, [name]: jobOffer[name]});
         }
+        console.log(newOffer.startDate);
+        console.log(newOffer.duration);
+        calculateEndDate(newOffer.startDate, newOffer.duration);
     }
 
     const handleClose = (e) => {
@@ -146,6 +157,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 { jobOffer.expirationDate !== null &&
                                     (<h6 className="text-dark fw-light mb-3">{t('endDate')} {jobOffer.expirationDate}</h6>)
                                 }
+                                <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
                                 <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
@@ -215,7 +227,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="startDate" className="mt-3">{t('startDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`} id="startDate" placeholder={jobOffer.startDate.split('T')[0]} onChange={handleChange} name="startDate"/>
+                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`} id="startDate" placeholder={jobOffer.startDate} onChange={handleChange} name="startDate"/>
                                         {warnings.startDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.startDate}
@@ -229,7 +241,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="expirationDate" className="mt-3">{t('endDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
+                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate} onChange={handleChange} name="expirationDate"/>
                                         {warnings.expirationDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.expirationDate}
