@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.request.CvFileNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;

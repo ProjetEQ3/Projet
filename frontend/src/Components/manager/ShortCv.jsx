@@ -5,7 +5,7 @@ import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-sv
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import State from "../util/State";
-import PDFPreview from "../util/PDFPreview";
+import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 
 const ShortCv = ({cv, index, updateCvList}) => {

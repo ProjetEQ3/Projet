@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose.dto.jobOffer;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;

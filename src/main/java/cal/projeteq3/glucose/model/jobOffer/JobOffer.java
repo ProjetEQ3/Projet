@@ -50,6 +50,8 @@ public class JobOffer{
 
 	private int hoursPerWeek;
 
+	private int nbOfCandidates;
+
 	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
@@ -72,6 +74,7 @@ public class JobOffer{
 		this.expirationDate = jobOffer.getExpirationDate();
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
+		this.nbOfCandidates = jobOffer.getNbOfCandidates();
 	}
 
 	// EQ3-13

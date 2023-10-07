@@ -8,13 +8,14 @@ import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
 
 const NewOfferForm = ({user}) => {
-    const [t, i18n] = useTranslation();
+    const [t] = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         department: '',
         location: '',
+        nbOfCandidates: 1,
         description: '',
         salary: '',
         hoursPerWeek: '',
@@ -33,6 +34,7 @@ const NewOfferForm = ({user}) => {
         startDate: '',
         duration: '',
         expirationDate: '',
+        nbOfCandidates: '',
     })
 
     const saveOffer = async () => {
@@ -73,6 +75,13 @@ const NewOfferForm = ({user}) => {
 
         if (formData.location === '') {
             validationErrors.location = t('locationRequired');
+        }
+
+        if (formData.nbOfCandidates === '') {
+            validationErrors.nbOfCandidates = t('nbOfCandidatesRequired');
+        }
+        else if (formData.nbOfCandidates < 1) {
+            validationErrors.nbOfCandidates = t('minimumNbOfCandidates');
         }
 
         if (formData.description === '') {
@@ -207,6 +216,28 @@ const NewOfferForm = ({user}) => {
                                 {warnings.location && (
                                     <div className="invalid-feedback">
                                         {warnings.location}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
+                                <label htmlFor="nbOfCandidates">{t('nbOfCandidates')}</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="10"
+                                    className={`form-control ${
+                                        warnings.nbOfCandidates ? 'is-invalid' : ''
+                                    }`}
+                                    id="nbOfCandidates"
+                                    placeholder={t('nbOfCandidatesPlaceHolder')}
+                                    name="nbOfCandidates"
+                                    onChange={handleChanges}
+                                    required
+                                />
+                                {warnings.nbOfCandidates && (
+                                    <div className="invalid-feedback">
+                                        {warnings.nbOfCandidates}
                                     </div>
                                 )}
                             </div>

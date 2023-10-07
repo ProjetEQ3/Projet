@@ -1,15 +1,12 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -13,14 +13,9 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
-import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.auth.Credentials;
-import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;

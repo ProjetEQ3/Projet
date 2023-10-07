@@ -23,6 +23,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                     <div className="col-8 col-sm-6">
                         <h5 className="text-dark fw-light pt-1">{jobOffer.title}</h5>
                         <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
+                        <p className="text-dark fw-light float-end">{t('nbOfCandidates')} <span><strong>{jobOffer.nbOfCandidates}</strong></span></p>
                     </div>
                     <div className="col-4 my-auto text-center d-none d-sm-block">
                         <State state={jobOffer.jobOfferState}/>

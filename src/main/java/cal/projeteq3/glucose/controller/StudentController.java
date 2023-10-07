@@ -1,9 +1,8 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
-import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -34,6 +33,13 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentService.createStudent(student));
+    }
+
+    @GetMapping("/cv/{studentId}")
+    public ResponseEntity<CvFileDTO> getCv(@PathVariable Long studentId) {
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.getCv(studentId));
     }
 
     @PostMapping("/cv/{studentId}")
@@ -80,7 +86,6 @@ public class StudentController {
     @PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
     public ResponseEntity<JobOfferDTO> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId) {
         return ResponseEntity.accepted().body(studentService.applyJobOffer(jobOfferId, studentId));
-
     }
 
     @GetMapping("/appliedJobOffer/{studentId}")

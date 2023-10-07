@@ -1,12 +1,10 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.APIException;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;

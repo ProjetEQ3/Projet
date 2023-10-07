@@ -74,6 +74,7 @@
   "organisationPhoneRequired": "Le numéro de téléphone de l'organisation est obligatoire.",
   "organisationNameInvalid": "Le nom de l'organisation doit être en format alphanumérique.",
   "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
+  "nbOfCandidatesPlaceHolder": "Entrez le nombre de candidats",
 
   "newInternshipCreation": "Création d'une nouvelle offre de stage",
 
@@ -81,6 +82,8 @@
   "departmentRequired": "Le département est obligatoire.",
   "locationRequired": "Le lieu est obligatoire.",
   "descriptionRequired": "La description est obligatoire.",
+  "nbOfCandidatesRequired": "Le nombre de candidats est obligatoire.",
+  "minimumNbOfCandidates": "Le nombre de candidats doit être d'au moins 1.",
   "salaryRequired": "Le salaire est obligatoire.",
   "salaryMustBePositive": "Le salaire doit être positif.",
   "hoursPerWeekRequired": "Le nombre d'heures par semaine est obligatoire.",
@@ -115,6 +118,7 @@
   "internshipDetails": "Détails de l'offre de stage",
   "addInternship": "Ajouter une offre de stage",
   "selectInternship": "Sélectionnez une offre de stage",
+  "nbOfCandidates": "Nombre de candidats :",
 
   "newInternshipSubmit": "Soumettre l'offre de stage",
 
@@ -142,6 +146,7 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "accept": "Accepter",
+  "preview": "Aperçu",
   "startDate": "Date de début du stage: ",
   "endDate": "Date d'expiration de l'offre de stage: ",
   "endDateInternship": "Date de fin du stage: ",

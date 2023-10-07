@@ -34,10 +34,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 					<div className="col-3 my-auto text-center">
 						<div className="col-3 my-auto text-center">
 							<button className={"btn btn-outline-ose"} onClick={
-								user.cvFile.cvState === "ACCEPTED" ?
-								() => applyForJobOffer(jobOffer.id, user.id) :
-								() => toast.error(t('cvNotApproved'))}
-							>{t('apply')}</button>
+								() => applyForJobOffer(jobOffer.id, user.id)}>{t('apply')}</button>
 						</div>
 					</div>
 				</div>

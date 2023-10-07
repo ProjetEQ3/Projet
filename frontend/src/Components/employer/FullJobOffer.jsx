@@ -22,6 +22,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         startDate: jobOffer.startDate,
         duration: jobOffer.duration,
         expirationDate: jobOffer.expirationDate,
+        nbOfCandidates: jobOffer.nbOfCandidates,
     })
 
     const [warnings, setWarnings] = useState({
@@ -34,6 +35,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         startDate: '',
         duration: '',
         expirationDate: '',
+        nbOfCandidates: ''
     })
 
     const handleChange = (e) => {
@@ -63,6 +65,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                 startDate: jobOffer.startDate,
                 duration: jobOffer.duration,
                 expirationDate: jobOffer.expirationDate,
+                nbOfCandidates: jobOffer.nbOfCandidates,
             }
         )
         formRef.current.reset();
@@ -86,6 +89,14 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         if (newOffer.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(newOffer.startDate)) {
             validationErrors.startDate = t('startDateFormat');
         }
+
+        if (newOffer.nbOfCandidates === '') {
+            validationErrors.nbOfCandidates = t('nbOfCandidatesRequired');
+        }
+        else if (newOffer.nbOfCandidates < 1) {
+            validationErrors.nbOfCandidates = t('minimumNbOfCandidates');
+        }
+
         else if (newOffer.startDate && new Date(newOffer.startDate) < new Date()) {
             validationErrors.startDate = t('startDateNotPassed');
         }
@@ -194,6 +205,13 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                         {warnings.location && (
                                             <div className="invalid-feedback">
                                                 {warnings.location}
+                                            </div>
+                                        )}
+                                        <label htmlFor="nbOfCandidates">{t('nbOfCandidates')}</label>
+                                        <input type="number" min="0" max="10" className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''}`} id="nbOfCandidates" placeholder={jobOffer.nbOfCandidates} name="nbOfCandidates" onChange={handleChange} required/>
+                                        {warnings.nbOfCandidates && (
+                                            <div className="invalid-feedback">
+                                                {warnings.nbOfCandidates}
                                             </div>
                                         )}
                                         <label htmlFor="startDate" className="mt-3">{t('startDate')}</label>
