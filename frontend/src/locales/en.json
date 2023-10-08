@@ -74,6 +74,7 @@
   "organisationPhoneRequired": "Organization phone number is required.",
   "organisationNameInvalid": "Organization name must be in alphanumeric format.",
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
+  "nbOfCandidatesPlaceHolder": "Enter the number of candidates",
 
   "newInternshipCreation": "Creating a new internship offer",
 
@@ -81,6 +82,7 @@
   "departmentRequired": "Department is required.",
   "locationRequired": "Location is required.",
   "descriptionRequired": "Description is required.",
+  "nbOfCandidatesRequired": "Number of candidates is required.",
   "salaryRequired": "Salary is required.",
   "salaryMustBePositive": "Salary must be positive.",
   "hoursPerWeekRequired": "Hours per week are required.",
@@ -117,6 +119,7 @@
   "selectInternship": "Select an internship offer",
 
   "newInternshipSubmit": "Submit Offer",
+  "nbOfCandidates": "Number of candidates",
 
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",

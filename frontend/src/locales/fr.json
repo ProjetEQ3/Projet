@@ -188,7 +188,6 @@
   "declineStudentSuccess" : "Étudiant refusé",
   "declineStudentError" : "Erreur lors du refus de l'étudiant: ",
 
-
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
   "cvNotApproved": "CV non approuvé",
