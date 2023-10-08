@@ -119,7 +119,7 @@
   "selectInternship": "Select an internship offer",
 
   "newInternshipSubmit": "Submit Offer",
-  "nbOfCandidates": "Number of candidates",
+  "nbOfCandidates": "Number of candidates looked for : ",
 
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",

@@ -1,5 +1,3 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useEffect, useState} from "react";

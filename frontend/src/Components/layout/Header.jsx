@@ -17,11 +17,15 @@ function Header({user}) {
                                 <p className="display-3 ms-2 my-3">{t('glucoseAcronym')}</p>
                             </div>
                         </NavLink>
-                        <p className="lead d-none d-md-block">{t('glucoseFullAcronym')}</p>
+                        <p className="lead d-none d-lg-block">{t('glucoseFullAcronym')}</p>
                         {user?.isLoggedIn ?
-                            <div className="m-3 text-center lh-1">
-                                <LngSelector/>
-                                <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
+                            <div className="m-3 col-lg-2 col-md-4 col-6 text-center lh-1">
+                                <div className="d-md-flex justify-content-around">
+                                    <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
+                                    <div className="m-0 p-0 float-end">
+                                        <LngSelector/>
+                                    </div>
+                                </div>
                                 <a className="text-light text-decoration-none h6" href="/">{t('disconnect')}</a>
                             </div> :
                             <div className="align-self-start d-flex m-3">

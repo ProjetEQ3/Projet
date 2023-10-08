@@ -79,9 +79,9 @@ const LoginForm = ({user, setUser}) => {
 							<div className="row">
 								<div className="col-9 mx-auto">
 								<form id="login-form" className="form-group">
-									<label htmlFor="colFormLabelSm" className="col-sm-3 mt-3">{t('email')}</label>
+									<label htmlFor="colFormLabelSm" className="mt-3">{t('email')}</label>
 									<input type="email" className="form-control" placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges} required/>
-									<label htmlFor="colFormLabelLg" className="col-sm-3 mt-3">{t('password')}</label>
+									<label htmlFor="colFormLabelLg" className="mt-3">{t('password')}</label>
 									<input type="password" className="form-control" placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges} required/>
 									<div className="row col-6 mx-auto">
 										<button type="submit" className="btn btn-outline-ose my-5 mx-auto" onClick={handleSubmit}>{t('loginSubmit')}</button>

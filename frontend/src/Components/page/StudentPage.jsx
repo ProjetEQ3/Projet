@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react"
 import Cv from "../student/Cv"
 import {useNavigate} from "react-router-dom"
-import JobOfferList from "../jobOffer/JobOfferList";
+import JobOfferList from "../student/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
 import {toast} from "react-toastify";
