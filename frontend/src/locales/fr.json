@@ -150,7 +150,7 @@
   "startDate": "Date de début du stage: ",
   "expirationDate": "Date d'expiration de l'offre de stage: ",
   "endDateInternship": "Date de fin du stage: ",
-  "hoursPerWeek": "Heures par semaine: ",
+  "hoursPerWeek": "Heures par semaine",
 
   "fetchError": "Erreur lors de la récupération des données: ",
   "pushingError": "Erreur lors de l'envoi des données: ",

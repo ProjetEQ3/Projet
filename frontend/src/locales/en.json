@@ -148,7 +148,7 @@
   "startDate": "Start Date of the internship: ",
   "expirationDate": "End Date of the offer: ",
   "endDateInternship": "End Date of the internship: ",
-  "hoursPerWeek": "Hours per Week: ",
+  "hoursPerWeek": "Hours per Week",
 
   "fetchError": "Error retrieving data: ",
   "pushingError": "Error sending data: ",
