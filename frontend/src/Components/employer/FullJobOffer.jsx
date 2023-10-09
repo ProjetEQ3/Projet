@@ -155,7 +155,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 }
                                 <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
                                 { jobOffer.expirationDate !== null &&
-                                    (<h6 className="text-dark fw-light mb-3">{t('endDate')} {jobOffer.expirationDate}</h6>)
+                                    (<h6 className="text-dark fw-light mb-3">{t('expirationDate')} {jobOffer.expirationDate}</h6>)
                                 }
                                 <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
@@ -240,8 +240,8 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                                 {warnings.duration}
                                             </div>
                                         )}
-                                        <label htmlFor="expirationDate" className="mt-3">{t('endDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate} onChange={handleChange} name="expirationDate"/>
+                                        <label htmlFor="expirationDate" className="mt-3">{t('expirationDate')}</label>
+                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
                                         {warnings.expirationDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.expirationDate}

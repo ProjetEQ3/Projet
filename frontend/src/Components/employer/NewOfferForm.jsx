@@ -353,7 +353,7 @@ const NewOfferForm = ({user}) => {
 
                             <div className="mb-3">
                                 <label htmlFor="expirationDate">
-                                    {t('endDate')}
+                                    {t('expirationDate')}
                                 </label>
                                 <input
                                     type="date"
@@ -363,7 +363,7 @@ const NewOfferForm = ({user}) => {
                                             : ''
                                     }`}
                                     id="expirationDate"
-                                    placeholder={t('endDate')}
+                                    placeholder={t('expirationDate')}
                                     name="expirationDate"
                                     onChange={handleChanges}
                                     required

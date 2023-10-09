@@ -13,7 +13,7 @@ const State = ({ state }) => {
     return (
         <>
             {
-                <div className={classes + " border rounded px-2 "}>
+                <div className={classes + " border rounded col-12 col-lg-10 float-end"}>
                     {t(state)}
                 </div>
             }

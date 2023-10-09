@@ -74,6 +74,7 @@
   "organisationPhoneRequired": "Organization phone number is required.",
   "organisationNameInvalid": "Organization name must be in alphanumeric format.",
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
+  "nbOfCandidatesPlaceHolder": "Enter the number of candidates",
 
   "newInternshipCreation": "Creating a new internship offer",
 
@@ -81,6 +82,7 @@
   "departmentRequired": "Department is required.",
   "locationRequired": "Location is required.",
   "descriptionRequired": "Description is required.",
+  "nbOfCandidatesRequired": "Number of candidates is required.",
   "salaryRequired": "Salary is required.",
   "salaryMustBePositive": "Salary must be positive.",
   "hoursPerWeekRequired": "Hours per week are required.",
@@ -118,6 +120,7 @@
   "estimateEndDate": "Estimated dnd date :",
 
   "newInternshipSubmit": "Submit Offer",
+  "nbOfCandidates": "Number of candidates looked for : ",
 
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",
@@ -144,9 +147,9 @@
   "close": "Close",
   "accept": "Accept",
   "startDate": "Start Date of the internship: ",
-  "endDate": "End Date of the offer: ",
+  "expirationDate": "End Date of the offer: ",
   "endDateInternship": "End Date of the internship: ",
-  "hoursPerWeek": "Hours per Week: ",
+  "hoursPerWeek": "Hours per Week",
 
   "fetchError": "Error retrieving data: ",
   "pushingError": "Error sending data: ",

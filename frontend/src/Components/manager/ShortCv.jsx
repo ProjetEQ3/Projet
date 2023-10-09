@@ -78,11 +78,11 @@ const ShortCv = ({cv, index, updateCvList}) => {
             <div className="row m-2">
                 <div className="col-12 bg-white rounded">
                     <div className="row">
-                        <div className="col-8">
+                        <div className="col-6">
                             <h4 className="text-dark fw-light m-0 p-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
                         </div>
-                        <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
-                            <div className="my-auto mx-auto d-none d-lg-block">
+                        <div className="col-6 my-auto d-block d-md-flex justify-content-end justify-content-md-between">
+                            <div className="my-auto col-6 text-center d-block">
                                 <State state={cv.cvState}/>
                             </div>
                             <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('probation')}</div>
@@ -95,7 +95,6 @@ const ShortCv = ({cv, index, updateCvList}) => {
                                         </div>
                                         <div className="modal-body">
                                             <h3 className="text-dark fw-light mb-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h3>
-                                            {/*<h3 className="text-dark fw-light mb-3">{cv.fileName}</h3>*/}
                                             {isDisplay ? (
                                                 <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
                                             ) : null}

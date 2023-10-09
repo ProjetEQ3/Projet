@@ -614,4 +614,47 @@ public class StudentServiceTest {
         verify(studentRepository, times(1)).findById(notFoundStudentId);
 
     }
+
+    @Test
+    public void getCv_Valid() {
+        // Arrange
+        Long studentId = 1L;
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+
+        CvFile cvFile = CvFile.builder()
+                .fileName("cv.pdf")
+                .fileData(new byte[]{1,1,1,1,1,1,1,1,1,1,1})
+                .cvState(CvState.SUBMITTED)
+                .build();
+
+        student.setCvFile(cvFile);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+        CvFileDTO cvFileDTO = studentService.getCv(studentId);
+
+        // Assert
+        assertEquals(cvFile.getFileName(), cvFileDTO.getFileName());
+        assertEquals(cvFile.getFileData(), cvFileDTO.getFileData());
+        assertEquals(cvFile.getCvState(), cvFileDTO.getCvState());
+        assertEquals(cvFile.getRefusReason(), cvFileDTO.getRefusReason());
+        verify(studentRepository, times(1)).findById(studentId);
+    }
+
+    @Test
+    public void getCv_studentNotFound() {
+        // Arrange
+        Long notFoundStudentId = -1L;
+
+        when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getCv(notFoundStudentId);
+        });
+        verify(studentRepository, times(1)).findById(notFoundStudentId);
+    }
 }
