@@ -25,6 +25,7 @@ const EmployerPage = ({user}) => {
 	}
 
 	const updateOffer = (offer) => {
+		console.log("updateOffer", offer)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {
