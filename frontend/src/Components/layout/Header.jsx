@@ -28,8 +28,10 @@ function Header({user}) {
                                 </div>
                                 <a className="text-light text-decoration-none h6" href="/">{t('disconnect')}</a>
                             </div> :
-                            <div className="align-self-start d-flex m-3">
-                                <LngSelector/>
+                            <div className="align-self-start d-md-flex m-3">
+                                <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5">
+                                    <LngSelector/>
+                                </div>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/login">{t('login')}</a>
                                 <div className="vr"></div>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/register">{t('registerSubmit')}</a>
