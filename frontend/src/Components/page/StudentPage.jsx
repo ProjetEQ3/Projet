@@ -47,25 +47,25 @@ const StudentPage = ({user, setUser}) => {
 			<div>
 				<div className="tabs btn-group my-2 mx-auto col-12">
 					<button
-						className={`btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
 						onClick={() => setTab('home')}
 					>
 						{t('home')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
 						onClick={() => setTab('stages')}
 					>
 						{t('jobOffers')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
 						onClick={() => setTab('my_applications')}
 					>
 						{t('myApplications')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
 						onClick={() => setTab('cv')}
 					>
 						{t('CV')}
