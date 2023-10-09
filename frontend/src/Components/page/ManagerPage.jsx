@@ -48,9 +48,9 @@ const ManagerPage = ({user}) => {
         <div className="container">
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
-                    <button className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
                             onClick={() => setTab('stages')}>{t('internship')}</button>
-                    <button className={`btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
                             onClick={() => setTab('cvs')}>CVs</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}/>}

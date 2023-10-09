@@ -73,7 +73,7 @@ const LoginForm = ({user, setUser}) => {
 					navigate("/")
 				) : (
 					<>
-						<div className="container">
+						<div className="container mt-5">
 							<h1 className="display-6 text-center mb-3">GlucOSE</h1>
 							{isLoading ? <Loading/> :
 							<div className="row">

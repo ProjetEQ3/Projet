@@ -75,7 +75,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                 </div>
                 <div className="modal-body">
                     <h3 className="text-dark fw-light mb-3">{jobOffer.title}</h3>
-                    <div className="d-flex m-2">
+                    <div className="d-flex m-2 text-center">
                         <State state={jobOffer.jobOfferState}/>
                     </div>
                     <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
