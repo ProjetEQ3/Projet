@@ -14,10 +14,10 @@ function Header({user}) {
                         <NavLink className="text-decoration-none text-white col-2" to="/">
                             <div className="d-flex">
                                 <img alt="Logo" className="col-4 d-none d-md-block" src={logo}/>
-                                <p className="display-3 ms-2 my-3">{t('glucoseAcronym')}</p>
+                                <p className="display-5 ms-2 my-3">{t('glucoseAcronym')}</p>
                             </div>
                         </NavLink>
-                        <p className="lead d-none d-lg-block">{t('glucoseFullAcronym')}</p>
+                        <p className="lead d-none d-lg-block col-lg-4 col-md-2 text-center">{t('glucoseFullAcronym')}</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 col-lg-2 col-md-4 col-6 text-center lh-1">
                                 <div className="d-md-flex justify-content-around">
