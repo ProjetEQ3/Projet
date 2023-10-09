@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../logo.png";
+import logo from "../../logo.svg";
 import {NavLink} from "react-router-dom";
 import LngSelector from "../util/LngSelector";
 import {useTranslation} from "react-i18next";
