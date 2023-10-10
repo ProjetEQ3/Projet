@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
@@ -12,6 +12,11 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
     const [formData, setFormData] = useState({
         refusalReason: '',
     });
+
+    let estimateEndDate = '';
+    if(jobOffer.startDate && jobOffer.duration) {
+        estimateEndDate = (new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+    }
     const handleAccept = (e) => {
         e.preventDefault();
         axiosInstance.put(`/manager/jobOffer/accept/${jobOffer.id}`)
@@ -80,13 +85,10 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                     </div>
                     <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.location}</p>
-                    { jobOffer.startDate !== undefined &&
-                        (<p className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</p>)
-                    }
+                    <p className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</p>
                     <p className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</p>
-                    { jobOffer.expirationDate !== undefined &&
-                        (<p className="text-dark fw-light mb-3">{t('expirationDate') + jobOffer.expirationDate}</p>)
-                    }
+                    <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
+                    <p className="text-dark fw-light mb-3">{t('expirationDate') + jobOffer.expirationDate}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.salary}$/h</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</p>
                     <p className="text-dark fw-light mb-3">{jobOffer.description}</p>

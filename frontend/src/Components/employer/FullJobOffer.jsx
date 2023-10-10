@@ -1,14 +1,18 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare, faX} from '@fortawesome/free-solid-svg-icons';
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Loading from "../util/Loading";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
+    const loadCalculateEndDate = () => {
+        return new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    }
     const {t} = useTranslation();
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false);
     const [isModified, setIsModified] = useState(false);
+    const [estimateEndDate, setEstimateEndDate] = useState('');
     const [newOffer, setNewOffer] = useState({
         jobOfferState: 'SUBMITTED',
         id: jobOffer.id,
@@ -24,6 +28,24 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         expirationDate: jobOffer.expirationDate,
         nbOfCandidates: jobOffer.nbOfCandidates,
     })
+    useEffect(() => {
+        setEstimateEndDate(loadCalculateEndDate())
+        setNewOffer({
+            jobOfferState: jobOffer.jobOfferState,
+            refusReason: jobOffer.refusReason,
+            id: jobOffer.id,
+            title: jobOffer.title,
+            department: jobOffer.department,
+            location: jobOffer.location,
+            description: jobOffer.description,
+            salary: jobOffer.salary,
+            hoursPerWeek: jobOffer.hoursPerWeek,
+            startDate: jobOffer.startDate,
+            duration: jobOffer.duration,
+            expirationDate: jobOffer.expirationDate,
+            nbOfCandidates: jobOffer.nbOfCandidates,
+        })
+    }, [jobOffer]);
 
     const [warnings, setWarnings] = useState({
         title: '',
@@ -38,10 +60,21 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         nbOfCandidates: ''
     })
 
+    const calculateEndDate = (startDate, duration) => {
+        setEstimateEndDate(new Date(new Date(startDate).getTime() + duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+    }
+
     const handleChange = (e) => {
+
         e.preventDefault();
         const {name, value} = e.target;
         if(value.trim() !== '') {
+            if(name === 'duration') {
+                calculateEndDate(newOffer.startDate, value);
+            }
+            else if(name === 'startDate') {
+                calculateEndDate(value, newOffer.duration);
+            }
             setNewOffer({...newOffer, [name]: value.trim()});
         }
         else {
@@ -73,8 +106,6 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        newOffer.startDate = newOffer.startDate.split('T')[0];
-        newOffer.expirationDate = newOffer.expirationDate.split('T')[0];
 
         const validationErrors = {};
 
@@ -146,6 +177,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 { jobOffer.expirationDate !== null &&
                                     (<h6 className="text-dark fw-light mb-3">{t('expirationDate')} {jobOffer.expirationDate}</h6>)
                                 }
+                                <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
                                 <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
                                 <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
@@ -215,7 +247,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="startDate" className="mt-3">{t('startDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`} id="startDate" placeholder={jobOffer.startDate.split('T')[0]} onChange={handleChange} name="startDate"/>
+                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`} id="startDate" placeholder={jobOffer.startDate} onChange={handleChange} name="startDate"/>
                                         {warnings.startDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.startDate}
@@ -228,6 +260,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                                 {warnings.duration}
                                             </div>
                                         )}
+                                        <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                         <label htmlFor="expirationDate" className="mt-3">{t('expirationDate')}</label>
                                         <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
                                         {warnings.expirationDate && (

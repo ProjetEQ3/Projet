@@ -22,10 +22,11 @@ const EmployerPage = ({user}) => {
 		axiosInstance
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {setOffers(response.data)})
-			.catch((error) => {console.log("Error", error)});
 	}
 
 	const updateOffer = (offer) => {
+		console.log("updateOffer", selectedOffer.id)
+		console.log("updateOffer", offer.id)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {

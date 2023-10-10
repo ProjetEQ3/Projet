@@ -6,6 +6,9 @@
   "disconnect": "Se Déconnecter",
   "login": "Connecter",
 
+  "wrongEmail": "L'adresse courriel est invalide",
+  "wrongPassword": "Le mot de passe est invalide",
+
   "welcome": "Bienvenue sur ",
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",
@@ -118,7 +121,8 @@
   "internshipDetails": "Détails de l'offre de stage",
   "addInternship": "Ajouter une offre de stage",
   "selectInternship": "Sélectionnez une offre de stage",
-  "nbOfCandidates": "Nombre de candidats demandés :",
+  "nbOfCandidates": "Nombre de candidats :",
+  "estimateEndDate": "Date de fin estimée :",
 
   "newInternshipSubmit": "Soumettre l'offre de stage",
 
@@ -150,7 +154,7 @@
   "startDate": "Date de début du stage: ",
   "expirationDate": "Date d'expiration de l'offre de stage: ",
   "endDateInternship": "Date de fin du stage: ",
-  "hoursPerWeek": "Heures par semaine",
+  "hoursPerWeek": "Heures par semaine: ",
 
   "fetchError": "Erreur lors de la récupération des données: ",
   "pushingError": "Erreur lors de l'envoi des données: ",
@@ -187,6 +191,7 @@
   "acceptStudentError" : "Erreur lors de l'acceptation de l'étudiant: ",
   "declineStudentSuccess" : "Étudiant refusé",
   "declineStudentError" : "Erreur lors du refus de l'étudiant: ",
+
 
   "updatedCV": "CV mis à jour avec l'état: ",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",

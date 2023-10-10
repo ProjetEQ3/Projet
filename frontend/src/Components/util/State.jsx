@@ -2,7 +2,6 @@ import React from "react";
 import {t} from "i18next";
 
 const State = ({ state }) => {
-    console.log(state)
     const classes = state === 'OPEN' ? 'border-success text-success' :
         state === 'SUBMITTED' ? 'border-secondary text-secondary' :
             state === 'REFUSED' ? 'border-danger text-danger' :

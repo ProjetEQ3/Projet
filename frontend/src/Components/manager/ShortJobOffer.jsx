@@ -22,6 +22,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                     <div className="col-6">
                         <h4 className="text-dark fw-light pt-1">{jobOffer.title}</h4>
                         <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
+                        <p className="text-dark fw-light float-sm-end">{t('nbOfCandidates')} <span><strong>{jobOffer.nbOfCandidates}</strong></span></p>
                     </div>
                     <div className="col-6 my-auto d-flex justify-content-around">
                         <div className="d-none d-lg-block my-auto col-6 text-center">
