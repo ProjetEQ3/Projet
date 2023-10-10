@@ -8,10 +8,6 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const loadCalculateEndDate = () => {
         return new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     }
-    useEffect(() => {
-        console.log("useEffect");
-        setEstimateEndDate(loadCalculateEndDate())
-    }, [jobOffer]);
     const {t} = useTranslation();
     const formRef = useRef(null)
     const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +28,24 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         expirationDate: jobOffer.expirationDate,
         nbOfCandidates: jobOffer.nbOfCandidates,
     })
+    useEffect(() => {
+        setEstimateEndDate(loadCalculateEndDate())
+        setNewOffer({
+            jobOfferState: jobOffer.jobOfferState,
+            refusReason: jobOffer.refusReason,
+            id: jobOffer.id,
+            title: jobOffer.title,
+            department: jobOffer.department,
+            location: jobOffer.location,
+            description: jobOffer.description,
+            salary: jobOffer.salary,
+            hoursPerWeek: jobOffer.hoursPerWeek,
+            startDate: jobOffer.startDate,
+            duration: jobOffer.duration,
+            expirationDate: jobOffer.expirationDate,
+            nbOfCandidates: jobOffer.nbOfCandidates,
+        })
+    }, [jobOffer]);
 
     const [warnings, setWarnings] = useState({
         title: '',
@@ -92,8 +106,6 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        newOffer.startDate = newOffer.startDate.split('T')[0];
-        newOffer.expirationDate = newOffer.expirationDate.split('T')[0];
 
         const validationErrors = {};
 

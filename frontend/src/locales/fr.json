@@ -6,6 +6,9 @@
   "disconnect": "Se Déconnecter",
   "login": "Connecter",
 
+  "wrongEmail": "L'adresse courriel est invalide",
+  "wrongPassword": "Le mot de passe est invalide",
+
   "welcome": "Bienvenue sur ",
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",

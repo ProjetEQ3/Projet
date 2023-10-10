@@ -6,6 +6,9 @@
   "disconnect": "Disconnect",
   "login": "Log In",
 
+  "wrongEmail": "Wrong email",
+  "wrongPassword": "Wrong password",
+
   "welcome": "Welcome to ",
   "descTitle": "Your internship management application",
   "description": "GlucOSE is a web application for managing student internships.",
