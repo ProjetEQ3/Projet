@@ -29,7 +29,7 @@ const StudentPage = ({user, setUser}) => {
 					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
 			  }).catch((error) => {
-				  toast.error(t('fetchError') + error);
+				  toast.error(t('fetchError') + t(error));
 				  console.log(t('fetchError') + error);
 			  });
 	  }

@@ -27,7 +27,7 @@ function MyApplications({ user }) {
                 });
                 setMyApplications(jobOffers);
             } catch (error) {
-                toast.error(t('fetchError') + error.message);
+                toast.error(t('fetchError') + t(error.message));
                 console.log("Fetch error: " + error);
             }
         }

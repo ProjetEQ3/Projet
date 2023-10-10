@@ -50,7 +50,7 @@ const NewOfferForm = ({user}) => {
                 navigate('/employer');
             })
             .catch((error) => {
-                toast.error(t('createIternshipError') + error.response.data.message)
+                toast.error(t('createIternshipError'))
                 setIsLoading(false);
             }
         )
