@@ -107,6 +107,7 @@
 
   "matricule": "College ID",
   "myApplications": "My Applications",
+  "minimumNbOfCandidates": "Number of candidates must be at least 1.",
   "minimumDuration": "Internship duration must be at least 1 week.",
   "matriculeInvalid": "College ID must contain only numbers.",
   "matriculeRequired": "College ID is required.",
