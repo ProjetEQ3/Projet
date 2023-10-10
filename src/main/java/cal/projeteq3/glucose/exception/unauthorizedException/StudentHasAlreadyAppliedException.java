@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.exception.unauthorisedException;
+package cal.projeteq3.glucose.exception.unauthorizedException;
 
 import cal.projeteq3.glucose.exception.unauthorizedException.UnauthorizedException;
 

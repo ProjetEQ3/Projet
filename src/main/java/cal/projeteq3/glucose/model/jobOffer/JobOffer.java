@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
-import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
-import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
