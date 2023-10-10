@@ -43,7 +43,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(offer)
 			})
 			.catch((error) => {
-				toast.error(t('updateInternshipError') + error.message);
+				toast.error(t('updateInternshipError') + t(error.message));
 			})
 	}
 	const deleteOffer = (offerId) => {
@@ -56,7 +56,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(null)
 			})
 			.catch((error) => {
-				toast.error(t('deleteInternshipError') + error.message);
+				toast.error(t('deleteInternshipError') + t(error.message));
 			})
 	}
 
@@ -81,7 +81,7 @@ const EmployerPage = ({user}) => {
 					setOffers(updatedOffers);
 				})
 				.catch((error) => {
-					toast.error(t('getStudentsError') + error.message);
+					toast.error(t('getStudentsError') + t(error.message));
 				});
 		}
 

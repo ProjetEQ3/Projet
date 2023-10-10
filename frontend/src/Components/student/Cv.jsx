@@ -29,7 +29,7 @@ function Cv({user, setCv}){
 					setIsLoading(false)
 				})
 				.catch((error) => {
-					toast.error(t('pushingError') + error.message)
+					toast.error(t('pushingError') + t(error.message))
 					setIsLoading(false)
 				})
 		}else{

@@ -25,7 +25,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                 updateJobOfferList(jobOffer);
             })
             .catch((error) => {
-                toast.error(t('pushingError') + error.message)
+                toast.error(t('pushingError') + t(error.message))
             })
     }
 
@@ -61,7 +61,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
                 updateJobOfferList(jobOffer);
             })
             .catch((error) => {
-                toast.error(t('pushingError') + error.message)
+                toast.error(t('pushingError') + t(error.message))
             })
         setIsDecline(false)
     }

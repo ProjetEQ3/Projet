@@ -17,7 +17,7 @@ const ShortStudentInfo = ({ student }) => {
                 toast.success(t('acceptStudentSuccess'));
             })
             .catch((error) => {
-                toast.error(t('acceptStudentError') + error.message);
+                toast.error(t('acceptStudentError') + t(error.message));
             })
     }
 
@@ -28,7 +28,7 @@ const ShortStudentInfo = ({ student }) => {
                 toast.success(t('declineStudentSuccess'));
             })
             .catch((error) => {
-                toast.error(t('declineStudentError') + error.message);
+                toast.error(t('declineStudentError') + t(error.message));
             })
     }
 
