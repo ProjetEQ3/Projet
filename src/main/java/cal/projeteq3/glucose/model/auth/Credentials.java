@@ -4,10 +4,11 @@ import cal.projeteq3.glucose.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 @Entity
 @Data
@@ -35,12 +36,12 @@ public final class Credentials implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return Collections.singleton(new SimpleGrantedAuthority(role.name()));
 	}
 
 	@Override
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	@Override
