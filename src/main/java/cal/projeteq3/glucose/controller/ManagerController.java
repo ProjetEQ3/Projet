@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/manager")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class ManagerController {
 
     private final ManagerService managerService;
