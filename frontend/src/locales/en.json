@@ -62,7 +62,7 @@
   "endDateInternship": "End Date of the internship: ",
   "edit": "Edit",
   "edited": "Edited",
-  "estimateEndDate": "Estimated end date :",
+  "estimateEndDate": "Estimated end Date :",
   "EXPIRED": "Expired",
   "endDateFormat": "End date must be in YYYY-MM-DD format.",
   "endDateNotPassed": "End date must not be in the past.",
@@ -189,7 +189,7 @@
   "wrongEmail": "Wrong email",
   "wrongPassword": "Wrong password",
   "welcome": "Welcome to ",
-  "week": " week",
+  "week": " week(s)",
 
   "yourInternship": "Your internship offers"
 }
