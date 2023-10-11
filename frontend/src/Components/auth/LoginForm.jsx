@@ -83,6 +83,14 @@ const LoginForm = ({ user, setUser }) => {
 				newUser.init(response.data);
 				newUser.isLoggedIn = true;
 				setUser(newUser);
+			}).catch((error) => {
+				if (error.response) {
+					if (error.response.status === 406) {
+						setWarnings({ ...warnings, email: t('wrongEmail') });
+					}
+				} else {
+					setWarnings({ ...warnings, email: t('wrongEmail'), password: t('wrongPassword') });
+				}
 			});
 		}
 	}
