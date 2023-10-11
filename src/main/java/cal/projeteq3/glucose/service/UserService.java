@@ -1,15 +1,12 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
-import cal.projeteq3.glucose.exception.request.RoleNotHandled;
-import cal.projeteq3.glucose.exception.request.UserAlreadyExistsException;
-import cal.projeteq3.glucose.exception.request.UserNotFoundException;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;

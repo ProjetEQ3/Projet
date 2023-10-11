@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.exception.request;
+package cal.projeteq3.glucose.exception.badRequestException;
 
 public class JobOfferNotFoundException extends BadRequestException{
 	public JobOfferNotFoundException(Long id) {

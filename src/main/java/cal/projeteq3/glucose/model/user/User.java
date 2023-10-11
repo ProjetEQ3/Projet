@@ -24,7 +24,7 @@ public abstract class User{
 
 	private String lastName;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(referencedColumnName = "id", nullable = false, unique = true)
 	@Getter(AccessLevel.NONE)
 	private Credentials credentials;
