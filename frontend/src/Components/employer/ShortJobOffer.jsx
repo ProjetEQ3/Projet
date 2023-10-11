@@ -4,6 +4,7 @@ import {faTrash, faX} from '@fortawesome/free-solid-svg-icons';
 import {useState} from "react";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
+
 const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
     const [t, i18n] = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
@@ -29,7 +30,13 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                         <State state={jobOffer.jobOfferState}/>
                     </div>
                     <div className="col-2 col-sm-2 my-auto text-end">
-                        <FontAwesomeIcon icon={faTrash} className="me-2 fa-lg icon-btn dark-hover" data-bs-toggle="modal" data-bs-target={`#delete${jobOffer.id}`}/>
+                        <FontAwesomeIcon
+                            icon={faTrash}
+                            className="me-2 fa-lg icon-btn dark-hover"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#delete${jobOffer.id}`}
+                            data-testid="trash-icon"
+                        />
                     </div>
                     <div id={`delete${jobOffer.id}`} className="modal">
                         <div className="modal-dialog">
@@ -45,7 +52,16 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                                 </div>
                                 <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">{t('cancel')}</button>
-                                    <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={deleteOffer}>{t('delete')}</button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-danger"
+                                        data-bs-dismiss="modal"
+                                        onClick={deleteOffer}
+                                        aria-label="trash"
+                                        data-testid="delete-modal-button"
+                                    >
+                                        {t('delete')}
+                                    </button>
                                 </div>
                             </div>
                         </div>
