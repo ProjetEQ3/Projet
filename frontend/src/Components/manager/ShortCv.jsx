@@ -42,7 +42,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
         if (document.getElementById('refusalForm').checkValidity() === false) {
             e.stopPropagation();
             document.getElementById('refusalForm').classList.add('was-validated');
-            toast(t('addRefusalReason'))
+            toast.error(t('addRefusalReason'))
             return;
         }
 
