@@ -11,6 +11,7 @@ class JobOffer{
 	jobOfferState
 	hoursPerWeek
 	dueDate
+	nbOfCandidates
 
 	constructor(){
 		this.reset()
@@ -47,8 +48,8 @@ class JobOffer{
 		else delete this.startDate
 		if(jobOffer.duration) this.duration = jobOffer.duration
 		else delete this.duration
-		if(jobOffer.formation) this.formation = jobOffer.formation
-		else delete this.formation
+		if(jobOffer.nbOfCandidates) this.nbOfCandidates = jobOffer.nbOfCandidates
+		else delete this.nbOfCandidates
 	}
 
 	reset(){
@@ -63,6 +64,8 @@ class JobOffer{
 		this.expirationDate = ''
 		this.jobOfferState = ''
 		this.hoursPerWeek = 0
+		this.dueDate = ''
+		this.nbOfCandidates = 0
 	}
 }
 

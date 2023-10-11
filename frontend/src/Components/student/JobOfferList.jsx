@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import ShortJobOffer from "../student/ShortJobOffer";
-import FullJobOffer from "../student/FullJobOffer";
+import ShortJobOffer from "./ShortJobOffer";
+import FullJobOffer from "./FullJobOffer";
 import {useTranslation} from "react-i18next";
 
 function JobOfferList({jobOffers, user, setJobOffers}){

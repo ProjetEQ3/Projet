@@ -1,5 +1,3 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import ShortJobOffer from "../employer/ShortJobOffer";
 import FullJobOffer from "../employer/FullJobOffer";
 import {useEffect, useState} from "react";
@@ -24,10 +22,11 @@ const EmployerPage = ({user}) => {
 		axiosInstance
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {setOffers(response.data)})
-			.catch((error) => {console.log("Error", error)});
 	}
 
 	const updateOffer = (offer) => {
+		console.log("updateOffer", selectedOffer.id)
+		console.log("updateOffer", offer.id)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {
@@ -44,7 +43,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(offer)
 			})
 			.catch((error) => {
-				toast.error(t('updateInternshipError') + error.message);
+				toast.error(t('updateInternshipError') + t(error.message));
 			})
 	}
 	const deleteOffer = (offerId) => {
@@ -57,7 +56,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(null)
 			})
 			.catch((error) => {
-				toast.error(t('deleteInternshipError') + error.message);
+				toast.error(t('deleteInternshipError') + t(error.message));
 			})
 	}
 
@@ -82,7 +81,7 @@ const EmployerPage = ({user}) => {
 					setOffers(updatedOffers);
 				})
 				.catch((error) => {
-					toast.error(t('getStudentsError') + error.message);
+					toast.error(t('getStudentsError') + t(error.message));
 				});
 		}
 

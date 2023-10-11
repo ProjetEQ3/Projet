@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.dto;
+package cal.projeteq3.glucose.dto.jobOffer;
 
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -24,6 +24,7 @@ public class JobOfferDTO{
 	private JobOfferState jobOfferState;
 	private int hoursPerWeek;
 	private String refusReason;
+	private int nbOfCandidates;
 
 	public JobOfferDTO(JobOffer jobOffer){
 		this.id = jobOffer.getId();
@@ -37,6 +38,7 @@ public class JobOfferDTO{
 		this.expirationDate = jobOffer.getExpirationDate();
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
+		this.nbOfCandidates = jobOffer.getNbOfCandidates();
 	}
 
 	public JobOffer toEntity(){
@@ -53,6 +55,7 @@ public class JobOfferDTO{
 				.hoursPerWeek(this.hoursPerWeek)
 				.expirationDate(this.expirationDate)
 				.refusReason(this.refusReason)
+				.nbOfCandidates(this.nbOfCandidates)
 				.build();
 	}
 

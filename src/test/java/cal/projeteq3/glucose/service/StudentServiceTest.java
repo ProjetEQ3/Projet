@@ -1,26 +1,21 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
-import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
-import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.auth.Credentials;
-import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -618,5 +613,48 @@ public class StudentServiceTest {
         });
         verify(studentRepository, times(1)).findById(notFoundStudentId);
 
+    }
+
+    @Test
+    public void getCv_Valid() {
+        // Arrange
+        Long studentId = 1L;
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+
+        CvFile cvFile = CvFile.builder()
+                .fileName("cv.pdf")
+                .fileData(new byte[]{1,1,1,1,1,1,1,1,1,1,1})
+                .cvState(CvState.SUBMITTED)
+                .build();
+
+        student.setCvFile(cvFile);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+        CvFileDTO cvFileDTO = studentService.getCv(studentId);
+
+        // Assert
+        assertEquals(cvFile.getFileName(), cvFileDTO.getFileName());
+        assertEquals(cvFile.getFileData(), cvFileDTO.getFileData());
+        assertEquals(cvFile.getCvState(), cvFileDTO.getCvState());
+        assertEquals(cvFile.getRefusReason(), cvFileDTO.getRefusReason());
+        verify(studentRepository, times(1)).findById(studentId);
+    }
+
+    @Test
+    public void getCv_studentNotFound() {
+        // Arrange
+        Long notFoundStudentId = -1L;
+
+        when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getCv(notFoundStudentId);
+        });
+        verify(studentRepository, times(1)).findById(notFoundStudentId);
     }
 }

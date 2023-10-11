@@ -1,7 +1,7 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
-import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
-import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
@@ -50,6 +50,8 @@ public class JobOffer{
 
 	private int hoursPerWeek;
 
+	private int nbOfCandidates;
+
 	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
@@ -72,6 +74,7 @@ public class JobOffer{
 		this.expirationDate = jobOffer.getExpirationDate();
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
+		this.nbOfCandidates = jobOffer.getNbOfCandidates();
 	}
 
 	// EQ3-13

@@ -6,15 +6,18 @@ import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import {useTranslation} from "react-i18next";
+import jobOffer from "../../model/JobOffer";
 
 const NewOfferForm = ({user}) => {
-    const [t, i18n] = useTranslation();
+    const [t] = useTranslation();
+    const [estimateEndDate, setEstimateEndDate] = useState('');
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: '',
         department: '',
         location: '',
+        nbOfCandidates: 1,
         description: '',
         salary: '',
         hoursPerWeek: '',
@@ -33,6 +36,7 @@ const NewOfferForm = ({user}) => {
         startDate: '',
         duration: '',
         expirationDate: '',
+        nbOfCandidates: '',
     })
 
     const saveOffer = async () => {
@@ -46,14 +50,25 @@ const NewOfferForm = ({user}) => {
                 navigate('/employer');
             })
             .catch((error) => {
-                toast.error(t('createIternshipError') + error.response.data.message)
+                toast.error(t('createIternshipError'))
                 setIsLoading(false);
             }
         )
     }
 
+    const calculateEndDate = (startDate, duration) => {
+        setEstimateEndDate(new Date(new Date(startDate).getTime() + duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
+    }
+
     const handleChanges = (e) => {
+
         const {name, value} = e.target;
+        if(name === 'duration' && formData.startDate !== '') {
+            calculateEndDate(formData.startDate, value);
+        }
+        else if(name === 'startDate' && formData.duration !== '') {
+            calculateEndDate(value, formData.duration);
+        }
         setWarnings({...warnings, [name]: ""})
         setFormData({...formData, [name]: value.trim()});
     }
@@ -73,6 +88,13 @@ const NewOfferForm = ({user}) => {
 
         if (formData.location === '') {
             validationErrors.location = t('locationRequired');
+        }
+
+        if (formData.nbOfCandidates === '') {
+            validationErrors.nbOfCandidates = t('nbOfCandidatesRequired');
+        }
+        else if (formData.nbOfCandidates < 1) {
+            validationErrors.nbOfCandidates = t('minimumNbOfCandidates');
         }
 
         if (formData.description === '') {
@@ -212,6 +234,28 @@ const NewOfferForm = ({user}) => {
                             </div>
 
                             <div className="mb-3">
+                                <label htmlFor="nbOfCandidates">{t('nbOfCandidates')}</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="10"
+                                    className={`form-control ${
+                                        warnings.nbOfCandidates ? 'is-invalid' : ''
+                                    }`}
+                                    id="nbOfCandidates"
+                                    placeholder={t('nbOfCandidatesPlaceHolder')}
+                                    name="nbOfCandidates"
+                                    onChange={handleChanges}
+                                    required
+                                />
+                                {warnings.nbOfCandidates && (
+                                    <div className="invalid-feedback">
+                                        {warnings.nbOfCandidates}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-3">
                                 <label htmlFor="description">
                                     {t('internshipDescription')}
                                 </label>
@@ -303,7 +347,6 @@ const NewOfferForm = ({user}) => {
                                 </label>
                                 <input
                                     type="number"
-                                    step="0.1"
                                     className={`form-control ${
                                         warnings.duration ? 'is-invalid' : ''
                                     }`}
@@ -319,10 +362,10 @@ const NewOfferForm = ({user}) => {
                                     </div>
                                 )}
                             </div>
-
+                            <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                             <div className="mb-3">
                                 <label htmlFor="expirationDate">
-                                    {t('endDate')}
+                                    {t('expirationDate')}
                                 </label>
                                 <input
                                     type="date"
@@ -332,7 +375,7 @@ const NewOfferForm = ({user}) => {
                                             : ''
                                     }`}
                                     id="expirationDate"
-                                    placeholder={t('endDate')}
+                                    placeholder={t('expirationDate')}
                                     name="expirationDate"
                                     onChange={handleChanges}
                                     required

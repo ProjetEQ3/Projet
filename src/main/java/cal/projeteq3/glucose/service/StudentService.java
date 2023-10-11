@@ -1,15 +1,15 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorisedException.CvNotApprovedException;
-import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
-import cal.projeteq3.glucose.exception.unauthorisedException.StudentHasAlreadyAppliedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
@@ -90,6 +90,13 @@ public class StudentService {
 
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    public CvFileDTO getCv(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+        CvFile cvFile = student.getCvFile();
+        if(cvFile == null) throw new StudentCvNotFoundException();
+        return new CvFileDTO(cvFile);
     }
 
     public CvFileDTO addCv(Long studentId, CvFileDTO cvFile){

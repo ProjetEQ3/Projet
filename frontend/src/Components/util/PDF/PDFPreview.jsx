@@ -1,8 +1,8 @@
 import React from "react";
+import PDFViewer from "./PDFViewer";
 
 const PDFPreview = ({file, setIsDisplay}) => {
     const pdfBlob = new Blob([file], {type: 'application/pdf'});
-    const pdfUrl = URL.createObjectURL(pdfBlob);
     const closePdfIframe = () => {
         setIsDisplay(false);
     }
@@ -10,7 +10,7 @@ const PDFPreview = ({file, setIsDisplay}) => {
     return (
         <div className="row">
             <div className="col-12">
-                <embed src={pdfUrl} className="mx-auto w-100 rounded vh-100"/>
+                <PDFViewer pdf={pdfBlob}/>
             </div>
         </div>
     );

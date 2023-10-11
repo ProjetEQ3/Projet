@@ -36,6 +36,27 @@
   color: #61dafb;
 }
 
+.pdf-document-container {
+  max-height: 80vh;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.pdf-document-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 1em;
+}
+
+@media (max-width: 768px) {
+  .pdf-document-page {
+    flex-direction: column;
+    margin: 0.5em;
+  }
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

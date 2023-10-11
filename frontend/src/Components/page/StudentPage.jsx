@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react"
 import Cv from "../student/Cv"
 import {useNavigate} from "react-router-dom"
-import JobOfferList from "../jobOffer/JobOfferList";
+import JobOfferList from "../student/JobOfferList";
 import {axiosInstance} from "../../App";
 import JobOffer from "../../model/JobOffer";
 import {toast} from "react-toastify";
@@ -29,7 +29,7 @@ const StudentPage = ({user, setUser}) => {
 					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
 			  }).catch((error) => {
-				  toast.error(t('fetchError') + error);
+				  toast.error(t('fetchError') + t(error));
 				  console.log(t('fetchError') + error);
 			  });
 	  }
@@ -47,25 +47,25 @@ const StudentPage = ({user, setUser}) => {
 			<div>
 				<div className="tabs btn-group my-2 mx-auto col-12">
 					<button
-						className={`btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
 						onClick={() => setTab('home')}
 					>
 						{t('home')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
 						onClick={() => setTab('stages')}
 					>
 						{t('jobOffers')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
 						onClick={() => setTab('my_applications')}
 					>
 						{t('myApplications')}
 					</button>
 					<button
-						className={`btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
+						className={`col-md-3 btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
 						onClick={() => setTab('cv')}
 					>
 						{t('CV')}

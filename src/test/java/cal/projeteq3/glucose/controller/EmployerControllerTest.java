@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
@@ -283,7 +283,7 @@ public class EmployerControllerTest {
 				new JobOfferDTO(1L, "Test Job", Department._420B0,
 						"MTL", "Test Job Description", 1.0f,
 						LocalDate.now(), 10, LocalDate.now().plusDays(3),
-						JobOfferState.OPEN, 30, null)
+						JobOfferState.OPEN, 30, null,1)
 		));
 
 		when(employerService.getAllJobOffers(employerId)).thenReturn(jobOfferDTOs);
@@ -328,12 +328,12 @@ public class EmployerControllerTest {
 		JobOfferDTO jobOfferDTO = new JobOfferDTO(employerId, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null);
+				JobOfferState.SUBMITTED, 40, null,1);
 
 		JobOfferDTO post = new JobOfferDTO(null, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null);
+				JobOfferState.SUBMITTED, 40, null,1);
 
 		String content = """
 					{
@@ -426,10 +426,10 @@ public class EmployerControllerTest {
 		when(employerService.updateJobOffer(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null))).thenReturn(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
+				JobOfferState.SUBMITTED, 40, null,1))).thenReturn(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null));
+				JobOfferState.SUBMITTED, 40, null,1));
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")

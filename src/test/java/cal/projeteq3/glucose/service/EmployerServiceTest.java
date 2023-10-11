@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
@@ -28,7 +28,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import static org.mockito.Mockito.when;
@@ -36,8 +35,6 @@ import static org.mockito.Mockito.when;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.mockito.MockitoAnnotations;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployerServiceTest {
@@ -474,7 +471,8 @@ public class EmployerServiceTest {
                 LocalDate.now().plusDays(30),
                 JobOfferState.OPEN,
                 40,
-                null
+                null,
+                1
         );
 
         when(employerRepository.findById(employerId)).thenReturn(Optional.of(employer));

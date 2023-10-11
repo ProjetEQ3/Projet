@@ -29,7 +29,7 @@ const Home = ({ user }) => {
         <>
             {user?.isLoggedIn ? (<div></div>
             ) : (
-                <div className="Home text-center">
+                <div className="text-center mt-5">
                     <h1>{t('welcome')} {t('glucoseAcronym')}</h1>
                     <h3>{t('descTitle')}</h3>
                     <p>{t('description')}</p>

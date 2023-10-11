@@ -1,28 +1,22 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.exception.APIException;
-import cal.projeteq3.glucose.exception.unauthorisedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorizedException.InvalidEmailOrPasswordException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
@@ -30,11 +24,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -391,4 +383,25 @@ public class StudentControllerTest {
 			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
 		       .andExpect(status().is(673));
 	}
+
+    @Test
+    void testGetCvSuccess() throws Exception{
+        CvFileDTO mockDto = new CvFileDTO();
+        when(studentService.getCv(validStudentId)).thenReturn(mockDto);
+
+        mockMvc
+                .perform(get("/student/cv/" + validStudentId).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    void testGetCvApiException() throws Exception{
+        APIException mockException = new StudentNotFoundException();
+
+        when(studentService.getCv(validStudentId)).thenThrow(mockException);
+
+        mockMvc
+                .perform(get("/student/cv/" + validStudentId).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
 }
