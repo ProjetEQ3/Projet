@@ -46,7 +46,6 @@ const ManagerPage = ({user}) => {
 
     return (
         <div className="container">
-            ManagerPage
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
                     <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
