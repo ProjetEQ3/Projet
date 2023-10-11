@@ -78,7 +78,7 @@ function Cv({user, setCv}){
 							<h2 className="text-center text-lg-start">{user.cvFile.fileName}</h2>
 						</div>
 						<div className="col-lg-4 d-flex my-auto mb-2 text-center justify-content-around justify-content-md-between">
-							<div className="d-block col-4">
+							<div className="d-block col-8">
 								<State state={user.cvFile.cvState}/>
 							</div>
 							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
