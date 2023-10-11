@@ -88,7 +88,7 @@ public class UserServiceTest {
         assertTrue(userDTO instanceof StudentDTO);
         assertEquals(user.getId(), userDTO.getId());
         assertEquals(user.getEmail(), userDTO.getEmail());
-        assertEquals(user.getCredentials().getRole().toString(), userDTO.getRole());
+        assertEquals(user.getRole().toString(), userDTO.getRole());
         verify(credentialRepository).findCredentialsByEmail(loginDTO.getEmail());
     }
 

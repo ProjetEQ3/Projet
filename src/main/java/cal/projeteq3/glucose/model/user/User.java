@@ -4,6 +4,9 @@ import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 @Data
 @ToString
@@ -23,6 +26,7 @@ public abstract class User{
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(referencedColumnName = "id", nullable = false, unique = true)
+	@Getter(AccessLevel.NONE)
 	private Credentials credentials;
 
 	public User(String lastName, String firstName, Credentials credentials){
@@ -55,4 +59,7 @@ public abstract class User{
 		this.credentials.setRole(role);
 	}
 
+	public Collection<? extends GrantedAuthority> getAuthorities(){
+		return this.credentials.getAuthorities();
+	}
 }

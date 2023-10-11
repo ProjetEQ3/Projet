@@ -31,7 +31,7 @@ public class StudentDTO extends UserDTO {
     public StudentDTO(Student student){
         super(
           student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(),
-          student.getCredentials().getRole().toString()
+          student.getRole().toString()
         );
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
@@ -41,7 +41,7 @@ public class StudentDTO extends UserDTO {
     public StudentDTO(Student student, Long jobApplicationId) {
         super(
           student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(),
-          student.getCredentials().getRole().toString()
+          student.getRole().toString()
         );
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
