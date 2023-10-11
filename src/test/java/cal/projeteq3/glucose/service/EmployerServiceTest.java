@@ -515,8 +515,6 @@ public class EmployerServiceTest {
         // Act
         JobOfferDTO result = employerService.updateJobOffer(updatedJobOffer);
 
-        System.out.println(result);
-
         // Assert
         assertNotNull(result);
         assertEquals(jobOfferId, result.getId());

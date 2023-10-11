@@ -41,7 +41,6 @@ public class AuthProvider implements AuthenticationProvider{
 	}
 
 	private void validateAuthentication(Authentication authentication, User user){
-		System.out.println("Auth : " + authentication.getCredentials().toString() + " " + user.getPassword());
 		if(!passwordEncoder.matches(authentication.getCredentials().toString(), user.getPassword()))
 			throw new AuthenticationException("Incorrect username or password");
 
