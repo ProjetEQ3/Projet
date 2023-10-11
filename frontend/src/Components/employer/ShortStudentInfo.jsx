@@ -51,7 +51,7 @@ const ShortStudentInfo = ({ student }) => {
             </div>
             {
                 isDisplay ?
-                    <div className="col-12">
+                    <div className="col-12" data-testid="pdf-preview-mock-element">
                         <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)}/>
                     </div> : null
             }
