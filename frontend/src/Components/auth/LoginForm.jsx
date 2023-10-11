@@ -87,6 +87,7 @@ const LoginForm = ({ user, setUser }) => {
 				if (error.response) {
 					if (error.response.status === 406) {
 						setWarnings({ ...warnings, email: t('wrongEmail') });
+						setWarnings({ ...warnings, password: t('wrongPassword') });
 					}
 				} else {
 					setWarnings({ ...warnings, email: t('wrongEmail'), password: t('wrongPassword') });
