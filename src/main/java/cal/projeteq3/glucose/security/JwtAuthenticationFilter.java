@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	}
 
 	private String getJWTFromRequest(HttpServletRequest request){
-		return request.getHeader("Authorization");
+		return request.getHeader("Authorization").replace("Bearer ", "");
 	}
 
 }
