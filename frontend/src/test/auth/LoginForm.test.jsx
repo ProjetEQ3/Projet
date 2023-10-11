@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from './axiosMock.mjs';
 import { render, fireEvent, screen } from '@testing-library/react';
-import LoginForm from '../Components/auth/LoginForm';
+import LoginForm from '../../Components/auth/LoginForm';
 
 describe('LoginForm Component', () => {
     it('should render the GlucOSE title', () => {

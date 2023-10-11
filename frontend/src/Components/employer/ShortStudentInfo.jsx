@@ -39,7 +39,7 @@ const ShortStudentInfo = ({ student }) => {
 
     return (
         <>
-            <div className="m-2 p-2 bg-white border rounded border-ose d-lg-flex">
+            <div className="m-2 p-2 bg-white border rounded border-ose d-lg-flex" data-testid="short-student-info">
                 <div className="col-12 col-lg-6">
                     <h3 className="text-dark fw-light">{student.firstName + " " + student.lastName + " - " + student.email}</h3>
                 </div>
