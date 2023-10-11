@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import StudentList from '../Components/employer/StudentList';
+import StudentList from '../../Components/employer/StudentList';
 
 describe('StudentList', () => {
 
