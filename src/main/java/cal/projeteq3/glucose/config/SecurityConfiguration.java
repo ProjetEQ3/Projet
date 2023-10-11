@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.config;
 
 import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtAuthenticationFilter;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class SecurityConfiguration {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,6 +42,7 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(POST, "/user/login").permitAll()
+                        .requestMatchers(GET, "/user/me").hasAnyAuthority("STUDENT", "EMPLOYER", "MANAGER")
                         .requestMatchers(POST, "/student/register").permitAll()
                         .requestMatchers("/student/**").hasAuthority("STUDENT")
                         .requestMatchers(POST, "/employer/register").permitAll()
@@ -51,6 +54,7 @@ public class SecurityConfiguration {
                     secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(configurer -> configurer.authenticationEntryPoint(authenticationEntryPoint))
         ;
 
         return http.build();

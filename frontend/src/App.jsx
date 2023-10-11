@@ -1,9 +1,9 @@
 import './App.css'
 import Header from "./Components/layout/Header"
 import axios from "axios"
-import {ToastContainer} from "react-toastify"
+import {toast, ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import User from "./model/User";
 import Footer from "./Components/layout/Footer";
 import Main from "./Components/layout/Main";
@@ -12,6 +12,20 @@ import {TranslationProvider} from "./Components/util/TranslationContext";
 
 function App(){
 	const [user, setUser] = useState(new User())
+	let _token = localStorage.getItem('token')
+
+	useEffect(() => {
+		if (_token) {
+			axiosInstance.get('/user/me')
+				.then(res => {
+					setUser(res.data)
+				})
+				.catch(err => {
+					toast.error(err.response.data.message)
+				})
+		}
+
+	}, []);
 
 	return (
 		<TranslationProvider>
@@ -47,6 +61,7 @@ export const axiosInstance = axios.create({
 	baseURL: baseURL,
 	headers: {
 		'Content-Type': 'application/json',
-		'Accept': 'application/json'
+		'Accept': 'application/json',
+		// 'Authorisation': localStorage.getItem('token')
 	}
 })
