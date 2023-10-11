@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from './axiosMock.mjs';
 import { render, fireEvent, screen } from '@testing-library/react';
 import LoginForm from '../../Components/auth/LoginForm';
 
