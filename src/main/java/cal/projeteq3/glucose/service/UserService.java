@@ -3,73 +3,57 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
-import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.*;
+import cal.projeteq3.glucose.security.JwtTokenProvider;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 	private final StudentRepository studentRepository;
 	private final EmployerRepository employerRepository;
 	private final ManagerRepository managerRepository;
 	private final CredentialRepository credentialRepository;
 	private final UserRepository userRepository;
+	private final AuthenticationManager authenticationManager;
+	private final JwtTokenProvider jwtTokenProvider;
 
-	public UserService(
-			StudentRepository studentRepository, EmployerRepository employerRepository,
-			ManagerRepository managerRepository, CredentialRepository credentialRepository, UserRepository userRepository
-	){
-		this.studentRepository = studentRepository;
-		this.employerRepository = employerRepository;
-		this.managerRepository = managerRepository;
-		this.credentialRepository = credentialRepository;
-		this.userRepository = userRepository;
+//	public UserDTO authenticateUser(LoginDTO loginDTO){
+//		User user;
+//        Optional<Credentials> optCred = credentialRepository.findCredentialsByEmail(loginDTO.getEmail());
+//        if (optCred.isEmpty())
+//			throw new UserNotFoundException("No user for email" + loginDTO.getEmail());
+//		if (!optCred.get().getPassword().equals(loginDTO.getPassword()))
+//			throw new ValidationException("Invalid User email or Password");
+//
+////		Pas besoin de valider Optional.isEmpty() puisque c'est impossible
+//		user = userRepository.findUserByCredentialsEmail(loginDTO.getEmail()).get();
+//
+//        return switch (user.getRole()){
+//            case STUDENT -> getStudentDto(user.getId());
+//            case EMPLOYER -> getEmployerDto(user.getId());
+//            case MANAGER -> getManagerDto(user.getId());
+//        };
+//    }
+
+	public String authenticateUser(LoginDTO loginDto) {
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+
+		return jwtTokenProvider.generateToken(authentication);
 	}
-
-	public UserDTO authenticateUser(LoginDTO loginDTO){
-		User user;
-        Optional<Credentials> optCred = credentialRepository.findCredentialsByEmail(loginDTO.getEmail());
-        if (optCred.isEmpty())
-			throw new UserNotFoundException("No user for email" + loginDTO.getEmail());
-		if (!optCred.get().getPassword().equals(loginDTO.getPassword()))
-			throw new ValidationException("Invalid User email or Password");
-
-//		Pas besoin de valider Optional.isEmpty() puisque c'est impossible
-		user = userRepository.findUserByCredentialsEmail(loginDTO.getEmail()).get();
-
-        return switch (user.getRole()){
-            case STUDENT -> getStudentDto(user.getId());
-            case EMPLOYER -> getEmployerDto(user.getId());
-            case MANAGER -> getManagerDto(user.getId());
-        };
-    }
-
-//	public UserDTO createUser(RegisterDTO registerDTO){
-//		if(userRepository.findCredentials(registerDTO.getEmail()).isPresent())
-//			throw new UserAlreadyExistsException(registerDTO.getEmail());
-//		User user = switch(registerDTO.getRole()){
-//			case "STUDENT" -> Student.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-//			case "EMPLOYER" -> Employer.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-//			case "MANAGER" -> Manager.builder().email(registerDTO.getEmail()).password(registerDTO.getPassword()).build();
-//			default -> throw new IllegalArgumentException();
-//		};
-//		User savedUser = userRepository.save(user);
-//		UserDTO userDTO = new UserDTO();
-//		userDTO.setId(savedUser.getId());
-//		userDTO.setEmail(savedUser.getEmail());
-//		userDTO.setRole(savedUser.getCredentials().getRole().toString());
-//		return userDTO;
-//	}
 
 	private ManagerDTO getManagerDto(Long id) {
 		Optional<Manager> optManager = managerRepository.findById(id);

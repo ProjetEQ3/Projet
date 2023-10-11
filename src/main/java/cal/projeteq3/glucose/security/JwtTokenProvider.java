@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.security;
 
 import java.util.Date;
+
+import cal.projeteq3.glucose.exception.badRequestException.InvalidJwtTokenException;
 import io.jsonwebtoken.*;
 import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.security.core.Authentication;
@@ -10,12 +12,12 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import io.jsonwebtoken.Jwts;
 
-//TODO prevent multiple logins
 @Component
 public class JwtTokenProvider{
-	@Value("${app.jwt-expiration-milliseconds}")
-	private int expirationInMs = 86400000;
-	private final String SECRET_KEY = "Secret_oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_";
+	@Value("${application.security.jwt.expiration}")
+	private int expirationInMs;
+	@Value("${application.security.jwt.secret-key}")
+	private final String SECRET_KEY = "2B7E151628AED2A6ABF7158809CF4F3C2B7E151628AED2A6ABF7158809CF4F3C";
 	private final byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
 
 	public String generateToken(Authentication authentication){

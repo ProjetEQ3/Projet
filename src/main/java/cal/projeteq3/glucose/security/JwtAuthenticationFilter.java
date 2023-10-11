@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.security;
 
+import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -33,9 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			try{
 				tokenProvider.validateToken(token);
 				String email = tokenProvider.getEmailFromJWT(token);
-				Operator operator = userRepository.findOperatorByEmail(email).orElseThrow(UserNotFoundException::new);
+				User user = userRepository.findUserByCredentialsEmail(email).orElseThrow(UserNotFoundException::new);
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-					operator.getEmail(), null, operator.getAuthorities()
+						user.getEmail(), null, user.getAuthorities()
 				);
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
