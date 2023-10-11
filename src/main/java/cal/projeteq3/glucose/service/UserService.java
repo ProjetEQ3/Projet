@@ -31,24 +31,6 @@ public class UserService {
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
 
-//	public UserDTO authenticateUser(LoginDTO loginDTO){
-//		User user;
-//        Optional<Credentials> optCred = credentialRepository.findCredentialsByEmail(loginDTO.getEmail());
-//        if (optCred.isEmpty())
-//			throw new UserNotFoundException("No user for email" + loginDTO.getEmail());
-//		if (!optCred.get().getPassword().equals(loginDTO.getPassword()))
-//			throw new ValidationException("Invalid User email or Password");
-//
-////		Pas besoin de valider Optional.isEmpty() puisque c'est impossible
-//		user = userRepository.findUserByCredentialsEmail(loginDTO.getEmail()).get();
-//
-//        return switch (user.getRole()){
-//            case STUDENT -> getStudentDto(user.getId());
-//            case EMPLOYER -> getEmployerDto(user.getId());
-//            case MANAGER -> getManagerDto(user.getId());
-//        };
-//    }
-
 	public String authenticateUser(LoginDTO loginDto) {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 

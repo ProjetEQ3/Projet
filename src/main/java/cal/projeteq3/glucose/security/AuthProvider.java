@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException
 import cal.projeteq3.glucose.exception.badRequestException.AuthenticationException;
 import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,14 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class AuthProvider implements AuthenticationProvider{
 	private final PasswordEncoder passwordEncoder;
 	private final UserRepository userRepository;
-
-	public AuthProvider(PasswordEncoder passwordEncoder, UserRepository userRepository){
-		this.passwordEncoder = passwordEncoder;
-		this.userRepository = userRepository;
-	}
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException{
@@ -44,7 +41,9 @@ public class AuthProvider implements AuthenticationProvider{
 	}
 
 	private void validateAuthentication(Authentication authentication, User user){
+		System.out.println("Auth : " + authentication.getCredentials().toString() + " " + user.getPassword());
 		if(!passwordEncoder.matches(authentication.getCredentials().toString(), user.getPassword()))
 			throw new AuthenticationException("Incorrect username or password");
+
 	}
 }

@@ -22,7 +22,9 @@ import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,28 +32,22 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
 
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
     private final JobApplicationRepository jobApplicationRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public StudentService(StudentRepository studentRepository, CvFileRepository cvFileRepository,
-            JobOfferRepository jobOfferRepository, JobApplicationRepository jobApplicationRepository) {
-        this.studentRepository = studentRepository;
-        this.cvFileRepository = cvFileRepository;
-        this.jobOfferRepository = jobOfferRepository;
-        this.jobApplicationRepository = jobApplicationRepository;
-    }
 
     // database operations here
 
     public StudentDTO createStudent(RegisterStudentDTO registerStudentDTO) {
         Student student = Student.builder()
                 .email(registerStudentDTO.getRegisterDTO().getEmail())
-                .password(registerStudentDTO.getRegisterDTO().getPassword())
+                .password(passwordEncoder.encode(registerStudentDTO.getRegisterDTO().getPassword()))
                 .firstName(registerStudentDTO.getStudentDTO().getFirstName())
                 .lastName(registerStudentDTO.getStudentDTO().getLastName())
                 .department(String.valueOf(registerStudentDTO.getStudentDTO().getDepartment()))
