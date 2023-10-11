@@ -71,7 +71,7 @@ function Cv({user, setCv}){
 		<div className="container">
 			{isLoading ? (
 				<Loading/>
-			) : user.cvFile.id ? (
+			) : user.cvFile && user.cvFile.id ? (
 				<>
 					<div className="row bg-white rounded">
 						<div className="col-lg-8">
