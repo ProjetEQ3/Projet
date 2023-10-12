@@ -28,6 +28,7 @@ class User{
 		if(user.isLoggedIn) this.isLoggedIn = user.isLoggedIn
 		else this.isLoggedIn = false
 		if(user.cvFile) this.cvFile.init(user.cvFile)
+		else delete this.cvFile
 		//if(user.cvFile) this.cvFile = user.cvFile
 		//else delete this.cvFile
 		if(user.role) this.role = user.role

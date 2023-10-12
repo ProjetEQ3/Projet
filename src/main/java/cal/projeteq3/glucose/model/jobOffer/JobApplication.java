@@ -15,8 +15,6 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
-//	boolean refused = false;
-//	String refusReason;
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
 	@ManyToOne

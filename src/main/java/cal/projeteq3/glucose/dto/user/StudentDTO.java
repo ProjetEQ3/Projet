@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.dto.user;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.StudentSummary;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -36,6 +37,15 @@ public class StudentDTO extends UserDTO {
         this.matricule = student.getMatricule();
         this.department = student.getDepartment();
         this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
+    }
+
+    public StudentDTO(StudentSummary summary){
+        super(
+          summary.getId(), summary.getFirstName(), summary.getLastName(), summary.getEmail(),
+          summary.getRole().toString()
+        );
+        this.matricule = summary.getMatricule();
+        this.department = summary.getDepartment();
     }
 
     public StudentDTO(Student student, Long jobApplicationId) {

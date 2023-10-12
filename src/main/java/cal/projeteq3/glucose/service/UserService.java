@@ -6,10 +6,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
-import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.user.User;
+import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +51,7 @@ public class UserService {
 	}
 
 	private StudentDTO getStudentDto(Long id) {
-		Optional<Student> optStudent = studentRepository.findById(id);
+		Optional<StudentSummary> optStudent = studentRepository.findStudentSummaryById(id);
 		if (optStudent.isEmpty()) throw new UserNotFoundException("No Student found with this ID: " + id);
 
 		return new StudentDTO(optStudent.get());
@@ -62,7 +59,13 @@ public class UserService {
 
 	public UserDTO getMe(String token) {
 		String email = jwtTokenProvider.getEmailFromJWT(token);
-		return new UserDTO(userRepository.findUserByCredentialsEmail(email)
-				.orElseThrow(() -> new UserNotFoundException("No User found with this email: " + email)));
-	}
+		User user = userRepository.findUserByCredentialsEmail(email)
+				.orElseThrow(() -> new UserNotFoundException("No User found with this email: " + email));
+
+        return switch (user.getRole()) {
+            case STUDENT -> getStudentDto(user.getId());
+            case EMPLOYER -> getEmployerDto(user.getId());
+            case MANAGER -> getManagerDto(user.getId());
+        };
+    }
 }

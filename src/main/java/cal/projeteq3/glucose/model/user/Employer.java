@@ -41,4 +41,9 @@ public class Employer extends User{
 			this.jobOffers.add(jobOffer);
 	}
 
+
+	@Override
+	public Employer fetch() {
+		return null;
+	}
 }

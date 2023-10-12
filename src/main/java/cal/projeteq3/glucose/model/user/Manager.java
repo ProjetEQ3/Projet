@@ -27,4 +27,8 @@ public class Manager extends User{
 		this.phoneNumber = phoneNumber;
 	}
 
+	@Override
+	public Manager fetch() {
+		return null;
+	}
 }

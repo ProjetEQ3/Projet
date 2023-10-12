@@ -30,7 +30,7 @@ const StudentPage = ({user, setUser}) => {
 				  });
 			  }).catch((error) => {
 				  toast.error(t('fetchError') + t(error));
-				  console.log(t('fetchError') + error);
+				  console.log(t('fetchError') + error.response.data.message);
 			  });
 	  }
 
