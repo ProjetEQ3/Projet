@@ -4,6 +4,7 @@ import { axiosInstance } from "../../App";
 import User from "../../model/User";
 import Loading from "../util/Loading";
 import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
 
 const LoginForm = ({ user, setUser }) => {
 	const { t, i18n } = useTranslation();
@@ -79,10 +80,21 @@ const LoginForm = ({ user, setUser }) => {
 				email: formData.email.toLowerCase(),
 				password: formData.password
 			}).then((response) => {
-				let newUser = new User();
-				newUser.init(response.data);
-				newUser.isLoggedIn = true;
-				setUser(newUser);
+
+				axiosInstance.defaults.headers.common['Authorization'] = response.data.accessToken;
+				sessionStorage.setItem('token', response.data.accessToken);
+
+				axiosInstance.get('/user/me')
+					.then(res => {
+						let newUser = new User()
+						newUser.init(res.data)
+						newUser.isLoggedIn = true
+						setUser(newUser)
+					})
+					.catch(err => {
+						console.log(err.response.data.message)
+						toast.error(err.response.data.message)
+					})
 			}).catch((error) => {
 				if (error.response) {
 					if (error.response.status === 406) {
