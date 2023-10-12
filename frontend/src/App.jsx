@@ -26,7 +26,7 @@ function App(){
 					setUser(newUser)
 				})
 				.catch(err => {
-					toast.error(err.response.data.message)
+					toast.error(err.message)
 				})
 		}
 	}, []);

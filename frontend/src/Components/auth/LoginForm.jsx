@@ -92,7 +92,7 @@ const LoginForm = ({ user, setUser }) => {
 						setUser(newUser)
 					})
 					.catch(err => {
-						toast.error(err.response.data.message)
+						toast.error(err.message)
 					})
 			}).catch((error) => {
 				if (error.response) {
@@ -101,6 +101,7 @@ const LoginForm = ({ user, setUser }) => {
 						setWarnings({ ...warnings, password: t('wrongPassword') });
 					}
 				} else {
+					toast.error(t('fetchError') + t(error.message));
 					setWarnings({ ...warnings, email: t('wrongEmail'), password: t('wrongPassword') });
 				}
 			});
