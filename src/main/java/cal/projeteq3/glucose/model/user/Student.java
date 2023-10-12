@@ -56,9 +56,4 @@ public class Student extends User{
 	public boolean hasApprovedCv(){
 		return this.cvFile != null && this.cvFile.getCvState() == CvState.ACCEPTED;
 	}
-
-	@Override
-	public Student fetch() {
-		return null;
-	}
 }

@@ -26,9 +26,4 @@ public class Manager extends User{
 		this.matricule = matricule;
 		this.phoneNumber = phoneNumber;
 	}
-
-	@Override
-	public Manager fetch() {
-		return null;
-	}
 }

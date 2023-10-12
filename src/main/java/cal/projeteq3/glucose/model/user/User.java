@@ -62,6 +62,4 @@ public abstract class User{
 	public Collection<? extends GrantedAuthority> getAuthorities(){
 		return this.credentials.getAuthorities();
 	}
-
-	public abstract User fetch();
 }
