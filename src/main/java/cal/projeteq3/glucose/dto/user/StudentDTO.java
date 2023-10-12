@@ -46,6 +46,7 @@ public class StudentDTO extends UserDTO {
         );
         this.matricule = summary.getMatricule();
         this.department = summary.getDepartment();
+        this.cvFile = summary.getCvFile() == null ? null : new CvFileDTO(summary.getCvFile());
     }
 
     public StudentDTO(Student student, Long jobApplicationId) {

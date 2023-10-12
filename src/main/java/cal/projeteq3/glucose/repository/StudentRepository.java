@@ -13,7 +13,6 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Student findByMatricule(String matricule);
 
-//    @Query("SELECT s FROM Student s INNER JOIN User u WHERE s.id = ?1 AND u.id = ?1")
     @Query("SELECT s FROM Student s JOIN User u ON u.id = ?1 WHERE s.id = ?1")
     Optional<StudentSummary> findStudentSummaryById(Long id);
 
