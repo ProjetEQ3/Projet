@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import Cvs from "../manager/Cvs";
 import {axiosInstance} from "../../App";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
 
 const ManagerPage = ({user}) => {
     const {t} = useTranslation();
@@ -18,7 +19,7 @@ const ManagerPage = ({user}) => {
                 setOffers(response.data);
                 return response.data;
             }).catch((error) => {
-                console.log(error);
+                toast.error(t('fetchError') + t(error));
             });
         }
         const getAllCvs = async () => {
@@ -28,12 +29,12 @@ const ManagerPage = ({user}) => {
                 setCvs(response.data);
                 return response.data;
             }).catch((error) => {
-                console.log(error);
+                toast.error(t('fetchError') + t(error));
             });
         }
 
-        getAllCvs().then(r => console.log(r));
-        getAllOffers().then(r => console.log(r));
+        getAllCvs().then(r => r);
+        getAllOffers().then(r => r);
     }, []);
 
     const updateJobOfferList = () => {

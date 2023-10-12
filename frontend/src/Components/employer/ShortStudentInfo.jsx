@@ -6,7 +6,6 @@ import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 
 const ShortStudentInfo = ({ student }) => {
-    console.log(student)
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
 

@@ -41,7 +41,6 @@ const NewOfferForm = ({user}) => {
 
     const saveOffer = async () => {
         setIsLoading(true);
-        console.log(formData)
         axiosInstance
             .post(`/employer/offer?employerId=${user.id}`, formData)
             .then((response) =>{
@@ -145,7 +144,7 @@ const NewOfferForm = ({user}) => {
         setWarnings(validationErrors);
 
         if (Object.keys(validationErrors).length === 0) {
-            saveOffer().then(r => console.log(r));
+            saveOffer().then(r => r);
         }
     }
 
