@@ -29,6 +29,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,6 +55,9 @@ public class StudentServiceTest {
 
     @InjectMocks
     private StudentService studentService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     private JobOffer jobOffer;
 
@@ -102,6 +108,7 @@ public class StudentServiceTest {
                     .department("_420B0")
                     .build()
         );
+        when(passwordEncoder.encode("Test1234")).thenReturn("Test1234");
 
         //Act
         studentService.createStudent(registerStudentDTO);

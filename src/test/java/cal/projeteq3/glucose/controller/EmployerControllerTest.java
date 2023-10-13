@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -9,8 +10,13 @@ import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoun
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
+import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -26,11 +32,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {EmployerController.class, CustomExceptionHandler.class})
+@SpringJUnitConfig(classes = {EmployerController.class, CustomExceptionHandler.class,
+		SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
 @WebMvcTest(EmployerController.class)
 public class EmployerControllerTest {
 
@@ -39,13 +48,17 @@ public class EmployerControllerTest {
 
 	@MockBean
 	private EmployerService employerService;
+	@MockBean
+	private UserRepository userRepository;
 
 	private ObjectMapper objectMapper;
+	private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0Bwcm9mZXNzaW9ubmVsLmNvbSIsImlhdCI6MTY5NzE1NTQ0NCwiZXhwIjoxNjk3MjQxODQ0LCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiRU1QTE9ZRVIifV19.47Sw0ZHGTq8KyuROvQ73k90kPIY-b5wwt_Ee_B4d3cM";;
 
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 		objectMapper = new ObjectMapper();
+		when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Employer.builder().build()));
 	}
 
 	private RegisterEmployerDTO createRegisterEmployer(String email, String password, String firstName, String lastName, String organisationName, String organisationPhone){
@@ -290,6 +303,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/offer/all")
+						.header("Authorization", token)
 						.param("employerId", employerId.toString())
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
@@ -315,6 +329,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.delete("/employer/offer/{id}", id)
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 		;
@@ -356,6 +371,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/employer/offer")
+						.header("Authorization", token)
 						.param("employerId", employerId.toString())
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
@@ -398,6 +414,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/employer/offer")
+						.header("Authorization", token)
 						.param("employerId", Long.toString(employerId))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
@@ -433,6 +450,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
@@ -471,6 +489,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
@@ -497,6 +516,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().is4xxClientError());
@@ -514,6 +534,7 @@ public class EmployerControllerTest {
 		// Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/offer/students/{id}", jobOfferId)
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
@@ -532,6 +553,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/accept/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -544,7 +566,9 @@ public class EmployerControllerTest {
 		Long applicationId = -1L;
 		when(employerService.acceptApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/accept/{jobApplicationId}", applicationId))
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/accept/{jobApplicationId}", applicationId)
+						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
 
@@ -553,7 +577,9 @@ public class EmployerControllerTest {
 		Long nullId = null;
 		when(employerService.acceptApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/accept/{jobApplicationId}", nullId))
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/accept/{jobApplicationId}", nullId)
+						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(404));
 	}
 
@@ -566,6 +592,7 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/refuse/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -578,7 +605,9 @@ public class EmployerControllerTest {
 		Long applicationId = -1L;
 		when(employerService.refuseApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/refuse/{jobApplicationId}", applicationId))
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/refuse/{jobApplicationId}", applicationId)
+						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
 
@@ -587,7 +616,9 @@ public class EmployerControllerTest {
 		Long nullId = null;
 		when(employerService.refuseApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
 
-		mockMvc.perform(MockMvcRequestBuilders.put("/employer/offer/refuse/{jobApplicationDTO}", nullId))
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/refuse/{jobApplicationDTO}", nullId)
+						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(404));
 	}
 }
