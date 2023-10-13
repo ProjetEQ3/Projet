@@ -32,10 +32,8 @@ const StudentPage = ({user, setUser}) => {
 					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
 			  }).catch((error) => {
-				  if (error.response.status === 401) {
-					  // console.log(error)
-					  return;
-				  }
+				  if (error.response.status === 401) return;
+
 				  toast.error(t('fetchError') + t(error.message))
 			  });
 	  }
