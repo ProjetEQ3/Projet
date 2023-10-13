@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundExcep
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -16,10 +17,12 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
@@ -52,6 +55,8 @@ public class StudentServiceTest {
     private CvFileRepository cvFileRepository;
     @Mock
     private JobOfferRepository jobOfferRepository;
+    @Mock
+    private JobApplicationRepository jobApplicationRepository;
 
     @InjectMocks
     private StudentService studentService;
@@ -437,6 +442,96 @@ public class StudentServiceTest {
             studentService.applyJobOffer(1L, 1L);
         });
     }
+
+    @Test
+    void applyJobOffer_SuccessfulApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        when(jobApplicationRepository.save(any(JobApplication.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(jobOfferRepository.save(any(JobOffer.class))).thenReturn(jobOffer);
+
+        // Act
+        JobOfferDTO result = studentService.applyJobOffer(jobOfferId, studentId);
+
+        // Assert
+        assertNotNull(result);
+        verify(jobOfferRepository, times(1)).findById(jobOfferId);
+        verify(studentRepository, times(1)).findById(studentId);
+        verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
+    }
+
+    @Test
+    void applyJobOffer_StudentAlreadyApplied() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer));
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(StudentHasAlreadyAppliedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_CvNotApproved() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_JobOfferNotOpen() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
 
     @Test
     void apply_withApprovedCVAndOpenJobOffer_returnsJobApplication() {
