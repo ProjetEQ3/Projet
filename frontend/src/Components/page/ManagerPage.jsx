@@ -14,28 +14,32 @@ const ManagerPage = ({user}) => {
     useEffect(() => {
         const getAllOffers = async () => {
             await axiosInstance.get('manager/jobOffers/all',
-                // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setOffers(response.data);
                 return response.data;
             }).catch((error) => {
+                if (error.response.status === 401) {
+                    return;
+                }
                 toast.error(t('fetchError') + t(error));
             });
         }
         const getAllCvs = async () => {
             await axiosInstance.get('manager/cvs/all',
-                // {headers: {Authorization: 'Bearer ' + localStorage.getItem('token')}}
             ).then((response) => {
                 setCvs(response.data);
                 return response.data;
             }).catch((error) => {
+                if (error.response.status === 401) {
+                    return;
+                }
                 toast.error(t('fetchError') + t(error));
             });
         }
 
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
-    }, []);
+    }, [user.isLoggedIn]);
 
     const updateJobOfferList = () => {
         setOffers(offers);
