@@ -14,7 +14,7 @@ function App(){
 	const [user, setUser] = useState(new User())
 	let _token = sessionStorage.getItem('token')
 
-	useEffect(() => {
+	useEffect( () => {
 		if (_token) {
 			axiosInstance.defaults.headers.common['Authorization'] = _token
 
