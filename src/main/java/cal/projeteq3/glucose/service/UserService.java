@@ -36,36 +36,28 @@ public class UserService {
 		return jwtTokenProvider.generateToken(authentication);
 	}
 
-	private ManagerDTO getManagerDto(Long id) {
-		Optional<Manager> optManager = managerRepository.findById(id);
-		if (optManager.isEmpty()) throw new UserNotFoundException("No Manager found with this ID: " + id);
-
-		return new ManagerDTO(optManager.get());
-	}
-
-	private EmployerDTO getEmployerDto(Long id) {
-		Optional<Employer> optEmployer = employerRepository.findById(id);
-		if (optEmployer.isEmpty()) throw new UserNotFoundException("No Employer found with this ID: " + id);
-
-		return new EmployerDTO(optEmployer.get());
-	}
-
-	private StudentDTO getStudentDto(Long id) {
-		Optional<StudentSummary> optStudent = studentRepository.findStudentSummaryById(id);
-		if (optStudent.isEmpty()) throw new UserNotFoundException("No Student found with this ID: " + id);
-
-		return new StudentDTO(optStudent.get());
-	}
-
 	public UserDTO getMe(String token) {
 		String email = jwtTokenProvider.getEmailFromJWT(token);
 		User user = userRepository.findUserByCredentialsEmail(email)
 				.orElseThrow(() -> new UserNotFoundException("No User found with this email: " + email));
 
-        return switch (user.getRole()) {
-            case STUDENT -> getStudentDto(user.getId());
-            case EMPLOYER -> getEmployerDto(user.getId());
-            case MANAGER -> getManagerDto(user.getId());
-        };
-    }
+		return switch (user.getRole()) {
+			case STUDENT -> getStudentDto(user.getId());
+			case EMPLOYER -> getEmployerDto(user.getId());
+			case MANAGER -> getManagerDto(user.getId());
+		};
+	}
+
+	private ManagerDTO getManagerDto(Long id) {
+		return new ManagerDTO(managerRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("No Manager found with this ID: " + id)));
+	}
+	private EmployerDTO getEmployerDto(Long id) {
+		return new EmployerDTO(employerRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("No Employer found with this ID: " + id)));
+	}
+	private StudentDTO getStudentDto(Long id) {
+		return new StudentDTO(studentRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("No Student found with this ID: " + id)));
+	}
 }
