@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import User from "./model/User";
 import Footer from "./Components/layout/Footer";
 import Main from "./Components/layout/Main";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, useNavigate} from "react-router-dom";
 import {TranslationProvider} from "./Components/util/TranslationContext";
 
 function App(){

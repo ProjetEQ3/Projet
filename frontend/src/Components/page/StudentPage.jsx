@@ -16,11 +16,9 @@ const StudentPage = ({user, setUser}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-	  if(!user?.isLoggedIn){
-		  navigate('/');
-	  }
-
 	  async function fetchStudentJobOffers() {
+		  if (!user?.isLoggedIn) navigate('/');
+
 		  await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			  .then((response) => {
 				  response.data.forEach((jobOffer) => {
@@ -30,6 +28,7 @@ const StudentPage = ({user, setUser}) => {
 				  });
 			  }).catch((error) => {
 				  if (error.response.status === 401) {
+					  console.log(error)
 					  return;
 				  }
 				  toast.error(t('fetchError') + t(error.message))

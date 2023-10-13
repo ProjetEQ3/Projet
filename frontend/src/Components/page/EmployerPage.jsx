@@ -15,6 +15,8 @@ const EmployerPage = ({user}) => {
 	const [offers, setOffers] = useState([]);
 
 	useEffect(() => {
+		if (!user?.isLoggedIn) navigate('/');
+
 		getOffers()
 	}, [user.isLoggedIn])
 

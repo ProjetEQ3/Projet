@@ -4,14 +4,18 @@ import Cvs from "../manager/Cvs";
 import {axiosInstance} from "../../App";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 const ManagerPage = ({user}) => {
     const {t} = useTranslation();
     const [tab, setTab] = useState('stages');
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        if (!user?.isLoggedIn) navigate('/');
+
         const getAllOffers = async () => {
             await axiosInstance.get('manager/jobOffers/all',
             ).then((response) => {
