@@ -28,7 +28,7 @@ const StudentPage = ({user, setUser}) => {
 				  });
 			  }).catch((error) => {
 				  if (error.response.status === 401) {
-					  console.log(error)
+					  // console.log(error)
 					  return;
 				  }
 				  toast.error(t('fetchError') + t(error.message))
