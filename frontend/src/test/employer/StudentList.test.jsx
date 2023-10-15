@@ -6,8 +6,8 @@ describe('StudentList', () => {
 
     const mockOffer = {
         students: [
-            { id: 1, name: 'John Doe' },
-            { id: 2, name: 'Jane Smith' }
+            { id: 1, name: 'Sam Sam' },
+            { id: 2, name: 'Gab Gab' }
         ]
     };
 

@@ -14,32 +14,33 @@ describe("ShortJobOffer", () => {
 
     const mockDeleteOffer = jest.fn();
 
-    it("renders job title correctly", () => {
+    beforeEach(() => {
         render(<ShortJobOffer jobOffer={mockJobOffer} deleteOffer={mockDeleteOffer} />);
-        const jobTitles = screen.getAllByText("Software Engineer");
-        expect(jobTitles).toHaveLength(2);
     });
 
-    it("renders number of candidates correctly", () => {
-        render(<ShortJobOffer jobOffer={mockJobOffer} deleteOffer={mockDeleteOffer} />);
-        expect(screen.getByText("nbOfCandidates")).toBeInTheDocument();
-        expect(screen.getByText((_, element) =>
-            element.tagName.toLowerCase() === 'strong' && element.textContent === '5'
-        )).toBeInTheDocument();
+    it('should render the job title', () => {
+        expect(screen.getByTestId('job-title')).toHaveTextContent(mockJobOffer.title);
+    });
+
+    it('should render the department', () => {
+        expect(screen.getByTestId('job-department')).toHaveTextContent(mockJobOffer.department);
+    });
+
+    it('should render the number of candidates', () => {
+        expect(screen.getByText(new RegExp(mockJobOffer.nbOfCandidates.toString(), 'i'))).toBeInTheDocument();
     });
 
     it('should display the delete confirmation modal when trash icon is clicked', () => {
-        const { getByTestId } = render(<ShortJobOffer jobOffer={mockJobOffer} deleteOffer={mockDeleteOffer} />);
-        const trashIcon = getByTestId('trash-icon');
+        const trashIcon = screen.getByTestId('trash-icon');
         fireEvent.click(trashIcon);
         const deleteModalTitle = screen.getByRole('heading', { name: /delete/i });
         expect(deleteModalTitle).toBeInTheDocument();
     });
 
     it('should call deleteOffer function when delete button is clicked', () => {
-        const { getByTestId } = render(<ShortJobOffer jobOffer={mockJobOffer} deleteOffer={mockDeleteOffer} />);
-        const deleteModalButton = getByTestId('delete-modal-button');
+        const deleteModalButton = screen.getByTestId('delete-modal-button');
         fireEvent.click(deleteModalButton);
         expect(mockDeleteOffer).toHaveBeenCalledTimes(1);
     });
+
 });

@@ -184,7 +184,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                             </div>
                         </div>
                         <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
-                            <button className="btn btn-outline-ose my-auto" onClick={() => setIsModified(false)}>
+                            <button className="btn btn-outline-ose my-auto" data-testid="edit-button" onClick={() => setIsModified(false)}>
                                 {t('edit')}
                                 <FontAwesomeIcon icon={faPenToSquare} className="ms-2"/>
                             </button>

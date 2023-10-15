@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import ShortStudentInfo from '../../Components/employer/ShortStudentInfo';
 
 describe("ShortStudentInfo", () => {
 
     const mockStudent = {
-        firstName: "John",
-        lastName: "Doe",
-        email: "john.doe@example.com",
+        firstName: "Sam",
+        lastName: "Sam",
+        email: "sam.sam@example.com",
         jobApplications: [1],
         cvFile: {
             fileData: "mockData"
@@ -16,7 +16,7 @@ describe("ShortStudentInfo", () => {
 
     it("renders correctly", () => {
         const { getByText } = render(<ShortStudentInfo student={mockStudent} />);
-        expect(getByText("John Doe - john.doe@example.com")).toBeInTheDocument();
+        expect(getByText("Sam Sam - sam.sam@example.com")).toBeInTheDocument();
     });
 
     it("handles preview button click", () => {

@@ -4,6 +4,7 @@ import NewOfferForm from '../../Components/employer/NewOfferForm';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('NewOfferForm', () => {
+
     test('renders the form and checks for fields', () => {
         render(
             <Router>
@@ -65,7 +66,6 @@ describe('NewOfferForm', () => {
 
         const expirationDateWarning = await findByText('endDateRequired');
         expect(expirationDateWarning).toBeInTheDocument();
-
     });
 
 });
