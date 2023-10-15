@@ -17,8 +17,6 @@ const ManagerPage = ({user}) => {
             ).then((response) => {
                 setOffers(response.data);
                 return response.data;
-            }).catch((error) => {
-                console.log(error);
             });
         }
         const getAllCvs = async () => {
@@ -27,8 +25,6 @@ const ManagerPage = ({user}) => {
             ).then((response) => {
                 setCvs(response.data);
                 return response.data;
-            }).catch((error) => {
-                console.log(error);
             });
         }
 
@@ -48,10 +44,8 @@ const ManagerPage = ({user}) => {
         <div className="container">
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
-                            onClick={() => setTab('stages')}>{t('internship')}</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`}
-                            onClick={() => setTab('cvs')}>CVs</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => setTab('stages')}>{t('internship')}</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => setTab('cvs')}>CVs</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} />}

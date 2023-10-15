@@ -1,11 +1,8 @@
 import React from "react";
 import PDFViewer from "./PDFViewer";
 
-const PDFPreview = ({file, setIsDisplay}) => {
+const PDFPreview = ({file}) => {
     const pdfBlob = new Blob([file], {type: 'application/pdf'});
-    const closePdfIframe = () => {
-        setIsDisplay(false);
-    }
 
     return (
         <div className="row">
