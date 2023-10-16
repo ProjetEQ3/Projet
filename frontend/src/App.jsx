@@ -29,7 +29,7 @@ function App(){
 					toast.error(err.message)
 				})
 		}
-	}, []);
+	}, [_token])
 
 	return (
 		<TranslationProvider>
