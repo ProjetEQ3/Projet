@@ -81,7 +81,7 @@ function Cv({user, setCv}){
 							<div className="d-block col-8">
 								<State state={user.cvFile.cvState}/>
 							</div>
-							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
+							<FontAwesomeIcon title="deleteCV" icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
 							                 onClick={handleDeletePdf}/>
 						</div>
 						<PDFPreview file={CVFile.readBytes(user.cvFile.fileData)}/>
@@ -91,7 +91,7 @@ function Cv({user, setCv}){
 				<div>
 					<h1 className="display-6">{t('uploadCV')}</h1>
 					<div className="col-6 mx-auto">
-						<input value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
+						<input id="uploadCV" name="uploadCV" title="uploadCV" value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
 					</div>
 				</div>
 			)

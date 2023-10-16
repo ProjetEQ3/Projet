@@ -29,7 +29,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 						<h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
 					</div>
 					<div className="col-3 my-auto text-center">
-						<button className={"btn btn-outline-ose"} onClick={
+						<button data-testid="apply-button" className={"btn btn-outline-ose"} onClick={
 							() => applyForJobOffer(jobOffer.id, user.id)}>{t('apply')}</button>
 					</div>
 				</div>

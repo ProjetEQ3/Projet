@@ -17,8 +17,8 @@ const ShortJobOffer = ({jobOffer}) => {
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-12">
-                        <h5 className="text-dark fw-light pt-1">{jobOffer.title}</h5>
-                        <p className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
+                        <h5 data-testid="job-title" className="text-dark fw-light pt-1">{jobOffer.title}</h5>
+                        <p data-testid="job-department" className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
                     </div>
                 </div>
             </div>
