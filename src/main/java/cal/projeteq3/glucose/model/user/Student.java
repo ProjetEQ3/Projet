@@ -5,8 +5,11 @@ import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -50,9 +53,7 @@ public class Student extends User{
 		}
 	}
 
-	// EQ3-13
 	public boolean hasApprovedCv(){
 		return this.cvFile != null && this.cvFile.getCvState() == CvState.ACCEPTED;
 	}
-
 }

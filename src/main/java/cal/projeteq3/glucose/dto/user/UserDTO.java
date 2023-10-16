@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.dto.user;
 
+import cal.projeteq3.glucose.model.user.User;
 import lombok.*;
 
 @AllArgsConstructor
@@ -17,5 +18,13 @@ public class UserDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+    }
+
+    public UserDTO(User user){
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.role = user.getRole().toString();
     }
 }

@@ -7,11 +7,6 @@ function JobOfferList({jobOffers, user, setJobOffers}){
     const {t} = useTranslation();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
-	useEffect(() => {
-		console.log("user", user)
-		console.log("jobOffers", jobOffers)
-	}, [])
-
 	const updatedOffer = (jobOffer) => {
 		setSelectedOffer(jobOffer)
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)

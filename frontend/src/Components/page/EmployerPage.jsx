@@ -15,18 +15,24 @@ const EmployerPage = ({user}) => {
 	const [offers, setOffers] = useState([]);
 
 	useEffect(() => {
+		if (!user?.isLoggedIn) navigate('/');
+
 		getOffers()
-	}, []);
+	}, [user.isLoggedIn])
 
 	const getOffers = () => {
 		axiosInstance
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {setOffers(response.data)})
+			.catch((error) => {
+				if (error.response.status === 401) {
+					return;
+				}
+				toast.error(t('fetchError') + t(error.message));
+			})
 	}
 
 	const updateOffer = (offer) => {
-		console.log("updateOffer", selectedOffer.id)
-		console.log("updateOffer", offer.id)
 		axiosInstance
 			.put('/employer/offer', offer)
 			.then((response) => {

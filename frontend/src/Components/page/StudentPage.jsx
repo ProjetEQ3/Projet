@@ -12,15 +12,18 @@ const StudentPage = ({user, setUser}) => {
   const {t} = useTranslation();
   const [tab, setTab] = useState('home');
   const [jobOffers, setJobOffers] = useState([]);
-
+  const tabs = [
+	  { id: 'home', label: 'home' },
+	  { id: 'stages', label: 'jobOffers' },
+	  { id: 'my_applications', label: 'myApplications' },
+	  { id: 'cv', label: 'CV' },
+  ];
   const navigate = useNavigate();
 
   useEffect(() => {
-	  if(!user?.isLoggedIn){
-		  navigate('/');
-	  }
-
 	  async function fetchStudentJobOffers() {
+		  if (!user?.isLoggedIn) navigate('/');
+
 		  await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			  .then((response) => {
 				  response.data.forEach((jobOffer) => {
@@ -29,8 +32,9 @@ const StudentPage = ({user, setUser}) => {
 					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
 				  });
 			  }).catch((error) => {
-				  toast.error(t('fetchError') + t(error));
-				  console.log(t('fetchError') + error);
+				  if (error.response.status === 401) return;
+
+				  toast.error(t('fetchError') + t(error.message))
 			  });
 	  }
 
@@ -46,30 +50,15 @@ const StudentPage = ({user, setUser}) => {
 		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>
 				<div className="tabs btn-group my-2 mx-auto col-12">
-					<button
-						className={`col-md-3 btn btn-outline-ose ${tab === 'home' ? 'active' : ''}`}
-						onClick={() => setTab('home')}
-					>
-						{t('home')}
-					</button>
-					<button
-						className={`col-md-3 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`}
-						onClick={() => setTab('stages')}
-					>
-						{t('jobOffers')}
-					</button>
-					<button
-						className={`col-md-3 btn btn-outline-ose ${tab === 'my_applications' ? 'active' : ''}`}
-						onClick={() => setTab('my_applications')}
-					>
-						{t('myApplications')}
-					</button>
-					<button
-						className={`col-md-3 btn btn-outline-ose ${tab === 'cv' ? 'active' : ''}`}
-						onClick={() => setTab('cv')}
-					>
-						{t('CV')}
-					</button>
+					{tabs.map(tabItem => (
+						<button
+							key={tabItem.id}
+							className={`col-md-3 btn btn-outline-ose ${tab === tabItem.id ? 'active' : ''}`}
+							onClick={() => setTab(tabItem.id)}
+						>
+							{t(tabItem.label)}
+						</button>
+					))}
 				</div>
 				{tab === 'home' && <h3>{t('home')}</h3>}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}

@@ -63,6 +63,10 @@ public class JobOffer{
 
 	private String refusReason;
 
+	public void addJobApplication(JobApplication jobApplication){
+		this.jobApplications.add(jobApplication);
+	}
+
 	public void copy(JobOffer jobOffer){
 		this.title = jobOffer.getTitle();
 		this.department = jobOffer.getDepartment();
@@ -77,7 +81,6 @@ public class JobOffer{
 		this.nbOfCandidates = jobOffer.getNbOfCandidates();
 	}
 
-	// EQ3-13
 	public JobApplication apply(Student student){
 		if(!student.hasApprovedCv()) throw new CvNotApprovedException();
 		if(getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();

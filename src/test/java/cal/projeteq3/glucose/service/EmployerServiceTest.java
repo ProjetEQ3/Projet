@@ -6,8 +6,8 @@ import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
@@ -26,6 +26,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,12 +46,12 @@ public class EmployerServiceTest {
     private EmployerRepository employerRepository;
     @Mock
     private StudentRepository studentRepository;
-
     @Mock
     private JobApplicationRepository jobApplicationRepository;
-
     @InjectMocks
     private EmployerService employerService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void createEmployer_valid(){
@@ -77,6 +79,7 @@ public class EmployerServiceTest {
                 .build();
 
         when(employerRepository.save(employer)).thenReturn(employer);
+        when(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword())).thenReturn("Testestest1");
 
 //        Act
         EmployerDTO employerDTOResult = employerService.createEmployer(registerEmployerDTO);
@@ -514,8 +517,6 @@ public class EmployerServiceTest {
 
         // Act
         JobOfferDTO result = employerService.updateJobOffer(updatedJobOffer);
-
-        System.out.println(result);
 
         // Assert
         assertNotNull(result);

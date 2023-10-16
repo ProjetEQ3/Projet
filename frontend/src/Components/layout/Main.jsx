@@ -11,6 +11,7 @@ const Main = ({user, setUser}) => {
     const fixMargin = {
         paddingBottom: "10em"
     }
+
     return (
         <main style={fixMargin} className='App-main bg-light mx-auto'>
             <Routes>

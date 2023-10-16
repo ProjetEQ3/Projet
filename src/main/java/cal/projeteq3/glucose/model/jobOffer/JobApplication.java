@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,8 +15,6 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
-//	boolean refused = false;
-//	String refusReason;
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
 	@ManyToOne

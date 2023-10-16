@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.exception.request;
+package cal.projeteq3.glucose.exception.badRequestException;
 
 public class UserNotFoundException extends BadRequestException{
         public UserNotFoundException(Long id) {
@@ -7,5 +7,10 @@ public class UserNotFoundException extends BadRequestException{
 
         public UserNotFoundException(String email) {
             super("User with email " + email + " does not exist.");
+        }
+
+        public UserNotFoundException() {
+            super("User not found");
+
         }
 }

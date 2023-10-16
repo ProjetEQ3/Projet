@@ -5,10 +5,11 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
@@ -16,10 +17,12 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Assertions;
@@ -29,6 +32,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -49,9 +55,14 @@ public class StudentServiceTest {
     private CvFileRepository cvFileRepository;
     @Mock
     private JobOfferRepository jobOfferRepository;
+    @Mock
+    private JobApplicationRepository jobApplicationRepository;
 
     @InjectMocks
     private StudentService studentService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     private JobOffer jobOffer;
 
@@ -102,6 +113,7 @@ public class StudentServiceTest {
                     .department("_420B0")
                     .build()
         );
+        when(passwordEncoder.encode("Test1234")).thenReturn("Test1234");
 
         //Act
         studentService.createStudent(registerStudentDTO);
@@ -430,6 +442,96 @@ public class StudentServiceTest {
             studentService.applyJobOffer(1L, 1L);
         });
     }
+
+    @Test
+    void applyJobOffer_SuccessfulApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        when(jobApplicationRepository.save(any(JobApplication.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(jobOfferRepository.save(any(JobOffer.class))).thenReturn(jobOffer);
+
+        // Act
+        JobOfferDTO result = studentService.applyJobOffer(jobOfferId, studentId);
+
+        // Assert
+        assertNotNull(result);
+        verify(jobOfferRepository, times(1)).findById(jobOfferId);
+        verify(studentRepository, times(1)).findById(studentId);
+        verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
+    }
+
+    @Test
+    void applyJobOffer_StudentAlreadyApplied() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer));
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(StudentHasAlreadyAppliedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_CvNotApproved() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_JobOfferNotOpen() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
 
     @Test
     void apply_withApprovedCVAndOpenJobOffer_returnsJobApplication() {

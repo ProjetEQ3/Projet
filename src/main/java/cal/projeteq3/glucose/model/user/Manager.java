@@ -26,5 +26,4 @@ public class Manager extends User{
 		this.matricule = matricule;
 		this.phoneNumber = phoneNumber;
 	}
-
 }
