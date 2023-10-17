@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -70,17 +70,21 @@ public class StudentController {
     }
 
     @GetMapping("/jobOffers/{department}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department, @RequestParam SemesterDTO semesterDTO) {
+    public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department, @RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getJobOffersByDepartment(Department.valueOf(department), semesterDTO));
+                .body(studentService.getJobOffersByDepartment(Department.valueOf(department), semester));
     }
 
     @GetMapping("/jobOffers/open/{department}")
-    public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department, @RequestParam SemesterDTO semesterDTO) {
+    public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department, @RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department), semesterDTO));
+                .body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department), semester));
     }
 
     @PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
@@ -89,9 +93,11 @@ public class StudentController {
     }
 
     @GetMapping("/appliedJobOffer/{studentId}")
-    public ResponseEntity<List<JobOfferDTO>> getAppliedJobOfferByStudentId(@PathVariable Long studentId, @RequestParam SemesterDTO semesterDTO) {
+    public ResponseEntity<List<JobOfferDTO>> getAppliedJobOfferByStudentId(@PathVariable Long studentId, @RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getAppliedJobOfferByStudentId(studentId, semesterDTO));
+                .body(studentService.getAppliedJobOfferByStudentId(studentId, semester));
     }
 }

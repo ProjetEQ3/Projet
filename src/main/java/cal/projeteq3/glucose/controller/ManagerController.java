@@ -1,8 +1,8 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -29,10 +29,12 @@ public class ManagerController {
 
 //    JobOffer
     @GetMapping("/jobOffers/all")
-    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam SemesterDTO semesterDTO){
+    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getAllJobOffer(semesterDTO));
+                .body(managerService.getAllJobOffer(semester));
     }
 
     @GetMapping("jobOffer/{id}")
@@ -43,17 +45,21 @@ public class ManagerController {
     }
 
     @GetMapping("jobOffers/employer/{employerId}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId, @RequestParam SemesterDTO semesterDTO){
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(employerService.getJobOffersDTOByEmployerId(employerId, semesterDTO));
+                .body(employerService.getJobOffersDTOByEmployerId(employerId, semester));
     }
 
     @GetMapping("jobOffers/{jobOfferState}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam SemesterDTO semesterDTO){
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam String season, @RequestParam String year){
+        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase()), semesterDTO));
+                .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase()), semester));
     }
 
     @PutMapping("jobOffer/accept/{id}")
