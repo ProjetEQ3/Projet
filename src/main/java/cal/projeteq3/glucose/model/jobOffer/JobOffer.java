@@ -83,6 +83,7 @@ public class JobOffer{
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 		this.nbOfCandidates = jobOffer.getNbOfCandidates();
+		this.semester = jobOffer.getSemester();
 	}
 
 	public JobApplication apply(Student student){
