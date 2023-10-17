@@ -517,6 +517,7 @@ public class EmployerServiceTest {
         Long jobOfferId = 1L;
         JobOfferDTO updatedJobOffer = new JobOfferDTO();
         updatedJobOffer.setId(jobOfferId);
+        updatedJobOffer.setStartDate(LocalDate.now());
 
         JobOffer returnedJobOffer = JobOffer.builder()
                 .id(jobOfferId)

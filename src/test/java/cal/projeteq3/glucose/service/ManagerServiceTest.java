@@ -480,7 +480,7 @@ class ManagerServiceTest {
                 .semester(semester)
                 .build());
 
-        when(jobOfferRepository.findAll()).thenReturn(jobOffers);
+        when(jobOfferRepository.findAllBySemester(semester)).thenReturn(jobOffers);
 
 //        Act
         List<JobOfferDTO> jobOfferDTOs = managerService.getAllJobOffer(semester);
@@ -488,7 +488,7 @@ class ManagerServiceTest {
 //        Assert
         assertNotNull(jobOfferDTOs);
         assertEquals(2, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findAll();
+        verify(jobOfferRepository, times(1)).findAllBySemester(semester);
     }
 
     @Test
