@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
@@ -33,7 +34,7 @@ public class EmployerController{
 	}
 
 	@GetMapping("/offer/all")
-	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId){
+	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId, @RequestParam SemesterDTO semesterDTO){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getAllJobOffers(employerId));
