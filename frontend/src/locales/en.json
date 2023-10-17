@@ -56,6 +56,7 @@
   "durationRequired": "Duration is required.",
   "departmentRequired": "Department is required.",
   "descriptionRequired": "Description is required.",
+  "displayedSession": "Displayed session: ",
 
   "errorUpdateCV": "Error updating CV: ",
   "expirationDate": "End Date of the offer: ",
@@ -78,6 +79,7 @@
   "firstNameInvalid": "First name must contain only letters.",
   "firstNameRequired": "First name is required.",
   "firstName": "First Name",
+  "fall": "Fall",
 
   "glucoseFullAcronym": "Free, Useful, and Collaborative Management of Student Internship Acquisition.",
   "glucoseAcronym": "GlucOSE",
@@ -175,6 +177,7 @@
   "successLogin": "Login successful.",
   "successRegister": "Your account has been successfully created.",
   "student": "Student",
+  "summer": "Summer",
 
   "TAKEN": "Taken",
   "titleRequired": "Title of the offer is required.",
@@ -190,6 +193,7 @@
   "wrongPassword": "Wrong password",
   "welcome": "Welcome to ",
   "week": " week(s)",
+  "winter": "Winter",
 
   "yourInternship": "Your internship offers"
 }
