@@ -3,6 +3,7 @@ package cal.projeteq3.glucose;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -227,6 +228,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -244,6 +246,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Full-stack developer")
@@ -261,6 +264,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
@@ -276,6 +280,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
@@ -290,6 +295,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
@@ -305,6 +311,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Mobile")
@@ -319,6 +326,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -333,6 +341,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -347,6 +356,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -361,6 +371,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Front-end developer")
@@ -378,6 +389,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -395,6 +407,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Java developer")
@@ -412,6 +425,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
@@ -427,6 +441,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
@@ -441,6 +456,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
@@ -456,6 +472,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Mobile")
@@ -470,6 +487,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -484,6 +502,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -498,6 +517,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -512,6 +532,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement COBOL")
@@ -525,6 +546,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build()
 		));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
