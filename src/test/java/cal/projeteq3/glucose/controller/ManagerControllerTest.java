@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -23,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +60,7 @@ public class ManagerControllerTest {
         // Arrange
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(managerService.getAllJobOffer()).thenReturn(jobOffers);
+        when(managerService.getAllJobOffer(new Semester(LocalDate.now()))).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders
@@ -96,7 +98,7 @@ public class ManagerControllerTest {
         Long employerId = 1L;
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(employerService.getJobOffersDTOByEmployerId(employerId)).thenReturn(jobOffers);
+        when(employerService.getJobOffersDTOByEmployerId(employerId,new Semester(LocalDate.now()))).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/employer/{employerId}", employerId)
@@ -113,7 +115,7 @@ public class ManagerControllerTest {
         String jobOfferState = "OPEN";
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(managerService.getJobOffersWithState(JobOfferState.OPEN)).thenReturn(jobOffers);
+        when(managerService.getJobOffersWithState(JobOfferState.OPEN,new Semester(LocalDate.now()))).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/{jobOfferState}", jobOfferState)
