@@ -24,7 +24,6 @@ import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -122,13 +121,13 @@ public class StudentService {
     }
 
     public List<JobOfferDTO> getJobOffersByDepartment(Department department, Semester semester){
-        return jobOfferRepository.findJobOffersByDepartment(department)
+        return jobOfferRepository.findJobOffersByDepartmentAndSemester(department, semester)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
 
     public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department, Semester semester){
-        return jobOfferRepository.findJobOffersByDepartmentAndJobOfferState(department, JobOfferState.OPEN)
+        return jobOfferRepository.findJobOffersByDepartmentAndJobOfferStateAndSemester(department, JobOfferState.OPEN, semester)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
@@ -154,7 +153,7 @@ public class StudentService {
 
     public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId, Semester semester) {
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
-        return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId())
+        return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId(), semester)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }

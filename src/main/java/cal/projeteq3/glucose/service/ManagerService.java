@@ -130,7 +130,7 @@ public class ManagerService{
 //	Job Offer
 
 	public List<JobOfferDTO> getAllJobOffer(Semester semester){
-		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+		return jobOfferRepository.findAllBySemester(semester).stream().map(JobOfferDTO::new).toList();
 	}
 
 	public JobOfferDTO getJobOfferByID(Long id){
@@ -139,7 +139,7 @@ public class ManagerService{
 	}
 
 	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester) {
-		return jobOfferRepository.findJobOfferByJobOfferState(state)
+		return jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester)
 				.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 

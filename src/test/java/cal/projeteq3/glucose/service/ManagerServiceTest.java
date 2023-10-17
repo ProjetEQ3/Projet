@@ -564,7 +564,7 @@ class ManagerServiceTest {
                 )
         );
 
-            when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.SUBMITTED)).thenReturn(
+            when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED)).thenReturn(
                     jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.SUBMITTED).toList());
 
 //        Act
@@ -574,7 +574,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.SUBMITTED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED);
 
     }
 
@@ -618,7 +618,7 @@ class ManagerServiceTest {
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.OPEN)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.OPEN).toList());
 
 //        Act
@@ -628,7 +628,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.OPEN);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN);
 
     }
 
@@ -672,7 +672,7 @@ class ManagerServiceTest {
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.PENDING)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.PENDING).toList());
 
 //        Act
@@ -682,7 +682,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.PENDING);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING);
 
     }
 
@@ -726,7 +726,7 @@ class ManagerServiceTest {
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.EXPIRED)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.EXPIRED).toList());
 
 //        Act
@@ -736,7 +736,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.EXPIRED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED);
 
     }
 
@@ -777,7 +777,7 @@ class ManagerServiceTest {
                         .build()
         ));
 
-        when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.TAKEN)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.TAKEN).toList());
 
 //        Act
@@ -787,7 +787,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.TAKEN);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN);
 
     }
 
@@ -831,7 +831,7 @@ class ManagerServiceTest {
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferState(JobOfferState.REFUSED)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.REFUSED).toList());
 
 //        Act
@@ -841,7 +841,7 @@ class ManagerServiceTest {
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferState(JobOfferState.REFUSED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED);
 
     }
 

@@ -541,7 +541,7 @@ public class EmployerServiceTest {
     public void GetAllJobOffers_Empty() {
         // Arrange
         Long employerId = 1L;
-        when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(Collections.emptyList());
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId)).thenReturn(Collections.emptyList());
 
         // Act
         List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
@@ -549,7 +549,7 @@ public class EmployerServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId);
     }
 
     @Test
@@ -594,7 +594,7 @@ public class EmployerServiceTest {
                         .hoursPerWeek(40)
                         .build()
         ));
-        when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(jobOffers);
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId)).thenReturn(jobOffers);
 
         // Act
         List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
@@ -602,7 +602,7 @@ public class EmployerServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(3, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId);
     }
 
 

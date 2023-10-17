@@ -32,8 +32,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -350,14 +348,14 @@ public class StudentServiceTest {
                 )
         );
 
-        when(jobOfferRepository.findJobOffersByDepartment(Department._420B0)).thenReturn(jobOffers_420B0);
+        when(jobOfferRepository.findJobOffersByDepartmentAndSemester(Department._420B0)).thenReturn(jobOffers_420B0);
 
 //        Act
         List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0);
 
 //        Assert
         assertEquals(3, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartment(Department._420B0);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndSemester(Department._420B0);
 
     }
 
@@ -408,7 +406,7 @@ public class StudentServiceTest {
         );
 
         when(jobOfferRepository
-                .findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN))
+                .findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN))
                 .thenReturn(jobOffers_420B0.stream()
                         .filter(jobOffer -> jobOffer.getJobOfferState()
                                 .equals(JobOfferState.OPEN))
@@ -419,7 +417,7 @@ public class StudentServiceTest {
 
 //        Assert
         assertEquals(1, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN);
 
     }
 

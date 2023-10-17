@@ -19,7 +19,6 @@ import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -91,7 +90,7 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) {
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) { // todo : wtf
 		Employer employer = employerRepository
 			.findById(employerId)
 			.orElseThrow(() -> new EmployerNotFoundException(employerId));
@@ -123,7 +122,7 @@ public class EmployerService{
 	}
 
 	public List<JobOfferDTO> getAllJobOffers(Long employerId, Semester semester){
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester);
 		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
