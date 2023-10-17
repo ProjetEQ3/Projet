@@ -374,7 +374,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), jobOffers.size());
