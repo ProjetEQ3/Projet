@@ -107,6 +107,9 @@ public class EmployerService{
 			.findById(employerId)
 			.orElseThrow(() -> new EmployerNotFoundException(employerId));
 		JobOffer jobOfferEntity = jobOffer.toEntity();
+
+		jobOfferEntity.setSemester(new Semester(jobOffer.getStartDate()));
+
 		employer.addJobOffer(jobOfferEntity);
 		JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity));
 		employerRepository.save(employer);
@@ -118,6 +121,8 @@ public class EmployerService{
 			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
+		jobOffer.setSemester(new Semester(jobOffer.getStartDate()));
+
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
 
