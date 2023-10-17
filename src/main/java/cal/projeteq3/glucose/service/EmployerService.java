@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -90,7 +91,7 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) {
 		Employer employer = employerRepository
 			.findById(employerId)
 			.orElseThrow(() -> new EmployerNotFoundException(employerId));
@@ -121,7 +122,7 @@ public class EmployerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getAllJobOffers(Long employerId){
+	public List<JobOfferDTO> getAllJobOffers(Long employerId, Semester semester){
 		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
 		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());

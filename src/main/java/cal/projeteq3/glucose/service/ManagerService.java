@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.exception.badRequestException.CvFileNotFoundExcepti
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.ManagerNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -128,7 +129,7 @@ public class ManagerService{
 
 //	Job Offer
 
-	public List<JobOfferDTO> getAllJobOffer(){
+	public List<JobOfferDTO> getAllJobOffer(Semester semester){
 		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
 	}
 
@@ -137,7 +138,7 @@ public class ManagerService{
 				.orElseThrow(() -> new JobOfferNotFoundException(id)));
 	}
 
-	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester) {
 		return jobOfferRepository.findJobOfferByJobOfferState(state)
 				.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}

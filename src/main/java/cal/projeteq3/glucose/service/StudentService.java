@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAp
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -120,13 +121,13 @@ public class StudentService {
         cvFileRepository.delete(cvExiste);
     }
 
-    public List<JobOfferDTO> getJobOffersByDepartment(Department department){
+    public List<JobOfferDTO> getJobOffersByDepartment(Department department, Semester semester){
         return jobOfferRepository.findJobOffersByDepartment(department)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department){
+    public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department, Semester semester){
         return jobOfferRepository.findJobOffersByDepartmentAndJobOfferState(department, JobOfferState.OPEN)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
@@ -151,7 +152,7 @@ public class StudentService {
     }
 
 
-    public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId) {
+    public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId, Semester semester) {
         Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
         return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId())
                 .stream().map(JobOfferDTO::new)
