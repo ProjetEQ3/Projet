@@ -6,6 +6,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
@@ -17,6 +18,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,4 +64,15 @@ public class UserService {
 		return new StudentDTO(studentRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("No Student found with this ID: " + id)));
 	}
+
+    public List<String> getSemesters() {
+		int nbSessions = 4;
+		List<String> semesters = new ArrayList<>();
+
+		for (int i = 0; i < nbSessions; i++) {
+			semesters.add(new Semester(LocalDate.now().minusYears(i)).toString());
+		}
+
+		return semesters;
+    }
 }

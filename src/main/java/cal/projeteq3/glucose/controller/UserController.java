@@ -12,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController{
@@ -33,5 +35,12 @@ public class UserController{
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getMe(request.getHeader("Authorization")));
+    }
+
+    @GetMapping("/semesters")
+    public ResponseEntity<List<String>> getSemesters(){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userService.getSemesters());
     }
 }
