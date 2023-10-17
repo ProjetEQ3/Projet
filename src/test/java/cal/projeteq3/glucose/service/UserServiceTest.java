@@ -12,17 +12,22 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.CredentialRepository;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import cal.projeteq3.glucose.security.JwtTokenProvider;
@@ -295,5 +300,26 @@ public class UserServiceTest {
 
         // Act and Assert
         assertThrows(UserNotFoundException.class, () -> userService.getMe(studentToken));
+    }
+
+    @Test
+    void GetSemesters() {
+        // Arrange
+        List<Semester> semesters = new ArrayList<>();
+        semesters.add(new Semester(LocalDate.now().plusMonths(4)));
+        semesters.add(new Semester(LocalDate.now()));
+        semesters.add(new Semester(LocalDate.now().minusMonths(4)));
+        semesters.add(new Semester(LocalDate.now().minusMonths(8)));
+        semesters.add(new Semester(LocalDate.now().minusMonths(12)));
+        semesters.add(new Semester(LocalDate.now().minusMonths(16)));
+
+        // Act and Assert
+        assertEquals(semesters.size(), userService.getSemesters().size());
+        assertEquals(semesters.get(0), userService.getSemesters().get(0).toEntity());
+        assertEquals(semesters.get(1), userService.getSemesters().get(1).toEntity());
+        assertEquals(semesters.get(2), userService.getSemesters().get(2).toEntity());
+        assertEquals(semesters.get(3), userService.getSemesters().get(3).toEntity());
+        assertEquals(semesters.get(4), userService.getSemesters().get(4).toEntity());
+
     }
 }

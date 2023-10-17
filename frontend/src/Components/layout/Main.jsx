@@ -21,6 +21,7 @@ const Main = ({user, setUser}) => {
         if (user?.isLoggedIn) {
             axiosInstance.get('/user/semesters')
                 .then((response) => {
+                    console.log(response.data)
                     setSessions(response.data)
                 }).catch((error) => {
                     if (error.response.status === 401) return;
