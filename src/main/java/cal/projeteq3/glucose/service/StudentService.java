@@ -144,6 +144,7 @@ public class StudentService {
         JobApplication jobApplication = new JobApplication();
         jobApplication.setStudent(student);
         jobApplication.setJobOffer(jobOffer);
+        jobApplication.setSemester(jobOffer.getSemester());
         jobOffer.getJobApplications().add(jobApplication);
 
         jobApplicationRepository.save(jobOffer.getJobApplications().get(jobOffer.getJobApplications().size()-1));
