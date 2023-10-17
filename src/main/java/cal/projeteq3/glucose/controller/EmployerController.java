@@ -37,7 +37,7 @@ public class EmployerController{
 	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId, @RequestParam SemesterDTO semesterDTO){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getAllJobOffers(employerId));
+				.body(this.employerService.getAllJobOffers(employerId, semesterDTO));
 	}
 
 	@PostMapping("/offer")

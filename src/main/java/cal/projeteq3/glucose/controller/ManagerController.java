@@ -32,7 +32,7 @@ public class ManagerController {
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getAllJobOffer());
+                .body(managerService.getAllJobOffer(semesterDTO));
     }
 
     @GetMapping("jobOffer/{id}")
@@ -46,14 +46,14 @@ public class ManagerController {
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId, @RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(employerService.getJobOffersDTOByEmployerId(employerId));
+                .body(employerService.getJobOffersDTOByEmployerId(employerId, semesterDTO));
     }
 
     @GetMapping("jobOffers/{jobOfferState}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
+                .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase()), semesterDTO));
     }
 
     @PutMapping("jobOffer/accept/{id}")
