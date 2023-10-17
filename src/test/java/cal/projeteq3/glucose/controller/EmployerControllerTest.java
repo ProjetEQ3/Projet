@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.UserRepository;
@@ -296,10 +297,10 @@ public class EmployerControllerTest {
 				new JobOfferDTO(1L, "Test Job", Department._420B0,
 						"MTL", "Test Job Description", 1.0f,
 						LocalDate.now(), 10, LocalDate.now().plusDays(3),
-						JobOfferState.OPEN, 30, null,1)
+						JobOfferState.OPEN, 30, null,1, new Semester(LocalDate.now()))
 		));
 
-		when(employerService.getAllJobOffers(employerId)).thenReturn(jobOfferDTOs);
+		when(employerService.getAllJobOffers(employerId, new Semester(LocalDate.now()))).thenReturn(jobOfferDTOs);
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/offer/all")
@@ -343,12 +344,12 @@ public class EmployerControllerTest {
 		JobOfferDTO jobOfferDTO = new JobOfferDTO(employerId, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null,1);
+				JobOfferState.SUBMITTED, 40, null,1,new Semester(LocalDate.now()));
 
 		JobOfferDTO post = new JobOfferDTO(null, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null,1);
+				JobOfferState.SUBMITTED, 40, null,1,new Semester(LocalDate.now()));
 
 		String content = """
 					{
@@ -443,10 +444,10 @@ public class EmployerControllerTest {
 		when(employerService.updateJobOffer(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null,1))).thenReturn(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
+				JobOfferState.SUBMITTED, 40, null,1,new Semester(LocalDate.now())))).thenReturn(new JobOfferDTO(1L, "Software Engineer", Department._420B0,
 				"New York", "We are looking for a talented software engineer to join our team.", 80000.0f,
 				LocalDate.now(), 12, LocalDate.now().plusDays(3),
-				JobOfferState.SUBMITTED, 40, null,1));
+				JobOfferState.SUBMITTED, 40, null,1,new Semester(LocalDate.now())));
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer")

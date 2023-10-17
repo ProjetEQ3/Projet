@@ -2,14 +2,15 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
-import cal.projeteq3.glucose.exception.APIException;
-import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -18,7 +19,6 @@ import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,12 +38,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class,
         SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
@@ -144,7 +144,7 @@ public class StudentControllerTest {
                                 .build()
                 )
         );
-        when(studentService.getJobOffersByDepartment(Department._420B0))
+        when(studentService.getJobOffersByDepartment(Department._420B0,new Semester(LocalDate.now())))
                 .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
 
 
@@ -214,7 +214,7 @@ public class StudentControllerTest {
                 )
         );
 
-        when(studentService.getOpenJobOffersByDepartment(Department._420B0))
+        when(studentService.getOpenJobOffersByDepartment(Department._420B0,new Semester(LocalDate.now())))
                 .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).filter(jobOfferDTO ->
                         jobOfferDTO.getJobOfferState().equals(JobOfferState.OPEN)).collect(Collectors.toList()));
 
@@ -290,7 +290,7 @@ public class StudentControllerTest {
         Long studentId = 1L;
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(studentService.getAppliedJobOfferByStudentId(studentId)).thenReturn(jobOffers);
+        when(studentService.getAppliedJobOfferByStudentId(studentId,new Semester(LocalDate.now()))).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", studentId)
@@ -305,7 +305,7 @@ public class StudentControllerTest {
     public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
         Long wrongStudentId = -1L;
 
-        when(studentService.getAppliedJobOfferByStudentId(wrongStudentId)).thenThrow(new StudentNotFoundException(wrongStudentId));
+        when(studentService.getAppliedJobOfferByStudentId(wrongStudentId,new Semester(LocalDate.now()))).thenThrow(new StudentNotFoundException(wrongStudentId));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/appliedJobOffer/{studentId}", wrongStudentId)
@@ -337,7 +337,7 @@ public class StudentControllerTest {
 		                                                     .jobOfferState(JobOfferState.EXPIRED).duration(6).hoursPerWeek(
 				40).salary(20.0f).startDate(LocalDate.now().minusDays(60)).expirationDate(LocalDate.now().minusDays(30))
 		                                                     .build()));
-		when(studentService.getJobOffersByDepartment(Department._420B0)).thenReturn(
+		when(studentService.getJobOffersByDepartment(Department._420B0,new Semester(LocalDate.now()))).thenReturn(
 			jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
 
 		//        Act & Assert
@@ -379,7 +379,7 @@ public class StudentControllerTest {
 				40).salary(20.0f).startDate(LocalDate.now().minusDays(60)).expirationDate(LocalDate.now().minusDays(30))
 		                                                     .build()));
 
-		when(studentService.getOpenJobOffersByDepartment(Department._420B0)).thenReturn(jobOffers_420B0.stream().map(
+		when(studentService.getOpenJobOffersByDepartment(Department._420B0,new Semester(LocalDate.now()))).thenReturn(jobOffers_420B0.stream().map(
 			JobOfferDTO::new).filter(jobOfferDTO -> {
 			return jobOfferDTO.getJobOfferState().equals(JobOfferState.OPEN);
 		}).collect(Collectors.toList()));
