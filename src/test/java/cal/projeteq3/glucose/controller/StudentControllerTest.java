@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.exception.APIException;
@@ -7,12 +8,18 @@ import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenExce
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
+import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -27,26 +34,37 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class})
+@SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class,
+        SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
 @WebMvcTest(StudentController.class)
 public class StudentControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
     private StudentService studentService;
+    @MockBean
+    private UserRepository userRepository;
 
 	private final Long validStudentId = 1L;
 
 	private final Long validJobOfferId = 1L;
 
+    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0BtaWNoYXVkLmNvbSIsImlhdCI6MTY5NzE1NzAzNywiZXhwIjoxNjk3MjQzNDM3LCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiU1RVREVOVCJ9XX0.daT23khpDRN0c4RhK1SQKkb7YtF4dbw0BRpKQc3_Ueo";
+
+    @BeforeEach
+    public void setup() {
+        when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Student.builder().build()));
+    }
       @Test
     public void Register_Valid() throws Exception {
         StudentDTO returnedStudent =
@@ -131,7 +149,9 @@ public class StudentControllerTest {
 
 
 //        Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B0"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B0")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3))
@@ -144,7 +164,9 @@ public class StudentControllerTest {
 //        Rien à arranger
 
 //        Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/jobOffers/{department}", "_420B1")
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().is(673));
     }
 
@@ -197,7 +219,9 @@ public class StudentControllerTest {
                         jobOfferDTO.getJobOfferState().equals(JobOfferState.OPEN)).collect(Collectors.toList()));
 
 //        Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B0"))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/jobOffers/open/{department}", "_420B0")
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
@@ -206,7 +230,9 @@ public class StudentControllerTest {
 
     @Test
     public void GetOpenJobOffersByDepartment_InvalidDep2() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B1"))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/jobOffers/open/{department}", "_420B1")
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().is(673));
     }
 
@@ -217,6 +243,7 @@ public class StudentControllerTest {
         byte[] fileData = new byte[100];
         mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 1L)
                         .file(new MockMultipartFile("file", "filename.pdf", "text/plain", fileData))
+                        .header("Authorization", token)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
@@ -228,9 +255,9 @@ public class StudentControllerTest {
 //        Arrange
 //        Rien à arranger
         mockMvc.perform(MockMvcRequestBuilders.post("/student/cv/{studentId}", 1L)
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-                .content("".getBytes())
-        )
+                        .header("Authorization", token)
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .content("".getBytes()))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
@@ -243,6 +270,7 @@ public class StudentControllerTest {
 //      Act and Assert
         mockMvc.perform(MockMvcRequestBuilders.multipart("/student/cv/{studentId}", 23L)
                         .file(new MockMultipartFile("file", "filename.txt", "text/plain", fileData))
+                        .header("Authorization", token)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
@@ -250,8 +278,9 @@ public class StudentControllerTest {
 
     @Test
     public void DeleteCv_Valid() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/student/cv/{studentId}", 1L)
-        )
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/student/cv/{studentId}", 1L)
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().isAccepted());
     }
 
@@ -265,6 +294,7 @@ public class StudentControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", studentId)
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -277,7 +307,9 @@ public class StudentControllerTest {
 
         when(studentService.getAppliedJobOfferByStudentId(wrongStudentId)).thenThrow(new StudentNotFoundException(wrongStudentId));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", wrongStudentId))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/appliedJobOffer/{studentId}", wrongStudentId)
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().is(406));
     }
 
@@ -285,7 +317,9 @@ public class StudentControllerTest {
     public void getAppliedJobOfferByStudent_InvalidNullId() throws Exception {
         Long nullStudentId = null;
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/student/appliedJobOffer/{studentId}", nullStudentId))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/appliedJobOffer/{studentId}", nullStudentId)
+                        .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().is(404));
     }
 
@@ -307,7 +341,10 @@ public class StudentControllerTest {
 			jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
 
 		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B0")).andExpect(
+		mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/jobOffers/{department}", "_420B0")
+                        .header("Authorization", token))
+                .andExpect(
 			MockMvcResultMatchers.status().isAccepted()).andExpect(
 			MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON)).andExpect(
 			MockMvcResultMatchers.jsonPath("$.length()").value(3)).andExpect(
@@ -320,7 +357,9 @@ public class StudentControllerTest {
 		//        Rien à arranger
 
 		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/{department}", "_420B1"))
+		mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/jobOffers/{department}", "_420B1")
+                        .header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(673))
 				;
 	}
@@ -346,7 +385,9 @@ public class StudentControllerTest {
 		}).collect(Collectors.toList()));
 
 		//        Act & Assert
-		mockMvc.perform(MockMvcRequestBuilders.get("/student/jobOffers/open/{department}", "_420B0")).andExpect(
+		mockMvc.perform(MockMvcRequestBuilders
+                .get("/student/jobOffers/open/{department}", "_420B0")
+                .header("Authorization", token)).andExpect(
 			MockMvcResultMatchers.status().isAccepted()).andExpect(
 			MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON)).andExpect(
 			MockMvcResultMatchers.jsonPath("$.length()").value(1)).andExpect(
@@ -359,7 +400,9 @@ public class StudentControllerTest {
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenReturn(mockDto);
 
 		mockMvc
-			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
+			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+                    .header("Authorization", token)
+                    .contentType(MediaType.APPLICATION_JSON))
 		  .andExpect(status().isAccepted());
 	}
 
@@ -380,7 +423,9 @@ public class StudentControllerTest {
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(new RuntimeException());
 
 		mockMvc.perform(
-			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
+			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+                           .header("Authorization", token)
+                           .contentType(MediaType.APPLICATION_JSON))
 		       .andExpect(status().is(673));
 	}
 
@@ -390,7 +435,9 @@ public class StudentControllerTest {
         when(studentService.getCv(validStudentId)).thenReturn(mockDto);
 
         mockMvc
-                .perform(get("/student/cv/" + validStudentId).contentType(MediaType.APPLICATION_JSON))
+                .perform(get("/student/cv/" + validStudentId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted());
     }
 

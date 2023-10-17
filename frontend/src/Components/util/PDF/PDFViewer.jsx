@@ -10,6 +10,7 @@ import {
     faDownload,
     faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
+import {toast} from "react-toastify";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.js',
@@ -27,7 +28,7 @@ const PdfViewer = ({ pdf }) => {
     };
 
     const handleError = (error) => {
-        console.log(error);
+        toast.error(error.message)
     };
 
     const handleZoomIn = () => {

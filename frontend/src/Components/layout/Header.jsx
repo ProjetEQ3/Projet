@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 
 function Header({user}) {
     const {t} = useTranslation()
+
     return (
         <header className="App-header">
             <div className="container-fluid">
@@ -26,7 +27,8 @@ function Header({user}) {
                                     <div className="m-0 p-0 float-end">
                                     </div>
                                 </div>
-                                <a className="text-light text-decoration-none h6" href="/">{t('disconnect')}</a>
+                                <a className="text-light text-decoration-none h6" href="/"
+                                   onClick={() => sessionStorage.removeItem('token') } >{t('disconnect')}</a>
                             </div> :
                             <div className="align-self-start d-md-flex m-3">
                                 <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5">

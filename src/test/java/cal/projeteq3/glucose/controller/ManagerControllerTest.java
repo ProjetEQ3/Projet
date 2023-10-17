@@ -1,12 +1,18 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
+import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,10 +26,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig(classes = {ManagerController.class, ManagerService.class, CustomExceptionHandler.class})
+@SpringJUnitConfig(classes = {ManagerController.class, ManagerService.class, CustomExceptionHandler.class,
+        SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
 @WebMvcTest(ManagerController.class)
 public class ManagerControllerTest {
     @Autowired
@@ -34,6 +43,15 @@ public class ManagerControllerTest {
     private StudentService studentService;
     @MockBean
     private EmployerService employerService;
+    @MockBean
+    private UserRepository userRepository;
+
+    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoZWxAbWljaGF1ZC5jb20iLCJpYXQiOjE2OTcxNTcwNTQsImV4cCI6MTY5NzI0MzQ1NCwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6Ik1BTkFHRVIifV19.8h9qs3SuTzn3SbcdXW4qRfFcpNvErBXxWP3OPnODgGU";
+
+    @BeforeEach
+    public void setUp() {
+        when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Manager.builder().build()));
+    }
 
     @Test
     public void getAllJobOffer_valid() throws Exception {
@@ -43,7 +61,9 @@ public class ManagerControllerTest {
         when(managerService.getAllJobOffer()).thenReturn(jobOffers);
 
         // Act & Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/all")
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/manager/jobOffers/all")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -62,6 +82,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffer/{id}", jobId)
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -79,6 +100,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/employer/{employerId}", employerId)
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -95,6 +117,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/{jobOfferState}", jobOfferState)
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -113,6 +136,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.put("/manager/jobOffer/accept/{id}", jobId)
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -134,6 +158,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.put("/manager/jobOffer/refuse/{id}", jobId)
+                        .header("Authorization", token)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
@@ -155,6 +180,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.put("/manager/cv/update/{id}", cvId)
+                        .header("Authorization", token)
                         .param("newCvState", "ACCEPTED")
                         .param("reason", "Approved")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -181,6 +207,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/cvs/all")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -208,6 +235,7 @@ public class ManagerControllerTest {
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/cvs/pending")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))

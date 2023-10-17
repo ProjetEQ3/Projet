@@ -56,6 +56,7 @@
   "descTitle": "Votre application de gestion de stage",
   "description": "GlucOSE est une application web qui permet de gérer les stages des étudiants.",
   "disconnect": "Se Déconnecter",
+  "displayedSession": "Session affichée",
 
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
   "expirationDate": "Date d'expiration de l'offre de stage: ",
@@ -78,6 +79,7 @@
   "firstNameInvalid": "Le prénom doit contenir seulement des lettres.",
   "firstNameRequired": "Le prénom est obligatoire.",
   "firstName": "Prénom",
+  "fall": "Automne",
 
   "glucoseFullAcronym": "Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.",
   "glucoseAcronym": "GlucOSE",
@@ -175,6 +177,7 @@
   "student": "Étudiant",
   "selectInternship": "Sélectionnez une offre de stage",
   "studentAlreadyApplied" : "Vous avez déjà postulé pour cette offre de stage.",
+  "summer": "Été",
 
   "TAKEN": "Pris",
   "titleRequired": "Le titre de l'offre est obligatoire.",
@@ -190,6 +193,7 @@
   "wrongPassword": "Le mot de passe est invalide",
   "welcome": "Bienvenue sur ",
   "week": " semaine(s)",
+  "winter": "Hiver",
 
   "yourInternship": "Vos offres de stages"
 }

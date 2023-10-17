@@ -5,8 +5,8 @@ import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
@@ -17,7 +17,9 @@ import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -26,31 +28,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EmployerService{
 	private final JobOfferRepository jobOfferRepository;
 	private final EmployerRepository employerRepository;
 	private final StudentRepository studentRepository;
 	private final JobApplicationRepository jobApplicationRepository;
-
-	@Autowired
-	public EmployerService(
-		EmployerRepository employerRepository,
-		JobOfferRepository jobOfferRepository,
-		StudentRepository studentRepository,
-		JobApplicationRepository jobApplicationRepository
-	){
-		this.jobOfferRepository = jobOfferRepository;
-		this.employerRepository = employerRepository;
-		this.studentRepository = studentRepository;
-		this.jobApplicationRepository = jobApplicationRepository;
-	}
+	private final PasswordEncoder passwordEncoder;
 
 	// database operations here
 
 	public EmployerDTO createEmployer(RegisterEmployerDTO registerEmployerDTO) {
 		Employer employer = Employer.builder()
 				.email(registerEmployerDTO.getRegisterDTO().getEmail())
-				.password(registerEmployerDTO.getRegisterDTO().getPassword())
+				.password(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword()))
 				.firstName(registerEmployerDTO.getEmployerDTO().getFirstName())
 				.lastName(registerEmployerDTO.getEmployerDTO().getLastName())
 				.organisationName(registerEmployerDTO.getEmployerDTO().getOrganisationName())
