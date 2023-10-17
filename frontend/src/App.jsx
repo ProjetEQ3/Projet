@@ -65,7 +65,6 @@ export const axiosInstance = axios.create({
 	baseURL: baseURL,
 	headers: {
 		'Content-Type': 'application/json',
-		'Accept': 'application/json',
-		// 'Authorisation': localStorage.getItem('token')
+		'Accept': 'application/json'
 	}
 })

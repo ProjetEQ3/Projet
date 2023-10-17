@@ -7,33 +7,48 @@ import EmployerPage from "../page/EmployerPage";
 import PageNotFound from "../page/PageNotFound";
 import NewOfferForm from "../employer/NewOfferForm";
 import {useTranslation} from "react-i18next";
+import {axiosInstance} from "../../App";
+import {useEffect, useState} from "react";
 
 const Main = ({user, setUser}) => {
     const {t} = useTranslation();
+    const [sessions, setSessions] = useState([]);
     const fixMargin = {
         paddingBottom: "10em"
     }
 
-    const sessions = [
-        {id: 1, year: 2023, season: "winter"},
-        {id: 2, year: 2022, season: "summer"}
-    ]
+    useEffect(() => {
+        if (user?.isLoggedIn) {
+            axiosInstance.get('/user/semesters')
+                .then((response) => {
+                    setSessions(response.data)
+                }).catch((error) => {
+                    if (error.response.status === 401) return;
+                });
+        }
+    },[user]);
+
+    const handleUpdateAxios = (index) => {
+        axiosInstance.defaults.params = {season: sessions[index].season, year: sessions[index].year}
+    }
 
 
     return (
         <main style={fixMargin} className='App-main bg-light mx-auto'>
-            <div className="row justify-content-start pt-2">
-                <h4 className="col-6 d-flex fw-light justify-content-end m-0">
-                    {t('displayedSession')}
-                </h4>
-                <select className="col-2 d-flex justify-content-start text-capitalize">
-                    {
-                        sessions.map((session) => (
-                            <option value={session.id} className="text-capitalize">{t(session.season)} {session.year}</option>
-                        ))
-                    }
-                </select>
-            </div>
+            {user?.isLoggedIn &&
+                <div className="row col-12 justify-content-start pt-2">
+                    <h4 className="col-6 d-flex fw-light justify-content-end m-0">
+                        {t('displayedSession')}
+                    </h4>
+                    <select className="col-2 d-flex justify-content-start text-capitalize">
+                        {
+                            sessions.map((session, index) => (
+                                <option value={index} onChange={() => handleUpdateAxios(index)} className="text-capitalize">{t(session.season)} {session.year}</option>
+                            ))
+                        }
+                    </select>
+                </div>
+            }
             <Routes>
                 <Route
                     path="/"

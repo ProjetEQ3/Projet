@@ -69,7 +69,7 @@ public class UserService {
 		int nbSessions = 4;
 		List<String> semesters = new ArrayList<>();
 
-		for (int i = 0; i < nbSessions; i++) {
+		for (int i = -1; i < nbSessions; i++) {
 			semesters.add(new Semester(LocalDate.now().minusYears(i)).toString());
 		}
 
