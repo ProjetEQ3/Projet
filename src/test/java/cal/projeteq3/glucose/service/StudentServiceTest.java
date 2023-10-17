@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedExcept
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -307,6 +308,7 @@ public class StudentServiceTest {
 
         // Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -320,6 +322,7 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -332,6 +335,7 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -344,18 +348,19 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now().minusDays(60))
                                 .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOffersByDepartmentAndSemester(Department._420B0)).thenReturn(jobOffers_420B0);
+        when(jobOfferRepository.findJobOffersByDepartmentAndSemester(Department._420B0, semester)).thenReturn(jobOffers_420B0);
 
 //        Act
-        List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0);
+        List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0, semester);
 
 //        Assert
         assertEquals(3, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndSemester(Department._420B0);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndSemester(Department._420B0, semester);
 
     }
 
@@ -364,6 +369,7 @@ public class StudentServiceTest {
 
         // Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -377,6 +383,7 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -389,6 +396,7 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -401,23 +409,24 @@ public class StudentServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now().minusDays(60))
                                 .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
 
         when(jobOfferRepository
-                .findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN))
+                .findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN, semester))
                 .thenReturn(jobOffers_420B0.stream()
                         .filter(jobOffer -> jobOffer.getJobOfferState()
                                 .equals(JobOfferState.OPEN))
                         .collect(Collectors.toList()));
 
 //        Act
-        List<JobOfferDTO> jobOffers = studentService.getOpenJobOffersByDepartment(Department._420B0);
+        List<JobOfferDTO> jobOffers = studentService.getOpenJobOffersByDepartment(Department._420B0, semester);
 
 //        Assert
         assertEquals(1, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN, semester);
 
     }
 
@@ -491,7 +500,7 @@ public class StudentServiceTest {
                         .cvState(CvState.ACCEPTED)
                         .build())
                 .build();
-        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer));
+        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer, new Semester(LocalDate.now())));
 
         when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
@@ -672,20 +681,23 @@ public class StudentServiceTest {
     public void getAppliedJobOfferByStudentId_valid() {
         // Arrange
         Long studentId = 1L;
+        Semester semester = new Semester(LocalDate.now());
         Student student = Student.builder()
                 .id(studentId)
                 .build();
 
         JobApplication jobApplication = JobApplication.builder()
                 .student(student)
+                .semester(semester)
                 .build();
 
         JobOffer jobOffer = JobOffer.builder()
                 .id(1L)
                 .jobApplications(List.of(jobApplication))
+                .semester(semester)
                 .build();
 
-        when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId)).thenReturn(List.of(jobOffer));
+        when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId, semester)).thenReturn(List.of(jobOffer));
 
         jobOfferRepository.save(jobOffer);
 
@@ -693,7 +705,7 @@ public class StudentServiceTest {
 
         // Act
 
-        List<JobOfferDTO> appliedOffers = studentService.getAppliedJobOfferByStudentId(studentId);
+        List<JobOfferDTO> appliedOffers = studentService.getAppliedJobOfferByStudentId(studentId, semester);
 
         // Assert
         assertEquals(jobOffer.getId(), appliedOffers.get(0).toEntity().getId());
@@ -704,12 +716,13 @@ public class StudentServiceTest {
     public void getAppliedJobOfferByStudentId_studentNotFound() {
         // Arrange
         Long notFoundStudentId = -1L;
+        Semester semester = new Semester(LocalDate.now());
 
         when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
 
         // Act and Assert
         assertThrows(StudentNotFoundException.class, () -> {
-            studentService.getAppliedJobOfferByStudentId(notFoundStudentId);
+            studentService.getAppliedJobOfferByStudentId(notFoundStudentId, semester);
         });
         verify(studentRepository, times(1)).findById(notFoundStudentId);
 

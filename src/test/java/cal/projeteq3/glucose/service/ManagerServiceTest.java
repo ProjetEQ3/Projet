@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.exception.badRequestException.CvFileNotFoundExcepti
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.ManagerNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -21,6 +22,7 @@ import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -463,27 +465,30 @@ class ManagerServiceTest {
     @Test
     void getAllJobOffer_valid(){
 //        Arrange
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.add(JobOffer.builder()
                 .title("Job Offer 1")
                 .description("Description 1")
                 .jobOfferState(JobOfferState.OPEN)
+                .semester(semester)
                 .build());
         jobOffers.add(JobOffer.builder()
                 .title("Job Offer 2")
                 .description("Description 2")
                 .jobOfferState(JobOfferState.OPEN)
+                .semester(semester)
                 .build());
 
-        when(jobOfferRepository.findAll()).thenReturn(jobOffers);
+        when(jobOfferRepository.findAllBySemester(semester)).thenReturn(jobOffers);
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOs = managerService.getAllJobOffer();
+        List<JobOfferDTO> jobOfferDTOs = managerService.getAllJobOffer(semester);
 
 //        Assert
         assertNotNull(jobOfferDTOs);
         assertEquals(2, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findAll();
+        verify(jobOfferRepository, times(1)).findAllBySemester(semester);
     }
 
     @Test
@@ -527,7 +532,7 @@ class ManagerServiceTest {
     @Test
     void getJobOffersWithState_Submitted(){
 //        Arrange
-
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.addAll(
                 List.of(
@@ -535,46 +540,52 @@ class ManagerServiceTest {
                                 .title("Job Offer 1")
                                 .description("Description 1")
                                 .jobOfferState(JobOfferState.SUBMITTED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 2")
                                 .description("Description 2")
                                 .jobOfferState(JobOfferState.REFUSED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 3")
                                 .description("Description 3")
                                 .jobOfferState(JobOfferState.OPEN)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 4")
                                 .description("Description 4")
                                 .jobOfferState(JobOfferState.PENDING)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 5")
                                 .description("Description 5")
                                 .jobOfferState(JobOfferState.EXPIRED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 6")
                                 .description("Description 6")
                                 .jobOfferState(JobOfferState.TAKEN)
+                                .semester(semester)
                                 .build()
                 )
         );
 
-            when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED)).thenReturn(
+            when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED, semester)).thenReturn(
                     jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.SUBMITTED).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.SUBMITTED);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.SUBMITTED, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED, semester);
 
     }
 
@@ -582,6 +593,7 @@ class ManagerServiceTest {
     void getJobOffersWithState_Open(){
 //        Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.addAll(
                 List.of(
@@ -589,53 +601,59 @@ class ManagerServiceTest {
                                 .title("Job Offer 1")
                                 .description("Description 1")
                                 .jobOfferState(JobOfferState.SUBMITTED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 2")
                                 .description("Description 2")
                                 .jobOfferState(JobOfferState.REFUSED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 3")
                                 .description("Description 3")
                                 .jobOfferState(JobOfferState.OPEN)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 4")
                                 .description("Description 4")
                                 .jobOfferState(JobOfferState.PENDING)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 5")
                                 .description("Description 5")
                                 .jobOfferState(JobOfferState.EXPIRED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 6")
                                 .description("Description 6")
                                 .jobOfferState(JobOfferState.TAKEN)
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN, semester)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.OPEN).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.OPEN);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.OPEN, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN, semester);
 
     }
 
     @Test
     void getJobOffersWithState_Pending(){
 //        Arrange
-
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.addAll(
                 List.of(
@@ -643,53 +661,59 @@ class ManagerServiceTest {
                                 .title("Job Offer 1")
                                 .description("Description 1")
                                 .jobOfferState(JobOfferState.SUBMITTED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 2")
                                 .description("Description 2")
                                 .jobOfferState(JobOfferState.REFUSED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 3")
                                 .description("Description 3")
                                 .jobOfferState(JobOfferState.OPEN)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 4")
                                 .description("Description 4")
                                 .jobOfferState(JobOfferState.PENDING)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 5")
                                 .description("Description 5")
                                 .jobOfferState(JobOfferState.EXPIRED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 6")
                                 .description("Description 6")
                                 .jobOfferState(JobOfferState.TAKEN)
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING, semester)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.PENDING).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.PENDING);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.PENDING, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING, semester);
 
     }
 
     @Test
     void getJobOffersWithState_Expired(){
 //        Arrange
-
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.addAll(
                 List.of(
@@ -697,46 +721,52 @@ class ManagerServiceTest {
                                 .title("Job Offer 1")
                                 .description("Description 1")
                                 .jobOfferState(JobOfferState.SUBMITTED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 2")
                                 .description("Description 2")
                                 .jobOfferState(JobOfferState.REFUSED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 3")
                                 .description("Description 3")
                                 .jobOfferState(JobOfferState.OPEN)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 4")
                                 .description("Description 4")
                                 .jobOfferState(JobOfferState.PENDING)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 5")
                                 .description("Description 5")
                                 .jobOfferState(JobOfferState.EXPIRED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 6")
                                 .description("Description 6")
                                 .jobOfferState(JobOfferState.TAKEN)
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED, semester)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.EXPIRED).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.EXPIRED);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.EXPIRED, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED, semester);
 
     }
 
@@ -744,50 +774,57 @@ class ManagerServiceTest {
     void getJobOffersWithState_Taken(){
 //        Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>(List.of(
                 JobOffer.builder()
                         .title("Job Offer 1")
                         .description("Description 1")
                         .jobOfferState(JobOfferState.SUBMITTED)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("Job Offer 2")
                         .description("Description 2")
                         .jobOfferState(JobOfferState.REFUSED)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("Job Offer 3")
                         .description("Description 3")
                         .jobOfferState(JobOfferState.OPEN)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("Job Offer 4")
                         .description("Description 4")
                         .jobOfferState(JobOfferState.PENDING)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("Job Offer 5")
                         .description("Description 5")
                         .jobOfferState(JobOfferState.EXPIRED)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("Job Offer 6")
                         .description("Description 6")
                         .jobOfferState(JobOfferState.TAKEN)
+                        .semester(semester)
                         .build()
         ));
 
-        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN, semester)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.TAKEN).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.TAKEN);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.TAKEN, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.TAKEN, semester);
 
     }
 
@@ -795,6 +832,7 @@ class ManagerServiceTest {
     void getJobOffersWithState_Refused(){
 //        Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
         jobOffers.addAll(
                 List.of(
@@ -802,46 +840,52 @@ class ManagerServiceTest {
                                 .title("Job Offer 1")
                                 .description("Description 1")
                                 .jobOfferState(JobOfferState.SUBMITTED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 2")
                                 .description("Description 2")
                                 .jobOfferState(JobOfferState.REFUSED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 3")
                                 .description("Description 3")
                                 .jobOfferState(JobOfferState.OPEN)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 4")
                                 .description("Description 4")
                                 .jobOfferState(JobOfferState.PENDING)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 5")
                                 .description("Description 5")
                                 .jobOfferState(JobOfferState.EXPIRED)
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("Job Offer 6")
                                 .description("Description 6")
                                 .jobOfferState(JobOfferState.TAKEN)
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED)).thenReturn(
+        when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED, semester)).thenReturn(
                 jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.REFUSED).toList());
 
 //        Act
 
-        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.REFUSED);
+        List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.REFUSED, semester);
 //        Assert
 
         assertNotNull(jobOfferDTOs);
         assertEquals(1, jobOfferDTOs.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED);
+        verify(jobOfferRepository, times(1)).findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED, semester);
 
     }
 
