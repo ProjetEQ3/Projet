@@ -3,12 +3,14 @@ package cal.projeteq3.glucose.model;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 
 import java.time.LocalDate;
 
 @Embeddable
 @Builder
+@AllArgsConstructor
 public class Semester {
 
     @Enumerated(EnumType.STRING)
