@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -316,6 +317,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_valid(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -330,6 +332,7 @@ public class EmployerServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .id(2L)
@@ -343,6 +346,7 @@ public class EmployerServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now())
                                 .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .id(3L)
@@ -356,6 +360,7 @@ public class EmployerServiceTest {
                                 .salary(20.0f)
                                 .startDate(LocalDate.now().minusDays(60))
                                 .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
@@ -385,12 +390,13 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_invalidId(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
 
         when(employerRepository.findById(id)).thenReturn(Optional.empty());
 
 //        Act & Assert
         assertThrows(EmployerNotFoundException.class, () ->
-                employerService.getJobOffersDTOByEmployerId(id));
+                employerService.getJobOffersDTOByEmployerId(id, semester));
 
         verify(employerRepository, times(1)).findById(id);
     }
@@ -399,6 +405,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_NoJobOffers(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
 
         Employer employer = Employer.builder()
@@ -415,7 +422,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), jobOffers.size());
@@ -426,6 +433,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_NullJobOffers(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
 
         Employer employer = Employer.builder()
                 .id(id)
@@ -440,7 +448,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), 0);
@@ -475,7 +483,8 @@ public class EmployerServiceTest {
                 JobOfferState.OPEN,
                 40,
                 null,
-                1
+                1,
+                new Semester(LocalDate.now())
         );
 
         when(employerRepository.findById(employerId)).thenReturn(Optional.of(employer));
@@ -497,6 +506,7 @@ public class EmployerServiceTest {
         assertEquals(jobOfferDTO.getJobOfferState(), result.getJobOfferState());
         assertEquals(jobOfferDTO.getHoursPerWeek(), result.getHoursPerWeek());
         assertEquals(jobOfferDTO.getRefusReason(), result.getRefusReason());
+        assertEquals(jobOfferDTO.getSemester(), result.getSemester());
         verify(employerRepository, times(1)).findById(employerId);
         verify(jobOfferRepository, times(1)).save(any());
     }
@@ -541,21 +551,23 @@ public class EmployerServiceTest {
     public void GetAllJobOffers_Empty() {
         // Arrange
         Long employerId = 1L;
-        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId)).thenReturn(Collections.emptyList());
+        Semester semester = new Semester(LocalDate.now());
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester)).thenReturn(Collections.emptyList());
 
         // Act
-        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
+        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId, semester);
 
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId, semester);
     }
 
     @Test
     public void GetAllJobOffers_List() {
         // Arrange
         Long employerId = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>(List.of(
                 JobOffer.builder()
                         .title("JobOffer1")
@@ -568,6 +580,7 @@ public class EmployerServiceTest {
                         .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("JobOffer2")
@@ -580,6 +593,7 @@ public class EmployerServiceTest {
                         .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("JobOffer3")
@@ -592,17 +606,18 @@ public class EmployerServiceTest {
                         .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build()
         ));
-        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId)).thenReturn(jobOffers);
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester)).thenReturn(jobOffers);
 
         // Act
-        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
+        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId, semester);
 
         // Assert
         assertNotNull(result);
         assertEquals(3, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId, semester);
     }
 
 
