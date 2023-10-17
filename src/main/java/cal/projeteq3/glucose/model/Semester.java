@@ -5,12 +5,16 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Embeddable
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Semester {
 
     @Enumerated(EnumType.STRING)
@@ -20,8 +24,6 @@ public class Semester {
     public enum Session {
         WINTER, SUMMER, FALL
     }
-
-    public Semester() {}
 
     public Semester(LocalDate localDate) {
 
@@ -46,14 +48,6 @@ public class Semester {
             throw new IllegalArgumentException("you dont know how dates work do you?");
         }
 
-    }
-
-    public Session getSession() {
-        return this.session;
-    }
-
-    public int getYear() {
-        return this.year;
     }
 
 }
