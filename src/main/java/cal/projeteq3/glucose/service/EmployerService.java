@@ -90,11 +90,15 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) { // todo : wtf
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) {
 		Employer employer = employerRepository
-			.findById(employerId)
-			.orElseThrow(() -> new EmployerNotFoundException(employerId));
-		return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
+				.findById(employerId)
+				.orElseThrow(() -> new EmployerNotFoundException(employerId));
+
+		return employer.getJobOffers().stream()
+				.filter(jobOffer -> jobOffer.getSemester().equals(semester))
+				.map(JobOfferDTO::new)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional

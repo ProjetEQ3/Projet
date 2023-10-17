@@ -40,4 +40,7 @@ public class Employer extends User{
 			jobOffer.setEmployer(this);
 			this.jobOffers.add(jobOffer);
 	}
+
+
+
 }
