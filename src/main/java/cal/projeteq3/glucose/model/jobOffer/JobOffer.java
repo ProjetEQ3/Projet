@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.model.jobOffer;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
@@ -62,6 +63,9 @@ public class JobOffer{
 	private Long acceptedJobApplicationId;
 
 	private String refusReason;
+
+	@Embedded
+	private Semester semester;
 
 	public void addJobApplication(JobApplication jobApplication){
 		this.jobApplications.add(jobApplication);

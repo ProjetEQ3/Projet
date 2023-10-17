@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.dto.jobOffer;
 
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class JobOfferDTO{
 	private int hoursPerWeek;
 	private String refusReason;
 	private int nbOfCandidates;
+	private Semester semester;
 
 	public JobOfferDTO(JobOffer jobOffer){
 		this.id = jobOffer.getId();
@@ -39,6 +41,7 @@ public class JobOfferDTO{
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
 		this.nbOfCandidates = jobOffer.getNbOfCandidates();
+		this.semester = jobOffer.getSemester();
 	}
 
 	public JobOffer toEntity(){
@@ -56,6 +59,7 @@ public class JobOfferDTO{
 				.expirationDate(this.expirationDate)
 				.refusReason(this.refusReason)
 				.nbOfCandidates(this.nbOfCandidates)
+				.semester(semester)
 				.build();
 	}
 
