@@ -73,14 +73,14 @@ public class StudentController {
     public ResponseEntity<List<JobOfferDTO>> getJobOffersByDepartment(@PathVariable String department, @RequestParam SemesterDTO semesterDTO) {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getJobOffersByDepartment(Department.valueOf(department, semesterDTO)));
+                .body(studentService.getJobOffersByDepartment(Department.valueOf(department), semesterDTO));
     }
 
     @GetMapping("/jobOffers/open/{department}")
     public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department, @RequestParam SemesterDTO semesterDTO) {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department, semesterDTO)));
+                .body(studentService.getOpenJobOffersByDepartment(Department.valueOf(department), semesterDTO));
     }
 
     @PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
