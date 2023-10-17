@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.auth.JWTAuthResponse;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
@@ -38,7 +39,7 @@ public class UserController{
     }
 
     @GetMapping("/semesters")
-    public ResponseEntity<List<String>> getSemesters(){
+    public ResponseEntity<List<SemesterDTO>> getSemesters(){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getSemesters());

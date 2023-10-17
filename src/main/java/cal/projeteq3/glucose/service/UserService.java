@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -65,16 +66,18 @@ public class UserService {
 				.orElseThrow(() -> new UserNotFoundException("No Student found with this ID: " + id)));
 	}
 
-    public List<String> getSemesters() {
-		int nbSessions = 12;
-		List<String> semesters = new ArrayList<>();
+    public List<SemesterDTO> getSemesters() {
+		int nbSessions = 5; // A changer au besoin du PO
+		List<Semester> semesters = new ArrayList<>();
 		Semester currentSemester = new Semester(LocalDate.now());
 
+		semesters.add(currentSemester.nextSemester());
+
 		for (int i = 0; i < nbSessions; i++) {
-			semesters.add(currentSemester.toString());
+			semesters.add(currentSemester);
 			currentSemester = currentSemester.previousSemester();
 		}
 
-		return semesters;
+		return semesters.stream().map(SemesterDTO::new).toList();
     }
 }

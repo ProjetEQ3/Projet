@@ -1,8 +1,10 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
+import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.UserRepository;
@@ -21,10 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-;import java.util.Optional;
+;import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringJUnitConfig(classes = {UserController.class, UserService.class, CustomExceptionHandler.class,
         SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
@@ -60,7 +66,7 @@ class UserControllerTest {
                         .post("/user/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content))
-                .andExpect(MockMvcResultMatchers.status().isAccepted());
+                .andExpect(status().isAccepted());
     }
 
 
@@ -73,7 +79,7 @@ class UserControllerTest {
 
 //        Act
         mockMvc.perform(MockMvcRequestBuilders.post("/user/login"))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -85,7 +91,7 @@ class UserControllerTest {
 
 //        Act
         mockMvc.perform(MockMvcRequestBuilders.post("/user/login"))
-                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -101,14 +107,14 @@ class UserControllerTest {
         when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(student));
 
         // Act and Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/me")
+        mockMvc.perform(get("/user/me")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("janedoe@exemple.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("Jane"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("Doe"))
+                .andExpect(jsonPath("$.email").value("janedoe@exemple.com"))
+                .andExpect(jsonPath("$.firstName").value("Jane"))
+                .andExpect(jsonPath("$.lastName").value("Doe"))
         ;
     }
 
@@ -118,12 +124,33 @@ class UserControllerTest {
         when(userService.getMe(token)).thenReturn(null);
 
         // Act and Assert
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/me")
+        mockMvc.perform(get("/user/me")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isUnauthorized());
+                .andExpect(status().isUnauthorized());
     }
 
+    @Test
+    public void testGetSemestersSuccess() throws Exception {
+        when(userService.getSemesters()).thenReturn(List.of(
+                new SemesterDTO(Semester.builder().session(Semester.Session.SUMMER).year(2021).build()),
+                new SemesterDTO(Semester.builder().session(Semester.Session.FALL).year(2020).build())
+        ));
 
+        mockMvc.perform(get("/semesters"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$.length()").value(2))
+        ;
+    }
+
+    @Test
+    public void testGetSemestersError() throws Exception {
+        // Mock an error case in the userService that would return an empty list or null.
+        when(userService.getSemesters()).thenReturn(null);
+
+        mockMvc.perform(get("/semesters"))
+                .andExpect(status().isInternalServerError());
+    }
 }
 

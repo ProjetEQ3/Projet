@@ -37,28 +37,29 @@ public class Semester {
 
     private Session getSessionFromDate(LocalDate localDate) {
         int month = localDate.getMonthValue();
-        if(month >= 1 && month <= 4) {
+        if(month <= 4) {
             return Session.WINTER;
-        } else if(month >= 5 && month <= 8) {
+        } else if(month <= 8) {
             return Session.SUMMER;
-        } else if(month >= 9 && month <= 12) {
-            return Session.FALL;
         } else {
-            throw new IllegalArgumentException("you dont know how dates work do you?");
+            return Session.FALL;
         }
     }
 
     public Semester previousSemester() {
-        switch (session) {
-            case WINTER:
-                return new Semester(Session.FALL, year - 1);
-            case SUMMER:
-                return new Semester(Session.WINTER, year);
-            case FALL:
-                return new Semester(Session.SUMMER, year);
-            default:
-                throw new IllegalArgumentException("you dont know how dates work do you?");
-        }
+        return switch (session) {
+            case WINTER -> new Semester(Session.FALL, year - 1);
+            case SUMMER -> new Semester(Session.WINTER, year);
+            case FALL -> new Semester(Session.SUMMER, year);
+        };
+    }
+
+    public Semester nextSemester() {
+        return switch (session) {
+            case WINTER -> new Semester(Session.SUMMER, year);
+            case SUMMER -> new Semester(Session.FALL, year);
+            case FALL -> new Semester(Session.WINTER, year + 1);
+        };
     }
 
 }
