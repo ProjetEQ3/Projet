@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -28,7 +29,7 @@ public class ManagerController {
 
 //    JobOffer
     @GetMapping("/jobOffers/all")
-    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(){
+    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getAllJobOffer());
@@ -42,14 +43,14 @@ public class ManagerController {
     }
 
     @GetMapping("jobOffers/employer/{employerId}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId){
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId, @RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(employerService.getJobOffersDTOByEmployerId(employerId));
     }
 
     @GetMapping("jobOffers/{jobOfferState}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState){
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam SemesterDTO semesterDTO){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase())));
