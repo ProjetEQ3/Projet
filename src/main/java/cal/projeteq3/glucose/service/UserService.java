@@ -66,11 +66,13 @@ public class UserService {
 	}
 
     public List<String> getSemesters() {
-		int nbSessions = 4;
+		int nbSessions = 12;
 		List<String> semesters = new ArrayList<>();
+		Semester currentSemester = new Semester(LocalDate.now());
 
-		for (int i = -1; i < nbSessions; i++) {
-			semesters.add(new Semester(LocalDate.now().minusYears(i)).toString());
+		for (int i = 0; i < nbSessions; i++) {
+			semesters.add(currentSemester.toString());
+			currentSemester = currentSemester.previousSemester();
 		}
 
 		return semesters;

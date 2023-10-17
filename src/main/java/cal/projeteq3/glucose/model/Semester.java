@@ -37,7 +37,6 @@ public class Semester {
 
     private Session getSessionFromDate(LocalDate localDate) {
         int month = localDate.getMonthValue();
-
         if(month >= 1 && month <= 4) {
             return Session.WINTER;
         } else if(month >= 5 && month <= 8) {
@@ -47,7 +46,19 @@ public class Semester {
         } else {
             throw new IllegalArgumentException("you dont know how dates work do you?");
         }
+    }
 
+    public Semester previousSemester() {
+        switch (session) {
+            case WINTER:
+                return new Semester(Session.FALL, year - 1);
+            case SUMMER:
+                return new Semester(Session.WINTER, year);
+            case FALL:
+                return new Semester(Session.SUMMER, year);
+            default:
+                throw new IllegalArgumentException("you dont know how dates work do you?");
+        }
     }
 
 }
