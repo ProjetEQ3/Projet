@@ -7,8 +7,10 @@ import {toast} from "react-toastify";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 import StudentList from "../employer/StudentList";
+import {useSession} from "../util/SessionContext";
 
 const EmployerPage = ({user}) => {
+	const {selectedSessionIndex} = useSession();
 	const [t, i18n] = useTranslation();
 	const navigate = useNavigate();
 	const [selectedOffer, setSelectedOffer] = useState(null);
@@ -19,6 +21,16 @@ const EmployerPage = ({user}) => {
 
 		getOffers()
 	}, [user.isLoggedIn])
+
+	useEffect(() => {
+		handleSessionChange();
+	}, [selectedSessionIndex]);
+
+	const handleSessionChange = () => {
+		setOffers([]);
+		setSelectedOffer(null);
+		getOffers();
+	}
 
 	const getOffers = () => {
 		axiosInstance

@@ -5,8 +5,10 @@ import {axiosInstance} from "../../App";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {useSession} from "../util/SessionContext";
 
 const ManagerPage = ({user}) => {
+    const {selectedSessionIndex} = useSession();
     const {t} = useTranslation();
     const [tab, setTab] = useState('stages');
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
@@ -16,34 +18,45 @@ const ManagerPage = ({user}) => {
     useEffect(() => {
         if (!user?.isLoggedIn) navigate('/');
 
-        const getAllOffers = async () => {
-            await axiosInstance.get('manager/jobOffers/all',
-            ).then((response) => {
-                setOffers(response.data);
-                return response.data;
-            }).catch((error) => {
-                if (error.response.status === 401) {
-                    return;
-                }
-                toast.error(t('fetchError') + t(error));
-            });
-        }
-        const getAllCvs = async () => {
-            await axiosInstance.get('manager/cvs/all',
-            ).then((response) => {
-                setCvs(response.data);
-                return response.data;
-            }).catch((error) => {
-                if (error.response.status === 401) {
-                    return;
-                }
-                toast.error(t('fetchError') + t(error));
-            });
-        }
-
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
     }, [user.isLoggedIn]);
+
+    useEffect(() => {
+        handleSessionChange();
+    }, [selectedSessionIndex]);
+
+    const handleSessionChange = () => {
+        setCvs([])
+        setOffers([]);
+        getAllCvs().then(r => r);
+        getAllOffers().then(r => r);
+    }
+
+    const getAllOffers = async () => {
+        await axiosInstance.get('manager/jobOffers/all',
+        ).then((response) => {
+            setOffers(response.data);
+            return response.data;
+        }).catch((error) => {
+            if (error.response.status === 401) {
+                return;
+            }
+            toast.error(t('fetchError') + t(error));
+        });
+    }
+    const getAllCvs = async () => {
+        await axiosInstance.get('manager/cvs/all',
+        ).then((response) => {
+            setCvs(response.data);
+            return response.data;
+        }).catch((error) => {
+            if (error.response.status === 401) {
+                return;
+            }
+            toast.error(t('fetchError') + t(error));
+        });
+    }
 
     const updateJobOfferList = () => {
         setOffers(offers);
