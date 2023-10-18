@@ -37,7 +37,7 @@
   "cvNotApproved": "CV not approved",
   "CV": "CV",
   "cvAuthorisation": "CV Authorization",
-  "confirmRefusal": "Are you sure you want to refuse this CV?",
+  "confirmRefusal": "Can you provide a reason for your refusal ?",
   "confirm": "Confirm",
 
   "declineStudentSuccess" : "Student declined",

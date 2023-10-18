@@ -28,7 +28,7 @@ const PdfViewer = ({ pdf }) => {
     };
 
     const handleError = (error) => {
-        toast.error(error.message)
+        toast.error(error.response.data.message)
     };
 
     const handleZoomIn = () => {

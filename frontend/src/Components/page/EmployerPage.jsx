@@ -40,7 +40,7 @@ const EmployerPage = ({user}) => {
 				if (error.response.status === 401) {
 					return;
 				}
-				toast.error(t('fetchError') + t(error.message));
+				toast.error(t('fetchError') + t(error.response.data.message));
 			})
 	}
 
@@ -61,7 +61,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(offer)
 			})
 			.catch((error) => {
-				toast.error(t('updateInternshipError') + t(error.message));
+				toast.error(t('updateInternshipError') + t(error.response.data.message));
 			})
 	}
 	const deleteOffer = (offerId) => {
@@ -74,7 +74,7 @@ const EmployerPage = ({user}) => {
 				setSelectedOffer(null)
 			})
 			.catch((error) => {
-				toast.error(t('deleteInternshipError') + t(error.message));
+				toast.error(t('deleteInternshipError') + t(error.response.data.message));
 			})
 	}
 
@@ -99,7 +99,7 @@ const EmployerPage = ({user}) => {
 					setOffers(updatedOffers);
 				})
 				.catch((error) => {
-					toast.error(t('getStudentsError') + t(error.message));
+					toast.error(t('getStudentsError') + t(error.response.data.message));
 				});
 		}
 
