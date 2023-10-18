@@ -7,8 +7,10 @@ import JobOffer from "../../model/JobOffer";
 import {toast} from "react-toastify";
 import MyApplications from "../student/MyApplications";
 import {useTranslation} from "react-i18next";
+import {useSession} from "../util/SessionContext";
 
 const StudentPage = ({user, setUser}) => {
+  const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
   const [tab, setTab] = useState('home');
   const [jobOffers, setJobOffers] = useState([]);
@@ -26,6 +28,7 @@ const StudentPage = ({user, setUser}) => {
 
 		  await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			  .then((response) => {
+				  console.log(response.data)
 				  response.data.forEach((jobOffer) => {
 					  const newJobOffer = new JobOffer();
 					  newJobOffer.init(jobOffer)
@@ -40,6 +43,34 @@ const StudentPage = ({user, setUser}) => {
 
 	  fetchStudentJobOffers();
   }, [user, navigate]);
+
+	useEffect(() => {
+		handleSessionChange();
+	}, [selectedSessionIndex]); // Refresh when the selected session index changes
+
+
+	const handleSessionChange = () => {
+	  setJobOffers([]);
+	  async function fetchStudentJobOffers() {
+		  if (!user?.isLoggedIn) navigate('/');
+
+		  await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
+			  .then((response) => {
+				  console.log(response.data)
+				  response.data.forEach((jobOffer) => {
+					  const newJobOffer = new JobOffer();
+					  newJobOffer.init(jobOffer)
+					  setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
+				  });
+			  }).catch((error) => {
+				  if (error.response.status === 401) return;
+
+				  toast.error(t('fetchError') + t(error.message))
+			  });
+	  }
+
+	  fetchStudentJobOffers();
+  }
 
 	const setCv = (cv) => {
 		user.cvFile = cv

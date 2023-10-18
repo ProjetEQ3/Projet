@@ -22,7 +22,6 @@ export const SessionProvider = ({ children }) => {
                     if (error.response.status === 401) return;
                 });
         }
-
         fetchSessions();
     }, []);
 

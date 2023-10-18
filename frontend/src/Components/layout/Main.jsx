@@ -7,8 +7,6 @@ import EmployerPage from "../page/EmployerPage";
 import PageNotFound from "../page/PageNotFound";
 import NewOfferForm from "../employer/NewOfferForm";
 import {useTranslation} from "react-i18next";
-import {axiosInstance} from "../../App";
-import {useEffect, useState} from "react";
 import {useSession} from "../util/SessionContext";
 
 const Main = ({user, setUser}) => {
