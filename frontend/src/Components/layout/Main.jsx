@@ -11,27 +11,36 @@ import {axiosInstance} from "../../App";
 import {useEffect, useState} from "react";
 
 const Main = ({user, setUser}) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const [sessions, setSessions] = useState([]);
+    const [selectedSessionIndex, setSelectedSessionIndex] = useState(0); // Track the selected index
+
     const fixMargin = {
-        paddingBottom: "10em"
-    }
+        paddingBottom: "10em",
+    };
 
     useEffect(() => {
         if (user?.isLoggedIn) {
-            axiosInstance.get('/user/semesters')
+            axiosInstance
+                .get("/user/semesters")
                 .then((response) => {
-                    console.log(response.data)
-                    setSessions(response.data)
-                }).catch((error) => {
+                    setSessions(response.data);
+                    axiosInstance.defaults.params['season'] = response.data[1].season;
+                    axiosInstance.defaults.params['year'] = response.data[1].year;
+                    setSelectedSessionIndex(1);
+                })
+                .catch((error) => {
                     if (error.response.status === 401) return;
                 });
         }
-    },[user]);
+    }, [user]);
 
     const handleUpdateAxios = (index) => {
-        axiosInstance.defaults.params = {season: sessions[index].season, year: sessions[index].year}
-    }
+        axiosInstance.defaults.params['season'] = sessions[index].season;
+        axiosInstance.defaults.params['year'] = sessions[index].year;
+        setSelectedSessionIndex(index);
+        setUser(user);
+    };
 
 
     return (
@@ -41,13 +50,16 @@ const Main = ({user, setUser}) => {
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
                         {t('displayedSession')}
                     </h4>
-                    <select className="col-2 d-flex justify-content-start text-capitalize">
+                    <select className="col-2 d-flex justify-content-start text-capitalize"
+                        onChange={(e) => handleUpdateAxios(e.target.value)}>
                         {
                             sessions.map((session, index) => (
-                                <option value={index} onChange={() => handleUpdateAxios(index)} className="text-capitalize">{t(session.season.toLowerCase())} {session.year}</option>
-                            ))
+                            <option key={index} value={index} className="text-capitalize">
+                                {t(session.season.toLowerCase())} {session.year}
+                            </option>))
                         }
                     </select>
+
                 </div>
             }
             <Routes>
