@@ -24,10 +24,9 @@ const StudentPage = ({user, setUser}) => {
 
 	async function fetchStudentJobOffers() {
 		if (!user?.isLoggedIn) navigate('/');
-
 		await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			.then((response) => {
-				console.log(response.data)
+				setJobOffers([]);
 				response.data.forEach((jobOffer) => {
 					const newJobOffer = new JobOffer();
 					newJobOffer.init(jobOffer)
@@ -42,7 +41,7 @@ const StudentPage = ({user, setUser}) => {
 
 	useEffect(() => {
 		fetchStudentJobOffers();
-	}, [user, navigate]);
+	}, []);
 
 	useEffect(() => {
 		handleSessionChange();
