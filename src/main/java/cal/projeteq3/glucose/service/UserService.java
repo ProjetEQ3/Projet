@@ -67,7 +67,7 @@ public class UserService {
 	}
 
     public List<SemesterDTO> getSemesters() {
-		int nbSeasons = 5; // A changer au besoin du PO
+		int nbSeasons = 6; // A changer au besoin du PO
 		List<Semester> semesters = new ArrayList<>();
 		Semester currentSemester = new Semester(LocalDate.now());
 
