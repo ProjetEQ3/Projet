@@ -45,7 +45,7 @@ const StudentPage = ({user, setUser}) => {
 
 	useEffect(() => {
 		handleSessionChange();
-	}, [selectedSessionIndex]); // Refresh when the selected session index changes
+	}, [selectedSessionIndex]);
 
 	const handleSessionChange = () => {
 	  setJobOffers([]);
