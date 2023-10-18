@@ -17,8 +17,8 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 				toast.success(t('appliedJobOffer'))}
 			)
 			.catch((err) => {
-				toast.error(t('pushingError') + t(err.error))}
-			)
+				toast.error(t('pushingError') + t(err.response.data.message))
+			})
 	}
 
 	return (

@@ -28,7 +28,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         CustomErrorResponse response = CustomErrorResponse.builder()
                 .timestamp(LocalDateTime.now().toString())
                 .status(ex.getStatus().value())
-                .error(ex.getMessage())
+                .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
 
@@ -40,7 +40,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         CustomErrorResponse response = CustomErrorResponse.builder()
                 .timestamp(LocalDateTime.now().toString())
                 .status(673)
-                .error(ex.getMessage())
+                .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
 
