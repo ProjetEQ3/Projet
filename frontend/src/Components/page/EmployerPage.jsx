@@ -109,11 +109,16 @@ const EmployerPage = ({user}) => {
 	const renderFilteredOffers = (filteredOffers) => {
 		return (
 			<div className="col-12">
-				{filteredOffers.map((offer, index) => (
-					<div key={index} onClick={() => handleSelectOffer(offer)}>
-						<ShortJobOffer jobOffer={offer} updateJobOfferList={updateOffer} deleteOffer={() => deleteOffer(offer.id)}/>
-					</div>
-				))}
+				{
+					filteredOffers.length !== 0 ?
+						filteredOffers.map((offer, index) => (
+							<div key={index} onClick={() => handleSelectOffer(offer)}>
+								<ShortJobOffer jobOffer={offer} updateJobOfferList={updateOffer} deleteOffer={() => deleteOffer(offer.id)}/>
+							</div>)) :
+							<div className="col-12 bg-white rounded p-3">
+								<h2 className="text-dark fw-light pt-1">{t('noInternship')}</h2>
+							</div>
+				}
 			</div>
 		)
 	}
