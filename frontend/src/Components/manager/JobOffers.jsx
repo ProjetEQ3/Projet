@@ -2,7 +2,7 @@ import FilterObjectList from "../util/FilterObjectList"
 import ShortJobOffer from "./ShortJobOffer"
 import {useTranslation} from "react-i18next";
 
-const JobOffers = ({ offers, updateJobOfferList }) => {
+const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal }) => {
   const { t } = useTranslation()
 
   const renderFilteredOffers = (filteredOffers) => {
@@ -12,7 +12,7 @@ const JobOffers = ({ offers, updateJobOfferList }) => {
           filteredOffers.length !== 0 ?
               filteredOffers.map((offer, index) => (
                   <div key={index} onClick={() => (offer)}>
-                    <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index}/>
+                    <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>
                   </div>)) :
                 <div className="col-12">
                     <h5 className="text-center">{t('noInternship')}</h5>

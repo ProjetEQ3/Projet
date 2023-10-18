@@ -3,7 +3,7 @@ import FullJobOffer from "./FullJobOffer"
 import State from "../util/State"
 import {useTranslation} from "react-i18next";
 
-const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
+const ShortJobOffer = ({ jobOffer, updateJobOfferList, index, updateJobOfferListAfterApprovalOrRefusal }) => {
     const {t} = useTranslation()
     const [isHovered, setIsHovered] = useState(false)
 
@@ -30,7 +30,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index }) => {
                         </div>
                         <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('internshipDetails')}</div>
                         <div id={"fullViewModal" + index} className="modal modal-lg">
-                            <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList}/>
+                            <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>
                         </div>
                     </div>
                 </div>

@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 
-const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
+const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal }) => {
     const {t} = useTranslation();
     const [isDecline, setIsDecline] = useState(false);
     const [formData, setFormData] = useState({
@@ -21,8 +21,8 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
         e.preventDefault();
         axiosInstance.put(`/manager/jobOffer/accept/${jobOffer.id}`)
             .then((res) => {
-                toast.success(t('acceptedOffer'))
-                updateJobOfferList(jobOffer);
+                toast.success(t('acceptedOffer'));
+                updateJobOfferListAfterApprovalOrRefusal("OPEN", jobOffer);
             })
             .catch((error) => {
                 toast.error(t('pushingError') + t(error.message))
@@ -57,8 +57,8 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList }) => {
 
         axiosInstance.put(`/manager/jobOffer/refuse/${jobOffer.id}`, formData.refusalReason)
             .then((res) => {
-                toast.success(t('refusedOffer'))
-                updateJobOfferList(jobOffer);
+                toast.success(t('refusedOffer'));
+                updateJobOfferListAfterApprovalOrRefusal("REFUSED", jobOffer);
             })
             .catch((error) => {
                 toast.error(t('pushingError') + t(error.message))
