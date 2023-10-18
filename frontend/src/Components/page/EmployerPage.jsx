@@ -37,7 +37,7 @@ const EmployerPage = ({user}) => {
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {setOffers(response.data)})
 			.catch((error) => {
-				if (error.response.status === 401) {
+				if (error.response?.status === 401) {
 					return;
 				}
 				toast.error(t('fetchError') + t(error.response.data.message));

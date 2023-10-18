@@ -19,7 +19,7 @@ export const SessionProvider = ({ children }) => {
                     setSelectedSessionIndex(1);
                 })
                 .catch((error) => {
-                    if (error.response.status === 401) return;
+                    if (error.response?.status === 401) return;
                 });
         }
         fetchSessions();
