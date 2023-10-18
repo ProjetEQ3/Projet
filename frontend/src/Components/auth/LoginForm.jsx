@@ -101,7 +101,7 @@ const LoginForm = ({ user, setUser }) => {
 						setWarnings({ ...warnings, password: t('wrongPassword') });
 					}
 				} else {
-					toast.error(t('fetchError') + t(error.message));
+					toast.error(t('fetchError') + t(error.response.data.message));
 					setWarnings({ ...warnings, email: t('wrongEmail'), password: t('wrongPassword') });
 				}
 			});

@@ -4,10 +4,27 @@ import ManagerPage from "../../Components/page/ManagerPage";
 import axiosInstance from "axios";
 import MockAdapter from "axios-mock-adapter";
 import JobOffers from "../../Components/manager/JobOffers";
+import {SessionProvider} from "../../Components/util/SessionContext";
+import {MemoryRouter} from "react-router";
 describe('ManagerPage', () => {
     const mock = new MockAdapter(axiosInstance);
+    const sessionData = { selectedSessionIndex: 0 };
+    const mockManager = {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "John@Doe.ca",
+        "role": "MANAGER",
+        "isLoggedIn": true,
+    }
     test('renders ManagerPage internship button is present', () => {
-        render(<ManagerPage />);
+        render(
+            <MemoryRouter>
+                <SessionProvider value={sessionData}>
+                    <ManagerPage user={mockManager} />
+                </SessionProvider>
+            </MemoryRouter>
+        );
 
         const internshipButton = screen.getByText('internship');
         expect(internshipButton).toBeInTheDocument();
@@ -16,7 +33,13 @@ describe('ManagerPage', () => {
     });
 
     test('renders ManagerPage internship button is clickable', () => {
-        render(<ManagerPage />);
+        render(
+            <MemoryRouter>
+                <SessionProvider value={sessionData}>
+                    <ManagerPage user={mockManager} />
+                </SessionProvider>
+            </MemoryRouter>
+        );
 
         const cvButton = screen.getByText('CVs');
         const internshipButton = screen.getByText('internship');
@@ -26,7 +49,13 @@ describe('ManagerPage', () => {
     });
 
     test('renders ManagerPage CVs button is present', () => {
-        render(<ManagerPage />);
+        render(
+            <MemoryRouter>
+                <SessionProvider value={sessionData}>
+                    <ManagerPage user={mockManager} />
+                </SessionProvider>
+            </MemoryRouter>
+        );
 
         const cvButton = screen.getByText('CVs');
         expect(cvButton).toBeInTheDocument();
@@ -35,7 +64,13 @@ describe('ManagerPage', () => {
     });
 
     test('renders ManagerPage CVs button is clickable', () => {
-       render(<ManagerPage />);
+       render(
+           <MemoryRouter>
+               <SessionProvider value={sessionData}>
+                   <ManagerPage user={mockManager} />
+               </SessionProvider>
+           </MemoryRouter>
+       );
 
         const internshipButton = screen.getByText('internship');
         const cvButton = screen.getByText('CVs');

@@ -62,6 +62,16 @@ const ManagerPage = ({user}) => {
         setOffers(offers);
     }
 
+    const updateJobOfferListAfterApprovalOrRefusal = (action, updatedJobOffer) => {
+        const updatedOffers = offers.map(offer =>
+            offer.id === updatedJobOffer.id
+                ? { ...offer, jobOfferState: action }
+                : offer
+        );
+        setOffers(updatedOffers);
+    }
+
+
     const updateCvList = () => {
         setCvs(cvs);
     }
@@ -73,7 +83,7 @@ const ManagerPage = ({user}) => {
                     <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => setTab('stages')}>{t('internship')}</button>
                     <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => setTab('cvs')}>CVs</button>
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}/>}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} />}
             </div>
         </div>

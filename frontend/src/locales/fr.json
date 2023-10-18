@@ -27,7 +27,7 @@
   "authorizeOffer": "Autorisation de l'offre de stage",
 
   "cvAuthorisation": "Autorisation du CV",
-  "confirmRefusal": "Êtes-vous sûr de vouloir refuser ce CV ?",
+  "confirmRefusal": "Pouvez-vous fournir une raison de refus ?",
   "confirm": "Confirmer",
   "cvNotApproved": "CV non approuvé",
   "CV": "CV",
