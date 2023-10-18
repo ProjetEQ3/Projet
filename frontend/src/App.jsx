@@ -9,6 +9,7 @@ import Footer from "./Components/layout/Footer";
 import Main from "./Components/layout/Main";
 import {BrowserRouter, useNavigate} from "react-router-dom";
 import {TranslationProvider} from "./Components/util/TranslationContext";
+import {SessionProvider} from "./Components/util/SessionContext";
 
 function App(){
 	const [user, setUser] = useState(new User())
@@ -44,15 +45,17 @@ function App(){
 				pauseOnHover
 				theme="colored"
 			/>
-			<div className="p-0">
-				<BrowserRouter>
-					<div className="min-vh-100 p-0 m-0 position-relative">
-						<Header user={user}/>
-						<Main user={user} setUser={setUser}/>
-						<Footer/>
-					</div>
-				</BrowserRouter>
-			</div>
+			<SessionProvider>
+				<div className="p-0">
+					<BrowserRouter>
+						<div className="min-vh-100 p-0 m-0 position-relative">
+							<Header user={user}/>
+							<Main user={user} setUser={setUser}/>
+							<Footer/>
+						</div>
+					</BrowserRouter>
+				</div>
+			</SessionProvider>
 		</TranslationProvider>
 	)
 }

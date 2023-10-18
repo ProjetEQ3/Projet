@@ -9,37 +9,14 @@ import NewOfferForm from "../employer/NewOfferForm";
 import {useTranslation} from "react-i18next";
 import {axiosInstance} from "../../App";
 import {useEffect, useState} from "react";
+import {useSession} from "../util/SessionContext";
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
-    const [sessions, setSessions] = useState([]);
-    const [selectedSessionIndex, setSelectedSessionIndex] = useState(0); // Track the selected index
+    const { sessions, selectedSessionIndex, updateSession } = useSession();
 
     const fixMargin = {
         paddingBottom: "10em",
-    };
-
-    useEffect(() => {
-        if (user?.isLoggedIn) {
-            axiosInstance
-                .get("/user/semesters")
-                .then((response) => {
-                    setSessions(response.data);
-                    axiosInstance.defaults.params['season'] = response.data[1].season;
-                    axiosInstance.defaults.params['year'] = response.data[1].year;
-                    setSelectedSessionIndex(1);
-                })
-                .catch((error) => {
-                    if (error.response.status === 401) return;
-                });
-        }
-    }, [user]);
-
-    const handleUpdateAxios = (index) => {
-        axiosInstance.defaults.params['season'] = sessions[index].season;
-        axiosInstance.defaults.params['year'] = sessions[index].year;
-        setSelectedSessionIndex(index);
-        setUser(user);
     };
 
 
@@ -51,7 +28,8 @@ const Main = ({user, setUser}) => {
                         {t('displayedSession')}
                     </h4>
                     <select className="col-2 d-flex justify-content-start text-capitalize"
-                        onChange={(e) => handleUpdateAxios(e.target.value)}>
+                        onChange={(e) => updateSession(e.target.value)}
+                        defaultValue={selectedSessionIndex}>
                         {
                             sessions.map((session, index) => (
                             <option key={index} value={index} className="text-capitalize">
