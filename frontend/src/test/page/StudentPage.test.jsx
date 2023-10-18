@@ -4,23 +4,30 @@ import StudentPage from "../../Components/page/StudentPage";
 import axiosInstance from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {MemoryRouter} from "react-router";
+import {SessionProvider} from "../../Components/util/SessionContext";
 describe('StudentPage', () => {
     const mock = new MockAdapter(axiosInstance);
+    const sessionData = { selectedSessionIndex: 0 };
 
     test('renders StudentPage internship button is present', () => {
         render(
             <MemoryRouter>
-                <StudentPage />
+                <SessionProvider value={sessionData}>
+                    <StudentPage />
+                </SessionProvider>
             </MemoryRouter>
         );
 
         const internshipButton = screen.getByText('jobOffers');
         expect(internshipButton).toBeInTheDocument();
     });
+
     test('renders StudentPage internship button is clickable', () => {
         render(
             <MemoryRouter>
-                <StudentPage />
+                <SessionProvider value={sessionData}>
+                    <StudentPage />
+                </SessionProvider>
             </MemoryRouter>
         );
 
@@ -33,7 +40,9 @@ describe('StudentPage', () => {
     test('renders StudentPage applications button is present', () => {
         render(
             <MemoryRouter>
-                <StudentPage />
+                <SessionProvider value={sessionData}>
+                    <StudentPage />
+                </SessionProvider>
             </MemoryRouter>
         );
 
@@ -43,7 +52,9 @@ describe('StudentPage', () => {
     test('renders StudentPage applications button is clickable', () => {
         render(
             <MemoryRouter>
-                <StudentPage />
+                <SessionProvider value={sessionData}>
+                    <StudentPage />
+                </SessionProvider>
             </MemoryRouter>
         );
 
@@ -56,7 +67,9 @@ describe('StudentPage', () => {
     test('renders StudentPage CV button is present', () => {
         render(
             <MemoryRouter>
-                <StudentPage />
+                <SessionProvider value={sessionData}>
+                    <StudentPage />
+                </SessionProvider>
             </MemoryRouter>
         );
 
@@ -76,7 +89,9 @@ describe('StudentPage', () => {
         }
         render(
             <MemoryRouter>
-                <StudentPage user={mockStudent} />
+                <SessionProvider value={sessionData}>
+                    <StudentPage  user={mockStudent}/>
+                </SessionProvider>
             </MemoryRouter>
         );
 
