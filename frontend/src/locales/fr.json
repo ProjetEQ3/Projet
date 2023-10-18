@@ -115,8 +115,9 @@
   "matricule": "Matricule du cégep",
 
   "noJobOffers": "Vous n'avez pas d'applications.",
-  "noInternship": "Vous n'avez pas d'offres de stage.",
+  "noInternship": "Aucune offre de stage n'a été trouvée.",
   "noStudent": "Aucun étudiant n'a postulé pour le moment",
+  "noCV": "Aucun CV n'a été téléversé pour le moment",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
   "next": "Suivant",
   "noData": "Aucune donnée disponible",

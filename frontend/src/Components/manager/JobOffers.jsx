@@ -8,11 +8,16 @@ const JobOffers = ({ offers, updateJobOfferList }) => {
   const renderFilteredOffers = (filteredOffers) => {
     return (
       <div className="col-12">
-        {filteredOffers.map((offer, index) => (
-          <div key={index} onClick={() => (offer)}>
-            <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index}/>
-          </div>
-        ))}
+        {
+          filteredOffers.length !== 0 ?
+              filteredOffers.map((offer, index) => (
+                  <div key={index} onClick={() => (offer)}>
+                    <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index}/>
+                  </div>)) :
+                <div className="col-12">
+                    <h5 className="text-center">{t('noInternship')}</h5>
+                </div>
+        }
       </div>
     )
   }

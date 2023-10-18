@@ -9,11 +9,16 @@ const Cvs = ({cvs, updateCvList}) => {
 	const renderFilteredCvs = (filteredCvs) => {
 		return (
 			<div className="col-12">
-				{filteredCvs.map((cv, index) => (
-					<div key={index} onClick={() => (cv)}>
-						<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
-					</div>
-				))}
+				{
+					filteredCvs.length !== 0 ?
+						filteredCvs.map((cv, index) => (
+							<div key={index} onClick={() => (cv)}>
+								<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
+							</div>)) :
+						<div className="col-12 text-center">
+							<h4 className="text-dark fw-light">{t('noCV')}</h4>
+						</div>
+				}
 			</div>
 		)
 	}
