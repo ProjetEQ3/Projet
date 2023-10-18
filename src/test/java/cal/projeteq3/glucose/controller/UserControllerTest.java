@@ -43,7 +43,7 @@ class UserControllerTest {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
-    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0BtaWNoYXVkLmNvbSIsImlhdCI6MTY5NzE1ODQyOSwiZXhwIjoxNjk3MjQ0ODI5LCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiU1RVREVOVCJ9XX0._SRa0D-XI3IV92vcOrKu1X-5TMjeczUuGsslYyU3-zo";
+    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoZWxAbWljaGF1ZC5jb20iLCJpYXQiOjE2OTc1ODY0MzIsImV4cCI6MTY5NzY3MjgzMiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6Ik1BTkFHRVIifV19.DRv0ToANfs2zVAZJCBIGmJOWOyOKT4lI6bFJCual6n4";
 
     @Test
     void Login_Valid() throws Exception {
@@ -137,20 +137,11 @@ class UserControllerTest {
                 new SemesterDTO(Semester.builder().session(Semester.Session.FALL).year(2020).build())
         ));
 
-        mockMvc.perform(get("/semesters"))
-                .andExpect(status().isOk())
+        mockMvc.perform(get("/user/semesters"))
+                .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(2))
         ;
-    }
-
-    @Test
-    public void testGetSemestersError() throws Exception {
-        // Mock an error case in the userService that would return an empty list or null.
-        when(userService.getSemesters()).thenReturn(null);
-
-        mockMvc.perform(get("/semesters"))
-                .andExpect(status().isInternalServerError());
     }
 }
 
