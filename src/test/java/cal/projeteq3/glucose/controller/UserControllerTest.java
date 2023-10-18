@@ -133,8 +133,8 @@ class UserControllerTest {
     @Test
     public void testGetSemestersSuccess() throws Exception {
         when(userService.getSemesters()).thenReturn(List.of(
-                new SemesterDTO(Semester.builder().session(Semester.Session.SUMMER).year(2021).build()),
-                new SemesterDTO(Semester.builder().session(Semester.Session.FALL).year(2020).build())
+                new SemesterDTO(Semester.builder().season(Semester.Season.SUMMER).year(2021).build()),
+                new SemesterDTO(Semester.builder().season(Semester.Season.FALL).year(2020).build())
         ));
 
         mockMvc.perform(get("/user/semesters"))

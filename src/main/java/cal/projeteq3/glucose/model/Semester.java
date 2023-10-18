@@ -18,10 +18,10 @@ import java.time.LocalDate;
 public class Semester {
 
     @Enumerated(EnumType.STRING)
-    private Session session;
+    private Season season;
     private int year;
 
-    public enum Session {
+    public enum Season {
         WINTER, SUMMER, FALL
     }
 
@@ -31,34 +31,34 @@ public class Semester {
             throw new IllegalArgumentException("the localdate provided is null.");
         }
 
-        session = getSessionFromDate(localDate);
+        season = getSeasonFromDate(localDate);
         year = localDate.getYear();
     }
 
-    private Session getSessionFromDate(LocalDate localDate) {
+    private Season getSeasonFromDate(LocalDate localDate) {
         int month = localDate.getMonthValue();
         if(month <= 4) {
-            return Session.WINTER;
+            return Season.WINTER;
         } else if(month <= 8) {
-            return Session.SUMMER;
+            return Season.SUMMER;
         } else {
-            return Session.FALL;
+            return Season.FALL;
         }
     }
 
     public Semester previousSemester() {
-        return switch (session) {
-            case WINTER -> new Semester(Session.FALL, year - 1);
-            case SUMMER -> new Semester(Session.WINTER, year);
-            case FALL -> new Semester(Session.SUMMER, year);
+        return switch (season) {
+            case WINTER -> new Semester(Season.FALL, year - 1);
+            case SUMMER -> new Semester(Season.WINTER, year);
+            case FALL -> new Semester(Season.SUMMER, year);
         };
     }
 
     public Semester nextSemester() {
-        return switch (session) {
-            case WINTER -> new Semester(Session.SUMMER, year);
-            case SUMMER -> new Semester(Session.FALL, year);
-            case FALL -> new Semester(Session.WINTER, year + 1);
+        return switch (season) {
+            case WINTER -> new Semester(Season.SUMMER, year);
+            case SUMMER -> new Semester(Season.FALL, year);
+            case FALL -> new Semester(Season.WINTER, year + 1);
         };
     }
 

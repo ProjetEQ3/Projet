@@ -30,7 +30,7 @@ public class ManagerController {
 //    JobOffer
     @GetMapping("/jobOffers/all")
     public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam String season, @RequestParam String year){
-        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+        Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ public class ManagerController {
 
     @GetMapping("jobOffers/employer/{employerId}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByEmployer(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
-        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+        Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +55,7 @@ public class ManagerController {
 
     @GetMapping("jobOffers/{jobOfferState}")
     public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam String season, @RequestParam String year){
-        Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+        Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)

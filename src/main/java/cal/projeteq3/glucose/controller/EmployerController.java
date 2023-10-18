@@ -35,7 +35,7 @@ public class EmployerController{
 
 	@GetMapping("/offer/all")
 	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
-		Semester semester = new Semester(Semester.Session.valueOf(season), Integer.parseInt(year));
+		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)

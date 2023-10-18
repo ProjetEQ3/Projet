@@ -44,7 +44,7 @@ const Main = ({user, setUser}) => {
                     <select className="col-2 d-flex justify-content-start text-capitalize">
                         {
                             sessions.map((session, index) => (
-                                <option value={index} onChange={() => handleUpdateAxios(index)} className="text-capitalize">{t(session.season)} {session.year}</option>
+                                <option value={index} onChange={() => handleUpdateAxios(index)} className="text-capitalize">{t(session.season.toLowerCase())} {session.year}</option>
                             ))
                         }
                     </select>

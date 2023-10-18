@@ -147,7 +147,7 @@ public class StudentControllerTest {
                 )
         );
         when(studentService.getJobOffersByDepartment(Department._420B0,Semester.builder()
-                .session(Semester.Session.FALL)
+                .season(Semester.Season.FALL)
                 .year(2021)
                 .build()))
                 .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
@@ -224,7 +224,7 @@ public class StudentControllerTest {
         );
 
         when(studentService.getOpenJobOffersByDepartment(Department._420B0,Semester.builder()
-                .session(Semester.Session.FALL)
+                .season(Semester.Season.FALL)
                 .year(2021)
                 .build()))
                 .thenReturn(jobOffers_420B0.stream().map(JobOfferDTO::new).filter(jobOfferDTO ->
@@ -324,7 +324,7 @@ public class StudentControllerTest {
 
         when(studentService.getAppliedJobOfferByStudentId(wrongStudentId,
                 Semester.builder()
-                    .session(Semester.Session.FALL)
+                    .season(Semester.Season.FALL)
                     .year(2021)
                     .build())).thenThrow(new StudentNotFoundException(wrongStudentId));
 
@@ -361,7 +361,7 @@ public class StudentControllerTest {
 				40).salary(20.0f).startDate(LocalDate.now().minusDays(60)).expirationDate(LocalDate.now().minusDays(30))
 		                                                     .build()));
 		when(studentService.getJobOffersByDepartment(Department._420B0,Semester.builder()
-                .session(Semester.Session.FALL)
+                .season(Semester.Season.FALL)
                 .year(2021)
                 .build())).thenReturn(
 			jobOffers_420B0.stream().map(JobOfferDTO::new).collect(Collectors.toList()));
@@ -409,7 +409,7 @@ public class StudentControllerTest {
 		                                                     .build()));
 
 		when(studentService.getOpenJobOffersByDepartment(Department._420B0,Semester.builder()
-                .session(Semester.Session.FALL)
+                .season(Semester.Season.FALL)
                 .year(2021)
                 .build())).thenReturn(jobOffers_420B0.stream().map(
 			JobOfferDTO::new).filter(jobOfferDTO -> {

@@ -8,17 +8,17 @@ import lombok.*;
 @NoArgsConstructor
 public class SemesterDTO {
 
-    private Semester.Session session;
+    private Semester.Season season;
     private int year;
 
     public SemesterDTO(Semester semester) {
-        this.session = semester.getSession();
+        this.season = semester.getSeason();
         this.year = semester.getYear();
     }
 
     public Semester toEntity() {
         return Semester.builder()
-                .session(session)
+                .season(season)
                 .year(year)
                 .build();
     }
