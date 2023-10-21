@@ -500,7 +500,7 @@ public class StudentServiceTest {
                         .cvState(CvState.ACCEPTED)
                         .build())
                 .build();
-        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer, new Semester(LocalDate.now())));
+        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer, new Semester(LocalDate.now()), new ArrayList<>(0)));
 
         when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
         when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));

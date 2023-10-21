@@ -1,10 +1,12 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -93,10 +95,10 @@ public class EmployerController{
 	}
 
 	@PutMapping("/offer/appointment/{applicationId}")
-	public ResponseEntity<JobApplicationDTO> suggestAppointment(@PathVariable Long applicationId, @RequestParam List<LocalDateTime> date){
+	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestParam List<Appointment> dates){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.setAppointment(applicationId, date));
+				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));
 	}
 
 }

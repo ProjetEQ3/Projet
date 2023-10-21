@@ -2,21 +2,22 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
-import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
-import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.repository.AppointmentRepository;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +33,8 @@ import java.util.stream.Collectors;
 public class EmployerService{
 	private final JobOfferRepository jobOfferRepository;
 	private final EmployerRepository employerRepository;
-	private final StudentRepository studentRepository;
 	private final JobApplicationRepository jobApplicationRepository;
+	private final AppointmentRepository appointmentRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	// database operations here
@@ -163,5 +164,20 @@ public class EmployerService{
 		return jobOffer.getJobApplications().stream()
 			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
 			.collect(Collectors.toList());
+	}
+
+	//EQ3-17
+	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, List<Appointment> appointment){
+		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
+			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
+		for(Appointment app : appointment){
+			app.setJobApplication(jobApplication);
+			jobApplication.addAppointment(app);
+			appointmentRepository.save(app);
+		}
+		jobApplicationRepository.save(jobApplication);
+		return jobApplicationRepository.findById(jobApplication.getJobOffer().getId())
+			.map(JobApplicationDTO::new)
+			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
 	}
 }

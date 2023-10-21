@@ -5,4 +5,7 @@ public class JobApplicationNotFoundException extends BadRequestException {
     public JobApplicationNotFoundException(Long id) {
         super("JobApplication with ID " + id + " does not exist.");
     }
+    public JobApplicationNotFoundException() {
+        super("JobApplication does not exist.");
+    }
 }
