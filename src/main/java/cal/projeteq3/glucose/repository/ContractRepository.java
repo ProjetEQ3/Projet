@@ -9,12 +9,8 @@ import java.util.Optional;
 public interface ContractRepository extends JpaRepository<Contract, Long> {
     Optional<Contract> findByStudentId(Long studentId);
     Optional<Contract> findByEmployerId(Long employerId);
-    Optional<Contract> findBySupervisorId(Long supervisorId);
     Optional<Contract> findByStudentIdAndEmployerId(Long studentId, Long employerId);
-    Optional<Contract> findByStudentIdAndSupervisorId(Long studentId, Long supervisorId);
-    Optional<Contract> findByEmployerIdAndSupervisorId(Long employerId, Long supervisorId);
-    Optional<Contract> findByStudentIdAndEmployerIdAndSupervisorId(Long studentId, Long employerId, Long supervisorId);
     Optional<Contract> findContractByEmployerSignatureId(Long employerSignatureId);
     Optional<Contract> findContractByStudentSignatureId(Long studentSignatureId);
-    Optional<Contract> findContractByDirectorSignatureId(Long managerSignatureId);
+    Optional<Contract> findContractByManagerSignatureId(Long managerSignatureId);
 }

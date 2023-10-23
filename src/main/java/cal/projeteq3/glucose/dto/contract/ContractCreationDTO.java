@@ -16,17 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContractCreationDTO {
+    private Long id;
+    private Long studentId;
     private Long jobOfferId;
-    private Long workAddressId;
-    private Long supervisorId;
-    private List<String> responsibilities = new ArrayList<>();
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int duration;
-    private Time startShiftTime;
-    private Time endShiftTime;
-    private int hoursPerDay;
-    private EmploymentType employmentType;
-    private Set<DayOfWeek> workDays;
-
 }

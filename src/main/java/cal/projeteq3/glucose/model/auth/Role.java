@@ -13,7 +13,6 @@ public enum Role{
 	MANAGER("ROLE_MANAGER"),
 	EMPLOYER("ROLE_EMPLOYER"),
 	STUDENT("ROLE_STUDENT"),
-	DIRECTOR("ROLE_DIRECTOR"),
 	;
 
 	private final String string;

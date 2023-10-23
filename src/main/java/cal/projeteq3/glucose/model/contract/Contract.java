@@ -1,22 +1,13 @@
 package cal.projeteq3.glucose.model.contract;
 
 import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisitNotMet;
-import cal.projeteq3.glucose.model.Address;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.user.Supervisor;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static java.time.DayOfWeek.*;
 
 @Getter
 @AllArgsConstructor
@@ -32,58 +23,17 @@ public class Contract {
     private Employer employer;
 
     @ManyToOne
-    private Supervisor supervisor;
-
-    @ManyToOne
-    private Address workAddress;
-
-    @ManyToOne
     private Student student;
 
-    @Column(nullable = false)
-    private String jobTitle;
-
-    @ElementCollection
-    private List<String> responsibilities = new ArrayList<>();
-
-    @Column(nullable = false)
-    private LocalDate startDate;
-
-    @Column(nullable = false)
-    private LocalDate endDate;
-
-    @Column(nullable = false)
-    private int duration;
-
-    @Column(nullable = false)
-    private float hoursPerWeek;
-
-    @Column(nullable = false)
-    private Time startShiftTime;
-
-    @Column(nullable = false)
-    private Time endShiftTime;
-
-    @Column(nullable = false)
-    private float hoursPerDay;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EmploymentType employmentType = EmploymentType.FULL_TIME;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    Set<DayOfWeek> workDays = Set.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY);
-
-    @Column(nullable = false)
-    private double hourlyRate;
+    @ManyToOne
+    private JobOffer jobOffer;
 
     @OneToOne
     private Signature employerSignature;
     @OneToOne
     private Signature studentSignature;
     @OneToOne
-    private Signature directorSignature;
+    private Signature managerSignature;
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime creationDate = LocalDateTime.now();
@@ -110,13 +60,13 @@ public class Contract {
         lastModificationDate = LocalDateTime.now();
     }
 
-    public void setDirectorSignature(Signature directorSignature) {
-        if (this.directorSignature != null)
+    public void setManagerSignature(Signature directorSignature) {
+        if (this.managerSignature != null)
             throw new IllegalStateException("Director signature already set");
         if (this.employerSignature == null || this.studentSignature == null)
             throw new SignaturePrerequisitNotMet();
 
-        this.directorSignature = directorSignature;
+        this.managerSignature = directorSignature;
         lastModificationDate = LocalDateTime.now();
     }
 }
