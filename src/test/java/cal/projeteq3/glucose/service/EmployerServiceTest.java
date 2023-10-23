@@ -17,12 +17,10 @@ import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.*;
 
 import java.time.LocalDate;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -51,6 +49,8 @@ public class EmployerServiceTest {
     private StudentRepository studentRepository;
     @Mock
     private JobApplicationRepository jobApplicationRepository;
+    @Mock
+    private AppointmentRepository appointmentRepository;
     @InjectMocks
     private EmployerService employerService;
     @Mock
@@ -744,6 +744,21 @@ public class EmployerServiceTest {
     @Test
     public void testAddAppointmentByApplicationId_Valid() {
         Long applicationId = 1L;
+        JobOffer jobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .build();
         Student student = Student
                 .builder()
                 .id(1L)
@@ -753,6 +768,7 @@ public class EmployerServiceTest {
         JobApplication mockApplication = new JobApplication();
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
+        mockApplication.setJobOffer(jobOffer);
 
         Appointment appointment = Appointment.builder()
                 .appointmentDate(LocalDateTime.now())
@@ -763,15 +779,23 @@ public class EmployerServiceTest {
                 .appointmentDate(LocalDateTime.now().plusDays(1))
                 .jobApplication(mockApplication)
                 .build();
+
+        Appointment appointment3 = Appointment.builder()
+                .appointmentDate(LocalDateTime.now().plusDays(2))
+                .jobApplication(mockApplication)
+                .build();
         List<Appointment> appointmentList = new ArrayList<>();
         appointmentList.add(appointment);
         appointmentList.add(appointment2);
+        appointmentList.add(appointment3);
 
         when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
+        when(jobApplicationRepository.save(mockApplication)).thenReturn(mockApplication);
 
         employerService.addAppointmentByJobApplicationId(mockApplication.getId(), appointmentList);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
-
+        assertEquals(mockApplication.getAppointments().size(), 3);
+        assertEquals(mockApplication.getAppointments(), appointmentList);
 
     }
 

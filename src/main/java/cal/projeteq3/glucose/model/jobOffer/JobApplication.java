@@ -14,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,14 +35,14 @@ public class JobApplication{
 	private Semester semester;
 
 	@OneToMany(mappedBy = "jobApplication", cascade = CascadeType.ALL)
-	private List<Appointment> appointment = new ArrayList<>();
+	private List<Appointment> appointments = new ArrayList<>();
 	public Student getStudent(){
 		if(this.student == null) throw new StudentNotFoundException();
 		return this.student;
 	}
 
 	public void addAppointment(Appointment appointment){
-		this.appointment.add(appointment);
+		this.appointments.add(appointment);
 	}
 
 }
