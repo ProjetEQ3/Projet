@@ -1,9 +1,10 @@
 package cal.projeteq3.glucose;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -13,17 +14,34 @@ import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.ManagerService;
+import cal.projeteq3.glucose.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
 public class GlucoseApplication implements CommandLineRunner {
+	@Autowired
+	private EmployerRepository employerRepository;
+	@Autowired
+	private StudentRepository studentRepository;
+	@Autowired
+	private ManagerRepository managerRepository;
+	@Autowired
+	private EmployerService employerService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private ManagerService managerService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(GlucoseApplication.class, args);
 		System.out.println("Hello World!");
@@ -34,15 +52,6 @@ public class GlucoseApplication implements CommandLineRunner {
 		createDatabase();
 	}
 
-	@Autowired
-	private EmployerRepository employerRepository;
-	@Autowired
-	private StudentRepository studentRepository;
-	@Autowired
-	private ManagerRepository managerRepository;
-	@Autowired
-	private EmployerService employerService;
-
 	private void createDatabase(){
 		employerRepository.saveAll(createEmployer());
 		studentRepository.saveAll(createStudent());
@@ -50,13 +59,20 @@ public class GlucoseApplication implements CommandLineRunner {
 		createJobOffers(employerService);
 	}
 
-	private static List<Employer> createEmployer(){
+	//Ajouter CV propre
+	private void createApplication(){
+		managerService.updateCvState(1L, CvState.ACCEPTED, null);
+		studentService.applyJobOffer(3L, 9L);
+		studentService.applyJobOffer(9L, 9L);
+	}
+
+	private List<Employer> createEmployer(){
 		return List.of(
 				Employer.builder()
 						.firstName("Gabriel")
 						.lastName("Non")
 						.email("gabriel@professionnel.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build(),
@@ -64,7 +80,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Chawki")
 						.lastName("Non")
 						.email("chawki@professionnel.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build(),
@@ -72,7 +88,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Zakaria")
 						.lastName("Non")
 						.email("e@zaka.se")
-						.password("aaaAAA111")
+						.password(passwordEncoder.encode("aaaAAA111"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build(),
@@ -80,7 +96,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Samuel")
 						.lastName("Non")
 						.email("samuel@professionnel.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build(),
@@ -88,7 +104,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Louis")
 						.lastName("Non")
 						.email("louis@professionnel.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build(),
@@ -96,20 +112,20 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Jean")
 						.lastName("Non")
 						.email("terss@professionnel.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
 						.organisationPhone("123-456-7890")
 						.build()
 		);
 	}
 
-	private static List<Student> createStudent(){
+	private List<Student> createStudent(){
 		return List.of(
 				Student.builder()
 						.firstName("Jean")
 						.lastName("Michaud")
 						.email("jean@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000001")
 						.department("_420B0")
 						.build(),
@@ -117,7 +133,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Joe")
 						.lastName("Michaud")
 						.email("joe@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000002")
 						.department("_420B0")
 						.build(),
@@ -125,27 +141,23 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Louis")
 						.lastName("Michaud")
 						.email("louis@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000003")
 						.department("_420B0")
-						.cvFile(CvFile.builder()
-								.fileData(new byte[]{1, 2, 3, 4, 5})
-								.fileName("awdawd.pdf")
-								.build())
 						.build(),
 				Student.builder()
 						.firstName("Chawki")
 						.lastName("Michaud")
 						.email("chawki@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000004")
 						.department("_420B0")
 						.build(),
 				Student.builder()
 						.firstName("Zakaria")
-						.lastName("Michaud")
+						.lastName("Gn")
 						.email("s@zaka.se")
-						.password("aaaAAA111")
+						.password(passwordEncoder.encode("aaaAAA111"))
 						.matricule("0000005")
 						.department("_420B0")
 						.build(),
@@ -153,7 +165,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Gabriel")
 						.lastName("Michaud")
 						.email("gabriel@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000006")
 						.department("_420B0")
 						.build(),
@@ -161,7 +173,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Samuel")
 						.lastName("Michaud")
 						.email("samuel@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000007")
 						.department("_420B0")
 						.build(),
@@ -169,20 +181,20 @@ public class GlucoseApplication implements CommandLineRunner {
 						.firstName("Karim")
 						.lastName("Michaud")
 						.email("karim@michaud.com")
-						.password("Ose12345")
+						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000008")
 						.department("_420B0")
 						.build());
 	}
 
-	private static List<Manager> createManager(){
+	private List<Manager> createManager(){
 		return
 			List.of(
 				Manager.builder()
 				.firstName("Zaka")
 				.lastName("Gn")
 				.email("m@zaka.se")
-				.password("aaaAAA111")
+				.password(passwordEncoder.encode("aaaAAA111"))
 				.matricule("0000000")
 				.phoneNumber("123-456-7890")
 				.build(),
@@ -190,15 +202,15 @@ public class GlucoseApplication implements CommandLineRunner {
 				.firstName("Michel")
 				.lastName("Michaud")
 				.email("michel@michaud.com")
-				.password("Ose12345")
+				.password(passwordEncoder.encode("Ose12345"))
 				.matricule("0000001")
 				.phoneNumber("123-456-7890")
 				.build()
-			);
+		);
 	}
 
 
-	private static void createJobOffers(EmployerService employerService) {
+	private void createJobOffers(EmployerService employerService) {
 		List<JobOffer> jobOffers = new ArrayList<>(List.of(
 				JobOffer.builder()
 						.title("Front-end developer")
@@ -211,10 +223,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(1))
+						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -227,10 +241,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(5))
+						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Full-stack developer")
@@ -243,10 +259,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(-5))
+						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
@@ -257,10 +275,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'applications web interactives en utilisant diverses " +
 								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
@@ -270,10 +290,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
@@ -284,10 +306,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'apprentissage automatique, l'analyse de données, " +
 								"et le développement d'applications basées sur l'IA.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Mobile")
@@ -297,10 +321,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -310,10 +336,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -323,10 +351,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -336,10 +366,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Front-end developer")
@@ -352,10 +384,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(1))
+						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -368,15 +402,17 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(5))
+						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
-						.title("Full-stack developer")
-						.jobOfferState(JobOfferState.OPEN)
-						.department(Department._420B0)
+						.title("Java developer")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._144A1)
 						.location("Montréal")
 						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
 								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
@@ -384,10 +420,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(-5))
+						.expirationDate(LocalDate.now().plusDays(-5))
 						.hoursPerWeek(1)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
@@ -398,10 +436,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'applications web interactives en utilisant diverses " +
 								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
@@ -411,24 +451,28 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
+						.jobOfferState(JobOfferState.OPEN)
 						.department(Department._420B0)
 						.location("Montréal")
 						.description("Ce stage pourrait impliquer la création de modèles " +
 								"d'apprentissage automatique, l'analyse de données, " +
 								"et le développement d'applications basées sur l'IA.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Mobile")
@@ -438,10 +482,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -451,10 +497,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -464,10 +512,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -477,10 +527,26 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDateTime.now())
+						.startDate(LocalDate.now())
 						.duration(7)
-						.expirationDate(LocalDateTime.now().plusDays(30))
+						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
+						.build(),
+				JobOffer.builder()
+						.title("Développement COBOL")
+						.jobOfferState(JobOfferState.SUBMITTED)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("COBOL is life.")
+						.salary(20.0f)
+						.startDate(LocalDate.now())
+						.duration(7)
+						.expirationDate(LocalDate.now().plusDays(30))
+						.hoursPerWeek(40)
+						.nbOfCandidates(2)
+						.semester(new Semester(LocalDate.now()))
 						.build()
 		));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
@@ -506,6 +572,7 @@ public class GlucoseApplication implements CommandLineRunner {
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());}
-
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(20)), employer.getId());
+	}
 }

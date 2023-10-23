@@ -1,36 +1,48 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,9 +54,24 @@ public class StudentServiceTest {
     private CvFileRepository cvFileRepository;
     @Mock
     private JobOfferRepository jobOfferRepository;
+    @Mock
+    private JobApplicationRepository jobApplicationRepository;
 
     @InjectMocks
     private StudentService studentService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    private JobOffer jobOffer;
+
+    private Student student;
+
+    @BeforeEach
+    void setUp() {
+        jobOffer = new JobOffer();
+        student = mock(Student.class);
+    }
 
     @Test
     public void createStudent_Valid() {
@@ -85,6 +112,7 @@ public class StudentServiceTest {
                     .department("_420B0")
                     .build()
         );
+        when(passwordEncoder.encode("Test1234")).thenReturn("Test1234");
 
         //Act
         studentService.createStudent(registerStudentDTO);
@@ -280,6 +308,7 @@ public class StudentServiceTest {
 
         // Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -291,8 +320,9 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -303,8 +333,9 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -315,20 +346,21 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
 
-        when(jobOfferRepository.findJobOffersByDepartment(Department._420B0)).thenReturn(jobOffers_420B0);
+        when(jobOfferRepository.findJobOffersByDepartmentAndSemester(Department._420B0, semester)).thenReturn(jobOffers_420B0);
 
 //        Act
-        List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0);
+        List<JobOfferDTO> jobOffers = studentService.getJobOffersByDepartment(Department._420B0, semester);
 
 //        Assert
         assertEquals(3, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartment(Department._420B0);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndSemester(Department._420B0, semester);
 
     }
 
@@ -337,6 +369,7 @@ public class StudentServiceTest {
 
         // Arrange
 
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers_420B0 = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -348,8 +381,9 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer2")
@@ -360,8 +394,9 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .title("JobOffer3")
@@ -372,26 +407,174 @@ public class StudentServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
 
         when(jobOfferRepository
-                .findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN))
+                .findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN, semester))
                 .thenReturn(jobOffers_420B0.stream()
                         .filter(jobOffer -> jobOffer.getJobOfferState()
                                 .equals(JobOfferState.OPEN))
                         .collect(Collectors.toList()));
 
 //        Act
-        List<JobOfferDTO> jobOffers = studentService.getOpenJobOffersByDepartment(Department._420B0);
+        List<JobOfferDTO> jobOffers = studentService.getOpenJobOffersByDepartment(Department._420B0, semester);
 
 //        Assert
         assertEquals(1, jobOffers.size());
-        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferState(Department._420B0, JobOfferState.OPEN);
+        verify(jobOfferRepository, times(1)).findJobOffersByDepartmentAndJobOfferStateAndSemester(Department._420B0, JobOfferState.OPEN, semester);
 
+    }
+
+    @Test
+    void testApplyJobOffer_JobOfferNotFound() {
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(JobOfferNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void testApplyJobOffer_StudentNotFound() {
+        JobOffer jobOffer = new JobOffer();
+        when(jobOfferRepository.findById(1L)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(StudentNotFoundException.class, () -> {
+            studentService.applyJobOffer(1L, 1L);
+        });
+    }
+
+    @Test
+    void applyJobOffer_SuccessfulApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+        when(jobApplicationRepository.save(any(JobApplication.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(jobOfferRepository.save(any(JobOffer.class))).thenReturn(jobOffer);
+
+        // Act
+        JobOfferDTO result = studentService.applyJobOffer(jobOfferId, studentId);
+
+        // Assert
+        assertNotNull(result);
+        verify(jobOfferRepository, times(1)).findById(jobOfferId);
+        verify(studentRepository, times(1)).findById(studentId);
+        verify(jobApplicationRepository, times(1)).save(any(JobApplication.class));
+    }
+
+    @Test
+    void applyJobOffer_StudentAlreadyApplied() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = JobOffer.builder()
+                .id(jobOfferId)
+                .jobOfferState(JobOfferState.OPEN)
+                .jobApplications(new ArrayList<>())
+                .build();
+        Student student = Student.builder()
+                .id(studentId)
+                .cvFile(CvFile.builder()
+                        .fileName("cv.pdf")
+                        .cvState(CvState.ACCEPTED)
+                        .build())
+                .build();
+        jobOffer.addJobApplication(new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer, new Semester(LocalDate.now())));
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(StudentHasAlreadyAppliedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_CvNotApproved() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+    @Test
+    void applyJobOffer_JobOfferNotOpen() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 2L;
+        JobOffer jobOffer = new JobOffer();
+        Student student = new Student();
+
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act and Assert
+        assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+    }
+
+
+    @Test
+    void apply_withApprovedCVAndOpenJobOffer_returnsJobApplication() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        JobApplication result = jobOffer.apply(student);
+
+        assertNotNull(result);
+        assertEquals(student, result.getStudent());
+        assertEquals(jobOffer, result.getJobOffer());
+    }
+
+    @Test
+    void apply_withNonApprovedCV_throwsCvNotApprovedException() {
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withClosedJobOffer_throwsJobOfferNotOpenException() {
+        when(student.hasApprovedCv()).thenReturn(true);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(JobOfferNotOpenException.class, () -> jobOffer.apply(student));
+    }
+
+    @Test
+    void apply_withNonApprovedCVAndClosedJobOffer_throwsCvNotApprovedException() {
+        // We're prioritizing the CV check first as per the `apply` method logic.
+        when(student.hasApprovedCv()).thenReturn(false);
+        jobOffer.setJobOfferState(JobOfferState.SUBMITTED);  // Or any state other than OPEN
+
+        assertThrows(CvNotApprovedException.class, () -> jobOffer.apply(student));
     }
 
     @Test
@@ -460,6 +643,8 @@ public class StudentServiceTest {
         verify(studentRepository, times(1)).findById(studentId);
     }
 
+
+
     @Test
     public void deleteCv_valid() {
         // Arrange
@@ -490,5 +675,99 @@ public class StudentServiceTest {
             studentService.deleteCv(nonExistentStudentId);
         });
         verify(studentRepository, times(1)).findById(nonExistentStudentId);
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudentId_valid() {
+        // Arrange
+        Long studentId = 1L;
+        Semester semester = new Semester(LocalDate.now());
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+
+        JobApplication jobApplication = JobApplication.builder()
+                .student(student)
+                .semester(semester)
+                .build();
+
+        JobOffer jobOffer = JobOffer.builder()
+                .id(1L)
+                .jobApplications(List.of(jobApplication))
+                .semester(semester)
+                .build();
+
+        when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId, semester)).thenReturn(List.of(jobOffer));
+
+        jobOfferRepository.save(jobOffer);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+
+        List<JobOfferDTO> appliedOffers = studentService.getAppliedJobOfferByStudentId(studentId, semester);
+
+        // Assert
+        assertEquals(jobOffer.getId(), appliedOffers.get(0).toEntity().getId());
+        verify(studentRepository, times(1)).findById(studentId);
+    }
+
+    @Test
+    public void getAppliedJobOfferByStudentId_studentNotFound() {
+        // Arrange
+        Long notFoundStudentId = -1L;
+        Semester semester = new Semester(LocalDate.now());
+
+        when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getAppliedJobOfferByStudentId(notFoundStudentId, semester);
+        });
+        verify(studentRepository, times(1)).findById(notFoundStudentId);
+
+    }
+
+    @Test
+    public void getCv_Valid() {
+        // Arrange
+        Long studentId = 1L;
+        Student student = Student.builder()
+                .id(studentId)
+                .build();
+
+        CvFile cvFile = CvFile.builder()
+                .fileName("cv.pdf")
+                .fileData(new byte[]{1,1,1,1,1,1,1,1,1,1,1})
+                .cvState(CvState.SUBMITTED)
+                .build();
+
+        student.setCvFile(cvFile);
+
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+
+        // Act
+        CvFileDTO cvFileDTO = studentService.getCv(studentId);
+
+        // Assert
+        assertEquals(cvFile.getFileName(), cvFileDTO.getFileName());
+        assertEquals(cvFile.getFileData(), cvFileDTO.getFileData());
+        assertEquals(cvFile.getCvState(), cvFileDTO.getCvState());
+        assertEquals(cvFile.getRefusReason(), cvFileDTO.getRefusReason());
+        verify(studentRepository, times(1)).findById(studentId);
+    }
+
+    @Test
+    public void getCv_studentNotFound() {
+        // Arrange
+        Long notFoundStudentId = -1L;
+
+        when(studentRepository.findById(notFoundStudentId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(StudentNotFoundException.class, () -> {
+            studentService.getCv(notFoundStudentId);
+        });
+        verify(studentRepository, times(1)).findById(notFoundStudentId);
     }
 }

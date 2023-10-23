@@ -1,55 +1,47 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
-import cal.projeteq3.glucose.dto.user.SupervisorDTO;
-import cal.projeteq3.glucose.exception.request.AddressNotFoundException;
-import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
-import cal.projeteq3.glucose.exception.request.SupervisorNotFoundException;
-import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobApplicationNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
-import cal.projeteq3.glucose.repository.*;
+import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class EmployerService{
-
 	private final JobOfferRepository jobOfferRepository;
 	private final EmployerRepository employerRepository;
-	private final ContractRepository contractRepository;
-	private final SupervisorRepository supervisorRepository;
-	private final AddressRepository addressRepository;
-
-	@Autowired
-	public EmployerService(EmployerRepository employerRepository, JobOfferRepository jobOfferRepository, ContractRepository contractRepository, SupervisorRepository supervisorRepository, AddressRepository addressRepository){
-		this.jobOfferRepository = jobOfferRepository;
-		this.employerRepository = employerRepository;
-		this.contractRepository = contractRepository;
-		this.supervisorRepository = supervisorRepository;
-		this.addressRepository = addressRepository;
-	}
+	private final StudentRepository studentRepository;
+	private final JobApplicationRepository jobApplicationRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	// database operations here
 
 	public EmployerDTO createEmployer(RegisterEmployerDTO registerEmployerDTO) {
 		Employer employer = Employer.builder()
 				.email(registerEmployerDTO.getRegisterDTO().getEmail())
-				.password(registerEmployerDTO.getRegisterDTO().getPassword())
+				.password(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword()))
 				.firstName(registerEmployerDTO.getEmployerDTO().getFirstName())
 				.lastName(registerEmployerDTO.getEmployerDTO().getLastName())
 				.organisationName(registerEmployerDTO.getEmployerDTO().getOrganisationName())
@@ -98,32 +90,39 @@ public class EmployerService{
 		employerRepository.deleteById(id);
 	}
 
-
-	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId) {
-		Employer employer = employerRepository.findById(employerId)
+	public List<JobOfferDTO> getJobOffersDTOByEmployerId(Long employerId, Semester semester) {
+		Employer employer = employerRepository
+				.findById(employerId)
 				.orElseThrow(() -> new EmployerNotFoundException(employerId));
-		return employer.getJobOffers().stream().map(JobOfferDTO::new).collect(Collectors.toList());
+
+		return employer.getJobOffers().stream()
+				.filter(jobOffer -> jobOffer.getSemester().equals(semester))
+				.map(JobOfferDTO::new)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional
 	public JobOfferDTO createJobOffer(JobOfferDTO jobOffer, Long employerId){
-		Employer employer = employerRepository.findById(employerId)
-				.orElseThrow(() -> new EmployerNotFoundException(employerId));
-
+		Employer employer = employerRepository
+			.findById(employerId)
+			.orElseThrow(() -> new EmployerNotFoundException(employerId));
 		JobOffer jobOfferEntity = jobOffer.toEntity();
+
+		jobOfferEntity.setSemester(new Semester(jobOffer.getStartDate()));
+
 		employer.addJobOffer(jobOfferEntity);
 		JobOfferDTO result = new JobOfferDTO(jobOfferRepository.save(jobOfferEntity));
 		employerRepository.save(employer);
-
 		return result;
-
 	}
 
 	public JobOfferDTO updateJobOffer(JobOfferDTO updatedJobOffer){
 		JobOffer jobOffer = jobOfferRepository.findById(updatedJobOffer.getId())
-				.orElseThrow(() -> new JobOffreNotFoundException(updatedJobOffer.getId()));
+			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
+		jobOffer.setSemester(new Semester(jobOffer.getStartDate()));
+
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
 
@@ -131,47 +130,38 @@ public class EmployerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	public List<JobOfferDTO> getAllJobOffers(Long employerId){
-		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_Id(employerId);
+	public List<JobOfferDTO> getAllJobOffers(Long employerId, Semester semester){
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester);
 		if(jobOffers.isEmpty()) return Collections.emptyList();
 		return jobOffers.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
-	public ContractDTO createContract(ContractCreationDTO createContractDTO){
-		JobOffer jobOffer = jobOfferRepository.findById(createContractDTO.getJobOfferId())
-				.orElseThrow(() -> new JobOffreNotFoundException(createContractDTO.getJobOfferId()));
-
-		return new ContractDTO(contractRepository.save(
-				Contract.builder()
-						.employer(jobOffer.getEmployer())
-						.supervisor(supervisorRepository.findById(createContractDTO.getSupervisorId())
-								.orElseThrow(() -> new SupervisorNotFoundException(createContractDTO.getSupervisorId())))
-						.workAddress(addressRepository.findById(createContractDTO.getWorkAddressId())
-								.orElseThrow(() -> new AddressNotFoundException("\n\t ID:" + createContractDTO.getWorkAddressId())))
-						.student(jobOffer.getJobApplications().stream()
-								.filter(jobApplication -> jobApplication.getJobApplicationState()
-										.equals(JobApplicationState.ACCEPTED)).findFirst()
-								.orElseThrow(() -> new NoSuchElementException("No accepted job application found")).getStudent())
-						.jobTitle(jobOffer.getTitle())
-						.responsibilities(createContractDTO.getResponsibilities())
-						.startDate(createContractDTO.getStartDate())
-						.endDate(createContractDTO.getEndDate())
-						.duration(createContractDTO.getDuration())
-						.hoursPerWeek(jobOffer.getHoursPerWeek())
-						.startShiftTime(createContractDTO.getStartShiftTime())
-						.endShiftTime(createContractDTO.getEndShiftTime())
-						.hoursPerDay(createContractDTO.getHoursPerDay())
-						.employmentType(createContractDTO.getEmploymentType())
-						.workDays(createContractDTO.getWorkDays())
-						.hourlyRate(jobOffer.getSalary())
-				.build()));
+	public JobApplicationDTO acceptApplication(Long applicationId){
+		JobApplication application = jobApplicationRepository
+			.findById(applicationId)
+			.orElseThrow(JobApplicationNotFoundException::new);
+		application.setJobApplicationState(JobApplicationState.ACCEPTED);
+		jobApplicationRepository.save(application);
+		return new JobApplicationDTO(application);
 	}
 
-	public SupervisorDTO createSupervisor(SupervisorDTO supervisorDTO){
-		return new SupervisorDTO(supervisorRepository.save(supervisorDTO.toEntity()));
+	public JobApplicationDTO refuseApplication(Long applicationId){
+		JobApplication application = jobApplicationRepository
+				.findById(applicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+		application.setJobApplicationState(JobApplicationState.REJECTED);
+		jobApplicationRepository.save(application);
+		return new JobApplicationDTO(application);
 	}
 
-	public AddressDTO createAddress(AddressDTO addressDTO){
-		return new AddressDTO(addressRepository.save(addressDTO.toEntity()));
+	//EQ3-16
+	public List<StudentDTO> getStudentsByJobOfferId(Long jobOfferId){
+		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
+			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
+		List<JobApplication> jobApplications = jobOffer.getJobApplications();
+		if(jobApplications.isEmpty()) return Collections.emptyList();
+		return jobOffer.getJobApplications().stream()
+			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
+			.collect(Collectors.toList());
 	}
 }

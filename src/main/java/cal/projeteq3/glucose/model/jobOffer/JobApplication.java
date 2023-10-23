@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
-import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,17 +11,25 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobApplication {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class JobApplication{
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @ManyToOne
-    private Student student;
+	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
-    @ManyToOne(optional = false)
-    private JobOffer jobOffer;
+	@ManyToOne
+	private Student student;
 
-    private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
+	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private JobOffer jobOffer;
+
+	@Embedded
+	private Semester semester;
+
+	public Student getStudent(){
+		if(this.student == null) throw new StudentNotFoundException();
+		return this.student;
+	}
 
 }

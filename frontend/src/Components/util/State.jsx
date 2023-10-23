@@ -1,47 +1,21 @@
 import React from "react";
+import {t} from "i18next";
 
 const State = ({ state }) => {
-    console.log(state)
+    const classes = state === 'OPEN' ? 'border-success text-success' :
+        state === 'SUBMITTED' ? 'border-secondary text-secondary' :
+            state === 'REFUSED' ? 'border-danger text-danger' :
+                state === 'TAKEN' ? 'border-primary text-primary' :
+                    state === 'PENDING' ? 'border-warning text-warning' :
+                        state === 'EXPIRED' ? 'border-danger text-danger' :
+                            state === 'ACCEPTED' ? 'border-success text-success' : '';
+
     return (
         <>
             {
-                state === 'OPEN' ?
-                <div className="border rounded px-2 border-success text-success">
-                    Ouvert aux candidatures
+                <div className={classes + " border rounded col-12 col-lg-10 float-end"}>
+                    {t(state)}
                 </div>
-                :
-                state === 'SUBMITTED' ?
-                <div className="border rounded px-2 border-secondary text-secondary">
-                    Attente d'approbation
-                </div>
-                :
-                state === 'REFUSED' ?
-                <div className="border rounded px-2 border-danger text-danger">
-                    Refusé
-                </div>
-                :
-                state === 'TAKEN' ?
-                <div className="border rounded px-2 border-primary text-primary">
-                    Pris
-                </div>
-                :
-
-                state === 'PENDING' ?
-                <div className="border rounded px-2 border-warning text-warning">
-                    En attente
-                </div>
-                :
-                state === 'EXPIRED' ?
-                <div className="border rounded px-2 border-danger text-danger">
-                    Expiré
-                </div>
-                :
-                state === 'ACCEPTED' ?
-                <div className="border rounded px-2 border-success text-success">
-                    Accepté
-                </div>
-                :
-                ""
             }
         </>
     )

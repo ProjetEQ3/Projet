@@ -1,19 +1,30 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,27 +32,22 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
+
     private final StudentRepository studentRepository;
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
+    private final JobApplicationRepository jobApplicationRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public StudentService(
-            StudentRepository studentRepository,
-            CvFileRepository cvFileRepository,
-            JobOfferRepository jobOfferRepository) {
-        this.studentRepository = studentRepository;
-        this.cvFileRepository = cvFileRepository;
-        this.jobOfferRepository = jobOfferRepository;
-    }
 
     // database operations here
 
     public StudentDTO createStudent(RegisterStudentDTO registerStudentDTO) {
         Student student = Student.builder()
                 .email(registerStudentDTO.getRegisterDTO().getEmail())
-                .password(registerStudentDTO.getRegisterDTO().getPassword())
+                .password(passwordEncoder.encode(registerStudentDTO.getRegisterDTO().getPassword()))
                 .firstName(registerStudentDTO.getStudentDTO().getFirstName())
                 .lastName(registerStudentDTO.getStudentDTO().getLastName())
                 .department(String.valueOf(registerStudentDTO.getStudentDTO().getDepartment()))
@@ -82,6 +88,13 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
+    public CvFileDTO getCv(Long studentId) {
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+        CvFile cvFile = student.getCvFile();
+        if(cvFile == null) throw new StudentCvNotFoundException();
+        return new CvFileDTO(cvFile);
+    }
+
     public CvFileDTO addCv(Long studentId, CvFileDTO cvFile){
         Student student;
         Optional<Student> studentOptional = studentRepository.findById(studentId);
@@ -98,26 +111,51 @@ public class StudentService {
         return new CvFileDTO(studentRepository.save(student).getCvFile());
     }
 
-    public boolean deleteCv(Long studentId){
+    public void deleteCv(Long studentId){
         Optional<Student> studentOptional = studentRepository.findById(studentId);
         if(studentOptional.isEmpty()) throw new StudentNotFoundException(studentId);
         Student student = studentOptional.get();
         CvFile cvExiste = student.getCvFile();
         student.deleteCv();
         cvFileRepository.delete(cvExiste);
-        return true;
     }
 
-    public List<JobOfferDTO> getJobOffersByDepartment(Department department){
-        return jobOfferRepository.findJobOffersByDepartment(department)
+    public List<JobOfferDTO> getJobOffersByDepartment(Department department, Semester semester){
+        return jobOfferRepository.findJobOffersByDepartmentAndSemester(department, semester)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department){
-        return jobOfferRepository.findJobOffersByDepartmentAndJobOfferState(department, JobOfferState.OPEN)
+    public List<JobOfferDTO> getOpenJobOffersByDepartment(Department department, Semester semester){
+        return jobOfferRepository.findJobOffersByDepartmentAndJobOfferStateAndSemester(department, JobOfferState.OPEN, semester)
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId){
+        JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+
+        if(jobOffer.hasApplied(studentId)) throw new StudentHasAlreadyAppliedException();
+        if(!student.hasApprovedCv()) throw new CvNotApprovedException();
+        if(jobOffer.getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+        jobApplication.setSemester(jobOffer.getSemester());
+        jobOffer.getJobApplications().add(jobApplication);
+
+        jobApplicationRepository.save(jobOffer.getJobApplications().get(jobOffer.getJobApplications().size()-1));
+        return new JobOfferDTO(jobOfferRepository.save(jobOffer));
+    }
+
+
+    public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId, Semester semester) {
+        Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+        return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId(), semester)
+                .stream().map(JobOfferDTO::new)
+                .collect(Collectors.toList());
+    }
 }

@@ -11,7 +11,9 @@ import {initReactI18next} from "react-i18next";
 import en from "./locales/en.json";
 import fr from "./locales/fr.json";
 
-i18n.use(initReactI18next).init({
+i18n
+    .use(initReactI18next)
+    .init({
     resources: {
         en: {translation: en},
         fr: {translation: fr}
@@ -19,11 +21,12 @@ i18n.use(initReactI18next).init({
     lng: "fr",
     fallbackLng: "fr",
     interpolation: {escapeValue: false}
-});
-
-createRoot(document.getElementById("root")).render(
-    <App/>
-);
+})
+    .then(() => {
+        createRoot(document.getElementById("root")).render(
+            <App/>
+        );
+    });
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

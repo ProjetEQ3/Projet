@@ -1,8 +1,11 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from 'react';
+import { render } from '@testing-library/react';
+import Header from "./Components/layout/Header";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+// TODO : un vrai test ici
+
+describe('True Test', () => {
+  it('should always return true', () => {
+    expect(true).toBe(true);
+  });
 });

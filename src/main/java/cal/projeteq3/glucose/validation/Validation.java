@@ -1,16 +1,11 @@
 package cal.projeteq3.glucose.validation;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
-import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
-import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.request.ValidationException;
+import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import cal.projeteq3.glucose.model.auth.Role;
-import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.model.user.Student;
 
 import java.time.LocalDate;
 import static cal.projeteq3.glucose.validation.ValidationPattern.*;

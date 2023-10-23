@@ -1,58 +1,58 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.exception.request.AddressNotFoundException;
-import cal.projeteq3.glucose.exception.request.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.request.JobOffreNotFoundException;
-import cal.projeteq3.glucose.exception.request.SupervisorNotFoundException;
-import cal.projeteq3.glucose.model.Address;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Department;
-import cal.projeteq3.glucose.model.contract.Contract;
-import cal.projeteq3.glucose.model.contract.EmploymentType;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.user.Supervisor;
-import cal.projeteq3.glucose.repository.*;
+import cal.projeteq3.glucose.repository.EmployerRepository;
+
+import java.time.LocalDate;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.sql.Time;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import static org.mockito.Mockito.when;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EmployerServiceTest {
-
     @Mock
     private JobOfferRepository jobOfferRepository;
     @Mock
     private EmployerRepository employerRepository;
     @Mock
-    private AddressRepository addressRepository;
+    private StudentRepository studentRepository;
     @Mock
-    private SupervisorRepository supervisorRepository;
-    @Mock
-    private ContractRepository contractRepository;
+    private JobApplicationRepository jobApplicationRepository;
     @InjectMocks
     private EmployerService employerService;
-
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void createEmployer_valid(){
@@ -80,6 +80,7 @@ public class EmployerServiceTest {
                 .build();
 
         when(employerRepository.save(employer)).thenReturn(employer);
+        when(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword())).thenReturn("Testestest1");
 
 //        Act
         EmployerDTO employerDTOResult = employerService.createEmployer(registerEmployerDTO);
@@ -316,6 +317,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_valid(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>(
                 List.of(
                         JobOffer.builder()
@@ -328,8 +330,9 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .id(2L)
@@ -341,8 +344,9 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now())
-                                .expirationDate(LocalDateTime.now().plusDays(30))
+                                .startDate(LocalDate.now())
+                                .expirationDate(LocalDate.now().plusDays(30))
+                                .semester(semester)
                                 .build(),
                         JobOffer.builder()
                                 .id(3L)
@@ -354,8 +358,9 @@ public class EmployerServiceTest {
                                 .duration(6)
                                 .hoursPerWeek(40)
                                 .salary(20.0f)
-                                .startDate(LocalDateTime.now().minusDays(60))
-                                .expirationDate(LocalDateTime.now().minusDays(30))
+                                .startDate(LocalDate.now().minusDays(60))
+                                .expirationDate(LocalDate.now().minusDays(30))
+                                .semester(semester)
                                 .build()
                 )
         );
@@ -374,7 +379,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), jobOffers.size());
@@ -385,12 +390,13 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_invalidId(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
 
         when(employerRepository.findById(id)).thenReturn(Optional.empty());
 
 //        Act & Assert
         assertThrows(EmployerNotFoundException.class, () ->
-                employerService.getJobOffersDTOByEmployerId(id));
+                employerService.getJobOffersDTOByEmployerId(id, semester));
 
         verify(employerRepository, times(1)).findById(id);
     }
@@ -399,6 +405,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_NoJobOffers(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>();
 
         Employer employer = Employer.builder()
@@ -415,7 +422,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), jobOffers.size());
@@ -426,6 +433,7 @@ public class EmployerServiceTest {
     void getJobOffersDTOByEmployerId_NullJobOffers(){
 //        Arrange
         Long id = 1L;
+        Semester semester = new Semester(LocalDate.now());
 
         Employer employer = Employer.builder()
                 .id(id)
@@ -440,7 +448,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(id)).thenReturn(Optional.of(employer));
 
 //        Act
-        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id);
+        List<JobOfferDTO> jobOfferDTOS = employerService.getJobOffersDTOByEmployerId(id, semester);
 
 //        Assert
         assertEquals(jobOfferDTOS.size(), 0);
@@ -469,12 +477,14 @@ public class EmployerServiceTest {
                 "Location1",
                 "Description1",
                 20.0f,
-                LocalDateTime.now(),
+                LocalDate.now(),
                 6,
-                LocalDateTime.now().plusDays(30),
+                LocalDate.now().plusDays(30),
                 JobOfferState.OPEN,
                 40,
-                null
+                null,
+                1,
+                new Semester(LocalDate.now())
         );
 
         when(employerRepository.findById(employerId)).thenReturn(Optional.of(employer));
@@ -496,6 +506,7 @@ public class EmployerServiceTest {
         assertEquals(jobOfferDTO.getJobOfferState(), result.getJobOfferState());
         assertEquals(jobOfferDTO.getHoursPerWeek(), result.getHoursPerWeek());
         assertEquals(jobOfferDTO.getRefusReason(), result.getRefusReason());
+        assertEquals(jobOfferDTO.getSemester(), result.getSemester());
         verify(employerRepository, times(1)).findById(employerId);
         verify(jobOfferRepository, times(1)).save(any());
     }
@@ -506,6 +517,7 @@ public class EmployerServiceTest {
         Long jobOfferId = 1L;
         JobOfferDTO updatedJobOffer = new JobOfferDTO();
         updatedJobOffer.setId(jobOfferId);
+        updatedJobOffer.setStartDate(LocalDate.now());
 
         JobOffer returnedJobOffer = JobOffer.builder()
                 .id(jobOfferId)
@@ -516,8 +528,6 @@ public class EmployerServiceTest {
 
         // Act
         JobOfferDTO result = employerService.updateJobOffer(updatedJobOffer);
-
-        System.out.println(result);
 
         // Assert
         assertNotNull(result);
@@ -542,21 +552,23 @@ public class EmployerServiceTest {
     public void GetAllJobOffers_Empty() {
         // Arrange
         Long employerId = 1L;
-        when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(Collections.emptyList());
+        Semester semester = new Semester(LocalDate.now());
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester)).thenReturn(Collections.emptyList());
 
         // Act
-        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
+        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId, semester);
 
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId, semester);
     }
 
     @Test
     public void GetAllJobOffers_List() {
         // Arrange
         Long employerId = 1L;
+        Semester semester = new Semester(LocalDate.now());
         List<JobOffer> jobOffers = new ArrayList<>(List.of(
                 JobOffer.builder()
                         .title("JobOffer1")
@@ -564,11 +576,12 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("JobOffer2")
@@ -576,11 +589,12 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build(),
                 JobOffer.builder()
                         .title("JobOffer3")
@@ -588,271 +602,142 @@ public class EmployerServiceTest {
                         .location("Location1")
                         .description("Description1")
                         .salary(20.0f)
-                        .startDate(LocalDateTime.now())
+                        .startDate(LocalDate.now())
                         .duration(6)
-                        .expirationDate(LocalDateTime.now().plusDays(30))
+                        .expirationDate(LocalDate.now().plusDays(30))
                         .jobOfferState(JobOfferState.OPEN)
                         .hoursPerWeek(40)
+                        .semester(semester)
                         .build()
         ));
-        when(jobOfferRepository.findJobOfferByEmployer_Id(employerId)).thenReturn(jobOffers);
+        when(jobOfferRepository.findJobOfferByEmployer_IdAndSemester(employerId, semester)).thenReturn(jobOffers);
 
         // Act
-        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId);
+        List<JobOfferDTO> result = employerService.getAllJobOffers(employerId, semester);
 
         // Assert
         assertNotNull(result);
         assertEquals(3, result.size());
-        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_Id(employerId);
+        verify(jobOfferRepository, times(1)).findJobOfferByEmployer_IdAndSemester(employerId, semester);
     }
 
-//    -------------- Contract --------------
 
     @Test
-    void createContract_valid(){
-//        Arrange
-        Long jobOfferId = 1L;
-        Long supervisorId = 1L;
-        Long addressId = 1L;
+    public void testGetStudentsByJobOfferId_full() {
+        Long testJobOfferId = 1L;
 
-        ContractCreationDTO createContractDTO = new ContractCreationDTO(
-                jobOfferId,
-                addressId,
-                supervisorId,
-                List.of("responsibility 1", "responsibility 2"),
-                LocalDate.now(),
-                LocalDate.now(),
-                1,
-                Time.valueOf("08:00:00"),
-                Time.valueOf("16:00:00"),
-                1,
-                EmploymentType.APPRENTICESHIP,
-                Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
-        );
+        // Arrange the mock objects
+        JobOffer mockJobOffer = new JobOffer();
+        JobApplication mockJobApplication = new JobApplication();
+        mockJobApplication.setId(1L);
 
-        when(jobOfferRepository.findById(jobOfferId)).thenReturn(
-                Optional.of(JobOffer.builder()
-                        .id(jobOfferId)
-                        .employer(new Employer())
-                        .jobApplications(new ArrayList<>(Set.of(
-                                JobApplication.builder()
-                                        .student(new Student())
-                                        .jobApplicationState(JobApplicationState.ACCEPTED)
-                                        .build()
-                        )))
-                        .build())
-        );
-        when(supervisorRepository.findById(supervisorId)).thenReturn(Optional.of(new Supervisor()));
-        when(addressRepository.findById(addressId)).thenReturn(Optional.of(new Address()));
-        when(contractRepository.save(any())).thenReturn(Contract.builder()
-                        .employer(new Employer())
-                        .supervisor(new Supervisor())
-                        .workAddress(new Address())
-                        .student(new Student())
-                        .responsibilities(createContractDTO.getResponsibilities())
-                        .startDate(createContractDTO.getStartDate())
-                        .endDate(createContractDTO.getEndDate())
-                        .duration(createContractDTO.getDuration())
-                        .startShiftTime(createContractDTO.getStartShiftTime())
-                        .endShiftTime(createContractDTO.getEndShiftTime())
-                        .hoursPerDay(createContractDTO.getHoursPerDay())
-                        .employmentType(createContractDTO.getEmploymentType())
-                        .workDays(createContractDTO.getWorkDays())
-                        .hourlyRate(20.0f)
-                .build());
+        Student mockStudent = Student.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("doe@john.com")
+                .password("password")
+                .build();
+        mockJobApplication.setStudent(mockStudent);
+        mockJobOffer.setJobApplications(List.of(mockJobApplication));
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
-//        Act
-        ContractDTO result = employerService.createContract(createContractDTO);
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
 
-//        Assert
+        // Assert the results
         assertNotNull(result);
-        assertEquals(createContractDTO.getResponsibilities(), result.getResponsibilities());
-        assertEquals(createContractDTO.getStartDate(), result.getStartDate());
-        assertEquals(createContractDTO.getEndDate(), result.getEndDate());
-        assertEquals(createContractDTO.getDuration(), result.getDuration());
-        assertEquals(createContractDTO.getStartShiftTime(), result.getStartShiftTime());
-        assertEquals(createContractDTO.getEndShiftTime(), result.getEndShiftTime());
-        assertEquals(createContractDTO.getHoursPerDay(), result.getHoursPerDay());
-        assertEquals(createContractDTO.getEmploymentType(), result.getEmploymentType());
-        assertEquals(createContractDTO.getWorkDays(), result.getWorkDays());
-        verify(jobOfferRepository, times(1)).findById(jobOfferId);
-        verify(supervisorRepository, times(1)).findById(supervisorId);
-        verify(addressRepository, times(1)).findById(addressId);
+        assertEquals(1, result.size());
+
+        StudentDTO returnedStudent = result.get(0);
+        assertEquals("John", returnedStudent.getFirstName());
+
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
 
     @Test
-    void createContract_invalidJobOfferId(){
-//        Arrange
-        Long jobOfferId = 1L;
-        Long supervisorId = 1L;
-        Long addressId = 1L;
+    void testGetStudentsByJobOfferId_empty(){
+        // Arrange
+        Long testJobOfferId = 1L;
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setJobApplications(Collections.emptyList());
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
-        ContractCreationDTO createContractDTO = new ContractCreationDTO(
-                jobOfferId,
-                addressId,
-                supervisorId,
-                List.of("responsibility 1", "responsibility 2"),
-                LocalDate.now(),
-                LocalDate.now(),
-                1,
-                Time.valueOf("08:00:00"),
-                Time.valueOf("16:00:00"),
-                1,
-                EmploymentType.APPRENTICESHIP,
-                Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
-        );
+        // Act
+        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
 
-        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.empty());
-
-//        Act & Assert
-        assertThrows(JobOffreNotFoundException.class, () ->
-                employerService.createContract(createContractDTO));
-
-        verify(jobOfferRepository, times(1)).findById(jobOfferId);
-        verify(supervisorRepository, times(0)).findById(supervisorId);
-        verify(addressRepository, times(0)).findById(addressId);
-        verify(contractRepository, times(0)).save(any());
+        // Assert
+        assertNotNull(result);
+        assertEquals(0, result.size());
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
 
     @Test
-    void createContract_invalidSupervisorId(){
-//        Arrange
-        Long jobOfferId = 1L;
-        Long supervisorId = 1L;
-        Long addressId = 1L;
+    void testGetStudentsByJobOfferId_NotFound(){
+        // Arrange
+        Long testJobOfferId = 99L;
+        when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        ContractCreationDTO createContractDTO = new ContractCreationDTO(
-                jobOfferId,
-                addressId,
-                supervisorId,
-                List.of("responsibility 1", "responsibility 2"),
-                LocalDate.now(),
-                LocalDate.now(),
-                1,
-                Time.valueOf("08:00:00"),
-                Time.valueOf("16:00:00"),
-                1,
-                EmploymentType.APPRENTICESHIP,
-                Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
-        );
+        // Act & Assert
+        assertThrows(JobOfferNotFoundException.class, () ->
+                employerService.getStudentsByJobOfferId(testJobOfferId));
+        verify(jobOfferRepository, times(1)).findById(testJobOfferId);
+    }
+    @Test
+    public void testAcceptApplication() {
+        Long applicationId = 1L;
+        Student student = Student
+          .builder()
+          .id(1L)
+          .email("studentmeail@student.st")
+          .password("studentpassword")
+          .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
+        JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setId(1L);
+        mockJobOffer.setJobOfferState(JobOfferState.OPEN);
+        mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.getJobApplications().add(mockApplication);
+        mockApplication.setJobOffer(mockJobOffer);
 
-        when(jobOfferRepository.findById(jobOfferId)).thenReturn(
-                Optional.of(JobOffer.builder()
-                        .id(jobOfferId)
-                        .employer(new Employer())
-                        .jobApplications(new ArrayList<>(Set.of(
-                                JobApplication.builder()
-                                        .student(new Student())
-                                        .jobApplicationState(JobApplicationState.ACCEPTED)
-                                        .build()
-                        )))
-                        .build())
-        );
-        when(supervisorRepository.findById(supervisorId)).thenReturn(Optional.empty());
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
 
-//        Act & Assert
-        assertThrows(SupervisorNotFoundException.class, () ->
-                employerService.createContract(createContractDTO));
-
-        verify(jobOfferRepository, times(1)).findById(jobOfferId);
-        verify(supervisorRepository, times(1)).findById(supervisorId);
-        verify(addressRepository, times(0)).findById(addressId);
-        verify(contractRepository, times(0)).save(any());
+        JobApplicationDTO result = employerService.acceptApplication(applicationId);
+        verify(jobApplicationRepository, times(1)).save(mockApplication);
+        assertNotNull(result);
+        assertEquals(JobApplicationState.ACCEPTED, result.getJobApplicationState());
     }
 
     @Test
-    void createContract_invalidAddressId(){
-//        Arrange
-        Long jobOfferId = 1L;
-        Long supervisorId = 1L;
-        Long addressId = 1L;
+    public void testRefuseApplication() {
+        Long applicationId = 1L;
+        Student student = Student
+          .builder()
+          .id(1L)
+          .email("studentmeail@student.st")
+          .password("studentpassword")
+          .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
 
-        ContractCreationDTO createContractDTO = new ContractCreationDTO(
-                jobOfferId,
-                addressId,
-                supervisorId,
-                List.of("responsibility 1", "responsibility 2"),
-                LocalDate.now(),
-                LocalDate.now(),
-                1,
-                Time.valueOf("08:00:00"),
-                Time.valueOf("16:00:00"),
-                1,
-                EmploymentType.APPRENTICESHIP,
-                Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
-        );
+        JobOffer mockJobOffer = new JobOffer();
 
-        when(jobOfferRepository.findById(jobOfferId)).thenReturn(
-                Optional.of(JobOffer.builder()
-                        .id(jobOfferId)
-                        .employer(new Employer())
-                        .jobApplications(new ArrayList<>(Set.of(
-                                JobApplication.builder()
-                                        .student(new Student())
-                                        .jobApplicationState(JobApplicationState.ACCEPTED)
-                                        .build()
-                        )))
-                        .build())
-        );
-        when(supervisorRepository.findById(supervisorId)).thenReturn(Optional.of(new Supervisor()));
-        when(addressRepository.findById(addressId)).thenReturn(Optional.empty());
+        mockJobOffer.setId(1L);
+        mockJobOffer.setJobOfferState(JobOfferState.OPEN);
+        mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.getJobApplications().add(mockApplication);
+        mockApplication.setJobOffer(mockJobOffer);
 
-//        Act & Assert
-        assertThrows(AddressNotFoundException.class, () ->
-                employerService.createContract(createContractDTO));
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
 
-        verify(jobOfferRepository, times(1)).findById(jobOfferId);
-        verify(supervisorRepository, times(1)).findById(supervisorId);
-        verify(addressRepository, times(1)).findById(addressId);
-        verify(contractRepository, times(0)).save(any());
+        JobApplicationDTO result = employerService.refuseApplication(applicationId);
+        verify(jobApplicationRepository, times(1)).save(mockApplication);
+        assertNotNull(result);
+        assertEquals(JobApplicationState.REJECTED, result.getJobApplicationState());
     }
 
-    @Test
-    void createContract_invalidJobApplicationState(){
-//        Arrange
-        Long jobOfferId = 1L;
-        Long supervisorId = 1L;
-        Long addressId = 1L;
-
-        ContractCreationDTO createContractDTO = new ContractCreationDTO(
-                jobOfferId,
-                addressId,
-                supervisorId,
-                List.of("responsibility 1", "responsibility 2"),
-                LocalDate.now(),
-                LocalDate.now(),
-                1,
-                Time.valueOf("08:00:00"),
-                Time.valueOf("16:00:00"),
-                1,
-                EmploymentType.APPRENTICESHIP,
-                Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY)
-        );
-
-        when(jobOfferRepository.findById(jobOfferId)).thenReturn(
-                Optional.of(JobOffer.builder()
-                        .id(jobOfferId)
-                        .employer(new Employer())
-                        .jobApplications(new ArrayList<>(Set.of(
-                                JobApplication.builder()
-                                        .student(new Student())
-                                        .jobApplicationState(JobApplicationState.SUBMITTED)
-                                        .build()
-                        )))
-                        .build())
-        );
-        when(supervisorRepository.findById(supervisorId)).thenReturn(Optional.of(new Supervisor()));
-        when(addressRepository.findById(addressId)).thenReturn(Optional.of(new Address()));
-
-//        Act & Assert
-
-        assertThrows(NoSuchElementException.class, () ->
-                employerService.createContract(createContractDTO));
-
-        verify(jobOfferRepository, times(1)).findById(jobOfferId);
-        verify(supervisorRepository, times(1)).findById(supervisorId);
-        verify(addressRepository, times(1)).findById(addressId);
-        verify(contractRepository, times(0)).save(any());
-    }
 
 }

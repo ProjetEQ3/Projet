@@ -1,3 +1,5 @@
+import CvFile from "./CvFile";
+
 class User{
 	id
 	firstName
@@ -5,7 +7,7 @@ class User{
 	email
 	password
 	isLoggedIn = false
-	cvFile
+	cvFile = new CvFile()
 	role
 	department
 	errors = []
@@ -25,8 +27,10 @@ class User{
 		else delete this.password
 		if(user.isLoggedIn) this.isLoggedIn = user.isLoggedIn
 		else this.isLoggedIn = false
-		if(user.cvFile) this.cvFile = user.cvFile
+		if(user.cvFile) this.cvFile.init(user.cvFile)
 		else delete this.cvFile
+		//if(user.cvFile) this.cvFile = user.cvFile
+		//else delete this.cvFile
 		if(user.role) this.role = user.role
 		else delete this.role
 		if(user.department) this.department = user.department

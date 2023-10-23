@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
-import cal.projeteq3.glucose.dto.contract.ContractCreationDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
-import cal.projeteq3.glucose.exception.APIException;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employer")
-@CrossOrigin(origins = "http://localhost:3000")
 public class EmployerController{
 	private final EmployerService employerService;
 
@@ -35,10 +34,12 @@ public class EmployerController{
 	}
 
 	@GetMapping("/offer/all")
-	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId){
+	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
+		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
+
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getAllJobOffers(employerId));
+				.body(this.employerService.getAllJobOffers(employerId, semester));
 	}
 
 	@PostMapping("/offer")
@@ -64,11 +65,27 @@ public class EmployerController{
 				.build();
 	}
 
-	// je change a employer, mais je suis pas d'accord avec toi, la story dit: le system
-	@PostMapping("/contract/create")
-	public ResponseEntity<ContractDTO> createContract(@RequestBody ContractCreationDTO contractCreationDTO){
-		return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-				.body(employerService.createContract(contractCreationDTO));
+	@PutMapping("/offer/accept/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> acceptJobApplication(@PathVariable Long jobApplicationId){
+		this.employerService.acceptApplication(jobApplicationId);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.build();
+	}
+
+	@PutMapping("/offer/refuse/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> refuseJobApplication(@PathVariable Long jobApplicationId){
+		this.employerService.refuseApplication(jobApplicationId);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.build();
+	}
+
+	@GetMapping("/offer/students/{id}")
+	public ResponseEntity<List<StudentDTO>> getStudentsByJobOffer(@PathVariable Long id){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getStudentsByJobOfferId(id));
 	}
 
 }

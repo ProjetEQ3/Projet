@@ -26,7 +26,7 @@ public class ManagerDTO extends UserDTO{
     public ManagerDTO(Manager manager){
         super(
           manager.getId(), manager.getFirstName(), manager.getLastName(), manager.getEmail(),
-          manager.getCredentials().getRole().toString()
+          manager.getRole().toString()
         );
         this.matricule = manager.getMatricule();
         this.phoneNumber = manager.getPhoneNumber();

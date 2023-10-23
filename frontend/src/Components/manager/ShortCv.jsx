@@ -5,9 +5,11 @@ import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-sv
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import State from "../util/State";
-import PDFPreview from "../util/PDFPreview";
+import PDFPreview from "../util/PDF/PDFPreview";
+import {useTranslation} from "react-i18next";
 
 const ShortCv = ({cv, index, updateCvList}) => {
+    const {t} = useTranslation();
     const [isDecline, setIsDecline] = React.useState(false);
     const [isDisplay, setIsDisplay] = React.useState(false);
     const [formData, setFormData] = React.useState({
@@ -31,7 +33,6 @@ const ShortCv = ({cv, index, updateCvList}) => {
 
     const validateReason = (e) => {
         e.preventDefault();
-
         setFormData({...formData, refusalReason: e.target.value});
     }
 
@@ -41,6 +42,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
         if (document.getElementById('refusalForm').checkValidity() === false) {
             e.stopPropagation();
             document.getElementById('refusalForm').classList.add('was-validated');
+            toast.error(t('addRefusalReason'))
             return;
         }
 
@@ -60,11 +62,12 @@ const ShortCv = ({cv, index, updateCvList}) => {
         axiosInstance
             .put(`/manager/cv/update/${cv.id}?newCvState=${cvState}&reason=${reason}`,)
             .then((response) => {
-                toast.success("CV est bien mis à jour avec l'état: " + cvState)
+                toast.success(t('updatedCV') + t(cvState))
                 updateCvList(cv)
             })
             .catch((error) => {
-                toast.error("Erreur lors de la mis à jour du CV: " + error.message)
+                console.log(error)
+                toast.error(t('errorUpdateCV') + t(error.response.data.message))
             })
     }
 
@@ -77,35 +80,38 @@ const ShortCv = ({cv, index, updateCvList}) => {
             <div className="row m-2">
                 <div className="col-12 bg-white rounded">
                     <div className="row">
-                        <div className="col-8">
-                            <h4 className="text-dark fw-light m-0 p-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
+                        <div className="col-6">
+                            <h4 data-testid="title" className="text-dark fw-light m-0 p-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
                         </div>
-                        <div className="col-4 my-auto d-flex justify-content-end justify-content-lg-between">
-                            <div className="my-auto mx-auto d-none d-lg-block">
+                        <div className="col-6 my-auto d-block d-md-flex justify-content-end justify-content-md-between">
+                            <div className="my-auto col-6 text-center d-block">
                                 <State state={cv.cvState}/>
                             </div>
-                            <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>Approbation</div>
+                            <div data-testid="modalButton" className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('probation')}</div>
                             <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className="modal-content">
                                         <div className="modal-header">
-                                            <h3 className="modal-title">Autorisation du CV</h3>
-                                            <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
+                                            <h3 data-testid="headerTitle" className="modal-title">{t('cvAuthorisation')}</h3>
+                                            <FontAwesomeIcon data-testid="headerX" icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                                         </div>
                                         <div className="modal-body">
-                                            <h3 className="text-dark fw-light mb-3">{cv.fileName}</h3>
+                                            <h3 data-testid="bodyTitle" className="text-dark fw-light mb-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h3>
+                                            {isDisplay ? (
+                                                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
+                                            ) : null}
                                         </div>
                                         <div className="modal-footer">
                                             {isDecline ? (
                                                     <form id="refusalForm" className="form col-10 mx-auto">
-                                                        <p>Êtes-vous sûr de vouloir refuser ce CV ?</p>
-                                                        <input id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder="Raison du refus" required/>
-                                                        <input value="Confirmer" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal"/>
-                                                        <button type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">Annuler</button>
+                                                        <label data-testid="footerLabel">{t('confirmRefusal')}</label>
+                                                        <input data-testid="refusalInput" id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder={t('refusalReason')} required/>
+                                                        <button data-testid="confirmButton" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal">{t('confirm')}</button>
+                                                        <button data-testid="cancelButton" type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">{t('cancel')}</button>
                                                     </form>) :
                                                 (<div>
-                                                    <button type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">Approuver</button>
-                                                    <button type="button" onClick={handleDecline} className="btn btn-danger">Refuser</button>
+                                                    <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
+                                                    <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger">{t('refuse')}</button>
                                                 </div>)}
                                         </div>
                                     </div>

@@ -6,20 +6,24 @@
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@react-pdf/renderer": "^3.1.12",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.5.0",
+    "axios-mock-adapter": "^1.22.0",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.30.0",
     "i18next": "^23.5.1",
     "jspdf": "^2.5.1",
     "moment": "^2.29.4",
+    "pdfjs-dist": "^3.11.174",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fontawesome": "^1.7.1",
     "react-i18next": "^13.2.2",
     "react-icons": "^4.8.0",
+    "react-pdf": "^7.5.0",
     "react-router": "^6.2.1",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
@@ -49,5 +53,20 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
+    "@babel/preset-env": "^7.22.20",
+    "@babel/preset-react": "^7.22.15",
+    "babel-jest": "^29.7.0"
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(axios)/)"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sss|styl)$": "<rootDir>/__mocks__/fileMock.js"
+    }
   }
 }

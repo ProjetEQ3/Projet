@@ -1,21 +1,28 @@
 import React from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslationContext } from "./TranslationContext";
 
 const LngSelector = () => {
-    const {i18n} = useTranslation()
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng)
+    const { langue, changeLanguage } = useTranslationContext();
+
+    const handleLanguageChange = (e) => {
+        const selectedLanguage = e.target.value;
+        changeLanguage(selectedLanguage);
+    };
+
+    const maxWidthStyle = {
+        'max-width' : "50px",
     }
+
     return (
-        <form className="w-25" action="">
-            <div className="form-group">
-                <select className="form-control" id="lng-selector" onChange={(e) => changeLanguage(e.target.value)} defaultValue="fr">
-                    <option value="en">EN</option>
+        <form style={maxWidthStyle} className="w-25">
+            <div>
+                <select className="btn btn-light p-1" id="lng-selector" onChange={handleLanguageChange} value={langue}>
                     <option value="fr">FR</option>
+                    <option value="en">EN</option>
                 </select>
             </div>
         </form>
-    )
-}
+    );
+};
 
 export default LngSelector;

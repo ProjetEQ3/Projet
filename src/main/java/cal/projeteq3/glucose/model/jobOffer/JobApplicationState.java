@@ -2,7 +2,8 @@ package cal.projeteq3.glucose.model.jobOffer;
 
 public enum JobApplicationState {
     SUBMITTED,
-    REVIEW,
+    WAITING_APPOINTMENT,
+    CONVOKED,
     ACCEPTED,
     REJECTED,
 }

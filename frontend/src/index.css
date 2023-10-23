@@ -11,6 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #f8f9fa !important;
+  min-height: 100%;
 }
 
 code {
@@ -40,6 +41,11 @@ code {
 .arrow-btn {
   --bs-text-opacity: 1;
     color: var(--ose-color) !important;
+}
+
+.danger-hover:hover{
+  --bs-text-opacity: 1;
+    color: #dc3545 !important;
 }
 
 .bg-ose {

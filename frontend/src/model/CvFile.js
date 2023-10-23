@@ -39,5 +39,4 @@ class CvFile{
 		return uint8Array;
 	}
 }
-
 export default CvFile;

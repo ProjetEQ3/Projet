@@ -1,14 +1,16 @@
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Loading from "../util/Loading"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import State from "../util/State";
-import PDFPreview from "../util/PDFPreview";
+import PDFPreview from "../util/PDF/PDFPreview";
 import CVFile from "../../model/CvFile";
+import {useTranslation} from "react-i18next";
 
 function Cv({user, setCv}){
+	const {t} = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
 
 	const handlePdfUpload = (e) => {
@@ -22,17 +24,16 @@ function Cv({user, setCv}){
 			axiosInstance
 				.post(`/student/cv/${user.id}`, formData, {headers: {"Content-Type": "multipart/form-data"}})
 				.then((response) => {
-					toast.success("CV téléversé")
-					console.log(response)
+					toast.success(t('uploadedCV'))
 					setCv(response.data)
 					setIsLoading(false)
 				})
 				.catch((error) => {
-					toast.error("Erreur lors du téléversement du CV: " + error.message)
+					toast.error(t('pushingError') + t(error.response.data.message))
 					setIsLoading(false)
 				})
 		}else{
-			alert("Veuillez sélectionner un fichier PDF valide.")
+			alert(t('PDFError'))
 			setIsLoading(false)
 		}
 	}
@@ -42,31 +43,45 @@ function Cv({user, setCv}){
 		axiosInstance
 			.delete(`/student/cv/${user.id}`)
 			.then(() => {
-				toast.success("CV supprimé")
+				toast.success(t('deleteCV'))
 				setCv(null)
 				setIsLoading(false)
 			})
 			.catch((error) => {
-				toast.error("Erreur lors de la suppression du CV" + error.message)
+				toast.error(t('pushingError') + error.response.data.message)
 				setIsLoading(false)
 			})
 	}
+
+	const refreshCvState = () => {
+		axiosInstance
+			.get(`/student/cv/${user.id}`)
+			.then((response) => {
+				setCv(response.data)
+			})
+			.catch((error) => {
+			})
+	}
+
+	useEffect(() => {
+		refreshCvState()
+	}, [])
 
 	return (
 		<div className="container">
 			{isLoading ? (
 				<Loading/>
-			) : user.cvFile ? (
+			) : user.cvFile && user.cvFile.id ? (
 				<>
 					<div className="row bg-white rounded">
-						<div className="col-8">
-							<h2 className="mx-auto">{user.cvFile.fileName}</h2>
+						<div className="col-lg-8">
+							<h2 className="text-center text-lg-start">{user.cvFile.fileName}</h2>
 						</div>
-						<div className="col-4 d-flex my-auto justify-content-end justify-content-md-between">
-							<div className="d-none d-md-block">
-								<State state={user.cvFile.state}/>
+						<div className="col-lg-4 d-flex my-auto mb-2 text-center justify-content-around justify-content-md-between">
+							<div className="d-block col-8">
+								<State state={user.cvFile.cvState}/>
 							</div>
-							<FontAwesomeIcon icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
+							<FontAwesomeIcon title="deleteCV" icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
 							                 onClick={handleDeletePdf}/>
 						</div>
 						<PDFPreview file={CVFile.readBytes(user.cvFile.fileData)}/>
@@ -74,9 +89,9 @@ function Cv({user, setCv}){
 				</>
 			) : (
 				<div>
-					<h1 className="display-6">Téléverser un CV</h1>
+					<h1 className="display-6">{t('uploadCV')}</h1>
 					<div className="col-6 mx-auto">
-						<input value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
+						<input id="uploadCV" name="uploadCV" title="uploadCV" value="" className="form-control" type="file" accept=".pdf" onChange={handlePdfUpload}/>
 					</div>
 				</div>
 			)

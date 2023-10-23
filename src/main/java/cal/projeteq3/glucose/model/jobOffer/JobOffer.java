@@ -1,11 +1,15 @@
 package cal.projeteq3.glucose.model.jobOffer;
 
+import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,26 +41,35 @@ public class JobOffer{
 
 	private float salary;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 
 	private int duration;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false)
-	private LocalDateTime expirationDate;
+	private LocalDate expirationDate;
 
 	private int hoursPerWeek;
+
+	private int nbOfCandidates;
 
 	@ToString.Exclude
 	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
 	private Employer employer;
 
-	@OneToMany(mappedBy = "jobOffer")
+	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
+	private Long acceptedJobApplicationId;
+
 	private String refusReason;
+
+	@Embedded
+	private Semester semester;
+
+	public void addJobApplication(JobApplication jobApplication){
+		this.jobApplications.add(jobApplication);
+	}
 
 	public void copy(JobOffer jobOffer){
 		this.title = jobOffer.getTitle();
@@ -69,8 +82,24 @@ public class JobOffer{
 		this.expirationDate = jobOffer.getExpirationDate();
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
+		this.nbOfCandidates = jobOffer.getNbOfCandidates();
+		this.semester = jobOffer.getSemester();
 	}
 
+	public JobApplication apply(Student student){
+		if(!student.hasApprovedCv()) throw new CvNotApprovedException();
+		if(getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
+
+		JobApplication jobApplication = new JobApplication();
+		jobApplication.setStudent(student);
+		jobApplication.setJobOffer(this);
+		this.jobApplications.add(jobApplication);
+
+		return jobApplication;
+	}
+
+	public boolean hasApplied(Long studentId){
+		return this.jobApplications.stream().anyMatch(jobApplication -> jobApplication.getStudent().getId().equals(studentId));
+	}
 
 }
-

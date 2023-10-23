@@ -41,4 +41,6 @@ public class Employer extends User{
 			this.jobOffers.add(jobOffer);
 	}
 
+
+
 }

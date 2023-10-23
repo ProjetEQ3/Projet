@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.dto.user;
 
-import cal.projeteq3.glucose.dto.JobOfferDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.user.Employer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +28,7 @@ public class EmployerDTO extends UserDTO {
     public EmployerDTO(Employer employer){
         super(
           employer.getId(), employer.getFirstName(), employer.getLastName(),
-          employer.getEmail(), employer.getCredentials().getRole().toString()
+          employer.getEmail(), employer.getRole().toString()
         );
         this.organisationName = employer.getOrganisationName();
         this.organisationPhone = employer.getOrganisationPhone();

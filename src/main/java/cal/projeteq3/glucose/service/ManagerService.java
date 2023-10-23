@@ -1,25 +1,22 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.AddressDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.JobOfferDTO;
-import cal.projeteq3.glucose.dto.auth.LoginDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.SignatureDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
-import cal.projeteq3.glucose.exception.request.*;
-import cal.projeteq3.glucose.model.Address;
-import cal.projeteq3.glucose.model.auth.Role;
-import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.exception.badRequestException.CvFileNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.ManagerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
-import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.user.Supervisor;
-import cal.projeteq3.glucose.repository.*;
+import cal.projeteq3.glucose.repository.CvFileRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
+import cal.projeteq3.glucose.repository.ManagerRepository;
+import cal.projeteq3.glucose.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,24 +28,18 @@ public class ManagerService{
 
 	private final ManagerRepository managerRepository;
 	private final StudentRepository studentRepository;
-	private final EmployerRepository employerRepository;
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
-	private final ContractRepository contractRepository;
-	private final SupervisorRepository supervisorRepository;
 
 	@Autowired
 	public ManagerService(
-			ManagerRepository managerRepository, StudentRepository studentRepository,
-			JobOfferRepository jobOfferRepository, CvFileRepository cvRepository,
-			ContractRepository contractRepository, EmployerRepository employerRepository, SupervisorRepository supervisorRepository){
+		ManagerRepository managerRepository, StudentRepository studentRepository,
+		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository
+	){
 		this.managerRepository = managerRepository;
 		this.studentRepository = studentRepository;
 		this.jobOfferRepository = jobOfferRepository;
 		this.cvRepository = cvRepository;
-		this.contractRepository = contractRepository;
-		this.employerRepository = employerRepository;
-		this.supervisorRepository = supervisorRepository;
 	}
 
 	// database operations here
@@ -138,23 +129,23 @@ public class ManagerService{
 
 //	Job Offer
 
-	public List<JobOfferDTO> getAllJobOffer(){
-		return jobOfferRepository.findAll().stream().map(JobOfferDTO::new).toList();
+	public List<JobOfferDTO> getAllJobOffer(Semester semester){
+		return jobOfferRepository.findAllBySemester(semester).stream().map(JobOfferDTO::new).toList();
 	}
 
 	public JobOfferDTO getJobOfferByID(Long id){
 		return new JobOfferDTO(jobOfferRepository.findById(id)
-				.orElseThrow(() -> new JobOffreNotFoundException(id)));
+				.orElseThrow(() -> new JobOfferNotFoundException(id)));
 	}
 
-	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state) {
-		return jobOfferRepository.findJobOfferByJobOfferState(state)
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester) {
+		return jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester)
 				.stream().map(JobOfferDTO::new).collect(Collectors.toList());
 	}
 
 	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason) {
 		JobOffer jobOffer = jobOfferRepository.findById(id)
-				.orElseThrow(() -> new JobOffreNotFoundException(id));
+				.orElseThrow(() -> new JobOfferNotFoundException(id));
 		jobOffer.setJobOfferState(newState);
 		jobOffer.setRefusReason(reason);
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
@@ -163,4 +154,5 @@ public class ManagerService{
 	public void deleteJobOffer(Long id){
 		jobOfferRepository.deleteById(id);
 	}
+
 }

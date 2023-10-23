@@ -1,14 +1,14 @@
-import React, {useState} from "react";
-import {axiosInstance} from "../../App";
-import {useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { axiosInstance } from "../../App";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import Loading from "../util/Loading";
-import {useTranslation} from "react-i18next";
-
+import { useTranslation } from "react-i18next";
 
 const RegisterEmployerForm = () => {
-    const {t} = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         lastName: '',
@@ -29,40 +29,9 @@ const RegisterEmployerForm = () => {
         passwordConfirm: "",
     });
 
-    const registerEmployer = async () => {
-        setIsLoading(true)
-        axiosInstance.post('/employer/register',
-            {
-                    registerDTO: {
-                        email: formData.email.toLowerCase(),
-                        password: formData.password,
-                        role: "EMPLOYER"
-                    },
-                    employerDTO: {
-                        firstName: formData.firstName,
-                        lastName: formData.lastName,
-                        organisationName: formData.organisationName,
-                        organisationPhone: formData.organisationPhone
-                    }
-            }
-        ).then(() => {
-            setIsLoading(false)
-            toast.success('Votre compte a été créé avec succès');
-            navigate('/auth/login')
-        }).catch(() =>
-                setIsLoading(false)
-        )
-    }
+    const [formAttempted, setFormAttempted] = useState(false);
 
-    const handleChanges = (e) => {
-        const {name, value} = e.target;
-        setWarnings({...warnings, [name]: ""});
-        setFormData({...formData, [name]: value.trim()});
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    const validateForm = () => {
         const validationErrors = {};
 
         if(formData.firstName === ''){
@@ -110,10 +79,60 @@ const RegisterEmployerForm = () => {
             validationErrors.passwordConfirm = t('passwordConfirmInvalid');
         }
 
+        return validationErrors;
+    };
+
+    useEffect(() => {
+        if (formAttempted) {
+            const languageChangeListener = i18n.on('languageChanged', () => {
+                setWarnings(validateForm());
+            });
+
+            return () => {
+                i18n.off('languageChanged', languageChangeListener);
+            };
+        }
+    }, [i18n, formAttempted]);
+
+    const registerEmployer = async () => {
+        setIsLoading(true)
+        axiosInstance.post('/employer/register',
+            {
+                registerDTO: {
+                    email: formData.email.toLowerCase(),
+                    password: formData.password,
+                    role: "EMPLOYER"
+                },
+                employerDTO: {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    organisationName: formData.organisationName,
+                    organisationPhone: formData.organisationPhone
+                }
+            }
+        ).then(() => {
+            setIsLoading(false)
+            toast.success(t('successRegister'));
+            navigate('/auth/login')
+        }).catch(() =>
+            setIsLoading(false)
+        )
+    }
+
+    const handleChanges = (e) => {
+        const {name, value} = e.target;
+        setWarnings({...warnings, [name]: ""});
+        setFormData({...formData, [name]: value.trim()});
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setFormAttempted(true);
+        const validationErrors = validateForm();
         setWarnings(validationErrors);
 
         if (Object.keys(validationErrors).length === 0) {
-            registerEmployer().then((r) => console.log(r));
+            registerEmployer();
         }
     }
 
@@ -167,7 +186,6 @@ const RegisterEmployerForm = () => {
             )}
         </div>
     );
-
 }
 
-export default RegisterEmployerForm
+export default RegisterEmployerForm;

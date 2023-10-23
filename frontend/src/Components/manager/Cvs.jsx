@@ -1,17 +1,24 @@
 import React from "react";
 import ShortCv from "./ShortCv";
 import FilterObjectList from "../util/FilterObjectList";
+import {useTranslation} from "react-i18next";
 
 const Cvs = ({cvs, updateCvList}) => {
+	const {t} = useTranslation();
 
 	const renderFilteredCvs = (filteredCvs) => {
 		return (
 			<div className="col-12">
-				{filteredCvs.map((cv, index) => (
-					<div key={index} onClick={() => (cv)}>
-						<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
-					</div>
-				))}
+				{
+					filteredCvs.length !== 0 ?
+						filteredCvs.map((cv, index) => (
+							<div key={index} onClick={() => (cv)}>
+								<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
+							</div>)) :
+						<div className="col-12 text-center">
+							<h4 className="text-dark fw-light">{t('noCV')}</h4>
+						</div>
+				}
 			</div>
 		)
 	}
@@ -19,11 +26,11 @@ const Cvs = ({cvs, updateCvList}) => {
 	return (
 		<div className="row">
 			<div className="col-12">
-				<h3 className="text-dark fw-light my-5">Les CVs des étudiants :</h3>
+				<h3 className="text-dark fw-light my-5">{t('studentCV')}</h3>
 				<div className="row justify-content-around">
 					<FilterObjectList
 						items={cvs}
-						attributes={['fileName:Nom de fichier','cvState.select:Status']}
+						attributes={['fileName:' + t('fileName'),'cvState.select:Status']}
 						renderItem={renderFilteredCvs}
 						selectOptions={{cvState: ['SUBMITTED', 'ACCEPTED', 'REFUSED']}}
 					/>
@@ -35,22 +42,3 @@ const Cvs = ({cvs, updateCvList}) => {
 }
 
 export default Cvs
-
-/*	return (
-		<div className="row">
-			<div className="col-12">
-				<h3 className="text-dark fw-light my-5">Les CVs des étudiants :</h3>
-				<div className="row justify-content-around">
-					<div className="col-12">
-						{
-							cvs.map((cv, index) => (
-								<div key={index} onClick={() => (cv)}>
-									<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
-								</div>
-							))
-						}
-					</div>
-				</div>
-			</div>
-		</div>
-	);*/
