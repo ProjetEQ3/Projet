@@ -27,6 +27,13 @@
   "authorizeOffer": "Offer Authorization",
 
   "copyRights": "© 2023 - All rights reserved.",
+  "convoke": "Convoke",
+  "convokeSentence": "You are looking to convoke the student : ",
+  "convokeErrorMin": "You must select at least three different dates.",
+  "convokeErrorMax": "You must select at most five different dates.",
+  "convokeDates": "Convocation dates.",
+  "convokeSuccess": "Student convoked",
+  "convokeError": "Error convoking student : ",
   "chooseADepartment": "Choose a department",
   "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
   "cancel": "Cancel",
