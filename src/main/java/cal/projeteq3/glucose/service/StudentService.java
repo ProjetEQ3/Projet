@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -11,6 +12,7 @@ import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenExce
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
@@ -158,4 +160,10 @@ public class StudentService {
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
+
+    public List<AppointmentDTO> getAppointmentsByJobApplicationId(Long id) {
+        List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(id);
+        return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+    }
+
 }
