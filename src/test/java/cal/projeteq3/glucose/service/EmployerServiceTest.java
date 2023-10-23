@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -29,6 +30,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -739,5 +741,38 @@ public class EmployerServiceTest {
         assertEquals(JobApplicationState.REJECTED, result.getJobApplicationState());
     }
 
+    @Test
+    public void testAddAppointmentByApplicationId_Valid() {
+        Long applicationId = 1L;
+        Student student = Student
+                .builder()
+                .id(1L)
+                .email("test@test.test")
+                .password("test")
+                .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
+
+        Appointment appointment = Appointment.builder()
+                .appointmentDate(LocalDateTime.now())
+                .jobApplication(mockApplication)
+                .build();
+
+        Appointment appointment2 = Appointment.builder()
+                .appointmentDate(LocalDateTime.now().plusDays(1))
+                .jobApplication(mockApplication)
+                .build();
+        List<Appointment> appointmentList = new ArrayList<>();
+        appointmentList.add(appointment);
+        appointmentList.add(appointment2);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
+
+        employerService.addAppointmentByJobApplicationId(mockApplication.getId(), appointmentList);
+        verify(jobApplicationRepository, times(1)).save(mockApplication);
+
+
+    }
 
 }

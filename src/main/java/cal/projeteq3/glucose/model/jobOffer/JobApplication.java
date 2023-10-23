@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,7 +34,7 @@ public class JobApplication{
 	private Semester semester;
 
 	@OneToMany(mappedBy = "jobApplication", cascade = CascadeType.ALL)
-	private List<Appointment> appointment;
+	private List<Appointment> appointment = new ArrayList<>();
 	public Student getStudent(){
 		if(this.student == null) throw new StudentNotFoundException();
 		return this.student;
