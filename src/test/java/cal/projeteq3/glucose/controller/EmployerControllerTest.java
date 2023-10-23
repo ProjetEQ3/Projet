@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -31,6 +32,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -623,5 +625,35 @@ public class EmployerControllerTest {
 						.put("/employer/offer/refuse/{jobApplicationDTO}", nullId)
 						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(404));
+	}
+
+	@Test
+	public void addSuggestedAppointment_valid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+
+		List<AppointmentDTO> appointments = new ArrayList<>();
+		for (LocalDateTime date : dates) {
+			AppointmentDTO app = new AppointmentDTO();
+			app.setAppointmentDate(date);
+			appointments.add(app);
+		}
+
+		jobApplicationDTO.setId(applicationId);
+		jobApplicationDTO.setAppointments(appointments);
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenReturn(jobApplicationDTO);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/suggest/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
 }
