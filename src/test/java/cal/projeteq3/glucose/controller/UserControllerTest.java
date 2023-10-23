@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.UserRepository;
@@ -12,11 +13,13 @@ import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -43,7 +46,15 @@ class UserControllerTest {
     private UserService userService;
     @MockBean
     private UserRepository userRepository;
-    private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoZWxAbWljaGF1ZC5jb20iLCJpYXQiOjE2OTc1ODY0MzIsImV4cCI6MTY5NzY3MjgzMiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6Ik1BTkFHRVIifV19.DRv0ToANfs2zVAZJCBIGmJOWOyOKT4lI6bFJCual6n4";
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    private String token;
+    @BeforeEach
+    void setUp() {
+        when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Employer.builder().build()));
+        this.token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("louis@professionnel.com", "Ose12345"));
+    }
 
     @Test
     void Login_Valid() throws Exception {

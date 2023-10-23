@@ -26,6 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -60,12 +61,13 @@ public class StudentControllerTest {
 
 	private final Long validJobOfferId = 1L;
 
-    private final String token =
-"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0BtaWNoYXVkLmNvbSIsImlhdCI6MTY5NzU4NjUwNCwiZXhwIjoxNjk3NjcyOTA0LCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiU1RVREVOVCJ9XX0.rWbsnxpbiOMbzuxHGGVREdrTdULU0oAXluAg7Sq5YhQ";
-
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    private String token;
     @BeforeEach
     public void setup() {
         when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Student.builder().build()));
+        token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("louis@michaud.com","Ose12345"));
     }
       @Test
     public void Register_Valid() throws Exception {

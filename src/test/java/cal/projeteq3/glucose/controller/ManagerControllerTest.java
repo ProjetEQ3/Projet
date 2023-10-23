@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -48,12 +49,13 @@ public class ManagerControllerTest {
     @MockBean
     private UserRepository userRepository;
 
-    private final String token =
-"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtaWNoZWxAbWljaGF1ZC5jb20iLCJpYXQiOjE2OTc1ODY0MzIsImV4cCI6MTY5NzY3MjgzMiwiYXV0aG9yaXRpZXMiOlt7ImF1dGhvcml0eSI6Ik1BTkFHRVIifV19.DRv0ToANfs2zVAZJCBIGmJOWOyOKT4lI6bFJCual6n4";
-
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+    private String token;
     @BeforeEach
     public void setUp() {
         when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Manager.builder().build()));
+        token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("michel@michaud.com","Ose12345"));
     }
 
     @Test
