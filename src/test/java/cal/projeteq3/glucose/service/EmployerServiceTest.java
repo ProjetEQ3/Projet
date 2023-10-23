@@ -796,7 +796,6 @@ public class EmployerServiceTest {
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertEquals(mockApplication.getAppointments().size(), 3);
         assertEquals(mockApplication.getAppointments(), appointmentList);
-
     }
 
 }

@@ -16,9 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -96,6 +93,7 @@ public class EmployerController{
 
 	@PutMapping("/offer/appointment/{applicationId}")
 	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestParam List<Appointment> dates){
+		Validation.validateAppointmentList(dates);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));

@@ -26,7 +26,8 @@ public enum ValidationMessage{
 	DURATION_MESSAGE("La durée doit être un nombre."),
 	HOURS_PER_WEEK_MESSAGE("Les heures par semaine doivent être un nombre."),
 	EXPIRATION_DATE_MESSAGE("La date d'expiration doit être un nombre."),
-	JOB_OFFER_STATE_MESSAGE("L'état de l'offre d'emploi doit être un état valide.");
+	JOB_OFFER_STATE_MESSAGE("L'état de l'offre d'emploi doit être un état valide."),
+	APPOINTMENT_OPTIONS_MESSAGE("Il doit y avoir au moins 3 créneaux de rendez-vous différents.");
 
 	private final String string;
 
