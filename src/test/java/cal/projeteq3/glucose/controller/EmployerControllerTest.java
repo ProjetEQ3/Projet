@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -54,14 +55,18 @@ public class EmployerControllerTest {
 	@MockBean
 	private UserRepository userRepository;
 
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+
 	private ObjectMapper objectMapper;
-	private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0Bwcm9mZXNzaW9ubmVsLmNvbSIsImlhdCI6MTY5NzU4NjE1MSwiZXhwIjoxNjk3NjcyNTUxLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiRU1QTE9ZRVIifV19.hJIbfTguzJfkNzxYQDaJGI6jLjMEq0rhJyXBMY5U_wg";
+	private String token;
 
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 		objectMapper = new ObjectMapper();
 		when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Employer.builder().build()));
+		this.token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("louis@professionnel.com", "Ose12345"));
 	}
 
 	private RegisterEmployerDTO createRegisterEmployer(String email, String password, String firstName, String lastName, String organisationName, String organisationPhone){
