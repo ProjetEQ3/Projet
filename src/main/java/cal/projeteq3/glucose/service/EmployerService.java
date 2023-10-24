@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -169,7 +170,7 @@ public class EmployerService{
 	}
 
 	//EQ3-17
-	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, List<LocalDateTime> dates){
+	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, Set<LocalDateTime> dates){
 		List<Appointment> appointmentList = dates.stream()
 				.map(time -> {
 					Appointment appointment = new Appointment();

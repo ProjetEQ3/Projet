@@ -106,7 +106,7 @@
   "internshipDescription": "Offer Description",
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
-  "interviewedStudents": "Interviewed Students",
+  "convokedStudents": "Convoked Student(s)",
 
   "jobOffers": "Internships",
 
@@ -126,7 +126,7 @@
   "matriculeRequired": "College ID is required.",
 
   "noJobOffers": "You have no applications.",
-  "noStudent": "No students have applied at the moment",
+  "noStudent": "No students have applied since the last time you visited.",
   "noCV": "No CV uploaded",
   "noInternship": "No internship offers at the moment",
   "noOpenInternship": "No open internship offers at the moment",

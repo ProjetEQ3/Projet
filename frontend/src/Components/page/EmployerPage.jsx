@@ -8,7 +8,7 @@ const EmployerPage = ({user}) => {
 	const [tab, setTab] = useState('stages');
 	const tabs = [
 		{ id: 'stages', label: 'jobOffers' },
-		{ id: 'entrevue', label: 'interviewedStudents' }
+		{ id: 'entrevue', label: 'convokedStudents' }
 	];
 
 	return (

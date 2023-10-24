@@ -106,7 +106,7 @@
   "internshipDescription": "Description de l'offre de stage",
   "internshipDetails": "Détails de l'offre de stage",
   "internshipList": "Liste de vos offres de stage",
-  "interviewedStudents": "Étudiants interviewés",
+  "convokedStudents": "Étudiant(s) convoqué(s)",
 
   "jobOffers": "Stages",
 
@@ -127,7 +127,7 @@
 
   "noJobOffers": "Vous n'avez pas d'applications.",
   "noInternship": "Aucune offre de stage n'a été trouvée.",
-  "noStudent": "Aucun étudiant n'a postulé pour le moment",
+  "noStudent": "Aucun étudiant n'a postulé depuis la dernière visite.",
   "noCV": "Aucun CV n'a été téléversé pour le moment",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
   "next": "Suivant",
