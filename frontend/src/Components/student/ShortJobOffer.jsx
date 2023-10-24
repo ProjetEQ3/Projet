@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
+import { axiosInstance } from "../../App";
 
-const ShortJobOffer = ({ jobOffer }) => {
+const ShortJobOffer = ({ user, jobOffer }) => {
     const { t } = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -13,10 +14,20 @@ const ShortJobOffer = ({ jobOffer }) => {
 
     useEffect(() => {
         fetchAppointments();
-    });
+    }, [user, jobOffer]);
+
     const fetchAppointments = async () => {
-        //     Get the appointments of the student (setAppointments)
-    }
+        try {
+            const response = await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`);
+            if (response.status === 202) {
+                console.log(response.data)
+                setAppointments(response.data);
+            }
+        } catch (error) {
+            console.error("Error fetching appointments:", error);
+            toast.error(t('errorFetchingAppointments'));
+        }
+    };
 
     function handleChosenAppointment(e) {
         e.preventDefault();

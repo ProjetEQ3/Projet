@@ -48,7 +48,7 @@ function MyApplications({ user }) {
                         renderItem={(filteredJobOffers) => (
                             <div>
                                 {filteredJobOffers.map((offer, index) => (
-                                    <ShortJobOffer jobOffer={offer} key={offer.id}/>
+                                    <ShortJobOffer user={user} jobOffer={offer} key={offer.id}/>
                                 ))}
                             </div>
                         )}
