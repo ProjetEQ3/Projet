@@ -197,5 +197,11 @@
   "week": " week(s)",
   "winter": "Winter",
 
-  "yourInternship": "Your internship offers"
+  "yourInternship": "Your internship offers",
+
+  "noAppointments": "No appointments at the moment",
+  "seeAppointments": "See appointments",
+  "appointments": "Appointments",
+  "select": "Select",
+  "selectedAppointment": "Selected appointment"
 }
