@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -39,12 +40,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class,
         SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
@@ -88,7 +91,7 @@ public class StudentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(validDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -162,9 +165,9 @@ public class StudentControllerTest {
                         .param("season", "FALL")
                         .param("year", "2021"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(3))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("JobOffer1"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].title").value("JobOffer1"));
     }
 
     @Test
@@ -238,9 +241,9 @@ public class StudentControllerTest {
                         .header("Authorization", token).param("season", "FALL")
                         .param("year", "2021"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].title").value("JobOffer1"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].title").value("JobOffer1"));
     }
 
     @Test
@@ -264,7 +267,7 @@ public class StudentControllerTest {
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -305,7 +308,7 @@ public class StudentControllerTest {
     public void getAppliedJobOfferByStudent_Valid() throws Exception {
         //        Arrange
         Long studentId = 1L;
-        List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
+        List<JobOfferDTO> jobOffers = asList(new JobOfferDTO(), new JobOfferDTO());
 
         when(studentService.getAppliedJobOfferByStudentId(studentId,new Semester(LocalDate.now()))).thenReturn(jobOffers);
 
@@ -316,7 +319,7 @@ public class StudentControllerTest {
                         .param("season", "FALL")
                         .param("year", "2021"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()));
     }
 
@@ -375,9 +378,9 @@ public class StudentControllerTest {
                         .param("year", "2021"))
                 .andExpect(
 			MockMvcResultMatchers.status().isAccepted()).andExpect(
-			MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON)).andExpect(
-			MockMvcResultMatchers.jsonPath("$.length()").value(3)).andExpect(
-			MockMvcResultMatchers.jsonPath("$[0].title").value("JobOffer1"));
+			content().contentType(MediaType.APPLICATION_JSON)).andExpect(
+			jsonPath("$.length()").value(3)).andExpect(
+			jsonPath("$[0].title").value("JobOffer1"));
 	}
 
 	@Test
@@ -424,9 +427,9 @@ public class StudentControllerTest {
                 .header("Authorization", token).param("season", "FALL")
                 .param("year", "2021")).andExpect(
 			MockMvcResultMatchers.status().isAccepted()).andExpect(
-			MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON)).andExpect(
-			MockMvcResultMatchers.jsonPath("$.length()").value(1)).andExpect(
-			MockMvcResultMatchers.jsonPath("$[0].title").value("JobOffer1"));
+			content().contentType(MediaType.APPLICATION_JSON)).andExpect(
+			jsonPath("$.length()").value(1)).andExpect(
+			jsonPath("$[0].title").value("JobOffer1"));
 	}
 
 	@Test
@@ -486,4 +489,18 @@ public class StudentControllerTest {
                 .perform(get("/student/cv/" + validStudentId).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
     }
+
+    @Test
+    void getAppointmentsByJobApplicationId_ShouldReturnAppointments() throws Exception {
+        Long id = 1L;
+        List<AppointmentDTO> appointments = asList(new AppointmentDTO(), new AppointmentDTO());
+        when(studentService.getAppointmentsByJobApplicationId(id)).thenReturn(appointments);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/appointmentsByJobApplicationId/{id}", id)
+                .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
 }
