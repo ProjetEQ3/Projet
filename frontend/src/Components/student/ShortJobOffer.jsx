@@ -19,21 +19,18 @@ const ShortJobOffer = ({ user, jobOffer }) => {
     }, [user, jobOffer]);
 
     const fetchAppointments = async () => {
-        try {
-            const response = await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`);
-            if (response.status === 202) {
-                const appointments = response.data.map((appointment) => {
+        await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
+            .then((response) => {
+                response.data.map((appointment) => {
                     const newAppointment = new Appointment();
                     newAppointment.init(appointment);
                     return newAppointment;
                 });
-                console.log(appointments)
-                setAppointments(appointments);
-            }
-        } catch (error) {
-            console.error("Error fetching appointments:", error);
-            toast.error(t('errorFetchingAppointments'));
-        }
+            })
+            .catch((error) => {
+                console.error("Error fetching appointments:", error);
+                toast.error(t('errorFetchingAppointments'));
+            });
     };
 
     function handleChosenAppointment(e) {
@@ -65,6 +62,16 @@ const ShortJobOffer = ({ user, jobOffer }) => {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
+    function appointmentChosable() {
+        if (appointments.length > 0) return false;
+
+        for (let i = 0; i < appointments.length; i++) {
+            if (appointments[i].appointmentDate !== null) return false;
+            if (appointments[i].isChosen) return false;
+        }
+        console.log("appointments: ", appointments)
+        return true;
+    }
 
     return (
         <div className={`row ${!isHovered ? "m-2" : "m-1 shadow"}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -78,7 +85,7 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointments.length > 0 ? (
+                    {appointmentChosable ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target="#appointmentModal">

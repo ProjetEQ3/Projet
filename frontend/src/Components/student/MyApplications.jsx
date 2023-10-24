@@ -20,17 +20,18 @@ function MyApplications({ user }) {
         }
 
         async function fetchMyApplications() {
-            try {
-                const response = await axiosInstance.get(`/student/appliedJobOffer/${user.id}`);
-                const jobOffers = response.data.map((jobOfferData) => {
-                    const newJobOffer = new JobOffer();
-                    newJobOffer.init(jobOfferData);
-                    return newJobOffer;
+            await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
+                .then((response) => {
+                    const jobOffers = response.data.map((jobOfferData) => {
+                        const newJobOffer = new JobOffer();
+                        newJobOffer.init(jobOfferData);
+                        return newJobOffer;
+                    });
+                    setMyApplications(jobOffers);
+                })
+                .catch((error) => {
+                    toast.error(t('fetchError') + t(error.response?.data.message));
                 });
-                setMyApplications(jobOffers);
-            } catch (error) {
-                toast.error(t('fetchError') + t(error.response?.data.message));
-            }
         }
         fetchMyApplications();
     }, [user, navigate]);
