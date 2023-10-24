@@ -7,9 +7,21 @@ const StudentList = ({user}) => {
     const [studentList, setStudentList] = useState([]);
 
     useEffect(() => {
-        axiosInstance.get('API/TO/DEFINE', {params: {employerId: user.id}})
+        axiosInstance.get('employer/waitingStudents', {params: {employerId: user.id}})
             .then(res => {
-                setStudentList(res.data)
+                setStudentList(res.data);
+                let newStudentList;
+                for (let student of studentList) {
+                    axiosInstance.get('employer/offerByApplication', {params: {jobApplicationId: res.data[0].jobApplications[0]}})
+                        .then(res => {
+                            student.jobTitle = res.data.title;
+                            newStudentList = [...newStudentList, student];
+                        })
+                        .catch(err => {
+                            toast.error(err.message)
+                        })
+                }
+                setStudentList(newStudentList);
             })
             .catch(err => {
                 toast.error(err.message)

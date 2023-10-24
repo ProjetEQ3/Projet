@@ -99,12 +99,19 @@ public class EmployerController{
 				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));
 	}
 
-	@GetMapping("/convokedStudents")
+	@GetMapping("/waitingStudents")
 	public ResponseEntity<List<StudentDTO>> getConvokedStudents(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
 		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getConvokedStudents(employerId, semester));
+				.body(this.employerService.getWaitingStudents(employerId, semester));
+	}
+
+	@GetMapping("/offerByApplication")
+	public ResponseEntity<JobOfferDTO> getJobOfferByApplicationId(@RequestParam Long applicationId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getJobOfferByApplicationId(applicationId));
 	}
 
 }

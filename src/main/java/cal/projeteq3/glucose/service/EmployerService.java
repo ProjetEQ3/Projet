@@ -200,4 +200,11 @@ public class EmployerService{
 				.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
 				.collect(Collectors.toList());
 	}
+
+	public JobOfferDTO getJobOfferByApplicationId(Long applicationId) {
+		return jobApplicationRepository.findById(applicationId)
+				.map(JobApplication::getJobOffer)
+				.map(JobOfferDTO::new)
+				.orElseThrow(() -> new JobOfferNotFoundException(0L));
+	}
 }
