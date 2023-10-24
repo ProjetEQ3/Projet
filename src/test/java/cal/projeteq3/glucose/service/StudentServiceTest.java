@@ -5,11 +5,13 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
@@ -770,4 +772,25 @@ public class StudentServiceTest {
         });
         verify(studentRepository, times(1)).findById(notFoundStudentId);
     }
+
+    @Test
+    public void getAppointmentsByJobApplicationIdTest() {
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(1L);
+        List<Appointment> appointments = new ArrayList<>();
+        Appointment appointment1 = new Appointment();
+        appointment1.setJobApplication(jobApplication);
+        Appointment appointment2 = new Appointment();
+        appointment2.setJobApplication(jobApplication);
+
+        when(jobApplicationRepository.findAppointmentsByJobApplicationId(any(Long.class)))
+                .thenReturn(appointments);
+
+        List<AppointmentDTO> result = studentService.getAppointmentsByJobApplicationId(jobApplication.getId());
+
+        assertEquals(appointments.size(), result.size());
+
+    }
+
 }
