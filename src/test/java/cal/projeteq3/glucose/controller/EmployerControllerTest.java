@@ -35,9 +35,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -638,7 +636,7 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
 		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
@@ -671,7 +669,7 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
 		dates.add(LocalDateTime.now().plusDays(2));
 
@@ -702,7 +700,7 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
 		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
@@ -737,7 +735,7 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = null;
+		Set<LocalDateTime> dates = null;
 
 		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
 
@@ -757,7 +755,7 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 
 		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
 
@@ -777,9 +775,8 @@ public class EmployerControllerTest {
 		Long applicationId = 1L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
-		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
 		dates.add(LocalDateTime.now().plusDays(3));
 
@@ -801,7 +798,7 @@ public class EmployerControllerTest {
 		Long applicationId = null;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(applicationId);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
 		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
@@ -825,13 +822,12 @@ public class EmployerControllerTest {
 		Long applicationId = 999L;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
 		jobApplicationDTO.setId(1L);
-		List<LocalDateTime> dates = new ArrayList<>();
+		Set<LocalDateTime> dates = new HashSet<>();
 		dates.add(LocalDateTime.now().plusDays(1));
 		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
-		dates.add(LocalDateTime.now().plusDays(3));
 
-		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(new JobApplicationNotFoundException(applicationId));
 
 		objectMapper.registerModule(new JavaTimeModule());
 		String content = objectMapper.writeValueAsString(dates);

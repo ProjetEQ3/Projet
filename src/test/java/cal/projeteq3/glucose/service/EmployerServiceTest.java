@@ -31,10 +31,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import static org.mockito.Mockito.when;
 
 
@@ -778,7 +776,7 @@ public class EmployerServiceTest {
         LocalDateTime date2 = LocalDateTime.now().plusDays(2);
         LocalDateTime date3 = LocalDateTime.now().plusDays(3);
 
-        List<LocalDateTime> dateList = new ArrayList<>();
+        Set<LocalDateTime> dateList = new HashSet<>();
         dateList.add(date1);
         dateList.add(date2);
         dateList.add(date3);
@@ -789,7 +787,7 @@ public class EmployerServiceTest {
         employerService.addAppointmentByJobApplicationId(mockApplication.getId(), dateList);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertEquals(mockApplication.getAppointments().size(), 3);
-        List<LocalDateTime> dateEnd = new ArrayList<>();
+        Set<LocalDateTime> dateEnd = new HashSet<>();
         for (Appointment appointment : mockApplication.getAppointments()) {
             dateEnd.add(appointment.getAppointmentDate());
         }
@@ -805,7 +803,7 @@ public class EmployerServiceTest {
     public void testAddAppointmentByApplicationId_NullId() {
         Long applicationId = null;
 
-        List<LocalDateTime> dateList = new ArrayList<>();
+        Set<LocalDateTime> dateList = new HashSet<>();
 
         assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
 
@@ -815,7 +813,7 @@ public class EmployerServiceTest {
     public void testAddAppointmentByApplicationId_InexistantId() {
         Long applicationId = 999L;
 
-        List<LocalDateTime> dateList = new ArrayList<>();
+        Set<LocalDateTime> dateList = new HashSet<>();
 
         assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
 

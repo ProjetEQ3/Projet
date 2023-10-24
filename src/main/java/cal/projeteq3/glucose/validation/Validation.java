@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.model.auth.Role;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static cal.projeteq3.glucose.validation.ValidationPattern.*;
 
@@ -183,16 +184,12 @@ public final class Validation{
 
 	}
 
-	public static void validateAppointmentDate(List<LocalDateTime> dates){
+	public static void validateAppointmentDate(Set<LocalDateTime> dates){
 		if (dates.size() < 3 || dates.size() > 5)
 			exception(ValidationMessage.APPOINTMENT_OPTIONS_MESSAGE.toString());
-		for (int i = 0; i < dates.size(); i++) {
-			if (dates.get(i).isBefore(LocalDateTime.now()))
+		for (LocalDateTime dateTime: dates) {
+			if (dateTime.isBefore(LocalDateTime.now()))
 				exception(ValidationMessage.APPOINTMENT_IN_FUTUR.toString());
-			for (int j = 0; j < dates.size(); j++)
-				if (i != j)
-					if (dates.get(i).equals(dates.get(j)))
-						exception(ValidationMessage.APPOINTMENT_OPTIONS_MESSAGE.toString());
 		}
 	}
 

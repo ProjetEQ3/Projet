@@ -33,13 +33,13 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             .catch((error) => {
                 toast.error(t('convokeError') + t(error.response?.data?.message));
             })
-        filterStudentList(student.jobApplications[0]);
     }
     const handleDecline = (e) => {
         e.preventDefault();
         axiosInstance.put('/employer/offer/refuse/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
+                filterStudentList(student.jobApplications[0]);
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
