@@ -97,7 +97,11 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					</button>
 					<div className="d-flex align-items-center me-2">
 						<span className="me-1">Page</span>
-						<span>{currentPage}</span>
+						{
+							totalPages > 1 ?
+							<span>{currentPage}</span> :
+							<span>0</span>
+						}
 						<span className="mx-1">{t('of')}</span>
 						<span>{totalPages}</span>
 					</div>
