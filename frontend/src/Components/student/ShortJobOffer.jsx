@@ -118,7 +118,7 @@ const ShortJobOffer = ({ jobOffer }) => {
                     ): (
                         <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2">
-                                <button className="btn btn-outline-ose my-auto" disabled>
+                                <button className="btn btn-outline-ose my-auto" data-testid="no-appointment-button-testid" disabled>
                                     {t('noAppointments')}
                                     <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
                                 </button>
