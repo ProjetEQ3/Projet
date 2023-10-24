@@ -94,7 +94,7 @@ public class EmployerController{
 	}
 
 	@PutMapping("/offer/appointment/{applicationId}")
-	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestParam("dates") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) List<LocalDateTime> dates){
+	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestBody List<LocalDateTime> dates){
 		Validation.validateAppointmentDate(dates);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)

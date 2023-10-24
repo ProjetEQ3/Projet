@@ -18,7 +18,7 @@ import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -649,15 +649,18 @@ public class EmployerControllerTest {
 			appointments.add(app);
 		}
 
-		jobApplicationDTO.setId(applicationId);
 		jobApplicationDTO.setAppointments(appointments);
 
 		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenReturn(jobApplicationDTO);
 
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
 		mockMvc.perform(MockMvcRequestBuilders
-						.put("/employer/offer/suggest/{jobApplicationId}", applicationId)
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
 						.header("Authorization", token)
-						.contentType(MediaType.APPLICATION_JSON))
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
