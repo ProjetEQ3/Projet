@@ -21,13 +21,11 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
         setAppointments([]);
         await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
             .then((response) => {
-                const fetchedAppointments = response.data.map((fetchedAppointment) => {
-                    const newAppointment = new Appointment()   ;
-                    newAppointment.init(fetchedAppointment);
-                    return newAppointment;
+                response.data.map((appointment) => {
+                    const newAppointment = new Appointment();
+                    newAppointment.init(appointment);
+                    setAppointments((appointments) => [...appointments, newAppointment]);
                 });
-                setAppointments(fetchedAppointments);
-                console.log("Appointments fetched: ", fetchedAppointments)
             })
             .catch((error) => {
                 console.error("Error fetching appointments:", error);
@@ -58,7 +56,7 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
         return result;
     }
 
-    function appointmentChoosable() {
+    function appointmentChosable() {
         console.log("Job offer state: ", jobOffer.jobOfferState)
         if (appointments.length === 0) return false;
         return jobOffer.jobOfferState === "CONVOKED";
@@ -83,7 +81,7 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointmentChoosable() === true ?  (
+                    {appointmentChosable() === true ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target="#appointmentModal">
