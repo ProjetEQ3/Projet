@@ -19,7 +19,7 @@ const ShortStudentInfo = ({ student }) => {
 
     const handleConvoke = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], {dates: dates})
+        axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
             })

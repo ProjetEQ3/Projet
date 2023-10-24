@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
@@ -791,7 +792,30 @@ public class EmployerServiceTest {
             dateEnd.add(appointment.getAppointmentDate());
         }
 
+        assertNotNull(mockApplication);
+        assertEquals(jobOffer.getId(), mockApplication.getJobOffer().getId());
+        assertEquals(student.getId(), mockApplication.getStudent().getId());
+        assertEquals(applicationId, mockApplication.getId());
         assertEquals(dateEnd, dateList);
     }
 
+    @Test
+    public void testAddAppointmentByApplicationId_NullId() {
+        Long applicationId = null;
+
+        List<LocalDateTime> dateList = new ArrayList<>();
+
+        assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
+
+    }
+
+    @Test
+    public void testAddAppointmentByApplicationId_InexistantId() {
+        Long applicationId = 999L;
+
+        List<LocalDateTime> dateList = new ArrayList<>();
+
+        assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
+
+    }
 }
