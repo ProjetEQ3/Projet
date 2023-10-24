@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
+import {axiosInstance} from "../../App";
+import Appointment from "../../model/Appointment";
 
 
 const ShortJobOffer = ({ user, jobOffer }) => {
@@ -14,11 +16,23 @@ const ShortJobOffer = ({ user, jobOffer }) => {
 
     useEffect(() => {
         fetchAppointments();
-    });
+    }, [user, jobOffer]);
+
     const fetchAppointments = async () => {
-
-
-    }
+        setAppointments([]);
+        await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
+            .then((response) => {
+                response.data.map((appointment) => {
+                    const newAppointment = new Appointment();
+                    newAppointment.init(appointment);
+                    setAppointments((appointments) => [...appointments, newAppointment]);
+                });
+            })
+            .catch((error) => {
+                console.error("Error fetching appointments:", error);
+                toast.error(t('errorFetchingAppointments'));
+            });
+    };
 
     function handleChosenAppointment(e) {
         e.preventDefault();
