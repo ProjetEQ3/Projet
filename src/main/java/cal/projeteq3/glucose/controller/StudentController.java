@@ -102,11 +102,18 @@ public class StudentController {
                 .body(studentService.getAppliedJobOfferByStudentId(studentId, semester));
     }
 
-    @GetMapping("/appointments/{id}")
+    @GetMapping("/appointmentsByJobApplicationId/{id}")
     public ResponseEntity<List<AppointmentDTO>> getAppointmentsByJobApplicationId(@PathVariable Long id) {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentService.getAppointmentsByJobApplicationId(id));
+    }
+
+    @GetMapping("/appointmentsByJobOfferIdAndStudentId/{jobOfferId}/{studentId}")
+    public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsForJobOfferAndStudent(@PathVariable Long jobOfferId, @PathVariable Long studentId) {
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.findAllAppointmentsForJobOfferAndStudent(jobOfferId, studentId));
     }
 
 }

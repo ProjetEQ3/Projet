@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -164,6 +165,19 @@ public class StudentService {
     public List<AppointmentDTO> getAppointmentsByJobApplicationId(Long id) {
         List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(id);
         return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+    }
+
+    public List<AppointmentDTO> findAllAppointmentsForJobOfferAndStudent(Long jobOfferId, Long studentId) {
+
+        List<JobApplication> jobApplications = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
+        List<Appointment> appointments = new ArrayList<>();
+
+        for(JobApplication jobApplication : jobApplications) {
+            appointments.addAll(jobApplication.getAppointments());
+        }
+
+        return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+
     }
 
 }

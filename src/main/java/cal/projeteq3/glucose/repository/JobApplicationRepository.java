@@ -15,4 +15,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     @Query("SELECT ja.appointments FROM JobApplication ja WHERE ja.id = :jobApplicationId")
     List<Appointment> findAppointmentsByJobApplicationId(@Param("jobApplicationId") Long jobApplicationId);
 
+    List<JobApplication> findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
+
 }
