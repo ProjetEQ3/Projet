@@ -4,7 +4,8 @@ import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 
-const ShortJobOffer = ({ jobOffer }) => {
+
+const ShortJobOffer = ({ user, jobOffer }) => {
     const { t } = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -15,7 +16,8 @@ const ShortJobOffer = ({ jobOffer }) => {
         fetchAppointments();
     });
     const fetchAppointments = async () => {
-        //     Get the appointments of the student (setAppointments)
+
+
     }
 
     function handleChosenAppointment(e) {
