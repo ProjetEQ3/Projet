@@ -83,7 +83,7 @@ const ShortStudentInfo = ({ student }) => {
             }
             {
                 isConvoque ?
-                    <div className="col-12 text-center" data-testid="convoque-mock-element">
+                    <div className="col-12 text-center" data-testid="convoke-mock-element">
                         <div className="m-2 p-2 bg-white border rounded border-ose">
                             <div className="col-12 text-center">
                                 <h5 className="text-dark fw-light">{t('convokeSentence') + student.firstName + " " + student.lastName}</h5>
@@ -94,7 +94,7 @@ const ShortStudentInfo = ({ student }) => {
                                     dates.map((date, index) => {
                                         return (
                                             <div className="col-10 text-center my-2 mx-auto" key={index}>
-                                                <input min={minDate} type="datetime-local" className="form-control" onChange={(e) => handleDateUpdate(e, index)}/>
+                                                <input data-testid={"convokeInput"+index} min={minDate} type="datetime-local" className="form-control" onChange={(e) => handleDateUpdate(e, index)}/>
                                             </div>
                                         )
                                     })
@@ -102,8 +102,8 @@ const ShortStudentInfo = ({ student }) => {
                             </div>
 
                             <div className="col-12 mb-2">
-                                <button type="button" disabled={dates.length > 4} onClick={() => modifyDates(1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faPlus} /></button>
-                                <button type="button" disabled={dates.length < 4} onClick={() => modifyDates(-1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faMinus} /></button>
+                                <button data-testid={'add-convoke-date-button'} type="button" disabled={dates.length > 4} onClick={() => modifyDates(1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faPlus} /></button>
+                                <button data-testid={'sub-convoke-date-button'} type="button" disabled={dates.length < 4} onClick={() => modifyDates(-1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                             <div className="col-12 text-center">
                                 <button type="button" onClick={handleConvoke} className="btn btn-success">{t('convoke')}</button>
