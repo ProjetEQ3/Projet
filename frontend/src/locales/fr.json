@@ -95,6 +95,9 @@
   "home": "Accueil",
   "hoursPerWeek": "Heures par semaine: ",
   "hello": "Bonjour ",
+  "hire" : "Embaucher",
+  "hireStudentSuccess": "Étudiant embauché",
+  "hireStudentError": "Erreur lors de l'embauche de l'étudiant: ",
   "hoursPerWeekRequired": "Le nombre d'heures par semaine est obligatoire.",
   "hoursPerWeekMustBePositive": "Le nombre d'heures par semaine doit être positif.",
 
@@ -103,6 +106,7 @@
   "internshipDescription": "Description de l'offre de stage",
   "internshipDetails": "Détails de l'offre de stage",
   "internshipList": "Liste de vos offres de stage",
+  "interviewedStudents": "Étudiants interviewés",
 
   "jobOffers": "Stages",
 

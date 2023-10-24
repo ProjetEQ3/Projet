@@ -1,8 +1,6 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
 import {useTranslation} from "react-i18next";
-import {Axios} from "axios";
-import {axiosInstance} from "../../App";
 
 const StudentList = ({ offer }) => {
     const { t } = useTranslation();

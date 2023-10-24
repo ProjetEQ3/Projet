@@ -10,6 +10,7 @@ class User{
 	cvFile = new CvFile()
 	role
 	department
+	jobTitle
 	errors = []
 
 	constructor(){}
@@ -29,8 +30,8 @@ class User{
 		else this.isLoggedIn = false
 		if(user.cvFile) this.cvFile.init(user.cvFile)
 		else delete this.cvFile
-		//if(user.cvFile) this.cvFile = user.cvFile
-		//else delete this.cvFile
+		if(user.jobTitle) this.jobTitle = user.jobTitle
+		else delete this.jobTitle
 		if(user.role) this.role = user.role
 		else delete this.role
 		if(user.department) this.department = user.department
