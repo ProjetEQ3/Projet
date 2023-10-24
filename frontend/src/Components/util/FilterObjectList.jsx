@@ -105,7 +105,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 						<span className="mx-1">{t('of')}</span>
 						<span>{totalPages}</span>
 					</div>
-					<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage} disabled={currentPage === totalPages}>
+					<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage} disabled={currentPage === totalPages || totalPages === 0}>
 						{t('next')}
 					</button>
 				</div>
