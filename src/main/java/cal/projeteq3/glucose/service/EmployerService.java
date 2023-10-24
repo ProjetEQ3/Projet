@@ -25,10 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -169,7 +166,6 @@ public class EmployerService{
 			.collect(Collectors.toList());
 	}
 
-	//EQ3-17
 	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, Set<LocalDateTime> dates){
 		List<Appointment> appointmentList = dates.stream()
 				.map(time -> {
@@ -194,7 +190,7 @@ public class EmployerService{
 	}
 
 	public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Long employerId){
-		throw new UnsupportedOperationException();
+		return jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId).stream().map(JobApplicationDTO::new).collect(Collectors.toList());
 	}
 
 	public List<StudentDTO> getConvokedStudents(Long employerId, Semester semester) {
