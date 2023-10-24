@@ -197,5 +197,11 @@
   "week": " semaine(s)",
   "winter": "Hiver",
 
-  "yourInternship": "Vos offres de stages"
+  "yourInternship": "Vos offres de stages",
+
+  "noAppointments": "Aucun rendez-vous pour le moment",
+  "seeAppointments": "Voir les rendez-vous",
+  "appointments": "Rendez-vous",
+  "select": "Sélectionner",
+  "selectedAppointment": "Rendez-vous sélectionné"
 }
