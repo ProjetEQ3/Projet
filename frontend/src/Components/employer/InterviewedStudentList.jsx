@@ -11,6 +11,7 @@ const StudentList = ({user}) => {
     useEffect(() => {
         axiosInstance.get('employer/waitingStudents', {params: {employerId: user.id}})
             .then(res => {
+                console.log(res)
                 if (res.data.length === 0) {
                     toast.info(t('noStudentsConvoked'));
                     return;
