@@ -4,6 +4,8 @@ import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 import { axiosInstance } from "../../App";
+import JobOffer from "../../model/JobOffer";
+import Appointment from "../../model/Appointment";
 
 const ShortJobOffer = ({ user, jobOffer }) => {
     const { t } = useTranslation();
@@ -20,8 +22,13 @@ const ShortJobOffer = ({ user, jobOffer }) => {
         try {
             const response = await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`);
             if (response.status === 202) {
-                console.log(response.data)
-                setAppointments(response.data);
+                const appointments = response.data.map((appointment) => {
+                    const newAppointment = new Appointment();
+                    newAppointment.init(appointment);
+                    return newAppointment;
+                });
+                console.log(appointments)
+                setAppointments(appointments);
             }
         } catch (error) {
             console.error("Error fetching appointments:", error);
