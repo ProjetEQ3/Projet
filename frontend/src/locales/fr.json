@@ -209,5 +209,11 @@
   "week": " semaine(s)",
   "winter": "Hiver",
 
-  "yourInternship": "Vos offres de stages"
+  "yourInternship": "Vos offres de stages",
+
+  "noAppointments": "Aucun rendez-vous proposé pour le moment",
+  "appointments": "Rendez-vous possibles",
+  "chooseAppointment": "Choisir un rendez-vous",
+  "appointmentChosen": "Rendez-vous choisi: ",
+  "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous"
 }

@@ -209,5 +209,11 @@
   "week": " week(s)",
   "winter": "Winter",
 
-  "yourInternship": "Your internship offers"
+  "yourInternship": "Your internship offers",
+
+  "noAppointments": "No appointments available",
+  "appointments": "Pending appointments",
+  "chooseAppointment": "Choose an appointment",
+  "appointmentChosen": "You have chosen this appointment",
+  "noAppointmentSelected": "You have not selected an appointment"
 }

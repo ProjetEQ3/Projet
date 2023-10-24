@@ -6,11 +6,13 @@ import ShortJobOffer from "./ShortJobOffer";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCalendar, faClock, faPenToSquare, faX} from "@fortawesome/free-solid-svg-icons";
 
 function MyApplications({ user }) {
     const {t} = useTranslation();
-    const [myApplications, setMyApplications] = useState([]);
     const navigate = useNavigate();
+    const [myApplications, setMyApplications] = useState([]);
 
     useEffect(() => {
         if (!user?.isLoggedIn) {
@@ -30,7 +32,6 @@ function MyApplications({ user }) {
                 toast.error(t('fetchError') + t(error.response?.data.message));
             }
         }
-
         fetchMyApplications();
     }, [user, navigate]);
 

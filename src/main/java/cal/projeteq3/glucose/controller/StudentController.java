@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -99,4 +100,19 @@ public class StudentController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentService.getAppliedJobOfferByStudentId(studentId, semester));
     }
+
+    @GetMapping("/appointmentsByJobApplicationId/{id}")
+    public ResponseEntity<List<AppointmentDTO>> getAppointmentsByJobApplicationId(@PathVariable Long id) {
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.getAppointmentsByJobApplicationId(id));
+    }
+
+    @GetMapping("/appointmentsByJobOfferIdAndStudentId/{jobOfferId}/{studentId}")
+    public ResponseEntity<List<AppointmentDTO>> findAllAppointmentsForJobOfferAndStudent(@PathVariable Long jobOfferId, @PathVariable Long studentId) {
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.findAllAppointmentsForJobOfferAndStudent(jobOfferId, studentId));
+    }
+
 }
