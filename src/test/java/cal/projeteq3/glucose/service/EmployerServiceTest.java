@@ -792,6 +792,10 @@ public class EmployerServiceTest {
             dateEnd.add(appointment.getAppointmentDate());
         }
 
+        assertNotNull(mockApplication);
+        assertEquals(jobOffer.getId(), mockApplication.getJobOffer().getId());
+        assertEquals(student.getId(), mockApplication.getStudent().getId());
+        assertEquals(applicationId, mockApplication.getId());
         assertEquals(dateEnd, dateList);
     }
 

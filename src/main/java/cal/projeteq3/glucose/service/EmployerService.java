@@ -177,6 +177,7 @@ public class EmployerService{
 					return appointment;
 				})
 				.toList();
+
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
 		for(Appointment app : appointmentList){
@@ -185,7 +186,7 @@ public class EmployerService{
 			appointmentRepository.save(app);
 		}
 		jobApplicationRepository.save(jobApplication);
-		return jobApplicationRepository.findById(jobApplication.getJobOffer().getId())
+		return jobApplicationRepository.findById(jobApplication.getId())
 			.map(JobApplicationDTO::new)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
 	}
