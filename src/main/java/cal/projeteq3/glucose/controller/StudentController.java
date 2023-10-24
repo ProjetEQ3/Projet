@@ -115,4 +115,11 @@ public class StudentController {
                 .body(studentService.findAllAppointmentsForJobOfferAndStudent(jobOfferId, studentId));
     }
 
+    @PutMapping("/setAppointmentToChosen/{id}")
+    public ResponseEntity<AppointmentDTO> setAppointmentToChosen(@PathVariable Long id) {
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.setAppointmentToChosen(id));
+    }
+
 }

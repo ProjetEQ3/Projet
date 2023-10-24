@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
@@ -180,4 +181,15 @@ public class StudentService {
 
     }
 
+    public AppointmentDTO setAppointmentToChosen(Long id) {
+        Optional<Appointment> existingAppointment = appointmentRepository.findById(id);
+        if(existingAppointment.isPresent()) {
+            Appointment appointment = existingAppointment.get();
+
+            appointment.setChosen(true);
+
+            return new AppointmentDTO(appointmentRepository.save(appointment));
+        }
+        throw new AppointmentNotFoundException(id);
+    }
 }

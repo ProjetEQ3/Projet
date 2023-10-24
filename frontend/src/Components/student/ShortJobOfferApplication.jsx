@@ -3,11 +3,10 @@ import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
-import {axiosInstance} from "../../App";
+import { axiosInstance } from "../../App";
 import Appointment from "../../model/Appointment";
 
-
-const ShortJobOffer = ({ user, jobOffer }) => {
+const ShortJobOfferApplication = ({ user, jobOffer }) => {
     const { t } = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -22,11 +21,13 @@ const ShortJobOffer = ({ user, jobOffer }) => {
         setAppointments([]);
         await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
             .then((response) => {
-                response.data.map((appointment) => {
-                    const newAppointment = new Appointment();
-                    newAppointment.init(appointment);
-                    setAppointments((appointments) => [...appointments, newAppointment]);
+                const fetchedAppointments = response.data.map((fetchedAppointment) => {
+                    const newAppointment = new Appointment()   ;
+                    newAppointment.init(fetchedAppointment);
+                    return newAppointment;
                 });
+                setAppointments(fetchedAppointments);
+                console.log("Appointments fetched: ", fetchedAppointments)
             })
             .catch((error) => {
                 console.error("Error fetching appointments:", error);
@@ -57,6 +58,12 @@ const ShortJobOffer = ({ user, jobOffer }) => {
         return result;
     }
 
+    function appointmentChoosable() {
+        console.log("Job offer state: ", jobOffer.jobOfferState)
+        if (appointments.length === 0) return false;
+        return jobOffer.jobOfferState === "CONVOKED";
+    }
+
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
@@ -76,7 +83,7 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointments.length > 0 ? (
+                    {appointmentChoosable() === true ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target="#appointmentModal">
@@ -103,10 +110,10 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                                                                    type="radio"
                                                                    name="appointment"
                                                                    id={`appointment-${index}`}
-                                                                   value={appointment}/>
+                                                                   value={appointment.appointmentDate}/>
                                                             <label className="form-check-label"
                                                                    htmlFor={`appointment-${index}`}>
-                                                                {dateTimeToShortString(appointment)}
+                                                                {dateTimeToShortString(appointment.appointmentDate)}
                                                             </label>
                                                         </div>
                                                     ))
@@ -147,4 +154,4 @@ const ShortJobOffer = ({ user, jobOffer }) => {
     );
 };
 
-export default ShortJobOffer;
+export default ShortJobOfferApplication;
