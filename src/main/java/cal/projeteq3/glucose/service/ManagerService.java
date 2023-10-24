@@ -17,12 +17,14 @@ import cal.projeteq3.glucose.repository.CvFileRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class ManagerService{
 
@@ -30,17 +32,6 @@ public class ManagerService{
 	private final StudentRepository studentRepository;
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
-
-	@Autowired
-	public ManagerService(
-		ManagerRepository managerRepository, StudentRepository studentRepository,
-		JobOfferRepository jobOfferRepository, CvFileRepository cvRepository
-	){
-		this.managerRepository = managerRepository;
-		this.studentRepository = studentRepository;
-		this.jobOfferRepository = jobOfferRepository;
-		this.cvRepository = cvRepository;
-	}
 
 	// database operations here
 

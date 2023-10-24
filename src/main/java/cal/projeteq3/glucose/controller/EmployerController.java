@@ -22,8 +22,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/employer")
 public class EmployerController{
 	private final EmployerService employerService;

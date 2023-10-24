@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.exception.CustomErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +14,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final HttpServletRequest request;
-
-    @Autowired
-    public CustomExceptionHandler(HttpServletRequest request) {
-        this.request = request;
-    }
-
+    
     @ExceptionHandler(APIException.class)
     public ResponseEntity<CustomErrorResponse> handleAPIException(APIException ex) {
         CustomErrorResponse response = CustomErrorResponse.builder()

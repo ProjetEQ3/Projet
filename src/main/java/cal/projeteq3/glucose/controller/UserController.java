@@ -9,20 +9,19 @@ import cal.projeteq3.glucose.validation.Validation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
 public class UserController{
-	private final UserService userService;
 
-	public UserController(UserService userService){
-		this.userService = userService;
-	}
+	private final UserService userService;
 
     @PostMapping("/login")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDTO loginDto){

@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.validation.Validation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    private final StudentService studentService;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    private final StudentService studentService;
 
     @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student) {
