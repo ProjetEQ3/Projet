@@ -99,4 +99,12 @@ public class EmployerController{
 				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));
 	}
 
+	@GetMapping("/convokedStudents")
+	public ResponseEntity<List<StudentDTO>> getConvokedStudents(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
+		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getConvokedStudents(employerId, semester));
+	}
+
 }

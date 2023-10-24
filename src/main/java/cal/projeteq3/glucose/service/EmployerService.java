@@ -192,4 +192,12 @@ public class EmployerService{
 			.map(JobApplicationDTO::new)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
 	}
+
+	public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Long employerId){
+		throw new UnsupportedOperationException();
+	}
+
+	public List<StudentDTO> getConvokedStudents(Long employerId, Semester semester) {
+		throw new UnsupportedOperationException();
+	}
 }
