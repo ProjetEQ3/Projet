@@ -19,6 +19,12 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
 
     const handleConvoke = (e) => {
         e.preventDefault();
+        for (let date of dates) {
+            if (date < todayDate) {
+                toast.error(t('convokeError') + t('convokeErrorMin'));
+                return;
+            }
+        }
         axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
@@ -27,6 +33,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             .catch((error) => {
                 toast.error(t('convokeError') + t(error.response?.data?.message));
             })
+        filterStudentList(student.jobApplications[0]);
     }
     const handleDecline = (e) => {
         e.preventDefault();
@@ -37,6 +44,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
             })
+
     }
     const modifyDates = (nb) => {
         if (nb > 0) {

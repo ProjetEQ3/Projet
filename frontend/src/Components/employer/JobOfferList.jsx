@@ -146,7 +146,7 @@ const JobOfferList = ({user}) => {
                                 {
                                     selectedOffer.jobOfferState === "OPEN" ?
                                         selectedOffer.students != null && selectedOffer.students.length > 0 ?
-                                            <StudentList offer={selectedOffer}/> :
+                                            <StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer}/> :
                                             <div><p className="display-6">{t('noStudent')}</p></div>
                                         : null
                                 }

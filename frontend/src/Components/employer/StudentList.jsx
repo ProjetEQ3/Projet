@@ -1,9 +1,13 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
 
-const StudentList = ({ offer }) => {
+const StudentList = ({ offer, setSelectedOffer }) => {
     const filterStudentList = (jobApplicationId) => {
-        offer.students = offer.students.filter((student) => student.jobApplications[0] !== jobApplicationId);
+        const updatedOffer = {
+            ...offer,
+            students: offer.students.filter((student) => student.jobApplications[0] !== jobApplicationId)
+        };
+        setSelectedOffer(updatedOffer);
     }
 
     return (
