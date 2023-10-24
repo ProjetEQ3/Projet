@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
@@ -20,10 +21,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +40,7 @@ public class StudentService {
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
     private final JobApplicationRepository jobApplicationRepository;
+    private final AppointmentRepository appointmentRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -178,6 +177,19 @@ public class StudentService {
 
         return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
 
+    }
+
+    public AppointmentDTO setAppointmentToChosen(Long id) {
+        Optional<Appointment> existingAppointment = appointmentRepository.findById(id);
+        if(existingAppointment.isPresent()) {
+            Appointment appointment = existingAppointment.get();
+
+            appointment.setChosen(true);
+
+            return new AppointmentDTO(appointmentRepository.save(appointment));
+        }
+
+        throw new AppointmentNotFoundException(id);
     }
 
 }
