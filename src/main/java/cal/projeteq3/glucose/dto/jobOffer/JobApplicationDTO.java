@@ -24,6 +24,7 @@ public final class JobApplicationDTO{
 	private JobOfferDTO jobOffer;
 	private JobApplicationState jobApplicationState;
 	private Semester semester;
+	private List<AppointmentDTO> appointments;
 
 	public JobApplicationDTO(JobApplication jobApplication){
 		this.id = jobApplication.getId();
@@ -31,6 +32,7 @@ public final class JobApplicationDTO{
 		this.jobOffer = new JobOfferDTO(jobApplication.getJobOffer());
 		this.jobApplicationState = jobApplication.getJobApplicationState();
 		this.semester = jobApplication.getSemester();
+		this.appointments = jobApplication.getAppointments().stream().map(AppointmentDTO::new).toList();
 	}
 
 	public JobApplication toEntity(){
@@ -40,6 +42,7 @@ public final class JobApplicationDTO{
 				.jobOffer(jobOffer.toEntity())
 				.jobApplicationState(jobApplicationState)
 				.semester(semester)
+				.appointments(appointments.stream().map(AppointmentDTO::toEntity).toList())
 				.build();
 	}
 
