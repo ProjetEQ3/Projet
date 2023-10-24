@@ -201,7 +201,7 @@ public class EmployerService{
 				.collect(Collectors.toList());
 	}
 
-	public JobOfferDTO getJobOfferByApplicationId(Long applicationId) {
+	public JobOfferDTO getOfferByApplicationId(Long applicationId) {
 		return jobApplicationRepository.findById(applicationId)
 				.map(JobApplication::getJobOffer)
 				.map(JobOfferDTO::new)

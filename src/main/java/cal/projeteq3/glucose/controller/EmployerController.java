@@ -111,7 +111,6 @@ public class EmployerController{
 	public ResponseEntity<JobOfferDTO> getOfferByApplicationId(@RequestParam Long applicationId){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getJobOfferByApplicationId(applicationId));
+				.body(this.employerService.getOfferByApplicationId(applicationId));
 	}
-
 }

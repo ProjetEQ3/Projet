@@ -881,6 +881,36 @@ public class EmployerControllerTest {
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
+	}
 
+	@Test
+	public void getOfferByApplicationId_valid() throws Exception {
+		Long applicationId = 1L;
+		JobOfferDTO jobOfferDTO = new JobOfferDTO(1L, "Test Job", Department._420B0,
+				"MTL", "Test Job Description", 1.0f,
+				LocalDate.now(), 10, LocalDate.now().plusDays(3),
+				JobOfferState.OPEN, 30, null, 1, new Semester(LocalDate.now()));
+
+		when(employerService.getOfferByApplicationId(applicationId)).thenReturn(jobOfferDTO);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/offerByApplication")
+						.header("Authorization", token)
+						.param("applicationId", applicationId.toString())
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+	}
+
+	@Test
+	public void getOfferByApplicationId_invalid() throws Exception {
+		Long applicationId = -1L;
+		when(employerService.getOfferByApplicationId(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/offerByApplication")
+						.header("Authorization", token)
+						.param("applicationId", applicationId.toString())
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
 }
