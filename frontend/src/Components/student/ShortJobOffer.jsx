@@ -105,10 +105,10 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                                                                    type="radio"
                                                                    name="appointment"
                                                                    id={`appointment-${index}`}
-                                                                   value={appointment}/>
+                                                                   value={appointment.appointmentDate}/>
                                                             <label className="form-check-label"
                                                                    htmlFor={`appointment-${index}`}>
-                                                                {dateTimeToShortString(appointment)}
+                                                                {dateTimeToShortString(appointment.appointmentDate)}
                                                             </label>
                                                         </div>
                                                     ))
