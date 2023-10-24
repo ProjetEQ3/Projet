@@ -26,7 +26,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						jobOffers.map((offer, index) => (
 							offer.jobOfferState === "OPEN" ? (
 								<div onClick={() => setSelectedOffer(offer)}>
-									<ShortJobOffer jobOffer={offer} key={offer.id}/>
+									<ShortJobOffer user={user} jobOffer={offer} key={offer.id}/>
 								</div>
 							) : null
 						))

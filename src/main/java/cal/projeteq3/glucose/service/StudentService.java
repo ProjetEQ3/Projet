@@ -21,10 +21,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,6 +40,7 @@ public class StudentService {
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
     private final JobApplicationRepository jobApplicationRepository;
+    private final AppointmentRepository appointmentRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -190,6 +188,8 @@ public class StudentService {
 
             return new AppointmentDTO(appointmentRepository.save(appointment));
         }
+
         throw new AppointmentNotFoundException(id);
     }
+
 }
