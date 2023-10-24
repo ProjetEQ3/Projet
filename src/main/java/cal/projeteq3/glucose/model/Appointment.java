@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class Appointment {
     @Id
@@ -26,4 +25,8 @@ public class Appointment {
     private LocalDateTime appointmentDate;
 
     private boolean isChosen;
+
+    public Appointment(){
+        this.isChosen = false;
+    }
 }

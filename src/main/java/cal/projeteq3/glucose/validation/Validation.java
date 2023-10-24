@@ -183,15 +183,15 @@ public final class Validation{
 
 	}
 
-	public static void validateAppointmentList(List<Appointment> appointmentList){
-		if (appointmentList.size() < 3 || appointmentList.size() > 5)
+	public static void validateAppointmentDate(List<LocalDateTime> dates){
+		if (dates.size() < 3 || dates.size() > 5)
 			exception(ValidationMessage.APPOINTMENT_OPTIONS_MESSAGE.toString());
-		for (int i = 0; i < appointmentList.size(); i++) {
-			if (appointmentList.get(i).getAppointmentDate().isBefore(LocalDateTime.now()))
+		for (int i = 0; i < dates.size(); i++) {
+			if (dates.get(i).isBefore(LocalDateTime.now()))
 				exception(ValidationMessage.APPOINTMENT_IN_FUTUR.toString());
-			for (int j = 0; j < appointmentList.size(); j++)
+			for (int j = 0; j < dates.size(); j++)
 				if (i != j)
-					if (appointmentList.get(i).equals(appointmentList.get(j)))
+					if (dates.get(i).equals(dates.get(j)))
 						exception(ValidationMessage.APPOINTMENT_OPTIONS_MESSAGE.toString());
 		}
 	}

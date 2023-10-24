@@ -24,6 +24,7 @@ public final class JobApplicationDTO{
 	private JobOfferDTO jobOffer;
 	private JobApplicationState jobApplicationState;
 	private Semester semester;
+	private List<AppointmentDTO> appointments;
 
 	public JobApplicationDTO(JobApplication jobApplication){
 		this.id = jobApplication.getId();
@@ -40,6 +41,7 @@ public final class JobApplicationDTO{
 				.jobOffer(jobOffer.toEntity())
 				.jobApplicationState(jobApplicationState)
 				.semester(semester)
+				.appointments(AppointmentDTO.toList(appointments))
 				.build();
 	}
 

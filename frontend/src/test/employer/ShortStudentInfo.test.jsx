@@ -25,4 +25,28 @@ describe("ShortStudentInfo", () => {
         expect(screen.getByTestId("pdf-preview-mock-element")).toBeInTheDocument();
     });
 
+    it("handles convoke button click", () => {
+        const { getByText } = render(<ShortStudentInfo student={mockStudent} />);
+        fireEvent.click(getByText('convoke'));
+        expect(screen.getByTestId("convoke-mock-element")).toBeInTheDocument();
+        expect(screen.getByTestId("convoke-mock-element")).toHaveTextContent("convoke");
+        expect(screen.getByTestId("convokeInput0")).toBeInTheDocument();
+        expect(screen.getByTestId("convokeInput1")).toBeInTheDocument();
+        expect(screen.getByTestId("convokeInput2")).toBeInTheDocument();
+    });
+
+    it("handles add convoke date button click", () => {
+        const { getByText } = render(<ShortStudentInfo student={mockStudent} />);
+        fireEvent.click(getByText('convoke'));
+        fireEvent.click(screen.getByTestId("add-convoke-date-button"));
+        expect(screen.getByTestId("convokeInput3")).toBeInTheDocument();
+    });
+
+    it("handles sub convoke date button click", () => {
+       const { getByText } = render(<ShortStudentInfo student={mockStudent} />);
+       fireEvent.click(getByText('convoke'));
+       fireEvent.click(screen.getByTestId("add-convoke-date-button"));
+       fireEvent.click(screen.getByTestId("sub-convoke-date-button"));
+       expect(screen.queryByTestId("convokeInput3")).not.toBeInTheDocument();
+    });
 });

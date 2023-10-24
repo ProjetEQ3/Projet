@@ -38,6 +38,13 @@
   "createInternshipError": "Erreur lors de la création de l'offre de stage",
   "confirmationOfferDelete": "Êtes-vous sûr de vouloir supprimer cette offre de stage ?",
   "chooseADepartment": "Choisissez un département",
+  "convoke": "Convoquer",
+  "convokeSentence": "Vous êtes en train de convoquer l'étudiant : ",
+  "convokeErrorMin": "Vous devez minimalement convoquer sur trois dates différentes",
+  "convokeErrorMax": "Vous ne pouvez pas convoquer sur plus de cinq dates différentes",
+  "convokeDates" : "Dates de convocation",
+  "convokeError" : "Erreur lors de la convocation de l'étudiant: ",
+  "convokeSuccess" : "Étudiant convoqué",
   "copyRights": "© 2023 - Tous droits réservés.",
 
   "declineStudentSuccess" : "Étudiant refusé",

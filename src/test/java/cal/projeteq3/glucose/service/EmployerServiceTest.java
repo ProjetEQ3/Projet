@@ -21,6 +21,7 @@ import cal.projeteq3.glucose.repository.*;
 
 import java.time.LocalDate;
 
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -770,32 +771,27 @@ public class EmployerServiceTest {
         mockApplication.setId(applicationId);
         mockApplication.setJobOffer(jobOffer);
 
-        Appointment appointment = Appointment.builder()
-                .appointmentDate(LocalDateTime.now())
-                .jobApplication(mockApplication)
-                .build();
+        LocalDateTime date1 = LocalDateTime.now().plusDays(1);
+        LocalDateTime date2 = LocalDateTime.now().plusDays(2);
+        LocalDateTime date3 = LocalDateTime.now().plusDays(3);
 
-        Appointment appointment2 = Appointment.builder()
-                .appointmentDate(LocalDateTime.now().plusDays(1))
-                .jobApplication(mockApplication)
-                .build();
-
-        Appointment appointment3 = Appointment.builder()
-                .appointmentDate(LocalDateTime.now().plusDays(2))
-                .jobApplication(mockApplication)
-                .build();
-        List<Appointment> appointmentList = new ArrayList<>();
-        appointmentList.add(appointment);
-        appointmentList.add(appointment2);
-        appointmentList.add(appointment3);
+        List<LocalDateTime> dateList = new ArrayList<>();
+        dateList.add(date1);
+        dateList.add(date2);
+        dateList.add(date3);
 
         when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
         when(jobApplicationRepository.save(mockApplication)).thenReturn(mockApplication);
 
-        employerService.addAppointmentByJobApplicationId(mockApplication.getId(), appointmentList);
+        employerService.addAppointmentByJobApplicationId(mockApplication.getId(), dateList);
         verify(jobApplicationRepository, times(1)).save(mockApplication);
         assertEquals(mockApplication.getAppointments().size(), 3);
-        assertEquals(mockApplication.getAppointments(), appointmentList);
+        List<LocalDateTime> dateEnd = new ArrayList<>();
+        for (Appointment appointment : mockApplication.getAppointments()) {
+            dateEnd.add(appointment.getAppointmentDate());
+        }
+
+        assertEquals(dateEnd, dateList);
     }
 
 }

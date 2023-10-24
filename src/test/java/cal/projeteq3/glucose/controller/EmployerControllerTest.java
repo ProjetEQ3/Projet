@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -17,7 +18,7 @@ import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -25,12 +26,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,14 +55,18 @@ public class EmployerControllerTest {
 	@MockBean
 	private UserRepository userRepository;
 
+	@Autowired
+	private JwtTokenProvider jwtTokenProvider;
+
 	private ObjectMapper objectMapper;
-	private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsb3Vpc0Bwcm9mZXNzaW9ubmVsLmNvbSIsImlhdCI6MTY5NzU4NjE1MSwiZXhwIjoxNjk3NjcyNTUxLCJhdXRob3JpdGllcyI6W3siYXV0aG9yaXR5IjoiRU1QTE9ZRVIifV19.hJIbfTguzJfkNzxYQDaJGI6jLjMEq0rhJyXBMY5U_wg";
+	private String token;
 
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
 		objectMapper = new ObjectMapper();
 		when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Employer.builder().build()));
+		this.token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("louis@professionnel.com", "Ose12345"));
 	}
 
 	private RegisterEmployerDTO createRegisterEmployer(String email, String password, String firstName, String lastName, String organisationName, String organisationPhone){
@@ -623,5 +630,38 @@ public class EmployerControllerTest {
 						.put("/employer/offer/refuse/{jobApplicationDTO}", nullId)
 						.header("Authorization", token))
 				.andExpect(MockMvcResultMatchers.status().is(404));
+	}
+
+	@Test
+	public void addSuggestedAppointment_valid() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+
+		List<AppointmentDTO> appointments = new ArrayList<>();
+		for (LocalDateTime date : dates) {
+			AppointmentDTO app = new AppointmentDTO();
+			app.setAppointmentDate(date);
+			appointments.add(app);
+		}
+
+		jobApplicationDTO.setAppointments(appointments);
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenReturn(jobApplicationDTO);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
 	}
 }

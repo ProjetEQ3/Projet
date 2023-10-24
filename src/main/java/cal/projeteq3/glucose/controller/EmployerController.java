@@ -11,11 +11,13 @@ import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -92,8 +94,8 @@ public class EmployerController{
 	}
 
 	@PutMapping("/offer/appointment/{applicationId}")
-	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestParam List<Appointment> dates){
-		Validation.validateAppointmentList(dates);
+	public ResponseEntity<JobApplicationDTO> addSuggestedAppointment(@PathVariable Long applicationId, @RequestBody List<LocalDateTime> dates){
+		Validation.validateAppointmentDate(dates);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));

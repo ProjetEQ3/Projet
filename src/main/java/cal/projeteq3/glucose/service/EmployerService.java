@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -167,10 +169,17 @@ public class EmployerService{
 	}
 
 	//EQ3-17
-	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, List<Appointment> appointment){
+	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, List<LocalDateTime> dates){
+		List<Appointment> appointmentList = dates.stream()
+				.map(time -> {
+					Appointment appointment = new Appointment();
+					appointment.setAppointmentDate(time);
+					return appointment;
+				})
+				.toList();
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
-		for(Appointment app : appointment){
+		for(Appointment app : appointmentList){
 			app.setJobApplication(jobApplication);
 			jobApplication.addAppointment(app);
 			appointmentRepository.save(app);

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,10 @@ private Long id;
         this.jobApplication = new JobApplicationDTO(appointment.getJobApplication());
         this.appointmentDate = appointment.getAppointmentDate();
         this.isChosen = appointment.isChosen();
+    }
+
+    public static List<Appointment> toList(List<AppointmentDTO> appointments) {
+        return appointments.stream().map(AppointmentDTO::toEntity).toList();
     }
 
     public Appointment toEntity(){
