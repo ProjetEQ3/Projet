@@ -132,11 +132,11 @@ class UserControllerTest {
     @Test
     void getMe_InvalidUser() throws Exception {
         // Arrange
-        when(userService.getMe(token)).thenReturn(null);
+        when(userService.getMe("Blablabla")).thenReturn(null);
 
         // Act and Assert
         mockMvc.perform(get("/user/me")
-                        .header("Authorization", token)
+                        .header("Authorization", "Blablabla")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized());
     }

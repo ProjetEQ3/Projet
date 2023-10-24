@@ -1,11 +1,14 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
-import {useTranslation} from "react-i18next";
-import {Axios} from "axios";
-import {axiosInstance} from "../../App";
 
-const StudentList = ({ offer }) => {
-    const { t } = useTranslation();
+const StudentList = ({ offer, setSelectedOffer }) => {
+    const filterStudentList = (jobApplicationId) => {
+        const updatedOffer = {
+            ...offer,
+            students: offer.students.filter((student) => student.jobApplications[0] !== jobApplicationId)
+        };
+        setSelectedOffer(updatedOffer);
+    }
 
     return (
         <div className="container">
@@ -13,7 +16,7 @@ const StudentList = ({ offer }) => {
                 <div className="col-12">
                     {offer.students.map((student, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={student} />
+                            <ShortStudentInfo student={student} filterStudentList={filterStudentList}/>
                         </div>
                     ))}
                 </div>

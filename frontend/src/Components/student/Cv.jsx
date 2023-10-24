@@ -29,7 +29,7 @@ function Cv({user, setCv}){
 					setIsLoading(false)
 				})
 				.catch((error) => {
-					toast.error(t('pushingError') + t(error.response.data.message))
+					toast.error(t('pushingError') + t(error.response?.data.message))
 					setIsLoading(false)
 				})
 		}else{
@@ -48,7 +48,7 @@ function Cv({user, setCv}){
 				setIsLoading(false)
 			})
 			.catch((error) => {
-				toast.error(t('pushingError') + error.response.data.message)
+				toast.error(t('pushingError') + error.response?.data.message)
 				setIsLoading(false)
 			})
 	}

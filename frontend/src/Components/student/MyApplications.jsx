@@ -29,7 +29,7 @@ function MyApplications({ user }) {
                 });
                 setMyApplications(jobOffers);
             } catch (error) {
-                toast.error(t('fetchError') + t(error.response.data.message));
+                toast.error(t('fetchError') + t(error.response?.data.message));
             }
         }
         fetchMyApplications();

@@ -19,6 +19,7 @@ import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -533,13 +534,13 @@ public class EmployerControllerTest {
 	}
 
 	@Test
-	public void getStudentsByJobOffer() throws Exception {
+	public void getPendingStudentsByJobOffer() throws Exception {
 		// Arrange
 		StudentDTO studentDTO = new StudentDTO("John", "Doe", "1234567", Department._420B0);
 		List<StudentDTO> studentDTOs = new ArrayList<>(List.of(studentDTO));
 		Long jobOfferId = 1L;
 
-		when(employerService.getStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
+		when(employerService.getPendingStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
 
 		// Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders
@@ -663,5 +664,183 @@ public class EmployerControllerTest {
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+	}
+
+	@Test
+	public void addSuggestedAppointment_LessThan3Dates() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+
+		List<AppointmentDTO> appointments = new ArrayList<>();
+		for (LocalDateTime date : dates) {
+			AppointmentDTO app = new AppointmentDTO();
+			app.setAppointmentDate(date);
+			appointments.add(app);
+		}
+
+		jobApplicationDTO.setAppointments(appointments);
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void addSuggestedAppointment_MoreThan5Dates() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+		dates.add(LocalDateTime.now().plusDays(4));
+		dates.add(LocalDateTime.now().plusDays(5));
+		dates.add(LocalDateTime.now().plusDays(6));
+
+		List<AppointmentDTO> appointments = new ArrayList<>();
+		for (LocalDateTime date : dates) {
+			AppointmentDTO app = new AppointmentDTO();
+			app.setAppointmentDate(date);
+			appointments.add(app);
+		}
+
+		jobApplicationDTO.setAppointments(appointments);
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void addSuggestedAppointment_DateNull() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = null;
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(400));
+	}
+
+	@Test
+	public void addSuggestedAppointment_DateEmpty() throws Exception {
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void addSuggestedAppointment_WithSameDate() throws Exception{
+		Long applicationId = 1L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+		dates.add(LocalDateTime.now().plusDays(3));
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+	@Test
+	public void addSuggestedAppointment_IdNull() throws Exception{
+		Long applicationId = null;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(applicationId);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+		dates.add(LocalDateTime.now().plusDays(3));
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(404));
+	}
+
+	@Test
+	public void addSuggestedAppointment_IdInexistant() throws Exception{
+		Long applicationId = 999L;
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(1L);
+		List<LocalDateTime> dates = new ArrayList<>();
+		dates.add(LocalDateTime.now().plusDays(1));
+		dates.add(LocalDateTime.now().plusDays(2));
+		dates.add(LocalDateTime.now().plusDays(3));
+		dates.add(LocalDateTime.now().plusDays(3));
+
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
+
+		objectMapper.registerModule(new JavaTimeModule());
+		String content = objectMapper.writeValueAsString(dates);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(content))
+				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
 }

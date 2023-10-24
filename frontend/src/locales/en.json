@@ -95,6 +95,9 @@
   "home": "Home",
   "hoursPerWeek": "Hours per Week",
   "hello": "Hello ",
+  "hire": "Hire",
+  "hireStudentSuccess": "Student hired",
+  "hireStudentError": "Error hiring student :",
   "hoursPerWeekRequired": "Hours per week are required.",
   "hoursPerWeekMustBePositive": "Hours per week must be positive.",
 
@@ -103,6 +106,7 @@
   "internshipDescription": "Offer Description",
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
+  "interviewedStudents": "Interviewed Students",
 
   "jobOffers": "Internships",
 

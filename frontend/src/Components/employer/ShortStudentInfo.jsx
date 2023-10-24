@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ student }) => {
+const ShortStudentInfo = ({ student, filterStudentList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
@@ -19,13 +19,21 @@ const ShortStudentInfo = ({ student }) => {
 
     const handleConvoke = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], {dates: dates})
+        for (let date of dates) {
+            if (date < todayDate) {
+                toast.error(t('convokeError') + t('convokeErrorMin'));
+                return;
+            }
+        }
+        axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
+                filterStudentList(student.jobApplications[0]);
             })
             .catch((error) => {
                 toast.error(t('convokeError') + t(error.response?.data?.message));
             })
+        filterStudentList(student.jobApplications[0]);
     }
     const handleDecline = (e) => {
         e.preventDefault();
@@ -36,6 +44,7 @@ const ShortStudentInfo = ({ student }) => {
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
             })
+
     }
     const modifyDates = (nb) => {
         if (nb > 0) {

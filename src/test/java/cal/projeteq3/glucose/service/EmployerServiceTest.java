@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
@@ -626,12 +627,13 @@ public class EmployerServiceTest {
 
 
     @Test
-    public void testGetStudentsByJobOfferId_full() {
+    public void testGetPendingStudentsByJobOfferId_full() {
         Long testJobOfferId = 1L;
 
         // Arrange the mock objects
         JobOffer mockJobOffer = new JobOffer();
         JobApplication mockJobApplication = new JobApplication();
+        mockJobApplication.setJobApplicationState(JobApplicationState.SUBMITTED);
         mockJobApplication.setId(1L);
 
         Student mockStudent = Student.builder()
@@ -646,7 +648,8 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
+
 
         // Assert the results
         assertNotNull(result);
@@ -659,7 +662,7 @@ public class EmployerServiceTest {
     }
 
     @Test
-    void testGetStudentsByJobOfferId_empty(){
+    void testGetPendingStudentsByJobOfferId_empty(){
         // Arrange
         Long testJobOfferId = 1L;
         JobOffer mockJobOffer = new JobOffer();
@@ -667,7 +670,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
 
         // Assert
         assertNotNull(result);
@@ -676,14 +679,14 @@ public class EmployerServiceTest {
     }
 
     @Test
-    void testGetStudentsByJobOfferId_NotFound(){
+    void testGetPendingStudentsByJobOfferId_NotFound(){
         // Arrange
         Long testJobOfferId = 99L;
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(JobOfferNotFoundException.class, () ->
-                employerService.getStudentsByJobOfferId(testJobOfferId));
+                employerService.getPendingStudentsByJobOfferId(testJobOfferId));
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
     @Test
@@ -791,7 +794,30 @@ public class EmployerServiceTest {
             dateEnd.add(appointment.getAppointmentDate());
         }
 
+        assertNotNull(mockApplication);
+        assertEquals(jobOffer.getId(), mockApplication.getJobOffer().getId());
+        assertEquals(student.getId(), mockApplication.getStudent().getId());
+        assertEquals(applicationId, mockApplication.getId());
         assertEquals(dateEnd, dateList);
     }
 
+    @Test
+    public void testAddAppointmentByApplicationId_NullId() {
+        Long applicationId = null;
+
+        List<LocalDateTime> dateList = new ArrayList<>();
+
+        assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
+
+    }
+
+    @Test
+    public void testAddAppointmentByApplicationId_InexistantId() {
+        Long applicationId = 999L;
+
+        List<LocalDateTime> dateList = new ArrayList<>();
+
+        assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
+
+    }
 }
