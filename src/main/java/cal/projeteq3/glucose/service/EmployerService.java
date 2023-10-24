@@ -193,7 +193,11 @@ public class EmployerService{
 		return jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId).stream().map(JobApplicationDTO::new).collect(Collectors.toList());
 	}
 
-	public List<StudentDTO> getConvokedStudents(Long employerId, Semester semester) {
-		throw new UnsupportedOperationException();
+	public List<StudentDTO> getWaitingStudents(Long employerId, Semester semester) {
+		return jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId).stream()
+				.filter(jobApplication -> jobApplication.getJobOffer().getSemester().equals(semester))
+				.filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.WAITING_APPOINTMENT))
+				.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
+				.collect(Collectors.toList());
 	}
 }
