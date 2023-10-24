@@ -206,9 +206,9 @@
 
   "yourInternship": "Your internship offers",
 
-  "noAppointments": "No appointments at the moment",
-  "seeAppointments": "See appointments",
-  "appointments": "Appointments",
-  "select": "Select",
-  "selectedAppointment": "Selected appointment"
+  "noAppointments": "No appointments available",
+  "appointments": "Pending appointments",
+  "chooseAppointment": "Choose an appointment",
+  "appointmentChosen": "You have chosen this appointment",
+  "noAppointmentSelected": "You have not selected an appointment"
 }

@@ -206,9 +206,9 @@
 
   "yourInternship": "Vos offres de stages",
 
-  "noAppointments": "Aucun rendez-vous pour le moment",
-  "seeAppointments": "Voir les rendez-vous",
-  "appointments": "Rendez-vous",
-  "select": "Sélectionner",
-  "selectedAppointment": "Rendez-vous sélectionné"
+  "noAppointments": "Aucun rendez-vous proposé pour le moment",
+  "appointments": "Rendez-vous possibles",
+  "chooseAppointment": "Choisir un rendez-vous",
+  "appointmentChosen": "Rendez-vous choisi: ",
+  "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous"
 }
