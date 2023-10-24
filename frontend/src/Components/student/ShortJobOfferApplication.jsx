@@ -13,25 +13,27 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
     const [appointments, setAppointments] = useState([]);
     const [checkboxValue, setCheckboxValue] = useState(false);
 
-    useEffect(() => {
-        fetchAppointments();
-    }, [user, jobOffer]);
 
-    const fetchAppointments = async () => {
-        setAppointments([]);
-        await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
-            .then((response) => {
-                response.data.map((appointment) => {
-                    const newAppointment = new Appointment();
-                    newAppointment.init(appointment);
-                    setAppointments((appointments) => [...appointments, newAppointment]);
+    useEffect(() => {
+        const fetchAppointments = async () => {
+            setAppointments([]);
+            await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
+                .then((response) => {
+                    const newAppointments = response.data.map((appointment) => {
+                        const newAppointment = new Appointment();
+                        newAppointment.init(appointment);
+                        console.log("Appointment: ", newAppointment);
+                        return newAppointment;
+                    });
+                    setAppointments(newAppointments);
+                })
+                .catch((error) => {
+                    console.error("Error fetching appointments:", error);
+                    toast.error(t('errorFetchingAppointments'));
                 });
-            })
-            .catch((error) => {
-                console.error("Error fetching appointments:", error);
-                toast.error(t('errorFetchingAppointments'));
-            });
-    };
+        };
+        fetchAppointments();
+    }, [user, jobOffer, t]);
 
     function handleChosenAppointment(e) {
         e.preventDefault();
