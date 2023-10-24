@@ -6,9 +6,6 @@ import ShortJobOffer from "./ShortJobOffer";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCalendar, faClock, faPenToSquare, faX} from "@fortawesome/free-solid-svg-icons";
-import Appointment from "../../model/Appointment";
 
 function MyApplications({ user }) {
     const {t} = useTranslation();

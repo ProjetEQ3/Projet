@@ -19,12 +19,13 @@ const ShortJobOffer = ({ user, jobOffer }) => {
     }, [user, jobOffer]);
 
     const fetchAppointments = async () => {
+        setAppointments([]);
         await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
             .then((response) => {
                 response.data.map((appointment) => {
                     const newAppointment = new Appointment();
                     newAppointment.init(appointment);
-                    return newAppointment;
+                    setAppointments((appointments) => [...appointments, newAppointment]);
                 });
             })
             .catch((error) => {
@@ -57,7 +58,7 @@ const ShortJobOffer = ({ user, jobOffer }) => {
     }
 
     function appointmentChosable() {
-        console.log("Appointments: ", appointments)
+        console.log("Job offer state: ", jobOffer.jobOfferState)
         if (appointments.length === 0) return false;
         return jobOffer.jobOfferState === "CONVOKED";
     }
@@ -81,7 +82,7 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointmentChosable === true ?  (
+                    {appointmentChosable() === true ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target="#appointmentModal">
