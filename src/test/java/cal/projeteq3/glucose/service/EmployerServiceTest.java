@@ -818,4 +818,26 @@ public class EmployerServiceTest {
         assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
 
     }
+
+    @Test
+    public void getAllJobApplicationsByEmployerId_Valid(){
+        // Arrange
+        Long employerId = 123L;
+        List<JobApplication> jobApplications = new ArrayList<>();
+        jobApplications.add(new JobApplication(/* create a JobApplication instance here */));
+        jobApplications.add(new JobApplication(/* create another JobApplication instance here */));
+
+        when(jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId)).thenReturn(jobApplications);
+
+        // Act
+        List<JobApplicationDTO> jobApplicationDTOs = employerService.getAllJobApplicationsByEmployerId(employerId);
+
+        // Assert
+        assertEquals(jobApplications.size(), jobApplicationDTOs.size());
+    }
+
+    @Test
+    public void getWaitingStudents_Valid(){
+
+    }
 }
