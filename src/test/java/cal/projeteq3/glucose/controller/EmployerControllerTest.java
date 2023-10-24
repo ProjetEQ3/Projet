@@ -839,4 +839,48 @@ public class EmployerControllerTest {
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
+
+	@Test
+	public void getWaitingStudents_valid() throws Exception {
+		 Long employerId = 1L;
+		 Semester currentSemester = new Semester(LocalDate.now());
+		 String season = currentSemester.getSeason().toString();
+		 String year = String.valueOf(currentSemester.getYear());
+		 List<StudentDTO> studentDTOs = new ArrayList<>(List.of(
+				 new StudentDTO("John", "Doe", "1234567", Department._420B0)
+		 ));
+
+		 when(employerService.getWaitingStudents(employerId, new Semester(LocalDate.now()))).thenReturn(studentDTOs);
+
+		 mockMvc.perform(MockMvcRequestBuilders
+				 .get("/employer/waitingStudents")
+				 .header("Authorization", token)
+				 .param("employerId", employerId.toString())
+				 .param("season", season)
+				 .param("year", year)
+				 .contentType(MediaType.APPLICATION_JSON))
+				 .andExpect(MockMvcResultMatchers.status().isAccepted())
+				 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
+	}
+
+	@Test
+	public void getWaitingStudents_InvalidSemester() throws Exception {
+		Long employerId = 1L;
+		List<StudentDTO> studentDTOs = new ArrayList<>(List.of(
+				new StudentDTO("John", "Doe", "1234567", Department._420B0)
+		));
+
+		when(employerService.getWaitingStudents(employerId, new Semester(LocalDate.now()))).thenReturn(studentDTOs);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/waitingStudents")
+						.header("Authorization", token)
+						.param("employerId", employerId.toString())
+						.param("season", "FALL")
+						.param("year", "2021")
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
+
+	}
 }

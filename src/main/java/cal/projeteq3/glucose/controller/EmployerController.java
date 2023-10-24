@@ -100,7 +100,7 @@ public class EmployerController{
 	}
 
 	@GetMapping("/waitingStudents")
-	public ResponseEntity<List<StudentDTO>> getConvokedStudents(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
+	public ResponseEntity<List<StudentDTO>> getWaitingStudents(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
 		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
@@ -108,7 +108,7 @@ public class EmployerController{
 	}
 
 	@GetMapping("/offerByApplication")
-	public ResponseEntity<JobOfferDTO> getJobOfferByApplicationId(@RequestParam Long applicationId){
+	public ResponseEntity<JobOfferDTO> getOfferByApplicationId(@RequestParam Long applicationId){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getJobOfferByApplicationId(applicationId));
