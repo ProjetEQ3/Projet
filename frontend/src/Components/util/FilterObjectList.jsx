@@ -98,7 +98,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					<div className="d-flex align-items-center me-2">
 						<span className="me-1">Page</span>
 						{
-							totalPages > 1 ?
+							totalPages > 0 ?
 							<span>{currentPage}</span> :
 							<span>0</span>
 						}

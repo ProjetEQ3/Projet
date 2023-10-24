@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ student }) => {
+const ShortStudentInfo = ({ student, filterStudentList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
@@ -22,6 +22,7 @@ const ShortStudentInfo = ({ student }) => {
         axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
+                filterStudentList(student.jobApplications[0]);
             })
             .catch((error) => {
                 toast.error(t('convokeError') + t(error.response?.data?.message));

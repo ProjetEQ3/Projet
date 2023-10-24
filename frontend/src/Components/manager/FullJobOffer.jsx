@@ -25,7 +25,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApp
                 updateJobOfferListAfterApprovalOrRefusal("OPEN", jobOffer);
             })
             .catch((error) => {
-                toast.error(t('pushingError') + t(error.response.data.message))
+                toast.error(t('pushingError') + t(error.response?.data.message))
             })
     }
 
@@ -61,7 +61,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApp
                 updateJobOfferListAfterApprovalOrRefusal("REFUSED", jobOffer);
             })
             .catch((error) => {
-                toast.error(t('pushingError') + t(error.response.data.message))
+                toast.error(t('pushingError') + t(error.response?.data.message))
             })
         setIsDecline(false)
     }

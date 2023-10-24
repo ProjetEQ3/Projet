@@ -534,13 +534,13 @@ public class EmployerControllerTest {
 	}
 
 	@Test
-	public void getStudentsByJobOffer() throws Exception {
+	public void getPendingStudentsByJobOffer() throws Exception {
 		// Arrange
 		StudentDTO studentDTO = new StudentDTO("John", "Doe", "1234567", Department._420B0);
 		List<StudentDTO> studentDTOs = new ArrayList<>(List.of(studentDTO));
 		Long jobOfferId = 1L;
 
-		when(employerService.getStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
+		when(employerService.getPendingStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
 
 		// Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders

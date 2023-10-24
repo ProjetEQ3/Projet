@@ -627,12 +627,13 @@ public class EmployerServiceTest {
 
 
     @Test
-    public void testGetStudentsByJobOfferId_full() {
+    public void testGetPendingStudentsByJobOfferId_full() {
         Long testJobOfferId = 1L;
 
         // Arrange the mock objects
         JobOffer mockJobOffer = new JobOffer();
         JobApplication mockJobApplication = new JobApplication();
+        mockJobApplication.setJobApplicationState(JobApplicationState.SUBMITTED);
         mockJobApplication.setId(1L);
 
         Student mockStudent = Student.builder()
@@ -647,7 +648,8 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
+
 
         // Assert the results
         assertNotNull(result);
@@ -660,7 +662,7 @@ public class EmployerServiceTest {
     }
 
     @Test
-    void testGetStudentsByJobOfferId_empty(){
+    void testGetPendingStudentsByJobOfferId_empty(){
         // Arrange
         Long testJobOfferId = 1L;
         JobOffer mockJobOffer = new JobOffer();
@@ -668,7 +670,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
 
         // Assert
         assertNotNull(result);
@@ -677,14 +679,14 @@ public class EmployerServiceTest {
     }
 
     @Test
-    void testGetStudentsByJobOfferId_NotFound(){
+    void testGetPendingStudentsByJobOfferId_NotFound(){
         // Arrange
         Long testJobOfferId = 99L;
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(JobOfferNotFoundException.class, () ->
-                employerService.getStudentsByJobOfferId(testJobOfferId));
+                employerService.getPendingStudentsByJobOfferId(testJobOfferId));
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
     @Test

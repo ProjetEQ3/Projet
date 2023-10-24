@@ -1,9 +1,10 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
-import {useTranslation} from "react-i18next";
 
 const StudentList = ({ offer }) => {
-    const { t } = useTranslation();
+    const filterStudentList = (jobApplicationId) => {
+        offer.students = offer.students.filter((student) => student.jobApplications[0] !== jobApplicationId);
+    }
 
     return (
         <div className="container">
@@ -11,7 +12,7 @@ const StudentList = ({ offer }) => {
                 <div className="col-12">
                     {offer.students.map((student, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={student} />
+                            <ShortStudentInfo student={student} filterStudentList={filterStudentList}/>
                         </div>
                     ))}
                 </div>

@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import ShortInterviewedStudentInfo from "./ShortInterviewedStudentInfo";
-import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../App";
 
 const StudentList = ({user}) => {
-    const { t } = useTranslation();
     const [studentList, setStudentList] = useState([]);
 
     useEffect(() => {
