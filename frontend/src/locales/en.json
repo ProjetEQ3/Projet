@@ -126,7 +126,7 @@
   "matriculeRequired": "College ID is required.",
 
   "noJobOffers": "You have no applications.",
-  "noStudent": "No students have applied at the moment",
+  "noStudent": "No students have applied since the last time you visited.",
   "noCV": "No CV uploaded",
   "noInternship": "No internship offers at the moment",
   "noOpenInternship": "No open internship offers at the moment",

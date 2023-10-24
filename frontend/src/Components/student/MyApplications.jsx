@@ -42,7 +42,7 @@ function MyApplications({ user }) {
                 <div>
                     <FilterObjectList
                         items={myApplications}
-                        attributes={["title", "companyName", "location", "jobOfferState.select:Status"]}
+                        attributes={['title:' + t('internshipTitle')]}
                         selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
                         renderItem={(filteredJobOffers) => (
                             <div>
