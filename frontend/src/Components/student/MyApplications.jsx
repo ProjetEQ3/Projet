@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faClock, faPenToSquare, faX} from "@fortawesome/free-solid-svg-icons";
+import Appointment from "../../model/Appointment";
 
 function MyApplications({ user }) {
     const {t} = useTranslation();
@@ -36,6 +37,8 @@ function MyApplications({ user }) {
         fetchMyApplications();
     }, [user, navigate]);
 
+
+
     return (
         <div>
             {myApplications.length === 0 ? (
@@ -49,7 +52,7 @@ function MyApplications({ user }) {
                         renderItem={(filteredJobOffers) => (
                             <div>
                                 {filteredJobOffers.map((offer, index) => (
-                                    <ShortJobOffer user={user} jobOffer={offer} key={offer.id}/>
+                                        <ShortJobOffer user={user} jobOffer={offer} key={index}/>
                                 ))}
                             </div>
                         )}

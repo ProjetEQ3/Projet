@@ -56,22 +56,18 @@ const ShortJobOffer = ({ user, jobOffer }) => {
         return result;
     }
 
+    function appointmentChosable() {
+        console.log("Appointments: ", appointments)
+        if (appointments.length === 0) return false;
+        return jobOffer.jobOfferState === "CONVOKED";
+    }
+
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-    function appointmentChosable() {
-        if (appointments.length > 0) return false;
-
-        for (let i = 0; i < appointments.length; i++) {
-            if (appointments[i].appointmentDate !== null) return false;
-            if (appointments[i].isChosen) return false;
-        }
-        console.log("appointments: ", appointments)
-        return true;
-    }
 
     return (
         <div className={`row ${!isHovered ? "m-2" : "m-1 shadow"}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -85,7 +81,7 @@ const ShortJobOffer = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointmentChosable ?  (
+                    {appointmentChosable === true ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target="#appointmentModal">
