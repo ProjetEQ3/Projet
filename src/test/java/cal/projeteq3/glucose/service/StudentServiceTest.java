@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
@@ -25,10 +26,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +56,9 @@ public class StudentServiceTest {
     private JobOfferRepository jobOfferRepository;
     @Mock
     private JobApplicationRepository jobApplicationRepository;
+
+    @Mock
+    private AppointmentRepository appointmentRepository;
 
     @InjectMocks
     private StudentService studentService;
@@ -820,6 +821,57 @@ public class StudentServiceTest {
 
     }
 
+    @Test
+    public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() {
 
+        // todo : what the hellllll
+
+    }
+
+    @Test
+    public void setAppointmentToChosen_ExistingId() {
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(1L);
+        jobApplication.setJobOffer(new JobOffer());
+
+        Student student = new Student();
+        student.setCredentials(new Credentials());
+        student.setRole(Role.STUDENT);
+
+        jobApplication.setStudent(student);
+
+        Appointment appointmentBeforeChosen = new Appointment();
+        appointmentBeforeChosen.setId(1L);
+        appointmentBeforeChosen.setJobApplication(jobApplication);
+
+        Appointment appointmentAfterChosen = new Appointment();
+        appointmentAfterChosen.setId(1L);
+        appointmentAfterChosen.setJobApplication(jobApplication);
+        appointmentAfterChosen.setChosen(true);
+
+        AppointmentDTO appointmentDTO = new AppointmentDTO(appointmentAfterChosen);
+
+        when(appointmentRepository.findById(1L)).thenReturn(Optional.of(appointmentBeforeChosen));
+        when(appointmentRepository.save(appointmentBeforeChosen)).thenReturn(appointmentAfterChosen);
+
+        AppointmentDTO retrievedAppointment = studentService.setAppointmentToChosen(1L);
+
+        assertEquals(retrievedAppointment.isChosen(), appointmentDTO.isChosen());
+
+    }
+
+    @Test
+    public void setAppointmentToChosen_NotExistingId() {
+
+        when(appointmentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        AppointmentNotFoundException exception = assertThrows(AppointmentNotFoundException.class, () -> {
+            studentService.setAppointmentToChosen(1L);
+        });
+
+        assertNotNull(exception);
+
+    }
 
 }
