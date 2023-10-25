@@ -8,11 +8,15 @@ import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -21,6 +25,7 @@ import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.StudentService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +51,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringJUnitConfig(classes = {StudentController.class, CustomExceptionHandler.class,
@@ -537,22 +541,47 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void setAppointmentToChosen_ExistingId() {
+    public void setAppointmentToChosen_ExistingId() throws Exception {
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(1L);
+        jobApplication.setJobOffer(new JobOffer());
+
+        Student student = new Student();
+        student.setCredentials(new Credentials());
+        student.setRole(Role.STUDENT);
+
+        jobApplication.setStudent(student);
 
         Appointment appointmentBeforeChosen = new Appointment();
         appointmentBeforeChosen.setId(1L);
+        appointmentBeforeChosen.setJobApplication(jobApplication);
 
         Appointment appointmentAfterChosen = appointmentBeforeChosen;
         appointmentAfterChosen.setChosen(true);
 
+        AppointmentDTO appointmentDTO = new AppointmentDTO(appointmentAfterChosen);
 
+        String expectedJson = objectMapper.writeValueAsString(appointmentDTO);
+
+        when(studentService.setAppointmentToChosen(1L)).thenReturn(appointmentDTO);
+
+        mockMvc.perform(put("/student/setAppointmentToChosen/{id}", 1L)
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(expectedJson));
 
     }
 
     @Test
-    public void setAppointmentToChosen_NotExistingId() {
+    public void setAppointmentToChosen_NotExistingId() throws Exception {
 
+        when(studentService.setAppointmentToChosen(1L)).thenThrow(new AppointmentNotFoundException());
 
+        mockMvc.perform(put("/student/setAppointmentToChosen/{id}", 1L)
+                        .header("Authorization", token))
+                .andExpect(status().isNotAcceptable())
+                .andExpect(jsonPath("$.message").value("Appointment does not exist."));
 
     }
 
