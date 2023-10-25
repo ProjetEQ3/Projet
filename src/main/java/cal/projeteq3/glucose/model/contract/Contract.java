@@ -11,11 +11,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 @Getter
 @AllArgsConstructor
@@ -81,9 +84,10 @@ public class Contract {
     public byte[] generateContractPDF() {
 
         Document document = new Document();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try{
-            PdfWriter.getInstance(document, new FileOutputStream("Contract.pdf"));
+            PdfWriter.getInstance(document, outputStream);
             document.open();
 
             document.addTitle("Contract");
@@ -94,7 +98,10 @@ public class Contract {
             document.add(new Paragraph("Contract paragraphe test"));
             document.close();
 
-            return Files.readAllBytes(Paths.get("Contract.pdf"));
+            byte[] bytes = outputStream.toByteArray();
+
+            return Base64.getEncoder().encode(bytes);
+
         }catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
