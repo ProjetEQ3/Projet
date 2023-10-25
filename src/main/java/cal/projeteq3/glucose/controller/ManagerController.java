@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
+import cal.projeteq3.glucose.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ public class ManagerController {
 
     private final ManagerService managerService;
     private final EmployerService employerService;
+    private final UserService userService;
 
 //    JobOffer
     @GetMapping("/jobOffers/all")
@@ -91,6 +93,13 @@ public class ManagerController {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getSubmittedCv());
+    }
+
+    @GetMapping("/contract/{contractId}")
+    public ResponseEntity<byte[]> getContract(@PathVariable Long contractId){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(userService.generateContractPDF(contractId));
     }
 
 }
