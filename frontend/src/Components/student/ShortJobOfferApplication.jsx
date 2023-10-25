@@ -6,7 +6,7 @@ import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 import { axiosInstance } from "../../App";
 import Appointment from "../../model/Appointment";
 
-const ShortJobOfferApplication = ({ user, jobOffer }) => {
+const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
     const { t } = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -22,7 +22,6 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
                     const newAppointments = response.data.map((appointment) => {
                         const newAppointment = new Appointment();
                         newAppointment.init(appointment);
-                        console.log("Appointment: ", newAppointment);
                         return newAppointment;
                     });
                     setAppointments(newAppointments);
@@ -43,9 +42,14 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
             return;
         }
 
-        console.log("Selected appointment: ", selectedAppointmentValue); // Change to API call
-
-        toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(selectedAppointmentValue));
+        axiosInstance.put(`/student/setAppointmentToChosen/${appointments[0].id}`)
+            .then((response) => {
+                toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(selectedAppointmentValue));
+                setCheckboxValue(true)
+            })
+            .catch(() => {
+                toast.error(t('errorChoosingAppointment'));
+            });
         setCheckboxValue(true)
     }
 
@@ -56,12 +60,6 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
         result += appointment.split("T")[1].split(":").slice(0, 2).join(":");
 
         return result;
-    }
-
-    function appointmentChosable() {
-        console.log("Job offer state: ", jobOffer.jobOfferState)
-        if (appointments.length === 0) return false;
-        return jobOffer.jobOfferState === "CONVOKED";
     }
 
     const handleMouseEnter = () => {
@@ -83,17 +81,17 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {appointmentChosable() === true ?  (
+                    {   appointments.length !== 0 && appointments[0].jobApplication.jobApplicationState === "CONVOKED" ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
-                                 data-bs-target="#appointmentModal">
+                                 data-bs-target={"#appointmentModal" + index}>
                                 <button className="btn btn-outline-ose my-auto"
                                         data-testid="appointment-button">
                                     {t('chooseAppointment')}
                                     <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
                                 </button>
                             </div>
-                            <div id="appointmentModal" className="modal">
+                            <div id={"appointmentModal" + index} className="modal">
                                 <div className="modal-dialog">
                                     <div className="modal-content">
                                         <div className="modal-header">
@@ -138,7 +136,16 @@ const ShortJobOfferApplication = ({ user, jobOffer }) => {
                                 </div>
                             </div>
                         </div>
-                    ): (
+                    ) : appointments.length !== 0 && appointments[0].jobApplication.jobApplicationState === "WAITING_APPOINTMENT" ? (
+                        <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
+                            <div className="text-end text-sm-center mb-2">
+                                <button className="btn btn-outline-ose my-auto" data-testid="waiting-appointment-button-testid" disabled>
+                                    {t('chosenAppointment')}
+                                    <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
                         <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2">
                                 <button className="btn btn-outline-ose my-auto" data-testid="no-appointment-button-testid" disabled>

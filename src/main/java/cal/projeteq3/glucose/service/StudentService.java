@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -180,16 +181,16 @@ public class StudentService {
     }
 
     public AppointmentDTO setAppointmentToChosen(Long id) {
-        Optional<Appointment> existingAppointment = appointmentRepository.findById(id);
-        if(existingAppointment.isPresent()) {
-            Appointment appointment = existingAppointment.get();
-
-            appointment.setChosen(true);
-
-            return new AppointmentDTO(appointmentRepository.save(appointment));
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow(AppointmentNotFoundException::new);
+        Long jobApplicationId = appointment.getJobApplication().getId();
+        List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(jobApplicationId);
+        for (Appointment siblingAppointment : appointments) {
+            if ((long) siblingAppointment.getId() != appointment.getId()) {
+                jobApplicationRepository.deleteById(siblingAppointment.getId());
+            }
         }
-
-        throw new AppointmentNotFoundException(id);
+        appointment.setChosen(true);
+        return new AppointmentDTO(appointmentRepository.save(appointment));
     }
 
 }
