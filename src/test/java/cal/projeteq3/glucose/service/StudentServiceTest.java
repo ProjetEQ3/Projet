@@ -845,9 +845,7 @@ public class StudentServiceTest {
         appointmentBeforeChosen.setId(1L);
         appointmentBeforeChosen.setJobApplication(jobApplication);
 
-        Appointment appointmentAfterChosen = new Appointment();
-        appointmentAfterChosen.setId(1L);
-        appointmentAfterChosen.setJobApplication(jobApplication);
+        Appointment appointmentAfterChosen = appointmentBeforeChosen;
         appointmentAfterChosen.setChosen(true);
 
         AppointmentDTO appointmentDTO = new AppointmentDTO(appointmentAfterChosen);

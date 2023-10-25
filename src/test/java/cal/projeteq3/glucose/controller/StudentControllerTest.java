@@ -10,6 +10,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -525,6 +526,33 @@ public class StudentControllerTest {
                         .header("Authorization", token))
                 .andExpect(status().isAccepted())
                 .andExpect(content().json(expectedJson));
+
+    }
+
+    @Test
+    public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() {
+
+        // todo : what the hell
+
+    }
+
+    @Test
+    public void setAppointmentToChosen_ExistingId() {
+
+        Appointment appointmentBeforeChosen = new Appointment();
+        appointmentBeforeChosen.setId(1L);
+
+        Appointment appointmentAfterChosen = appointmentBeforeChosen;
+        appointmentAfterChosen.setChosen(true);
+
+
+
+    }
+
+    @Test
+    public void setAppointmentToChosen_NotExistingId() {
+
+
 
     }
 
