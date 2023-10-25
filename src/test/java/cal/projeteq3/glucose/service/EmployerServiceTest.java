@@ -826,6 +826,11 @@ public class EmployerServiceTest {
         List<JobApplication> jobApplications = new ArrayList<>();
         jobApplications.add(new JobApplication(/* create a JobApplication instance here */));
         jobApplications.add(new JobApplication(/* create another JobApplication instance here */));
+        jobApplications.get(0).setStudent(Student.builder().build());
+        jobApplications.get(0).setJobOffer(JobOffer.builder().id(1L).build());
+        jobApplications.get(1).setStudent(Student.builder().build());
+        jobApplications.get(1).setJobOffer(JobOffer.builder().id(1L).build());
+
 
         when(jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId)).thenReturn(jobApplications);
 
@@ -838,6 +843,26 @@ public class EmployerServiceTest {
 
     @Test
     public void getWaitingStudents_Valid(){
+        // Arrange
+        Long employerId = 123L;
+        List<JobApplication> jobApplications = new ArrayList<>();
+        jobApplications.add(new JobApplication(/* create a JobApplication instance here */));
+        jobApplications.add(new JobApplication(/* create another JobApplication instance here */));
+        jobApplications.get(0).setStudent(Student.builder().build());
+        jobApplications.get(0).setJobOffer(JobOffer.builder().id(1L).semester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build()).build());
+        jobApplications.get(0).setSemester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
+        jobApplications.get(0).setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+        jobApplications.get(1).setStudent(Student.builder().build());
+        jobApplications.get(1).setJobOffer(JobOffer.builder().id(1L).semester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build()).build());
+        jobApplications.get(1).setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+        jobApplications.get(1).setSemester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
 
+        when(jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId)).thenReturn(jobApplications);
+
+        // Act
+        List<StudentDTO> studentDTOs = employerService.getWaitingStudents(employerId, Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
+
+        // Assert
+        assertEquals(jobApplications.size(), studentDTOs.size());
     }
 }
