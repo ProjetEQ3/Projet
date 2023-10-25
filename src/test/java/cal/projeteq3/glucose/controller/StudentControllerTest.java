@@ -527,10 +527,30 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() {
+    public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() throws Exception {
+//        Arrage
+        Student student = Student.builder().id(1L).build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).build();
+        JobApplication application = JobApplication.builder().id(2L).student(student).jobOffer(jobOffer).build();
+        List<Appointment> appointments = new ArrayList<>(
+                List.of(
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build()
+                )
+        );
+        application.setAppointments(appointments);
 
-        // todo : what the hell
+        when(studentService.findAllAppointmentsForJobOfferAndStudent(jobOffer.getId(), jobOffer.getId()))
+                .thenReturn(appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList()));
 
+//        Act & Assert
+        mockMvc.perform(get("/student/appointmentsByJobOfferIdAndStudentId/{jobOfferId}/{studentId}",
+                jobOffer.getId(), student.getId())
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 
     @Test
