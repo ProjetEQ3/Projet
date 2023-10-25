@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
-import { axiosInstance } from "../../App";
+import {axiosInstance} from "../../App";
 import Appointment from "../../model/Appointment";
-import {id} from "date-fns/locale";
 
-const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
+const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
     const { t } = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -57,21 +56,25 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                 toast.error(t('errorChoosingAppointment'));
             });
         setCheckboxValue(true);
-        fetchAppointments();
+        refresh();
     }
 
     function dateTimeToShortString(appointment) {
-        let result = "";
-        let date = new Date(appointment);
-        date.setHours(date.getUTCHours() - 12);
-        let day = ('0' + date.getDate()).slice(-2);
-        let month = ('0' + (date.getMonth() + 1)).slice(-2);
-        let year = date.getFullYear();
-        result += `${day}-${month}-${year}`;
-        let hours = ('0' + date.getUTCHours()).slice(-2);
-        let minutes = ('0' + date.getUTCMinutes()).slice(-2);
-        result += ` ${hours}:${minutes}`;
-        return result;
+        const date = new Date(appointment);
+
+        const timeZoneOffset = date.getTimezoneOffset();
+
+        date.setMinutes(date.getMinutes() - timeZoneOffset);
+
+        const options = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        };
+
+        return date.toLocaleString('fr-CA', options);
     }
 
     const handleMouseEnter = () => {

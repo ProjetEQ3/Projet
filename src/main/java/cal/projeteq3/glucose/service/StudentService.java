@@ -18,6 +18,7 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
@@ -190,6 +191,8 @@ public class StudentService {
             }
         }
         appointment.setChosen(true);
+        JobApplication jobApplication = appointment.getJobApplication();
+        jobApplication.setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
         return new AppointmentDTO(appointmentRepository.save(appointment));
     }
 

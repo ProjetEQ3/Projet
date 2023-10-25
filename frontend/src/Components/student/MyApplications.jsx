@@ -16,23 +16,25 @@ function MyApplications({ user }) {
         if (!user?.isLoggedIn) {
             navigate("/");
         }
-
-        async function fetchMyApplications() {
-            await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
-                .then((response) => {
-                    const jobOffers = response.data.map((jobOfferData) => {
-                        const newJobOffer = new JobOffer();
-                        newJobOffer.init(jobOfferData);
-                        return newJobOffer;
-                    });
-                    setMyApplications(jobOffers);
-                })
-                .catch((error) => {
-                    toast.error(t('fetchError') + t(error.response?.data.message));
-                });
-        }
         fetchMyApplications();
     }, [user, navigate]);
+    async function fetchMyApplications() {
+        await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
+            .then((response) => {
+                const jobOffers = response.data.map((jobOfferData) => {
+                    const newJobOffer = new JobOffer();
+                    newJobOffer.init(jobOfferData);
+                    return newJobOffer;
+                });
+                setMyApplications(jobOffers);
+            })
+            .catch((error) => {
+                toast.error(t('fetchError') + t(error.response?.data.message));
+            });
+    }
+    function handleRefresh() {
+        fetchMyApplications();
+    }
 
     return (
         <div>
@@ -47,7 +49,7 @@ function MyApplications({ user }) {
                         renderItem={(filteredJobOffers) => (
                             <div>
                                 {filteredJobOffers.map((offer, index) => (
-                                    <ShortJobOfferApplication index={index} user={user} jobOffer={offer} key={offer.id}/>
+                                    <ShortJobOfferApplication index={index} user={user} jobOffer={offer} key={offer.id} refresh={handleRefresh}/>
                                 ))}
                             </div>
                         )}
