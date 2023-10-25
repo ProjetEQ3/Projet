@@ -99,4 +99,5 @@ public class StudentController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentService.getAppliedJobOfferByStudentId(studentId, semester));
     }
+
 }

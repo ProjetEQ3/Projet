@@ -4,9 +4,17 @@ import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisi
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 @Getter
@@ -68,5 +76,29 @@ public class Contract {
 
         this.managerSignature = directorSignature;
         lastModificationDate = LocalDateTime.now();
+    }
+
+    public byte[] generateContractPDF() {
+
+        Document document = new Document();
+
+        try{
+            PdfWriter.getInstance(document, new FileOutputStream("Contract.pdf"));
+            document.open();
+
+            document.addTitle("Contract");
+            document.addSubject("Contract");
+            document.addKeywords("Contract");
+            document.addAuthor("Glucose");
+            document.addCreator("Glucose");
+            document.add(new Paragraph("Contract paragraphe test"));
+            document.close();
+
+            return Files.readAllBytes(Paths.get("Contract.pdf"));
+        }catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

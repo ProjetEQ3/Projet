@@ -43,4 +43,11 @@ public class UserController{
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getSemesters());
     }
+
+    @GetMapping("/contract/{contractId}")
+    public ResponseEntity<byte[]> getContract(@PathVariable Long contractId){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(userService.generateContractPDF(contractId));
+    }
 }

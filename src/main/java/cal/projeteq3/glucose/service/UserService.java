@@ -6,28 +6,30 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
+import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.itextpdf.text.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 	private final StudentRepository studentRepository;
+	private final ContractRepository contractRepository;
 	private final EmployerRepository employerRepository;
 	private final ManagerRepository managerRepository;
 	private final CredentialRepository credentialRepository;
@@ -67,7 +69,7 @@ public class UserService {
 	}
 
     public List<SemesterDTO> getSemesters() {
-		int nbSeasons = 5; // A changer au besoin du PO
+		int nbSeasons = 5;
 		List<Semester> semesters = new ArrayList<>();
 		Semester currentSemester = new Semester(LocalDate.now());
 
@@ -80,4 +82,10 @@ public class UserService {
 
 		return semesters.stream().map(SemesterDTO::new).toList();
     }
+
+	public byte[] generateContractPDF(Long contractId) {
+		//Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+		Contract contract1 = new Contract();
+		return contract1.generateContractPDF();
+	}
 }
