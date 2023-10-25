@@ -34,7 +34,6 @@ public class AuthProvider implements AuthenticationProvider{
 		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
-	//TODO: code duplication with JwtAuthenticationFilter: create AuthenticationManager
 	private User loadUserByEmail(String email) throws UsernameNotFoundException{
 		return userRepository.findUserByCredentialsEmail(email)
 			.orElseThrow(UserNotFoundException::new);

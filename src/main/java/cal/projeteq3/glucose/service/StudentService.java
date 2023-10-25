@@ -170,15 +170,11 @@ public class StudentService {
 
     public List<AppointmentDTO> findAllAppointmentsForJobOfferAndStudent(Long jobOfferId, Long studentId) {
 
-        List<JobApplication> jobApplications = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
-        List<Appointment> appointments = new ArrayList<>();
+        JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
 
-        for(JobApplication jobApplication : jobApplications) {
-            appointments.addAll(jobApplication.getAppointments());
-        }
+        List<Appointment> appointments = new ArrayList<>(jobApplication.getAppointments());
 
         return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
-
     }
 
     public AppointmentDTO setAppointmentToChosen(Long id) {
