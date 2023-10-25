@@ -865,4 +865,38 @@ public class EmployerServiceTest {
         // Assert
         assertEquals(jobApplications.size(), studentDTOs.size());
     }
+
+    @Test
+    void getOfferByApplicationId_WhenValidId_ReturnsJobOfferDTO() {
+        // Arrange
+        Long applicationId = 1L;
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(applicationId);
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(100L);
+        jobApplication.setJobOffer(jobOffer);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(jobApplication));
+
+        // Act
+        JobOfferDTO result = employerService.getOfferByApplicationId(applicationId);
+
+        // Assert
+        assertEquals(jobOffer.getId(), result.getId());
+        // Add more assertions for other properties if needed.
+    }
+
+    @Test
+    void getOfferByApplicationId_WhenInvalidId_ThrowsJobOfferNotFoundException() {
+        // Arrange
+        Long applicationId = 1L;
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(JobOfferNotFoundException.class, () -> {
+            employerService.getOfferByApplicationId(applicationId);
+        });
+    }
 }
