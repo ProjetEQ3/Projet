@@ -823,9 +823,25 @@ public class StudentServiceTest {
 
     @Test
     public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() {
+//        Arrange
+        Student student = Student.builder().id(1L).build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).build();
+        JobApplication application = JobApplication.builder().id(2L).student(student).jobOffer(jobOffer).build();
+        List<Appointment> appointments = new ArrayList<>(
+                List.of(
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build()
+                )
+        );
+        application.setAppointments(appointments);
 
-        // todo : what the hellllll
+        when(jobApplicationRepository.findByJobOfferIdAndStudentId(jobOffer.getId(), student.getId())).thenReturn(List.of(application));
+//        Act
+        List<AppointmentDTO> appointmentDTOS = studentService.findAllAppointmentsForJobOfferAndStudent(jobOffer.getId(), student.getId());
 
+//        Assert
+        assertEquals(appointments.size(), appointmentDTOS.size());
     }
 
     @Test
