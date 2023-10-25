@@ -65,6 +65,9 @@ public class StudentControllerTest {
 	private final Long validJobOfferId = 1L;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
     private String token;
     @BeforeEach
@@ -491,16 +494,38 @@ public class StudentControllerTest {
     }
 
     @Test
-    void getAppointmentsByJobApplicationId_ShouldReturnAppointments() throws Exception {
-        Long id = 1L;
-        List<AppointmentDTO> appointments = asList(new AppointmentDTO(), new AppointmentDTO());
-        when(studentService.getAppointmentsByJobApplicationId(id)).thenReturn(appointments);
+    public void getAppointmentsByJobApplicationId_ExistingId() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/appointmentsByJobApplicationId/{id}", id)
-                .header("Authorization", token))
+        List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+        appointmentDTOS.add(new AppointmentDTO());
+        appointmentDTOS.add(new AppointmentDTO());
+        appointmentDTOS.add(new AppointmentDTO());
+
+        String expectedJson = objectMapper.writeValueAsString(appointmentDTOS);
+
+        when(studentService.getAppointmentsByJobApplicationId(1L)).thenReturn(appointmentDTOS);
+
+        mockMvc.perform(get("/student/appointmentsByJobApplicationId/{id}", 1L)
+                        .header("Authorization", token))
                 .andExpect(status().isAccepted())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(content().json(expectedJson));
+
+    }
+
+    @Test
+    public void getAppointmentsByJobApplicationId_NotExistingId() throws Exception {
+
+        List<AppointmentDTO> appointmentDTOS = new ArrayList<>();
+
+        String expectedJson = objectMapper.writeValueAsString(appointmentDTOS);
+
+        when(studentService.getAppointmentsByJobApplicationId(1L)).thenReturn(appointmentDTOS);
+
+        mockMvc.perform(get("/student/appointmentsByJobApplicationId/{id}", 1L)
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(expectedJson));
+
     }
 
 }
