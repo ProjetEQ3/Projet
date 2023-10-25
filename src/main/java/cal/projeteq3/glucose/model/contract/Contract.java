@@ -102,7 +102,7 @@ public class Contract {
 
             return Base64.getEncoder().encode(bytes);
 
-        }catch (DocumentException | IOException e) {
+        }catch (DocumentException e) {
             e.printStackTrace();
         }
 
