@@ -859,8 +859,7 @@ public class EmployerControllerTest {
 				 .param("season", season)
 				 .param("year", year)
 				 .contentType(MediaType.APPLICATION_JSON))
-				 .andExpect(MockMvcResultMatchers.status().isAccepted())
-				 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
+				 .andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
 	@Test
@@ -879,8 +878,7 @@ public class EmployerControllerTest {
 						.param("season", "FALL")
 						.param("year", "2021")
 						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isAccepted())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1));
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
 	@Test

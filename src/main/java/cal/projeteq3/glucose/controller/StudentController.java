@@ -94,11 +94,12 @@ public class StudentController {
 
     @GetMapping("/appliedJobOffer/{studentId}")
     public ResponseEntity<List<JobOfferDTO>> getAppliedJobOfferByStudentId(@PathVariable Long studentId, @RequestParam String season, @RequestParam String year){
-        Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
-
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getAppliedJobOfferByStudentId(studentId, semester));
+                .body(studentService.getAppliedJobOfferByStudentId(studentId, Semester.builder()
+                        .season(Semester.Season.valueOf(season))
+                        .year(Integer.parseInt(year))
+                        .build()));
     }
 
     @GetMapping("/appointmentsByJobApplicationId/{id}")
