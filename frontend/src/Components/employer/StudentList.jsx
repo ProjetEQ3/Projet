@@ -14,7 +14,7 @@ const StudentList = ({ offer, setSelectedOffer }) => {
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    {offer.students.map((student, index) => (
+                    {offer?.students?.map((student, index) => (
                         <div key={index}>
                             <ShortStudentInfo student={student} filterStudentList={filterStudentList}/>
                         </div>
@@ -22,7 +22,7 @@ const StudentList = ({ offer, setSelectedOffer }) => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default StudentList;

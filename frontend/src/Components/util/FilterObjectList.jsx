@@ -14,7 +14,9 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	const actualAttribute = isSelectAttribute
 		? getAttributeKey(selectedAttribute).replace('.select', '')
 		: getAttributeKey(selectedAttribute)
-	const filteredItems = items.filter(item => String(item[actualAttribute]).toLowerCase().includes(query.toLowerCase()))
+	const filteredItems = Array.isArray(items)
+		? items.filter(item => String(item[actualAttribute]).toLowerCase().includes(query.toLowerCase()))
+		: []
 	const totalPages = Math.ceil(filteredItems.length/itemsPerPage)
 	const displayedItems = filteredItems.slice((currentPage - 1)*itemsPerPage, currentPage*itemsPerPage)
 

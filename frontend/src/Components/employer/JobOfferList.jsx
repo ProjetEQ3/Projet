@@ -17,7 +17,6 @@ const JobOfferList = ({user}) => {
     const {selectedSessionIndex} = useSession();
     useEffect(() => {
         if (!user?.isLoggedIn) navigate('/');
-
         getOffers()
     }, [user.isLoggedIn]);
     useEffect(() => {
