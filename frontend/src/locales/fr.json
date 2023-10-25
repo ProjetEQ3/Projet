@@ -46,6 +46,7 @@
   "convokeDates" : "Dates de convocation",
   "convokeError" : "Erreur lors de la convocation de l'étudiant: ",
   "convokeSuccess" : "Étudiant convoqué",
+  "convokedStudents": "Étudiant(s) convoqué(s)",
   "copyRights": "© 2023 - Tous droits réservés.",
 
   "declineStudentSuccess" : "Étudiant refusé",
@@ -107,9 +108,9 @@
   "internshipDescription": "Description de l'offre de stage",
   "internshipDetails": "Détails de l'offre de stage",
   "internshipList": "Liste de vos offres de stage",
-  "convokedStudents": "Étudiant(s) convoqué(s)",
 
   "jobOffers": "Stages",
+  "jobOffer": "Stage",
 
   "login": "Connecter",
   "location": "Lieu de travail",

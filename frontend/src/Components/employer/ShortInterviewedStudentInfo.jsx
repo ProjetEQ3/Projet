@@ -38,7 +38,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
             <div className="m-2 p-2 bg-white border rounded border-ose d-lg-flex" data-testid="short-student-info">
                 <div className="col-12 col-lg-6">
                     <h4 className="text-dark fw-light">{student.firstName + " " + student.lastName + " - " + student.email}</h4>
-                    <h5 className="text-dark fw-light">{t('jobOffer') + ": " + jobOfferTitle}</h5>
+                    <h5 className="text-dark fw-light">{t('jobOffer') + ": " + student.jobTitle}</h5>
                 </div>
                 <div className="col-12 col-lg-6 text-end">
                     <button type="button" onClick={handlePreview} className="btn btn-outline-ose">{t('preview')}</button>

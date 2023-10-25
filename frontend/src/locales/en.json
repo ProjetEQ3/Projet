@@ -34,6 +34,7 @@
   "convokeDates": "Convocation dates.",
   "convokeSuccess": "Student convoked",
   "convokeError": "Error convoking student : ",
+  "convokedStudents": "Convoked Student(s)",
   "chooseADepartment": "Choose a department",
   "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
   "cancel": "Cancel",
@@ -107,9 +108,9 @@
   "internshipDescription": "Offer Description",
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
-  "convokedStudents": "Convoked Student(s)",
 
   "jobOffers": "Internships",
+  "jobOffer": "Internship",
 
   "location": "Work Location",
   "locationRequired": "Location is required.",
