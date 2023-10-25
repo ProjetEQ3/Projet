@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 public enum Role{
 	MANAGER("ROLE_MANAGER"),
 	EMPLOYER("ROLE_EMPLOYER"),
-	STUDENT("ROLE_STUDENT");
+	STUDENT("ROLE_STUDENT"),
+	;
 
 	private final String string;
 	private final Set<Role> managedRoles = new HashSet<>();
