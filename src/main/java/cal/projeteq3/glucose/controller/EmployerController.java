@@ -70,18 +70,16 @@ public class EmployerController{
 
 	@PutMapping("/offer/accept/{jobApplicationId}")
 	public ResponseEntity<JobApplicationDTO> acceptJobApplication(@PathVariable Long jobApplicationId){
-		this.employerService.acceptApplication(jobApplicationId);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.build();
+				.body(this.employerService.acceptApplication(jobApplicationId));
 	}
 
 	@PutMapping("/offer/refuse/{jobApplicationId}")
 	public ResponseEntity<JobApplicationDTO> refuseJobApplication(@PathVariable Long jobApplicationId){
-		this.employerService.refuseApplication(jobApplicationId);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.build();
+				.body(this.employerService.refuseApplication(jobApplicationId));
 	}
 
 	@GetMapping("/offer/students/{id}")
