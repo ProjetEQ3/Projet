@@ -41,6 +41,7 @@
   "createInternshipSuccess": "Internship offer created",
   "createInternshipError": "Error creating internship offer",
   "choose": "Choose an option",
+  "chosenAppointment" : "Chosen appointment : ",
   "cvNotApproved": "CV not approved",
   "CV": "CV",
   "cvAuthorisation": "CV Authorization",

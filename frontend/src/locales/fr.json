@@ -34,6 +34,7 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "choose": "Choisir une option",
+  "chosenAppointment": "Rendez-vous choisi: ",
   "createInternshipSuccess": "Offre de stage créée",
   "createInternshipError": "Erreur lors de la création de l'offre de stage",
   "confirmationOfferDelete": "Êtes-vous sûr de vouloir supprimer cette offre de stage ?",

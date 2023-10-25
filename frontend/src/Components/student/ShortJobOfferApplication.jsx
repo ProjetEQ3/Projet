@@ -14,27 +14,27 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
     const [appointments, setAppointments] = useState([]);
     const [checkboxValue, setCheckboxValue] = useState(false);
 
+    const fetchAppointments = async () => {
+        setAppointments([]);
+        await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
+            .then((response) => {
+                const newAppointments = response.data.map((appointment) => {
+                    const newAppointment = new Appointment();
+                    newAppointment.init(appointment);
+                    return newAppointment;
+                });
+                newAppointments.sort((a, b) => {
+                    return new Date(a.appointmentDate) - new Date(b.appointmentDate);
+                }, []);
+                setAppointments(newAppointments);
+            })
+            .catch((error) => {
+                console.error("Error fetching appointments:", error);
+                toast.error(t('errorFetchingAppointments'));
+            });
+    };
 
     useEffect(() => {
-        const fetchAppointments = async () => {
-            setAppointments([]);
-            await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
-                .then((response) => {
-                    const newAppointments = response.data.map((appointment) => {
-                        const newAppointment = new Appointment();
-                        newAppointment.init(appointment);
-                        return newAppointment;
-                    });
-                    newAppointments.sort((a, b) => {
-                        return new Date(a.appointmentDate) - new Date(b.appointmentDate);
-                    }, []);
-                    setAppointments(newAppointments);
-                })
-                .catch((error) => {
-                    console.error("Error fetching appointments:", error);
-                    toast.error(t('errorFetchingAppointments'));
-                });
-        };
         fetchAppointments();
     }, [user, jobOffer, t]);
 
@@ -46,15 +46,18 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
             return;
         }
 
+        console.log(selectedAppointmentValue);
+
         axiosInstance.put(`/student/setAppointmentToChosen/${appointments[selectedAppointmentValue].id}`)
             .then((response) => {
-                toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(selectedAppointmentValue));
+                toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(appointments[selectedAppointmentValue].appointmentDate));
                 setCheckboxValue(true)
             })
             .catch(() => {
                 toast.error(t('errorChoosingAppointment'));
             });
-        setCheckboxValue(true)
+        setCheckboxValue(true);
+        fetchAppointments();
     }
 
     function dateTimeToShortString(appointment) {
@@ -90,7 +93,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                             {t(jobOffer.department)}
                         </p>
                     </div>
-                    {   appointments.length !== 0 && appointments[0].jobApplication.jobApplicationState === "CONVOKED" ?  (
+                    {   appointments.length > 1 && appointments[0].jobApplication.jobApplicationState === "CONVOKED" ?  (
                         <div className="col-md-3 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2" data-bs-toggle="modal"
                                  data-bs-target={"#appointmentModal" + index}>
@@ -117,7 +120,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                                                                    type="radio"
                                                                    name="appointment"
                                                                    id={`appointment-${index}`}
-                                                                   value={appointment.appointmentDate}/>
+                                                                   value={index}/>
                                                             <label className="form-check-label"
                                                                    htmlFor={`appointment-${index}`}>
                                                                 {dateTimeToShortString(appointment.appointmentDate)}
@@ -145,11 +148,11 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                                 </div>
                             </div>
                         </div>
-                    ) : appointments.length !== 0 && appointments[0].jobApplication.jobApplicationState === "WAITING_APPOINTMENT" ? (
+                    ) : appointments.length === 1 ? (
                         <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2">
-                                <button className="btn btn-outline-ose my-auto" data-testid="waiting-appointment-button-testid" disabled>
-                                    {t('chosenAppointment')}
+                                <button className="btn btn-success my-auto" data-testid="waiting-appointment-button-testid" disabled>
+                                    {t('chosenAppointment')} {dateTimeToShortString(appointments[0].appointmentDate)}
                                     <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
                                 </button>
                             </div>
@@ -157,7 +160,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                     ) : (
                         <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2">
-                                <button className="btn btn-outline-ose my-auto" data-testid="no-appointment-button-testid" disabled>
+                                <button className="btn btn-outline-secondary my-auto" data-testid="no-appointment-button-testid" disabled>
                                     {t('noAppointments')}
                                     <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
                                 </button>
