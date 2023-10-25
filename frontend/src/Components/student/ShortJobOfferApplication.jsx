@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 import { axiosInstance } from "../../App";
 import Appointment from "../../model/Appointment";
+import {id} from "date-fns/locale";
 
 const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
     const { t } = useTranslation();
@@ -24,6 +25,9 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
                         newAppointment.init(appointment);
                         return newAppointment;
                     });
+                    newAppointments.sort((a, b) => {
+                        return new Date(a.appointmentDate) - new Date(b.appointmentDate);
+                    }, []);
                     setAppointments(newAppointments);
                 })
                 .catch((error) => {
@@ -42,7 +46,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
             return;
         }
 
-        axiosInstance.put(`/student/setAppointmentToChosen/${appointments[0].id}`)
+        axiosInstance.put(`/student/setAppointmentToChosen/${appointments[selectedAppointmentValue].id}`)
             .then((response) => {
                 toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(selectedAppointmentValue));
                 setCheckboxValue(true)
@@ -55,10 +59,15 @@ const ShortJobOfferApplication = ({ user, jobOffer, index }) => {
 
     function dateTimeToShortString(appointment) {
         let result = "";
-        result += appointment.split("T")[0].split("-").reverse().join("-");
-        result += " ";
-        result += appointment.split("T")[1].split(":").slice(0, 2).join(":");
-
+        let date = new Date(appointment);
+        date.setHours(date.getUTCHours() - 12);
+        let day = ('0' + date.getDate()).slice(-2);
+        let month = ('0' + (date.getMonth() + 1)).slice(-2);
+        let year = date.getFullYear();
+        result += `${day}-${month}-${year}`;
+        let hours = ('0' + date.getUTCHours()).slice(-2);
+        let minutes = ('0' + date.getUTCMinutes()).slice(-2);
+        result += ` ${hours}:${minutes}`;
         return result;
     }
 

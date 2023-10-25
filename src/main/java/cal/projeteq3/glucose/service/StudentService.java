@@ -186,7 +186,7 @@ public class StudentService {
         List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(jobApplicationId);
         for (Appointment siblingAppointment : appointments) {
             if ((long) siblingAppointment.getId() != appointment.getId()) {
-                jobApplicationRepository.deleteById(siblingAppointment.getId());
+                appointmentRepository.deleteById(siblingAppointment.getId());
             }
         }
         appointment.setChosen(true);
