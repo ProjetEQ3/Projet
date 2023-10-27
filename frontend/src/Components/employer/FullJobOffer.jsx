@@ -183,7 +183,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
                             </div>
                         </div>
-                        <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal">
+                        <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal" data-testid="editModal">
                             <button className="btn btn-outline-ose my-auto" data-testid="edit-button" onClick={() => setIsModified(false)}>
                                 {t('edit')}
                                 <FontAwesomeIcon icon={faPenToSquare} className="ms-2"/>
@@ -199,7 +199,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                             </div>
                             <div className="modal-body">
-                                <form ref={formRef} onSubmit={handleSubmit}>
+                                <form ref={formRef} onSubmit={handleSubmit} data-testid="form">
                                     <div className="mb-3">
                                         <label htmlFor="title" className="mt-3">{t('internshipTitle')}</label>
                                         <input type="text" className={`form-control ${warnings.title ? 'is-invalid' : ''}`} id="title" placeholder={jobOffer.title} onChange={handleChange} name="title"/>
@@ -292,13 +292,13 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                     </div>
                                     {!isModified ? (
                                     <div className="text-end">
-                                        <button type="submit" className="btn btn-success me-2">{t('edit')}</button>
-                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>{t('cancel')}</button>
+                                        <button type="submit" className="btn btn-success me-2" data-testid="edit">{t('edit')}</button>
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose} data-testid="cancel">{t('cancel')}</button>
                                     </div>
                                     ) : (
                                         <div className="text-end">
                                             <div className="text-success me-2 text-center">{t('edited')}</div>
-                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>{t('close')}</button>
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose} data-testid="close">{t('close')}</button>
                                         </div>
                                     )}
                                 </form>

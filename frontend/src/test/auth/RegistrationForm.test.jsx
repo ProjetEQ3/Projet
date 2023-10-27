@@ -37,7 +37,6 @@ describe('<RegistrationForm />', () => {
 
 	it('switches to RegisterEmployerForm on clicking the employer button', () => {
 		fireEvent.click(screen.getByText('employer'))
-
 		expect(screen.getByText('RegisterEmployerForm')).toBeInTheDocument()
 		expect(screen.queryByText('RegisterStudentForm')).not.toBeInTheDocument()
 	})
@@ -45,7 +44,6 @@ describe('<RegistrationForm />', () => {
 	it('switches back to RegisterStudentForm on clicking the student button', () => {
 		fireEvent.click(screen.getByText('employer'))
 		fireEvent.click(screen.getByText('student'))
-
 		expect(screen.getByText('RegisterStudentForm')).toBeInTheDocument()
 		expect(screen.queryByText('RegisterEmployerForm')).not.toBeInTheDocument()
 	})

@@ -1,14 +1,15 @@
 import React from 'react'
-import { render, screen, fireEvent, act } from '@testing-library/react'
+import {render, screen, fireEvent, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router-dom'
-import { axiosInstance } from "../../App"
+import {MemoryRouter} from 'react-router-dom'
+import {axiosInstance} from "../../App"
 import RegisterStudentForm from '../../Components/auth/RegisterStudentForm'
 
 const mockNavigate = jest.fn()
+
 jest.mock('react-router-dom', () => ({
 	...jest.requireActual('react-router-dom'),
-	useNavigate: () => mockNavigate,
+	useNavigate: () => mockNavigate
 }))
 
 jest.mock('react-i18next', () => ({
@@ -16,15 +17,15 @@ jest.mock('react-i18next', () => ({
 		t: (key) => key,
 		i18n: {
 			on: jest.fn(),
-			off: jest.fn(),
-		},
-	}),
+			off: jest.fn()
+		}
+	})
 }))
 
 jest.mock('../../App', () => ({
 	axiosInstance: {
-		post: jest.fn(),
-	},
+		post: jest.fn()
+	}
 }))
 
 describe('<RegisterStudentForm />', () => {
@@ -49,7 +50,6 @@ describe('<RegisterStudentForm />', () => {
 
 	it('submits the form with valid data', async () => {
 		axiosInstance.post.mockResolvedValueOnce({ data: {} })
-
 		userEvent.type(screen.getByPlaceholderText('placeHolderFirstName'), 'John')
 		userEvent.type(screen.getByPlaceholderText('placeHolderLastName'), 'Doe')
 		userEvent.type(screen.getByPlaceholderText('placeHolderEmail'), 'john.doe@example.com')
@@ -57,33 +57,21 @@ describe('<RegisterStudentForm />', () => {
 		userEvent.selectOptions(screen.getByRole('combobox', { name: /departmentStudent/i }), '_410B0')
 		userEvent.type(screen.getByPlaceholderText('placeHolderPassword'), 'Password123')
 		userEvent.type(screen.getByPlaceholderText('placeHolderPasswordConfirm'), 'Password123')
-
-		await act(async () => {
-			fireEvent.click(screen.getByText(/registerSubmit/i))
-		})
-
+		await act(async () => {fireEvent.click(screen.getByText(/registerSubmit/i))})
 		expect(axiosInstance.post).toHaveBeenCalled()
 	})
 
 	it('displays validation errors for invalid data', async () => {
-		await act(async () => {
-			fireEvent.click(screen.getByText(/registerSubmit/i))
-		})
-
+		await act(async () => {fireEvent.click(screen.getByText(/registerSubmit/i))})
 		expect(screen.getByText('firstNameRequired')).toBeInTheDocument()
 		expect(screen.getByText('lastNameRequired')).toBeInTheDocument()
 		expect(screen.getByText('emailRequired')).toBeInTheDocument()
 		expect(screen.getByText('matriculeRequired')).toBeInTheDocument()
 		expect(screen.getByText('departmentStudentRequired')).toBeInTheDocument()
 		expect(screen.getByText('passwordRequired')).toBeInTheDocument()
-
 		userEvent.type(screen.getByPlaceholderText('placeHolderPassword'), 'Password123')
 		userEvent.type(screen.getByPlaceholderText('placeHolderPasswordConfirm'), 'Password456')
-
-		await act(async () => {
-			fireEvent.click(screen.getByText(/registerSubmit/i))
-		})
-
+		await act(async () => {fireEvent.click(screen.getByText(/registerSubmit/i))})
 		expect(screen.getByText('passwordConfirmInvalid')).toBeInTheDocument()
 	})
 })

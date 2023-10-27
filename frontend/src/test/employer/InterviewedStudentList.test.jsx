@@ -1,9 +1,6 @@
 import React from 'react'
-import {render, screen, waitFor} from '@testing-library/react'
-import {axiosInstance} from '../../App'
-import {toast} from 'react-toastify'
+import {render, screen} from '@testing-library/react'
 import StudentList from '../../Components/employer/StudentList'
-
 
 jest.mock('../../Components/employer/ShortInterviewedStudentInfo', () => {
     return function MockedShortInterviewedStudentInfo({student}) {
@@ -45,13 +42,11 @@ describe('<StudentList />', () => {
         const mockOffer = {
             students: [
                 {id: '1', firstName: 'John', lastName: 'Doe', jobApplications: ['application1']},
-                {id: '2', firstName: 'Jane', lastName: 'Smith', jobApplications: ['application2']},
+                {id: '2', firstName: 'Jane', lastName: 'Smith', jobApplications: ['application2']}
             ]
         }
-
         render(<StudentList offer={mockOffer}/>)
-
-        expect(screen.getByText(/John\s+Doe/)).toBeInTheDocument();
-        expect(screen.getByText(/Jane\s+Smith/)).toBeInTheDocument();
+        expect(screen.getByText(/John\s+Doe/)).toBeInTheDocument()
+        expect(screen.getByText(/Jane\s+Smith/)).toBeInTheDocument()
     })
 })
