@@ -24,9 +24,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @SpringBootApplication
 public class GlucoseApplication implements CommandLineRunner {
@@ -68,6 +67,7 @@ public class GlucoseApplication implements CommandLineRunner {
 		managerService.updateCvState(1L, CvState.ACCEPTED, null);
 		studentService.applyJobOffer(3L, 10L);
 		studentService.applyJobOffer(9L, 10L);
+		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
 	}
 
 	private List<Employer> createEmployer(){

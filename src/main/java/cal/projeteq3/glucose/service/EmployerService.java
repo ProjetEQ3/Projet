@@ -166,6 +166,7 @@ public class EmployerService{
 			.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, Set<LocalDateTime> dates){
 		List<Appointment> appointmentList = dates.stream()
 				.map(time -> {
@@ -177,6 +178,7 @@ public class EmployerService{
 
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
+
 		for(Appointment app : appointmentList){
 			app.setJobApplication(jobApplication);
 			jobApplication.addAppointment(app);

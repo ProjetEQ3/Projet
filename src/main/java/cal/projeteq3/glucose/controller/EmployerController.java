@@ -1,18 +1,14 @@
 package cal.projeteq3.glucose.controller;
 
-import cal.projeteq3.glucose.dto.AppointmentDTO;
-import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +34,9 @@ public class EmployerController{
 
 	@GetMapping("/offer/all")
 	public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
-		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
-
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getAllJobOffers(employerId, semester));
+				.body(this.employerService.getAllJobOffers(employerId, getSemesterFrom(season, year)));
 	}
 
 	@PostMapping("/offer")
@@ -99,10 +93,9 @@ public class EmployerController{
 
 	@GetMapping("/waitingStudents")
 	public ResponseEntity<List<StudentDTO>> getWaitingStudents(@RequestParam Long employerId, @RequestParam String season, @RequestParam String year){
-		Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getWaitingStudents(employerId, semester));
+				.body(this.employerService.getWaitingStudents(employerId, getSemesterFrom(season, year)));
 	}
 
 	@GetMapping("/offerByApplication")
@@ -110,5 +103,12 @@ public class EmployerController{
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getOfferByApplicationId(applicationId));
+	}
+
+	private Semester getSemesterFrom(String season, String year){
+		return Semester.builder()
+				.season(Semester.Season.valueOf(season))
+				.year(Integer.parseInt(year))
+				.build();
 	}
 }
