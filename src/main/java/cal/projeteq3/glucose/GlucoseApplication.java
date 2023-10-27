@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -60,6 +61,8 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentRepository.saveAll(createStudent());
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
+		Contract contract = new Contract();
+		contract.generateContractPDF();
 	}
 
 	//Ajouter CV propre

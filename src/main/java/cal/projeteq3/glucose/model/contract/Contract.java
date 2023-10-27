@@ -4,19 +4,14 @@ import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisi
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.BaseFont;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
@@ -89,20 +84,32 @@ public class Contract {
         try{
             PdfWriter.getInstance(document, outputStream);
             document.open();
-
             document.addTitle("Contract");
-            document.addSubject("Contract");
-            document.addKeywords("Contract");
-            document.addAuthor("Glucose");
-            document.addCreator("Glucose");
-            document.add(new Paragraph("Contract paragraphe test"));
+
+            BaseFont arialFont = BaseFont.createFont("src/main/resources/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font documentTitleFont = new Font(arialFont, 18, Font.BOLD, BaseColor.BLACK);
+            Font normalTextFont = new Font(arialFont, 10, Font.NORMAL, BaseColor.BLACK);
+            Font boldTextFont = new Font(arialFont, 10, Font.BOLD, BaseColor.BLACK);
+
+            Paragraph documentTitle = new Paragraph("Entente Intervenue entre les parties suivantes", documentTitleFont);
+            documentTitle.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph intro = new Paragraph();
+            intro.add(new Phrase("Dans le cadre de la formule Alternance travail-études du programme de ", normalTextFont));
+            intro.add(new Chunk("Techniques de l’informatique", boldTextFont));
+            intro.add(new Phrase(", les parties citées ci-dessous :", normalTextFont));
+            intro.setAlignment(Paragraph.ALIGN_CENTER);
+            intro.setSpacingBefore(20f);
+
+            document.add(documentTitle);
+            document.add(intro);
             document.close();
 
             byte[] bytes = outputStream.toByteArray();
 
             return Base64.getEncoder().encode(bytes);
 
-        }catch (DocumentException e) {
+        }catch (DocumentException | IOException e) {
             e.printStackTrace();
         }
 

@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import CvFile from '../../model/CvFile'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowUpRightFromSquare, faCheck, faX} from '@fortawesome/free-solid-svg-icons';
+import {faX} from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import State from "../util/State";
@@ -9,12 +9,31 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 
 const ShortCv = ({cv, index, updateCvList}) => {
+    const [contract, setContract] = useState('');
     const {t} = useTranslation();
-    const [isDecline, setIsDecline] = React.useState(false);
-    const [isDisplay, setIsDisplay] = React.useState(false);
-    const [formData, setFormData] = React.useState({
+    const [isDecline, setIsDecline] = useState(false);
+    const [isDisplay, setIsDisplay] = useState(false);
+    const [formData, setFormData] = useState({
         refusalReason: '',
     });
+
+    useEffect(() => {
+        getContract().then(r => r);
+    }, []);
+
+    const getContract = async () => {
+        await axiosInstance.get('manager/contract/1',
+        ).then((response) => {
+            setContract(response.data);
+            console.log(response.data)
+            return response.data;
+        }).catch((error) => {
+            if (error.response?.status === 401) {
+                return;
+            }
+            toast.error(t('fetchError') + t(error));
+        });
+    }
 
     const handleAccept = (e) => {
         e.preventDefault();
@@ -122,7 +141,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
                 </div>
             </div>
             {isDisplay ? (
-                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
+                <PDFPreview file={CvFile.readBytes(contract)} setIsDisplay={setIsDisplay}/>
             ) : null}
         </>
 
