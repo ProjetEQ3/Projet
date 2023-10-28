@@ -54,7 +54,7 @@ public class JobOffer{
 	private int nbOfCandidates;
 
 	@ToString.Exclude
-	@ManyToOne(fetch = FetchType.LAZY)//TODO check cascade on delete jobOffer
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Employer employer;
 
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
