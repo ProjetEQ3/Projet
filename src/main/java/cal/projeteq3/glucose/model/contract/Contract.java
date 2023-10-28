@@ -93,16 +93,52 @@ public class Contract {
 
             Paragraph documentTitle = new Paragraph("Entente Intervenue entre les parties suivantes", documentTitleFont);
             documentTitle.setAlignment(Paragraph.ALIGN_CENTER);
+            documentTitle.setSpacingBefore(20f);
+            document.add(documentTitle);
 
             Paragraph intro = new Paragraph();
             intro.add(new Phrase("Dans le cadre de la formule Alternance travail-études du programme de ", normalTextFont));
-            intro.add(new Chunk("Techniques de l’informatique", boldTextFont));
+            intro.add(new Chunk("_____________________", boldTextFont));
             intro.add(new Phrase(", les parties citées ci-dessous :", normalTextFont));
             intro.setAlignment(Paragraph.ALIGN_CENTER);
             intro.setSpacingBefore(20f);
-
-            document.add(documentTitle);
             document.add(intro);
+
+
+            Paragraph presentationEducationCenter = new Paragraph();
+            presentationEducationCenter.add(new Phrase("Le ", normalTextFont));
+            presentationEducationCenter.add(new Chunk("Cégep André-Laurendeau", boldTextFont));
+            presentationEducationCenter.add(new Chunk(", corporation légalement constituée, situé au ", normalTextFont));
+            presentationEducationCenter.add(new Chunk("1111, rue Lapierre, Lasalle, Québec, H8N 2J4", boldTextFont));
+            presentationEducationCenter.setAlignment(Paragraph.ALIGN_CENTER);
+            presentationEducationCenter.setSpacingBefore(15f);
+            document.add(presentationEducationCenter);
+
+            Paragraph presentationDirector = new Paragraph();
+            presentationDirector.add(new Phrase("ici représenté par ", normalTextFont));
+            presentationDirector.add(new Chunk("_____________________", boldTextFont));
+            presentationDirector.add(new Phrase(", ci-après désigné \"Le Collège\".", normalTextFont));
+            presentationDirector.setAlignment(Paragraph.ALIGN_CENTER);
+            presentationDirector.setSpacingBefore(15f);
+            document.add(presentationDirector);
+
+            Paragraph et = new Paragraph();
+            et.add(new Phrase("et", boldTextFont));
+            et.setAlignment(Paragraph.ALIGN_CENTER);
+            et.setSpacingBefore(20f);
+            document.add(et);
+
+            Paragraph presentationEmployer = new Paragraph();
+            presentationEmployer.add(new Phrase("L'entreprise ", normalTextFont));
+            if(employer != null)
+                presentationEmployer.add(new Chunk(employer.getOrganisationName(), boldTextFont));
+            else
+                presentationEmployer.add(new Chunk("_____________________", boldTextFont));
+            presentationEmployer.add(new Phrase(" ayant sa place d'affaire au :", normalTextFont));
+            presentationEmployer.setAlignment(Paragraph.ALIGN_CENTER);
+            presentationEmployer.setSpacingBefore(20f);
+            document.add(presentationEmployer);
+
             document.close();
 
             byte[] bytes = outputStream.toByteArray();
