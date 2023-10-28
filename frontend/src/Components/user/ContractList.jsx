@@ -3,7 +3,6 @@ import ShortContract from "./ShortContract";
 import { axiosInstance } from '../../App';
 
 const ContractList = ({ contracts }) => {
-    contracts = [1];
     return (
         <div className="container">
             <div className="row">

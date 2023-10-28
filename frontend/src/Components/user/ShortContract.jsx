@@ -19,8 +19,8 @@ const ShortContract = ({ contractId }) => {
             .then((response) => {
                 newContract.data = response.data;
                 newContract.title = "test";
-                newContract.studentName = "Test Test";
-                newContract.organisationName = "We rich";
+                newContract.jobOfferName = "Test Test";
+                newContract.jobOfferCompany = "We rich";
                 setContract(newContract);
             })
             .catch((error) => {

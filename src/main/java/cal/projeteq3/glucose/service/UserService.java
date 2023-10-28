@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.SemesterDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -83,9 +85,11 @@ public class UserService {
 		return semesters.stream().map(SemesterDTO::new).toList();
     }
 
-	public byte[] generateContractPDF(Long contractId) {
-		//Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-		Contract contract1 = new Contract();
-		return contract1.generateContractPDF();
+	public ShortContractDTO getContractById(Long id) {
+		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new));
+	}
+
+	public List<ContractDTO> getAllContracts() {
+		return contractRepository.findAll().stream().map(ContractDTO::new).toList();
 	}
 }
