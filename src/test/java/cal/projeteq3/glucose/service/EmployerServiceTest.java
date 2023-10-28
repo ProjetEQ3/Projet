@@ -703,6 +703,8 @@ public class EmployerServiceTest {
         mockJobOffer.setId(1L);
         mockJobOffer.setJobOfferState(JobOfferState.OPEN);
         mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.setNbOfCandidates(4);
+        mockJobOffer.setExpirationDate(LocalDate.now().plusDays(30));
         mockJobOffer.getJobApplications().add(mockApplication);
         mockApplication.setJobOffer(mockJobOffer);
 
