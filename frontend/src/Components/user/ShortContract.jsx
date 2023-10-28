@@ -8,24 +8,25 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 
-const ShortContract = (contractId) => {
+const ShortContract = ({ contractId }) => {
     const [t, i18n] = useTranslation();
     const [isDisplayed, setIsDisplayed] = useState(false);
     const [contract, setContract] = useState({});
 
     useEffect(() => {
         let newContract = {};
-        axiosInstance.get('manager/contract/${contractId}').then((response) => {
-            console.log(response.data);
-            newContract.data = response.data;
-            newContract.title = "test"
-            newContract.studentName = "Test Test"
-            newContract.organisationName = "We rich"
-            setContract(newContract);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, []);
+        axiosInstance.get(`manager/contract/${contractId}`)
+            .then((response) => {
+                newContract.data = response.data;
+                newContract.title = "test";
+                newContract.studentName = "Test Test";
+                newContract.organisationName = "We rich";
+                setContract(newContract);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [contractId]);
 
     const handleClick = () => {
         setIsDisplayed(!isDisplayed);
