@@ -327,7 +327,6 @@ public class StudentControllerTest {
     }
 
 //    TODO: Fix this test
-//    J'ADORE LANCÉ UNE EXCEPTION ET L'IGNORER!
     @Test
     public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
         Long wrongStudentId = -1L;
