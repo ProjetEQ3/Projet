@@ -9,31 +9,12 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 
 const ShortCv = ({cv, index, updateCvList}) => {
-    const [contract, setContract] = useState('');
     const {t} = useTranslation();
     const [isDecline, setIsDecline] = useState(false);
     const [isDisplay, setIsDisplay] = useState(false);
     const [formData, setFormData] = useState({
         refusalReason: '',
     });
-
-    useEffect(() => {
-        getContract().then(r => r);
-    }, []);
-
-    const getContract = async () => {
-        await axiosInstance.get('manager/contract/1',
-        ).then((response) => {
-            setContract(response.data);
-            console.log(response.data)
-            return response.data;
-        }).catch((error) => {
-            if (error.response?.status === 401) {
-                return;
-            }
-            toast.error(t('fetchError') + t(error));
-        });
-    }
 
     const handleAccept = (e) => {
         e.preventDefault();
@@ -141,7 +122,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
                 </div>
             </div>
             {isDisplay ? (
-                <PDFPreview file={CvFile.readBytes(contract)} setIsDisplay={setIsDisplay}/>
+                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
             ) : null}
         </>
 
