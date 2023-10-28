@@ -22,6 +22,7 @@ const ManagerPage = ({user}) => {
 
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
+        getAllContracts().then(r => r);
     }, [user.isLoggedIn]);
 
     useEffect(() => {
@@ -51,6 +52,19 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/cvs/all',
         ).then((response) => {
             setCvs(response.data);
+            return response.data;
+        }).catch((error) => {
+            if (error.response?.status === 401) {
+                return;
+            }
+            toast.error(t('fetchError') + t(error));
+        });
+    }
+
+    const getAllContracts = async () => {
+        await axiosInstance.get('manager/contracts/all',
+        ).then((response) => {
+            setContracts(response.data);
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {

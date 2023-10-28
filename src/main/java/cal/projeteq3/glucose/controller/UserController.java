@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.auth.JWTAuthResponse;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -45,9 +46,9 @@ public class UserController{
     }
 
     @GetMapping("/contract/{contractId}")
-    public ResponseEntity<byte[]> getContract(@PathVariable Long contractId){
+    public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(userService.generateContractPDF(contractId));
+                .body(userService.getContractById(contractId));
     }
 }

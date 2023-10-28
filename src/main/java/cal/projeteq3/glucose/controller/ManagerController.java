@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -95,11 +97,18 @@ public class ManagerController {
                 .body(managerService.getSubmittedCv());
     }
 
+    @GetMapping("/contracts/all")
+    public ResponseEntity<List<ContractDTO>> getAllContracts(){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userService.getAllContracts());
+    }
+
     @GetMapping("/contract/{contractId}")
-    public ResponseEntity<byte[]> getContract(@PathVariable Long contractId){
+    public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(userService.generateContractPDF(contractId));
+                .body(userService.getContractById(contractId));
     }
 
 }

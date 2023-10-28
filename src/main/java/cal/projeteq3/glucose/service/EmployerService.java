@@ -15,6 +15,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.AppointmentRepository;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobApplicationRepository;
@@ -146,7 +147,15 @@ public class EmployerService{
 			.orElseThrow(JobApplicationNotFoundException::new);
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
+		createNewContract(application);
 		return new JobApplicationDTO(application);
+	}
+
+	private void createNewContract(JobApplication application) {
+		JobOffer jobOffer = application.getJobOffer();
+		Student student = application.getStudent();
+		Employer employer = jobOffer.getEmployer();
+
 	}
 
 	public JobApplicationDTO refuseApplication(Long applicationId){
