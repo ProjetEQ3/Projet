@@ -60,8 +60,6 @@ public class JobOffer{
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 
-	private Long acceptedJobApplicationId;
-
 	private String refusReason;
 
 	@Embedded
@@ -102,4 +100,28 @@ public class JobOffer{
 		return this.jobApplications.stream().anyMatch(jobApplication -> jobApplication.getStudent().getId().equals(studentId));
 	}
 
+	public boolean isHiring() {
+		if (this.jobOfferState.equals(JobOfferState.TAKEN)) return false;
+		if (isFull()){
+			this.jobOfferState = JobOfferState.TAKEN;
+			return false;
+		}
+		if (isExpired()){
+			this.jobOfferState = JobOfferState.EXPIRED;
+			return false;
+		}
+		return isTakingIn();
+	}
+
+	private boolean isExpired(){
+		return this.expirationDate.isBefore(LocalDate.now());
+	}
+
+	private boolean isFull(){
+		return this.jobApplications.stream().filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.ACCEPTED)).count() >= this.nbOfCandidates;
+	}
+
+	private boolean isTakingIn(){
+		return this.jobApplications.stream().filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.ACCEPTED)).count() < this.nbOfCandidates;
+	}
 }

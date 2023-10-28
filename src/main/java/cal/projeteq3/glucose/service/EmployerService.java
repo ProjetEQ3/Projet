@@ -1,14 +1,15 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobApplicationHasAlreadyADecision;
 import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -138,9 +139,12 @@ public class EmployerService{
 	}
 
 	public JobApplicationDTO acceptApplication(Long applicationId){
-		JobApplication application = jobApplicationRepository
-			.findById(applicationId)
-			.orElseThrow(JobApplicationNotFoundException::new);
+		JobApplication application = jobApplicationRepository.findById(applicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+
+		if (!application.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
+		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
@@ -150,7 +154,11 @@ public class EmployerService{
 		JobApplication application = jobApplicationRepository
 				.findById(applicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
+
+		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+
 		application.setJobApplicationState(JobApplicationState.REJECTED);
+
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
