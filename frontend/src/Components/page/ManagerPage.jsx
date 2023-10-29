@@ -121,7 +121,7 @@ const ManagerPage = ({user}) => {
                     <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => handleTabClick('contracts')}>{t('contracts')}</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
-                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} />}
+                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} />}
             </div>
         </div>

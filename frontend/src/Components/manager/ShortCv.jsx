@@ -8,7 +8,7 @@ import State from "../util/State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 
-const ShortCv = ({cv, index, updateCvList}) => {
+const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     const {t} = useTranslation();
     const [isDecline, setIsDecline] = useState(false);
     const [isDisplay, setIsDisplay] = useState(false);
@@ -64,6 +64,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
             .then((response) => {
                 toast.success(t('updatedCV') + t(cvState))
                 updateCvList(cv)
+                getAllCvs();
             })
             .catch((error) => {
                 console.log(error)
