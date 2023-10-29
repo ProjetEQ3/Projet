@@ -125,19 +125,16 @@ public class Contract {
             presentationDirector.setAlignment(Element.ALIGN_CENTER);
             document.add(presentationDirector);
 
-            // "et" paragraph
             Paragraph et = new Paragraph("et", boldTextFont);
             et.setAlignment(Element.ALIGN_CENTER);
             document.add(et);
 
-            // Presentation of Employer
-            Paragraph presentationEmployer = new Paragraph("L'entreprise " + employer.getOrganisationName() + " ayant sa place d'affaire au :", normalTextFont);
+            Paragraph presentationEmployer = new Paragraph("L'entreprise " + employer.getOrganisationName() + " ayant sa place d'affaire au : AJOUT ADRESSE JOBOFFER", normalTextFont);
             presentationEmployer.setAlignment(Element.ALIGN_CENTER);
             document.add(presentationEmployer);
 
             Paragraph studentParagraph = new Paragraph();
             studentParagraph.add(new Phrase("L’élève, ", normalTextFont));
-            // Replace with your student's name
             studentParagraph.add(new Chunk(student.getFirstName() + ", " +student.getLastName(), boldTextFont));
             studentParagraph.add(new Phrase(",\nConviennent des conditions de stage suivantes :", normalTextFont));
             studentParagraph.setAlignment(Paragraph.ALIGN_CENTER);
@@ -187,7 +184,7 @@ public class Contract {
             internshipDetails.add(new Phrase("\nDate de fin :\n", normalTextFont));
             internshipDetails.add(new Chunk(String.valueOf(jobOffer.getStartDate().plusWeeks(jobOffer.getDuration())), boldTextFont));
             internshipDetails.add(new Phrase("\nNombre total de semaines :\n", normalTextFont));
-            internshipDetails.add(new Chunk(String.valueOf(jobOffer.getDuration()), boldTextFont));
+            internshipDetails.add(new Chunk(String.valueOf(jobOffer.getDuration()) + " Semaines", boldTextFont));
             internshipDetails.setAlignment(Paragraph.ALIGN_LEFT);
             internshipDetails.setSpacingBefore(10f);
             document.add(internshipDetails);
@@ -200,11 +197,11 @@ public class Contract {
 
             Paragraph scheduleDetails = new Paragraph();
             scheduleDetails.add(new Phrase("Heure de début :\n", normalTextFont));
-            scheduleDetails.add(new Chunk("9h", boldTextFont));
+            scheduleDetails.add(new Chunk("9h00", boldTextFont));
             scheduleDetails.add(new Phrase("\nHeure de fin :\n", normalTextFont));
-            scheduleDetails.add(new Chunk("17h", boldTextFont));
+            scheduleDetails.add(new Chunk("17h00", boldTextFont));
             scheduleDetails.add(new Phrase("\nNombre total d’heures par semaine :\n", normalTextFont));
-            scheduleDetails.add(new Chunk(String.valueOf(jobOffer.getHoursPerWeek()), boldTextFont));
+            scheduleDetails.add(new Chunk(jobOffer.getHoursPerWeek() + " h/Semaine", boldTextFont));
             scheduleDetails.setAlignment(Paragraph.ALIGN_LEFT);
             scheduleDetails.setSpacingBefore(10f);
             document.add(scheduleDetails);
@@ -227,7 +224,7 @@ public class Contract {
 
             Paragraph salaryDetails = new Paragraph();
             salaryDetails.add(new Phrase("Salaire horaire :\n", normalTextFont));
-            salaryDetails.add(new Chunk(jobOffer.getSalary() + " $/heure\n", boldTextFont));
+            salaryDetails.add(new Chunk(jobOffer.getSalary() + "0 $/heure\n", boldTextFont));
             salaryDetails.setAlignment(Paragraph.ALIGN_LEFT);
             salaryDetails.setSpacingBefore(10f);
             document.add(salaryDetails);
@@ -292,25 +289,26 @@ public class Contract {
             document.add(signatureDetails);
 
 // Add the signature lines
-            Paragraph studentSignature = new Paragraph("L'élève :\n" + getStudentSignature(), normalTextFont);
+            Paragraph studentSignature = new Paragraph("L'élève :\n" + studentSignatureContract(), normalTextFont);
             studentSignature.setAlignment(Paragraph.ALIGN_LEFT);
             studentSignature.setSpacingBefore(20f);
             document.add(studentSignature);
 
-            Paragraph employerSignature = new Paragraph("Pour l’entreprise :\n" + getEmployerSignature(), normalTextFont);
+            Paragraph employerSignature = new Paragraph("Pour l’entreprise :\n" + employerSignatureContract(), normalTextFont);
             employerSignature.setAlignment(Paragraph.ALIGN_LEFT);
             employerSignature.setSpacingBefore(20f);
             document.add(employerSignature);
 
-            Paragraph directorSignature = new Paragraph("Pour le Collège :\n" + getManagerSignature(), normalTextFont);
+            Paragraph directorSignature = new Paragraph("Pour le Collège :\n" + managerSignatureContract(), normalTextFont);
             directorSignature.setAlignment(Paragraph.ALIGN_LEFT);
             directorSignature.setSpacingBefore(20f);
             document.add(directorSignature);
 
-            Paragraph finalParagraph = new Paragraph("Toute personne morale ou physique faisant affaire avec le VAR :ETABLISSEMENT doit prendre connaissance des politiques et procédures internes la concernant. En cas de manquements à une politique ou à la Loi de la part d’une personne issue du milieu de stage, ce dernier se verrait exclu de la liste des milieux approuvés.", normalTextFont);
+            Paragraph finalParagraph = new Paragraph("Toute personne morale ou physique faisant affaire avec le Cégep André-Laurendeau doit prendre connaissance des politiques et procédures internes la concernant. En cas de manquements à une politique ou à la Loi de la part d’une personne issue du milieu de stage, ce dernier se verrait exclu de la liste des milieux approuvés.", normalTextFont);
             finalParagraph.setAlignment(Paragraph.ALIGN_LEFT);
             finalParagraph.setSpacingBefore(20f);
             document.add(finalParagraph);
+
 
             Anchor link = new Anchor("Contactez votre personne-ressources pour plus d’information ou consultez: https://claurendeau.qc.ca/", normalTextFont);
             link.setReference("https://claurendeau.qc.ca/");
@@ -325,5 +323,23 @@ public class Contract {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String studentSignatureContract() {
+        if (studentSignature != null)
+            return studentSignature.toString();
+        return "__________________________";
+    }
+
+    private String employerSignatureContract() {
+        if (employerSignature != null)
+            return employerSignature.toString();
+        return "__________________________";
+    }
+
+    private String managerSignatureContract() {
+        if (managerSignature != null)
+            return managerSignature.toString();
+        return "__________________________";
     }
 }
