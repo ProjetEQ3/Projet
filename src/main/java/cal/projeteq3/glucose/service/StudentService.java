@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -21,6 +22,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.*;
 import jakarta.transaction.Transactional;
@@ -44,6 +46,8 @@ public class StudentService {
     private final JobApplicationRepository jobApplicationRepository;
     private final AppointmentRepository appointmentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ManagerRepository managerRepository;
+    private final ContractRepository contractRepository;
 
 
     // database operations here
@@ -192,4 +196,9 @@ public class StudentService {
         return new AppointmentDTO(appointmentRepository.save(appointment));
     }
 
+    public List<ShortContractDTO> getContractsByStudentId(Long studentId, Semester semester) {
+        Manager manager = managerRepository.findAll().get(1);
+        return contractRepository.findAllByStudentId(studentId)
+                .stream().filter(contract -> contract.getJobOffer().getSemester().equals(semester)).map((contract -> new ShortContractDTO(contract, manager))).toList();
+    }
 }

@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -121,6 +122,16 @@ public class StudentController {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentService.setAppointmentToChosen(id));
+    }
+
+    @GetMapping("/contracts/{studentId}")
+    public ResponseEntity<List<ShortContractDTO>> getContractsByStudentId(@PathVariable Long studentId, @RequestParam String season, @RequestParam String year){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.getContractsByStudentId(studentId, Semester.builder()
+                        .season(Semester.Season.valueOf(season))
+                        .year(Integer.parseInt(year))
+                        .build()));
     }
 
 }

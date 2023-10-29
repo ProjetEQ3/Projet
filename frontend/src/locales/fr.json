@@ -218,5 +218,7 @@
   "appointments": "Rendez-vous possibles",
   "chooseAppointment": "Choisir un rendez-vous",
   "appointmentChosen": "Rendez-vous choisi: ",
-  "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous"
+  "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous",
+
+  "contractsList": "Liste des contrats"
 }

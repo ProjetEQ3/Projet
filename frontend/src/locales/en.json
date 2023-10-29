@@ -217,5 +217,7 @@
   "appointments": "Pending appointments",
   "chooseAppointment": "Choose an appointment",
   "appointmentChosen": "You have chosen this appointment",
-  "noAppointmentSelected": "You have not selected an appointment"
+  "noAppointmentSelected": "You have not selected an appointment",
+
+  "contractsList": "List of your contracts"
 }
