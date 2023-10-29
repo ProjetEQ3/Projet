@@ -8,20 +8,6 @@ import Contract from "../../model/Contract";
 const ShortContract = ({ contract }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
-    // const [contract, setContract] = useState(new Contract());
-    //
-    // useEffect(() => {
-    //     let id = contractId.id;
-    //     let newContract = new Contract();
-    //     axiosInstance.get(`manager/contract/${id}`)
-    //         .then((response) => {
-    //             newContract.init(response.data);
-    //             setContract(newContract);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }, [contractId]);
 
     const handleClick = () => {
         setIsDisplay(!isDisplay);

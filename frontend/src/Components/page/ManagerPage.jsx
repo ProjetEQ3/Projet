@@ -65,15 +65,9 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllContracts = async () => {
-        setContracts([])
         await axiosInstance.get('manager/shortContracts/all',
         ).then((response) => {
-            response.data.forEach(contract => {
-                let newContract = new Contract();
-                newContract.init(contract);
-                setContracts(contracts => [...contracts, newContract])
-            })
-            return response.data;
+            setContracts(response.data)
         }).catch((error) => {
             if (error.response?.status === 401) {
                 return;
