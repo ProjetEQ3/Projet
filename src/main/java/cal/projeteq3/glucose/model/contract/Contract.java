@@ -99,9 +99,10 @@ public class Contract {
             BaseFont arialFont = BaseFont.createFont("src/main/resources/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font normalTextFont = new Font(arialFont, 10, Font.NORMAL, BaseColor.BLACK);
             Font boldTextFont = new Font(arialFont, 10, Font.BOLD, BaseColor.BLACK);
+            Font titleTextFont = new Font(arialFont, 20, Font.BOLD, BaseColor.BLACK);
 
             // Centered title
-            Paragraph title = new Paragraph("Entente Intervenue entre les parties suivantes", boldTextFont);
+            Paragraph title = new Paragraph("Entente Intervenue entre les parties suivantes", titleTextFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
@@ -144,7 +145,7 @@ public class Contract {
             document.add(studentParagraph);
 
             Paragraph internshipLocation = new Paragraph();
-            internshipLocation.add(new Phrase("Lieu du stage ", boldTextFont));
+            internshipLocation.add(new Phrase("Lieu du stage ", titleTextFont));
             internshipLocation.add(new Phrase("\nService ou département :\n", normalTextFont));
             internshipLocation.add(new Chunk(employer.getOrganisationName(), boldTextFont));
             internshipLocation.add(new Phrase("\nAdresse :\n", normalTextFont));
@@ -153,7 +154,7 @@ public class Contract {
             internshipLocation.setSpacingBefore(15f);
             document.add(internshipLocation);
 
-            Paragraph supervisorInfo = new Paragraph("Superviseur du stage", boldTextFont);
+            Paragraph supervisorInfo = new Paragraph("Superviseur du stage", titleTextFont);
             supervisorInfo.setAlignment(Paragraph.ALIGN_LEFT);
             supervisorInfo.setSpacingBefore(20f);
             document.add(supervisorInfo);
@@ -175,7 +176,7 @@ public class Contract {
             document.add(supervisorDetails);
 
 
-            Paragraph internshipDuration = new Paragraph("Durée de stage (durée minimale de 8 semaines et de 224 heures)", boldTextFont);
+            Paragraph internshipDuration = new Paragraph("Durée de stage (durée minimale de 8 semaines et de 224 heures)", titleTextFont);
             internshipDuration.setAlignment(Paragraph.ALIGN_LEFT);
             internshipDuration.setSpacingBefore(20f);
             document.add(internshipDuration);
@@ -192,7 +193,7 @@ public class Contract {
             document.add(internshipDetails);
 
 
-            Paragraph internshipSchedule = new Paragraph("Horaire de travail", boldTextFont);
+            Paragraph internshipSchedule = new Paragraph("Horaire de travail", titleTextFont);
             internshipSchedule.setAlignment(Paragraph.ALIGN_LEFT);
             internshipSchedule.setSpacingBefore(20f);
             document.add(internshipSchedule);
@@ -208,7 +209,7 @@ public class Contract {
             scheduleDetails.setSpacingBefore(10f);
             document.add(scheduleDetails);
 
-            Paragraph workDays = new Paragraph("Jours de travail\n", boldTextFont);
+            Paragraph workDays = new Paragraph("Jours de travail", titleTextFont);
             workDays.setAlignment(Paragraph.ALIGN_LEFT);
             workDays.setSpacingBefore(20f);
             document.add(workDays);
@@ -219,13 +220,13 @@ public class Contract {
             workDaysDetails.setSpacingBefore(10f);
             document.add(workDaysDetails);
 
-            Paragraph salaryInfo = new Paragraph("\nSalaire\n", boldTextFont);
+            Paragraph salaryInfo = new Paragraph("\nSalaire", titleTextFont);
             salaryInfo.setAlignment(Paragraph.ALIGN_LEFT);
             salaryInfo.setSpacingBefore(20f);
             document.add(salaryInfo);
 
             Paragraph salaryDetails = new Paragraph();
-            salaryDetails.add(new Phrase("\nSalaire horaire :\n", normalTextFont));
+            salaryDetails.add(new Phrase("Salaire horaire :\n", normalTextFont));
             salaryDetails.add(new Chunk(jobOffer.getSalary() + " $/heure\n", boldTextFont));
             salaryDetails.setAlignment(Paragraph.ALIGN_LEFT);
             salaryDetails.setSpacingBefore(10f);
@@ -244,7 +245,7 @@ public class Contract {
             responsibilities.setSpacingBefore(10f);
             document.add(responsibilities);
 
-            Paragraph responsibilitiesSection = new Paragraph("Responsabilités", boldTextFont);
+            Paragraph responsibilitiesSection = new Paragraph("Responsabilités", titleTextFont);
             responsibilitiesSection.setAlignment(Paragraph.ALIGN_LEFT);
             responsibilitiesSection.setSpacingBefore(20f);
             document.add(responsibilitiesSection);
@@ -279,14 +280,14 @@ public class Contract {
             responsibilitiesText.setSpacingBefore(10f);
             document.add(responsibilitiesText);
 
-            Paragraph signatures = new Paragraph("\nSignatures.", boldTextFont);
+            Paragraph signatures = new Paragraph("\nSignatures.", titleTextFont);
             signatures.setAlignment(Paragraph.ALIGN_CENTER);
             signatures.setSpacingBefore(20f);
             document.add(signatures);
 
 // Add the signature details
             Paragraph signatureDetails = new Paragraph("\n\nLes parties s’engagent à respecter cette entente de stage", boldTextFont);
-            signatureDetails.setAlignment(Paragraph.ALIGN_LEFT);
+            signatureDetails.setAlignment(Paragraph.ALIGN_CENTER);
             signatureDetails.setSpacingBefore(10f);
             document.add(signatureDetails);
 
