@@ -3,7 +3,7 @@ import ShortCv from "./ShortCv";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 
-const Cvs = ({cvs, updateCvList}) => {
+const Cvs = ({cvs, updateCvList, getAllCvs }) => {
 	const {t} = useTranslation();
 
 	const renderFilteredCvs = (filteredCvs) => {
@@ -13,7 +13,7 @@ const Cvs = ({cvs, updateCvList}) => {
 					filteredCvs.length !== 0 ?
 						filteredCvs.map((cv, index) => (
 							<div key={index} onClick={() => (cv)}>
-								<ShortCv cv={cv} updateCvList={updateCvList} index={index}/>
+								<ShortCv cv={cv} updateCvList={updateCvList} index={index} getAllCvs={getAllCvs} />
 							</div>)) :
 						<div className="col-12 text-center">
 							<h4 className="text-dark fw-light">{t('noCV')}</h4>
