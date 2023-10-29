@@ -103,8 +103,8 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApp
                             <button data-testid="cancelButton" type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">{t('cancel')}</button>
                         </form>) :
                         (<div>
-                            <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
-                            <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger">{t('refuse')}</button>
+                            <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal" disabled={jobOffer.jobOfferState !== 'SUBMITTED'}>{t('accept')}</button>
+                            <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger" disabled={jobOffer.jobOfferState !== 'SUBMITTED'}>{t('refuse')}</button>
                         </div>)}
                 </div>
              </div>
