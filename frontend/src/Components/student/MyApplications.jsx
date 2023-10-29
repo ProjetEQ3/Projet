@@ -2,37 +2,39 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../App";
 import JobOffer from "../../model/JobOffer";
-import ShortJobOffer from "./ShortJobOffer";
+import ShortJobOfferApplication from "./ShortJobOfferApplication";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
 function MyApplications({ user }) {
     const {t} = useTranslation();
-    const [myApplications, setMyApplications] = useState([]);
     const navigate = useNavigate();
+    const [myApplications, setMyApplications] = useState([]);
 
     useEffect(() => {
         if (!user?.isLoggedIn) {
             navigate("/");
         }
-
-        async function fetchMyApplications() {
-            try {
-                const response = await axiosInstance.get(`/student/appliedJobOffer/${user.id}`);
+        fetchMyApplications();
+    }, [user, navigate]);
+    async function fetchMyApplications() {
+        await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
+            .then((response) => {
                 const jobOffers = response.data.map((jobOfferData) => {
                     const newJobOffer = new JobOffer();
                     newJobOffer.init(jobOfferData);
                     return newJobOffer;
                 });
                 setMyApplications(jobOffers);
-            } catch (error) {
+            })
+            .catch((error) => {
                 toast.error(t('fetchError') + t(error.response?.data.message));
-            }
-        }
-
+            });
+    }
+    function handleRefresh() {
         fetchMyApplications();
-    }, [user, navigate]);
+    }
 
     return (
         <div>
@@ -47,7 +49,7 @@ function MyApplications({ user }) {
                         renderItem={(filteredJobOffers) => (
                             <div>
                                 {filteredJobOffers.map((offer, index) => (
-                                    <ShortJobOffer jobOffer={offer} key={offer.id}/>
+                                    <ShortJobOfferApplication index={index} user={user} jobOffer={offer} key={offer.id} refresh={handleRefresh}/>
                                 ))}
                             </div>
                         )}

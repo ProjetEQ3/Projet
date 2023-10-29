@@ -62,4 +62,8 @@ public class Semester {
         };
     }
 
+    public boolean equals(Semester semester){
+        return this.season == semester.season && this.year == semester.year;
+    }
+
 }

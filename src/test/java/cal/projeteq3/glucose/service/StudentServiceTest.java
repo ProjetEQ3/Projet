@@ -1,15 +1,19 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
@@ -22,10 +26,8 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,9 +38,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,6 +56,9 @@ public class StudentServiceTest {
     private JobOfferRepository jobOfferRepository;
     @Mock
     private JobApplicationRepository jobApplicationRepository;
+
+    @Mock
+    private AppointmentRepository appointmentRepository;
 
     @InjectMocks
     private StudentService studentService;
@@ -770,4 +773,119 @@ public class StudentServiceTest {
         });
         verify(studentRepository, times(1)).findById(notFoundStudentId);
     }
+
+    @Test
+    public void getAppointmentsByJobApplicationId_ExistingId() {
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(1L);
+        jobApplication.setJobOffer(new JobOffer());
+
+        Student student = new Student();
+        student.setCredentials(new Credentials());
+        student.setRole(Role.STUDENT);
+
+        jobApplication.setStudent(student);
+
+        Appointment appointment = new Appointment();
+        appointment.setJobApplication(jobApplication);
+
+        List<Appointment> appointments = new ArrayList<>();
+        appointments.add(appointment);
+
+        jobApplication.setAppointments(appointments);
+
+        List<AppointmentDTO> appointmentDTOS = appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+
+        JobApplicationDTO jobApplicationDTO = new JobApplicationDTO(jobApplication);
+
+        when(jobApplicationRepository.findAppointmentsByJobApplicationId(1L)).thenReturn(appointments);
+
+        List<AppointmentDTO> retrievedAppointmentDTOS = studentService.getAppointmentsByJobApplicationId(1L);
+
+        assertEquals(retrievedAppointmentDTOS.size(), appointmentDTOS.size());
+
+    }
+
+    @Test
+    public void getAppointmentsByJobApplicationId_NotExistingId() {
+
+        List<Appointment> appointments = new ArrayList<>();
+        List<AppointmentDTO> appointmentDTOS = appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+
+        when(jobApplicationRepository.findAppointmentsByJobApplicationId(1L)).thenReturn(appointments);
+
+        List<AppointmentDTO> retrievedAppointmentDTOS = studentService.getAppointmentsByJobApplicationId(1L);
+
+        assertEquals(retrievedAppointmentDTOS.size(), appointmentDTOS.size());
+
+    }
+
+    @Test
+    public void findAllAppointmentsForJobOfferAndStudent_ThereAreAppointmentsAndJobOfferAndStudentActuallyExist() {
+//        Arrange
+        Student student = Student.builder().id(1L).build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).build();
+        JobApplication application = JobApplication.builder().id(2L).student(student).jobOffer(jobOffer).build();
+        List<Appointment> appointments = new ArrayList<>(
+                List.of(
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build(),
+                        Appointment.builder().jobApplication(application).build()
+                )
+        );
+        application.setAppointments(appointments);
+
+        when(jobApplicationRepository.findByJobOfferIdAndStudentId(jobOffer.getId(), student.getId())).thenReturn(application);
+//        Act
+        List<AppointmentDTO> appointmentDTOS = studentService.findAllAppointmentsForJobOfferAndStudent(jobOffer.getId(), student.getId());
+
+//        Assert
+        assertEquals(appointments.size(), appointmentDTOS.size());
+    }
+
+    @Test
+    public void setAppointmentToChosen_ExistingId() {
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(1L);
+        jobApplication.setJobOffer(new JobOffer());
+
+        Student student = new Student();
+        student.setCredentials(new Credentials());
+        student.setRole(Role.STUDENT);
+
+        jobApplication.setStudent(student);
+
+        Appointment appointmentBeforeChosen = new Appointment();
+        appointmentBeforeChosen.setId(1L);
+        appointmentBeforeChosen.setJobApplication(jobApplication);
+
+        Appointment appointmentAfterChosen = appointmentBeforeChosen;
+        appointmentAfterChosen.setChosen(true);
+
+        AppointmentDTO appointmentDTO = new AppointmentDTO(appointmentAfterChosen);
+
+        when(appointmentRepository.findById(1L)).thenReturn(Optional.of(appointmentBeforeChosen));
+        when(appointmentRepository.save(appointmentBeforeChosen)).thenReturn(appointmentAfterChosen);
+
+        AppointmentDTO retrievedAppointment = studentService.setAppointmentToChosen(1L);
+
+        assertEquals(retrievedAppointment.isChosen(), appointmentDTO.isChosen());
+
+    }
+
+    @Test
+    public void setAppointmentToChosen_NotExistingId() {
+
+        when(appointmentRepository.findById(1L)).thenReturn(Optional.empty());
+
+        AppointmentNotFoundException exception = assertThrows(AppointmentNotFoundException.class, () -> {
+            studentService.setAppointmentToChosen(1L);
+        });
+
+        assertNotNull(exception);
+
+    }
+
 }

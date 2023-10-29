@@ -703,6 +703,8 @@ public class EmployerServiceTest {
         mockJobOffer.setId(1L);
         mockJobOffer.setJobOfferState(JobOfferState.OPEN);
         mockJobOffer.setJobApplications(new ArrayList<>());
+        mockJobOffer.setNbOfCandidates(4);
+        mockJobOffer.setExpirationDate(LocalDate.now().plusDays(30));
         mockJobOffer.getJobApplications().add(mockApplication);
         mockApplication.setJobOffer(mockJobOffer);
 
@@ -817,5 +819,86 @@ public class EmployerServiceTest {
 
         assertThrows(JobApplicationNotFoundException.class, () -> employerService.addAppointmentByJobApplicationId(applicationId, dateList));
 
+    }
+
+    @Test
+    public void getAllJobApplicationsByEmployerId_Valid(){
+        // Arrange
+        Long employerId = 123L;
+        List<JobApplication> jobApplications = new ArrayList<>();
+        jobApplications.add(new JobApplication(/* create a JobApplication instance here */));
+        jobApplications.add(new JobApplication(/* create another JobApplication instance here */));
+        jobApplications.get(0).setStudent(Student.builder().build());
+        jobApplications.get(0).setJobOffer(JobOffer.builder().id(1L).build());
+        jobApplications.get(1).setStudent(Student.builder().build());
+        jobApplications.get(1).setJobOffer(JobOffer.builder().id(1L).build());
+
+
+        when(jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId)).thenReturn(jobApplications);
+
+        // Act
+        List<JobApplicationDTO> jobApplicationDTOs = employerService.getAllJobApplicationsByEmployerId(employerId);
+
+        // Assert
+        assertEquals(jobApplications.size(), jobApplicationDTOs.size());
+    }
+
+    @Test
+    public void getWaitingStudents_Valid(){
+        // Arrange
+        Long employerId = 123L;
+        List<JobApplication> jobApplications = new ArrayList<>();
+        jobApplications.add(new JobApplication(/* create a JobApplication instance here */));
+        jobApplications.add(new JobApplication(/* create another JobApplication instance here */));
+        jobApplications.get(0).setStudent(Student.builder().build());
+        jobApplications.get(0).setJobOffer(JobOffer.builder().id(1L).semester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build()).build());
+        jobApplications.get(0).setSemester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
+        jobApplications.get(0).setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+        jobApplications.get(1).setStudent(Student.builder().build());
+        jobApplications.get(1).setJobOffer(JobOffer.builder().id(1L).semester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build()).build());
+        jobApplications.get(1).setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+        jobApplications.get(1).setSemester(Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
+
+        when(jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId)).thenReturn(jobApplications);
+
+        // Act
+        List<StudentDTO> studentDTOs = employerService.getWaitingStudents(employerId, Semester.builder().season(Semester.Season.SUMMER).year(2023).build());
+
+        // Assert
+        assertEquals(jobApplications.size(), studentDTOs.size());
+    }
+
+    @Test
+    void getOfferByApplicationId_WhenValidId_ReturnsJobOfferDTO() {
+        // Arrange
+        Long applicationId = 1L;
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(applicationId);
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(100L);
+        jobApplication.setJobOffer(jobOffer);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(jobApplication));
+
+        // Act
+        JobOfferDTO result = employerService.getOfferByApplicationId(applicationId);
+
+        // Assert
+        assertEquals(jobOffer.getId(), result.getId());
+        // Add more assertions for other properties if needed.
+    }
+
+    @Test
+    void getOfferByApplicationId_WhenInvalidId_ThrowsJobOfferNotFoundException() {
+        // Arrange
+        Long applicationId = 1L;
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        assertThrows(JobOfferNotFoundException.class, () -> {
+            employerService.getOfferByApplicationId(applicationId);
+        });
     }
 }

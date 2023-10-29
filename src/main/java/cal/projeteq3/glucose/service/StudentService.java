@@ -1,9 +1,11 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
@@ -11,23 +13,24 @@ import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenExce
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
 import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
+import cal.projeteq3.glucose.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -39,6 +42,7 @@ public class StudentService {
     private final CvFileRepository cvFileRepository;
     private final JobOfferRepository jobOfferRepository;
     private final JobApplicationRepository jobApplicationRepository;
+    private final AppointmentRepository appointmentRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -158,4 +162,34 @@ public class StudentService {
                 .stream().map(JobOfferDTO::new)
                 .collect(Collectors.toList());
     }
+
+    public List<AppointmentDTO> getAppointmentsByJobApplicationId(Long id) {
+        List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(id);
+        return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+    }
+
+    public List<AppointmentDTO> findAllAppointmentsForJobOfferAndStudent(Long jobOfferId, Long studentId) {
+
+        JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
+
+        List<Appointment> appointments = new ArrayList<>(jobApplication.getAppointments());
+
+        return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+    }
+
+    public AppointmentDTO setAppointmentToChosen(Long id) {
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow(AppointmentNotFoundException::new);
+        Long jobApplicationId = appointment.getJobApplication().getId();
+        List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(jobApplicationId);
+        for (Appointment siblingAppointment : appointments) {
+            if ((long) siblingAppointment.getId() != appointment.getId()) {
+                appointmentRepository.deleteById(siblingAppointment.getId());
+            }
+        }
+        appointment.setChosen(true);
+        JobApplication jobApplication = appointment.getJobApplication();
+        jobApplication.setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+        return new AppointmentDTO(appointmentRepository.save(appointment));
+    }
+
 }

@@ -21,7 +21,7 @@ public class Employer extends User{
 
 	private String organisationPhone;
 
-	@OneToMany(mappedBy = "employer")//TODO check cascade on delete jobOffer
+	@OneToMany(mappedBy = "employer", cascade = CascadeType.ALL)
 	private List<JobOffer> jobOffers = new ArrayList<>();
 
 	@Builder

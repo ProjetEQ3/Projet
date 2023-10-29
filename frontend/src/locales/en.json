@@ -34,6 +34,7 @@
   "convokeDates": "Convocation dates.",
   "convokeSuccess": "Student convoked",
   "convokeError": "Error convoking student : ",
+  "convokedStudents": "Convoked Student(s)",
   "chooseADepartment": "Choose a department",
   "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
   "cancel": "Cancel",
@@ -41,6 +42,7 @@
   "createInternshipSuccess": "Internship offer created",
   "createInternshipError": "Error creating internship offer",
   "choose": "Choose an option",
+  "chosenAppointment" : "Chosen appointment : ",
   "cvNotApproved": "CV not approved",
   "CV": "CV",
   "cvAuthorisation": "CV Authorization",
@@ -106,9 +108,9 @@
   "internshipDescription": "Offer Description",
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
-  "convokedStudents": "Convoked Student(s)",
 
   "jobOffers": "Internships",
+  "jobOffer": "Internship",
 
   "location": "Work Location",
   "locationRequired": "Location is required.",
@@ -130,6 +132,7 @@
   "noCV": "No CV uploaded",
   "noInternship": "No internship offers at the moment",
   "noOpenInternship": "No open internship offers at the moment",
+  "noStudentsConvoked": "No students have accepted one of your convocations yet.",
   "next": "Next",
   "noData": "No data available",
   "newInternshipSubmit": "Submit Offer",
@@ -208,5 +211,11 @@
   "week": " week(s)",
   "winter": "Winter",
 
-  "yourInternship": "Your internship offers"
+  "yourInternship": "Your internship offers",
+
+  "noAppointments": "No appointments available",
+  "appointments": "Pending appointments",
+  "chooseAppointment": "Choose an appointment",
+  "appointmentChosen": "You have chosen this appointment",
+  "noAppointmentSelected": "You have not selected an appointment"
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from "@testing-library/react";
+import {render, fireEvent, screen, waitFor} from "@testing-library/react";
 import ShortJobOffer from "../../Components/student/ShortJobOffer";
 
 describe("ShortJobOffer", () => {
@@ -20,5 +20,8 @@ describe("ShortJobOffer", () => {
 
     it('should render the department', () => {
         expect(screen.getByTestId('job-department')).toHaveTextContent(mockJobOffer.department);
+    });
+    it('should initially not render the appointment button when there are no appointments', () => {
+        expect(screen.queryByTestId('appointment-button')).toBeNull();
     });
 });

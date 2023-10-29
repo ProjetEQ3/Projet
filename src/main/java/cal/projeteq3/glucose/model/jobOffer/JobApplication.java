@@ -6,9 +6,7 @@ import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +21,7 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
+	@Enumerated(EnumType.STRING)
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
 	@ManyToOne
@@ -36,6 +35,7 @@ public class JobApplication{
 
 	@OneToMany(mappedBy = "jobApplication", cascade = CascadeType.ALL)
 	private List<Appointment> appointments = new ArrayList<>();
+
 	public Student getStudent(){
 		if(this.student == null) throw new StudentNotFoundException();
 		return this.student;
@@ -45,4 +45,7 @@ public class JobApplication{
 		this.appointments.add(appointment);
 	}
 
+	public boolean isNotChangeble() {
+		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED;
+	}
 }

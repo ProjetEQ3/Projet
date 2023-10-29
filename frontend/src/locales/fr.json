@@ -34,6 +34,7 @@
   "cancel": "Annuler",
   "close": "Fermer",
   "choose": "Choisir une option",
+  "chosenAppointment": "Rendez-vous choisi: ",
   "createInternshipSuccess": "Offre de stage créée",
   "createInternshipError": "Erreur lors de la création de l'offre de stage",
   "confirmationOfferDelete": "Êtes-vous sûr de vouloir supprimer cette offre de stage ?",
@@ -45,6 +46,7 @@
   "convokeDates" : "Dates de convocation",
   "convokeError" : "Erreur lors de la convocation de l'étudiant: ",
   "convokeSuccess" : "Étudiant convoqué",
+  "convokedStudents": "Étudiant(s) convoqué(s)",
   "contracts" : "Contrats",
   "copyRights": "© 2023 - Tous droits réservés.",
 
@@ -107,9 +109,9 @@
   "internshipDescription": "Description de l'offre de stage",
   "internshipDetails": "Détails de l'offre de stage",
   "internshipList": "Liste de vos offres de stage",
-  "convokedStudents": "Étudiant(s) convoqué(s)",
 
   "jobOffers": "Stages",
+  "jobOffer": "Stage",
 
   "login": "Connecter",
   "location": "Lieu de travail",
@@ -130,6 +132,7 @@
   "noInternship": "Aucune offre de stage n'a été trouvée.",
   "noStudent": "Aucun étudiant n'a postulé depuis la dernière visite.",
   "noCV": "Aucun CV n'a été téléversé pour le moment",
+  "noStudentsConvoked": "Aucun étudiant n'a accepté vos convocations pour le moment.",
   "noOpenInternship": "Aucune offre de stage Ouverte pour le moment",
   "next": "Suivant",
   "noData": "Aucune donnée disponible",
@@ -209,5 +212,11 @@
   "week": " semaine(s)",
   "winter": "Hiver",
 
-  "yourInternship": "Vos offres de stages"
+  "yourInternship": "Vos offres de stages",
+
+  "noAppointments": "Aucun rendez-vous proposé pour le moment",
+  "appointments": "Rendez-vous possibles",
+  "chooseAppointment": "Choisir un rendez-vous",
+  "appointmentChosen": "Rendez-vous choisi: ",
+  "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous"
 }

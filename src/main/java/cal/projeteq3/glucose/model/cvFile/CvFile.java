@@ -22,6 +22,7 @@ public final class CvFile{
 	private CvState cvState = CvState.SUBMITTED;
 
 	@OneToOne(mappedBy = "cvFile")
+	@ToString.Exclude
 	private Student student;
 
 	private String refusReason;

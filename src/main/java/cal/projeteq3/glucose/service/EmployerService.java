@@ -1,14 +1,15 @@
 package cal.projeteq3.glucose.service;
 
-import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.JobApplicationHasAlreadyADecision;
 import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -26,10 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -142,9 +140,12 @@ public class EmployerService{
 	}
 
 	public JobApplicationDTO acceptApplication(Long applicationId){
-		JobApplication application = jobApplicationRepository
-			.findById(applicationId)
-			.orElseThrow(JobApplicationNotFoundException::new);
+		JobApplication application = jobApplicationRepository.findById(applicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+
+		if (!application.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
+		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
 		createNewContract(application);
@@ -162,7 +163,11 @@ public class EmployerService{
 		JobApplication application = jobApplicationRepository
 				.findById(applicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
+
+		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+
 		application.setJobApplicationState(JobApplicationState.REJECTED);
+
 		jobApplicationRepository.save(application);
 		return new JobApplicationDTO(application);
 	}
@@ -178,7 +183,7 @@ public class EmployerService{
 			.collect(Collectors.toList());
 	}
 
-	//EQ3-17
+	@Transactional
 	public JobApplicationDTO addAppointmentByJobApplicationId(Long jobApplicationId, Set<LocalDateTime> dates){
 		List<Appointment> appointmentList = dates.stream()
 				.map(time -> {
@@ -190,6 +195,7 @@ public class EmployerService{
 
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
+
 		for(Appointment app : appointmentList){
 			app.setJobApplication(jobApplication);
 			jobApplication.addAppointment(app);
@@ -200,5 +206,24 @@ public class EmployerService{
 		return jobApplicationRepository.findById(jobApplication.getId())
 			.map(JobApplicationDTO::new)
 			.orElseThrow(() -> new JobApplicationNotFoundException(jobApplicationId));
+	}
+
+	public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Long employerId){
+		return jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId).stream().map(JobApplicationDTO::new).collect(Collectors.toList());
+	}
+
+	public List<StudentDTO> getWaitingStudents(Long employerId, Semester semester) {
+		return jobApplicationRepository.findAllByJobOffer_Employer_Id(employerId).stream()
+				.filter(jobApplication -> jobApplication.getJobOffer().getSemester().equals(semester))
+				.filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.WAITING_APPOINTMENT))
+				.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
+				.collect(Collectors.toList());
+	}
+
+	public JobOfferDTO getOfferByApplicationId(Long applicationId) {
+		return jobApplicationRepository.findById(applicationId)
+				.map(JobApplication::getJobOffer)
+				.map(JobOfferDTO::new)
+				.orElseThrow(() -> new JobOfferNotFoundException(0L));
 	}
 }
