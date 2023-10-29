@@ -29,18 +29,10 @@ public class SignatureDTO {
         this.contractId = signature.getContract().getId();
     }
 
-    public Signature toEntity(LoginDTO loginDTO, Role role){
+    public Signature toEntity(){
         return Signature.builder()
-                .credentials(
-                        Credentials.builder()
-                                .email(loginDTO.getEmail())
-                                .password(loginDTO.getPassword())
-                                .role(role)
-                                .build()
-                )
                 .firstName(this.firstName)
                 .lastName(this.lastName)
-                .jobTitle(this.jobTitle)
                 .signatureDate(this.signatureDate)
                 .build();
     }
