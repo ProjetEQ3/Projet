@@ -109,7 +109,7 @@ public class Contract {
             // Introduction
             Paragraph intro = new Paragraph();
             intro.add(new Phrase("Dans le cadre de la formule Alternance travail-études du programme de ", normalTextFont));
-            intro.add(new Chunk(String.valueOf(jobOffer.getDepartment()), boldTextFont));
+            intro.add(new Chunk(jobOffer.getDepartment().toString(), boldTextFont));
             intro.add(new Phrase(", les parties citées ci-dessous :", normalTextFont));
             intro.setAlignment(Paragraph.ALIGN_CENTER);
             intro.setSpacingBefore(20f);
@@ -184,7 +184,7 @@ public class Contract {
             internshipDetails.add(new Phrase("\nDate de fin :\n", normalTextFont));
             internshipDetails.add(new Chunk(String.valueOf(jobOffer.getStartDate().plusWeeks(jobOffer.getDuration())), boldTextFont));
             internshipDetails.add(new Phrase("\nNombre total de semaines :\n", normalTextFont));
-            internshipDetails.add(new Chunk(String.valueOf(jobOffer.getDuration()) + " Semaines", boldTextFont));
+            internshipDetails.add(new Chunk(jobOffer.getDuration() + " Semaines", boldTextFont));
             internshipDetails.setAlignment(Paragraph.ALIGN_LEFT);
             internshipDetails.setSpacingBefore(10f);
             document.add(internshipDetails);
