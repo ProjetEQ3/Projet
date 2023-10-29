@@ -17,7 +17,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     import.meta.url
 ).toString();
 
-const PdfViewer = ({ pdf }) => {
+const PdfViewer = ({ pdf, contractComplete }) => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [scale, setScale] = useState(1); // To control zoom level
@@ -75,7 +75,7 @@ const PdfViewer = ({ pdf }) => {
                     <button className={'btn btn-outline-ose col-2'} onClick={handleZoomOut} disabled={scale === 0.5}>
                         <FontAwesomeIcon icon={faSearchMinus} />
                     </button>
-                    <button className={'btn btn-outline-ose col-2'} onClick={handleDownload}>
+                    <button className={'btn btn-outline-ose col-2'} onClick={handleDownload} disabled={!contractComplete}>
                         <FontAwesomeIcon icon={faDownload} />
                     </button>
                     <button className={'btn btn-outline-ose col-2'} onClick={handleOpenInNewTab}>

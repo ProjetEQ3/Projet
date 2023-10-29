@@ -84,7 +84,7 @@ function Cv({user, setCv}){
 							<FontAwesomeIcon title="deleteCV" icon={faTrash} className="my-auto pe-2 fa-lg text-danger dark-hover"
 							                 onClick={handleDeletePdf}/>
 						</div>
-						<PDFPreview file={CVFile.readBytes(user.cvFile.fileData)}/>
+						<PDFPreview file={CVFile.readBytes(user.cvFile.fileData)} contractComplete={true}/>
 					</div>
 				</>
 			) : (

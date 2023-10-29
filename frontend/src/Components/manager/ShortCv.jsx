@@ -131,7 +131,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                 </div>
             </div>
             {isDisplay ? (
-                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
+                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay} contractComplete={true}/>
             ) : null}
         </>
 

@@ -78,7 +78,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
             {
                 isDisplay ?
                     <div className="col-12" data-testid="pdf-preview-mock-element">
-                        <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)}/>
+                        <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
                     </div> : null
             }
         </>
