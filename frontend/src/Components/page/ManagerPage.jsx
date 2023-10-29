@@ -97,13 +97,28 @@ const ManagerPage = ({user}) => {
         setCvs(cvs);
     }
 
+    const handleTabClick = async (tabName) => {
+        setTab(tabName);
+        switch(tabName) {
+            case 'stages':
+                await getAllOffers();
+                break;
+            case 'cvs':
+                await getAllCvs();
+                break;
+            case 'contracts':
+                await getAllContracts();
+                break;
+        }
+    };
+
     return (
         <div className="container">
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => setTab('stages')}>{t('internship')}</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => setTab('cvs')}>CVs</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => setTab('contracts')}>{t('contracts')}</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => handleTabClick('stages')}>{t('internship')}</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => handleTabClick('cvs')}>CVs</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => handleTabClick('contracts')}>{t('contracts')}</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} />}
