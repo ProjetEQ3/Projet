@@ -8,34 +8,43 @@ import {toast} from "react-toastify";
 import MyApplications from "../student/MyApplications";
 import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
+import ContractList from "../user/ContractList";
+import Contract from "../../model/Contract";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
   const [tab, setTab] = useState('home');
-  const [jobOffers, setJobOffers] = useState([]);
+  const [jobOffers, setJobOffers] = useState([new JobOffer()]);
   const tabs = [
 	  { id: 'home', label: 'home' },
 	  { id: 'stages', label: 'jobOffers' },
 	  { id: 'my_applications', label: 'myApplications' },
 	  { id: 'cv', label: 'CV' },
+	  { id: 'contract', label: 'contractsList' }
   ];
   const navigate = useNavigate();
+  const [contracts, setContracts] = useState([new Contract()]);
 
 	async function fetchStudentJobOffers() {
 		if (!user?.isLoggedIn) navigate('/');
 		await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			.then((response) => {
-				setJobOffers([]);
-				response.data.forEach((jobOffer) => {
-					const newJobOffer = new JobOffer();
-					newJobOffer.init(jobOffer)
-					setJobOffers(jobOffers => [...jobOffers, newJobOffer]);
-				});
+				setJobOffers(response.data)
 			}).catch((error) => {
 				if (error.response?.status === 401) return;
 
 				toast.error(t('fetchError') + t(error.response?.data.message))
+			});
+	}
+
+	async function getContracts() {
+		await axiosInstance.get(`student/contracts/${user.id}`)
+			.then((response) => {
+				setContracts(response.data);
+			})
+			.catch((error) => {
+				toast.error(error.response?.data?.message)
 			});
 	}
 
@@ -65,7 +74,10 @@ const StudentPage = ({user, setUser}) => {
 						<button
 							key={tabItem.id}
 							className={`col-md-3 btn btn-outline-ose ${tab === tabItem.id ? 'active' : ''}`}
-							onClick={() => setTab(tabItem.id)}
+							onClick={() => {
+								setTab(tabItem.id)
+								if (tabItem.id === 'contract') getContracts();
+							}}
 						>
 							{t(tabItem.label)}
 						</button>
@@ -75,6 +87,7 @@ const StudentPage = ({user, setUser}) => {
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}
 				{tab === 'my_applications' && <MyApplications user={user}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
+				{tab === 'contract' && <ContractList contracts={contracts} />}
 			</div>
 		</div>
 	)
