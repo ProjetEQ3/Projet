@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -18,12 +19,9 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.AppointmentRepository;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.ContractRepository;
+import cal.projeteq3.glucose.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +40,7 @@ public class EmployerService{
 	private final AppointmentRepository appointmentRepository;
 	private final ContractRepository contractRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final ManagerRepository managerRepository;
 
 	// database operations here
 
@@ -237,4 +236,11 @@ public class EmployerService{
 		List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(applicationId).stream().filter(Appointment::isChosen).toList();
 		return appointments.isEmpty() ? null : new AppointmentDTO(appointments.get(0));
     }
+
+	public List<ShortContractDTO> getContractsBySession(Semester semester) {
+//		TODO: get quel manager ?
+		Manager manager = managerRepository.findAll().get(0);
+		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester).stream().toList();
+		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
+	}
 }

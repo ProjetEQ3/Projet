@@ -1,15 +1,35 @@
 import {useTranslation} from "react-i18next";
 import JobOfferList from "../employer/JobOfferList";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import InterviewedStudentList from "../employer/InterviewedStudentList";
+import ContractList from "../user/ContractList";
+import Contract from "../../model/Contract";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
 
 const EmployerPage = ({user}) => {
 	const [t] = useTranslation();
 	const [tab, setTab] = useState('stages');
 	const tabs = [
 		{ id: 'stages', label: 'jobOffers' },
-		{ id: 'entrevue', label: 'convokedStudents' }
+		{ id: 'entrevue', label: 'convokedStudents' },
+		{ id: 'contract', label: 'contractsList' }
 	];
+	const [contracts, setContracts] = useState([new Contract()]);
+
+	function getContracts() {
+		axiosInstance.get(`employer/contracts/`)
+			.then((response) => {
+				setContracts(response.data);
+			})
+			.catch((error) => {
+				toast.error(error.response?.data?.message)
+			});
+	}
+
+	useEffect(() => {
+		getContracts();
+	}, [contracts])
 
 	return (
 		<div className="bg-light">
@@ -34,6 +54,7 @@ const EmployerPage = ({user}) => {
 					</div>
 					{tab === 'stages' && <JobOfferList user={user}/>}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
+					{tab === 'contract' && <ContractList contracts={contracts} />}
 			</div>
 		</div>
 	)
