@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class AppointmentDTO {
-private Long id;
+    private Long id;
     private JobApplicationDTO jobApplication;
     private LocalDateTime appointmentDate;
     private boolean isChosen;

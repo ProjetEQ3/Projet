@@ -53,6 +53,8 @@ public class Contract {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastModificationDate = LocalDateTime.now();
 
+    private boolean isCompleted = false;
+
     public Contract(Employer employer, Student student, JobOffer jobOffer) {
         this.employer = employer;
         this.student = student;
@@ -84,6 +86,7 @@ public class Contract {
             throw new SignaturePrerequisitNotMet();
 
         this.managerSignature = directorSignature;
+        isCompleted = true;
         lastModificationDate = LocalDateTime.now();
     }
 

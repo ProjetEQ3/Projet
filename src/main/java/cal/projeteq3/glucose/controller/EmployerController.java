@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.controller;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
@@ -89,6 +90,13 @@ public class EmployerController{
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.addAppointmentByJobApplicationId(applicationId, dates));
+	}
+
+	@GetMapping("/offer/appointment/{applicationId}")
+	public ResponseEntity<AppointmentDTO> getSuggestedAppointment(@PathVariable Long applicationId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getAppointmentByJobApplicationId(applicationId));
 	}
 
 	@GetMapping("/waitingStudents")

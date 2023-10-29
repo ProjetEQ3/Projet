@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
@@ -231,4 +232,9 @@ public class EmployerService{
 				.map(JobOfferDTO::new)
 				.orElseThrow(() -> new JobOfferNotFoundException(0L));
 	}
+
+    public AppointmentDTO getAppointmentByJobApplicationId(Long applicationId) {
+		List<Appointment> appointments = jobApplicationRepository.findAppointmentsByJobApplicationId(applicationId).stream().filter(Appointment::isChosen).toList();
+		return appointments.isEmpty() ? null : new AppointmentDTO(appointments.get(0));
+    }
 }
