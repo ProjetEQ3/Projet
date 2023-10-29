@@ -86,7 +86,10 @@ public class UserService {
     }
 
 	public ShortContractDTO getContractById(Long id) {
-		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new));
+		Manager manager = new Manager();
+		manager.setFirstName("Nathalie");
+		manager.setLastName("Giguère");
+		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
 	}
 
 	public List<ContractDTO> getAllContracts() {
