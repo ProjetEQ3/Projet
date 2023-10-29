@@ -36,8 +36,10 @@ public class Contract {
 
     @OneToOne
     private Signature employerSignature;
+
     @OneToOne
     private Signature studentSignature;
+
     @OneToOne
     private Signature managerSignature;
 

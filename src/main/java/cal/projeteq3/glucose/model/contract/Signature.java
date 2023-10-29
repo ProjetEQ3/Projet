@@ -16,17 +16,11 @@ public class Signature {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Credentials credentials;
-
     @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
     private String lastName;
-
-    @Column(nullable = false)
-    private String jobTitle;
 
     @Column(nullable = false)
     private LocalDate signatureDate;

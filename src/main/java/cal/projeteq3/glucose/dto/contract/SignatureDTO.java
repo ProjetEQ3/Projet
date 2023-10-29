@@ -23,10 +23,8 @@ public class SignatureDTO {
 
     public SignatureDTO(Signature signature){
         this.id = signature.getId();
-        this.email = signature.getCredentials().getEmail();
         this.firstName = signature.getFirstName();
         this.lastName = signature.getLastName();
-        this.jobTitle = signature.getJobTitle();
         this.signatureDate = signature.getSignatureDate();
         this.contractId = signature.getContract().getId();
     }
