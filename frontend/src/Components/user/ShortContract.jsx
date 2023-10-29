@@ -3,19 +3,19 @@ import {useTranslation} from "react-i18next";
 import PDFPreview from "../util/PDF/PDFPreview";
 import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
+import Contract from "../../model/Contract";
 
 const ShortContract = ({ contractId }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
-    const [contract, setContract] = useState({});
+    const [contract, setContract] = useState(new Contract());
 
     useEffect(() => {
         let id = contractId.id;
-        let newContract = {};
+        let newContract = new Contract();
         axiosInstance.get(`manager/contract/${id}`)
             .then((response) => {
-                newContract = response.data;
-                console.log(newContract);
+                newContract.init(response.data);
                 setContract(newContract);
             })
             .catch((error) => {
