@@ -32,8 +32,10 @@ const ManagerPage = ({user}) => {
     const handleSessionChange = () => {
         setCvs([])
         setOffers([]);
+        setContracts([]);
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
+        getAllContracts().then(r => r);
     }
 
     const getAllOffers = async () => {
@@ -64,10 +66,13 @@ const ManagerPage = ({user}) => {
     const getAllContracts = async () => {
         await axiosInstance.get('manager/contracts/all',
         ).then((response) => {
+            console.log("ICI COLISS");
+            console.log(response.data);
             setContracts(response.data);
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {
+                console.log(error);
                 return;
             }
             toast.error(t('fetchError') + t(error));

@@ -1,21 +1,18 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash, faX} from '@fortawesome/free-solid-svg-icons';
-
 import React, {useEffect, useState} from "react";
-import State from "../util/State";
 import {useTranslation} from "react-i18next";
 import PDFPreview from "../util/PDF/PDFPreview";
 import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 
 const ShortContract = ({ contractId }) => {
-    const [t, i18n] = useTranslation();
-    const [isDisplayed, setIsDisplayed] = useState(false);
+    const [t] = useTranslation();
+    const [isDisplay, setIsDisplay] = useState(false);
     const [contract, setContract] = useState({});
 
     useEffect(() => {
+        let id = contractId.id;
         let newContract = {};
-        axiosInstance.get(`manager/contract/${contractId}`)
+        axiosInstance.get(`manager/contract/${id}`)
             .then((response) => {
                 newContract.data = response.data;
                 newContract.title = "test";
@@ -29,7 +26,7 @@ const ShortContract = ({ contractId }) => {
     }, [contractId]);
 
     const handleClick = () => {
-        setIsDisplayed(!isDisplayed);
+        setIsDisplay(!isDisplay);
     }
 
     return (
@@ -44,8 +41,8 @@ const ShortContract = ({ contractId }) => {
                     </div>
                 </div>
                 {
-                    isDisplayed ? (
-                            <PDFPreview file={CvFile.readBytes(contract.data)} setIsDisplay={setIsDisplayed}/>
+                    isDisplay ? (
+                            <PDFPreview file={CvFile.readBytes(contract.data)} setIsDisplay={setIsDisplay}/>
                         ) : null
                 }
             </div>
