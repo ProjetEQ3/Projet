@@ -47,6 +47,11 @@ public class Contract {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lastModificationDate = LocalDateTime.now();
 
+    public Contract(Employer employer, Student student, JobOffer jobOffer) {
+        this.employer = employer;
+        this.student = student;
+        this.jobOffer = jobOffer;
+    }
 
     public void setEmployerSignature(Signature employerSignature) {
         if (this.employerSignature != null)
@@ -76,7 +81,7 @@ public class Contract {
         lastModificationDate = LocalDateTime.now();
     }
 
-    public byte[] generateContractPDF() {
+    public String generateContractPDF() {
 
         Document document = new Document();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -143,7 +148,7 @@ public class Contract {
 
             byte[] bytes = outputStream.toByteArray();
 
-            return Base64.getEncoder().encode(bytes);
+            return Base64.getEncoder().encodeToString(bytes);
 
         }catch (DocumentException | IOException e) {
             e.printStackTrace();

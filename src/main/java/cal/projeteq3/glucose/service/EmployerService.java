@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundExcep
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -21,6 +22,7 @@ import cal.projeteq3.glucose.repository.AppointmentRepository;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
+import cal.projeteq3.glucose.repository.ContractRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +39,7 @@ public class EmployerService{
 	private final EmployerRepository employerRepository;
 	private final JobApplicationRepository jobApplicationRepository;
 	private final AppointmentRepository appointmentRepository;
+	private final ContractRepository contractRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	// database operations here
@@ -157,6 +160,8 @@ public class EmployerService{
 		Student student = application.getStudent();
 		Employer employer = jobOffer.getEmployer();
 
+		Contract contract = new Contract(employer, student, jobOffer);
+		contractRepository.save(contract);
 	}
 
 	public JobApplicationDTO refuseApplication(Long applicationId){

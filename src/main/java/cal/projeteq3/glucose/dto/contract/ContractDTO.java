@@ -31,4 +31,18 @@ public class ContractDTO {
                 .student(student)
                 .build();
     }
+
+    public ContractDTO fromEntity(Contract contract) {
+        return ContractDTO.builder()
+                .id(contract.getId())
+                .employerId(contract.getEmployer().getId())
+                .studentId(contract.getStudent().getId())
+                .jobOfferId(contract.getJobOffer().getId())
+                .employerSignature(new SignatureDTO(contract.getEmployerSignature()))
+                .studentSignature(new SignatureDTO(contract.getStudentSignature()))
+                .managerSignature(new SignatureDTO(contract.getManagerSignature()))
+                .build();
+    }
+
+
 }

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class ShortContractDTO {
     private String studentName;
     private String jobOfferName;
     private String jobOfferCompany;
-    private byte[] data;
+    private String data;
 
     public ShortContractDTO(Contract contract) {
         this.id = contract.getId();

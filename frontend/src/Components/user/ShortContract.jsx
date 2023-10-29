@@ -14,10 +14,8 @@ const ShortContract = ({ contractId }) => {
         let newContract = {};
         axiosInstance.get(`manager/contract/${id}`)
             .then((response) => {
-                newContract.data = response.data;
-                newContract.title = "test";
-                newContract.jobOfferName = "Test Test";
-                newContract.jobOfferCompany = "We rich";
+                newContract = response.data;
+                console.log(newContract);
                 setContract(newContract);
             })
             .catch((error) => {
@@ -34,9 +32,9 @@ const ShortContract = ({ contractId }) => {
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
-                        <h5 className="text-dark fw-light pt-1" data-testid="job-title">{contract?.title}</h5>
+                        <h5 className="text-dark fw-light pt-1" data-testid="job-title">{contract?.jobOfferName}</h5>
                         <p className="text-dark fw-light mb-3" data-testid="student-name">{t(contract?.studentName)}</p>
-                        <p className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract?.organisationName)}</p>
+                        <p className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract?.jobOfferCompany)}</p>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
                     </div>
                 </div>

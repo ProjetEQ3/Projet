@@ -328,7 +328,7 @@ public class StudentControllerTest {
 
 //    TODO: Fix this test
     @Test
-    public void getAppliedJobOfferByStudent_InvalidWrongId() throws Exception {
+    public void getAppliedJobOfferByStudent_InvalidId() throws Exception {
         Long wrongStudentId = -1L;
 
         when(studentService.getAppliedJobOfferByStudentId(wrongStudentId,
