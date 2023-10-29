@@ -8,7 +8,7 @@ import State from "../util/State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 
-const ShortCv = ({cv, index, updateCvList}) => {
+const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     const {t} = useTranslation();
     const [isDecline, setIsDecline] = useState(false);
     const [isDisplay, setIsDisplay] = useState(false);
@@ -64,6 +64,7 @@ const ShortCv = ({cv, index, updateCvList}) => {
             .then((response) => {
                 toast.success(t('updatedCV') + t(cvState))
                 updateCvList(cv)
+                getAllCvs();
             })
             .catch((error) => {
                 console.log(error)
@@ -87,7 +88,15 @@ const ShortCv = ({cv, index, updateCvList}) => {
                             <div className="my-auto col-6 text-center d-block">
                                 <State state={cv.cvState}/>
                             </div>
-                            <div data-testid="modalButton" className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('probation')}</div>
+                            <div
+                                data-testid="modalButton"
+                                className={`btn btn-outline-ose my-auto ${cv.cvState !== 'SUBMITTED' ? 'disabled' : ''}`}
+                                data-bs-toggle={cv.cvState === 'SUBMITTED' ? 'modal' : ''}
+                                data-bs-target={`#fullViewModal${index}`}
+                                onClick={cv.cvState !== 'SUBMITTED' ? (e) => e.preventDefault() : undefined}
+                            >
+                                {t('probation')}
+                            </div>
                             <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className="modal-content">
