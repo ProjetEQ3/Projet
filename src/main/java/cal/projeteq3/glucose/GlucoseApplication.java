@@ -61,7 +61,7 @@ public class GlucoseApplication implements CommandLineRunner {
 		managerRepository.saveAll(createManager());
 		createJobOffers(employerService);
 		Contract contract = new Contract();
-		contract.generateContractPDF();
+//		contract.generateContractPDF();
 	}
 
 	//Ajouter CV propre
