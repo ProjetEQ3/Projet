@@ -21,11 +21,9 @@ const EmployerPage = ({user}) => {
 		await axiosInstance.get(`employer/contracts`)
 			.then((response) => {
 				setContracts(response.data);
-				console.log("RES: ", response.data)
 			})
 			.catch((error) => {
 				toast.error(error.response?.data?.message)
-				console.log("ERR: ", error.data)
 			});
 	}
 
@@ -47,7 +45,10 @@ const EmployerPage = ({user}) => {
 								<button
 									key={tabItem.id}
 									className={`col-md-3 btn btn-outline-ose ${tab === tabItem.id ? 'active' : ''}`}
-									onClick={() => setTab(tabItem.id)}
+									onClick={() => {
+										setTab(tabItem.id)
+										if (tabItem.id === 'contract') getContracts();
+									}}
 								>
 									{t(tabItem.label)}
 								</button>
