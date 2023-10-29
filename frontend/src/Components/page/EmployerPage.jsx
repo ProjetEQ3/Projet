@@ -17,19 +17,21 @@ const EmployerPage = ({user}) => {
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
 
-	function getContracts() {
-		axiosInstance.get(`employer/contracts/`)
+	async function getContracts() {
+		await axiosInstance.get(`employer/contracts`)
 			.then((response) => {
 				setContracts(response.data);
+				console.log("RES: ", response.data)
 			})
 			.catch((error) => {
 				toast.error(error.response?.data?.message)
+				console.log("ERR: ", error.data)
 			});
 	}
 
 	useEffect(() => {
 		getContracts();
-	}, [contracts])
+	}, [])
 
 	return (
 		<div className="bg-light">

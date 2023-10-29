@@ -9,7 +9,7 @@ const ContractList = ({ contracts }) => {
                 <div className="col-12">
                     {contracts.map((contract, index) => (
                         <div key={index}>
-                            <ShortContract contractId={contracts[index]}/>
+                            <ShortContract contract={contracts[index]}/>
                         </div>
                     ))}
                 </div>

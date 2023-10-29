@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
+import Contract from "../../model/Contract";
 
 const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
@@ -14,7 +15,7 @@ const ManagerPage = ({user}) => {
     const [tab, setTab] = useState('stages');
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
-    const [contracts, setContracts] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+    const [contracts, setContracts] = useState([new Contract()]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -64,15 +65,17 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllContracts = async () => {
-        await axiosInstance.get('manager/contracts/all',
+        setContracts([])
+        await axiosInstance.get('manager/shortContracts/all',
         ).then((response) => {
-            console.log("ICI COLISS");
-            console.log(response.data);
-            setContracts(response.data);
+            response.data.forEach(contract => {
+                let newContract = new Contract();
+                newContract.init(contract);
+                setContracts(contracts => [...contracts, newContract])
+            })
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {
-                console.log(error);
                 return;
             }
             toast.error(t('fetchError') + t(error));

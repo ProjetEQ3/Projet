@@ -104,6 +104,13 @@ public class ManagerController {
                 .body(userService.getAllContracts());
     }
 
+    @GetMapping("/shortContracts/all")
+    public ResponseEntity<List<ShortContractDTO>> getAllShortContracts(){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userService.getAllShortContracts());
+    }
+
     @GetMapping("/contract/{contractId}")
     public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
