@@ -129,7 +129,7 @@ public class Contract {
             et.setAlignment(Element.ALIGN_CENTER);
             document.add(et);
 
-            Paragraph presentationEmployer = new Paragraph("L'entreprise " + employer.getOrganisationName() + " ayant sa place d'affaire au : AJOUT ADRESSE JOBOFFER", normalTextFont);
+            Paragraph presentationEmployer = new Paragraph("L'entreprise " + employer.getOrganisationName() + " ayant sa place d'affaire au : " + jobOffer.getLocation(), normalTextFont);
             presentationEmployer.setAlignment(Element.ALIGN_CENTER);
             document.add(presentationEmployer);
 
@@ -146,7 +146,7 @@ public class Contract {
             internshipLocation.add(new Phrase("\nService ou département :\n", normalTextFont));
             internshipLocation.add(new Chunk(employer.getOrganisationName(), boldTextFont));
             internshipLocation.add(new Phrase("\nAdresse :\n", normalTextFont));
-            internshipLocation.add(new Chunk("AJOUT ADRESSE JOBOFFER", boldTextFont));
+            internshipLocation.add(new Chunk(jobOffer.getLocation(), boldTextFont));
             internshipLocation.setAlignment(Paragraph.ALIGN_LEFT);
             internshipLocation.setSpacingBefore(15f);
             document.add(internshipLocation);
