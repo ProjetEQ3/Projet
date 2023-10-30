@@ -969,14 +969,22 @@ public class EmployerServiceTest {
         Manager manager = new Manager();
         manager.setCredentials(credManager);
         manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
 
         Employer employer = new Employer();
         employer.setCredentials(credEmployer);
         employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
 
         Student student = new Student();
         student.setId(3L);
         student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
 
         Semester semester = new Semester(LocalDate.now());
 
@@ -984,6 +992,16 @@ public class EmployerServiceTest {
         jobOffer.setId(4L);
         jobOffer.setEmployer(employer);
         jobOffer.setSemester(semester);
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
 
         Contract contract = new Contract(employer, student, jobOffer);
 
