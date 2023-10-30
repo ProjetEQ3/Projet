@@ -19,11 +19,7 @@ import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.model.user.User;
-import cal.projeteq3.glucose.repository.CredentialRepository;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
-import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.repository.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -56,6 +52,8 @@ public class UserServiceTest {
 
     @MockBean
     private StudentRepository studentRepository;
+    @MockBean
+    private ContractRepository contractRepository;
 
     @MockBean
     private UserRepository userRepository;

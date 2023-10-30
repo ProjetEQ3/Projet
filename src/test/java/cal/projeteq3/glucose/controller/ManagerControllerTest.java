@@ -7,12 +7,14 @@ import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.repository.ContractRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
+import cal.projeteq3.glucose.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,8 @@ public class ManagerControllerTest {
     private EmployerService employerService;
     @MockBean
     private UserRepository userRepository;
+    @MockBean
+    private UserService userService;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;

@@ -112,7 +112,7 @@ public class Contract {
             // Introduction
             Paragraph intro = new Paragraph();
             intro.add(new Phrase("Dans le cadre de la formule Alternance travail-études du programme de ", normalTextFont));
-            intro.add(new Chunk(jobOffer.getDepartment().toString(), boldTextFont));
+            intro.add(new Chunk(jobOffer.getDepartment().getDepartment(), boldTextFont));
             intro.add(new Phrase(", les parties citées ci-dessous :", normalTextFont));
             intro.setAlignment(Paragraph.ALIGN_CENTER);
             intro.setSpacingBefore(20f);

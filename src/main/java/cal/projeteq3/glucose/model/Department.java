@@ -23,8 +23,7 @@ public enum Department {
         this.department = department;
     }
 
-    @Override
-    public String toString() {
+    public String getDepartment() {
         return department;
     }
 }
