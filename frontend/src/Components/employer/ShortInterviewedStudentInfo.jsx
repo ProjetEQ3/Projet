@@ -50,7 +50,6 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
     }
 
     async function dateTimeToShortString(appointment) {
-        console.log(appointment);
         const date = new Date(appointment);
         const timeZoneOffset = date.getTimezoneOffset();
         date.setMinutes(date.getMinutes() - timeZoneOffset);
