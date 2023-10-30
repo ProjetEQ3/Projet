@@ -238,7 +238,6 @@ public class EmployerService{
     }
 
 	public List<ShortContractDTO> getContractsBySession(Semester semester) {
-//		TODO: get quel manager ?
 		Manager manager = managerRepository.findAll().get(1);
 		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester).stream().toList();
 		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
