@@ -5,9 +5,31 @@ import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 import Contract from "../../model/Contract";
 
-const ShortContract = ({ contract }) => {
+const ShortContract = ({ contract, user }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
+    const [showSigningModal, setShowSigningModal] = useState(false);
+    const [signaturePassword, setSignaturePassword] = useState('');
+
+    const handleSignClick = () => {
+        setShowSigningModal(true);
+    }
+
+    const handleSignaturePasswordChange = (e) => {
+        setSignaturePassword(e.target.value);
+    }
+
+    const handleSignatureSubmit = () => {
+        // check password
+        // sign
+        setShowSigningModal(false);
+        setSignaturePassword('');
+    }
+
+    const handleCloseModal = () => {
+        setShowSigningModal(false);
+        setSignaturePassword('')
+    }
 
     const handleClick = () => {
         setIsDisplay(!isDisplay);
@@ -22,6 +44,7 @@ const ShortContract = ({ contract }) => {
                         <p className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</p>
                         <p className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</p>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
+                        <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
                     </div>
                 </div>
                 {
@@ -30,6 +53,40 @@ const ShortContract = ({ contract }) => {
                         ) : null
                 }
             </div>
+
+            {showSigningModal && (
+                <div className="modal show" tabIndex="-1" style={{ display: 'block' }}>
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">{t('signContract')}</h5>
+                                <button type="button" className="btn-close" onClick={handleCloseModal}></button>
+                            </div>
+                            <div className="modal-body">
+                                <div className="mb-3">
+                                    <label className="form-label">{t('fullName')}</label>
+                                    {/* name */}
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label">{t('password')}</label>
+                                    <input type="password" className="form-control" value={signaturePassword} onChange={handleSignaturePasswordChange} />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={handleCloseModal}>
+                                    {t('close')}
+                                </button>
+                                <button type="button" className="btn btn-primary" onClick={handleSignatureSubmit}>
+                                    {t('submit')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {showSigningModal && <div className="modal-backdrop fade show"></div>}
+
         </div>
     );
 }

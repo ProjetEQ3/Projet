@@ -219,5 +219,11 @@
   "appointmentChosen": "You have chosen this appointment",
   "noAppointmentSelected": "You have not selected an appointment",
 
-  "contractsList": "List of your contracts"
+  "contractsList": "List of your contracts",
+
+  "sign" : "Sign",
+  "signContract" : "Sign the contract",
+  "fullName" : "Full name",
+  "submit" : "Submit"
+
 }
