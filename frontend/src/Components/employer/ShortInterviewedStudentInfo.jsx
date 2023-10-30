@@ -10,11 +10,13 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [appointment, setAppointment] = useState(new Appointment());
+    const [date, setDate] = useState(null);
 
     useEffect(() => {
         axiosInstance.get('/employer/offer/appointment/' + 1)
             .then((response) => {
                 appointment.init(response.data)
+                dateTimeToShortString(appointment.appointmentDate);
             })
             .catch((error) => {
                 toast.error(t('errorFetchingAppointments'));
@@ -47,7 +49,8 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
         setIsDisplay(!isDisplay);
     }
 
-    function dateTimeToShortString(appointment) {
+    async function dateTimeToShortString(appointment) {
+        console.log(appointment);
         const date = new Date(appointment);
         const timeZoneOffset = date.getTimezoneOffset();
         date.setMinutes(date.getMinutes() - timeZoneOffset);
@@ -58,7 +61,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
             hour: 'numeric',
             minute: 'numeric',
         };
-        return date.toLocaleString('fr-CA', options).replace(' ', ', ');
+        setDate(date.toLocaleString('fr-CA', options).replace(' ', ', '));
     }
 
     return (
@@ -66,7 +69,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
             <div className="m-2 p-2 bg-white border rounded border-ose d-lg-flex" data-testid="short-student-info">
                 <div className="col-12 col-lg-6">
                     <h3 className="text-dark fw-light d-inline-block m-0 p-0">{student.firstName + " " + student.lastName + " - " + student.email}</h3>
-                    <h4 className="text-dark fw-light d-inline-block m-0 p-0">{t('chosenAppointment')} {dateTimeToShortString(appointment.appointmentDate)}</h4>
+                    <h4 className="text-dark fw-light d-inline-block m-0 p-0">{t('chosenAppointment')} {date}</h4>
                     <h5 className="text-dark fw-light">{t('jobOffer') + ": " + student.jobTitle}</h5>
                 </div>
                 <div className="col-12 col-lg-6 text-end">
