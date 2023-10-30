@@ -197,7 +197,7 @@ public class StudentService {
     }
 
     public List<ShortContractDTO> getContractsByStudentId(Long studentId, Semester semester) {
-        Manager manager = managerRepository.findAll().get(1);
+        Manager manager = managerRepository.findAll().get(0);
         return contractRepository.findAllByStudentId(studentId)
                 .stream().filter(contract -> contract.getJobOffer().getSemester().equals(semester)).map((contract -> new ShortContractDTO(contract, manager))).toList();
     }
