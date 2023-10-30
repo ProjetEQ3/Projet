@@ -856,7 +856,6 @@ public class StudentServiceTest {
 
     @Test
     public void setAppointmentToChosen_ExistingId() {
-
         JobApplication jobApplication = new JobApplication();
         jobApplication.setId(1L);
         jobApplication.setJobOffer(new JobOffer());
@@ -871,6 +870,10 @@ public class StudentServiceTest {
         appointmentBeforeChosen.setId(1L);
         appointmentBeforeChosen.setJobApplication(jobApplication);
 
+        Appointment appointmentToBeDeleted = new Appointment();
+        appointmentToBeDeleted.setId(2L);
+        appointmentToBeDeleted.setJobApplication(jobApplication);
+
         Appointment appointmentAfterChosen = appointmentBeforeChosen;
         appointmentAfterChosen.setChosen(true);
 
@@ -878,11 +881,18 @@ public class StudentServiceTest {
 
         when(appointmentRepository.findById(1L)).thenReturn(Optional.of(appointmentBeforeChosen));
         when(appointmentRepository.save(appointmentBeforeChosen)).thenReturn(appointmentAfterChosen);
+        when(jobApplicationRepository.findAppointmentsByJobApplicationId(1L)).thenReturn(List.of(appointmentBeforeChosen, appointmentToBeDeleted));
+        doNothing().when(appointmentRepository).deleteById(appointmentToBeDeleted.getId());
+
+        // Set jobApplication to null
+        appointmentToBeDeleted.setJobApplication(null);
+
+        // Set jobApplication to null
+        appointmentToBeDeleted.setJobApplication(null);
 
         AppointmentDTO retrievedAppointment = studentService.setAppointmentToChosen(1L);
 
         assertEquals(retrievedAppointment.isChosen(), appointmentDTO.isChosen());
-
     }
 
     @Test
