@@ -11,11 +11,9 @@ import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.model.Semester;
-import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
-import com.itextpdf.text.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -85,9 +83,9 @@ public class UserService {
 		return semesters.stream().map(SemesterDTO::new).toList();
     }
 
-	public ShortContractDTO getContractById(Long id) {
+	public ShortContractDTO getShortContractById(Long id) {
 		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(1);
+		Manager manager = managerRepository.findAll().get(0);
 		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
 	}
 
@@ -97,7 +95,7 @@ public class UserService {
 
 	public List<ShortContractDTO> getAllShortContracts() {
 		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(1);
+		Manager manager = managerRepository.findAll().get(0);
 		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
 	}
 }

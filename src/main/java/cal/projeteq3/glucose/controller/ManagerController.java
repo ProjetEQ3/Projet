@@ -11,7 +11,6 @@ import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -115,7 +114,6 @@ public class ManagerController {
     public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(userService.getContractById(contractId));
+                .body(userService.getShortContractById(contractId));
     }
-
 }

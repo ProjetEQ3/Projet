@@ -6,10 +6,7 @@ import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.service.UserService;
-import cal.projeteq3.glucose.validation.Validation;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +46,6 @@ public class UserController{
     public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(userService.getContractById(contractId));
+                .body(userService.getShortContractById(contractId));
     }
 }

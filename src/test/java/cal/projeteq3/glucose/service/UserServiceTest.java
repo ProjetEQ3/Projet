@@ -6,15 +6,20 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -325,5 +330,72 @@ public class UserServiceTest {
 //        assertEquals(semesters.get(3), userService.getSemesters().get(3).toEntity());
 //        assertEquals(semesters.get(4), userService.getSemesters().get(4).toEntity());
 
+    }
+
+    @Test
+    public void getContractsBySession() {
+        // Arrange
+        Credentials credManager = new Credentials();
+        credManager.setEmail("Michel@Michaud.com");
+        credManager.setRole(Role.MANAGER);
+
+        Credentials credEmployer = new Credentials();
+        credEmployer.setEmail("Michel@Professionel.com");
+        credEmployer.setRole(Role.EMPLOYER);
+
+        Credentials credStudent = new Credentials();
+        credStudent.setEmail("Michel@Student.com");
+        credStudent.setRole(Role.STUDENT);
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
+
+        Employer employer = new Employer();
+        employer.setCredentials(credEmployer);
+        employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
+
+        Student student = new Student();
+        student.setId(3L);
+        student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
+
+        Semester semester = new Semester(LocalDate.now());
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(4L);
+        jobOffer.setEmployer(employer);
+        jobOffer.setSemester(semester);
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
+
+        Contract contract = new Contract(employer, student, jobOffer);
+        contract.setId(1L);
+        System.out.println(contract.getId());
+
+        contractRepository.save(contract);
+        when(contractRepository.findAll()).thenReturn(List.of(contract));
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
+        when(employerRepository.findAll()).thenReturn(List.of(employer));
+        when(studentRepository.findAll()).thenReturn(List.of(student));
+
+        // Act
+        ShortContractDTO shortContractDTO = userService.getShortContractById(1L);
+        assertEquals(contract.getId(), shortContractDTO.getId());
     }
 }
