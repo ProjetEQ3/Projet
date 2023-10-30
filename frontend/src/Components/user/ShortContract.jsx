@@ -64,11 +64,11 @@ const ShortContract = ({ contract, user }) => {
                             </div>
                             <div className="modal-body">
                                 <div className="mb-3">
-                                    <label className="form-label">{t('fullName')}</label>
-                                    {/* name */}
+                                    <label className="form-label">{t('fullName') + " : "}</label>
+                                    <p>{user.firstName + " " + user.lastName}</p>
                                 </div>
                                 <div className="mb-3">
-                                    <label className="form-label">{t('password')}</label>
+                                    <label className="form-label">{t('password') + " : "}</label>
                                     <input type="password" className="form-control" value={signaturePassword} onChange={handleSignaturePasswordChange} />
                                 </div>
                             </div>
