@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -62,6 +64,8 @@ public class EmployerServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private ContractRepository contractRepository;
+    @Mock
+    private ManagerRepository managerRepository;
 
     @Test
     void createEmployer_valid(){
@@ -965,15 +969,51 @@ public class EmployerServiceTest {
         Manager manager = new Manager();
         manager.setCredentials(credManager);
         manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
 
         Employer employer = new Employer();
         employer.setCredentials(credEmployer);
         employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
 
         Student student = new Student();
         student.setId(3L);
         student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
 
-        Contract contract = new Contract();
+        Semester semester = new Semester(LocalDate.now());
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(4L);
+        jobOffer.setEmployer(employer);
+        jobOffer.setSemester(semester);
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
+
+        Contract contract = new Contract(employer, student, jobOffer);
+
+        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(Optional.of(contract));
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
+
+        // Act
+        List<ShortContractDTO> result = employerService.getContractsBySession(semester);
+        assertEquals(1, result.size());
+        assertEquals(contract.getId(), result.get(0).getId());
+        assertEquals(contract.getJobOffer().getTitle(), result.get(0).getJobOfferName());
+        assertEquals(contract.getStudent().getFirstName() + " " + contract.getStudent().getLastName(), result.get(0).getStudentName());
+        assertEquals(contract.getJobOffer().getEmployer().getOrganisationName(), result.get(0).getJobOfferCompany());
     }
 }

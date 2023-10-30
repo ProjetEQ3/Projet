@@ -115,7 +115,7 @@ public class EmployerController{
 	}
 
 	@GetMapping("/contracts")
-	public ResponseEntity<List<ShortContractDTO>> getJobOfferByContractId(@RequestParam String season, @RequestParam String year){
+	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@RequestParam String season, @RequestParam String year){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getContractsBySession(Semester.builder()
