@@ -72,8 +72,6 @@ public class Contract {
     public void setStudentSignature(Signature studentSignature) {
         if (this.studentSignature != null)
             throw new IllegalStateException("Student signature already set");
-        if (this.employerSignature == null)
-            throw new SignaturePrerequisitNotMet();
 
         this.studentSignature = studentSignature;
         lastModificationDate = LocalDateTime.now();
