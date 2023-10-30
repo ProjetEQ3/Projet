@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.service;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -12,11 +13,15 @@ import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundExcep
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.*;
 
@@ -55,6 +60,8 @@ public class EmployerServiceTest {
     private EmployerService employerService;
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private ContractRepository contractRepository;
 
     @Test
     void createEmployer_valid(){
@@ -900,5 +907,73 @@ public class EmployerServiceTest {
         assertThrows(JobOfferNotFoundException.class, () -> {
             employerService.getOfferByApplicationId(applicationId);
         });
+    }
+
+    @Test
+    void getAppointmentByJobApplicationId() {
+        // Arrange
+        Long jobOfferId = 1L;
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(jobOfferId);
+
+        Long applicationId = 1L;
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(applicationId);
+        jobApplication.setJobOffer(jobOffer);
+
+        Credentials credentials = new Credentials();
+        credentials.setEmail("John@Doe.fr");
+        credentials.setRole(Role.STUDENT);
+
+        Long studentId = 1L;
+        Student student = new Student();
+        student.setId(studentId);
+        student.setCredentials(credentials);
+        jobApplication.setStudent(student);
+
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentDate(LocalDateTime.now());
+        appointment.setJobApplication(jobApplication);
+        appointment.setChosen(true);
+
+
+
+        when(jobApplicationRepository.findAppointmentsByJobApplicationId(1L)).thenReturn(List.of(appointment));
+
+        // Act
+        AppointmentDTO result = employerService.getAppointmentByJobApplicationId(applicationId);
+
+        // Assert
+        assertEquals(appointment.getAppointmentDate(), result.getAppointmentDate());
+    }
+
+    @Test
+    void getContractsBySession() {
+        // Arrange
+        Credentials credManager = new Credentials();
+        credManager.setEmail("Michel@Michaud.com");
+        credManager.setRole(Role.MANAGER);
+
+        Credentials credEmployer = new Credentials();
+        credEmployer.setEmail("Michel@Professionel.com");
+        credEmployer.setRole(Role.EMPLOYER);
+
+        Credentials credStudent = new Credentials();
+        credStudent.setEmail("Michel@Student.com");
+        credStudent.setRole(Role.STUDENT);
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+
+        Employer employer = new Employer();
+        employer.setCredentials(credEmployer);
+        employer.setId(2L);
+
+        Student student = new Student();
+        student.setId(3L);
+        student.setCredentials(credStudent);
+
+        Contract contract = new Contract();
     }
 }
