@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -37,6 +38,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -910,5 +912,41 @@ public class EmployerControllerTest {
 						.param("applicationId", applicationId.toString())
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().is(406));
+	}
+
+//	TODO: Fix Les 2 autres (Je dois work)
+	@Test
+	public void getSuggestedAppointment() throws Exception {
+		Long applicationId = 1L;
+
+		// Mock the behavior of the employerService
+		when(employerService.getAppointmentByJobApplicationId(applicationId))
+				.thenReturn(new AppointmentDTO(1L, new JobApplicationDTO(), LocalDateTime.now(), false));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/offer/appointment/{applicationId}", applicationId)
+						.header("Authorization", token)
+						.param("applicationId", applicationId.toString())
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+	}
+
+	@Test
+	public void testGetAllContracts() throws Exception {
+		String season = "FALL"; // Replace with a suitable season for your test
+		String year = "2023"; // Replace with a suitable year for your test
+
+		// Mock the behavior of the employerService
+		when(employerService.getContractsBySession(any(Semester.class)))
+				.thenReturn(new ArrayList<ShortContractDTO>());
+
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/contracts")
+						.param("season", season)
+						.param("year", year)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted())
+				.andReturn();
 	}
 }
