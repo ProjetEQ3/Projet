@@ -55,6 +55,8 @@ public class EmployerServiceTest {
     private EmployerService employerService;
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private ContractRepository contractRepository;
 
     @Test
     void createEmployer_valid(){
