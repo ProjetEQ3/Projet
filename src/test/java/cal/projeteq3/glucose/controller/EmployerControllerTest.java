@@ -38,8 +38,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -932,11 +931,10 @@ public class EmployerControllerTest {
 
 	@Test
 	public void testGetAllContracts() throws Exception {
-		String season = "FALL"; // Replace with a suitable season for your test
-		String year = "2023"; // Replace with a suitable year for your test
+		String season = "FALL";
+		String year = "2023";
 
-		// Mock the behavior of the employerService
-		when(employerService.getContractsBySession(any(Semester.class)))
+		when(employerService.getContractsBySession(any(Semester.class), anyLong()))
 				.thenReturn(new ArrayList<ShortContractDTO>());
 
 

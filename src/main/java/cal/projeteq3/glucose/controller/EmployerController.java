@@ -114,14 +114,15 @@ public class EmployerController{
 				.body(this.employerService.getOfferByApplicationId(applicationId));
 	}
 
-	@GetMapping("/contracts")
-	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@RequestParam String season, @RequestParam String year){
+	@GetMapping("/contracts/{employerId}")
+	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getContractsBySession(Semester.builder()
 						.season(Semester.Season.valueOf(season))
 						.year(Integer.parseInt(year))
-						.build()));
+						.build(),
+						employerId));
 	}
 
 

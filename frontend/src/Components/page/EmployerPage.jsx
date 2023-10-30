@@ -13,12 +13,12 @@ const EmployerPage = ({user}) => {
 	const tabs = [
 		{ id: 'stages', label: 'jobOffers' },
 		{ id: 'entrevue', label: 'convokedStudents' },
-		{ id: 'contract', label: 'contractsList' }
+		{ id: 'contract', label: 'contracts' }
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
 
 	async function getContracts() {
-		await axiosInstance.get(`employer/contracts`)
+		await axiosInstance.get(`employer/contracts/${user.id}`)
 			.then((response) => {
 				setContracts(response.data);
 			})
