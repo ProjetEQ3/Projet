@@ -48,7 +48,8 @@ public class UserService {
 	}
 
 	public Long authenticateUserContractSigning(LoginDTO loginDto){
-		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+//		String email = jwtTokenProvider.getEmailFromJWT(jwtTokenProvider.generateToken(authentication));
 		return userRepository.findUserByCredentialsEmail(loginDto.getEmail()).orElseThrow(UserNotFoundException::new).getId();
 	}
 
