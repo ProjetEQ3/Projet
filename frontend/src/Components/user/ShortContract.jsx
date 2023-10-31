@@ -4,6 +4,7 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 import Contract from "../../model/Contract";
+import {toast} from "react-toastify";
 
 const ShortContract = ({ contract, user }) => {
     const [t] = useTranslation();
@@ -20,8 +21,18 @@ const ShortContract = ({ contract, user }) => {
     }
 
     const handleSignatureSubmit = () => {
-        // check password
-        // sign
+        console.log("ROLE", user.role)
+        axiosInstance.post(`/${user.role.split('_')[1].toLowerCase()}/contract/sign/${contract.id}`,{
+            email: user.email,
+            password: signaturePassword,
+        })
+            .then(response => {
+                toast.success(t('contractSigned'));
+            })
+            .catch(error => {
+                if (error.response?.status === 673) toast.error(error.response);
+                toast.error(t('error') + error.response?.data?.message);
+            })
         setShowSigningModal(false);
         setSignaturePassword('');
     }

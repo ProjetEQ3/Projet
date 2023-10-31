@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -132,6 +134,13 @@ public class StudentController {
                         .season(Semester.Season.valueOf(season))
                         .year(Integer.parseInt(year))
                         .build()));
+    }
+
+    @PostMapping("/contract/sign/{contractId}")
+    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(this.studentService.signContract(contractId, loginDTO));
     }
 
 }

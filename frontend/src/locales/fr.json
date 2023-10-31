@@ -225,6 +225,7 @@
   "sign" : "Signer",
   "signContract" : "Signer le contrat",
   "fullName" : "Nom complet",
-  "submit" : "Envoyer"
+  "submit" : "Envoyer",
+  "contractSigned": "Votre contrat a été signé avec succès"
 
 }
