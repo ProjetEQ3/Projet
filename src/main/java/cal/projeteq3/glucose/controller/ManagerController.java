@@ -112,8 +112,8 @@ public class ManagerController {
                 .body(userService.getContractById(contractId));
     }
 
-    @PostMapping("/contract/sign")
-    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @RequestParam Long contractId){
+    @PostMapping("/contract/sign/{contractId}")
+    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(this.managerService.signContract(contractId, loginDTO));

@@ -224,6 +224,7 @@
   "sign" : "Sign",
   "signContract" : "Sign the contract",
   "fullName" : "Full name",
-  "submit" : "Submit"
+  "submit" : "Submit",
+  "contractSigned": "Contract was signed successfully"
 
 }

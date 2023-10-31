@@ -136,8 +136,8 @@ public class StudentController {
                         .build()));
     }
 
-    @PostMapping("/contract/sign")
-    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @RequestParam Long contractId){
+    @PostMapping("/contract/sign/{contractId}")
+    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(this.studentService.signContract(contractId, loginDTO));

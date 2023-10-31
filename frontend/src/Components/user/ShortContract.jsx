@@ -21,11 +21,16 @@ const ShortContract = ({ contract, user }) => {
     }
 
     const handleSignatureSubmit = () => {
-        axiosInstance.post(`/${user.role}/contract/sign`, {})
+        console.log("ROLE", user.role)
+        axiosInstance.post(`/${user.role.split('_')[1].toLowerCase()}/contract/sign/${contract.id}`,{
+            email: user.email,
+            password: signaturePassword,
+        })
             .then(response => {
-
-                })
+                toast.success(t('contractSigned'));
+            })
             .catch(error => {
+                if (error.response?.status === 673) toast.error(error.response);
                 toast.error(t('error') + error.response?.data?.message);
             })
         setShowSigningModal(false);
