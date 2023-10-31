@@ -203,22 +203,30 @@ public class GlucoseApplication implements CommandLineRunner {
 	private List<Manager> createManager(){
 		return
 			List.of(
-				Manager.builder()
-				.firstName("Zaka")
-				.lastName("Gn")
-				.email("m@zaka.se")
-				.password(passwordEncoder.encode("aaaAAA111"))
-				.matricule("0000000")
-				.phoneNumber("123-456-7890")
-				.build(),
-			Manager.builder()
-				.firstName("Michel")
-				.lastName("Michaud")
-				.email("michel@michaud.com")
-				.password(passwordEncoder.encode("Ose12345"))
-				.matricule("0000001")
-				.phoneNumber("123-456-7890")
-				.build()
+					Manager.builder()
+							.firstName("Édouard")
+							.lastName("Langlois-Légaré")
+							.email("edouard.langlois@claurendeau.qc.ca")
+							.password(passwordEncoder.encode("Ose12345"))
+							.matricule("0000000")
+							.phoneNumber("111-111-1111")
+							.build(),
+					Manager.builder()
+							.firstName("Zaka")
+							.lastName("Gn")
+							.email("m@zaka.se")
+							.password(passwordEncoder.encode("aaaAAA111"))
+							.matricule("0000001")
+							.phoneNumber("123-456-7890")
+							.build(),
+					Manager.builder()
+						.firstName("Michel")
+						.lastName("Michaud")
+						.email("michel@michaud.com")
+						.password(passwordEncoder.encode("Ose12345"))
+						.matricule("0000002")
+						.phoneNumber("123-456-7890")
+						.build()
 		);
 	}
 
