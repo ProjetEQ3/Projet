@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
@@ -109,6 +110,13 @@ public class ManagerController {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getContractById(contractId));
+    }
+
+    @PostMapping("/contract/sign")
+    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @RequestParam Long contractId){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(this.managerService.signContract(contractId, loginDTO));
     }
 
 }

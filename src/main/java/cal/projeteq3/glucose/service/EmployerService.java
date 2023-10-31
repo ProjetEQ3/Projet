@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
@@ -243,14 +244,18 @@ public class EmployerService{
 		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
-	public ContractDTO signContract(Long contractId, Long managerId) {
-		Employer employer = employerRepository.findById(managerId).orElseThrow(() -> new EmployerNotFoundException(managerId));
-		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-		Signature signature = Signature.builder().firstName(employer.getFirstName()).lastName(employer.getLastName())
-				.signatureDate(java.time.LocalDate.now()).build();
-		contract.setManagerSignature(signature);
-		contractRepository.save(contract);
-		return new ContractDTO(contractRepository.save(contract));
+//	public ContractDTO signContract(Long contractId, Long managerId) {
+//		Employer employer = employerRepository.findById(managerId).orElseThrow(() -> new EmployerNotFoundException(managerId));
+//		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+//		Signature signature = Signature.builder().firstName(employer.getFirstName()).lastName(employer.getLastName())
+//				.signatureDate(java.time.LocalDate.now()).build();
+//		contract.setManagerSignature(signature);
+//		contractRepository.save(contract);
+//		return new ContractDTO(contractRepository.save(contract));
+//	}
+
+	public ContractDTO signContract(Long contractId, LoginDTO loginDTO){
+		throw new UnsupportedOperationException();
 	}
 
 }

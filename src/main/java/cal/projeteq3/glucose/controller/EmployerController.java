@@ -129,6 +129,13 @@ public class EmployerController{
 						employerId));
 	}
 
+	@PostMapping("/contract/sign")
+	public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @RequestParam Long contractId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.signContract(contractId, loginDTO));
+	}
+
 	private Semester getSemesterFrom(String season, String year){
 		return Semester.builder()
 				.season(Semester.Season.valueOf(season))
