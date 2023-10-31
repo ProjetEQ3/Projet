@@ -16,9 +16,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -153,10 +151,19 @@ public class ManagerService{
 	public ContractDTO signContract(Long contractId, Long managerId){
 		Manager manager = managerRepository.findById(managerId).orElseThrow(() -> new ManagerNotFoundException(managerId));
 		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-		Signature signature = Signature.builder().firstName(manager.getFirstName()).lastName(manager.getLastName())
-		                               .signatureDate(java.time.LocalDate.now()).build();
+		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
+		if(contract.getEmployerSignature() != null) throw new ContractAlreadySignedException();
+		if(manager.getFirstName() == null || manager.getLastName() == null) throw new ManagerNotCompleteException();
+		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
+		if(contract.getStudentSignature() == null) throw new ContractNotSignedByStudentException();
+		if(contract.getManagerSignature() == null) throw new ContractNotSignedByManagerException();
+		Signature signature = Signature
+			.builder()
+			.firstName(manager.getFirstName())
+			.lastName(manager.getLastName())
+			.signatureDate(java.time.LocalDate.now())
+			.build();
 		contract.setManagerSignature(signature);
-		contractRepository.save(contract);
 		return new ContractDTO(contractRepository.save(contract));
 	}
 

@@ -91,4 +91,8 @@ public class Contract{
 		return "__________________________";
 	}
 
+	public boolean isReadyToSign(){
+		return employer != null && student != null && jobOffer != null;
+	}
+
 }
