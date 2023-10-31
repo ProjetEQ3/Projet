@@ -300,15 +300,7 @@ public final class ContractPDFGenerator{
 			directorSignature.setSpacingBefore(20f);
 			document.add(directorSignature);
 
-			Paragraph finalParagraph = new Paragraph(
-				"Toute personne morale ou physique faisant affaire avec le Cégep André-Laurendeau doit prendre " +
-					"connaissance des politiques et procédures internes la concernant. En cas de manquements à une " +
-					"politique ou à la Loi de la part d’une personne issue du milieu de stage, ce dernier se verrait exclu " +
-					"de la liste des milieux approuvés.",
-				normalTextFont
-			);
-			finalParagraph.setAlignment(Paragraph.ALIGN_LEFT);
-			finalParagraph.setSpacingBefore(20f);
+			Paragraph finalParagraph = getElements(normalTextFont);
 			document.add(finalParagraph);
 
 			Anchor link = new Anchor(
@@ -324,9 +316,21 @@ public final class ContractPDFGenerator{
 			return Base64.getEncoder().encodeToString(bytes);
 
 		}catch(DocumentException | IOException e){
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		return null;
+	}
+
+	private static Paragraph getElements(Font normalTextFont){
+		Paragraph finalParagraph = new Paragraph(
+			"Toute personne morale ou physique faisant affaire avec le Cégep André-Laurendeau doit prendre " +
+				"connaissance des politiques et procédures internes la concernant. En cas de manquements à une " +
+				"politique ou à la Loi de la part d’une personne issue du milieu de stage, ce dernier se verrait exclu " +
+				"de la liste des milieux approuvés.", normalTextFont
+		);
+		finalParagraph.setAlignment(Paragraph.ALIGN_LEFT);
+		finalParagraph.setSpacingBefore(20f);
+		return finalParagraph;
 	}
 
 }
