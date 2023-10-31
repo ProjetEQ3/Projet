@@ -27,4 +27,8 @@ public class Signature{
 	@OneToOne
 	private Contract contract;
 
+	@Override
+	public String toString() {
+		return firstName + " " + lastName + " (" + signatureDate + ")";
+	}
 }

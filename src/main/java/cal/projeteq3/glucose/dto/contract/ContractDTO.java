@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.dto.contract;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.validation.Validation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,12 @@ public class ContractDTO {
 
     public ContractDTO(Contract contract){
         this.id = contract.getId();
+        this.employerId = contract.getEmployer().getId();
+        this.studentId = contract.getStudent().getId();
+        this.jobOfferId = contract.getJobOffer().getId();
+        this.employerSignature = new SignatureDTO(contract.getEmployerSignature());
+        this.studentSignature = new SignatureDTO(contract.getStudentSignature());
+        this.managerSignature = new SignatureDTO(contract.getManagerSignature());
     }
 
     public Contract toEntity(Employer employer, Student student){
