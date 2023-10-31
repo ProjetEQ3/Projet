@@ -954,12 +954,6 @@ public class EmployerControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
-//	@PostMapping("/contract/sign/{contractId}")
-//	public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
-//		return ResponseEntity.accepted()
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.body(this.employerService.signContract(contractId, loginDTO));
-//	}
 	@Test
 	public void PostSignatureContract() throws Exception {
 		LoginDTO loginDTO = new LoginDTO("test", "test");
@@ -971,7 +965,7 @@ public class EmployerControllerTest {
 						.post("/employer/contract/sign/{contractId}", contractId)
 						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON)
-						.content(loginDTO.toString()))
+						.content(objectMapper.writeValueAsString(loginDTO)))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 		;
 	}

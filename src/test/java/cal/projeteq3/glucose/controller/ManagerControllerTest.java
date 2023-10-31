@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -21,11 +22,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -261,6 +265,23 @@ public class ManagerControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].fileName").value(cv1.getFileName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(cv2.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].fileName").value(cv2.getFileName()));
+    }
+
+    @Test
+    public void getAllContracts() throws Exception{
+        // Arrange
+        List<ShortContractDTO> contracts = Arrays.asList(new ShortContractDTO(), new ShortContractDTO());
+
+        when(managerService.getContractsBySession(new Semester(LocalDate.now()))).thenReturn(contracts);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/manager/contracts")
+                            .header("Authorization", token)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .param("season", "FALL")
+                            .param("year", "2021"))
+                    .andExpect(MockMvcResultMatchers.status().isAccepted())
+                    .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
 }
