@@ -15,6 +15,7 @@ describe('ShortContract', () => {
     const userMock = {
         firstName: 'Sam',
         lastName: 'Chan',
+        role : 'ROLE_TEST'
     };
 
     const setup = () => render(<ShortContract contract={contractMock} user={userMock} />);
