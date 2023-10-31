@@ -27,9 +27,24 @@ public class ContractDTO {
         this.employerId = contract.getEmployer().getId();
         this.studentId = contract.getStudent().getId();
         this.jobOfferId = contract.getJobOffer().getId();
-        this.employerSignature = new SignatureDTO(contract.getEmployerSignature());
-        this.studentSignature = new SignatureDTO(contract.getStudentSignature());
-        this.managerSignature = new SignatureDTO(contract.getManagerSignature());
+
+        if (contract.getEmployerSignature() == null) {
+            this.employerSignature = null;
+        } else {
+            this.employerSignature = new SignatureDTO(contract.getEmployerSignature());
+        }
+
+        if (contract.getStudentSignature() == null) {
+            this.studentSignature = null;
+        } else {
+            this.studentSignature = new SignatureDTO(contract.getStudentSignature());
+        }
+
+        if (contract.getManagerSignature() == null) {
+            this.managerSignature = null;
+        } else {
+            this.managerSignature = new SignatureDTO(contract.getManagerSignature());
+        }
     }
 
     public Contract toEntity(Employer employer, Student student){

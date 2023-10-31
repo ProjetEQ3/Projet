@@ -41,6 +41,7 @@ public class EmployerService{
 	private final ContractRepository contractRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final ManagerRepository managerRepository;
+	private final SignatureRepository signatureRepository;
 
 	// database operations here
 
@@ -251,12 +252,14 @@ public class EmployerService{
 		if(!contract.getEmployer().getId().equals(employerId)) throw new UnauthorizedContractToSignException();
 		if(contract.getEmployerSignature() != null) throw new ContractAlreadySignedException();
 		if(employer.getFirstName() == null || employer.getLastName() == null) throw new EmployerNotCompleteException();
-		Signature signature = Signature
-			.builder()
-			.firstName(employer.getFirstName())
-			.lastName(employer.getLastName())
-			.signatureDate(java.time.LocalDate.now())
-			.build();
+		Signature signature = signatureRepository.save(Signature
+				.builder()
+				.firstName(employer.getFirstName())
+				.lastName(employer.getLastName())
+				.signatureDate(java.time.LocalDate.now())
+				.contract(contract)
+				.build());
+
 		contract.setEmployerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
