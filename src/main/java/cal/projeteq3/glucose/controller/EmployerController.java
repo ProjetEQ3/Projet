@@ -129,7 +129,7 @@ public class EmployerController{
 	public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.signContract(contractId, loginDTO));
+				.body(this.employerService.signContract(contractId, 1L));
 	}
 
 	private Semester getSemesterFrom(String season, String year){

@@ -116,7 +116,7 @@ public class ManagerController {
     public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.managerService.signContract(contractId, loginDTO));
+                .body(this.managerService.signContract(contractId, 1L));
     }
 
 }
