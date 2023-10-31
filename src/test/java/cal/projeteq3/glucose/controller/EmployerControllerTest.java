@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
@@ -28,11 +30,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -918,11 +924,10 @@ public class EmployerControllerTest {
 	public void getSuggestedAppointment() throws Exception {
 		Long applicationId = 1L;
 
-		// Mock the behavior of the employerService
 		when(employerService.getAppointmentByJobApplicationId(applicationId))
 				.thenReturn(new AppointmentDTO(1L, new JobApplicationDTO(), LocalDateTime.now(), false));
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/offer/appointment/{applicationId}", applicationId)
+		mockMvc.perform(MockMvcRequestBuilders.get("/employer/offer/appointment/{applicationId}", applicationId)
 						.header("Authorization", token)
 						.param("applicationId", applicationId.toString())
 						.contentType(MediaType.APPLICATION_JSON))
@@ -934,17 +939,34 @@ public class EmployerControllerTest {
 		String season = "FALL";
 		String year = "2023";
 
-		when(employerService.getContractsBySession(any(Semester.class), anyLong()))
-				.thenReturn(new ArrayList<ShortContractDTO>());
+		when(employerService.getContractsBySession(Semester.builder()
+				.year(Integer.parseInt(year))
+				.season(Semester.Season.valueOf(season)).build(), 1L))
+				.thenReturn(new ArrayList<>());
 
 
 		mockMvc.perform(MockMvcRequestBuilders
-						.get("/contracts")
+						.get("/employer/contracts/1")
 						.param("season", season)
 						.param("year", year)
 						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+	}
+
+	@Test
+	public void PostSignatureContract() throws Exception {
+		LoginDTO loginDTO = new LoginDTO("test", "test");
+		Long contractId = 1L;
+
+		when(employerService.signContract(contractId, loginDTO)).thenReturn(new ContractDTO());
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.post("/employer/contract/sign/{contractId}", contractId)
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(loginDTO)))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
-				.andReturn();
+		;
 	}
 }

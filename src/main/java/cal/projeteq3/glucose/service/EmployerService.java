@@ -244,18 +244,21 @@ public class EmployerService{
 		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
-//	public ContractDTO signContract(Long contractId, Long managerId) {
-//		Employer employer = employerRepository.findById(managerId).orElseThrow(() -> new EmployerNotFoundException(managerId));
-//		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-//		Signature signature = Signature.builder().firstName(employer.getFirstName()).lastName(employer.getLastName())
-//				.signatureDate(java.time.LocalDate.now()).build();
-//		contract.setManagerSignature(signature);
-//		contractRepository.save(contract);
-//		return new ContractDTO(contractRepository.save(contract));
-//	}
-
-	public ContractDTO signContract(Long contractId, LoginDTO loginDTO){
-		throw new UnsupportedOperationException();
+	public ContractDTO signContract(Long contractId, Long employerId){
+		Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId));
+		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
+		if(!contract.getEmployer().getId().equals(employerId)) throw new UnauthorizedContractToSignException();
+		if(contract.getEmployerSignature() != null) throw new ContractAlreadySignedException();
+		if(employer.getFirstName() == null || employer.getLastName() == null) throw new EmployerNotCompleteException();
+		Signature signature = Signature
+			.builder()
+			.firstName(employer.getFirstName())
+			.lastName(employer.getLastName())
+			.signatureDate(java.time.LocalDate.now())
+			.build();
+		contract.setEmployerSignature(signature);
+		return new ContractDTO(contractRepository.save(contract));
 	}
 
 }

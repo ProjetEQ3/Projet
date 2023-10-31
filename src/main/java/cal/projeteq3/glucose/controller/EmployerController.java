@@ -122,11 +122,7 @@ public class EmployerController{
 	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getContractsBySession(Semester.builder()
-						.season(Semester.Season.valueOf(season))
-						.year(Integer.parseInt(year))
-						.build(),
-						employerId));
+				.body(this.employerService.getContractsBySession(getSemesterFrom(season, year), employerId));
 	}
 
 	@PostMapping("/contract/sign/{contractId}")

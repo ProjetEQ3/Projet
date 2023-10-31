@@ -9,15 +9,8 @@ import cal.projeteq3.glucose.dto.contract.SignatureDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.badRequestException.AppointmentNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorizedException.CvNotApprovedException;
-import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
-import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyAppliedException;
-import cal.projeteq3.glucose.exception.unauthorizedException.StudentCvNotFoundException;
-import cal.projeteq3.glucose.exception.unauthorizedException.StudentHasAlreadyCVException;
+import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.*;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
@@ -199,17 +192,22 @@ public class StudentService{
 			(contract -> new ShortContractDTO(contract, manager))).toList();
 	}
 
-//	public ContractDTO signContract(Long contractId, Long studentId){
-//		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
-//		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
-//		Signature studentSignature = Signature.builder().firstName(student.getFirstName()).lastName(student.getLastName())
-//		                                      .signatureDate(LocalDate.now()).contract(contract).build();
-//		contract.setStudentSignature(studentSignature);
-//		return new ContractDTO(contractRepository.save(contract));
-//	}
-
-	public ContractDTO signContract(Long contractId, LoginDTO loginDTO){
-		throw new UnsupportedOperationException();
+	public ContractDTO signContract(Long contractId, Long studentId){
+		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
+		if(!contract.getStudent().getId().equals(studentId)) throw new UnauthorizedContractToSignException();
+		if(contract.getStudentSignature() != null) throw new ContractAlreadySignedException();
+		if(student.getFirstName() == null || student.getLastName() == null) throw new StudentNotCompleteException();
+		Signature studentSignature = Signature
+			.builder()
+			.firstName(student.getFirstName())
+			.lastName(student.getLastName())
+			.signatureDate(LocalDate.now())
+			.contract(contract)
+			.build();
+		contract.setStudentSignature(studentSignature);
+		return new ContractDTO(contractRepository.save(contract));
 	}
 
 }
