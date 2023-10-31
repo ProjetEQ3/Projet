@@ -3,8 +3,11 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
@@ -32,12 +35,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -595,6 +600,43 @@ public class StudentControllerTest {
                 .andExpect(status().isNotAcceptable())
                 .andExpect(jsonPath("$.message").value("Appointment does not exist."));
 
+    }
+
+    @Test
+    public void getContractsByStudentId_Valid() throws Exception {
+//        Arrange
+        List<ShortContractDTO> contracts = new ArrayList<>();
+        contracts.add(new ShortContractDTO());
+
+        when(studentService.getContractsByStudentId(validStudentId, Semester.builder()
+                .season(Semester.Season.FALL)
+                .year(2021)
+                .build())).thenReturn(contracts);
+
+//        Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/contracts/{studentId}", validStudentId)
+                    .param("season", "FALL")
+                    .param("year", "2021")
+                    .header("Authorization", token)
+                    .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted());
+    }
+
+    @Test
+    public void signContract_Valid() throws Exception {
+//        Arrange
+        ContractDTO contractDTO = new ContractDTO();
+        LoginDTO loginDTO = new LoginDTO("", "");
+
+        when(studentService.signContract(validStudentId, loginDTO)).thenReturn(contractDTO);
+
+//        Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.post("/student/contract/sign/{contractId}", validStudentId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginDTO)))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
 }
