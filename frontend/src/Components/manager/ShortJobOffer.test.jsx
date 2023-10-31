@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import ShortJobOffer from "../../Components/manager/ShortJobOffer";
+import ShortJobOffer from "./ShortJobOffer";
 
 describe('ShortJobOffer', () => {
     const mockOffer = {

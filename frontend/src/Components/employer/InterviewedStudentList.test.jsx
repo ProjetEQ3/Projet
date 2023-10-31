@@ -1,6 +1,6 @@
 import React from 'react'
 import {render, screen} from '@testing-library/react'
-import StudentList from '../../Components/employer/StudentList'
+import StudentList from './StudentList'
 
 jest.mock('../../Components/employer/ShortInterviewedStudentInfo', () => {
     return function MockedShortInterviewedStudentInfo({student}) {
@@ -27,15 +27,13 @@ jest.mock('react-i18next', () => ({
 
 jest.mock('../../App', () => ({
     axiosInstance: {
-        get: jest.fn(),
+        get: jest.fn()
     }
 }))
 
 describe('<StudentList />', () => {
-    const user = {id: '123'}
-
     beforeEach(() => {
-        jest.clearAllMocks()
+        jest.clearAllMocks();
     })
 
     it('renders without crashing', () => {

@@ -2,7 +2,7 @@ import React from 'react'
 import {render, screen, fireEvent, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {MemoryRouter} from 'react-router-dom'
-import RegisterEmployerForm from '../../Components/auth/RegisterEmployerForm'
+import RegisterEmployerForm from './RegisterEmployerForm'
 import {axiosInstance} from "../../App"
 
 jest.mock('react-i18next', () => ({

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import RegistrationForm from '../../Components/auth/RegistrationForm'
+import RegistrationForm from './RegistrationForm'
 
 jest.mock('../../Components/auth/RegisterStudentForm', () => {
 	return function MockedRegisterStudentForm() {

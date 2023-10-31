@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import Cv from '../../Components/student/Cv';
+import Cv from './Cv';
 
 const mockStudent = {
     firstName: "John",

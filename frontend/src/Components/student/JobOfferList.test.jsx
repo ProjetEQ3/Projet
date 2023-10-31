@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import JobOfferList from "../../Components/student/JobOfferList";
+import JobOfferList from "./JobOfferList";
 import React from "react";
 
 describe('JobOfferList', () => {

@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import JobOffers from "../../Components/manager/JobOffers";
+import JobOffers from "./JobOffers";
 import React from "react";
 
 

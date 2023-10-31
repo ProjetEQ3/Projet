@@ -1,7 +1,7 @@
 import {render} from "@testing-library/react";
-import ShortJobOffer from "../../Components/student/ShortJobOffer";
+import ShortJobOffer from "./ShortJobOffer";
 import React from "react";
-import ShortJobOfferApplication from "../../Components/student/ShortJobOfferApplication";
+import ShortJobOfferApplication from "./ShortJobOfferApplication";
 
 describe("ShortJobOffer", () => {
     const mockJobOffer = {

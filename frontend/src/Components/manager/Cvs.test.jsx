@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import Cvs from "../../Components/manager/Cvs";
+import Cvs from "./Cvs";
 
 describe('Cvs', () => {
     test ('renders Cvs title is present', () => {

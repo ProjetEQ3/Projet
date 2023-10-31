@@ -1,10 +1,10 @@
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from "react";
-import ManagerPage from "../../Components/page/ManagerPage";
+import ManagerPage from "./ManagerPage";
 import axiosInstance from "axios";
 import MockAdapter from "axios-mock-adapter";
-import JobOffers from "../../Components/manager/JobOffers";
-import {SessionProvider} from "../../Components/util/SessionContext";
+import JobOffers from "../manager/JobOffers";
+import {SessionProvider} from "../util/SessionContext";
 import {MemoryRouter} from "react-router";
 describe('ManagerPage', () => {
     const mock = new MockAdapter(axiosInstance);

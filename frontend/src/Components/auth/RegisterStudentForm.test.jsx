@@ -3,7 +3,7 @@ import {render, screen, fireEvent, act} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {MemoryRouter} from 'react-router-dom'
 import {axiosInstance} from "../../App"
-import RegisterStudentForm from '../../Components/auth/RegisterStudentForm'
+import RegisterStudentForm from './RegisterStudentForm'
 
 const mockNavigate = jest.fn()
 

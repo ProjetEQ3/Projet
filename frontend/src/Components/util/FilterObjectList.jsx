@@ -65,7 +65,10 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 					{isSelectAttribute ? (
 						<select className="form-control me-2 flex-grow-1" value={query} onChange={handleInputChange}>
 							<option value="">{t('choose')}</option>
-							{selectOptions[actualAttribute].map(option => (
+							{/*{selectOptions[actualAttribute].map(option => (
+								<option key={option} value={option}>{t(option)}</option>
+							))}*/}
+							{Array.isArray(selectOptions[actualAttribute]) && selectOptions[actualAttribute].map(option => (
 								<option key={option} value={option}>{t(option)}</option>
 							))}
 						</select>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from "@testing-library/react";
-import ShortJobOffer from "../../Components/employer/ShortJobOffer";
+import ShortJobOffer from "./ShortJobOffer";
 
 describe("ShortJobOffer", () => {
 

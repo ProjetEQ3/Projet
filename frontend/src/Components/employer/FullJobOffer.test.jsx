@@ -1,7 +1,7 @@
 import React from 'react'
 import {render, screen, fireEvent} from '@testing-library/react'
-import FullJobOffer from '../../Components/employer/FullJobOffer'
-import userEvent from "@testing-library/user-event";
+import FullJobOffer from './FullJobOffer'
+import userEvent from "@testing-library/user-event"
 
 jest.mock('react-i18next', () => ({
     useTranslation: () => ({
@@ -13,8 +13,9 @@ jest.mock('react-i18next', () => ({
     })
 }))
 
-jest.mock('../../Components/util/Loading.jsx', () => () => <div data-testid="loading-component">Loading...</div>);
-jest.mock('../../Components/util/State.jsx', () => () => <div data-testid="state-component">Active</div>);
+jest.mock('../../Components/util/Loading.jsx', () => () => <div data-testid="loading-component">Loading...</div>)
+
+jest.mock('../../Components/util/State.jsx', () => () => <div data-testid="state-component">Active</div>)
 
 describe('FullJobOffer', () => {
     const mockJobOffer = {
@@ -130,15 +131,15 @@ describe('FullJobOffer', () => {
     })
 
     it('renders input fields with job offer data', () => {
-        render(<FullJobOffer jobOffer={mockJobOffer} />);
-        userEvent.click(screen.getByTestId('editModal'));
-        expect(screen.getByPlaceholderText('Software Developer')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Montreal')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('2023-01-01')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('4 semaine(s)')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('2023-02-01')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('25$/h')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('40h/semaine')).toBeInTheDocument();
+        render(<FullJobOffer jobOffer={mockJobOffer} />)
+        userEvent.click(screen.getByTestId('editModal'))
+        expect(screen.getByPlaceholderText('Software Developer')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Montreal')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('2023-01-01')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('4 semaine(s)')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('2023-02-01')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('25$/h')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('40h/semaine')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('sheesh')).toBeInTheDocument()
     })
 

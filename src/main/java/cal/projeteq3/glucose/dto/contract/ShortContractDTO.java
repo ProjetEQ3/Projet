@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.dto.contract;
 
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.util.ContractPDFGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,6 @@ public class ShortContractDTO {
         this.studentName = contract.getStudent().getFirstName() + " " + contract.getStudent().getLastName();
         this.jobOfferName = contract.getJobOffer().getTitle();
         this.jobOfferCompany = contract.getJobOffer().getEmployer().getOrganisationName();
-        this.data = contract.generateContractPDF(manager);
+        this.data = ContractPDFGenerator.generatePDF(contract, manager);
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
-import ShortCv from "../../Components/manager/ShortCv";
+import ShortCv from "./ShortCv";
 
 describe('ShortCv', () => {
     const mockData = {

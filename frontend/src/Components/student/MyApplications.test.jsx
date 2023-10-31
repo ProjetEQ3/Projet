@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import MyApplications from "../../Components/student/MyApplications";
+import MyApplications from "./MyApplications";
 import React from "react";
 import {MemoryRouter} from "react-router";
 

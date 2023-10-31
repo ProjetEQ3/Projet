@@ -1,10 +1,10 @@
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from "react";
-import StudentPage from "../../Components/page/StudentPage";
+import StudentPage from "./StudentPage";
 import axiosInstance from "axios";
 import MockAdapter from "axios-mock-adapter";
 import {MemoryRouter} from "react-router";
-import {SessionProvider} from "../../Components/util/SessionContext";
+import {SessionProvider} from "../util/SessionContext";
 describe('StudentPage', () => {
     const mock = new MockAdapter(axiosInstance);
     const sessionData = { selectedSessionIndex: 0 };

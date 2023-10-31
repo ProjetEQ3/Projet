@@ -1,9 +1,7 @@
 package cal.projeteq3.glucose.model.contract;
 
-import cal.projeteq3.glucose.model.auth.Credentials;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Getter
@@ -11,22 +9,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Signature {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Signature{
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
+	@Column(nullable = false)
+	private String firstName;
 
-    @Column(nullable = false)
-    private String lastName;
+	@Column(nullable = false)
+	private String lastName;
 
-    @Column(nullable = false)
-    private LocalDate signatureDate;
+	@Column(nullable = false)
+	private LocalDate signatureDate;
 
-    @JoinColumn(nullable = false)
-    @OneToOne
-    private Contract contract;
+	@JoinColumn(nullable = false)
+	@OneToOne
+	private Contract contract;
 
 }
