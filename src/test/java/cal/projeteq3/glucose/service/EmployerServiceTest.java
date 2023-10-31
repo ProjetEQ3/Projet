@@ -1009,7 +1009,7 @@ public class EmployerServiceTest {
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         // Act
-        List<ShortContractDTO> result = employerService.getContractsBySession(semester);
+        List<ShortContractDTO> result = employerService.getContractsBySession(semester, 2L);
         assertEquals(1, result.size());
         assertEquals(contract.getId(), result.get(0).getId());
         assertEquals(contract.getJobOffer().getTitle(), result.get(0).getJobOfferName());

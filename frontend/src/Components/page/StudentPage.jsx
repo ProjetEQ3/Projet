@@ -21,7 +21,7 @@ const StudentPage = ({user, setUser}) => {
 	  { id: 'stages', label: 'jobOffers' },
 	  { id: 'my_applications', label: 'myApplications' },
 	  { id: 'cv', label: 'CV' },
-	  { id: 'contract', label: 'contractsList' }
+	  { id: 'contract', label: 'contracts' }
   ];
   const navigate = useNavigate();
   const [contracts, setContracts] = useState([new Contract()]);

@@ -96,18 +96,11 @@ public class ManagerController {
                 .body(managerService.getSubmittedCv());
     }
 
-    @GetMapping("/contracts/all")
-    public ResponseEntity<List<ContractDTO>> getAllContracts(){
+    @GetMapping("/contracts")
+    public ResponseEntity<List<ShortContractDTO>> getAllShortContracts(@RequestParam String season, @RequestParam String year){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(userService.getAllContracts());
-    }
-
-    @GetMapping("/shortContracts/all")
-    public ResponseEntity<List<ShortContractDTO>> getAllShortContracts(){
-        return ResponseEntity.accepted()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(userService.getAllShortContracts());
+                .body(managerService.getContractsBySession(new Semester(Semester.Season.valueOf(season), Integer.parseInt(year))));
     }
 
     @GetMapping("/contract/{contractId}")

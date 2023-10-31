@@ -237,9 +237,10 @@ public class EmployerService{
 		return appointments.isEmpty() ? null : new AppointmentDTO(appointments.get(0));
     }
 
-	public List<ShortContractDTO> getContractsBySession(Semester semester) {
+	public List<ShortContractDTO> getContractsBySession(Semester semester, Long employerId) {
 		Manager manager = managerRepository.findAll().get(0);
-		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester).stream().toList();
+		List<Contract> contracts = new ArrayList<>(contractRepository.findAllByJobOffer_Semester(semester).stream().toList());
+        contracts.removeIf(contract -> !contract.getEmployer().getId().equals(employerId));
 		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 }
