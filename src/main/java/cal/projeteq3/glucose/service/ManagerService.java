@@ -152,11 +152,11 @@ public class ManagerService{
 		Manager manager = managerRepository.findById(managerId).orElseThrow(() -> new ManagerNotFoundException(managerId));
 		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
 		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
-		if(contract.getEmployerSignature() != null) throw new ContractAlreadySignedException();
+		if(contract.getManagerSignature() != null) throw new ContractAlreadySignedException();
 		if(manager.getFirstName() == null || manager.getLastName() == null) throw new ManagerNotCompleteException();
 		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
 		if(contract.getStudentSignature() == null) throw new ContractNotSignedByStudentException();
-		if(contract.getManagerSignature() == null) throw new ContractNotSignedByManagerException();
+		if(contract.getEmployerSignature() == null) throw new ContractNotSignedByEmployerException();
 		Signature signature = Signature
 			.builder()
 			.firstName(manager.getFirstName())
