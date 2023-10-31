@@ -140,6 +140,7 @@ public class StudentController {
 
     @PostMapping("/contract/sign/{contractId}")
     public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+        Validation.validateLogin(loginDTO);
         long studentId = userService.authenticateUserContractSigning(loginDTO);
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)

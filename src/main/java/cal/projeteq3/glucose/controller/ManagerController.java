@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.UserService;
+import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -114,6 +115,7 @@ public class ManagerController {
 
     @PostMapping("/contract/sign/{contractId}")
     public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+        Validation.validateLogin(loginDTO);
         long studentId = userService.authenticateUserContractSigning(loginDTO);
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
