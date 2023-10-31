@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ShortContract from "../../Components/user/ShortContract";
+import ShortContract from "./ShortContract";
 
 describe('ShortContract', () => {
     const contractMock = {
