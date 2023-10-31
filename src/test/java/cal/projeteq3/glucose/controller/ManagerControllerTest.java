@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.Semester;
@@ -16,6 +18,7 @@ import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,10 +62,13 @@ public class ManagerControllerTest {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     private String token;
+    private ObjectMapper objectMapper;
+
     @BeforeEach
     public void setUp() {
         when(userRepository.findUserByCredentialsEmail(anyString())).thenReturn(Optional.of(Manager.builder().build()));
         token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("michel@michaud.com","Ose12345"));
+        objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -268,7 +273,7 @@ public class ManagerControllerTest {
     }
 
     @Test
-    public void getAllContracts() throws Exception{
+    public void getAllContracts_valid() throws Exception{
         // Arrange
         List<ShortContractDTO> contracts = Arrays.asList(new ShortContractDTO(), new ShortContractDTO());
 
@@ -282,6 +287,38 @@ public class ManagerControllerTest {
                             .param("year", "2021"))
                     .andExpect(MockMvcResultMatchers.status().isAccepted())
                     .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getContractById_valid() throws Exception{
+        Long contractId = 1L;
+
+        when(userService.getContractById(contractId)).thenReturn(new ShortContractDTO());
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/manager/contract/" + contractId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void signContract_valid() throws Exception{
+        Long contractId = 1L;
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("");
+        loginDTO.setPassword("");
+
+        when(managerService.signContract(contractId, loginDTO)).thenReturn(new ContractDTO());
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.post("/manager/contract/sign/{contractId}", contractId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginDTO)))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
 }
