@@ -310,7 +310,7 @@ public class ManagerControllerTest {
         loginDTO.setEmail("");
         loginDTO.setPassword("");
 
-        when(managerService.signContract(contractId, loginDTO)).thenReturn(new ContractDTO());
+        when(managerService.signContract(contractId, 1L)).thenReturn(new ContractDTO());
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.post("/manager/contract/sign/{contractId}", contractId)

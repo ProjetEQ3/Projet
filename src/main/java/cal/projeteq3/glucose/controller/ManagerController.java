@@ -114,9 +114,10 @@ public class ManagerController {
 
     @PostMapping("/contract/sign/{contractId}")
     public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+        long studentId = userService.authenticateUserContractSigning(loginDTO);
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(this.managerService.signContract(contractId, 1L));
+                .body(this.managerService.signContract(contractId, studentId));
     }
 
 }

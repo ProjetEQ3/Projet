@@ -27,6 +27,7 @@ import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.StudentService;
+import cal.projeteq3.glucose.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,6 +70,8 @@ public class StudentControllerTest {
     private StudentService studentService;
     @MockBean
     private UserRepository userRepository;
+    @MockBean
+    private UserService userService;
 
 	private final Long validStudentId = 1L;
 
@@ -628,7 +631,7 @@ public class StudentControllerTest {
         ContractDTO contractDTO = new ContractDTO();
         LoginDTO loginDTO = new LoginDTO("", "");
 
-        when(studentService.signContract(validStudentId, loginDTO)).thenReturn(contractDTO);
+        when(studentService.signContract(validStudentId, 1L)).thenReturn(contractDTO);
 
 //        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.post("/student/contract/sign/{contractId}", validStudentId)

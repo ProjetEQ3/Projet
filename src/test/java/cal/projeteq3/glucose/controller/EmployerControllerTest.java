@@ -20,6 +20,7 @@ import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cal.projeteq3.glucose.exception.badRequestException.ValidationException;
@@ -60,6 +61,8 @@ public class EmployerControllerTest {
 	private EmployerService employerService;
 	@MockBean
 	private UserRepository userRepository;
+	@MockBean
+	private UserService userService;
 
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
@@ -959,7 +962,7 @@ public class EmployerControllerTest {
 		LoginDTO loginDTO = new LoginDTO("test", "test");
 		Long contractId = 1L;
 
-		when(employerService.signContract(contractId, loginDTO)).thenReturn(new ContractDTO());
+		when(employerService.signContract(contractId, 1L)).thenReturn(new ContractDTO());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/employer/contract/sign/{contractId}", contractId)

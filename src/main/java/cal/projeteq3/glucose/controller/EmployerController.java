@@ -12,6 +12,7 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -29,6 +30,7 @@ import java.util.Set;
 @RequestMapping("/employer")
 public class EmployerController{
 	private final EmployerService employerService;
+	private final UserService userService;
 
 	@PostMapping("/register")
 	public ResponseEntity<EmployerDTO> register(@RequestBody RegisterEmployerDTO employerDTO){
@@ -127,9 +129,10 @@ public class EmployerController{
 
 	@PostMapping("/contract/sign/{contractId}")
 	public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+		long studentId = userService.authenticateUserContractSigning(loginDTO);
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.signContract(contractId, 1L));
+				.body(this.employerService.signContract(contractId, studentId));
 	}
 
 	private Semester getSemesterFrom(String season, String year){
