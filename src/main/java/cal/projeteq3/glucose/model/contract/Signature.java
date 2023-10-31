@@ -21,7 +21,7 @@ public class Signature{
 	private String lastName;
 
 	@Column(nullable = false)
-	private LocalDate signatureDate;
+	private LocalDate signatureDate = LocalDate.now();
 
 	@JoinColumn(nullable = false)
 	@OneToOne

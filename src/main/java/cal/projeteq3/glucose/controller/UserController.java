@@ -45,18 +45,4 @@ public class UserController{
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getSemesters());
     }
-
-    @GetMapping("/contract/{contractId}")
-    public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
-        return ResponseEntity.accepted()
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(userService.getContractById(contractId));
-    }
-
-    @PostMapping("/contract/sign")
-    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @RequestParam Long contractId){
-        return ResponseEntity.accepted()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(this.userService.signContract(contractId, loginDTO));
-    }
 }

@@ -9,9 +9,11 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
@@ -99,10 +101,5 @@ public class UserService {
 		//		TODO: get quel manager ?
 		Manager manager = managerRepository.findAll().get(1);
 		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
-	}
-
-//	TODO: Implémenter la signature ici
-	public ContractDTO signContract(Long contractId, LoginDTO loginDTO) {
-		throw new UnsupportedOperationException();
 	}
 }
