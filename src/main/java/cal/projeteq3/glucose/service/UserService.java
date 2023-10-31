@@ -100,4 +100,9 @@ public class UserService {
 		Manager manager = managerRepository.findAll().get(1);
 		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
 	}
+
+//	TODO: Implémenter la signature ici
+	public ContractDTO signContract(Long contractId, LoginDTO loginDTO) {
+		throw new UnsupportedOperationException();
+	}
 }
