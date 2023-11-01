@@ -293,7 +293,7 @@ public class ManagerControllerTest {
     public void getContractById_valid() throws Exception{
         Long contractId = 1L;
 
-        when(userService.getContractById(contractId)).thenReturn(new ShortContractDTO());
+        when(userService.getShortContractById(contractId)).thenReturn(new ShortContractDTO());
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/contract/" + contractId)
