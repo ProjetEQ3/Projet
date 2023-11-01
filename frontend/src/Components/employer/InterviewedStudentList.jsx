@@ -38,7 +38,7 @@ const InterviewedStudentList = ({user}) => {
 	}, [])
 
 	return (
-		<div className="container">
+		<div className="container" data-testid="interviewed-student-list">
 			<div className="row">
 				<div className="col-12">
 					{

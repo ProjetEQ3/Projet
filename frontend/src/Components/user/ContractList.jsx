@@ -4,7 +4,7 @@ import { axiosInstance } from '../../App';
 
 const ContractList = ({ contracts, user }) => {
     return (
-        <div className="container">
+        <div className="container" data-testid="contract-list">
             <div className="row">
                 <div className="col-12">
                     {contracts.map((contract, index) => (

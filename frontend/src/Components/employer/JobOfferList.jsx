@@ -127,7 +127,7 @@ const JobOfferList = ({user}) => {
 	}
 
 	return (
-		<div className="row">
+		<div className="row" data-testid="job-offer-list">
 			<div className="col-12">
 				<h3 className="text-dark fw-light d-none d-lg-block">{t('yourInternship')}</h3>
 				<div className="row justify-content-around">
