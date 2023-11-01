@@ -959,10 +959,11 @@ public class EmployerControllerTest {
 
 	@Test
 	public void PostSignatureContract() throws Exception {
-		LoginDTO loginDTO = new LoginDTO("test", "test");
+		LoginDTO loginDTO = new LoginDTO("test@test.com", "Test1234");
 		Long contractId = 1L;
 
 		when(employerService.signContract(contractId, 1L)).thenReturn(new ContractDTO());
+		when(userService.authenticateUserContractSigning(loginDTO)).thenReturn(1L);
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.post("/employer/contract/sign/{contractId}", contractId)

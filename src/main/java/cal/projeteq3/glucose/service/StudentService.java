@@ -207,7 +207,7 @@ public class StudentService{
 				.signatureDate(java.time.LocalDate.now())
 				.contract(contract)
 				.build());
-		contract.setEmployerSignature(signature);
+		contract.setStudentSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
 

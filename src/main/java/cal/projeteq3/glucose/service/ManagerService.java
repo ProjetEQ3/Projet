@@ -166,7 +166,7 @@ public class ManagerService{
 				.signatureDate(java.time.LocalDate.now())
 				.contract(contract)
 				.build());
-		contract.setEmployerSignature(signature);
+		contract.setManagerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
 

@@ -307,10 +307,11 @@ public class ManagerControllerTest {
     public void signContract_valid() throws Exception{
         Long contractId = 1L;
         LoginDTO loginDTO = new LoginDTO();
-        loginDTO.setEmail("");
-        loginDTO.setPassword("");
+        loginDTO.setEmail("Test@test.com");
+        loginDTO.setPassword("Test12345");
 
         when(managerService.signContract(contractId, 1L)).thenReturn(new ContractDTO());
+        when(userService.authenticateUserContractSigning(loginDTO)).thenReturn(1L);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.post("/manager/contract/sign/{contractId}", contractId)
