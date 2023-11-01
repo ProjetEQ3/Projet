@@ -7,7 +7,6 @@ import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.APIException;
@@ -608,8 +607,8 @@ public class StudentControllerTest {
     @Test
     public void getContractsByStudentId_Valid() throws Exception {
 //        Arrange
-        List<ShortContractDTO> contracts = new ArrayList<>();
-        contracts.add(new ShortContractDTO());
+        List<ContractDTO> contracts = new ArrayList<>();
+        contracts.add(new ContractDTO());
 
         when(studentService.getContractsByStudentId(validStudentId, Semester.builder()
                 .season(Semester.Season.FALL)

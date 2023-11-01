@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;

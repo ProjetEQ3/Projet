@@ -2,7 +2,7 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
@@ -834,7 +834,7 @@ public class StudentServiceTest{
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act
-		List<ShortContractDTO> result = studentService.getContractsByStudentId(3L, semester);
+		List<ContractDTO> result = studentService.getContractsByStudentId(3L, semester);
 		assertEquals(1, result.size());
 		assertEquals(contract.getId(), result.get(0).getId());
 		assertEquals(contract.getJobOffer().getTitle(), result.get(0).getJobOfferName());
