@@ -1023,8 +1023,26 @@ public class EmployerServiceTest {
         String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         Student student = Student.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").build();
         Manager manager = Manager.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
-        Employer employer = Employer.builder().id(1L).firstName("EmployerFirstName").lastName("EmployerLastName").build();
-        JobOffer jobOffer = JobOffer.builder().id(1L).title("JobOfferTitle").employer(employer).jobOfferState(JobOfferState.OPEN).build();
+        Employer employer = Employer.builder()
+                .id(1L)
+                .email("asd@asd.com")
+                .firstName("EmployerFirstName")
+                .lastName("EmployerLastName")
+                .organisationName(" asd")
+                .organisationPhone("111-111-1111")
+                .build();
+        JobOffer jobOffer = JobOffer.builder()
+                .id(1L)
+                .title("JobOfferTitle")
+                .description("  asdads")
+                .location("Location1")
+                .department(Department._145A0)
+                .jobOfferState(JobOfferState.OPEN)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .employer(employer)
+                .build();
 
         Contract contract = Contract
                 .builder()
@@ -1055,12 +1073,11 @@ public class EmployerServiceTest {
         savedContract.setEmployerSignature(employerSignature);
         savedContract.setManagerSignature(managerSignature);
 
-//        when(signatureRepository.save(any(Signature.class))).thenReturn(studentSignature);
-//        when(signatureRepository.save(any(Signature.class))).thenReturn(employerSignature);
         when(signatureRepository.save(any(Signature.class))).thenReturn(managerSignature);
         when(employerRepository.findById(1L)).thenReturn(Optional.of(employer));
         when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
         when(contractRepository.save(any(Contract.class))).thenReturn(savedContract);
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         ContractDTO result = employerService.signContract(1L, 1L);
 

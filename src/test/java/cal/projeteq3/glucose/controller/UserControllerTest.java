@@ -3,8 +3,11 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -19,16 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 ;import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -152,6 +159,46 @@ class UserControllerTest {
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(2))
+        ;
+    }
+
+//    @GetMapping("/contract/{contractId}")
+//    public ResponseEntity<ContractDTO> getContract(@PathVariable Long contractId){
+//        return ResponseEntity.accepted()
+//                .contentType(MediaType.APPLICATION_PDF)
+//                .body(userService.getShortContractById(contractId));
+//    }
+
+    @Test
+    public void testGetContractSuccess() throws Exception {
+        String studentName = "Student Name";
+        String jobOfferName = "Job Offer Name";
+        String jobOfferCompany = "Job Offer Company";
+        when(userService.getShortContractById(any())).thenReturn(
+                new ContractDTO(
+                Contract.builder()
+                        .student(
+                                Student.builder()
+                                        .firstName(studentName)
+                                        .lastName(studentName)
+                                        .build())
+                        .employer(
+                                Employer.builder()
+                                        .organisationName(jobOfferCompany)
+                                        .build())
+                        .jobOffer(JobOffer.builder()
+                                .title(jobOfferName)
+                                .employer(
+                                        Employer.builder()
+                                                .organisationName(jobOfferCompany)
+                                                .build())
+                                .build())
+                        .build()));
+
+        mockMvc.perform(get("/user/contract/{contractId}", 1L)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted())
         ;
     }
 }
