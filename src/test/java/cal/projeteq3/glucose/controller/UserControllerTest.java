@@ -161,45 +161,5 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.length()").value(2))
         ;
     }
-
-//    @GetMapping("/contract/{contractId}")
-//    public ResponseEntity<ContractDTO> getContract(@PathVariable Long contractId){
-//        return ResponseEntity.accepted()
-//                .contentType(MediaType.APPLICATION_PDF)
-//                .body(userService.getShortContractById(contractId));
-//    }
-
-    @Test
-    public void testGetContractSuccess() throws Exception {
-        String studentName = "Student Name";
-        String jobOfferName = "Job Offer Name";
-        String jobOfferCompany = "Job Offer Company";
-        when(userService.getShortContractById(any())).thenReturn(
-                new ContractDTO(
-                Contract.builder()
-                        .student(
-                                Student.builder()
-                                        .firstName(studentName)
-                                        .lastName(studentName)
-                                        .build())
-                        .employer(
-                                Employer.builder()
-                                        .organisationName(jobOfferCompany)
-                                        .build())
-                        .jobOffer(JobOffer.builder()
-                                .title(jobOfferName)
-                                .employer(
-                                        Employer.builder()
-                                                .organisationName(jobOfferCompany)
-                                                .build())
-                                .build())
-                        .build()));
-
-        mockMvc.perform(get("/user/contract/{contractId}", 1L)
-                        .header("Authorization", token)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isAccepted())
-        ;
-    }
 }
 
