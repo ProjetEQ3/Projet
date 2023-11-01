@@ -97,14 +97,4 @@ public class UserService {
 		Manager manager = managerRepository.findAll().get(1);
 		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
 	}
-
-	public List<ContractDTO> getAllContracts() {
-		return contractRepository.findAll().stream().map(ContractDTO::new).toList();
-	}
-
-	public List<ShortContractDTO> getAllShortContracts() {
-		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(1);
-		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
-	}
 }
