@@ -8,11 +8,16 @@ const InterviewedStudentList = ({user}) => {
 	const {t} = useTranslation()
 	const [studentList, setStudentList] = useState([])
 
-	async function fetchStudentList(){
+	async function fetchStudentList(userClicked){
 		await axiosInstance
 			.get('employer/waitingStudents', {params: {employerId: user.id}})
 			.then(res => {
 				if(res.data.length === 0){
+					if (userClicked)
+					{
+						setStudentList([])
+						return
+					}
 					toast.info(t('noStudentsConvoked'))
 					setStudentList([])
 					return

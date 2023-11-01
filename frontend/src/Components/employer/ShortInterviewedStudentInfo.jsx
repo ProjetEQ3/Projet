@@ -29,7 +29,7 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
         axiosInstance.put('/employer/offer/accept/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('hireStudentSuccess'));
-                fetchStudentList();
+                fetchStudentList(true);
             })
             .catch((error) => {
                 toast.error(t('hireStudentError') + t(error?.response?.data?.message));
@@ -40,7 +40,7 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
         axiosInstance.put('/employer/offer/refuse/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
-                fetchStudentList();
+                fetchStudentList(true);
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
