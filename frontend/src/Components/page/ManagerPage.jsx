@@ -119,7 +119,7 @@ const ManagerPage = ({user}) => {
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
-                {tab === 'contracts' && <ContractList contracts={contracts} />}
+                {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
             </div>
         </div>
     )

@@ -258,7 +258,8 @@ public class EmployerService{
 				.contract(contract)
 				.build());
 		contract.setEmployerSignature(signature);
-		return new ContractDTO(contractRepository.save(contract));
+//		TODO: get what manager ?
+		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
 }
