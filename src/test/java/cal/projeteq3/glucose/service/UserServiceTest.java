@@ -326,4 +326,15 @@ public class UserServiceTest {
 //        assertEquals(semesters.get(4), userService.getSemesters().get(4).toEntity());
 
     }
+
+    @Test
+    public void getContractById_valid(){
+        // Arrange
+        Long id = 1L;
+        Manager manager = Manager.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .email("
+    }
 }
