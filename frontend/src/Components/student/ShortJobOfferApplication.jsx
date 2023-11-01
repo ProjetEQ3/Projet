@@ -45,8 +45,6 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
             return;
         }
 
-        console.log(selectedAppointmentValue);
-
         axiosInstance.put(`/student/setAppointmentToChosen/${appointments[selectedAppointmentValue].id}`)
             .then((response) => {
                 toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(appointments[selectedAppointmentValue].appointmentDate));
