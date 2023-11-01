@@ -49,7 +49,7 @@ public class UserService {
 	public UserDTO getMe(String token) {
 		String email = jwtTokenProvider.getEmailFromJWT(token);
 		User user = userRepository.findUserByCredentialsEmail(email)
-				.orElseThrow(() -> new UserNotFoundException("No User found with this email: " + email));
+				.orElseThrow(() -> new UserNotFoundException());
 
 		return switch (user.getRole()) {
 			case STUDENT -> getStudentDto(user.getId());
@@ -60,15 +60,15 @@ public class UserService {
 
 	private ManagerDTO getManagerDto(Long id) {
 		return new ManagerDTO(managerRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("No Manager found with this ID: " + id)));
+				.orElseThrow(UserNotFoundException::new));
 	}
 	private EmployerDTO getEmployerDto(Long id) {
 		return new EmployerDTO(employerRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("No Employer found with this ID: " + id)));
+				.orElseThrow(UserNotFoundException::new));
 	}
 	private StudentDTO getStudentDto(Long id) {
 		return new StudentDTO(studentRepository.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("No Student found with this ID: " + id)));
+				.orElseThrow(UserNotFoundException::new));
 	}
 
     public List<SemesterDTO> getSemesters() {

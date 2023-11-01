@@ -46,66 +46,16 @@ public final class Validation{
 		exception(ValidationMessage.NAME_MESSAGE.toString());
 	}
 
-	public static void validateBirthDate(LocalDate birthDate){
-		if(
-			birthDate.isBefore(LocalDate.now().minusYears(MAX_AGE)) &&
-			birthDate.isAfter(LocalDate.now().minusYears(MIN_AGE))
-		)
-			return;
-		exception(ValidationMessage.AGE_MESSAGE.toString());
-	}
-
-	public static void validateStreet(String street){
-		if(street.matches(STREET_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.STREET_MESSAGE.toString());
-	}
-
-	public static void validateCity(String city){
-		if(city.matches(CITY_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.CITY_MESSAGE.toString());
-	}
-
-	public static void validateProvince(String province){
-		if(province.matches(PROVINCE_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.PROVINCE_MESSAGE.toString());
-	}
-
-	public static void validatePostalCode(String postalCode){
-		if(postalCode.matches(POSTAL_CODE_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.POSTAL_CODE_MESSAGE.toString());
-	}
-
-	public static void validateCountry(String country){
-		if(country.matches(COUNTRY_PATTERN.toString()))
-			return;
-		exception(ValidationMessage.COUNTRY_MESSAGE.toString());
-	}
-
 	public static void validatePhoneNumber(String phoneNumber){
 		if(phoneNumber.matches(PHONE_NUMBER_PATTERN.toString()))
 			return;
 		exception(ValidationMessage.PHONE_NUMBER_MESSAGE.toString());
 	}
 
-	public static void validateUrl(String website){
-		if(website.matches(WEBSITE_PATTERN.toString()))
-			return;
-    exception(ValidationMessage.WEBSITE_MESSAGE.toString());
-	}
-
 	public static void validateCvFileName(String fileName){
 		if(fileName.matches(CV_FILE_NAME_PATTERN.toString()))
 			return;
 		exception(ValidationMessage.CV_FILE_NAME_MESSAGE.toString());
-	}
-
-	public static void validateSerial(String serial){
-		if(!serial.matches(SERIAL_PATTERN.toString()))
-			exception(ValidationMessage.SERIAL_MESSAGE.toString());
 	}
 
 	private static void validateOrgName(String organisationName) {
@@ -145,12 +95,6 @@ public final class Validation{
 		validatePassword(loginDTO.getPassword());
 	}
 
-	public static void validateRole(String role){
-		if(role.matches(Role.getAllRolesString()))
-			return;
-		exception(ValidationMessage.ROLE_MESSAGE.toString());
-	}
-
 	public static void validateJobOffer(JobOfferDTO jobOffer){
 		if(!jobOffer.getTitle().matches(TITLE_PATTERN.toString()))
 			exception(ValidationMessage.TITLE_MESSAGE.toString());
@@ -185,7 +129,7 @@ public final class Validation{
 	}
 
 	public static void validateAppointmentDate(Set<LocalDateTime> dates){
-		if (dates.size() < 3 || dates.size() > 5)
+		if (dates.isEmpty() || dates.size() > 5)
 			exception(ValidationMessage.APPOINTMENT_OPTIONS_MESSAGE.toString());
 		for (LocalDateTime dateTime: dates) {
 			if (dateTime.isBefore(LocalDateTime.now()))

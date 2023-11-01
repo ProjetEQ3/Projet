@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.model.contract;
 
-import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisitNotMet;
+import cal.projeteq3.glucose.exception.unauthorizedException.SignaturePrerequisiteNotMetException;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Student;
@@ -69,7 +69,7 @@ public class Contract{
 
 	public void setManagerSignature(Signature directorSignature){
 		if(this.managerSignature != null) throw new IllegalStateException("Director signature already set");
-		if(this.employerSignature == null || this.studentSignature == null) throw new SignaturePrerequisitNotMet();
+		if(this.employerSignature == null || this.studentSignature == null) throw new SignaturePrerequisiteNotMetException();
 
 		this.managerSignature = directorSignature;
 		isComplete = true;

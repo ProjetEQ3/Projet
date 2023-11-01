@@ -15,13 +15,6 @@ public class RegisterDTO{
 		this.email = email;
 		this.password = password;
 		this.role = role;
-//		validate();
-	}
-
-	public void validate(){
-		Validation.validateEmail(this.email);
-		Validation.validatePassword(this.password);
-		Validation.validateRole(this.role);
 	}
 
 }

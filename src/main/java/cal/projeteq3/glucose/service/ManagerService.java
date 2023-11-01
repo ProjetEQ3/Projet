@@ -44,7 +44,7 @@ public class ManagerService{
 	}
 
 	public ManagerDTO getManagerByID(Long id){
-		return new ManagerDTO(managerRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id)));
+		return new ManagerDTO(managerRepository.findById(id).orElseThrow(UserNotFoundException::new));
 	}
 
 	public ManagerDTO updateManager(Long id, ManagerDTO updatedManager){
