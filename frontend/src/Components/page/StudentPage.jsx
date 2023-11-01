@@ -87,7 +87,7 @@ const StudentPage = ({user, setUser}) => {
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}
 				{tab === 'my_applications' && <MyApplications user={user}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
-				{tab === 'contract' && <ContractList contracts={contracts} />}
+				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>
 		</div>
 	)
