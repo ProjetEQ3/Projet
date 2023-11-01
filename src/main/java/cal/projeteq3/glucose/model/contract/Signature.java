@@ -24,7 +24,7 @@ public class Signature{
 	private LocalDate signatureDate = LocalDate.now();
 
 	@JoinColumn(nullable = false)
-	@OneToOne
+	@ManyToOne
 	private Contract contract;
 
 	@Override
