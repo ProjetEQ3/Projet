@@ -14,6 +14,7 @@ const ShortContract = ({ contract, user }) => {
 
     const handleSignClick = () => {
         setShowSigningModal(true);
+        setIsDisplay(false)
     }
 
     const handleSignaturePasswordChange = (e) => {

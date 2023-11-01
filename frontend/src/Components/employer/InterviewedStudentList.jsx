@@ -45,7 +45,7 @@ const InterviewedStudentList = ({user}) => {
 						studentList.length === 0 ? <h3 className="text-center">{t('noStudentsConvoked')}</h3>
 							: studentList.map((student, index) => (
 								<div key={index}>
-									<ShortInterviewedStudentInfo student={student}/>
+									<ShortInterviewedStudentInfo student={student} fetchStudentList={fetchStudentList}/>
 								</div>
 							))
 					}

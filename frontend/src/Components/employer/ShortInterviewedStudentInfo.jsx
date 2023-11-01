@@ -6,7 +6,7 @@ import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 import Appointment from "../../model/Appointment";
 
-const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
+const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [appointment, setAppointment] = useState(new Appointment());
@@ -29,6 +29,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
         axiosInstance.put('/employer/offer/accept/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('hireStudentSuccess'));
+                fetchStudentList();
             })
             .catch((error) => {
                 toast.error(t('hireStudentError') + t(error?.response?.data?.message));
@@ -39,6 +40,7 @@ const ShortInterviewedStudentInfo = ({ student, jobOfferTitle }) => {
         axiosInstance.put('/employer/offer/refuse/' + student.jobApplications[0])
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
+                fetchStudentList();
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
