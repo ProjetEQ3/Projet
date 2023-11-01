@@ -282,23 +282,21 @@ public final class ContractPDFGenerator{
 			document.add(signatureDetails);
 
 			// Add the signature lines
-			Paragraph studentSignature = new Paragraph(
-				"L'élève :\n" + contract.getStudentSignatureContract(), normalTextFont);
-			studentSignature.setAlignment(Paragraph.ALIGN_LEFT);
-			studentSignature.setSpacingBefore(20f);
-			document.add(studentSignature);
+			boldTextFont.setSize(12);
 
-			Paragraph employerSignature = new Paragraph(
-				"Pour l’entreprise :\n" + contract.getEmployerSignatureContract(), normalTextFont);
-			employerSignature.setAlignment(Paragraph.ALIGN_LEFT);
-			employerSignature.setSpacingBefore(20f);
-			document.add(employerSignature);
+			Paragraph signatureLines = new Paragraph();
+			signatureLines.add(new Phrase("L'élève :\n", normalTextFont));
+			signatureLines.add(new Chunk(contract.getStudentSignatureContract(), boldTextFont));
 
-			Paragraph directorSignature = new Paragraph(
-				"Pour le Collège :\n" + contract.getManagerSignatureContract(), normalTextFont);
-			directorSignature.setAlignment(Paragraph.ALIGN_LEFT);
-			directorSignature.setSpacingBefore(20f);
-			document.add(directorSignature);
+			signatureLines.add(new Phrase("\n\nPour l’entreprise :\n", normalTextFont));
+			signatureLines.add(new Chunk(contract.getEmployerSignatureContract(), boldTextFont));
+
+			signatureLines.add(new Phrase("\n\nPour le Collège :\n", normalTextFont));
+			signatureLines.add(new Chunk(contract.getManagerSignatureContract(), boldTextFont));
+
+			signatureLines.setAlignment(Paragraph.ALIGN_LEFT);
+			signatureLines.setSpacingBefore(20f);
+			document.add(signatureLines);
 
 			Paragraph finalParagraph = getElements(normalTextFont);
 			document.add(finalParagraph);
