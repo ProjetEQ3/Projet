@@ -44,4 +44,7 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
 * Ne pas toucher une tâche qui nous n'est pas assignée. (in progress)
 * Éliminer le YAGNI dans notre code
 
+1. Améliorer la communication entre les membres de l'équipe
+2. Prendre les grosses tâches en peer programming
+
 
