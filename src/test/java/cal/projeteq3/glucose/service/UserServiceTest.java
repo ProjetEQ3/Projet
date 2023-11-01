@@ -835,11 +835,6 @@ public class UserServiceTest {
         assertEquals(0, contractDTOS.size());
     }
 
-    // public Long authenticateUserContractSigning(LoginDTO loginDto){
-    //     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
-    //     return userRepository.findUserByCredentialsEmail(loginDto.getEmail()).orElseThrow(UserNotFoundException::new).getId();
-    // }
-
     @Test
     void authenticateUserContractSigning_valid() {
         // Arrange
