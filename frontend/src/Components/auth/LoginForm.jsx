@@ -92,7 +92,7 @@ const LoginForm = ({ user, setUser }) => {
 						setUser(newUser)
 					})
 					.catch(err => {
-						toast.error(err.message)
+						toast.error(t(err.response?.data.message))
 					})
 			}).catch((error) => {
 				if (error.response) {

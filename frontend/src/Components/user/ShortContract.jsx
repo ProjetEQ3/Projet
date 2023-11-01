@@ -31,7 +31,7 @@ const ShortContract = ({ contract, user }) => {
                 toast.success(t('contractSigned'));
             })
             .catch(error => {
-                toast.error(error.response?.data?.message);
+                toast.error(t(error.response?.data?.message))
             })
         setShowSigningModal(false);
         setSignaturePassword('');

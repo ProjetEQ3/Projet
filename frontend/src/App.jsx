@@ -27,7 +27,7 @@ function App(){
 					setUser(newUser)
 				})
 				.catch(err => {
-					toast.error(err.message)
+					toast.error(t(err.response?.data.message))
 				})
 		}
 	}, [_token])

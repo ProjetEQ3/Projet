@@ -44,7 +44,7 @@ const StudentPage = ({user, setUser}) => {
 				setContracts(response.data);
 			})
 			.catch((error) => {
-				toast.error(error.response?.data?.message)
+				toast.error(t(error.response?.data?.message))
 			});
 	}
 

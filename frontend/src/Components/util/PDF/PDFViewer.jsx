@@ -28,7 +28,7 @@ const PdfViewer = ({ pdf, contractComplete }) => {
     };
 
     const handleError = (error) => {
-        toast.error(error.response?.data.message)
+        toast.error(t(error.response?.data.message))
     };
 
     const handleZoomIn = () => {
