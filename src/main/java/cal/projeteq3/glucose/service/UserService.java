@@ -9,15 +9,11 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.StudentNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.model.Semester;
-import cal.projeteq3.glucose.model.contract.Contract;
-import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
-import com.itextpdf.text.Paragraph;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,7 +32,6 @@ public class UserService {
 	private final ContractRepository contractRepository;
 	private final EmployerRepository employerRepository;
 	private final ManagerRepository managerRepository;
-	private final CredentialRepository credentialRepository;
 	private final UserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -92,9 +87,19 @@ public class UserService {
 		return semesters.stream().map(SemesterDTO::new).toList();
     }
 
-	public ShortContractDTO getContractById(Long id) {
+	public ShortContractDTO getShortContractById(Long id) {
 		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(1);
+		Manager manager = managerRepository.findAll().get(0);
 		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
+	}
+
+	public List<ContractDTO> getAllContracts() {
+		return contractRepository.findAll().stream().map(ContractDTO::new).toList();
+	}
+
+	public List<ShortContractDTO> getAllShortContracts() {
+		//		TODO: get quel manager ?
+		Manager manager = managerRepository.findAll().get(0);
+		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
 	}
 }
