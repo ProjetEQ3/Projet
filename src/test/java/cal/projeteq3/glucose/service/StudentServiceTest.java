@@ -830,7 +830,7 @@ public class StudentServiceTest{
 
 		Contract contract = new Contract(employer, student, jobOffer);
 
-		when(contractRepository.findAllByStudentId(3L)).thenReturn(Optional.of(contract));
+		when(contractRepository.findAllByStudentId(3L)).thenReturn(List.of(contract));
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act

@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ContractRepository extends JpaRepository<Contract, Long> {
-    Optional<Contract> findAllByStudentId(Long studentId);
+    List<Contract> findAllByStudentId(Long studentId);
     Optional<Contract> findByEmployerId(Long employerId);
     Optional<Contract> findByStudentIdAndEmployerId(Long studentId, Long employerId);
     Optional<Contract> findContractByEmployerSignatureId(Long employerSignatureId);
     Optional<Contract> findContractByStudentSignatureId(Long studentSignatureId);
     Optional<Contract> findContractByManagerSignatureId(Long managerSignatureId);
-    Optional<Contract> findAllByJobOffer_Semester(Semester semester);
+    List<Contract> findAllByJobOffer_Semester(Semester semester);
 }

@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
@@ -1178,6 +1177,74 @@ class ManagerServiceTest {
         employer.setOrganisationName("Professionel");
         employer.setOrganisationPhone("111-111-1111");
 
+        Student student = new Student();
+        student.setId(3L);
+        student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
+
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(4L);
+        jobOffer.setEmployer(employer);
+        jobOffer.setSemester(semester);
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
+
+        Contract contract = new Contract(employer, student, jobOffer);
+
+        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(List.of(contract));
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
+
+        // Act
+        List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+
+        // Assert
+        assertNotNull(contractsDTO);
+        assertEquals(contract.getId(), contractsDTO.get(0).getId());
+        verify(contractRepository, times(1)).findAllByJobOffer_Semester(semester);
+    }
+
+    @Test
+    public void getContractBySession_validWithMultipleContracts() {
+        // Arrange
+
+        Semester semester = new Semester(LocalDate.now());
+
+        Credentials credManager = new Credentials();
+        credManager.setEmail("Michel@Michaud.com");
+        credManager.setRole(Role.MANAGER);
+
+        Credentials credEmployer = new Credentials();
+        credEmployer.setEmail("Michel@Professionel.com");
+        credEmployer.setRole(Role.EMPLOYER);
+
+        Credentials credStudent = new Credentials();
+        credStudent.setEmail("Michel@Student.com");
+        credStudent.setRole(Role.STUDENT);
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
+
+        Employer employer = new Employer();
+        employer.setCredentials(credEmployer);
+        employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
+
         Employer employer1 = new Employer();
         employer1.setCredentials(credEmployer);
         employer1.setId(4L);
@@ -1229,18 +1296,148 @@ class ManagerServiceTest {
         jobOffer1.setTitle("JobOffer1");
 
         Contract contract = new Contract(employer, student, jobOffer);
+        Contract contract1 = new Contract(employer1, student1, jobOffer1);
 
-        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(Optional.of(contract));
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
+        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(List.of(contract, contract1));
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         // Act
-        List<ShortContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+        List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+
+        // Assert
+        assertEquals(contractsDTO.size(), 2);
+        assertEquals(contract.getId(), contractsDTO.get(0).getId());
+        verify(contractRepository, times(1)).findAllByJobOffer_Semester(semester);
+    }
+
+    @Test
+    public void getContractBySession_validListEmpty() {
+        // Arrange
+        LocalDate date = LocalDate.now().plusMonths(-6);
+        Semester semester = new Semester(date);
+
+        Credentials credManager = new Credentials();
+        credManager.setEmail("Michel@Michaud.com");
+        credManager.setRole(Role.MANAGER);
+
+        Credentials credEmployer = new Credentials();
+        credEmployer.setEmail("Michel@Professionel.com");
+        credEmployer.setRole(Role.EMPLOYER);
+
+        Credentials credStudent = new Credentials();
+        credStudent.setEmail("Michel@Student.com");
+        credStudent.setRole(Role.STUDENT);
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
+
+        Employer employer = new Employer();
+        employer.setCredentials(credEmployer);
+        employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
+
+        Student student = new Student();
+        student.setId(3L);
+        student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
+
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(4L);
+        jobOffer.setEmployer(employer);
+        jobOffer.setSemester(new Semester(LocalDate.now()));
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
+
+        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(List.of());
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
+
+        // Act
+        List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
 
         // Assert
         assertNotNull(contractsDTO);
-        assertEquals(id, contractsDTO.get(0).getId());
-        verify(contractRepository, times(1)).findById(id);
+        assertEquals(0, contractsDTO.size());
+        verify(contractRepository, times(1)).findAllByJobOffer_Semester(semester);
+    }
+
+    @Test
+    public void getContractBySession_SemesterNull() {
+        // Arrange
+
+        Credentials credManager = new Credentials();
+        credManager.setEmail("Michel@Michaud.com");
+        credManager.setRole(Role.MANAGER);
+
+        Credentials credEmployer = new Credentials();
+        credEmployer.setEmail("Michel@Professionel.com");
+        credEmployer.setRole(Role.EMPLOYER);
+
+        Credentials credStudent = new Credentials();
+        credStudent.setEmail("Michel@Student.com");
+        credStudent.setRole(Role.STUDENT);
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
+
+        Employer employer = new Employer();
+        employer.setCredentials(credEmployer);
+        employer.setId(2L);
+        employer.setFirstName("Michel");
+        employer.setLastName("Professionel");
+        employer.setOrganisationName("Professionel");
+        employer.setOrganisationPhone("111-111-1111");
+
+        Student student = new Student();
+        student.setId(3L);
+        student.setCredentials(credStudent);
+        student.setFirstName("Michel");
+        student.setLastName("Student");
+
+
+        JobOffer jobOffer = new JobOffer();
+        jobOffer.setId(4L);
+        jobOffer.setEmployer(employer);
+        jobOffer.setSemester(null);
+        jobOffer.setDepartment(Department._420B0);
+        jobOffer.setJobOfferState(JobOfferState.OPEN);
+        jobOffer.setDuration(6);
+        jobOffer.setHoursPerWeek(40);
+        jobOffer.setSalary(20.0f);
+        jobOffer.setStartDate(LocalDate.now());
+        jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+        jobOffer.setLocation("Location1");
+        jobOffer.setDescription("Description1");
+        jobOffer.setTitle("JobOffer1");
+
+        when(contractRepository.findAllByJobOffer_Semester(null)).thenReturn(List.of());
+        when(managerRepository.findAll()).thenReturn(List.of(manager));
+
+        // Act
+        List<ContractDTO> contractsDTO = managerService.getContractsBySession(null);
+
+        // Assert
+        assertNotNull(contractsDTO);
+        assertEquals(0, contractsDTO.size());
+        verify(contractRepository, times(1)).findAllByJobOffer_Semester(null);
     }
 }
 

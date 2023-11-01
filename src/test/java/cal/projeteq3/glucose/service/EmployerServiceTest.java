@@ -1005,7 +1005,7 @@ public class EmployerServiceTest {
 
         Contract contract = new Contract(employer, student, jobOffer);
 
-        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(Optional.of(contract));
+        when(contractRepository.findAllByJobOffer_Semester(semester)).thenReturn(List.of(contract));
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         // Act

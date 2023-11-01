@@ -144,9 +144,7 @@ public class ManagerService{
 
 	public List<ContractDTO> getContractsBySession(Semester semester){
 		Manager manager = managerRepository.findAll().get(0);
-		List<Contract> contracts = new ArrayList<>(contractRepository.findAllByJobOffer_Semester(semester).stream()
-		                                                             .toList());
-		return contracts.stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
+		return contractRepository.findAllByJobOffer_Semester(semester).stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long managerId){
