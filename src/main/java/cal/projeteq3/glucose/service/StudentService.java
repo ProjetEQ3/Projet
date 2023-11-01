@@ -4,7 +4,6 @@ import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.contract.SignatureDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -186,11 +185,11 @@ public class StudentService{
 		return new AppointmentDTO(appointmentRepository.save(appointment));
 	}
 
-	public List<ShortContractDTO> getContractsByStudentId(Long studentId, Semester semester){
+	public List<ContractDTO> getContractsByStudentId(Long studentId, Semester semester){
 		Manager manager = managerRepository.findAll().get(0);
 		return contractRepository.findAllByStudentId(studentId).stream().filter(
 			contract -> contract.getJobOffer().getSemester().equals(semester)).map(
-			(contract -> new ShortContractDTO(contract, manager))).toList();
+			(contract -> new ContractDTO(contract, manager))).toList();
 	}
 
 	public ContractDTO signContract(Long contractId, Long studentId){

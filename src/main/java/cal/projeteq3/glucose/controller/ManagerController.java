@@ -3,7 +3,6 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -99,14 +98,14 @@ public class ManagerController {
     }
 
     @GetMapping("/contracts")
-    public ResponseEntity<List<ShortContractDTO>> getAllShortContracts(@RequestParam String season, @RequestParam String year){
+    public ResponseEntity<List<ContractDTO>> getAllShortContracts(@RequestParam String season, @RequestParam String year){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getContractsBySession(new Semester(Semester.Season.valueOf(season), Integer.parseInt(year))));
     }
 
     @GetMapping("/contract/{contractId}")
-    public ResponseEntity<ShortContractDTO> getContract(@PathVariable Long contractId){
+    public ResponseEntity<ContractDTO> getContract(@PathVariable Long contractId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(userService.getShortContractById(contractId));

@@ -3,7 +3,6 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
@@ -143,11 +142,11 @@ public class ManagerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	public List<ShortContractDTO> getContractsBySession(Semester semester){
+	public List<ContractDTO> getContractsBySession(Semester semester){
 		Manager manager = managerRepository.findAll().get(0);
 		List<Contract> contracts = new ArrayList<>(contractRepository.findAllByJobOffer_Semester(semester).stream()
 		                                                             .toList());
-		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
+		return contracts.stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long managerId){

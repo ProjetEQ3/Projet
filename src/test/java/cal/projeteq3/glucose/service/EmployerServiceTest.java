@@ -2,7 +2,6 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -1010,7 +1009,7 @@ public class EmployerServiceTest {
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         // Act
-        List<ShortContractDTO> result = employerService.getContractsBySession(semester, 2L);
+        List<ContractDTO> result = employerService.getContractsBySession(semester, 2L);
         assertEquals(1, result.size());
         assertEquals(contract.getId(), result.get(0).getId());
         assertEquals(contract.getJobOffer().getTitle(), result.get(0).getJobOfferName());

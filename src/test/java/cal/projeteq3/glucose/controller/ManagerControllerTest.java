@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -275,7 +275,7 @@ public class ManagerControllerTest {
     @Test
     public void getAllContracts_valid() throws Exception{
         // Arrange
-        List<ShortContractDTO> contracts = Arrays.asList(new ShortContractDTO(), new ShortContractDTO());
+        List<ContractDTO> contracts = Arrays.asList(new ContractDTO(), new ContractDTO());
 
         when(managerService.getContractsBySession(new Semester(LocalDate.now()))).thenReturn(contracts);
 
@@ -293,7 +293,7 @@ public class ManagerControllerTest {
     public void getContractById_valid() throws Exception{
         Long contractId = 1L;
 
-        when(userService.getShortContractById(contractId)).thenReturn(new ShortContractDTO());
+        when(userService.getShortContractById(contractId)).thenReturn(new ContractDTO());
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/contract/" + contractId)

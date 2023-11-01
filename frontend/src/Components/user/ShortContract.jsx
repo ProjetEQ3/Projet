@@ -27,6 +27,8 @@ const ShortContract = ({ contract, user }) => {
             password: signaturePassword,
         })
             .then(response => {
+                console.log("DATA", response.data)
+                // contract.data = response.data.data;
                 toast.success(t('contractSigned'));
             })
             .catch(error => {

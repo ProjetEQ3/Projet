@@ -4,7 +4,6 @@ import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -121,7 +120,7 @@ public class EmployerController{
 	}
 
 	@GetMapping("/contracts/{employerId}")
-	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
+	public ResponseEntity<List<ContractDTO>> getAllContracts(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getContractsBySession(getSemesterFrom(season, year), employerId));

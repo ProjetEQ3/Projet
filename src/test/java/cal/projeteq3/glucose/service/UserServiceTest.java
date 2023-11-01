@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -406,8 +406,8 @@ public class UserServiceTest {
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
         // Act
-        ShortContractDTO shortContractDTO = userService.getShortContractById(1L);
-        assertEquals(contract.getId(), shortContractDTO.getId());
+        ContractDTO ContractDTO = userService.getShortContractById(1L);
+        assertEquals(contract.getId(), ContractDTO.getId());
     }
 
     @Test
@@ -740,7 +740,7 @@ public class UserServiceTest {
         when(contractRepository.findAll()).thenReturn(List.of(contract, contract1));
         when(managerRepository.findAll()).thenReturn(List.of(manager));
 
-        List<ShortContractDTO> contractDTOS = userService.getAllShortContracts();
+        List<ContractDTO> contractDTOS = userService.getAllShortContracts();
         // Act
         assertEquals(2, contractDTOS.size());
         assertEquals(contract.getId(), contractDTOS.get(0).getId());
@@ -829,7 +829,7 @@ public class UserServiceTest {
 
         when(contractRepository.findAll()).thenReturn(List.of());
         when(managerRepository.findAll()).thenReturn(List.of(manager));
-        List<ShortContractDTO> contractDTOS = userService.getAllShortContracts();
+        List<ContractDTO> contractDTOS = userService.getAllShortContracts();
         // Act
         assertEquals(0, contractDTOS.size());
     }
