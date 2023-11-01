@@ -11,6 +11,7 @@ import {
     faExternalLinkAlt
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.js',
@@ -18,6 +19,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 const PdfViewer = ({ pdf, contractComplete }) => {
+    const [t] = useTranslation();
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [scale, setScale] = useState(1); // To control zoom level

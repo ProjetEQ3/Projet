@@ -10,8 +10,10 @@ import Main from "./Components/layout/Main";
 import {BrowserRouter} from "react-router-dom";
 import {TranslationProvider} from "./Components/util/TranslationContext";
 import {SessionProvider} from "./Components/util/SessionContext";
+import {useTranslation} from "react-i18next";
 
 function App(){
+	const [t] = useTranslation();
 	const [user, setUser] = useState(new User())
 	let _token = sessionStorage.getItem('token')
 
