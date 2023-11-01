@@ -36,7 +36,6 @@ public class UserService {
 	private final ContractRepository contractRepository;
 	private final EmployerRepository employerRepository;
 	private final ManagerRepository managerRepository;
-	private final CredentialRepository credentialRepository;
 	private final UserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;

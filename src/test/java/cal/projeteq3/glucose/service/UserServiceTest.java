@@ -335,6 +335,6 @@ public class UserServiceTest {
                 .id(1L)
                 .firstName("John")
                 .lastName("Doe")
-                .email("
+                .build();
     }
 }
