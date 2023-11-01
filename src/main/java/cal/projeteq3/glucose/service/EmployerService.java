@@ -1,10 +1,8 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
-import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -238,11 +236,11 @@ public class EmployerService{
 		return appointments.isEmpty() ? null : new AppointmentDTO(appointments.get(0));
     }
 
-	public List<ShortContractDTO> getContractsBySession(Semester semester, Long employerId) {
+	public List<ContractDTO> getContractsBySession(Semester semester, Long employerId) {
 		Manager manager = managerRepository.findAll().get(0);
 		List<Contract> contracts = new ArrayList<>(contractRepository.findAllByJobOffer_Semester(semester).stream().toList());
         contracts.removeIf(contract -> !contract.getEmployer().getId().equals(employerId));
-		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
+		return contracts.stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long employerId){

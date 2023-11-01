@@ -2,7 +2,6 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.SemesterDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -87,19 +86,19 @@ public class UserService {
 		return semesters.stream().map(SemesterDTO::new).toList();
     }
 
-	public ShortContractDTO getShortContractById(Long id) {
+	public ContractDTO getShortContractById(Long id) {
 		//		TODO: get quel manager ?
 		Manager manager = managerRepository.findAll().get(0);
-		return new ShortContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
+		return new ContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
 	}
 
 	public List<ContractDTO> getAllContracts() {
 		return contractRepository.findAll().stream().map(ContractDTO::new).toList();
 	}
 
-	public List<ShortContractDTO> getAllShortContracts() {
+	public List<ContractDTO> getAllShortContracts() {
 		//		TODO: get quel manager ?
 		Manager manager = managerRepository.findAll().get(0);
-		return contractRepository.findAll().stream().map((contract -> new ShortContractDTO(contract, manager))).toList();
+		return contractRepository.findAll().stream().map((contract -> new ContractDTO(contract, manager))).toList();
 	}
 }
