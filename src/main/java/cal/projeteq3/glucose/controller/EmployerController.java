@@ -1,16 +1,21 @@
 package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.service.EmployerService;
+import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +30,7 @@ import java.util.Set;
 @RequestMapping("/employer")
 public class EmployerController{
 	private final EmployerService employerService;
+	private final UserService userService;
 
 	@PostMapping("/register")
 	public ResponseEntity<EmployerDTO> register(@RequestBody RegisterEmployerDTO employerDTO){
@@ -118,13 +124,17 @@ public class EmployerController{
 	public ResponseEntity<List<ShortContractDTO>> getAllContracts(@PathVariable Long employerId, @RequestParam String season, @RequestParam String year){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getContractsBySession(Semester.builder()
-						.season(Semester.Season.valueOf(season))
-						.year(Integer.parseInt(year))
-						.build(),
-						employerId));
+				.body(this.employerService.getContractsBySession(getSemesterFrom(season, year), employerId));
 	}
 
+	@PostMapping("/contract/sign/{contractId}")
+	public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+		Validation.validateLogin(loginDTO);
+		long studentId = userService.authenticateUserContractSigning(loginDTO);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.signContract(contractId, studentId));
+	}
 
 	private Semester getSemesterFrom(String season, String year){
 		return Semester.builder()

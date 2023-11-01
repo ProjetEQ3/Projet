@@ -337,6 +337,17 @@ public class UserServiceTest {
     }
 
     @Test
+    public void getContractById_valid(){
+        // Arrange
+        Long id = 1L;
+        Manager manager = Manager.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+    }
+
+    @Test
     public void getContractsBySession_valid() {
         // Arrange
         Credentials credManager = new Credentials();

@@ -32,7 +32,6 @@ public class UserService {
 	private final ContractRepository contractRepository;
 	private final EmployerRepository employerRepository;
 	private final ManagerRepository managerRepository;
-	private final CredentialRepository credentialRepository;
 	private final UserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
@@ -41,6 +40,11 @@ public class UserService {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
 
 		return jwtTokenProvider.generateToken(authentication);
+	}
+
+	public Long authenticateUserContractSigning(LoginDTO loginDto){
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+		return userRepository.findUserByCredentialsEmail(loginDto.getEmail()).orElseThrow(UserNotFoundException::new).getId();
 	}
 
 	public UserDTO getMe(String token) {

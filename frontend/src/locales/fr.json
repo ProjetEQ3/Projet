@@ -220,5 +220,12 @@
   "appointmentChosen": "Rendez-vous choisi: ",
   "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous",
 
-  "contractsList": "Liste des contrats"
+  "contractsList": "Liste des contrats",
+
+  "sign" : "Signer",
+  "signContract" : "Signer le contrat",
+  "fullName" : "Nom complet",
+  "submit" : "Envoyer",
+  "contractSigned": "Votre contrat a été signé avec succès"
+
 }

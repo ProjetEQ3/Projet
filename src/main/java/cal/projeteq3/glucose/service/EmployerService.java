@@ -1,20 +1,20 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
-import cal.projeteq3.glucose.exception.badRequestException.EmployerNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.JobApplicationHasAlreadyADecision;
-import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.*;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -41,6 +41,7 @@ public class EmployerService{
 	private final ContractRepository contractRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final ManagerRepository managerRepository;
+	private final SignatureRepository signatureRepository;
 
 	// database operations here
 
@@ -243,4 +244,23 @@ public class EmployerService{
         contracts.removeIf(contract -> !contract.getEmployer().getId().equals(employerId));
 		return contracts.stream().map((contract -> new ShortContractDTO(contract, manager))).collect(Collectors.toList());
 	}
+
+	public ContractDTO signContract(Long contractId, Long employerId){
+		Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId));
+		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
+		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
+		if(!contract.getEmployer().getId().equals(employerId)) throw new UnauthorizedContractToSignException();
+		if(contract.getEmployerSignature() != null) throw new ContractAlreadySignedException();
+		if(employer.getFirstName() == null || employer.getLastName() == null) throw new EmployerNotCompleteException();
+		Signature signature = signatureRepository.save(Signature
+				.builder()
+				.firstName(employer.getFirstName())
+				.lastName(employer.getLastName())
+				.signatureDate(java.time.LocalDate.now())
+				.contract(contract)
+				.build());
+		contract.setEmployerSignature(signature);
+		return new ContractDTO(contractRepository.save(contract));
+	}
+
 }

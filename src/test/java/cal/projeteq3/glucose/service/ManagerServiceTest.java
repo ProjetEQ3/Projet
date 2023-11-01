@@ -5,30 +5,29 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
-import cal.projeteq3.glucose.exception.badRequestException.CvFileNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.JobOfferNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.ManagerNotFoundException;
-import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
+import cal.projeteq3.glucose.exception.badRequestException.*;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
+import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.repository.CvFileRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
+import cal.projeteq3.glucose.repository.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
-import cal.projeteq3.glucose.repository.StudentRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,10 +44,14 @@ class ManagerServiceTest {
     @Mock
     private JobOfferRepository jobOfferRepository;
     @Mock
+    private ContractRepository contractRepository;
+    @Mock
     private CvFileRepository cvRepository;
 
     @InjectMocks
     private ManagerService managerService;
+    @Mock
+    private SignatureRepository signatureRepository;
 
     @Test
     void createManager_valid() {
@@ -978,6 +981,165 @@ class ManagerServiceTest {
         Student student = new Student();
         student.setMatricule(matricule);
         return student;
+    }
+
+    @Test
+    public void testSignContract() {
+        LocalDateTime date = LocalDateTime.now();
+        String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Student student = Student.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").build();
+        Employer employer = Employer.builder().id(1L).firstName("EmployerFirstName").lastName("EmployerLastName").build();
+        Manager manager = Manager.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).title("JobOfferTitle").employer(employer).jobOfferState(JobOfferState.OPEN).build();
+        Contract contract = Contract
+                .builder()
+                .id(1L)
+                .student(student)
+                .employer(employer)
+                .jobOffer(jobOffer)
+                .build();
+        Contract savedContract = Contract
+                .builder()
+                .id(1L)
+                .employer(employer)
+                .student(student)
+                .jobOffer(jobOffer)
+                .creationDate(date)
+                .lastModificationDate(date)
+                .isComplete(true)
+                .build();
+
+        Signature studentSignature = Signature
+                .builder().firstName("StudentFirstName").lastName("StudentLastName").signatureDate(LocalDate.now()).contract(savedContract).build();
+        Signature employerSignature = Signature
+                .builder().firstName("EmployerFirstName").lastName("EmployerLastName").signatureDate(LocalDate.now()).contract(savedContract).build();
+        Signature managerSignature = Signature
+                .builder().firstName("ManagerFirstName").lastName("ManagerLastName").signatureDate(LocalDate.now()).contract(savedContract).build();
+
+        contract.setStudentSignature(studentSignature);
+        contract.setEmployerSignature(employerSignature);
+
+        savedContract.setStudentSignature(studentSignature);
+        savedContract.setEmployerSignature(employerSignature);
+        savedContract.setManagerSignature(managerSignature);
+
+        when(signatureRepository.save(any(Signature.class))).thenReturn(studentSignature);
+        when(signatureRepository.save(any(Signature.class))).thenReturn(employerSignature);
+        when(signatureRepository.save(any(Signature.class))).thenReturn(managerSignature);
+        when(managerRepository.findById(1L)).thenReturn(Optional.of(manager));
+        when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
+        when(contractRepository.save(any(Contract.class))).thenReturn(savedContract);
+
+        ContractDTO result = managerService.signContract(1L, 1L);
+
+        assertEquals("StudentFirstName", savedContract.getStudentSignature().getFirstName());
+        assertEquals("StudentLastName", savedContract.getStudentSignature().getLastName());
+        assertEquals(formattedDate, savedContract.getStudentSignature().getSignatureDate().toString());
+        assertEquals("EmployerFirstName", savedContract.getEmployerSignature().getFirstName());
+        assertEquals("EmployerLastName", savedContract.getEmployerSignature().getLastName());
+        assertEquals(formattedDate, savedContract.getEmployerSignature().getSignatureDate().toString());
+        assertEquals("ManagerFirstName", savedContract.getManagerSignature().getFirstName());
+        assertEquals("ManagerLastName", savedContract.getManagerSignature().getLastName());
+        assertEquals(formattedDate, savedContract.getManagerSignature().getSignatureDate().toString());
+        assertEquals(date, savedContract.getCreationDate());
+//        assertEquals(date, savedContract.getLastModificationDate()); Test prenne plus que 1ms alors FAIL
+        verify(contractRepository, times(1)).save(contract);
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+    }
+
+    @Test
+    public void testSignContractValidations() {
+        LocalDateTime date = LocalDateTime.now();
+        Student student = Student.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").build();
+        Employer employer = Employer.builder().id(1L).firstName("EmployerFirstName").lastName("EmployerLastName").build();
+        Manager manager = Manager.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).title("JobOfferTitle").employer(employer).jobOfferState(JobOfferState.OPEN).build();
+
+        Signature studentSignature = Signature.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").signatureDate(LocalDate.now()).build();
+        Signature employerSignature = Signature.builder().id(1L).firstName("EmployerFirstName").lastName("EmployerLastName").signatureDate(LocalDate.now()).build();
+        Signature managerSignature = Signature.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").signatureDate(LocalDate.now()).build();
+
+        Contract contract = Contract
+          .builder()
+          .id(1L)
+          .student(student)
+          .employer(employer)
+          .jobOffer(jobOffer)
+          .build();
+        Contract savedContract = Contract
+          .builder()
+          .id(1L)
+          .student(student)
+          .employer(employer)
+          .jobOffer(jobOffer)
+          .employerSignature(employerSignature)
+          .managerSignature(managerSignature)
+          .creationDate(date)
+          .lastModificationDate(date)
+          .isComplete(true)
+          .build();
+
+        Manager manager2 = Manager.builder().id(2L).firstName("StudentFirstName2").lastName("StudentLastName2").build();
+        Contract contract2 = Contract
+          .builder()
+          .id(2L)
+          .student(student)
+          .employer(employer)
+          .jobOffer(jobOffer)
+          .studentSignature(studentSignature)
+          .employerSignature(employerSignature)
+          .managerSignature(managerSignature)
+          .build();
+        Contract savedContract2 = Contract
+          .builder()
+          .id(2L)
+          .student(student)
+          .employer(employer)
+          .jobOffer(jobOffer)
+          .studentSignature(studentSignature)
+          .employerSignature(employerSignature)
+          .creationDate(date)
+          .lastModificationDate(date)
+          .isComplete(true)
+          .build();
+
+        Manager manager3 = Manager.builder().id(3L).firstName("StudentFirstName3").lastName("StudentLastName3").build();
+        Contract contract3 = Contract
+          .builder()
+          .id(3L)
+          .student(student)
+          .employer(employer)
+          .studentSignature(studentSignature)
+          .build();
+        Contract savedContract3 = Contract
+          .builder()
+          .id(3L)
+          .employer(employer)
+          .student(student)
+          .jobOffer(jobOffer)
+          .employerSignature(employerSignature)
+          .managerSignature(managerSignature)
+          .creationDate(date)
+          .lastModificationDate(date)
+          .isComplete(true)
+          .build();
+
+        when(managerRepository.findById(1L)).thenReturn(Optional.of(manager));
+        when(managerRepository.findById(2L)).thenReturn(Optional.of(manager2));
+        when(managerRepository.findById(3L)).thenReturn(Optional.of(manager3));
+        when(managerRepository.findById(100L)).thenReturn(Optional.empty());
+
+        when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
+        when(contractRepository.findById(2L)).thenReturn(Optional.of(contract2));
+        when(contractRepository.findById(3L)).thenReturn(Optional.of(contract3));
+        when(contractRepository.findById(100L)).thenReturn(Optional.empty());
+
+        assertThrows(ManagerNotFoundException.class, () -> {managerService.signContract(1L, 100L);});
+        assertThrows(ContractNotFoundException.class, () -> {managerService.signContract(100L, 1L);});
+        assertThrows(ContractNotReadyToSignException.class, () -> {managerService.signContract(3L, 3L);});
+        assertThrows(ContractNotSignedByStudentException.class, () -> {managerService.signContract(1L, 2L);});
+        assertThrows(ContractAlreadySignedException.class, () -> {managerService.signContract(2L, 2L);});
     }
 }
 

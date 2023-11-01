@@ -2,6 +2,8 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.auth.LoginDTO;
+import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.contract.ShortContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterStudentDTO;
@@ -10,6 +12,7 @@ import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.service.StudentService;
+import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,7 @@ import java.util.List;
 public class StudentController {
 
     private final StudentService studentService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<StudentDTO> register(@RequestBody RegisterStudentDTO student) {
@@ -132,6 +136,15 @@ public class StudentController {
                         .season(Semester.Season.valueOf(season))
                         .year(Integer.parseInt(year))
                         .build()));
+    }
+
+    @PostMapping("/contract/sign/{contractId}")
+    public ResponseEntity<ContractDTO> signContract(@RequestBody LoginDTO loginDTO, @PathVariable Long contractId){
+        Validation.validateLogin(loginDTO);
+        long studentId = userService.authenticateUserContractSigning(loginDTO);
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(this.studentService.signContract(contractId, studentId));
     }
 
 }

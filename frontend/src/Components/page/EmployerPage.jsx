@@ -57,7 +57,7 @@ const EmployerPage = ({user}) => {
 					</div>
 					{tab === 'stages' && <JobOfferList user={user}/>}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
-					{tab === 'contract' && <ContractList contracts={contracts} />}
+					{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>
 		</div>
 	)
