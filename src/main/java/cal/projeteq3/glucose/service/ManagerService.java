@@ -31,6 +31,7 @@ public class ManagerService{
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
 	private final ContractRepository contractRepository;
+	private final SignatureRepository signatureRepository;
 
 	// database operations here
 
@@ -158,13 +159,14 @@ public class ManagerService{
 		if(!contract.isReadyToSign()) throw new ContractNotReadyToSignException();
 		if(contract.getStudentSignature() == null) throw new ContractNotSignedByStudentException();
 		if(contract.getEmployerSignature() == null) throw new ContractNotSignedByEmployerException();
-		Signature signature = Signature
-			.builder()
-			.firstName(manager.getFirstName())
-			.lastName(manager.getLastName())
-			.signatureDate(java.time.LocalDate.now())
-			.build();
-		contract.setManagerSignature(signature);
+		Signature signature = signatureRepository.save(Signature
+				.builder()
+				.firstName(manager.getFirstName())
+				.lastName(manager.getLastName())
+				.signatureDate(java.time.LocalDate.now())
+				.contract(contract)
+				.build());
+		contract.setEmployerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
 

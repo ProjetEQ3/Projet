@@ -48,6 +48,7 @@ public class StudentService{
 	private final PasswordEncoder passwordEncoder;
 	private final ManagerRepository managerRepository;
 	private final ContractRepository contractRepository;
+	private final SignatureRepository signatureRepository;
 
 	// database operations here
 
@@ -199,14 +200,14 @@ public class StudentService{
 		if(!contract.getStudent().getId().equals(studentId)) throw new UnauthorizedContractToSignException();
 		if(contract.getStudentSignature() != null) throw new ContractAlreadySignedException();
 		if(student.getFirstName() == null || student.getLastName() == null) throw new StudentNotCompleteException();
-		Signature studentSignature = Signature
-			.builder()
-			.firstName(student.getFirstName())
-			.lastName(student.getLastName())
-			.signatureDate(LocalDate.now())
-			.contract(contract)
-			.build();
-		contract.setStudentSignature(studentSignature);
+		Signature signature = signatureRepository.save(Signature
+				.builder()
+				.firstName(student.getFirstName())
+				.lastName(student.getLastName())
+				.signatureDate(java.time.LocalDate.now())
+				.contract(contract)
+				.build());
+		contract.setEmployerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
 

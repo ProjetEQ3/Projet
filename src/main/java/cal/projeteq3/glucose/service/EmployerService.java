@@ -259,7 +259,6 @@ public class EmployerService{
 				.signatureDate(java.time.LocalDate.now())
 				.contract(contract)
 				.build());
-
 		contract.setEmployerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
