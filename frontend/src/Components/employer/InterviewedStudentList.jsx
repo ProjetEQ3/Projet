@@ -14,6 +14,7 @@ const InterviewedStudentList = ({user}) => {
 			.then(res => {
 				if(res.data.length === 0){
 					toast.info(t('noStudentsConvoked'))
+					setStudentList([])
 					return
 				}
 				fetchStudentsJobTitles(res.data)
