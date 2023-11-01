@@ -1,11 +1,13 @@
 package cal.projeteq3.glucose.exception.badRequestException;
 
 public class JobOfferNotFoundException extends BadRequestException{
+
+	//    TODO: add id to the message
 	public JobOfferNotFoundException(Long id) {
-		super("Job offer with id " + id + " not found");
+		super("jobOfferNotFound");
 	}
 
 	public JobOfferNotFoundException() {
-		super("Job offer with title not found");
+		super("jobOfferNotFound");
 	}
 }

@@ -1,16 +1,17 @@
 package cal.projeteq3.glucose.exception.badRequestException;
 
 public class UserNotFoundException extends BadRequestException{
+//    TODO: add a message to the exception
         public UserNotFoundException(Long id) {
-            super("User with ID " + id + " does not exist.");
+            super("userNotFound");
         }
 
         public UserNotFoundException(String email) {
-            super("User with email " + email + " does not exist.");
+            super("userNotFound");
         }
 
         public UserNotFoundException() {
-            super("User not found");
+            super("userNotFound");
 
         }
 }

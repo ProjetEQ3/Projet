@@ -2,12 +2,13 @@ package cal.projeteq3.glucose.exception.badRequestException;
 
 public class StudentNotFoundException extends BadRequestException{
 
+//	TODO: add id to the message
 	public StudentNotFoundException(Long id){
-		super("Student with ID " + id + " does not exist.");
+		super("studentNotFound");
 	}
 
 	public StudentNotFoundException(){
-		super("Student does not exist.");
+		super("studentNotFound");
 	}
 
 }
