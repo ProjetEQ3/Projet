@@ -53,8 +53,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -337,12 +336,12 @@ public class StudentControllerTest {
     @Test
     public void getAppliedJobOfferByStudent_InvalidId() throws Exception {
 //        Long wrongStudentId = -1L;
-//
-//        when(studentService.getAppliedJobOfferByStudentId(wrongStudentId,
-//                Semester.builder()
-//                    .season(Semester.Season.FALL)
-//                    .year(2021)
-//                    .build())).thenThrow(new StudentNotFoundException(wrongStudentId));
+//        Semester semester = Semester.builder()
+//                .season(Semester.Season.FALL)
+//                .year(2021)
+//                .build();
+//        when(studentService.getAppliedJobOfferByStudentId(anyLong(), any()))
+//                .thenThrow(StudentNotFoundException.class);
 //
 //        mockMvc.perform(MockMvcRequestBuilders
 //                        .get("/student/appliedJobOffer/{studentId}", wrongStudentId)

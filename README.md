@@ -41,7 +41,7 @@ Bienvenue sur le repo de Glucose, un projet qui propose une platforme web pour g
   
 # Points d'action
 
-- Ne pas toucher une tâche qui nous n'est pas assignée. (in progress)
-- Limiter le temps de discussion et ne pas se perdre dans les détails inutiles (ex. 15 min pour une daily)
-* Respecter la définition de DONE mis dans le README.md avant de mettre en review
-* Arrêter de coder trop en avance pour éviter le YAGNI
+* Ne pas toucher une tâche qui nous n'est pas assignée. (in progress)
+* Éliminer le YAGNI dans notre code
+
+
