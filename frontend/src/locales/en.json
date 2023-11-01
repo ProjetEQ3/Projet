@@ -18,6 +18,7 @@
   "acceptStudentError" : "Error accepting student",
   "apply": "Apply",
   "appliedJobOffer": "You have successfully applied",
+  "appointmentNotFound": "Appointment not found",
   "addRefusalReason": "Please add a refusal reason",
   "acceptedOffer": "Accepted Offer",
   "accept": "Accept",
@@ -35,6 +36,9 @@
   "convokeSuccess": "Student convoked",
   "convokeError": "Error convoking student : ",
   "convokedStudents": "Convoked Student(s)",
+  "contractAlreadySigned": "Contract already signed",
+  "contractNotReadyToSign": "Contract is not ready to be signed",
+
   "chooseADepartment": "Choose a department",
   "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
   "cancel": "Cancel",
@@ -66,9 +70,11 @@
   "departmentRequired": "Department is required.",
   "descriptionRequired": "Description is required.",
   "displayedSession": "Displayed session: ",
+  "decidedApplication": "Decided Application",
 
   "errorUpdateCV": "Error updating CV: ",
   "expirationDate": "End Date of the offer: ",
+  "existingCv": "Existing CV",
   "endDateInternship": "End Date of the internship: ",
   "edit": "Edit",
   "edited": "Edited",
@@ -81,6 +87,7 @@
   "emailRequired": "Email is required.",
   "errorLogin": "Incorrect username or password.",
   "email": "Email",
+  "empSignatureMissing": "Employer signature is missing.",
 
   "fileName": "File Name",
   "fetchError": "Error retrieving data: ",
@@ -111,6 +118,7 @@
 
   "jobOffers": "Internships",
   "jobOffer": "Internship",
+  "jobApplicationNotFound": "Job application not found",
 
   "location": "Work Location",
   "locationRequired": "Location is required.",
@@ -180,6 +188,7 @@
   "registerSubmit": "Register",
 
   "studentCV": "Student CVs: ",
+  "studentSignatureMissing": "Student signature is missing.",
   "studentAlreadyApplied" : "You have already applied for this internship offer.",
   "startDate": "Start Date of the internship: ",
   "salary": "Salary",
@@ -204,6 +213,7 @@
   "uploadedCV": "CV is uploaded",
   "uploadCV": "Upload a CV",
   "updatedCV": "CV updated with status: ",
+  "unauthorizedSigning": "You are not authorized to sign this contract",
 
   "wrongEmail": "Wrong email",
   "wrongPassword": "Wrong password",

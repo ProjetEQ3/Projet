@@ -2,10 +2,11 @@ package cal.projeteq3.glucose.exception.badRequestException;
 
 public class JobApplicationNotFoundException extends BadRequestException {
 
+//    TODO: add id to the message
     public JobApplicationNotFoundException(Long id) {
-        super("JobApplication with ID " + id + " does not exist.");
+        super("jobApplicationNotFound");
     }
     public JobApplicationNotFoundException() {
-        super("JobApplication does not exist.");
+        super("jobApplicationNotFound");
     }
 }
