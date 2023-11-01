@@ -42,6 +42,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.w3c.dom.ls.LSException;
@@ -832,5 +833,38 @@ public class UserServiceTest {
         List<ContractDTO> contractDTOS = userService.getAllShortContracts();
         // Act
         assertEquals(0, contractDTOS.size());
+    }
+
+    // public Long authenticateUserContractSigning(LoginDTO loginDto){
+    //     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+    //     return userRepository.findUserByCredentialsEmail(loginDto.getEmail()).orElseThrow(UserNotFoundException::new).getId();
+    // }
+
+    @Test
+    void authenticateUserContractSigning_valid() {
+        // Arrange
+        Credentials credManager = new Credentials();
+        credManager.setEmail("michel@michaud.com");
+        credManager.setRole(Role.MANAGER);
+        credManager.setPassword("Ose12345");
+
+        Manager manager = new Manager();
+        manager.setCredentials(credManager);
+        manager.setId(1L);
+        manager.setFirstName("Michel");
+        manager.setLastName("Michaud");
+
+        when(credentialRepository.findCredentialsByEmail(credManager.getEmail())).thenReturn(Optional.of(credManager));
+        when(userRepository.findUserByCredentialsEmail(credManager.getEmail())).thenReturn(Optional.of(manager));
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("michel@michaud.com");
+        loginDTO.setPassword("Ose12345");
+
+        // Act
+        Long id = userService.authenticateUserContractSigning(loginDTO);
+
+        // Assert
+        assertEquals(1L, id);
     }
 }
