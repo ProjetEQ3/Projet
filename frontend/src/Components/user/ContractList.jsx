@@ -9,7 +9,7 @@ const ContractList = ({ contracts, user }) => {
         <div className="container" data-testid="contract-list">
             <div className="row">
                 <div className="col-12">
-                    {contracts > 0 ? contracts.map((contract, index) => (
+                    {contracts.length > 0 ? contracts.map((contract, index) => (
                         <div key={index}>
                             <ShortContract contract={contracts[index]} user={user} />
                         </div>
