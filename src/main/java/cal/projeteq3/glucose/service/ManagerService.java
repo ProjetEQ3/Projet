@@ -166,7 +166,8 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
-		return new ContractDTO(contractRepository.save(contract));
+//		TODO: get what manager ?
+		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
 }
