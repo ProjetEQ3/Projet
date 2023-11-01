@@ -169,5 +169,4 @@ public class ManagerService{
 		contract.setManagerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract));
 	}
-
 }

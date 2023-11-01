@@ -648,7 +648,6 @@ public class UserServiceTest {
 
         when(contractRepository.findAll()).thenReturn(List.of());
         when(managerRepository.findAll()).thenReturn(List.of(manager));
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
         List<ContractDTO> contractDTOS = userService.getAllContracts();
         // Act
         assertEquals(0, contractDTOS.size());
@@ -829,7 +828,6 @@ public class UserServiceTest {
         jobOffer1.setTitle("JobOffer1");
 
         when(contractRepository.findAll()).thenReturn(List.of());
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
         when(managerRepository.findAll()).thenReturn(List.of(manager));
         List<ShortContractDTO> contractDTOS = userService.getAllShortContracts();
         // Act
