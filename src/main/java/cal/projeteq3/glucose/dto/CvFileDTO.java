@@ -5,7 +5,6 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import lombok.*;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class CvFileDTO{

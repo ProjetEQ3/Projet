@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose.model.contract;
 
-import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;

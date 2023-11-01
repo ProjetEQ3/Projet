@@ -599,7 +599,7 @@ public class StudentControllerTest {
         mockMvc.perform(put("/student/setAppointmentToChosen/{id}", 1L)
                         .header("Authorization", token))
                 .andExpect(status().isNotAcceptable())
-                .andExpect(jsonPath("$.message").value("Appointment does not exist."));
+                .andExpect(jsonPath("$.message").value("appointmentNotFound"));
 
     }
 

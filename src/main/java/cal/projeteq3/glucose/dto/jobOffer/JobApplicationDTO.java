@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class JobApplicationDTO{
 	private Long id;
 	private StudentDTO student;
@@ -33,16 +32,4 @@ public final class JobApplicationDTO{
 		this.jobApplicationState = jobApplication.getJobApplicationState();
 		this.semester = jobApplication.getSemester();
 	}
-
-	public JobApplication toEntity(){
-		return JobApplication.builder()
-				.id(id)
-				.student(student.toEntity())
-				.jobOffer(jobOffer.toEntity())
-				.jobApplicationState(jobApplicationState)
-				.semester(semester)
-				.appointments(AppointmentDTO.toList(appointments))
-				.build();
-	}
-
 }

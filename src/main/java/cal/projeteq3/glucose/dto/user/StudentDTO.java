@@ -12,7 +12,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class StudentDTO extends UserDTO {
     private String matricule;
@@ -39,16 +38,6 @@ public class StudentDTO extends UserDTO {
         this.cvFile = student.getCvFile() == null ? null : new CvFileDTO(student.getCvFile());
     }
 
-    public StudentDTO(StudentSummary summary){
-        super(
-          summary.getId(), summary.getFirstName(), summary.getLastName(), summary.getEmail(),
-          summary.getRole().toString()
-        );
-        this.matricule = summary.getMatricule();
-        this.department = summary.getDepartment();
-        this.cvFile = summary.getCvFile() == null ? null : new CvFileDTO(summary.getCvFile());
-    }
-
     public StudentDTO(Student student, Long jobApplicationId) {
         super(
           student.getId(), student.getFirstName(), student.getLastName(), student.getEmail(),
@@ -65,17 +54,4 @@ public class StudentDTO extends UserDTO {
         this.matricule = matricule;
         this.department = department;
     }
-
-    public Student toEntity() {
-        return Student.builder()
-            .id(this.getId())
-            .firstName(this.getFirstName())
-            .lastName(this.getLastName())
-            .email(this.getEmail())
-            .matricule(this.getMatricule())
-            .department(this.getDepartment().toString())
-            .cvFile(this.getCvFile() == null ? null : this.getCvFile().toEntity())
-            .build();
-    }
-
 }

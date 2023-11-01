@@ -1,11 +1,9 @@
 package cal.projeteq3.glucose.dto;
 
 import cal.projeteq3.glucose.model.Semester;
-import lombok.*;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class SemesterDTO {
 
     private Semester.Season season;

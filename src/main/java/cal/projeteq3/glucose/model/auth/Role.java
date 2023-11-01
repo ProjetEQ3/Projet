@@ -27,44 +27,6 @@ public enum Role{
 		this.string = string;
 	}
 
-	public boolean isManagedRole(Role role){
-		return managedRoles.contains(role);
-	}
-
-	public static String getAllRolesString(){
-		StringBuilder stringBuilder = new StringBuilder();
-		for(int i = 0; i < Role.values().length; i++){
-			stringBuilder.append(Role.values()[i].name());
-			if(i != Role.values().length - 1){
-				stringBuilder.append(" or ");
-			}
-		}
-		return stringBuilder.toString();
-	}
-
-	public static String getManagedRolesString(Role role){
-		StringBuilder stringBuilder = new StringBuilder();
-		for(Role validRole : role.managedRoles){
-			stringBuilder.append(validRole.name());
-			stringBuilder.append(" or ");
-		}
-		stringBuilder.setLength(stringBuilder.length() - 4);
-		return stringBuilder.toString();
-	}
-
-	public static List<Role> getManagedRoles(Role role){
-		return List.copyOf(role.managedRoles);
-	}
-
-	public static Role fromString(String string){
-		for(Role role : Role.values()){
-			if(role.string.equalsIgnoreCase(string)){
-				return role;
-			}
-		}
-		return null;
-	}
-
 	@Override
 	public String toString(){
 		return string;

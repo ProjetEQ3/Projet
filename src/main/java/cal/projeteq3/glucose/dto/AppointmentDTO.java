@@ -26,17 +26,4 @@ public final class AppointmentDTO {
         this.appointmentDate = appointment.getAppointmentDate();
         this.isChosen = appointment.isChosen();
     }
-
-    public static List<Appointment> toList(List<AppointmentDTO> appointments) {
-        return appointments.stream().map(AppointmentDTO::toEntity).toList();
-    }
-
-    public Appointment toEntity(){
-        return Appointment.builder()
-                .id(id)
-                .jobApplication(jobApplication.toEntity())
-                .appointmentDate(appointmentDate)
-                .isChosen(isChosen)
-                .build();
-    }
 }

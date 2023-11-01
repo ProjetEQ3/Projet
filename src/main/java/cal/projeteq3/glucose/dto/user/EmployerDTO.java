@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,16 +32,5 @@ public class EmployerDTO extends UserDTO {
         this.organisationName = employer.getOrganisationName();
         this.organisationPhone = employer.getOrganisationPhone();
         this.jobOffers = employer.getJobOffers() == null ? null : employer.getJobOffers().stream().map(JobOfferDTO::new).toList();
-    }
-
-    public Employer toEntity() {
-        return Employer.builder()
-                .id(this.getId())
-                .firstName(this.getFirstName())
-                .lastName(this.getLastName())
-                .email(this.getEmail())
-                .organisationName(this.getOrganisationName())
-                .organisationPhone(this.getOrganisationPhone())
-                .build();
     }
 }

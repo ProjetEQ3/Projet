@@ -11,9 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @NoArgsConstructor
 public class Employer extends User{
 

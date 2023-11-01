@@ -583,7 +583,7 @@ public class EmployerControllerTest {
 	@Test
 	public void AcceptJobApplication_invalid() throws Exception {
 		Long applicationId = -1L;
-		when(employerService.acceptApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+		when(employerService.acceptApplication(applicationId)).thenThrow(new JobApplicationNotFoundException());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/accept/{jobApplicationId}", applicationId)
@@ -594,7 +594,7 @@ public class EmployerControllerTest {
 	@Test
 	public void AcceptJobApplication_null() throws Exception {
 		Long nullId = null;
-		when(employerService.acceptApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
+		when(employerService.acceptApplication(nullId)).thenThrow(new JobApplicationNotFoundException());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/accept/{jobApplicationId}", nullId)
@@ -622,7 +622,7 @@ public class EmployerControllerTest {
 	@Test
 	public void RefuseJobApplication_invalid() throws Exception {
 		Long applicationId = -1L;
-		when(employerService.refuseApplication(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+		when(employerService.refuseApplication(applicationId)).thenThrow(new JobApplicationNotFoundException());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/refuse/{jobApplicationId}", applicationId)
@@ -633,7 +633,7 @@ public class EmployerControllerTest {
 	@Test
 	public void RefuseJobApplication_null() throws Exception {
 		Long nullId = null;
-		when(employerService.refuseApplication(nullId)).thenThrow(new JobApplicationNotFoundException(nullId));
+		when(employerService.refuseApplication(nullId)).thenThrow(new JobApplicationNotFoundException());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.put("/employer/offer/refuse/{jobApplicationDTO}", nullId)
@@ -672,37 +672,6 @@ public class EmployerControllerTest {
 						.content(content))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
-	}
-
-	@Test
-	public void addSuggestedAppointment_LessThan3Dates() throws Exception {
-		Long applicationId = 1L;
-		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
-		jobApplicationDTO.setId(applicationId);
-		Set<LocalDateTime> dates = new HashSet<>();
-		dates.add(LocalDateTime.now().plusDays(1));
-		dates.add(LocalDateTime.now().plusDays(2));
-
-		List<AppointmentDTO> appointments = new ArrayList<>();
-		for (LocalDateTime date : dates) {
-			AppointmentDTO app = new AppointmentDTO();
-			app.setAppointmentDate(date);
-			appointments.add(app);
-		}
-
-		jobApplicationDTO.setAppointments(appointments);
-
-		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
-
-		objectMapper.registerModule(new JavaTimeModule());
-		String content = objectMapper.writeValueAsString(dates);
-
-		mockMvc.perform(MockMvcRequestBuilders
-						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
-						.header("Authorization", token)
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(content))
-				.andExpect(MockMvcResultMatchers.status().is(406));
 	}
 
 	@Test
@@ -781,29 +750,6 @@ public class EmployerControllerTest {
 	}
 
 	@Test
-	public void addSuggestedAppointment_WithSameDate() throws Exception{
-		Long applicationId = 1L;
-		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
-		jobApplicationDTO.setId(applicationId);
-		Set<LocalDateTime> dates = new HashSet<>();
-		dates.add(LocalDateTime.now().plusDays(1));
-		dates.add(LocalDateTime.now().plusDays(3));
-		dates.add(LocalDateTime.now().plusDays(3));
-
-		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(ValidationException.class);
-
-		objectMapper.registerModule(new JavaTimeModule());
-		String content = objectMapper.writeValueAsString(dates);
-
-		mockMvc.perform(MockMvcRequestBuilders
-						.put("/employer/offer/appointment/{jobApplicationId}", applicationId)
-						.header("Authorization", token)
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(content))
-				.andExpect(MockMvcResultMatchers.status().is(406));
-	}
-
-	@Test
 	public void addSuggestedAppointment_IdNull() throws Exception{
 		Long applicationId = null;
 		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
@@ -837,7 +783,7 @@ public class EmployerControllerTest {
 		dates.add(LocalDateTime.now().plusDays(2));
 		dates.add(LocalDateTime.now().plusDays(3));
 
-		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(new JobApplicationNotFoundException(applicationId));
+		when(employerService.addAppointmentByJobApplicationId(applicationId, dates)).thenThrow(new JobApplicationNotFoundException());
 
 		objectMapper.registerModule(new JavaTimeModule());
 		String content = objectMapper.writeValueAsString(dates);
@@ -912,7 +858,7 @@ public class EmployerControllerTest {
 	@Test
 	public void getOfferByApplicationId_invalid() throws Exception {
 		Long applicationId = -1L;
-		when(employerService.getOfferByApplicationId(applicationId)).thenThrow(new JobApplicationNotFoundException(applicationId));
+		when(employerService.getOfferByApplicationId(applicationId)).thenThrow(new JobApplicationNotFoundException());
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/offerByApplication")

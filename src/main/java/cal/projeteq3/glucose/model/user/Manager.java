@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
+@Getter
 @NoArgsConstructor
 public class Manager extends User{
 	@Column(unique = true, nullable = false)
