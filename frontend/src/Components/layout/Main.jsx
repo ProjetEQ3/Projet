@@ -25,7 +25,7 @@ const Main = ({user, setUser}) => {
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
                         {t('displayedSession')}
                     </h4>
-                    <select className="col-2 d-flex justify-content-start text-capitalize"
+                    <select className="col-2 d-flex justify-content-start text-capitalize clickable"
                         onChange={(e) => updateSession(e.target.value)}
                         defaultValue={selectedSessionIndex}>
                         {

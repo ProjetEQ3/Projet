@@ -72,3 +72,7 @@ code {
   --bs-btn-disabled-border-color: var(--ose-color);
   --bs-gradient: none;
 }
+
+.clickable {
+  cursor: pointer;
+}
