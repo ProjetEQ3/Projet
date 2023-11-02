@@ -15,6 +15,17 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     const [formData, setFormData] = useState({
         refusalReason: '',
     });
+    const [isHovered, setHovered] = useState(false);
+
+    const handleMouseEnter = () => {
+        if (isDisplay) return;
+        setHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+        if (isDisplay) return;
+        setHovered(false);
+    };
 
     const handleAccept = (e) => {
         e.preventDefault();
@@ -78,11 +89,11 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
 
     return (
         <>
-            <div className="row m-2">
+            <div className={`row clickable ${!isHovered? 'm-2':'m-1 shadow'}`} onClick={OpenCv} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
                 <div className="col-12 bg-white rounded">
                     <div className="row">
                         <div className="col-6">
-                            <h4 data-testid="title" className="text-dark fw-light m-0 p-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h4>
+                            <h3 data-testid="title" className="text-dark fw-light m-0 p-3 fw-semibold">{cv.fileName}</h3>
                         </div>
                         <div className="col-6 my-auto d-block d-md-flex justify-content-end justify-content-md-between">
                             <div className="my-auto col-6 text-center d-block">
@@ -105,7 +116,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                                             <FontAwesomeIcon data-testid="headerX" icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                                         </div>
                                         <div className="modal-body">
-                                            <h3 data-testid="bodyTitle" className="text-dark fw-light mb-3"><a onClick={OpenCv} className="link-dark">{cv.fileName}</a></h3>
+                                            <h3 data-testid="bodyTitle" className="text-dark fw-light mb-3 fw-semibold">{cv.fileName}</h3>
                                             {isDisplay ? (
                                                 <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
                                             ) : null}
@@ -134,7 +145,6 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                 <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay} contractComplete={true}/>
             ) : null}
         </>
-
     );
 }
 export default ShortCv;
