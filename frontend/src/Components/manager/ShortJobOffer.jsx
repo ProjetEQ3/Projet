@@ -16,7 +16,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index, updateJobOfferList
     }
 
     return (
-        <div data-testid="shadowElement" className={`row ${!isHovered? 'm-2':'m-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div data-testid="shadowElement" className={`row clickable ${!isHovered? 'm-2':'m-1 shadow'}`} data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}  onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-6">
@@ -28,7 +28,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index, updateJobOfferList
                         <div className="d-none d-lg-block my-auto col-6 text-center">
                             <State state={jobOffer.jobOfferState}/>
                         </div>
-                        <div className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('internshipDetails')}</div>
+                        <button className="btn btn-outline-ose my-auto" data-bs-toggle="modal" data-bs-target={"#fullViewModal" + index}>{t('internshipDetails')}</button>
                         <div id={"fullViewModal" + index} className="modal modal-lg">
                             <FullJobOffer jobOffer={jobOffer} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>
                         </div>
