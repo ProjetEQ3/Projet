@@ -8,7 +8,6 @@ import Appointment from "../../model/Appointment";
 
 const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
     const { t } = useTranslation();
-    const [isHovered, setIsHovered] = useState(false);
 
     const [appointments, setAppointments] = useState([]);
     const [checkboxValue, setCheckboxValue] = useState(false);
@@ -72,15 +71,8 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
                 date.getHours() + "h" + date.getMinutes();
     }
 
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
     return (
-        <div className={`row ${!isHovered ? "m-2" : "m-1 shadow"}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className={`row m-2`} >
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-lg-9 col-md-8 col-sm-6">
