@@ -12,7 +12,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
-    const [dates, setDates] = useState([new Date(now()), new Date(now()), new Date(now())]);
+    const [dates, setDates] = useState([new Date(now())]);
 
     const todayDate = new Date();
     const minDate = todayDate.toISOString().slice(0, 16);
@@ -112,7 +112,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
 
                             <div className="col-12 mb-2">
                                 <button data-testid={'add-convoke-date-button'} type="button" disabled={dates.length > 4} onClick={() => modifyDates(1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faPlus} /></button>
-                                <button data-testid={'sub-convoke-date-button'} type="button" disabled={dates.length < 4} onClick={() => modifyDates(-1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faMinus} /></button>
+                                <button data-testid={'sub-convoke-date-button'} type="button" disabled={dates.length < 2} onClick={() => modifyDates(-1)} className="btn btn-sm btn-outline-ose m-1"><FontAwesomeIcon icon={faMinus} /></button>
                             </div>
                             <div className="col-12 text-center">
                                 <button type="button" onClick={handleConvoke} className="btn btn-success">{t('convoke')}</button>
