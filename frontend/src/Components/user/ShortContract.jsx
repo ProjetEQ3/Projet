@@ -48,12 +48,12 @@ const ShortContract = ({ contract, user }) => {
 
     return (
         <div className={'row'}>
-            <div className="col-12 bg-white rounded">
+            <div className="col-12 bg-white rounded pt-1">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
                         <h5 className="text-dark fw-light pt-1" data-testid="job-title">{contract.jobOfferName}</h5>
-                        <p className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</p>
-                        <p className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</p>
+                        <h5 className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</h5>
+                        <h5 className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
                         <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
                     </div>
