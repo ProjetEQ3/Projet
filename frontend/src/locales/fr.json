@@ -237,6 +237,29 @@
   "fullName" : "Nom complet",
   "submit" : "Envoyer",
   "contractSigned": "Votre contrat a été signé avec succès",
-  "noContracts": "Vous n'avez aucun contrat pour le moment"
+  "noContracts": "Vous n'avez aucun contrat pour le moment",
 
+  "at": "à",
+  "the": "le",
+
+  "Sun": "Dimanche",
+  "Mon": "Lundi",
+  "Tue": "Mardi",
+  "Wed": "Mercredi",
+  "Thu": "Jeudi",
+  "Fri": "Vendredi",
+  "Sat": "Samedi",
+
+  "Jan": "Janvier",
+  "Feb": "Février",
+  "Mar": "Mars",
+  "Apr": "Avril",
+  "May": "Mai",
+  "Jun": "Juin",
+  "Jul": "Juillet",
+  "Aug": "Août",
+  "Sep": "Septembre",
+  "Oct": "Octobre",
+  "Nov": "Novembre",
+  "Dec": "Décembre"
 }

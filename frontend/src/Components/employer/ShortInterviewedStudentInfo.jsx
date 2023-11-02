@@ -51,18 +51,19 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
         setIsDisplay(!isDisplay);
     }
 
-    async function dateTimeToShortString(appointment) {
+    function dateTimeToShortString(appointment) {
         const date = new Date(appointment);
+
         const timeZoneOffset = date.getTimezoneOffset();
+
         date.setMinutes(date.getMinutes() - timeZoneOffset);
-        const options = {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-        };
-        setDate(date.toLocaleString('fr-CA', options).replace(' ', ', '));
+
+        return  t(date.toDateString().split(' ')[0]) + " " +
+            t('the') + " " +
+            date.toDateString().split(' ')[2] + " " +
+            t(date.toDateString().split(' ')[1]) + " " +
+            t('at') + " " +
+            date.getHours() + "h" + date.getMinutes();
     }
 
     return (

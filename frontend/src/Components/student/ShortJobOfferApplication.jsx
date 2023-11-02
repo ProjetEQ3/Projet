@@ -64,15 +64,12 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
 
         date.setMinutes(date.getMinutes() - timeZoneOffset);
 
-        const options = {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-        };
-
-        return date.toLocaleString('fr-CA', options);
+        return  t(date.toDateString().split(' ')[0]) + " " +
+                t('the') + " " +
+                date.toDateString().split(' ')[2] + " " +
+                t(date.toDateString().split(' ')[1]) + " " +
+                t('at') + " " +
+                date.getHours() + "h" + date.getMinutes();
     }
 
     const handleMouseEnter = () => {
@@ -152,9 +149,10 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
                     ) : appointments.length === 1 ? (
                         <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-4">
                             <div className="text-end text-sm-center mb-2">
-                                <button className="btn btn-success my-auto" data-testid="waiting-appointment-button-testid" disabled>
-                                    {t('chosenAppointment')} {dateTimeToShortString(appointments[0].appointmentDate)}
-                                    <FontAwesomeIcon icon={faCalendar} className="ms-2"/>
+                                <button className="btn btn-success my-auto " data-testid="waiting-appointment-button-testid" disabled>
+                                    {t('chosenAppointment')}
+                                    <p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} className="pb-1 mb-0"> {dateTimeToShortString(appointments[0].appointmentDate)}
+                                        <FontAwesomeIcon icon={faCalendar} className="ms-2"/></p>
                                 </button>
                             </div>
                         </div>
