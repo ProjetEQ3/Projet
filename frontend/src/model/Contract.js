@@ -55,7 +55,7 @@ class Contract{
         if(contract.data) this.data = contract.data
         else delete this.data
         if(contract.isComplete) this.isComplete = contract.isComplete
-        else delete this.isComplete
+        else this.isComplete = false
     }
 }
 

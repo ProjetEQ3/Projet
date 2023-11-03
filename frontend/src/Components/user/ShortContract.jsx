@@ -28,6 +28,7 @@ const ShortContract = ({ contract, user }) => {
         })
             .then(response => {
                 contract.data = response.data.data;
+                contract.isComplete = response.data.complete;
                 toast.success(t('contractSigned'));
             })
             .catch(error => {
