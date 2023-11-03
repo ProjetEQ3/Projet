@@ -14,8 +14,8 @@ export const SessionProvider = ({ children }) => {
                 .get("/user/semesters")
                 .then((response) => {
                     setSessions(response.data);
-                    axiosInstance.defaults.params['season'] = response.data[1].season;
-                    axiosInstance.defaults.params['year'] = response.data[1].year;
+                    axiosInstance.defaults.params['season'] = response.data[0].season;
+                    axiosInstance.defaults.params['year'] = response.data[0].year;
                     setSelectedSessionIndex(1);
                 })
                 .catch((error) => {

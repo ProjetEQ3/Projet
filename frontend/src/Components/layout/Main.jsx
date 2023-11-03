@@ -26,8 +26,7 @@ const Main = ({user, setUser}) => {
                         {t('displayedSession')}
                     </h4>
                     <select className="col-2 d-flex justify-content-start text-capitalize clickable"
-                        onChange={(e) => updateSession(e.target.value)}
-                        defaultValue={selectedSessionIndex}>
+                        onChange={(e) => updateSession(e.target.value)}>
                         {
                             sessions.map((session, index) => (
                             <option key={index} value={index} className="text-capitalize">
