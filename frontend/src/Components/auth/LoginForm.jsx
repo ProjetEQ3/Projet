@@ -69,7 +69,7 @@ const LoginForm = ({ user, setUser }) => {
 				i18n.off('languageChanged', languageChangeListener);
 			};
 		}
-	}, [i18n, formAttempted]);
+	}, [i18n, formAttempted, user]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();

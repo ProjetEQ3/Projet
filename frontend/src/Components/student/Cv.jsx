@@ -65,7 +65,7 @@ function Cv({user, setCv}){
 
 	useEffect(() => {
 		refreshCvState()
-	}, [])
+	}, [user])
 
 	return (
 		<div className="container">

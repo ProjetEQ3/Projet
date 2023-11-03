@@ -83,7 +83,7 @@ const RegisterStudentForm = () => {
                 i18n.off('languageChanged', languageChangeListener);
             };
         }
-    }, [i18n, formAttempted]);
+    }, [i18n, formAttempted, user]);
 
     const registerStudent = async () => {
         setIsLoading(true);

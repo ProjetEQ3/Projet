@@ -7,7 +7,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	const {t} = useTranslation()
 
 	useEffect(() => {
-	}, [])
+	}, [user])
 
 	const applyForJobOffer = (jobOfferID, studentId) => {
 		axiosInstance

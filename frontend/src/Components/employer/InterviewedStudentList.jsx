@@ -41,7 +41,7 @@ const InterviewedStudentList = ({user}) => {
 
 	useEffect(() => {
 		fetchStudentList().then(r => console.log('Student list fetched'))
-	}, [])
+	}, [user])
 
 	return (
 		<div className="container" data-testid="interviewed-student-list">

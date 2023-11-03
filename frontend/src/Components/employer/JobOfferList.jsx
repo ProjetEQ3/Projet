@@ -19,7 +19,7 @@ const JobOfferList = ({user}) => {
 	useEffect(() => {
 		if(!user?.isLoggedIn) navigate('/')
 		getOffers()
-	}, [user.isLoggedIn])
+	}, [user.isLoggedIn, user])
 
 	useEffect(() => {
 		handleSessionChange()

@@ -29,7 +29,7 @@ const EmployerPage = ({user}) => {
 
 	useEffect(() => {
 		getContracts();
-	}, [])
+	}, [user])
 
 	return (
 		<div className="bg-light">

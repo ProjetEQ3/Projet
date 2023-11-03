@@ -24,7 +24,7 @@ const ManagerPage = ({user}) => {
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
-    }, [user.isLoggedIn]);
+    }, [user.isLoggedIn, user]);
 
     useEffect(() => {
         handleSessionChange();

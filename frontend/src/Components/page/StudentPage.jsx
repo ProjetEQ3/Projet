@@ -50,7 +50,7 @@ const StudentPage = ({user, setUser}) => {
 
 	useEffect(() => {
 		fetchStudentJobOffers();
-	}, []);
+	}, [user]);
 
 	useEffect(() => {
 		handleSessionChange();
