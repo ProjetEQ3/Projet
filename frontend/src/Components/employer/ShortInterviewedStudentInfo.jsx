@@ -63,7 +63,7 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
             date.toDateString().split(' ')[2] + " " +
             t(date.toDateString().split(' ')[1]) + " " +
             t('at') + " " +
-            date.getHours() + "h" + date.getMinutes();
+            date.getHours() + "h" + date.getMinutes().toString().padStart(2, '0');
     }
 
     return (
