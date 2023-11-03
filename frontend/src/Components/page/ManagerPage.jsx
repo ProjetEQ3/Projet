@@ -64,7 +64,6 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllContracts = async () => {
-        console.log(user)
         await axiosInstance.get('manager/contracts',
         ).then((response) => {
             setContracts(response.data)
