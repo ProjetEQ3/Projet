@@ -20,11 +20,10 @@ const ManagerPage = ({user}) => {
 
     useEffect(() => {
         if (!user?.isLoggedIn) navigate('/');
-
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
-    }, [user.isLoggedIn, user]);
+    }, [user]);
 
     useEffect(() => {
         handleSessionChange();
@@ -65,6 +64,7 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllContracts = async () => {
+        console.log(user)
         await axiosInstance.get('manager/contracts',
         ).then((response) => {
             setContracts(response.data)

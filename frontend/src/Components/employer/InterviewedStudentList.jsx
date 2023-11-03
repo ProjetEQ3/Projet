@@ -9,6 +9,7 @@ const InterviewedStudentList = ({user}) => {
 	const [studentList, setStudentList] = useState([])
 
 	async function fetchStudentList(userClicked){
+		if (!user?.id) return;
 		await axiosInstance
 			.get('employer/waitingStudents', {params: {employerId: user.id}})
 			.then(res => {

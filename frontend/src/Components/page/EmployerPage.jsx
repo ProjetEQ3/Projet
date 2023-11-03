@@ -6,8 +6,11 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import {use} from "i18next";
+import {useNavigate} from "react-router-dom";
 
 const EmployerPage = ({user}) => {
+	const navigate = useNavigate();
 	const [t] = useTranslation();
 	const [tab, setTab] = useState('stages');
 	const tabs = [
@@ -18,6 +21,7 @@ const EmployerPage = ({user}) => {
 	const [contracts, setContracts] = useState([new Contract()]);
 
 	async function getContracts() {
+		if (!user?.id) return;
 		await axiosInstance.get(`employer/contracts/${user.id}`)
 			.then((response) => {
 				setContracts(response.data);
@@ -28,6 +32,7 @@ const EmployerPage = ({user}) => {
 	}
 
 	useEffect(() => {
+		if (!user?.isLoggedIn) navigate('/');
 		getContracts();
 	}, [user])
 

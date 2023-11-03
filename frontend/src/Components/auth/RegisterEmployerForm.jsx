@@ -92,7 +92,7 @@ const RegisterEmployerForm = () => {
                 i18n.off('languageChanged', languageChangeListener);
             };
         }
-    }, [i18n, formAttempted, user]);
+    }, [i18n, formAttempted]);
 
     const registerEmployer = async () => {
         setIsLoading(true)

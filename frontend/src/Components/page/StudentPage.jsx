@@ -27,7 +27,7 @@ const StudentPage = ({user, setUser}) => {
   const [contracts, setContracts] = useState([new Contract()]);
 
 	async function fetchStudentJobOffers() {
-		if (!user?.isLoggedIn) navigate('/');
+		if (!user?.id) return;
 		await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
 			.then((response) => {
 				setJobOffers(response.data)
@@ -39,6 +39,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	async function getContracts() {
+		if (!user?.id) return;
 		await axiosInstance.get(`student/contracts/${user.id}`)
 			.then((response) => {
 				setContracts(response.data);
@@ -49,6 +50,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	useEffect(() => {
+		if (!user?.isLoggedIn) navigate('/');
 		fetchStudentJobOffers();
 	}, [user]);
 

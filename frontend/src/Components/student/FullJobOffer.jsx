@@ -9,9 +9,10 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	useEffect(() => {
 	}, [user])
 
-	const applyForJobOffer = (jobOfferID, studentId) => {
+	const applyForJobOffer = (jobOfferID) => {
+		if (!user?.id) return;
 		axiosInstance
-			.post(`/student/applyJobOffer/${studentId}/${jobOfferID}`)
+			.post(`/student/applyJobOffer/${user.id}/${jobOfferID}`)
 			.then((response) => {
 				updatedOffer(response.data)
 				toast.success(t('appliedJobOffer'))}
@@ -30,7 +31,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 					</div>
 					<div className="col-3 my-auto text-center">
 						<button data-testid="apply-button" className={"btn btn-outline-ose"} onClick={
-							() => applyForJobOffer(jobOffer.id, user.id)}>{t('apply')}</button>
+							() => applyForJobOffer(jobOffer.id)}>{t('apply')}</button>
 					</div>
 				</div>
 				<div className="row">

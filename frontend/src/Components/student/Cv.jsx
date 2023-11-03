@@ -21,6 +21,7 @@ function Cv({user, setCv}){
 			const formData = new FormData()
 			formData.append("file", sentFile)
 			formData.append("studentId", user.id)
+			if (!user?.id) return;
 			axiosInstance
 				.post(`/student/cv/${user.id}`, formData, {headers: {"Content-Type": "multipart/form-data"}})
 				.then((response) => {
@@ -39,6 +40,7 @@ function Cv({user, setCv}){
 	}
 
 	const handleDeletePdf = () => {
+		if (!user?.id) return;
 		setIsLoading(true)
 		axiosInstance
 			.delete(`/student/cv/${user.id}`)
@@ -54,6 +56,7 @@ function Cv({user, setCv}){
 	}
 
 	const refreshCvState = () => {
+		if (!user?.id) return;
 		axiosInstance
 			.get(`/student/cv/${user.id}`)
 			.then((response) => {
