@@ -69,11 +69,11 @@ public class GlucoseApplication implements CommandLineRunner {
 
 		managerService.updateCvState(1L, CvState.ACCEPTED, null);
 		managerService.updateCvState(2L, CvState.ACCEPTED, null);
-		studentService.applyJobOffer(3L, 10L);
 		studentService.applyJobOffer(9L, 10L);
+		studentService.applyJobOffer(10L, 10L);
 
-		studentService.applyJobOffer(3L, 9L);
 		studentService.applyJobOffer(9L, 9L);
+		studentService.applyJobOffer(10L, 9L);
 
 		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
 		employerService.addAppointmentByJobApplicationId(3L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
@@ -220,13 +220,13 @@ public class GlucoseApplication implements CommandLineRunner {
 							.phoneNumber("123-456-7890")
 							.build(),
 					Manager.builder()
-						.firstName("Michel")
-						.lastName("Michaud")
-						.email("michel@michaud.com")
-						.password(passwordEncoder.encode("Ose12345"))
-						.matricule("0000002")
-						.phoneNumber("123-456-7890")
-						.build()
+							.firstName("Michel")
+							.lastName("Michaud")
+							.email("michel@michaud.com")
+							.password(passwordEncoder.encode("Ose12345"))
+							.matricule("0000002")
+							.phoneNumber("123-456-7890")
+							.build()
 		);
 	}
 
@@ -244,12 +244,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -262,92 +262,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
-						.build(),
-				JobOffer.builder()
-						.title("Full-stack developer")
-						.jobOfferState(JobOfferState.OPEN)
-						.department(Department._420B0)
-						.location("Montréal")
-						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
-								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
-								"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
-								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
-								"maintenance et à l'amélioration de nos produits logiciels.")
-						.salary(20.0f)
-						.startDate(LocalDate.now())
-						.duration(7)
-						.expirationDate(LocalDate.now().plusDays(5))
-						.hoursPerWeek(1)
-						.nbOfCandidates(1)
-						.semester(new Semester(LocalDate.now()))
-						.build(),
-				JobOffer.builder()
-						.title("Développement Web Full Stack")
-						.jobOfferState(JobOfferState.SUBMITTED)
-						.department(Department._420B0)
-						.location("Montréal")
-						.description("Ce stage pourrait impliquer la conception et le développement " +
-								"d'applications web interactives en utilisant diverses " +
-								"technologies front-end et back-end.")
-						.salary(20.0f)
-						.startDate(LocalDate.now())
-						.duration(7)
-						.expirationDate(LocalDate.now().plusDays(30))
-						.hoursPerWeek(20)
-						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
-						.build(),
-				JobOffer.builder()
-						.title("Sécurité Informatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
-						.department(Department._420B0)
-						.location("Montréal")
-						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
-								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
-						.salary(20.0f)
-						.startDate(LocalDate.now())
-						.duration(7)
-						.expirationDate(LocalDate.now().plusDays(30))
-						.hoursPerWeek(23)
-						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
-						.build(),
-				JobOffer.builder()
-						.title("Intelligence Artificielle et Apprentissage Automatique")
-						.jobOfferState(JobOfferState.SUBMITTED)
-						.department(Department._420B0)
-						.location("Montréal")
-						.description("Ce stage pourrait impliquer la création de modèles " +
-								"d'apprentissage automatique, l'analyse de données, " +
-								"et le développement d'applications basées sur l'IA.")
-						.salary(20.0f)
-						.startDate(LocalDate.now())
-						.duration(7)
-						.expirationDate(LocalDate.now().plusDays(30))
-						.hoursPerWeek(25)
-						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
-						.build(),
-				JobOffer.builder()
-						.title("Développement Mobile")
-						.jobOfferState(JobOfferState.SUBMITTED)
-						.department(Department._420B0)
-						.location("Montréal")
-						.description("Ce stage pourrait impliquer la conception et le développement " +
-								"d'applications mobiles pour Android et iOS.")
-						.salary(20.0f)
-						.startDate(LocalDate.now())
-						.duration(7)
-						.expirationDate(LocalDate.now().plusDays(30))
-						.hoursPerWeek(30)
-						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -357,12 +277,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -372,12 +292,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -387,12 +307,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Front-end developer")
@@ -405,12 +325,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(1))
 						.hoursPerWeek(15)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Back-end developer")
@@ -423,12 +343,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(13)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Java developer")
@@ -441,12 +361,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
 								"maintenance et à l'amélioration de nos produits logiciels.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(5))
 						.hoursPerWeek(1)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Web Full Stack")
@@ -457,12 +377,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'applications web interactives en utilisant diverses " +
 								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(20)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Sécurité Informatique")
@@ -472,12 +392,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait se concentrer sur l'analyse de la sécurité " +
 								"des systèmes informatiques, la détection des vulnérabilités, et la mise en place de mesures de sécurité.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(23)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Intelligence Artificielle et Apprentissage Automatique")
@@ -488,12 +408,12 @@ public class GlucoseApplication implements CommandLineRunner {
 								"d'apprentissage automatique, l'analyse de données, " +
 								"et le développement d'applications basées sur l'IA.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(25)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Développement Mobile")
@@ -503,12 +423,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"d'applications mobiles pour Android et iOS.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(30)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Développement de Jeux Vidéo")
@@ -518,12 +438,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la conception et le développement " +
 								"de jeux vidéo pour PC et consoles.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Gestion de feu de circulation")
@@ -533,12 +453,12 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Ce stage pourrait impliquer la gestion de la circulation " +
 								"et la coordination des interventions d'urgence.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
 						.title("Techniques de santé animale")
@@ -548,32 +468,59 @@ public class GlucoseApplication implements CommandLineRunner {
 						.description("Prendre soin des animaux et les aider à se rétablir " +
 								"de leurs maladies ou blessures.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
 						.hoursPerWeek(40)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
+						.build(),
+
+//				Louis@professionnel
+				JobOffer.builder()
+						.title("Full-stack developer")
+						.jobOfferState(JobOfferState.OPEN)
+						.department(Department._420B0)
+						.location("Montréal")
+						.description("En tant que stagiaire en développement logiciel au sein de notre entreprise, vous aurez " +
+								"l'opportunité de participer à des projets passionnants et innovants tout en acquérant une " +
+								"expérience précieuse dans le domaine du développement logiciel. Vous travaillerez en étroite " +
+								"collaboration avec notre équipe de développement pour contribuer au développement, à la " +
+								"maintenance et à l'amélioration de nos produits logiciels.")
+						.salary(20.0f)
+						.startDate(LocalDate.of(2024, 2, 10))
+						.duration(7)
+						.expirationDate(LocalDate.now().plusDays(5))
+						.hoursPerWeek(1)
+						.nbOfCandidates(1)
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build(),
 				JobOffer.builder()
-						.title("Développement COBOL")
+						.title("Développement Web Full Stack")
 						.jobOfferState(JobOfferState.SUBMITTED)
 						.department(Department._420B0)
 						.location("Montréal")
-						.description("COBOL is life.")
+						.description("Ce stage pourrait impliquer la conception et le développement " +
+								"d'applications web interactives en utilisant diverses " +
+								"technologies front-end et back-end.")
 						.salary(20.0f)
-						.startDate(LocalDate.now())
+						.startDate(LocalDate.of(2024, 2, 10))
 						.duration(7)
 						.expirationDate(LocalDate.now().plusDays(30))
-						.hoursPerWeek(40)
+						.hoursPerWeek(20)
 						.nbOfCandidates(2)
-						.semester(new Semester(LocalDate.now()))
+						.semester(new Semester(LocalDate.of(2024, 2, 10)))
 						.build()
-		));
+				));
 		EmployerDTO employer = employerService.getEmployerByEmail("chawki@professionnel.com");
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(0)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(1)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(2)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(3)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(8)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(9)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(10)), employer.getId());
@@ -581,20 +528,11 @@ public class GlucoseApplication implements CommandLineRunner {
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(12)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(13)), employer.getId());
 		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(14)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(15)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(16)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(17)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(18)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(19)), employer.getId());
 
 		employer = employerService.getEmployerByEmail("louis@professionnel.com");
 
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(3)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(4)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(5)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(6)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(7)), employer.getId());
-		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(20)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(15)), employer.getId());
+		employerService.createJobOffer(new JobOfferDTO(jobOffers.get(16)), employer.getId());
 	}
 
 	private CvFileDTO createFakePDF(String fileName) {

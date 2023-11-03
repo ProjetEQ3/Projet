@@ -31,6 +31,7 @@ public class JobOffer{
 	private String title;
 
 	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private Department department;
 
 	@Column(nullable = false)
