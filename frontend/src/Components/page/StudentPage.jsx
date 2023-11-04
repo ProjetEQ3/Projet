@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
-import Home from "../user/Home";
+import Home from "../student/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
 import jobOffer from "../../model/JobOffer";
