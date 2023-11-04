@@ -136,7 +136,7 @@ const StudentPage = ({user, setUser}) => {
 					))}
 				</div>
 				{tab === 'dashboard' && <Dashboard />}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} defaultIndex={0} />}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}

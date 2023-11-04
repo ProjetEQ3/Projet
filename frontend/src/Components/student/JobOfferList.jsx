@@ -3,7 +3,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import FullJobOffer from "./FullJobOffer";
 import {useTranslation} from "react-i18next";
 
-function JobOfferList({jobOffers, user, setJobOffers , defaultIndex = 0, refresh}) {
+function JobOfferList({jobOffers, user, setJobOffers, refresh}) {
     const {t} = useTranslation();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
@@ -13,10 +13,6 @@ function JobOfferList({jobOffers, user, setJobOffers , defaultIndex = 0, refresh
 		setJobOffers(updatedOffers);
 		refresh();
 	}
-
-	useEffect(() => {
-		setSelectedOffer(jobOffers[defaultIndex])
-	},[])
 
 	return (
 		<div className="row justify-content-around mx-2">
