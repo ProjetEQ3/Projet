@@ -10,21 +10,29 @@ import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
+import NotificationBadge from '../notification/NotificationBadge';
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
   const [tab, setTab] = useState('home');
   const [jobOffers, setJobOffers] = useState([new JobOffer()]);
-  const tabs = [
-	  { id: 'home', label: 'home' },
-	  { id: 'stages', label: 'jobOffers' },
-	  { id: 'my_applications', label: 'myApplications' },
-	  { id: 'cv', label: 'CV' },
-	  { id: 'contract', label: 'contracts' }
-  ];
-  const navigate = useNavigate();
+	const tabs = [
+		{ id: 'home', label: 'home' },
+		{ id: 'stages', label: 'jobOffers' },
+		{ id: 'my_applications', label: 'myApplications' },
+		{ id: 'cv', label: 'CV' },
+		{ id: 'contract', label: 'contracts' }
+	];
+	const navigate = useNavigate();
   const [contracts, setContracts] = useState([new Contract()]);
+	const [notifications, setNotifications] = useState({
+		home: { green: 1, yellow: 1, red: 1 },
+		stages: { green: 0, yellow: 0, red: 0 },
+		my_applications: { green: 0, yellow: 0, red: 0 },
+		cv: { green: 0, yellow: 0, red: 0 },
+		contract: { green: 0, yellow: 0, red: 0 },
+	});
 
 	async function fetchStudentJobOffers() {
 		if (!user?.id) return;
@@ -68,6 +76,13 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
+	const updateNotifications = (tabId, { green, yellow, red }) => {
+		setNotifications(prevNotifications => ({
+			...prevNotifications,
+			[tabId]: { green, yellow, red }
+		}));
+	};
+
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>
@@ -80,8 +95,12 @@ const StudentPage = ({user, setUser}) => {
 								setTab(tabItem.id)
 								if (tabItem.id === 'contract') getContracts();
 							}}
+							style={{ position: 'relative' }}
 						>
 							{t(tabItem.label)}
+							<NotificationBadge count={notifications[tabItem.id].red} color="red" index={0} />
+							<NotificationBadge count={notifications[tabItem.id].yellow} color="yellow" index={1} />
+							<NotificationBadge count={notifications[tabItem.id].green} color="green" index={2} />
 						</button>
 					))}
 				</div>
