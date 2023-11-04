@@ -17,6 +17,7 @@ const Home = ({jobOffers}) => {
                             <div key={index}>
                                 <h5>{offer.title}</h5>
                             </div>))
+
                         }
                     </>
                 )
