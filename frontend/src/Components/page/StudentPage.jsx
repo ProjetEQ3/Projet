@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
-import Dashboard from "../user/Dashboard";
+import Home from "../user/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
 import jobOffer from "../../model/JobOffer";
@@ -19,9 +19,9 @@ const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
   const navigate = useNavigate();
-  const [tab, setTab] = useState('dashboard');
+  const [tab, setTab] = useState('home');
   const tabs = [
-	  { id: 'dashboard', label: 'dashboard' },
+	  { id: 'home', label: 'home' },
 	  { id: 'stages', label: 'jobOffers' },
 	  { id: 'my_applications', label: 'myApplications' },
 	  { id: 'cv', label: 'CV' },
@@ -32,7 +32,7 @@ const StudentPage = ({user, setUser}) => {
   const [contracts, setContracts] = useState([new Contract()]);
 
   const [notifications, setNotifications] = useState({
-		dashboard: { green: 1, yellow: 1, red: 1 },
+		home: { green: 1, yellow: 1, red: 1 },
 		stages: { green: 0, yellow: 0, red: 0 },
 		my_applications: { green: 0, yellow: 0, red: 0 },
 		cv: { green: 0, yellow: 0, red: 0 },
@@ -108,7 +108,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function getNotificationsCounts() {
-		updateNotifications('dashboard', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('home', { green: 0, yellow: 0, red: 0 });
 		updateNotifications('stages', {
 			green: 0, yellow: 0, red: jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length});
 		updateNotifications('my_applications', { green: 1, yellow: 1, red: 1 });
@@ -142,7 +142,7 @@ const StudentPage = ({user, setUser}) => {
 						</button>
 					))}
 				</div>
-				{tab === 'dashboard' && <Dashboard />}
+				{tab === 'home' && <Home />}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
