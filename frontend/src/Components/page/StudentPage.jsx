@@ -13,6 +13,7 @@ import Contract from "../../model/Contract";
 import Dashboard from "../user/Dashboard";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
+import jobOffer from "../../model/JobOffer";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -109,7 +110,7 @@ const StudentPage = ({user, setUser}) => {
 	function getNotificationsCounts() {
 		updateNotifications('dashboard', { green: 0, yellow: 0, red: 0 });
 		updateNotifications('stages', {
-			green: jobOffers.length - myApplications.length, yellow: 0, red: 0});
+			green: 0, yellow: 0, red: jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length});
 		updateNotifications('my_applications', { green: 1, yellow: 1, red: 1 });
 		updateNotifications('cv', { green: 1, yellow: 1, red: 1 });
 		updateNotifications('contract', { green: 1, yellow: 1, red: 1 });
@@ -142,7 +143,7 @@ const StudentPage = ({user, setUser}) => {
 					))}
 				</div>
 				{tab === 'dashboard' && <Dashboard />}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} />}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}

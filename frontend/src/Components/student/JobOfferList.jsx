@@ -3,7 +3,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import FullJobOffer from "./FullJobOffer";
 import {useTranslation} from "react-i18next";
 
-function JobOfferList({jobOffers, user, setJobOffers, refresh}) {
+function JobOfferList({jobOffers, user, setJobOffers}) {
     const {t} = useTranslation();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
@@ -11,7 +11,6 @@ function JobOfferList({jobOffers, user, setJobOffers, refresh}) {
 		setSelectedOffer(jobOffer)
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
 		setJobOffers(updatedOffers);
-		refresh();
 	}
 
 	return (
