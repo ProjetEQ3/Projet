@@ -15,6 +15,7 @@ function JobOfferList({jobOffers, user, setJobOffers, selectedById}) {
 
 	useEffect(() => {
 		if (jobOffers.length === 0) return;
+		if (selectedById === null) return;
 		setSelectedOffer(jobOffers.find((offer) => offer.id === selectedById));
 	}, [selectedById]);
 
