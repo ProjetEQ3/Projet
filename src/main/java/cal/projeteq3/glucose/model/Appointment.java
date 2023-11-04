@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +22,7 @@ public class Appointment {
     private Long id;
 
     @ManyToOne
+    @ToString.Exclude
     private JobApplication jobApplication;
 
     private LocalDateTime appointmentDate;
