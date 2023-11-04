@@ -14,6 +14,10 @@ function JobOfferList({jobOffers, user, setJobOffers , defaultIndex = 0, refresh
 		refresh();
 	}
 
+	useEffect(() => {
+		setSelectedOffer(jobOffers[defaultIndex])
+	},[])
+
 	return (
 		<div className="row justify-content-around mx-2">
 			<div className="col-lg-6 col-12 order-2 order-lg-1">

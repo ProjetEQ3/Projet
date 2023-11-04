@@ -101,11 +101,11 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function getNotificationsCounts() {
-		console.log(jobOffers.length, myApplications.length)
 		updateNotifications('dashboard', { green: 0, yellow: 0, red: 0 });
-		updateNotifications('stages', { green: jobOffers.length - myApplications.length, yellow: 0, red: 0 });
-		updateNotifications('my_applications', { green: 0, yellow: 0, red: 0 });
-		updateNotifications('cv', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('stages', {
+			green: jobOffers.length - myApplications.length, yellow: 0, red: 0});
+		updateNotifications('my_applications', { green: 1, yellow: 1, red: 1 });
+		updateNotifications('cv', { green: 1, yellow: 1, red: 1 });
 		updateNotifications('contract', { green: 1, yellow: 1, red: 1 });
 	}
 
@@ -136,7 +136,7 @@ const StudentPage = ({user, setUser}) => {
 					))}
 				</div>
 				{tab === 'dashboard' && <Dashboard />}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} />}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} defaultIndex={0} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
