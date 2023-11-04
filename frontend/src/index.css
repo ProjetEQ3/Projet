@@ -73,6 +73,24 @@ code {
   --bs-gradient: none;
 }
 
+.btn-ose {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--ose-color) !important;
+  --bs-btn-border-color: var(--ose-color) !important;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #6060c8;
+  --bs-btn-hover-border-color: #6060c8;
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #6060c8;
+  --bs-btn-active-border-color: #6060c8;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--ose-color) !important;
+  --bs-btn-disabled-border-color: var(--ose-color) !important;
+}
+
+
 .clickable {
   cursor: pointer;
 }
