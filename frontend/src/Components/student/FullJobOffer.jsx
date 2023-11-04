@@ -2,6 +2,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import React, {useEffect} from "react"
 import {useTranslation} from "react-i18next";
+import JobOffer from "../../model/JobOffer";
 
 const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 	const {t} = useTranslation()
@@ -14,7 +15,11 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 		axiosInstance
 			.post(`/student/applyJobOffer/${user.id}/${jobOfferID}`)
 			.then((response) => {
-				updatedOffer(response.data)
+				let updatedJobOffer = new JobOffer()
+				updatedJobOffer.init(response.data)
+				updatedJobOffer.hasApplied = true
+
+				updatedOffer(updatedJobOffer)
 				toast.success(t('appliedJobOffer'))}
 			)
 			.catch((error) => {

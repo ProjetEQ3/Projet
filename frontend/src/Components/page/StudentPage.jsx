@@ -12,6 +12,7 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import Dashboard from "../user/Dashboard";
 import NotificationBadge from '../notification/NotificationBadge';
+import Application from "../../model/Application";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -26,7 +27,7 @@ const StudentPage = ({user, setUser}) => {
 	  { id: 'contract', label: 'contracts' }
   ];
   const [jobOffers, setJobOffers] = useState([new JobOffer()]);
-  const [myApplications, setMyApplications] = useState([]);
+  const [myApplications, setMyApplications] = useState([new Application()]);
   const [contracts, setContracts] = useState([new Contract()]);
 
   const [notifications, setNotifications] = useState({
@@ -64,12 +65,7 @@ const StudentPage = ({user, setUser}) => {
 		if (!user?.id) return;
 		await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
 			.then((response) => {
-				const jobOffers = response.data.map((jobOfferData) => {
-					const newJobOffer = new JobOffer();
-					newJobOffer.init(jobOfferData);
-					return newJobOffer;
-				});
-				setMyApplications(jobOffers);
+				setMyApplications(response.data);
 			})
 			.catch((error) => {
 				toast.error(t('fetchError') + t(error.response?.data.message));
@@ -86,7 +82,17 @@ const StudentPage = ({user, setUser}) => {
 		handleSessionChange();
 	}, [selectedSessionIndex]);
 
+	function filterApplicationsFromJobOffers() {
+		return jobOffers.map((jobOffer) => {
+		 	 myApplications.map((application) => {
+				if (application.id === jobOffer.id)
+					jobOffer.hasApplied = true;
+			});
+		});
+	}
+
 	useEffect(() => {
+		filterApplicationsFromJobOffers();
 		getNotificationsCounts();
 	}, [myApplications, jobOffers, contracts]);
 
