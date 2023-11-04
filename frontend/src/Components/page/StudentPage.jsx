@@ -13,7 +13,6 @@ import Contract from "../../model/Contract";
 import Home from "../student/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
-import jobOffer from "../../model/JobOffer";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -30,6 +29,8 @@ const StudentPage = ({user, setUser}) => {
   const [jobOffers, setJobOffers] = useState([new JobOffer()]);
   const [myApplications, setMyApplications] = useState([new Application()]);
   const [contracts, setContracts] = useState([new Contract()]);
+
+  const [idElement, setIdElement] = useState(null);
 
   const [notifications, setNotifications] = useState({
 		home: { green: 1, yellow: 1, red: 1 },
@@ -123,6 +124,8 @@ const StudentPage = ({user, setUser}) => {
 		}));
 	};
 
+
+
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>
@@ -142,8 +145,8 @@ const StudentPage = ({user, setUser}) => {
 						</button>
 					))}
 				</div>
-				{tab === 'home' && <Home jobOffers={jobOffers} />}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} />}
+				{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} />}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} selectedById={idElement} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}

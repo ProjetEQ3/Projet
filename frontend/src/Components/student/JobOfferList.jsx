@@ -3,7 +3,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import FullJobOffer from "./FullJobOffer";
 import {useTranslation} from "react-i18next";
 
-function JobOfferList({jobOffers, user, setJobOffers}) {
+function JobOfferList({jobOffers, user, setJobOffers, selectedById}) {
     const {t} = useTranslation();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
@@ -12,6 +12,12 @@ function JobOfferList({jobOffers, user, setJobOffers}) {
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
 		setJobOffers(updatedOffers);
 	}
+
+	useEffect(() => {
+		console.log("JOB", selectedById)
+		if (jobOffers.length === 0) return;
+		setSelectedOffer(jobOffers.find((offer) => offer.id === selectedById));
+	}, [selectedById]);
 
 	return (
 		<div className="row justify-content-around mx-2">
