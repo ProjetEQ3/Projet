@@ -10,14 +10,16 @@ import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
+import Dashboard from "../user/Dashboard";
+import CircleNotification from "../user/CircleNotification";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
-  const [tab, setTab] = useState('home');
+  const [tab, setTab] = useState('dashboard');
   const [jobOffers, setJobOffers] = useState([new JobOffer()]);
   const tabs = [
-	  { id: 'home', label: 'home' },
+	  { id: 'dashboard', label: 'dashboard' },
 	  { id: 'stages', label: 'jobOffers' },
 	  { id: 'my_applications', label: 'myApplications' },
 	  { id: 'cv', label: 'CV' },
@@ -68,6 +70,18 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
+	function getNotificationCount(CurrentTab) {
+		let count = 0;
+		jobOffers.forEach(jobOffer => {
+			if (jobOffer.id) count++;
+		})
+		return count;
+	}
+
+	function getNotifColor() {
+		return "success";
+	}
+
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
 			<div>
@@ -82,10 +96,11 @@ const StudentPage = ({user, setUser}) => {
 							}}
 						>
 							{t(tabItem.label)}
+							<CircleNotification tab={tabItem.id} user={user}/>
 						</button>
 					))}
 				</div>
-				{tab === 'home' && <h3>{t('home')}</h3>}
+				{tab === 'dashboard' && <Dashboard />}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}
 				{tab === 'my_applications' && <MyApplications user={user}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
