@@ -1,7 +1,12 @@
 import React from 'react';
 import './NotificationBadge.css';
 
-const NotificationBadge = ({ count, color, index }) => {
+const NotificationBadge = ({ count, color, index, tab, setTab, user }) => {
+
+    const handleNotificationClick = () => {
+        setTab(tab.id);
+    };
+
     if (count > 0) {
         const badgeStyle = {
             right: `${index * 20}px`,
@@ -10,9 +15,9 @@ const NotificationBadge = ({ count, color, index }) => {
 
         const badgeClass = `notification-badge notification-badge-${color}`;
         return (
-            <span className={badgeClass} style={badgeStyle}>
+            <button className={badgeClass} style={badgeStyle} onClick={handleNotificationClick}>
         {count}
-      </span>
+      </button>
         );
     }
 

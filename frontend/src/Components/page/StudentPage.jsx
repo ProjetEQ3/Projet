@@ -29,11 +29,11 @@ const StudentPage = ({user, setUser}) => {
   const navigate = useNavigate();
   const [contracts, setContracts] = useState([new Contract()]);
 	const [notifications, setNotifications] = useState({
-		home: { green: 1, yellow: 1, red: 1 },
-		stages: { green: 0, yellow: 0, red: 0 },
-		my_applications: { green: 0, yellow: 0, red: 0 },
-		cv: { green: 0, yellow: 0, red: 0 },
-		contract: { green: 0, yellow: 0, red: 0 },
+		dashboard: { green: 1, yellow: 1, red: 1 },
+		stages: { green: 1, yellow: 1, red: 1 },
+		my_applications: { green: 1, yellow: 1, red: 1 },
+		cv: { green: 1, yellow: 1, red: 1 },
+		contract: { green: 1, yellow: 1, red: 1 },
 	});
 
 	async function fetchStudentJobOffers() {
@@ -100,10 +100,10 @@ const StudentPage = ({user, setUser}) => {
 							style={{ position: 'relative' }}
 						>
 							{t(tabItem.label)}
-							<NotificationBadge count={notifications[tabItem.id].red} color="red" index={0} />
-							<NotificationBadge count={notifications[tabItem.id].yellow} color="yellow" index={1} />
-							<NotificationBadge count={notifications[tabItem.id].green} color="green" index={2} />
-							<CircleNotification tab={tabItem.id} user={user}/>
+							<NotificationBadge count={notifications[tabItem.id].red} color="red" index={0} user={user} tab={tabItem} setTab={setTab} />
+							<NotificationBadge count={notifications[tabItem.id].yellow} color="yellow" index={1} user={user} tab={tabItem} setTab={setTab} />
+							<NotificationBadge count={notifications[tabItem.id].green} color="green" index={2} user={user} tab={tabItem} setTab={setTab} />
+							{/*<CircleNotification tab={tabItem.id} user={user}/>*/}
 						</button>
 					))}
 				</div>
