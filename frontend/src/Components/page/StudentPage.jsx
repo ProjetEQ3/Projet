@@ -112,9 +112,9 @@ const StudentPage = ({user, setUser}) => {
 		updateNotifications('home', { green: 0, yellow: 0, red: 0 });
 		updateNotifications('stages', {
 			green: 0, yellow: 0, red: jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length});
-		updateNotifications('my_applications', { green: 1, yellow: 1, red: 1 });
-		updateNotifications('cv', { green: 1, yellow: 1, red: 1 });
-		updateNotifications('contract', { green: 1, yellow: 1, red: 1 });
+		updateNotifications('my_applications', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('cv', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('contract', { green: 0, yellow: 0, red: 0 });
 	}
 
 	const updateNotifications = (tabId, { green, yellow, red }) => {

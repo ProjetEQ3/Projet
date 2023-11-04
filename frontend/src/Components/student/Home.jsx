@@ -6,7 +6,6 @@ const Home = ({setTab, setIdElement, jobOffers}) => {
     const {t} = useTranslation();
 
     const handleJobOfferClick = (jobOffer) => {
-        console.log("Job:", jobOffer)
         setIdElement(jobOffer.id);
         setTab('stages');
     }
