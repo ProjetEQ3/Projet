@@ -13,6 +13,7 @@ import Contract from "../../model/Contract";
 import Home from "../student/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
+import Appointment from "../../model/Appointment";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -29,15 +30,16 @@ const StudentPage = ({user, setUser}) => {
   const [jobOffers, setJobOffers] = useState([new JobOffer()]);
   const [myApplications, setMyApplications] = useState([new Application()]);
   const [contracts, setContracts] = useState([new Contract()]);
+  const [appointments, setAppointments] = useState([new Appointment()]);
 
   const [idElement, setIdElement] = useState(null);
 
   const [notifications, setNotifications] = useState({
-		home: { green: 1, yellow: 1, red: 1 },
-		stages: { green: 0, yellow: 0, red: 0 },
-		my_applications: { green: 0, yellow: 0, red: 0 },
-		cv: { green: 0, yellow: 0, red: 0 },
-		contract: { green: 0, yellow: 0, red: 0 },
+		home: { green: 0, gray: 0, red: 0 },
+		stages: { green: 0, gray: 0, red: 0 },
+		my_applications: { green: 0, gray: 0, red: 0 },
+		cv: { green: 0, gray: 0, red: 0 },
+		contract: { green: 0, gray: 0, red: 0 },
   });
 
 	async function fetchStudentJobOffers() {
@@ -47,10 +49,30 @@ const StudentPage = ({user, setUser}) => {
 				setJobOffers(response.data)
 			}).catch((error) => {
 				if (error.response?.status === 401) return;
-
 				toast.error(t('fetchError') + t(error.response?.data.message))
 			});
 	}
+	const fetchAppointments = async () => {
+		myApplications.map((application) => {
+			if (application.id === 0) return;
+			axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${application.id}/${user.id}`)
+				.then((response) => {
+					const newAppointments = response.data.map((appointment) => {
+						const newAppointment = new Appointment();
+						newAppointment.init(appointment);
+						return newAppointment;
+					});
+					newAppointments.sort((a, b) => {
+						return new Date(a.appointmentDate) - new Date(b.appointmentDate);
+					}, []);
+					application.appointments = newAppointments;
+					setAppointments(newAppointments);
+				})
+				.catch((error) => {
+					console.error("Error fetching appointments:", error);
+				});
+		});
+	};
 
 	async function getContracts() {
 		if (!user?.id) return;
@@ -74,19 +96,9 @@ const StudentPage = ({user, setUser}) => {
 			});
 	}
 
-	useEffect(() => {
-		if (!user?.isLoggedIn) navigate('/');
-		fetchStudentJobOffers()
-		fetchMyApplications()
-	}, [user]);
-
-	useEffect(() => {
-		handleSessionChange();
-	}, [selectedSessionIndex]);
-
 	function filterApplicationsFromJobOffers() {
 		return jobOffers.map((jobOffer) => {
-		 	 myApplications.map((application) => {
+			myApplications.map((application) => {
 				if (application.id === jobOffer.id)
 					jobOffer.hasApplied = true;
 			});
@@ -94,9 +106,26 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	useEffect(() => {
+		if (!user?.isLoggedIn) navigate('/');
+		fetchStudentJobOffers()
+		fetchMyApplications()
+	}, [user]);
+
+	useEffect(() => {
+		fetchAppointments();
+	}, [myApplications]);
+
+	useEffect(() => {
+		handleSessionChange();
+	}, [selectedSessionIndex]);
+
+	useEffect(() => {
 		filterApplicationsFromJobOffers();
+	}, [myApplications, jobOffers]);
+
+	useEffect(() => {
 		getNotificationsCounts();
-	}, [myApplications, jobOffers, contracts]);
+	}, [jobOffers, myApplications, contracts, appointments]);
 
 	const handleSessionChange = () => {
 	  setJobOffers([]);
@@ -109,22 +138,39 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function getNotificationsCounts() {
-		updateNotifications('home', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('home', { green: 0, gray: 0, red: 0 });
+		let greenNotificationsStages = 0;
+		let grayNotificationsStages = 0;
+		let redNotificationsStages = jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length;
 		updateNotifications('stages', {
-			green: 0, yellow: 0, red: jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length});
-		updateNotifications('my_applications', { green: 0, yellow: 0, red: 0 });
-		updateNotifications('cv', { green: 0, yellow: 0, red: 0 });
-		updateNotifications('contract', { green: 0, yellow: 0, red: 0 });
+			green: greenNotificationsStages, gray: grayNotificationsStages, red: redNotificationsStages});
+
+		let greenNotificationsApplication = 0;
+		let grayNotificationsApplication = 0;
+		let redNotificationsApplication = 0;
+		myApplications.forEach((application) => {
+			if (application.appointments === undefined) return;
+			if (application.appointments.length === 1) {
+				greenNotificationsApplication++;
+			} else if (application.appointments.length === 0) {
+				grayNotificationsApplication++;
+			}
+			else {
+				redNotificationsApplication++;
+			}
+		});
+		updateNotifications('my_applications', { green: greenNotificationsApplication, gray: grayNotificationsApplication, red: redNotificationsApplication });
+
+		updateNotifications('cv', { green: 0, gray: 0, red: 0 });
+		updateNotifications('contract', { green: 0, gray: 0, red: 0 });
 	}
 
-	const updateNotifications = (tabId, { green, yellow, red }) => {
+	const updateNotifications = (tabId, { green, gray, red }) => {
 		setNotifications(prevNotifications => ({
 			...prevNotifications,
-			[tabId]: { green, yellow, red }
+			[tabId]: { green, gray, red }
 		}));
 	};
-
-
 
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
@@ -141,11 +187,11 @@ const StudentPage = ({user, setUser}) => {
 							style={{ position: 'relative' }}
 						>
 							{t(tabItem.label)}
-							<NotificationBadge notifications={notifications[tabItem.id]} tab={tabItem} setTab={setTab}/>
+							<NotificationBadge notifications={notifications[tabItem.id]} tab={tabItem} setTab={setTab} titleInfos={tabItem.label}/>
 						</button>
 					))}
 				</div>
-				{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} />}
+				{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} applications={myApplications}/>}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} selectedById={idElement} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}

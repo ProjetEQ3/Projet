@@ -160,11 +160,9 @@ public class StudentService{
 	}
 
 	public List<AppointmentDTO> findAllAppointmentsForJobOfferAndStudent(Long jobOfferId, Long studentId){
-
-		JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
-
+		JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId).orElseThrow(
+			JobApplicationNotFoundException::new);
 		List<Appointment> appointments = new ArrayList<>(jobApplication.getAppointments());
-
 		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
 	}
 

@@ -21,9 +21,8 @@
     background-color: #ff4136; /* red */
 }
 
-.notification-badge-yellow {
-    background-color: #ffb700; /* yellow */
-    /*color: black; !* text color for yellow *!*/
+.notification-badge-gray {
+    background-color: #9f9f9f; /* gray */
 }
 
 .notification-badge-green {

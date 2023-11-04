@@ -713,7 +713,7 @@ public class StudentServiceTest{
 		application.setAppointments(appointments);
 
 		when(jobApplicationRepository.findByJobOfferIdAndStudentId(jobOffer.getId(), student.getId())).thenReturn(
-			application);
+			Optional.of(application));
 		//        Act
 		List<AppointmentDTO> appointmentDTOS = studentService.findAllAppointmentsForJobOfferAndStudent(
 			jobOffer.getId(), student.getId());

@@ -1,8 +1,11 @@
 import React from 'react';
 import './NotificationBadge.css';
+import {useTranslation} from "react-i18next";
 
-const NotificationBadge = ({ notifications, tab, setTab }) => {
-    const badgeTypes = ['red', 'yellow', 'green'];
+const NotificationBadge = ({ notifications, tab, setTab, titleInfos }) => {
+    const {t} = useTranslation();
+    if (titleInfos === undefined) titleInfos = '';
+    const badgeTypes = ['red', 'green', 'gray'];
     let visibleBadges = badgeTypes.filter(type => notifications[type] > 0);
     const handleNotificationClick = () => {
         setTab(tab.id);
@@ -14,7 +17,8 @@ const NotificationBadge = ({ notifications, tab, setTab }) => {
                 <button
                     key={type}
                     className={`notification-badge notification-badge-${type}`}
-                    style={{ right: `${index * 20}px` }}
+                    title={t(titleInfos)}
+                    style={{ right: `${index * 22}px` }}
                     onClick={handleNotificationClick}
                 >
           {notifications[type]}

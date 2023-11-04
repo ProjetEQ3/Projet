@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
@@ -15,7 +16,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     @Query("SELECT ja.appointments FROM JobApplication ja WHERE ja.id = :jobApplicationId")
     List<Appointment> findAppointmentsByJobApplicationId(@Param("jobApplicationId") Long jobApplicationId);
 
-    JobApplication findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
+    Optional<JobApplication> findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
 
     List<JobApplication> findAllByJobOffer_Employer_Id(Long employerId);
 }
