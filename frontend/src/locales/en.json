@@ -265,5 +265,7 @@
 
   "applied": "You have already applied",
   "availableInternships": "Available internships",
-  "myAppointments": "My appointments"
+  "myAppointments": "My appointments",
+  "appointmentsToAttest": "Your appointments are or will be displayed here",
+  "availableInternshipsToApplyTo": "Available internships are or will be displayed here"
 }

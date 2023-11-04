@@ -23,6 +23,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications}) => {
                 applications.length !== 0 && (
                     <>
                         <h2>{t('myAppointments')}</h2>
+                        <p>{t('appointmentsToAttest')}</p>
                         {
                             applications.map((application, index) => (
                                 <div onClick={() => handleJobApplicationClick(application)} key={index}>
@@ -36,6 +37,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications}) => {
                 jobOffers.length !== 0 && (
                     <>
                         <h2>{t('availableInternships')}</h2>
+                        <p>{t('availableInternshipsToApplyTo')}</p>
                         {
                             jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).map((offer, index) => (
                             <div onClick={() => handleJobOfferClick(offer)} key={index}>

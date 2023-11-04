@@ -267,5 +267,7 @@
 
   "applied": "Vous avez déjà postulé",
   "availableInternships": "Offres de stage disponibles",
-  "myAppointments": "Mes rendez-vous"
+  "myAppointments": "Mes rendez-vous",
+  "appointmentsToAttest": "Vos rendez-vous sont ou seront indiqués ici",
+  "availableInternshipsToApplyTo": "Les offres de stage disponibles sont ou seront indiquées ici"
 }
