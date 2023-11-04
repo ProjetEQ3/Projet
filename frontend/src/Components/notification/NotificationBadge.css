@@ -32,6 +32,7 @@
 
 .notification-badge {
     animation: badge-pop 0.3s ease;
+    border: none;
 }
 
 @keyframes badge-pop {
