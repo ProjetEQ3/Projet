@@ -4,7 +4,7 @@ import Loading from "../util/Loading"
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faPaperPlane} from "@fortawesome/free-solid-svg-icons"
+import {faPaperPlane, faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import {useTranslation} from "react-i18next"
 
 const NewOfferForm = ({user}) => {
@@ -98,8 +98,16 @@ const NewOfferForm = ({user}) => {
 		if(Object.keys(validationErrors).length === 0) saveOffer().then(r => r)
 	}
 
+	const handleBack = () => {
+		navigate(-1)
+	}
+
 	return (
 		<div className="container">
+			<button className="btn btn-outline-ose">
+				<FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2" onClick={handleBack}/>
+				{t('back')}
+			</button>
 			<h1 className="text-center fw-light">{t('newInternshipCreation')}</h1>
 			{isLoading ? (
 				<Loading/>

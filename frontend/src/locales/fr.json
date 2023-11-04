@@ -27,6 +27,8 @@
   "allInternship": "Toutes les offres de stage: ",
   "authorizeOffer": "Autorisation de l'offre de stage",
 
+  "back": "Retour",
+
   "cvAuthorisation": "Autorisation du CV",
   "confirmRefusal": "Pouvez-vous fournir une raison de refus ?",
   "confirm": "Confirmer",
@@ -42,7 +44,7 @@
   "chooseADepartment": "Choisissez un département",
   "convoke": "Convoquer",
   "convokeSentence": "Vous êtes en train de convoquer l'étudiant : ",
-  "convokeErrorMin": "Vous devez minimalement convoquer sur trois dates différentes",
+  "convokeErrorMin": "Vous devez convoquer sur une dates ultérieure",
   "convokeErrorMax": "Vous ne pouvez pas convoquer sur plus de cinq dates différentes",
   "convokeDates" : "Dates de convocation",
   "convokeError" : "Erreur lors de la convocation de l'étudiant: ",

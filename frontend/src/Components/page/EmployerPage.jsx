@@ -6,7 +6,6 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import {use} from "i18next";
 import {useNavigate} from "react-router-dom";
 
 const EmployerPage = ({user}) => {
