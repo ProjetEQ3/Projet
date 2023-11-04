@@ -16,8 +16,8 @@ import NotificationBadge from '../notification/NotificationBadge';
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
   const {t} = useTranslation();
+  const navigate = useNavigate();
   const [tab, setTab] = useState('dashboard');
-  const [jobOffers, setJobOffers] = useState([new JobOffer()]);
   const tabs = [
 	  { id: 'dashboard', label: 'dashboard' },
 	  { id: 'stages', label: 'jobOffers' },
@@ -25,15 +25,17 @@ const StudentPage = ({user, setUser}) => {
 	  { id: 'cv', label: 'CV' },
 	  { id: 'contract', label: 'contracts' }
   ];
-  const navigate = useNavigate();
+  const [jobOffers, setJobOffers] = useState([new JobOffer()]);
+  const [myApplications, setMyApplications] = useState([]);
   const [contracts, setContracts] = useState([new Contract()]);
-	const [notifications, setNotifications] = useState({
+
+  const [notifications, setNotifications] = useState({
 		dashboard: { green: 1, yellow: 1, red: 1 },
-		stages: { green: 1, yellow: 0, red: 1 },
-		my_applications: { green: 0, yellow: 1, red: 1 },
-		cv: { green: 1, yellow: 1, red: 0 },
-		contract: { green: 1, yellow: 1, red: 1 },
-	});
+		stages: { green: 0, yellow: 0, red: 0 },
+		my_applications: { green: 0, yellow: 0, red: 0 },
+		cv: { green: 0, yellow: 0, red: 0 },
+		contract: { green: 0, yellow: 0, red: 0 },
+  });
 
 	async function fetchStudentJobOffers() {
 		if (!user?.id) return;
@@ -58,15 +60,35 @@ const StudentPage = ({user, setUser}) => {
 			});
 	}
 
+	async function fetchMyApplications() {
+		if (!user?.id) return;
+		await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
+			.then((response) => {
+				const jobOffers = response.data.map((jobOfferData) => {
+					const newJobOffer = new JobOffer();
+					newJobOffer.init(jobOfferData);
+					return newJobOffer;
+				});
+				setMyApplications(jobOffers);
+			})
+			.catch((error) => {
+				toast.error(t('fetchError') + t(error.response?.data.message));
+			});
+	}
+
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
-		fetchStudentJobOffers();
-		notificationsCounts();
+		fetchStudentJobOffers()
+		fetchMyApplications()
 	}, [user]);
 
 	useEffect(() => {
 		handleSessionChange();
 	}, [selectedSessionIndex]);
+
+	useEffect(() => {
+		getNotificationsCounts();
+	}, [myApplications, jobOffers, contracts]);
 
 	const handleSessionChange = () => {
 	  setJobOffers([]);
@@ -78,8 +100,13 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
-	function notificationsCounts() {
+	function getNotificationsCounts() {
+		console.log(jobOffers.length, myApplications.length)
 		updateNotifications('dashboard', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('stages', { green: jobOffers.length - myApplications.length, yellow: 0, red: 0 });
+		updateNotifications('my_applications', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('cv', { green: 0, yellow: 0, red: 0 });
+		updateNotifications('contract', { green: 1, yellow: 1, red: 1 });
 	}
 
 	const updateNotifications = (tabId, { green, yellow, red }) => {
@@ -109,8 +136,8 @@ const StudentPage = ({user, setUser}) => {
 					))}
 				</div>
 				{tab === 'dashboard' && <Dashboard />}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers}/>}
-				{tab === 'my_applications' && <MyApplications user={user}/>}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} refresh={getNotificationsCounts} />}
+				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>

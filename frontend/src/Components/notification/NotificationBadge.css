@@ -23,7 +23,7 @@
 
 .notification-badge-yellow {
     background-color: #ffb700; /* yellow */
-    color: black; /* text color for yellow */
+    /*color: black; !* text color for yellow *!*/
 }
 
 .notification-badge-green {

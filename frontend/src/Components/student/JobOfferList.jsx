@@ -3,7 +3,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import FullJobOffer from "./FullJobOffer";
 import {useTranslation} from "react-i18next";
 
-function JobOfferList({jobOffers, user, setJobOffers}){
+function JobOfferList({jobOffers, user, setJobOffers , defaultIndex = 0, refresh}) {
     const {t} = useTranslation();
     const [selectedOffer, setSelectedOffer] = useState(null);
 
@@ -11,6 +11,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 		setSelectedOffer(jobOffer)
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
 		setJobOffers(updatedOffers);
+		refresh();
 	}
 
 	return (
@@ -26,7 +27,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						jobOffers.map((offer, index) => (
 							offer.jobOfferState === "OPEN" ? (
 								<div onClick={() => setSelectedOffer(offer)}>
-									<ShortJobOffer user={user} jobOffer={offer} key={offer.id}/>
+									<ShortJobOffer user={user} jobOffer={offer} key={offer.id} />
 								</div>
 							) : null
 						))

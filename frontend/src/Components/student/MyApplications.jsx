@@ -7,34 +7,15 @@ import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 
-function MyApplications({ user }) {
+function MyApplications({ user, myApplications, setMyApplications, fetchMyApplications }) {
     const {t} = useTranslation();
     const navigate = useNavigate();
-    const [myApplications, setMyApplications] = useState([]);
 
     useEffect(() => {
         if (!user?.isLoggedIn) {
             navigate("/");
         }
-        fetchMyApplications();
     }, [user, navigate]);
-    async function fetchMyApplications() {
-        await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
-            .then((response) => {
-                const jobOffers = response.data.map((jobOfferData) => {
-                    const newJobOffer = new JobOffer();
-                    newJobOffer.init(jobOfferData);
-                    return newJobOffer;
-                });
-                setMyApplications(jobOffers);
-            })
-            .catch((error) => {
-                toast.error(t('fetchError') + t(error.response?.data.message));
-            });
-    }
-    function handleRefresh() {
-        fetchMyApplications();
-    }
 
     return (
         <div>
@@ -49,7 +30,7 @@ function MyApplications({ user }) {
                         renderItem={(filteredJobOffers) => (
                             <div>
                                 {filteredJobOffers.map((offer, index) => (
-                                    <ShortJobOfferApplication index={index} user={user} jobOffer={offer} key={offer.id} refresh={handleRefresh}/>
+                                    <ShortJobOfferApplication index={index} user={user} jobOffer={offer} key={offer.id} refresh={fetchMyApplications}/>
                                 ))}
                             </div>
                         )}
