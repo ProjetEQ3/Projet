@@ -11,7 +11,6 @@ import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import Dashboard from "../user/Dashboard";
-import CircleNotification from "../user/CircleNotification";
 import NotificationBadge from '../notification/NotificationBadge';
 
 const StudentPage = ({user, setUser}) => {
@@ -30,9 +29,9 @@ const StudentPage = ({user, setUser}) => {
   const [contracts, setContracts] = useState([new Contract()]);
 	const [notifications, setNotifications] = useState({
 		dashboard: { green: 1, yellow: 1, red: 1 },
-		stages: { green: 1, yellow: 1, red: 1 },
-		my_applications: { green: 1, yellow: 1, red: 1 },
-		cv: { green: 1, yellow: 1, red: 1 },
+		stages: { green: 1, yellow: 0, red: 1 },
+		my_applications: { green: 0, yellow: 1, red: 1 },
+		cv: { green: 1, yellow: 1, red: 0 },
 		contract: { green: 1, yellow: 1, red: 1 },
 	});
 
@@ -62,6 +61,7 @@ const StudentPage = ({user, setUser}) => {
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		fetchStudentJobOffers();
+		notificationsCounts();
 	}, [user]);
 
 	useEffect(() => {
@@ -76,6 +76,10 @@ const StudentPage = ({user, setUser}) => {
 	const setCv = (cv) => {
 		user.cvFile = cv
 		setUser(user)
+	}
+
+	function notificationsCounts() {
+		updateNotifications('dashboard', { green: 0, yellow: 0, red: 0 });
 	}
 
 	const updateNotifications = (tabId, { green, yellow, red }) => {
@@ -100,10 +104,7 @@ const StudentPage = ({user, setUser}) => {
 							style={{ position: 'relative' }}
 						>
 							{t(tabItem.label)}
-							<NotificationBadge count={notifications[tabItem.id].red} color="red" index={0} user={user} tab={tabItem} setTab={setTab} />
-							<NotificationBadge count={notifications[tabItem.id].yellow} color="yellow" index={1} user={user} tab={tabItem} setTab={setTab} />
-							<NotificationBadge count={notifications[tabItem.id].green} color="green" index={2} user={user} tab={tabItem} setTab={setTab} />
-							{/*<CircleNotification tab={tabItem.id} user={user}/>*/}
+							<NotificationBadge notifications={notifications[tabItem.id]} tab={tabItem} setTab={setTab}/>
 						</button>
 					))}
 				</div>

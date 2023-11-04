@@ -17,6 +17,11 @@ const ManagerPage = ({user}) => {
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
     const [contracts, setContracts] = useState([new Contract()]);
     const navigate = useNavigate();
+    const tabConfig = [
+        { key: 'stages', label: t('internship') },
+        { key: 'cvs', label: 'CVs' },
+        { key: 'contract', label: t('contracts') },
+    ];
 
     useEffect(() => {
         if (!user?.isLoggedIn) navigate('/');
@@ -112,16 +117,22 @@ const ManagerPage = ({user}) => {
         <div className="container">
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => handleTabClick('stages')}>{t('internship')}</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => handleTabClick('cvs')}>CVs</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => handleTabClick('contracts')}>{t('contracts')}</button>
+                    {tabConfig.map((item) => (
+                        <button
+                            key={item.key}
+                            className={`col-6 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
+                            onClick={() => handleTabClick(item.key)}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal} />}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
-                {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'contract' && <ContractList contracts={contracts} user={user} />}
             </div>
         </div>
-    )
+    );
 }
 
 export default ManagerPage

@@ -1,27 +1,27 @@
 import React from 'react';
 import './NotificationBadge.css';
 
-const NotificationBadge = ({ count, color, index, tab, setTab, user }) => {
-
+const NotificationBadge = ({ notifications, tab, setTab }) => {
+    const badgeTypes = ['red', 'yellow', 'green'];
+    let visibleBadges = badgeTypes.filter(type => notifications[type] > 0);
     const handleNotificationClick = () => {
         setTab(tab.id);
     };
 
-    if (count > 0) {
-        const badgeStyle = {
-            right: `${index * 20}px`,
-            zIndex: 2 + index
-        };
-
-        const badgeClass = `notification-badge notification-badge-${color}`;
-        return (
-            <button className={badgeClass} style={badgeStyle} onClick={handleNotificationClick}>
-        {count}
-      </button>
-        );
-    }
-
-    return null;
+    return (
+        <>
+            {visibleBadges.map((type, index) => (
+                <button
+                    key={type}
+                    className={`notification-badge notification-badge-${type}`}
+                    style={{ right: `${index * 20}px` }}
+                    onClick={handleNotificationClick}
+                >
+          {notifications[type]}
+        </button>
+            ))}
+        </>
+    );
 };
 
 export default NotificationBadge;
