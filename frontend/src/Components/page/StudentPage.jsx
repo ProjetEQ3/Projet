@@ -12,6 +12,7 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import Dashboard from "../user/Dashboard";
 import CircleNotification from "../user/CircleNotification";
+import NotificationBadge from '../notification/NotificationBadge';
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -27,6 +28,13 @@ const StudentPage = ({user, setUser}) => {
   ];
   const navigate = useNavigate();
   const [contracts, setContracts] = useState([new Contract()]);
+	const [notifications, setNotifications] = useState({
+		home: { green: 1, yellow: 1, red: 1 },
+		stages: { green: 0, yellow: 0, red: 0 },
+		my_applications: { green: 0, yellow: 0, red: 0 },
+		cv: { green: 0, yellow: 0, red: 0 },
+		contract: { green: 0, yellow: 0, red: 0 },
+	});
 
 	async function fetchStudentJobOffers() {
 		if (!user?.id) return;
@@ -70,17 +78,12 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
-	function getNotificationCount(CurrentTab) {
-		let count = 0;
-		jobOffers.forEach(jobOffer => {
-			if (jobOffer.id) count++;
-		})
-		return count;
-	}
-
-	function getNotifColor() {
-		return "success";
-	}
+	const updateNotifications = (tabId, { green, yellow, red }) => {
+		setNotifications(prevNotifications => ({
+			...prevNotifications,
+			[tabId]: { green, yellow, red }
+		}));
+	};
 
 	return (
 		<div className="container-fluid px-lg-5 px-2 py-2">
@@ -94,8 +97,12 @@ const StudentPage = ({user, setUser}) => {
 								setTab(tabItem.id)
 								if (tabItem.id === 'contract') getContracts();
 							}}
+							style={{ position: 'relative' }}
 						>
 							{t(tabItem.label)}
+							<NotificationBadge count={notifications[tabItem.id].red} color="red" index={0} />
+							<NotificationBadge count={notifications[tabItem.id].yellow} color="yellow" index={1} />
+							<NotificationBadge count={notifications[tabItem.id].green} color="green" index={2} />
 							<CircleNotification tab={tabItem.id} user={user}/>
 						</button>
 					))}
