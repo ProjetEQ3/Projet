@@ -99,13 +99,14 @@ const NewOfferForm = ({user}) => {
 	}
 
 	const handleBack = () => {
+		console.log('back')
 		navigate(-1)
 	}
 
 	return (
 		<div className="container">
-			<button className="btn btn-outline-ose">
-				<FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2" onClick={handleBack}/>
+			<button className="btn btn-outline-ose" onClick={handleBack}>
+				<FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2"/>
 				{t('back')}
 			</button>
 			<h1 className="text-center fw-light">{t('newInternshipCreation')}</h1>
