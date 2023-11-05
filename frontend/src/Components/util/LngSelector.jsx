@@ -17,8 +17,8 @@ const LngSelector = () => {
         <form style={maxWidthStyle} className="w-25">
             <div>
                 <select className="btn btn-light p-1" id="lng-selector" onChange={handleLanguageChange} value={langue}>
-                    <option value="fr">FR</option>
-                    <option value="en">EN</option>
+                    <option className="clickable" value="fr">FR</option>
+                    <option className="clickable" value="en">EN</option>
                 </select>
             </div>
         </form>

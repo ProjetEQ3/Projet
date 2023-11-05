@@ -29,7 +29,7 @@ const Main = ({user, setUser}) => {
                         onChange={(e) => updateSession(e.target.value)}>
                         {
                             sessions.map((session, index) => (
-                            <option key={index} value={index} className="text-capitalize">
+                            <option key={index} value={index} className="text-capitalize clickable">
                                 {t(session.season.toLowerCase())} {session.year}
                             </option>))
                         }
