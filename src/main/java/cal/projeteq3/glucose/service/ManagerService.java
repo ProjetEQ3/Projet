@@ -1,11 +1,11 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
@@ -14,10 +14,10 @@ import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -167,4 +167,11 @@ public class ManagerService{
 //		TODO: get what manager ?
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
+
+	// TODO: by semester ??
+	public List<Student> getStudentsByDepartment(Department department){
+		return studentRepository.findAllByDepartment(department);
+
+	}
+
 }
