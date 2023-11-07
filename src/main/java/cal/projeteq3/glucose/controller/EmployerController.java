@@ -141,4 +141,12 @@ public class EmployerController{
 				.year(Integer.parseInt(year))
 				.build();
 	}
+
+	@GetMapping("/nbApplications/{employerId}")
+	public ResponseEntity<?> nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(@PathVariable Long employerId) {
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(employerId));
+	}
+
 }

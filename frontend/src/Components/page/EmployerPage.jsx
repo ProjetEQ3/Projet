@@ -18,6 +18,18 @@ const EmployerPage = ({user}) => {
 		{ id: 'contract', label: 'contracts' }
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
+	const [nbPostulations, setNbPostulations] = useState(0);
+
+	const updateNbPostulations = (offers) => {
+		const count = offers.reduce((acc, offer) => {
+			return acc + (offer.students ? offer.students.length : 0);
+		}, 0);
+		setNbPostulations(count);
+	}
+
+	useEffect(() => {
+		console.log(`nb de postulations : ${nbPostulations}`)
+	}, [nbPostulations]);
 
 	async function getContracts() {
 		if (!user?.id) return;
@@ -59,7 +71,7 @@ const EmployerPage = ({user}) => {
 							))}
 						</div>
 					</div>
-					{tab === 'stages' && <JobOfferList user={user}/>}
+					{tab === 'stages' && <JobOfferList user={user} updateNbPostulations={updateNbPostulations} />}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
 					{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>

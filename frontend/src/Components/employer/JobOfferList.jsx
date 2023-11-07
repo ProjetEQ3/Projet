@@ -9,7 +9,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user}) => {
+const JobOfferList = ({user, updateNbPostulations}) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
 	const [offers, setOffers] = useState([])
@@ -36,6 +36,8 @@ const JobOfferList = ({user}) => {
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
+				console.log(response.data)
+				updateNbPostulations(response.data)
 			})
 			.catch((error) => {
 				if(error.response?.status === 401){

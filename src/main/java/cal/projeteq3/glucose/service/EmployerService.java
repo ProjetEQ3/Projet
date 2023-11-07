@@ -262,4 +262,8 @@ public class EmployerService{
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
+	public int nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(Long employerId) {
+		return jobOfferRepository.countSubmittedApplicationsForEmployer(employerId);
+	}
+
 }
