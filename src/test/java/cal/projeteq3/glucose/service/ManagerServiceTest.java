@@ -72,6 +72,7 @@ class ManagerServiceTest{
 		managerDTO.setFirstName("John");
 		managerDTO.setLastName("Doe");
 		managerDTO.setEmail("john@example.com");
+		managerDTO.setDepartment("_420B0");
 
 		when(managerRepository.save(any())).thenReturn(managerDTO.toEntity());
 
@@ -89,7 +90,7 @@ class ManagerServiceTest{
 	@Test
 	void getAllManagers_valid(){
 		// Arrange
-		Manager manager = Manager.builder().firstName("John").lastName("Doe").email("manager@test.com").build();
+		Manager manager = Manager.builder().department(testDepartment).firstName("John").lastName("Doe").email("manager@test.com").build();
 
 		when(managerRepository.findAll()).thenReturn(Collections.singletonList(manager));
 
@@ -114,9 +115,7 @@ class ManagerServiceTest{
 		when(managerRepository.findById(id)).thenReturn(Optional.empty());
 
 		// Act and Assert
-		assertThrows(UserNotFoundException.class, () -> {
-			managerService.getManagerByID(id);
-		});
+		assertThrows(UserNotFoundException.class, () -> managerService.getManagerByID(id));
 		verify(managerRepository, times(1)).findById(id);
 	}
 
@@ -124,7 +123,7 @@ class ManagerServiceTest{
 	void getManagerByID_valid(){
 		// Arrange
 		Long id = 1L;
-		Manager manager = Manager.builder().firstName("John").lastName("Doe").email("Exemple@email.com").build();
+		Manager manager = Manager.builder().department(testDepartment).firstName("John").lastName("Doe").email("Exemple@email.com").build();
 
 		when(managerRepository.findById(id)).thenReturn(Optional.of(manager));
 
@@ -149,7 +148,7 @@ class ManagerServiceTest{
 		updatedManager.setLastName("UpdatedLastName");
 		updatedManager.setEmail("updated@example.com");
 
-		Manager existingManager = Manager.builder().id(1L).firstName("John").lastName("Doe").email("john@example.com")
+		Manager existingManager = Manager.builder().department(testDepartment).id(1L).firstName("John").lastName("Doe").email("john@example.com")
 		                                 .build();
 
 		when(managerRepository.findById(id)).thenReturn(Optional.of(existingManager));
@@ -179,9 +178,7 @@ class ManagerServiceTest{
 		when(managerRepository.findById(id)).thenReturn(Optional.empty());
 
 		// Act and Assert
-		assertThrows(ManagerNotFoundException.class, () -> {
-			managerService.updateManager(id, updatedManager);
-		});
+		assertThrows(ManagerNotFoundException.class, () -> managerService.updateManager(id, updatedManager));
 		verify(managerRepository, times(1)).findById(id);
 	}
 
@@ -228,7 +225,7 @@ class ManagerServiceTest{
 		when(cvRepository.findAll()).thenReturn(cvFiles);
 
 		// Act
-		List<CvFileDTO> cvFileDTOs = managerService.getAllCv();
+		List<CvFileDTO> cvFileDTOs = managerService.getAllCv(testDepartment);
 
 		// Assert
 		assertNotNull(cvFileDTOs);
@@ -238,20 +235,26 @@ class ManagerServiceTest{
 
 	@Test
 	void getAllSubmittedCv_valid(){
+		Student student1 = Student.builder().department("_420B0").matricule("1234567").build();
+		Student student2 = Student.builder().department("_420B0").matricule("1234561").build();
+		Student student3 = Student.builder().department("_420B0").matricule("1234562").build();
+		Student student4 = Student.builder().department("_420B0").matricule("1234563").build();
 		//        Arrange
-		List<CvFile> cvFiles = new ArrayList<>();
-		cvFiles.addAll(List.of(CvFile.builder().fileName("cv1.pdf").fileData(new byte[]{}).cvState(CvState.SUBMITTED)
-		                             .build(), CvFile.builder().fileName("cv1.pdf").fileData(new byte[]{})
-		                                             .cvState(CvState.SUBMITTED).build(), CvFile.builder().fileName(
-			"cv1.pdf").fileData(new byte[]{}).cvState(CvState.REFUSED).build(),
-		                       CvFile.builder().fileName("cv1.pdf").fileData(
-			new byte[]{}).cvState(CvState.ACCEPTED).build()));
+        List<CvFile> cvFiles = new ArrayList<>(List.of(
+				CvFile.builder().student(student1).fileName("cv1.pdf").fileData(new byte[]{}).cvState(CvState.SUBMITTED)
+                        .build(),
+				CvFile.builder().student(student2).fileName("cv1.pdf").fileData(new byte[]{}).cvState(CvState.SUBMITTED)
+						.build(),
+				CvFile.builder().student(student3).fileName("cv1.pdf").fileData(new byte[]{}).cvState(CvState.REFUSED)
+						.build(),
+                CvFile.builder().student(student4).fileName("cv1.pdf").fileData(new byte[]{}).cvState(CvState.ACCEPTED)
+						.build()));
 
 		when(cvRepository.findAllByCvState(CvState.SUBMITTED)).thenReturn(
 			cvFiles.stream().filter(cvFile -> cvFile.getCvState() == CvState.SUBMITTED).toList());
 
 		//        Act
-		List<CvFileDTO> cvFileDTOs = managerService.getSubmittedCv();
+		List<CvFileDTO> cvFileDTOs = managerService.getSubmittedCv(testDepartment);
 
 		//        Assert
 		assertNotNull(cvFileDTOs);
@@ -379,9 +382,7 @@ class ManagerServiceTest{
 		when(cvRepository.findById(cvFileId)).thenReturn(Optional.empty());
 
 		// Act & Assert
-		assertThrows(CvFileNotFoundException.class, () -> {
-			managerService.rejectCv(cvFileId, "reason");
-		});
+		assertThrows(CvFileNotFoundException.class, () -> managerService.rejectCv(cvFileId, "reason"));
 
 		verify(cvRepository, times(1)).findById(cvFileId);
 	}
@@ -398,7 +399,7 @@ class ManagerServiceTest{
 		when(cvRepository.findAllByCvState(state)).thenReturn(cvFiles);
 
 		// Act
-		List<CvFileDTO> cvFileDTOs = managerService.getCvFilesWithState(state);
+		List<CvFileDTO> cvFileDTOs = managerService.getCvFilesWithState(state, testDepartment);
 
 		// Assert
 		assertNotNull(cvFileDTOs);
@@ -441,9 +442,7 @@ class ManagerServiceTest{
 		when(cvRepository.findById(id)).thenReturn(Optional.empty());
 
 		// Act and Assert
-		assertThrows(CvFileNotFoundException.class, () -> {
-			managerService.updateCvState(id, newState, reason);
-		});
+		assertThrows(CvFileNotFoundException.class, () -> managerService.updateCvState(id, newState, reason));
 		verify(cvRepository, times(1)).findById(id);
 	}
 
@@ -454,15 +453,15 @@ class ManagerServiceTest{
 		//        Arrange
 		Semester semester = new Semester(LocalDate.now());
 		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.add(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(JobOfferState.OPEN)
+		jobOffers.add(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(JobOfferState.OPEN)
 		                      .semester(semester).build());
-		jobOffers.add(JobOffer.builder().title("Job Offer 2").description("Description 2").jobOfferState(JobOfferState.OPEN)
+		jobOffers.add(JobOffer.builder().department(testDepartment).title("Job Offer 2").description("Description 2").jobOfferState(JobOfferState.OPEN)
 		                      .semester(semester).build());
 
 		when(jobOfferRepository.findAllBySemester(semester)).thenReturn(jobOffers);
 
 		//        Act
-		List<JobOfferDTO> jobOfferDTOs = managerService.getAllJobOffer(semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getAllJobOffer(semester, testDepartment);
 
 		//        Assert
 		assertNotNull(jobOfferDTOs);
@@ -474,7 +473,7 @@ class ManagerServiceTest{
 	void getJobOfferByID_valid(){
 		//        Arrange
 		Long id = 1L;
-		JobOffer jobOffer = JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
+		JobOffer jobOffer = JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
 			JobOfferState.OPEN).build();
 
 		when(jobOfferRepository.findById(id)).thenReturn(Optional.of(jobOffer));
@@ -499,9 +498,7 @@ class ManagerServiceTest{
 		when(jobOfferRepository.findById(id)).thenReturn(Optional.empty());
 
 		//        Act and Assert
-		assertThrows(JobOfferNotFoundException.class, () -> {
-			managerService.getJobOfferByID(id);
-		});
+		assertThrows(JobOfferNotFoundException.class, () -> managerService.getJobOfferByID(id));
 		verify(jobOfferRepository, times(1)).findById(id);
 	}
 
@@ -509,25 +506,24 @@ class ManagerServiceTest{
 	void getJobOffersWithState_Submitted(){
 		//        Arrange
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.addAll(List.of(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
-			                         JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title("Job Offer 2").description(
-			                         "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                         JobOffer.builder().title(
-			                         "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 4").description("Description 4").jobOfferState(
-			                         JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().title(
-				"Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 6").description("Description 6").jobOfferState(
-			                         JobOfferState.TAKEN).semester(semester).build()
-		));
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
+                        JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title("Job Offer 2").description(
+                        "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 4").description("Description 4").jobOfferState(
+                        JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 6").description("Description 6").jobOfferState(
+                        JobOfferState.TAKEN).semester(semester).build()
+        ));
 
 		when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.SUBMITTED, semester)).thenReturn(
 			jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.SUBMITTED).toList());
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.SUBMITTED, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.SUBMITTED, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -541,25 +537,24 @@ class ManagerServiceTest{
 		//        Arrange
 
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.addAll(List.of(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
-			                         JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title("Job Offer 2").description(
-			                         "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                         JobOffer.builder().title(
-			                         "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 4").description("Description 4").jobOfferState(
-			                         JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().title(
-				"Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 6").description("Description 6").jobOfferState(
-			                         JobOfferState.TAKEN).semester(semester).build()
-		));
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
+                        JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title("Job Offer 2").description(
+                        "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 4").description("Description 4").jobOfferState(
+                        JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 6").description("Description 6").jobOfferState(
+                        JobOfferState.TAKEN).semester(semester).build()
+        ));
 
 		when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.OPEN, semester)).thenReturn(
 			jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.OPEN).toList());
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.OPEN, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.OPEN, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -572,25 +567,24 @@ class ManagerServiceTest{
 	void getJobOffersWithState_Pending(){
 		//        Arrange
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.addAll(List.of(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
-			                         JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title("Job Offer 2").description(
-			                         "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                         JobOffer.builder().title(
-			                         "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 4").description("Description 4").jobOfferState(
-			                         JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().title(
-				"Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 6").description("Description 6").jobOfferState(
-			                         JobOfferState.TAKEN).semester(semester).build()
-		));
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
+                        JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title("Job Offer 2").description(
+                        "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 4").description("Description 4").jobOfferState(
+                        JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 6").description("Description 6").jobOfferState(
+                        JobOfferState.TAKEN).semester(semester).build()
+        ));
 
 		when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.PENDING, semester)).thenReturn(
 			jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.PENDING).toList());
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.PENDING, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.PENDING, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -603,25 +597,24 @@ class ManagerServiceTest{
 	void getJobOffersWithState_Expired(){
 		//        Arrange
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.addAll(List.of(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
-			                         JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title("Job Offer 2").description(
-			                         "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                         JobOffer.builder().title(
-			                         "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 4").description("Description 4").jobOfferState(
-			                         JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().title(
-				"Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 6").description("Description 6").jobOfferState(
-			                         JobOfferState.TAKEN).semester(semester).build()
-		));
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
+                        JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title("Job Offer 2").description(
+                        "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 4").description("Description 4").jobOfferState(
+                        JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 6").description("Description 6").jobOfferState(
+                        JobOfferState.TAKEN).semester(semester).build()
+        ));
 
 		when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.EXPIRED, semester)).thenReturn(
 			jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.EXPIRED).toList());
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.EXPIRED, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.EXPIRED, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -635,16 +628,16 @@ class ManagerServiceTest{
 		//        Arrange
 
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().title("Job Offer 1").description(
-			                                                   "Description 1").jobOfferState(JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title(
+		List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description(
+			                                                   "Description 1").jobOfferState(JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
 			                                                   "Job Offer 2").description("Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                                                   JobOffer.builder().title("Job Offer 3").description(
+		                                                   JobOffer.builder().department(testDepartment).title("Job Offer 3").description(
 			                                                           "Description 3").jobOfferState(JobOfferState.OPEN)
-		                                                           .semester(semester).build(), JobOffer.builder().title(
+		                                                           .semester(semester).build(), JobOffer.builder().department(testDepartment).title(
 				"Job Offer 4").description("Description 4").jobOfferState(JobOfferState.PENDING).semester(semester).build(),
-		                                                   JobOffer.builder().title("Job Offer 5").description(
+		                                                   JobOffer.builder().department(testDepartment).title("Job Offer 5").description(
 			                                                           "Description 5").jobOfferState(JobOfferState.EXPIRED)
-		                                                           .semester(semester).build(), JobOffer.builder().title(
+		                                                           .semester(semester).build(), JobOffer.builder().department(testDepartment).title(
 				"Job Offer 6").description("Description 6").jobOfferState(JobOfferState.TAKEN).semester(semester).build()
 		));
 
@@ -653,7 +646,7 @@ class ManagerServiceTest{
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.TAKEN, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.TAKEN, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -667,25 +660,24 @@ class ManagerServiceTest{
 		//        Arrange
 
 		Semester semester = new Semester(LocalDate.now());
-		List<JobOffer> jobOffers = new ArrayList<>();
-		jobOffers.addAll(List.of(JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
-			                         JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().title("Job Offer 2").description(
-			                         "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
-		                         JobOffer.builder().title(
-			                         "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 4").description("Description 4").jobOfferState(
-			                         JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().title(
-				"Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
-		                         JobOffer.builder().title("Job Offer 6").description("Description 6").jobOfferState(
-			                         JobOfferState.TAKEN).semester(semester).build()
-		));
+        List<JobOffer> jobOffers = new ArrayList<>(List.of(JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
+                        JobOfferState.SUBMITTED).semester(semester).build(), JobOffer.builder().department(testDepartment).title("Job Offer 2").description(
+                        "Description 2").jobOfferState(JobOfferState.REFUSED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 3").description("Description 3").jobOfferState(JobOfferState.OPEN).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 4").description("Description 4").jobOfferState(
+                        JobOfferState.PENDING).semester(semester).build(), JobOffer.builder().department(testDepartment).title(
+                        "Job Offer 5").description("Description 5").jobOfferState(JobOfferState.EXPIRED).semester(semester).build(),
+                JobOffer.builder().department(testDepartment).title("Job Offer 6").description("Description 6").jobOfferState(
+                        JobOfferState.TAKEN).semester(semester).build()
+        ));
 
 		when(jobOfferRepository.findJobOfferByJobOfferStateAndSemester(JobOfferState.REFUSED, semester)).thenReturn(
 			jobOffers.stream().filter(jobOffer -> jobOffer.getJobOfferState() == JobOfferState.REFUSED).toList());
 
 		//        Act
 
-		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.REFUSED, semester);
+		List<JobOfferDTO> jobOfferDTOs = managerService.getJobOffersWithState(JobOfferState.REFUSED, semester, testDepartment);
 		//        Assert
 
 		assertNotNull(jobOfferDTOs);
@@ -701,7 +693,7 @@ class ManagerServiceTest{
 		Long id = 1L;
 		JobOfferState newState = JobOfferState.OPEN;
 
-		JobOffer jobOffer = JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(
+		JobOffer jobOffer = JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(
 			JobOfferState.SUBMITTED).build();
 
 		when(jobOfferRepository.findById(id)).thenReturn(Optional.of(jobOffer));
@@ -731,9 +723,7 @@ class ManagerServiceTest{
 		when(jobOfferRepository.findById(id)).thenReturn(Optional.empty());
 
 		// Act and Assert
-		assertThrows(JobOfferNotFoundException.class, () -> {
-			managerService.updateJobOfferState(id, newState, reason);
-		});
+		assertThrows(JobOfferNotFoundException.class, () -> managerService.updateJobOfferState(id, newState, reason));
 		verify(jobOfferRepository, times(1)).findById(id);
 	}
 
@@ -741,7 +731,7 @@ class ManagerServiceTest{
 	void deleteJobOffer_valid(){
 		//        Arrange
 		Long id = 1L;
-		JobOffer.builder().title("Job Offer 1").description("Description 1").jobOfferState(JobOfferState.SUBMITTED).build();
+		JobOffer.builder().department(testDepartment).title("Job Offer 1").description("Description 1").jobOfferState(JobOfferState.SUBMITTED).build();
 
 		//        Act
 		managerService.deleteJobOffer(id);
@@ -774,6 +764,7 @@ class ManagerServiceTest{
 	private Student createStudent(String matricule){
 		Student student = new Student();
 		student.setMatricule(matricule);
+		student.setDepartment(testDepartment);
 		return student;
 	}
 
@@ -782,10 +773,10 @@ class ManagerServiceTest{
 		LocalDateTime date = LocalDateTime.now();
 		String formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		Student student = Student.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").build();
-		Manager manager = Manager.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
+		Manager manager = Manager.builder().department(testDepartment).id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
 		Employer employer = Employer.builder().id(1L).email("asd@asd.com").firstName("EmployerFirstName").lastName(
 			"EmployerLastName").organisationName(" asd").organisationPhone("111-111-1111").build();
-		JobOffer jobOffer = JobOffer.builder().id(1L).title("JobOfferTitle").description("  asdads").location("Location1")
+		JobOffer jobOffer = JobOffer.builder().department(testDepartment).id(1L).title("JobOfferTitle").description("  asdads").location("Location1")
 		                            .department(Department._145A0).jobOfferState(JobOfferState.OPEN).startDate(
 				LocalDate.now()).expirationDate(LocalDate.now().plusDays(30)).semester(new Semester(LocalDate.now())).employer(
 				employer).build();
@@ -827,7 +818,6 @@ class ManagerServiceTest{
 		assertEquals("ManagerLastName", savedContract.getManagerSignature().getLastName());
 		assertEquals(formattedDate, savedContract.getManagerSignature().getSignatureDate().toString());
 		assertEquals(date, savedContract.getCreationDate());
-		//        assertEquals(date, savedContract.getLastModificationDate()); Test prenne plus que 1ms alors FAIL
 		verify(contractRepository, times(1)).save(contract);
 		assertNotNull(result);
 		assertEquals(1L, result.getId());
@@ -835,11 +825,10 @@ class ManagerServiceTest{
 
 	@Test
 	public void testSignContractValidations(){
-		LocalDateTime date = LocalDateTime.now();
 		Student student = Student.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName").build();
 		Employer employer = Employer.builder().id(1L).firstName("EmployerFirstName").lastName("EmployerLastName").build();
-		Manager manager = Manager.builder().id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
-		JobOffer jobOffer = JobOffer.builder().id(1L).title("JobOfferTitle").employer(employer).jobOfferState(
+		Manager manager = Manager.builder().department(testDepartment).id(1L).firstName("ManagerFirstName").lastName("ManagerLastName").build();
+		JobOffer jobOffer = JobOffer.builder().department(testDepartment).id(1L).title("JobOfferTitle").employer(employer).jobOfferState(
 			JobOfferState.OPEN).build();
 
 		Signature studentSignature = Signature.builder().id(1L).firstName("StudentFirstName").lastName("StudentLastName")
@@ -851,24 +840,15 @@ class ManagerServiceTest{
 		                                      .signatureDate(LocalDate.now()).build();
 
 		Contract contract = Contract.builder().id(1L).student(student).employer(employer).jobOffer(jobOffer).build();
-		Contract savedContract = Contract.builder().id(1L).student(student).employer(employer).jobOffer(jobOffer)
-		                                 .employerSignature(employerSignature).managerSignature(managerSignature)
-		                                 .creationDate(date).lastModificationDate(date).isComplete(true).build();
 
-		Manager manager2 = Manager.builder().id(2L).firstName("StudentFirstName2").lastName("StudentLastName2").build();
+		Manager manager2 = Manager.builder().department(testDepartment).id(2L).firstName("StudentFirstName2").lastName("StudentLastName2").build();
 		Contract contract2 = Contract.builder().id(2L).student(student).employer(employer).jobOffer(jobOffer)
 		                             .studentSignature(studentSignature).employerSignature(employerSignature)
 		                             .managerSignature(managerSignature).build();
-		Contract savedContract2 = Contract.builder().id(2L).student(student).employer(employer).jobOffer(jobOffer)
-		                                  .studentSignature(studentSignature).employerSignature(employerSignature)
-		                                  .creationDate(date).lastModificationDate(date).isComplete(true).build();
 
-		Manager manager3 = Manager.builder().id(3L).firstName("StudentFirstName3").lastName("StudentLastName3").build();
+		Manager manager3 = Manager.builder().department(testDepartment).id(3L).firstName("StudentFirstName3").lastName("StudentLastName3").build();
 		Contract contract3 = Contract.builder().id(3L).student(student).employer(employer).studentSignature(
 			studentSignature).build();
-		Contract savedContract3 = Contract.builder().id(3L).employer(employer).student(student).jobOffer(jobOffer)
-		                                  .employerSignature(employerSignature).managerSignature(managerSignature)
-		                                  .creationDate(date).lastModificationDate(date).isComplete(true).build();
 
 		when(managerRepository.findById(1L)).thenReturn(Optional.of(manager));
 		when(managerRepository.findById(2L)).thenReturn(Optional.of(manager2));
@@ -880,11 +860,11 @@ class ManagerServiceTest{
 		when(contractRepository.findById(3L)).thenReturn(Optional.of(contract3));
 		when(contractRepository.findById(100L)).thenReturn(Optional.empty());
 
-		assertThrows(ManagerNotFoundException.class, () -> {managerService.signContract(1L, 100L);});
-		assertThrows(ContractNotFoundException.class, () -> {managerService.signContract(100L, 1L);});
-		assertThrows(ContractNotReadyToSignException.class, () -> {managerService.signContract(3L, 3L);});
-		assertThrows(ContractNotSignedByStudentException.class, () -> {managerService.signContract(1L, 2L);});
-		assertThrows(ContractAlreadySignedException.class, () -> {managerService.signContract(2L, 2L);});
+		assertThrows(ManagerNotFoundException.class, () -> managerService.signContract(1L, 100L));
+		assertThrows(ContractNotFoundException.class, () -> managerService.signContract(100L, 1L));
+		assertThrows(ContractNotReadyToSignException.class, () -> managerService.signContract(3L, 3L));
+		assertThrows(ContractNotSignedByStudentException.class, () -> managerService.signContract(1L, 2L));
+		assertThrows(ContractAlreadySignedException.class, () -> managerService.signContract(2L, 2L));
 	}
 
 	@Test
@@ -929,7 +909,7 @@ class ManagerServiceTest{
 		jobOffer.setId(4L);
 		jobOffer.setEmployer(employer);
 		jobOffer.setSemester(semester);
-		jobOffer.setDepartment(Department._420B0);
+		jobOffer.setDepartment(testDepartment);
 		jobOffer.setJobOfferState(JobOfferState.OPEN);
 		jobOffer.setDuration(6);
 		jobOffer.setHoursPerWeek(40);
@@ -946,7 +926,7 @@ class ManagerServiceTest{
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act
-		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester, testDepartment);
 
 		// Assert
 		assertNotNull(contractsDTO);
@@ -1010,7 +990,7 @@ class ManagerServiceTest{
 		jobOffer.setId(4L);
 		jobOffer.setEmployer(employer);
 		jobOffer.setSemester(semester);
-		jobOffer.setDepartment(Department._420B0);
+		jobOffer.setDepartment(testDepartment);
 		jobOffer.setJobOfferState(JobOfferState.OPEN);
 		jobOffer.setDuration(6);
 		jobOffer.setHoursPerWeek(40);
@@ -1025,7 +1005,7 @@ class ManagerServiceTest{
 		jobOffer1.setId(8L);
 		jobOffer1.setEmployer(employer);
 		jobOffer1.setSemester(semester);
-		jobOffer1.setDepartment(Department._420B0);
+		jobOffer1.setDepartment(testDepartment);
 		jobOffer1.setJobOfferState(JobOfferState.OPEN);
 		jobOffer1.setDuration(6);
 		jobOffer1.setHoursPerWeek(40);
@@ -1043,7 +1023,7 @@ class ManagerServiceTest{
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act
-		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester, testDepartment);
 
 		// Assert
 		assertEquals(contractsDTO.size(), 2);
@@ -1093,7 +1073,7 @@ class ManagerServiceTest{
 		jobOffer.setId(4L);
 		jobOffer.setEmployer(employer);
 		jobOffer.setSemester(new Semester(LocalDate.now()));
-		jobOffer.setDepartment(Department._420B0);
+		jobOffer.setDepartment(testDepartment);
 		jobOffer.setJobOfferState(JobOfferState.OPEN);
 		jobOffer.setDuration(6);
 		jobOffer.setHoursPerWeek(40);
@@ -1108,7 +1088,7 @@ class ManagerServiceTest{
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act
-		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester);
+		List<ContractDTO> contractsDTO = managerService.getContractsBySession(semester, testDepartment);
 
 		// Assert
 		assertNotNull(contractsDTO);
@@ -1156,7 +1136,7 @@ class ManagerServiceTest{
 		jobOffer.setId(4L);
 		jobOffer.setEmployer(employer);
 		jobOffer.setSemester(null);
-		jobOffer.setDepartment(Department._420B0);
+		jobOffer.setDepartment(testDepartment);
 		jobOffer.setJobOfferState(JobOfferState.OPEN);
 		jobOffer.setDuration(6);
 		jobOffer.setHoursPerWeek(40);
@@ -1171,7 +1151,7 @@ class ManagerServiceTest{
 		when(managerRepository.findAll()).thenReturn(List.of(manager));
 
 		// Act
-		List<ContractDTO> contractsDTO = managerService.getContractsBySession(null);
+		List<ContractDTO> contractsDTO = managerService.getContractsBySession(null, testDepartment);
 
 		// Assert
 		assertNotNull(contractsDTO);

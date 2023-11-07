@@ -207,6 +207,7 @@ public class UserServiceTest {
                 .id(2L)
                 .email(email)
                 .password("Test12345")
+                .department(Department._420B0)
                 .build();
 
         when(jwtTokenProvider.getEmailFromJWT(managerToken)).thenReturn(email);

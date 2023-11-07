@@ -66,12 +66,14 @@ public class ManagerService{
 		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
 	}
 
-	public List<CvFileDTO> getAllCv(){
-		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
+	public List<CvFileDTO> getAllCv(Department department){
+		List<CvFile> cvFiles = cvRepository.findAll();
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new).toList();
 	}
 
-	public List<CvFileDTO> getSubmittedCv(){
-		return cvRepository.findAllByCvState(CvState.SUBMITTED).stream().map(CvFileDTO::new).toList();
+	public List<CvFileDTO> getSubmittedCv(Department department){
+		List<CvFile> cvFiles = cvRepository.findAllByCvState(CvState.SUBMITTED);
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new).toList();
 	}
 
 	public List<CvFileDTO> getAllCvFileByStudent(Long id){
@@ -104,9 +106,10 @@ public class ManagerService{
 		return new CvFileDTO(cvRepository.save(cvFile));
 	}
 
-	public List<CvFileDTO> getCvFilesWithState(CvState state){
+	public List<CvFileDTO> getCvFilesWithState(CvState state, Department department){
 		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
-		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new)
+		               .toList();
 	}
 
 	public CvFileDTO updateCvState(Long id, CvState newState, String reason){
@@ -118,17 +121,20 @@ public class ManagerService{
 
 	//	Job Offer
 
-	public List<JobOfferDTO> getAllJobOffer(Semester semester){
-		return jobOfferRepository.findAllBySemester(semester).stream().map(JobOfferDTO::new).toList();
+	public List<JobOfferDTO> getAllJobOffer(Semester semester, Department department){
+		List<JobOffer> jobOffers = jobOfferRepository.findAllBySemester(semester);
+		return jobOffers.stream().filter(jobOffer -> jobOffer.getDepartment() == department).map(JobOfferDTO::new)
+		                .toList();
 	}
 
 	public JobOfferDTO getJobOfferByID(Long id){
 		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow(() -> new JobOfferNotFoundException(id)));
 	}
 
-	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester){
-		return jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester).stream().map(JobOfferDTO::new)
-		                         .collect(Collectors.toList());
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester, Department department){
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester);
+		return jobOffers.stream().filter(jobOffer -> jobOffer.getDepartment() == department).map(JobOfferDTO::new)
+		                .toList();
 	}
 
 	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason){
@@ -142,9 +148,11 @@ public class ManagerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	public List<ContractDTO> getContractsBySession(Semester semester){
+	public List<ContractDTO> getContractsBySession(Semester semester, Department department){
 		Manager manager = managerRepository.findAll().get(0);
-		return contractRepository.findAllByJobOffer_Semester(semester).stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
+		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester);
+		return contracts.stream().filter(contract -> contract.getJobOffer().getDepartment() == department)
+		                .map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long managerId){
@@ -164,11 +172,9 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
-//		TODO: get what manager ?
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
-	// TODO: by semester ??
 	public List<Student> getStudentsByDepartment(Department department){
 		return studentRepository.findAllByDepartment(department);
 
