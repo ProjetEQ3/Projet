@@ -34,6 +34,12 @@ function App(){
 		}
 	}, [_token])
 
+	useEffect(() => {
+		if (user.role === 'ROLE_MANAGER') {
+			axiosInstance.defaults.params['department'] = user.department
+		}
+	}, [user])
+
 	return (
 		<TranslationProvider>
 			<ToastContainer
@@ -47,7 +53,7 @@ function App(){
 				pauseOnHover
 				theme="colored"
 			/>
-			<SessionProvider>
+			<SessionProvider user={user}>
 				<div className="p-0">
 					<BrowserRouter>
 						<div className="min-vh-100 p-0 m-0 position-relative">

@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
@@ -1162,17 +1163,34 @@ class ManagerServiceTest{
 	@Test
 	void getStudentsByDepartment_ShouldReturnStudents(){
 		// Arrange
-		when(studentRepository.findAllByDepartment(testDepartment)).thenReturn(testStudents);
+		Credentials studCreds = new Credentials();
+		studCreds.setEmail("John@Doe.fr");
+		studCreds.setRole(Role.STUDENT);
+		Student student = new Student();
+		student.setMatricule("1234567");
+		student.setFirstName("John");
+		student.setLastName("Doe");
+		student.setDepartment(testDepartment);
+		student.setCredentials(studCreds);
+
+		StudentDTO studentExpected = new StudentDTO();
+		studentExpected.setMatricule("1234567");
+		studentExpected.setFirstName("John");
+		studentExpected.setLastName("Doe");
+		studentExpected.setDepartment(testDepartment);
+		when(studentRepository.findAllByDepartment(testDepartment)).thenReturn(List.of(student));
 
 		// Act
-		List<Student> students = managerService.getStudentsByDepartment(testDepartment);
+		List<StudentDTO> students = managerService.getStudentsByDepartment(testDepartment);
 
 		// Assert
-		assertNotNull(students, "The returned student list should not be null");
-		assertEquals(2, students.size(), "There should be 2 students returned");
-		assertEquals(testStudents, students, "The students returned should be the ones defined in test setup");
+		assertNotNull(students);
+		assertEquals(1, students.size());
+		assertEquals(studentExpected.getFirstName(), students.get(0).getFirstName());
+		assertEquals(studentExpected.getLastName(), students.get(0).getLastName());
+		assertEquals(studentExpected.getMatricule(), students.get(0).getMatricule());
+		assertEquals(studentExpected.getDepartment(), students.get(0).getDepartment());
 		verify(studentRepository).findAllByDepartment(testDepartment);
 	}
-
 }
 

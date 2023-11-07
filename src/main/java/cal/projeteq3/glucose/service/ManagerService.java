@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
@@ -21,10 +22,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @RequiredArgsConstructor
 @Service
 public class ManagerService{
-
 	private final ManagerRepository managerRepository;
 	private final StudentRepository studentRepository;
 	private final JobOfferRepository jobOfferRepository;
@@ -40,7 +42,7 @@ public class ManagerService{
 
 	public List<ManagerDTO> getAllManagers(){
 		List<Manager> managers = managerRepository.findAll();
-		return managers.stream().map(ManagerDTO::new).collect(Collectors.toList());
+		return managers.stream().map(ManagerDTO::new).collect(toList());
 	}
 
 	public ManagerDTO getManagerByID(Long id){
@@ -152,7 +154,7 @@ public class ManagerService{
 		Manager manager = managerRepository.findAll().get(0);
 		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester);
 		return contracts.stream().filter(contract -> contract.getJobOffer().getDepartment() == department)
-		                .map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
+		                .map((contract -> new ContractDTO(contract, manager))).collect(toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long managerId){
@@ -175,9 +177,8 @@ public class ManagerService{
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
-	public List<Student> getStudentsByDepartment(Department department){
-		return studentRepository.findAllByDepartment(department);
-
+	public List<StudentDTO> getStudentsByDepartment(Department department){
+		return studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).collect(Collectors.toList());
 	}
 
 }
