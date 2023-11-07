@@ -35,7 +35,7 @@ function App(){
 	}, [_token])
 
 	useEffect(() => {
-		if (user.role === 'ROLE_MANAGER') {
+		if (user.role === 'ROLE_MANAGER' || user.role === 'ROLE_STUDENT') {
 			axiosInstance.defaults.params['department'] = user.department
 		}
 	}, [user])

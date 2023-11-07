@@ -249,9 +249,11 @@ public class StudentControllerTest {
 
 //        Act & Assert
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/jobOffers/open/{department}", "_420B0")
-                        .header("Authorization", token).param("season", "FALL")
-                        .param("year", "2021"))
+                        .get("/student/jobOffers/open")
+                        .header("Authorization", token)
+                        .param("season", "FALL")
+                        .param("year", "2021")
+                        .param("department", "_420B0"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -259,10 +261,11 @@ public class StudentControllerTest {
     @Test
     public void GetOpenJobOffersByDepartment_InvalidDep2() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/jobOffers/open/{department}", "_420B1")
+                        .get("/student/jobOffers/open")
                         .header("Authorization", token)
                         .param("season", "FALL")
-                        .param("year", "2021"))
+                        .param("year", "2021")
+                        .param("department", "_420B1"))
                 .andExpect(MockMvcResultMatchers.status().is(673));
     }
 
@@ -431,11 +434,12 @@ public class StudentControllerTest {
 
 		//        Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders
-                .get("/student/jobOffers/open/{department}", "_420B0")
+                .get("/student/jobOffers/open")
                 .header("Authorization", token).param("season", "FALL")
-                .param("year", "2021")).andExpect(
-			MockMvcResultMatchers.status().isAccepted()).andExpect(
-			content().contentType(MediaType.APPLICATION_JSON));
+                .param("year", "2021")
+                .param("department", "_420B0"))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 
 	@Test
