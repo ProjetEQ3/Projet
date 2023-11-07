@@ -405,7 +405,7 @@ public class UserServiceTest {
 
         when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
         when(contractRepository.findAll()).thenReturn(List.of(contract));
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
+        when(managerRepository.findFirstByDepartment(Department._420B0)).thenReturn(manager);
 
         // Act
         ContractDTO ContractDTO = userService.getShortContractById(1L);
@@ -740,7 +740,7 @@ public class UserServiceTest {
         Contract contract1 = new Contract(employer1, student1, jobOffer1);
 
         when(contractRepository.findAll()).thenReturn(List.of(contract, contract1));
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
+        when(managerRepository.findFirstByDepartment(Department._420B0)).thenReturn(manager);
 
         List<ContractDTO> contractDTOS = userService.getAllShortContracts();
         // Act

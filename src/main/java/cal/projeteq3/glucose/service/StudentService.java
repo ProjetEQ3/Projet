@@ -205,8 +205,7 @@ public class StudentService{
 				.contract(contract)
 				.build());
 		contract.setStudentSignature(signature);
-//		TODO: get what manager ?
-		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
+		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
 	}
 
 }
