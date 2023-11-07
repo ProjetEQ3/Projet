@@ -24,7 +24,7 @@
   "accept": "Accepter",
   "addInternship": "Ajouter une offre de stage",
   "ACCEPTED": "Accepté",
-  "allInternship": "Toutes les offres de stage: ",
+  "allInternship": "Toutes les offres de stage",
   "authorizeOffer": "Autorisation de l'offre de stage",
 
   "back": "Retour",
@@ -138,6 +138,7 @@
   "matriculeRequired": "Le matricule est obligatoire.",
   "matricule": "Matricule du cégep",
 
+  "noApplications": "Aucune application pour cette étudiant pour l'instant",
   "noJobOffers": "Vous n'avez pas d'applications.",
   "noInternship": "Aucune offre de stage n'a été trouvée.",
   "noStudent": "Aucun étudiant n'a postulé depuis la dernière visite.",
@@ -190,7 +191,9 @@
   "REFUSED": "Refusé",
   "registerSubmit": "S'inscrire",
 
-  "studentCV": "Les CVs des étudiants : ",
+  "students": "Étudiants",
+  "studentCV": "Les CVs des étudiants",
+  "studentList": "Liste des étudiants",
   "studentSignatureMissing": "La signature de l'étudiant est manquante",
   "startDate": "Date de début du stage: ",
   "salary": "Salaire",

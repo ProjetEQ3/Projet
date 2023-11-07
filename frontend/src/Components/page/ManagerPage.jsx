@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
+import StudentList from "../manager/StudentList";
+import Student from "../../model/Student";
 
 const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
@@ -16,6 +18,7 @@ const ManagerPage = ({user}) => {
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
     const [contracts, setContracts] = useState([new Contract()]);
+    const [students, setStudents] = useState([new Student()])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,6 +26,7 @@ const ManagerPage = ({user}) => {
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
+        getAllStudents().then(r => r);
     }, [user]);
 
     useEffect(() => {
@@ -36,6 +40,35 @@ const ManagerPage = ({user}) => {
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
+    }
+
+    const getAllStudents = async () => {
+        const studentData = [{
+            id: 1,
+            firstName: "Gabriel",
+            lastName: "Houle",
+            email: "gab@gab,com",
+            matricule: "2164584",
+            department: "_420B0",
+            state: "Sans stage"
+        },
+        {
+            id: 2,
+            firstName: "Gabriel",
+            lastName: "Houle",
+            email: "gab@gab,com",
+            matricule: "4854612",
+            department: "_420B0",
+            state: "Attente d'entrevue"
+        }]
+        const newStudent = []
+        for(let i = 0 ; i < studentData.length; i++){
+            const stud = new Student();
+            stud.init(studentData[i]);
+            newStudent.push(stud);
+        }
+
+        setStudents(newStudent);
     }
 
     const getAllOffers = async () => {
@@ -115,10 +148,12 @@ const ManagerPage = ({user}) => {
                     <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => handleTabClick('stages')}>{t('internship')}</button>
                     <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => handleTabClick('cvs')}>CVs</button>
                     <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => handleTabClick('contracts')}>{t('contracts')}</button>
+                    <button className={`col-6 btn btn-outline-ose ${tab === 'students' ? 'active' : ''}`} onClick={() => handleTabClick('students')}>{t('students')}</button>
                 </div>
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'students' && <StudentList students={students}/>}
             </div>
         </div>
     )
