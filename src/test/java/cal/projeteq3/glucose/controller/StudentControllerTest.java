@@ -441,7 +441,7 @@ public class StudentControllerTest {
 	@Test
 	void testApplyJobOfferSuccess() throws Exception{
 		JobOfferDTO mockDto = new JobOfferDTO();
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenReturn(mockDto);
+		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenReturn(mockDto);
 
 		mockMvc
 			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
@@ -454,7 +454,7 @@ public class StudentControllerTest {
 	void testApplyJobOfferApiException() throws Exception{
 		APIException mockException = new JobOfferNotOpenException();
 
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(mockException);
+		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenThrow(mockException);
 
 		mockMvc
 			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
@@ -464,7 +464,7 @@ public class StudentControllerTest {
 
 	@Test
 	void ApplyJobOffer_GenericException() throws Exception{
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(new RuntimeException());
+		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenThrow(new RuntimeException());
 
 		mockMvc.perform(
 			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)

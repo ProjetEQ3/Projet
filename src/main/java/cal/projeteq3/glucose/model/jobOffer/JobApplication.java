@@ -21,6 +21,8 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
+	String coverLetter;
+
 	@Enumerated(EnumType.STRING)
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 

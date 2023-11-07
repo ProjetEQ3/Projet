@@ -64,7 +64,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
 									className="btn btn-outline-ose"
 									onClick={() => applyForJobOffer(jobOffer.id)}
 								>
-									{t('submitApplication')}
+									{t('apply')}
 								</button>
 							</div>
 						)}
