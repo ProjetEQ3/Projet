@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import ShortStudent from "./ShortStudent";
-import JobApplication from "../../model/JobApplication";
 
 const StudentList = ({students}) => {
     const {t} = useTranslation();
