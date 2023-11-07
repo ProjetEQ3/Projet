@@ -47,7 +47,7 @@ public class JobApplication{
 		this.appointments.add(appointment);
 	}
 
-	public boolean isNotChangeble() {
+	public boolean isImmutable() {
 		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED;
 	}
 }
