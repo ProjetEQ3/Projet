@@ -269,5 +269,8 @@
   "availableInternships": "Offres de stage disponibles",
   "myAppointments": "Mes rendez-vous",
   "appointmentsToAttest": "Vos rendez-vous sont ou seront indiqués ici",
-  "availableInternshipsToApplyTo": "Les offres de stage disponibles sont ou seront indiquées ici"
+  "availableInternshipsToApplyTo": "Les offres de stage disponibles sont ou seront indiquées ici",
+  "cvRequiredToContinue": "Vous devez téléverser un CV pour continuer",
+  "cvWaitingApproval": "Votre CV est en attente d'approbation",
+  "cvCurrentlyRefused": "Votre CV a été refusé, veillez voir pourquoi et le modifier le cas échéant."
 }

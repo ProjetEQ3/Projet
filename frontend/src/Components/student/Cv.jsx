@@ -46,7 +46,7 @@ function Cv({user, setCv}){
 			.delete(`/student/cv/${user.id}`)
 			.then(() => {
 				toast.success(t('deleteCV'))
-				setCv(null)
+				setCv(undefined)
 				setIsLoading(false)
 			})
 			.catch((error) => {
@@ -57,6 +57,7 @@ function Cv({user, setCv}){
 
 	const refreshCvState = () => {
 		if (!user?.id) return;
+		if (!user.cvFile || !user.cvFile.id) return;
 		axiosInstance
 			.get(`/student/cv/${user.id}`)
 			.then((response) => {

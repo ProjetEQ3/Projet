@@ -267,5 +267,8 @@
   "availableInternships": "Available internships",
   "myAppointments": "My appointments",
   "appointmentsToAttest": "Your appointments are or will be displayed here",
-  "availableInternshipsToApplyTo": "Available internships are or will be displayed here"
+  "availableInternshipsToApplyTo": "Available internships are or will be displayed here",
+  "cvRequiredToContinue": "You must upload a CV to continue",
+  "cvWaitingApproval": "Your CV is waiting for approval",
+  "cvCurrentlyRefused": "Your CV has been refused, please see why and modify it as necessary."
 }

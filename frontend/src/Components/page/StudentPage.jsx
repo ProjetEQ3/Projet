@@ -14,6 +14,7 @@ import Home from "../student/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
 import Appointment from "../../model/Appointment";
+import cv from "../student/Cv";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -125,7 +126,7 @@ const StudentPage = ({user, setUser}) => {
 
 	useEffect(() => {
 		getNotificationsCounts();
-	}, [jobOffers, myApplications, contracts, appointments]);
+	}, [jobOffers, myApplications, contracts, appointments, user]);
 
 	const handleSessionChange = () => {
 	  setJobOffers([]);
@@ -139,6 +140,7 @@ const StudentPage = ({user, setUser}) => {
 
 	function getNotificationsCounts() {
 		updateNotifications('home', { green: 0, gray: 0, red: 0 });
+
 		let greenNotificationsStages = 0;
 		let grayNotificationsStages = 0;
 		let redNotificationsStages = jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length;
@@ -161,7 +163,18 @@ const StudentPage = ({user, setUser}) => {
 		});
 		updateNotifications('my_applications', { green: greenNotificationsApplication, gray: grayNotificationsApplication, red: redNotificationsApplication });
 
-		updateNotifications('cv', { green: 0, gray: 0, red: 0 });
+		let redNotificationsCv = 0;
+		let greenNotificationsCv = 0;
+		let grayNotificationsCv = 0;
+
+		if (user.cvFile === undefined) {
+			redNotificationsCv = 1;
+		} else if (user.cvFile.cvState === 'SUBMITTED') {
+			grayNotificationsCv = 1;
+		} else {
+			greenNotificationsCv = 1;
+		}
+		updateNotifications('cv', { green: greenNotificationsCv, gray: grayNotificationsCv, red: redNotificationsCv });
 		updateNotifications('contract', { green: 0, gray: 0, red: 0 });
 	}
 
@@ -191,7 +204,7 @@ const StudentPage = ({user, setUser}) => {
 						</button>
 					))}
 				</div>
-				{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} applications={myApplications}/>}
+				{tab === 'home' && <Home cv={user.cvFile} setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} applications={myApplications}/>}
 				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} selectedById={idElement} />}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv}/>}
