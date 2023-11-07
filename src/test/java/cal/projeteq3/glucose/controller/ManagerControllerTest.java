@@ -5,6 +5,7 @@ import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
@@ -319,6 +320,23 @@ public class ManagerControllerTest {
                         .content(objectMapper.writeValueAsString(loginDTO)))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getStudents_valid() throws Exception{
+        // Arrange
+        List<StudentDTO> studentDTOS = Arrays.asList(new StudentDTO(), new StudentDTO());
+
+        when(managerService.getStudents(Department._420B0)).thenReturn(studentDTOS);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/manager/students")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("department", "_420B0"))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(studentDTOS.size()));
     }
 
 }

@@ -1181,7 +1181,7 @@ class ManagerServiceTest{
 		when(studentRepository.findAllByDepartment(testDepartment)).thenReturn(List.of(student));
 
 		// Act
-		List<StudentDTO> students = managerService.getStudentsByDepartment(testDepartment);
+		List<StudentDTO> students = managerService.getStudents(testDepartment);
 
 		// Assert
 		assertNotNull(students);

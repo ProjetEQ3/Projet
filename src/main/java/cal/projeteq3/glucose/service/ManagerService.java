@@ -177,7 +177,7 @@ public class ManagerService{
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
-	public List<StudentDTO> getStudentsByDepartment(Department department){
+	public List<StudentDTO> getStudents(Department department){
 		return studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).collect(Collectors.toList());
 	}
 
