@@ -27,6 +27,17 @@ const EmployerPage = ({user}) => {
 		setNbPostulations(count);
 	}
 
+	async function getNbPostulations() {
+		if (!user?.id) return;
+		await axiosInstance.get(`employer/nbApplications/${user.id}`)
+			.then((response) => {
+				setNbPostulations(response.data);
+			})
+			.catch((error) => {
+				toast.error(t(error.response?.data?.message))
+			});
+	}
+
 	useEffect(() => {
 		console.log(`nb de postulations : ${nbPostulations}`)
 	}, [nbPostulations]);
@@ -45,6 +56,7 @@ const EmployerPage = ({user}) => {
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		getContracts();
+		getNbPostulations();
 	}, [user])
 
 	return (

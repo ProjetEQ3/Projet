@@ -36,8 +36,6 @@ const JobOfferList = ({user, updateNbPostulations}) => {
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
-				console.log(response.data)
-				updateNbPostulations(response.data)
 			})
 			.catch((error) => {
 				if(error.response?.status === 401){
