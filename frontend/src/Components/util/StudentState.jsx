@@ -5,7 +5,7 @@ const StudentState = ({ state }) => {
     const classes = state === 'COMPLETE' || state === 'ACCEPTED' ? 'border-success text-success' :
             state === 'NO_CV' || state === 'NO_JOB_APPLICATION'? 'border-danger text-danger' :
                     state === 'NO_APPOINTMENT' || state === 'NO_CONTRACT' || state === 'SUBMITTED' || state === 'CONVOKED' || state === 'WAITING_APPOINTMENT' ? 'border-warning text-warning' : '';
-
+    console.log(state);
     return (
         <>
             {
