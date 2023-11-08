@@ -26,9 +26,6 @@ public class Student extends User{
 	@Enumerated(EnumType.STRING)
 	private Department department;
 
-	@ManyToMany(mappedBy = "viewedStudents")
-	private List<JobOffer> viewedJobOffers = new ArrayList<>();
-
 	@Builder
 	public Student(Long id, String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile){
 		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());
