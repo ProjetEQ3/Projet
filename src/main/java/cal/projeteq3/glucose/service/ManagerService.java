@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -185,6 +186,10 @@ public class ManagerService{
 			student.setStudentState(jobApplicationRepository);
 		}
 		return students;
+	}
+
+	public List<JobApplicationDTO> getJobApplicationsByStudentId(Long id){
+		return jobApplicationRepository.findAllByStudentId(id).stream().map(JobApplicationDTO::new).toList();
 	}
 
 	private void loadJobApplications(StudentDTO student, JobApplicationRepository jobApplicationRepository) {

@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
@@ -133,5 +134,12 @@ public class ManagerController {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getStudents(Department.valueOf(department)));
+    }
+
+    @GetMapping("/student/applications/{id}")
+    public ResponseEntity<List<JobApplicationDTO>> getStudent(@PathVariable Long id){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(managerService.getJobApplicationsByStudentId(id));
     }
 }
