@@ -7,6 +7,7 @@ import Contract from "../../model/Contract";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import NotificationBadge from "../notification/NotificationBadge";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
@@ -19,6 +20,24 @@ const EmployerPage = ({user}) => {
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [nbPostulations, setNbPostulations] = useState(0);
+	const [notifications, setNotifications] = useState({
+		stages: { red: 0, green: 0, gray: 0 },
+		entrevue: { red: 0, green: 0, gray: 0 },
+		contract: { red: 0, green: 0, gray: 0 },
+	});
+
+	useEffect(() => {
+		setNotifications(notifications => ({
+			...notifications,
+			stages: { ...notifications.stages, red: nbPostulations },
+		}));
+	}, [nbPostulations]);
+
+	useEffect(() => {
+		if (tab === 'stages') {
+			getNbPostulations();
+		}
+	}, [tab]);
 
 	const updateNbPostulations = (offers) => {
 		const count = offers.reduce((acc, offer) => {
@@ -37,10 +56,6 @@ const EmployerPage = ({user}) => {
 				toast.error(t(error.response?.data?.message))
 			});
 	}
-
-	useEffect(() => {
-		console.log(`nb de postulations : ${nbPostulations}`)
-	}, [nbPostulations]);
 
 	async function getContracts() {
 		if (!user?.id) return;
@@ -79,6 +94,7 @@ const EmployerPage = ({user}) => {
 									}}
 								>
 									{t(tabItem.label)}
+									<NotificationBadge notifications={notifications[tabItem.id]} tab={tabItem} setTab={setTab} titleInfos={`title_${tabItem.id}`} />
 								</button>
 							))}
 						</div>
