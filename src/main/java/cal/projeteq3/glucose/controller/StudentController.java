@@ -147,4 +147,19 @@ public class StudentController {
                 .body(this.studentService.signContract(contractId, studentId));
     }
 
+    @GetMapping("/viewedJobOffers/{studentId}")
+    public ResponseEntity<List<Long>> getViewedJobOffersByStudentId(@PathVariable Long studentId, @RequestParam String season, @RequestParam String year){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentService.getViewedJobOffersByStudentId(studentId, Semester.builder()
+                        .season(Semester.Season.valueOf(season))
+                        .year(Integer.parseInt(year))
+                        .build()));
+    }
+
+
+    @PutMapping("/jobOffer/view/{studentId}/{jobOfferId}")
+    public ResponseEntity<JobOfferDTO> viewJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId) {
+        return ResponseEntity.accepted().body(studentService.markJobOfferAsViewed(jobOfferId, studentId));
+    }
 }

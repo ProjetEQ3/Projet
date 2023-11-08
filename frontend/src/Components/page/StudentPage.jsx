@@ -32,6 +32,7 @@ const StudentPage = ({user, setUser}) => {
   const [myApplications, setMyApplications] = useState([new Application()]);
   const [contracts, setContracts] = useState([new Contract()]);
   const [appointments, setAppointments] = useState([new Appointment()]);
+  const [viewedJobOfferList, setViewedJobOfferList] = useState([]);
 
   const [idElement, setIdElement] = useState(null);
 
@@ -75,7 +76,7 @@ const StudentPage = ({user, setUser}) => {
 		});
 	};
 
-	async function getContracts() {
+	async function fetchContracts() {
 		if (!user?.id) return;
 		await axiosInstance.get(`student/contracts/${user.id}`)
 			.then((response) => {
@@ -97,6 +98,17 @@ const StudentPage = ({user, setUser}) => {
 			});
 	}
 
+	async function fetchViewedJobOfferList() {
+		if (!user?.id) return;
+		await axiosInstance.get(`/student/viewedJobOffers/${user.id}`)
+			.then((response) => {
+				setViewedJobOfferList(response.data);
+			})
+			.catch((error) => {
+				toast.error(t('fetchError') + t(error.response?.data.message));
+			});
+	}
+
 	function filterApplicationsFromJobOffers() {
 		return jobOffers.map((jobOffer) => {
 			myApplications.map((application) => {
@@ -109,6 +121,7 @@ const StudentPage = ({user, setUser}) => {
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		fetchStudentJobOffers()
+		fetchViewedJobOfferList()
 		fetchMyApplications()
 	}, [user]);
 
@@ -133,8 +146,19 @@ const StudentPage = ({user, setUser}) => {
 	}, [jobOffers, myApplications, contracts, appointments, user]);
 
 	const handleSessionChange = () => {
-	  setJobOffers([]);
-	  fetchStudentJobOffers();
+	  handleRefresh()
+	}
+
+	const handleRefresh = () => {
+		setJobOffers([]);
+		setMyApplications([]);
+		setContracts([]);
+		setAppointments([]);
+		fetchStudentJobOffers();
+		fetchMyApplications();
+		fetchViewedJobOfferList();
+		fetchContracts();
+		getNotificationsCounts();
 	}
 
 	const setCv = (cv) => {
@@ -199,7 +223,8 @@ const StudentPage = ({user, setUser}) => {
 							className={`col-md-3 btn btn-outline-ose mx-2 ${tab === tabItem.id ? 'active' : ''}`}
 							onClick={() => {
 								setTab(tabItem.id)
-								if (tabItem.id === 'contract') getContracts();
+								handleRefresh();
+								
 							}}
 							style={{ position: 'relative' }}
 						>

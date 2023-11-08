@@ -207,4 +207,15 @@ public class StudentService{
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 
+	public JobOfferDTO markJobOfferAsViewed(Long id, Long jobOfferId) {
+		Student student = studentRepository.findById(id).orElseThrow(StudentNotFoundException::new);
+		if(student.getViewedJobOfferIds().contains(jobOfferId)) return null;
+		student.getViewedJobOfferIds().add(jobOfferId);
+		studentRepository.save(student);
+		return new JobOfferDTO(jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new));
+	}
+
+	public List<Long> getViewedJobOffersByStudentId(Long studentId, Semester build) {
+		return studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new).getViewedJobOfferIds();
+	}
 }
