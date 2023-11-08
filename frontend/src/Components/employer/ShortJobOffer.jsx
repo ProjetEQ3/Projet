@@ -5,7 +5,7 @@ import {useState} from "react";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 
-const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
+const ShortJobOffer = ({ jobOffer, deleteOffer, isBold}) => {
     const [t, i18n] = useTranslation();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -22,7 +22,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-10 col-sm-6">
-                        <h5 className="text-dark fw-light pt-1" data-testid="job-title">{jobOffer.title}</h5>
+                        <h5 className={`text-dark fw-light pt-1 ${isBold ? 'fw-bold' : ''}`} data-testid="job-title">{jobOffer.title}</h5>
                         <p className="text-dark fw-light mb-3" data-testid="job-department">{t(jobOffer.department)}</p>
                         <p className="text-dark fw-light float-sm-end">{t('nbOfCandidates')} <span><strong>{jobOffer.nbOfCandidates}</strong></span></p>
                     </div>

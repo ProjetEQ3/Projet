@@ -15,6 +15,24 @@ const JobOfferList = ({user, getNbPostulations}) => {
 	const [offers, setOffers] = useState([])
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
+	const [offersWithApplications, setOffersWithApplications] = useState([])
+
+	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
+		axiosInstance
+			.get(`/employer/offer/submittedApplications/${user.id}`)
+			.then((response) => {
+				setOffersWithApplications(response.data);
+			})
+			.catch((error) => {
+				toast.error(t('getOffersWithSubmittedApplicationsError') + t(error.response?.data.message))
+			});
+	}
+
+	useEffect(() => {
+		if (user?.isLoggedIn) {
+			getOffersWithSubmittedApplications();
+		}
+	}, [user]);
 
 	useEffect(() => {
 		if(!user?.isLoggedIn) navigate('/')
@@ -49,26 +67,36 @@ const JobOfferList = ({user, getNbPostulations}) => {
 		navigate('/employer/newOffer')
 	}
 
+	const isOfferInSubmissions = (offerId) => {
+		return offersWithApplications.some((submission) => submission.id === offerId);
+	};
+
 	const renderFilteredOffers = (filteredOffers) => {
 		return (
 			<div className="col-12">
 				{
 					filteredOffers.length !== 0 ?
-						filteredOffers.map((offer, index) => (
-							<div key={index} onClick={() => handleSelectOffer(offer)}>
-								<ShortJobOffer
-									jobOffer={offer}
-									updateJobOfferList={updateOffer}
-								  deleteOffer={() => deleteOffer(offer.id)}
-								/>
-							</div>)) :
+						filteredOffers.map((offer, index) => {
+							const boldTitle = isOfferInSubmissions(offer.id);
+							return (
+								<div key={index} onClick={() => handleSelectOffer(offer)}>
+									<ShortJobOffer
+										jobOffer={offer}
+										updateJobOfferList={updateOffer}
+										deleteOffer={() => deleteOffer(offer.id)}
+										isBold={boldTitle}
+									/>
+								</div>
+							);
+						}) :
 						<div className="col-12 bg-white rounded p-3">
 							<h2 className="text-dark fw-light pt-1">{t('noInternship')}</h2>
 						</div>
 				}
 			</div>
-		)
-	}
+		);
+	};
+
 	const updateOffer = (offer) => {
 		axiosInstance
 			.put('/employer/offer', offer)
