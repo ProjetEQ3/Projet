@@ -110,10 +110,10 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
           />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="light" className={"btn-outline-ose"} onClick={() => setShowModal(false)}>
+                    <Button variant="outline-secondary" className={"btn-outline-ose"} onClick={() => setShowModal(false)}>
                         {t('close')}
                     </Button>
-                    <Button variant="light" className={"btn-outline-ose"} onClick={() => applyForJobOffer(jobOffer.id)}>
+                    <Button variant="none" className={"btn-outline-ose"} onClick={() => applyForJobOffer(jobOffer.id)}>
                         {t('apply')}
                     </Button>
                 </Modal.Footer>
