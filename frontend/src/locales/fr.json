@@ -140,6 +140,7 @@
 
   "STUDENT_SUBMITTED": "Aucun rendez-vous",
   "STUDENT_NO_APPOINTMENT": "Aucun rendez-vous",
+  "STUDENT_WAITING_APPOINTMENT": "Aucun rendez-vous",
   "STUDENT_NO_CV": "CV manquant",
   "STUDENT_NO_JOB_APPLICATION": "Aucune application",
   "STUDENT_NO_CONTRACT": "Convoqué en entrevue",

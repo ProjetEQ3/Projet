@@ -75,6 +75,7 @@ return (
                                                     <StudentState state={application.jobApplicationState}/>
                                                 </div>
                                             </div>
+                                            <h5 className="fw-light">{t(application.jobOffer.department)}</h5>
                                             <p className="fw-light">{application.jobOffer.description}</p>
                                         </div>
                                     ))
