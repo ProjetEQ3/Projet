@@ -263,7 +263,7 @@ public class EmployerService{
 	}
 
 	public int nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(Long employerId) {
-		return jobOfferRepository.countSubmittedApplicationsForEmployer(employerId);
+		return jobOfferRepository.countAllByEmployer_IdAndJobApplications_JobApplicationState(employerId, JobApplicationState.SUBMITTED);
 	}
 
 	public List<JobOfferDTO> getAllJobOffersWithSubmittedApplicationsFromEmployer(Long employerId) {
