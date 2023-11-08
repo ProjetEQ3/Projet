@@ -41,7 +41,7 @@ const InterviewedStudentList = ({user}) => {
 	}
 
 	useEffect(() => {
-		fetchStudentList().then(r => console.log('Student list fetched'))
+		fetchStudentList().then(r => r)
 	}, [user])
 
 	return (

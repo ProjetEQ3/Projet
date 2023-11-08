@@ -117,6 +117,14 @@ const StudentPage = ({user, setUser}) => {
 			});
 		});
 	}
+	function filterViewedFromJobOffers() {
+		return jobOffers.map((jobOffer) => {
+			viewedJobOfferList.map((viewedJobOffer) => {
+				if (viewedJobOffer === jobOffer.id)
+					jobOffer.isViewed = true;
+			});
+		});
+	}
 
 	async function handleViewJobOffer(jobOffer) {
 		if (!user?.id) return;
@@ -155,6 +163,10 @@ const StudentPage = ({user, setUser}) => {
 	}, [myApplications, jobOffers]);
 
 	useEffect(() => {
+		filterViewedFromJobOffers();
+	}, [viewedJobOfferList, jobOffers]);
+
+	useEffect(() => {
 		getNotificationsCounts();
 	}, [viewedJobOfferList, jobOffers, myApplications, contracts, appointments, user]);
 
@@ -185,6 +197,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function getNotificationsCounts() {
+
 		updateNotifications('home', { green: 0, gray: 0, red: 0 });
 
 		let greenNotificationsStages = 0;

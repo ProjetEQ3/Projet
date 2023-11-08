@@ -78,7 +78,6 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                 getAllCvs();
             })
             .catch((error) => {
-                console.log(error)
                 toast.error(t('errorUpdateCV') + t(error.response?.data.message))
             })
     }
