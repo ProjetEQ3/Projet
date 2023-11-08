@@ -78,7 +78,7 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-danger" type="reset" data-bs-dismiss="modal">{t('cancel')}</button>
-                            <button className="btn btn-outline-ose" onClick={() => applyForJobOffer(jobOffer.id)} type="submit">{t('apply')}</button>
+                            <button className="btn btn-outline-ose" data-bs-dismiss="modal" onClick={() => applyForJobOffer(jobOffer.id)} type="submit">{t('apply')}</button>
                         </div>
                     </div>
                 </div>
