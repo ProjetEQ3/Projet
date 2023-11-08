@@ -121,6 +121,10 @@ const StudentPage = ({user, setUser}) => {
 	}, [selectedSessionIndex]);
 
 	useEffect(() => {
+		fetchMyApplications();
+	}, [jobOffers]);
+
+	useEffect(() => {
 		filterApplicationsFromJobOffers();
 	}, [myApplications, jobOffers]);
 
