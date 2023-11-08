@@ -267,8 +267,8 @@ public class EmployerService{
 	}
 
 	public List<JobOfferDTO> getAllJobOffersWithSubmittedApplicationsFromEmployer(Long employerId) {
-		Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId));
-		return employer.getJobOffers().stream()
+		return employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId))
+				.getJobOffers().stream()
 				.filter(jobOffer -> jobOffer.getJobApplications().stream()
 						.anyMatch(application -> application.getJobApplicationState() == JobApplicationState.SUBMITTED))
 				.map(JobOfferDTO::new)

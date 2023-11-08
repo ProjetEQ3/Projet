@@ -584,7 +584,7 @@ public class StudentServiceTest{
 
 		JobOffer jobOffer = JobOffer.builder().id(1L).jobApplications(List.of(jobApplication)).semester(semester).build();
 
-		when(jobOfferRepository.findAppliedJobOffersByStudent_Id(studentId, semester)).thenReturn(List.of(jobOffer));
+		when(jobOfferRepository.findAllByJobApplications_Student_IdAndSemester(studentId, semester)).thenReturn(List.of(jobOffer));
 
 		jobOfferRepository.save(jobOffer);
 
