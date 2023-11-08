@@ -146,7 +146,7 @@ public class EmployerService{
 				.orElseThrow(JobApplicationNotFoundException::new);
 
 		if (!application.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
-		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isImmutable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
@@ -168,7 +168,7 @@ public class EmployerService{
 				.findById(applicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isImmutable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.REJECTED);
 

@@ -21,6 +21,8 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
+	private String coverLetter;
+
 	@Enumerated(EnumType.STRING)
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
@@ -45,7 +47,7 @@ public class JobApplication{
 		this.appointments.add(appointment);
 	}
 
-	public boolean isNotChangeble() {
+	public boolean isImmutable() {
 		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED;
 	}
 }
