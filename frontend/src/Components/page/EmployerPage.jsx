@@ -80,7 +80,7 @@ const EmployerPage = ({user}) => {
 							{tabs.map(tabItem => (
 								<button
 									key={tabItem.id}
-									className={`col-md-3 btn btn-outline-ose ${tab === tabItem.id ? 'active' : ''}`}
+									className={`col-md-3 btn btn-outline-ose mx-2 ${tab === tabItem.id ? 'active' : ''}`}
 									onClick={() => {
 										setTab(tabItem.id)
 										if (tabItem.id === 'contract') getContracts();
