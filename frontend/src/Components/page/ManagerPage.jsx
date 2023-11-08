@@ -31,7 +31,7 @@ const ManagerPage = ({user}) => {
 
     useEffect(() => {
         handleSessionChange();
-    }, [selectedSessionIndex]);
+    }, [selectedSessionIndex, tab]);
 
     const handleSessionChange = () => {
         setCvs([])
