@@ -657,7 +657,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
 
 
         // Assert the results
@@ -679,7 +679,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getPendingStudentsByJobOfferId(testJobOfferId);
+        List<StudentDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
 
         // Assert
         assertNotNull(result);
@@ -695,7 +695,7 @@ public class EmployerServiceTest {
 
         // Act & Assert
         assertThrows(JobOfferNotFoundException.class, () ->
-                employerService.getPendingStudentsByJobOfferId(testJobOfferId));
+                employerService.getPendingApplicationsByJobOfferId(testJobOfferId));
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
     @Test

@@ -176,7 +176,7 @@ public class EmployerService{
 		return new JobApplicationDTO(application);
 	}
 
-	public List<JobApplicationDTO> getPendingStudentsByJobOfferId(Long jobOfferId) {
+	public List<JobApplicationDTO> getPendingApplicationsByJobOfferId(Long jobOfferId) {
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
 		List<JobApplication> jobApplications = jobOffer.getJobApplications();

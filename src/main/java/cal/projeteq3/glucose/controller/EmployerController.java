@@ -9,12 +9,10 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
-import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -87,7 +85,7 @@ public class EmployerController{
 	public ResponseEntity<List<JobApplicationDTO>> getStudentsByJobOffer(@PathVariable Long id){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(this.employerService.getPendingStudentsByJobOfferId(id));
+				.body(this.employerService.getPendingApplicationsByJobOfferId(id));
 	}
 
 	@PutMapping("/offer/appointment/{applicationId}")
