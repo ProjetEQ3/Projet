@@ -113,11 +113,12 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
               value={coverLetter}
               onChange={handleCoverLetterChange}
               placeholder={t('coverLetterPlaceholder')}
+              style={{height: "500px"}}
               className="form-control mb-2"
           />
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="outline-secondary" className={"btn-outline-ose"} onClick={() => setShowModal(false)}>
+                    <Button className={"btn btn-danger text-white"} onClick={() => setShowModal(false)}>
                         {t('close')}
                     </Button>
                     <Button variant="none" className={"btn-outline-ose"} onClick={() => applyForJobOffer(jobOffer.id)}>
