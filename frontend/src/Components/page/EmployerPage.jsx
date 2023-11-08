@@ -39,13 +39,6 @@ const EmployerPage = ({user}) => {
 		}
 	}, [tab]);
 
-	const updateNbPostulations = (offers) => {
-		const count = offers.reduce((acc, offer) => {
-			return acc + (offer.students ? offer.students.length : 0);
-		}, 0);
-		setNbPostulations(count);
-	}
-
 	async function getNbPostulations() {
 		if (!user?.id) return;
 		await axiosInstance.get(`employer/nbApplications/${user.id}`)
@@ -99,7 +92,7 @@ const EmployerPage = ({user}) => {
 							))}
 						</div>
 					</div>
-					{tab === 'stages' && <JobOfferList user={user} updateNbPostulations={updateNbPostulations} />}
+					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} />}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
 					{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>

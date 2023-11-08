@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ student, filterStudentList }) => {
+const ShortStudentInfo = ({ student, filterStudentList, getNbPostulations }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
@@ -29,6 +29,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             .then((response) => {
                 toast.success(t('convokeSuccess'));
                 filterStudentList(student.jobApplications[0]);
+                getNbPostulations();
             })
             .catch((error) => {
                 toast.error(t('convokeError') + t(error.response?.data?.message));
@@ -40,6 +41,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
                 filterStudentList(student.jobApplications[0]);
+                getNbPostulations();
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));

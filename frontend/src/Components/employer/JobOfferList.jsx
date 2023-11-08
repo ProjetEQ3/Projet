@@ -9,7 +9,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user, updateNbPostulations}) => {
+const JobOfferList = ({user, getNbPostulations}) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
 	const [offers, setOffers] = useState([])
@@ -158,7 +158,7 @@ const JobOfferList = ({user, updateNbPostulations}) => {
 								{
 									selectedOffer.jobOfferState === "OPEN" ?
 										selectedOffer.students != null && selectedOffer.students.length > 0 ?
-											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer}/> :
+											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer} getNbPostulations={getNbPostulations} /> :
 											<div><p className="display-6">{t('noStudent')}</p></div>
 										: null
 								}

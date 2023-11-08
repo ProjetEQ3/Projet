@@ -1,7 +1,7 @@
 import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
 
-const StudentList = ({ offer, setSelectedOffer }) => {
+const StudentList = ({ offer, setSelectedOffer, getNbPostulations }) => {
     const filterStudentList = (jobApplicationId) => {
         const updatedOffer = {
             ...offer,
@@ -16,7 +16,7 @@ const StudentList = ({ offer, setSelectedOffer }) => {
                 <div className="col-12">
                     {offer?.students?.map((student, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={student} filterStudentList={filterStudentList}/>
+                            <ShortStudentInfo student={student} filterStudentList={filterStudentList} getNbPostulations={getNbPostulations} />
                         </div>
                     ))}
                 </div>
