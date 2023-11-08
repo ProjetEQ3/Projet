@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
@@ -18,6 +19,8 @@ import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -47,6 +50,8 @@ class ManagerServiceTest{
 	private JobOfferRepository jobOfferRepository;
 	@Mock
 	private ContractRepository contractRepository;
+	@Mock
+	private JobApplicationRepository jobApplicationRepository;
 	@Mock
 	private CvFileRepository cvRepository;
 
@@ -1191,6 +1196,62 @@ class ManagerServiceTest{
 		assertEquals(studentExpected.getMatricule(), students.get(0).getMatricule());
 		assertEquals(studentExpected.getDepartment(), students.get(0).getDepartment());
 		verify(studentRepository).findAllByDepartment(testDepartment);
+	}
+
+	// public List<JobApplicationDTO> getJobApplicationsByStudentId(Long id){
+	// 	return jobApplicationRepository.findAllByStudentId(id).stream().map(JobApplicationDTO::new).toList();
+	// }
+	@Test
+	public void getJobApplicationsByStudentId_valid() {
+		// Arrange
+		Credentials studCreds = new Credentials();
+		studCreds.setEmail("bob@bob.com");
+		studCreds.setRole(Role.STUDENT);
+		Student student = new Student();
+		student.setMatricule("1234567");
+		student.setFirstName("John");
+		student.setLastName("Doe");
+		student.setDepartment(testDepartment);
+		student.setCredentials(studCreds);
+
+		JobOffer jobOffer = new JobOffer();
+		jobOffer.setId(1L);
+		jobOffer.setDepartment(testDepartment);
+		jobOffer.setJobOfferState(JobOfferState.OPEN);
+		jobOffer.setSemester(new Semester(LocalDate.now()));
+		jobOffer.setEmployer(new Employer());
+		jobOffer.setDuration(6);
+		jobOffer.setHoursPerWeek(40);
+		jobOffer.setSalary(20.0f);
+		jobOffer.setStartDate(LocalDate.now());
+		jobOffer.setExpirationDate(LocalDate.now().plusDays(30));
+		jobOffer.setLocation("Location1");
+		jobOffer.setDescription("Description1");
+		jobOffer.setTitle("JobOffer1");
+
+		JobApplication jobApplication = new JobApplication();
+		jobApplication.setId(1L);
+		jobApplication.setStudent(student);
+		jobApplication.setJobOffer(jobOffer);
+		jobApplication.setJobApplicationState(JobApplicationState.SUBMITTED);
+		jobApplication.setSemester(new Semester(LocalDate.now()));
+		jobApplication.setStudent(student);
+		jobApplication.setJobOffer(jobOffer);
+
+		when(jobApplicationRepository.findAllByStudentId(1L)).thenReturn(List.of(jobApplication));
+
+		// Act
+		List<JobApplicationDTO> jobApplications = managerService.getJobApplicationsByStudentId(1L);
+
+		// Assert
+		assertNotNull(jobApplications);
+		assertEquals(1, jobApplications.size());
+		assertEquals(jobApplication.getId(), jobApplications.get(0).getId());
+		assertEquals(jobApplication.getJobApplicationState(), jobApplications.get(0).getJobApplicationState());
+		assertEquals(jobApplication.getJobOffer().getId(), jobApplications.get(0).getJobOffer().getId());
+		assertEquals(jobApplication.getStudent().getId(), jobApplications.get(0).getStudent().getId());
+		assertEquals(jobApplication.getSemester(), jobApplications.get(0).getSemester());
+		verify(jobApplicationRepository).findAllByStudentId(1L);
 	}
 }
 
