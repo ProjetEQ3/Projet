@@ -636,7 +636,7 @@ public class EmployerServiceTest {
 
 
     @Test
-    public void testGetPendingStudentsByJobOfferId_full() {
+    public void testGetPendingApplicationsByJobOfferId_full() {
         Long testJobOfferId = 1L;
 
         // Arrange the mock objects
@@ -657,21 +657,21 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
+        List<JobApplicationDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
 
 
         // Assert the results
         assertNotNull(result);
         assertEquals(1, result.size());
 
-        StudentDTO returnedStudent = result.get(0);
-        assertEquals("John", returnedStudent.getFirstName());
+        JobApplicationDTO returnedJobApplication = result.get(0);
+        assertEquals("cover", returnedJobApplication.get());
 
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
 
     @Test
-    void testGetPendingStudentsByJobOfferId_empty(){
+    void testGetPendingApplicationsByJobOfferId_empty(){
         // Arrange
         Long testJobOfferId = 1L;
         JobOffer mockJobOffer = new JobOffer();
