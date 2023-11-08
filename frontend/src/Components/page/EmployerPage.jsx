@@ -39,12 +39,14 @@ const EmployerPage = ({user}) => {
 	}, [nbPostulations]);
 
 	useEffect(() => {
-		if (tab === 'stages') {
+		if (tab === 'home') {
 			getNbPostulations();
+			getOffersWithSubmittedApplications();
 		}
 	}, [tab]);
 
 	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
+		if (!user?.id) return;
 		axiosInstance
 			.get(`/employer/offer/submittedApplications/${user.id}`)
 			.then((response) => {
