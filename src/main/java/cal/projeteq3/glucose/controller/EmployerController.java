@@ -149,4 +149,11 @@ public class EmployerController{
 				.body(this.employerService.nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(employerId));
 	}
 
+	@GetMapping("/offer/submittedApplications/{employerId}")
+	public ResponseEntity<List<JobOfferDTO>> getAllJobOffersWithSubmittedApplicationsFromEmployer(@PathVariable Long employerId) {
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(employerId));
+	}
+
 }

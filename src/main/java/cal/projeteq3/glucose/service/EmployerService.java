@@ -266,4 +266,13 @@ public class EmployerService{
 		return jobOfferRepository.countSubmittedApplicationsForEmployer(employerId);
 	}
 
+	public List<JobOfferDTO> getAllJobOffersWithSubmittedApplicationsFromEmployer(Long employerId) {
+		Employer employer = employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId));
+		return employer.getJobOffers().stream()
+				.filter(jobOffer -> jobOffer.getJobApplications().stream()
+						.anyMatch(application -> application.getJobApplicationState() == JobApplicationState.SUBMITTED))
+				.map(JobOfferDTO::new)
+				.collect(Collectors.toList());
+	}
+
 }
