@@ -10,6 +10,7 @@ const StudentList = ({ offer, setSelectedOffer }) => {
         setSelectedOffer(updatedOffer);
     }
 
+    console.log(offer);
     return (
         <div className="container">
             <div className="row">

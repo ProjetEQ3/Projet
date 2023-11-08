@@ -176,14 +176,14 @@ public class EmployerService{
 		return new JobApplicationDTO(application);
 	}
 
-	public List<StudentDTO> getPendingStudentsByJobOfferId(Long jobOfferId) {
+	public List<JobApplicationDTO> getPendingStudentsByJobOfferId(Long jobOfferId) {
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
 		List<JobApplication> jobApplications = jobOffer.getJobApplications();
 		if(jobApplications.isEmpty()) return Collections.emptyList();
 		return jobOffer.getJobApplications().stream()
 			.filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.SUBMITTED))
-			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
+			.map(JobApplicationDTO::new)
 			.collect(Collectors.toList());
 	}
 

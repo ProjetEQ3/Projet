@@ -83,8 +83,8 @@ public class EmployerController{
 				.body(this.employerService.refuseApplication(jobApplicationId));
 	}
 
-	@GetMapping("/offer/students/{id}")
-	public ResponseEntity<List<StudentDTO>> getStudentsByJobOffer(@PathVariable Long id){
+	@GetMapping("/offer/applications/{id}")
+	public ResponseEntity<List<JobApplicationDTO>> getStudentsByJobOffer(@PathVariable Long id){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getPendingStudentsByJobOfferId(id));

@@ -105,9 +105,9 @@ const JobOfferList = ({user}) => {
 
 	const handleSelectOffer = (offer) => {
 		if(offer.jobOfferState === "OPEN"){
-			axiosInstance.get(`/employer/offer/students/${offer.id}`)
+			axiosInstance.get(`/employer/offer/applications/${offer.id}`)
 				.then((response) => {
-					offer.students = response.data
+					offer.applications = response.data
 
 					const updatedOffers = offers.map((o) => {
 						if(o.id === offer.id){
