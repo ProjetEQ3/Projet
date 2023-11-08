@@ -1188,4 +1188,39 @@ public class EmployerServiceTest {
         assertThrows(UnauthorizedContractToSignException.class, () -> {employerService.signContract(1L, 2L);});
         assertThrows(ContractAlreadySignedException.class, () -> {employerService.signContract(2L, 2L);});
     }
+
+    @Test
+    public void testNbSubmittedApplicationsAcrossAllJobOffersFromEmployer() {
+
+        Employer employer = Employer.builder().id(1L).build();
+        int nbSubmittedApplications = 5;
+
+        when(jobOfferRepository.countSubmittedApplicationsForEmployer(employer.getId())).thenReturn(nbSubmittedApplications);
+
+        int count = employerService.nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(employer.getId());
+
+        assertEquals(count, nbSubmittedApplications);
+
+    }
+
+    @Test
+    public void testGetAllJobOffersWithSubmittedApplicationsFromEmployer_ExistentEmployer() {
+
+
+
+    }
+
+    @Test
+    public void testGetAllJobOffersWithSubmittedApplicationsFromEmployer_NonExistentEmployer() {
+
+        Long nonExistentEmployerId = -1L;
+
+        when(employerRepository.findById(nonExistentEmployerId)).thenThrow(new EmployerNotFoundException(nonExistentEmployerId));
+
+        assertThrows(EmployerNotFoundException.class, () -> {
+            employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(nonExistentEmployerId);
+        });
+
+    }
+
 }
