@@ -23,6 +23,7 @@ const EmployerPage = ({user}) => {
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [nbPostulations, setNbPostulations] = useState(0);
 	const [idElement, setIdElement] = useState(null);
+	const [offersWithApplications, setOffersWithApplications] = useState([])
 	const [notifications, setNotifications] = useState({
 		home: { red: 0, green: 0, gray: 0 },
 		stages: { red: 0, green: 0, gray: 0 },
@@ -42,6 +43,17 @@ const EmployerPage = ({user}) => {
 			getNbPostulations();
 		}
 	}, [tab]);
+
+	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
+		axiosInstance
+			.get(`/employer/offer/submittedApplications/${user.id}`)
+			.then((response) => {
+				setOffersWithApplications(response.data);
+			})
+			.catch((error) => {
+				toast.error(t('getOffersWithSubmittedApplicationsError') + t(error.response?.data.message))
+			});
+	}
 
 	async function getNbPostulations() {
 		if (!user?.id) return;
@@ -96,10 +108,18 @@ const EmployerPage = ({user}) => {
 							))}
 						</div>
 					</div>
-					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={"rer"} />}
-					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} selectedById={idElement} />}
+					{tab === 'home' && <Home setTab={setTab}
+											 setIdElement={setIdElement}
+											 jobOffers={offersWithApplications} />}
+					{tab === 'stages' &&
+						<JobOfferList user={user} getNbPostulations={getNbPostulations}
+									  offersWithApplications={offersWithApplications}
+									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}
+									  selectedById={idElement}
+									  setSelectedById={setIdElement}/>}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
-					{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
+					{tab === 'contract' && <ContractList user={user}
+														 contracts={contracts} />}
 			</div>
 		</div>
 	)

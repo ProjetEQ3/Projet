@@ -9,24 +9,12 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user, getNbPostulations, selectedById}) => {
+const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById}) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
 	const [offers, setOffers] = useState([])
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
-	const [offersWithApplications, setOffersWithApplications] = useState([])
-
-	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
-		axiosInstance
-			.get(`/employer/offer/submittedApplications/${user.id}`)
-			.then((response) => {
-				setOffersWithApplications(response.data);
-			})
-			.catch((error) => {
-				toast.error(t('getOffersWithSubmittedApplicationsError') + t(error.response?.data.message))
-			});
-	}
 
 	useEffect(() => {
 		if (user?.isLoggedIn) {
@@ -42,6 +30,13 @@ const JobOfferList = ({user, getNbPostulations, selectedById}) => {
 	useEffect(() => {
 		handleSessionChange()
 	}, [selectedSessionIndex])
+
+	useEffect(() => {
+		if (offers.length === 0) return;
+		if (selectedById === null) return;
+		handleSelectOffer(offers.find((offer) => offer.id === selectedById))
+		setSelectedById(null)
+	}, [offers, selectedById]);
 
 	const handleSessionChange = () => {
 		setOffers([])
@@ -132,6 +127,7 @@ const JobOfferList = ({user, getNbPostulations, selectedById}) => {
 	}
 
 	const handleSelectOffer = (offer) => {
+		selectedById = null
 		if(offer.jobOfferState === "OPEN"){
 			axiosInstance.get(`/employer/offer/students/${offer.id}`)
 				.then((response) => {
