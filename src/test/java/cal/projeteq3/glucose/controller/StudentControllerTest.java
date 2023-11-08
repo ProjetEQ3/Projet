@@ -441,12 +441,14 @@ public class StudentControllerTest {
 	@Test
 	void testApplyJobOfferSuccess() throws Exception{
 		JobOfferDTO mockDto = new JobOfferDTO();
+
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenReturn(mockDto);
 
 		mockMvc
-			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId, "{CoverLetter}")
-                    .header("Authorization", token)
-                    .contentType(MediaType.APPLICATION_JSON)
+			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString("CoverLetter"))
 			)
 		  .andExpect(status().isAccepted());
 	}
