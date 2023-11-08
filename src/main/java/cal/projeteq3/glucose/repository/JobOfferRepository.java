@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.repository;
 
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
@@ -31,7 +32,6 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
 
     List<JobOffer> findAllByJobApplications_Student_IdAndSemester(Long studentId, Semester semester);
 
-    @Query("SELECT COUNT(ja) FROM JobApplication ja WHERE ja.jobOffer.employer.id = :employerId AND ja.jobApplicationState = 'SUBMITTED'")
-    int countSubmittedApplicationsForEmployer(@Param("employerId") Long employerId);
+    int countAllByEmployer_IdAndJobApplications_JobApplicationState(Long employerId, JobApplicationState jobApplicationState);
 
 }

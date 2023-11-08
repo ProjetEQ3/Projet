@@ -931,7 +931,7 @@ public class EmployerControllerTest {
 		Employer employer = Employer.builder().id(1L).build();
 		int nbSubmittedApplications = 5;
 
-		when(jobOfferRepository.countSubmittedApplicationsForEmployer(employer.getId())).thenReturn(nbSubmittedApplications);
+		when(jobOfferRepository.countAllByEmployer_IdAndJobApplications_JobApplicationState(employer.getId(), JobApplicationState.SUBMITTED)).thenReturn(nbSubmittedApplications);
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/nbApplications/1")
