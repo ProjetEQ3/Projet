@@ -5,13 +5,10 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.LifecycleState;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -19,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public final class JobApplicationDTO{
 	private Long id;
+	private String coverLetter;
 	private StudentDTO student;
 	private JobOfferDTO jobOffer;
 	private JobApplicationState jobApplicationState;
@@ -27,6 +25,7 @@ public final class JobApplicationDTO{
 
 	public JobApplicationDTO(JobApplication jobApplication){
 		this.id = jobApplication.getId();
+		this.coverLetter = jobApplication.getCoverLetter();
 		this.student = new StudentDTO(jobApplication.getStudent());
 		this.jobOffer = new JobOfferDTO(jobApplication.getJobOffer());
 		this.jobApplicationState = jobApplication.getJobApplicationState();
