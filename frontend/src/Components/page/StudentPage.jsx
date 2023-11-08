@@ -224,11 +224,11 @@ const StudentPage = ({user, setUser}) => {
 		let grayNotificationsCv = 0;
 
 		if (user.cvFile === undefined) {
-			redNotificationsCv = 1;
+			redNotificationsCv = -1;
 		} else if (user.cvFile.cvState === 'SUBMITTED') {
-			grayNotificationsCv = 1;
-		} else {
-			greenNotificationsCv = 1;
+			grayNotificationsCv = -1;
+		} else if (user.cvFile.cvState === 'REFUSED') {
+			redNotificationsCv = -1;
 		}
 		updateNotifications('cv', { green: greenNotificationsCv, gray: grayNotificationsCv, red: redNotificationsCv });
 		updateNotifications('contract', { green: 0, gray: 0, red: 0 });

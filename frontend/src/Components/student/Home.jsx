@@ -16,6 +16,10 @@ const Home = ({cv, setTab, setIdElement, jobOffers, applications}) => {
         setTab('my_applications');
     }
 
+    const handleCvClick = () => {
+        setTab('cv');
+    }
+
     return (
         <div className="container-fluid px-lg-5 px-2 py-2">
             <h1>{t('home')}</h1>
@@ -24,13 +28,13 @@ const Home = ({cv, setTab, setIdElement, jobOffers, applications}) => {
                     cv.cvState === 'SUBMITTED' ?
                         (
                             <>
-                                <h1 className={"bg-secondary rounded display-6 text-white text-center py-3"}>{t('cvWaitingApproval')}</h1>
+                                <h1 onClick={handleCvClick} className={"clickable bg-secondary rounded display-6 text-white text-center py-3"}>{t('cvWaitingApproval')}</h1>
                             </>
                         ) : cv.cvState === "ACCEPTED" ? null : <>
-                                <h1 className={"bg-danger rounded display-6 text-center text-white py-3"}>{t('cvCurrentlyRefused')}</h1>
+                                <h1 onClick={handleCvClick} className={"clickable bg-danger rounded display-6 text-center text-white py-3"}>{t('cvCurrentlyRefused')}</h1>
                             </>
                     ) : <>
-                            <h1 className={"bg-danger rounded display-6 text-center text-white py-3"}>{t('cvRequiredToContinue')}</h1>
+                            <h1 onClick={handleCvClick} className={"clickable bg-danger rounded display-6 text-center text-white py-3"}>{t('cvRequiredToContinue')}</h1>
                         </>
             }
             {
