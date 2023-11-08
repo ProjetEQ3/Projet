@@ -467,13 +467,13 @@ public class StudentControllerTest {
 
 	@Test
 	void ApplyJobOffer_GenericException() throws Exception{
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenThrow(new RuntimeException());
+		when(studentService.applyJobOffer(eq(validJobOfferId), eq(validStudentId), any(String.class))).thenThrow(new RuntimeException());
 
 		mockMvc.perform(
-			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+			       post("/student/applyJobOffer/" + validJobOfferId + "/" + validStudentId)
                .header("Authorization", token)
                .contentType(MediaType.APPLICATION_JSON)
-				       .content("CoverLetter")
+               .content(objectMapper.writeValueAsString("CoverLetter"))
 		       )
 		       .andExpect(status().is(673));
 	}
