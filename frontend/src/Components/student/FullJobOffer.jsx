@@ -2,35 +2,30 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
-import { Modal, Button } from 'react-bootstrap'
-import './FullJobOffer.css'
-import {faTimes, faX} from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
     const {t} = useTranslation()
-    const [isApplying, setIsApplying] = useState(false)
-    const [showModal, setShowModal] = useState(false)
     const [coverLetter, setCoverLetter] = useState("")
 
     useEffect(() => {
         setCoverLetter("")
-        setIsApplying(false)
     }, [jobOffer])
 
     const applyForJobOffer = (jobOfferId) => {
+        console.log(coverLetter)
         axiosInstance
-            .post(`/student/applyJobOffer/${user.id}/${jobOfferId}`, {coverLetter: coverLetter})
+            .post(`/student/applyJobOffer/${user.id}/${jobOfferId}`, coverLetter, {
+                headers: { 'Content-Type': 'text/plain' }
+            })
             .then((response) => {
                 updatedOffer(response.data)
                 toast.success(t('appliedJobOffer'))
-                setIsApplying(false)
-                setShowModal(false)
                 }
             )
             .catch((error) => {
                 toast.error(t('pushingError') + t(error.response?.data.message))
-                setShowModal(false)
             })
     }
 

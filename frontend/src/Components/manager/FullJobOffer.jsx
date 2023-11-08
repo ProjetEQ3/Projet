@@ -55,7 +55,9 @@ const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApp
             return;
         }
 
-        axiosInstance.put(`/manager/jobOffer/refuse/${jobOffer.id}`, formData.refusalReason)
+        axiosInstance.put(`/manager/jobOffer/refuse/${jobOffer.id}`, formData.refusalReason, {
+            headers: { 'Content-Type': 'text/plain' }
+        })
             .then((res) => {
                 toast.success(t('refusedOffer'));
                 updateJobOfferListAfterApprovalOrRefusal("REFUSED", jobOffer);
