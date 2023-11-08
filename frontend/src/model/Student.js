@@ -5,7 +5,7 @@ class Student {
     email
     matricule
     department
-    state
+    studentState
 
     constructor(){
         this.reset()
@@ -18,7 +18,7 @@ class Student {
         this.email = ""
         this.matricule = ""
         this.department = ""
-        this.state = ""
+        this.studentState = ""
     }
 
     init(student){
@@ -34,8 +34,8 @@ class Student {
         else delete this.matricule
         if(student.department) this.department = student.department
         else delete this.department
-        if(student.state) this.state = student.state
-        else delete this.state
+        if(student.studentState) this.studentState = student.studentState
+        else delete this.studentState
     }
 }
 

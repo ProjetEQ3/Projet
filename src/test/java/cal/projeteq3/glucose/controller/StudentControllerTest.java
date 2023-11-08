@@ -88,8 +88,14 @@ public class StudentControllerTest {
     }
       @Test
     public void Register_Valid() throws Exception {
-        StudentDTO returnedStudent =
-                new StudentDTO(1L, "asd", "asd", "blabla@example.ca", "STUDENT", "1231231", "_420B0");
+        StudentDTO returnedStudent = StudentDTO.builder()
+                .id(1L)
+                .firstName("asd")
+                .lastName("asd")
+                .email("blabla@example.ca")
+                .role("STUDENT")
+                .matricule("1231231")
+                .department("_420B0").build();
 
         RegisterStudentDTO validDTO = new RegisterStudentDTO();
         validDTO.setRegisterDTO(new RegisterDTO("blabla@example.ca", "Ose12345", "STUDENT"));

@@ -37,38 +37,23 @@ const ManagerPage = ({user}) => {
         setCvs([])
         setOffers([]);
         setContracts([]);
+        setStudents([]);
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
+        getAllStudents().then(r => r);
     }
 
     const getAllStudents = async () => {
-        const studentData = [{
-            id: 1,
-            firstName: "Gabriel",
-            lastName: "Houle",
-            email: "gab@gab,com",
-            matricule: "2164584",
-            department: "_420B0",
-            state: "Sans stage"
-        },
-        {
-            id: 2,
-            firstName: "Gabriel",
-            lastName: "Houle",
-            email: "gab@gab,com",
-            matricule: "4854612",
-            department: "_420B0",
-            state: "Attente d'entrevue"
-        }]
-        const newStudent = []
-        for(let i = 0 ; i < studentData.length; i++){
-            const stud = new Student();
-            stud.init(studentData[i]);
-            newStudent.push(stud);
-        }
-
-        setStudents(newStudent);
+        await axiosInstance.get('manager/students')
+            .then((response) => {
+                setStudents(response.data);
+            }).catch((error) => {
+                if (error.response?.status === 401) {
+                    return;
+                }
+                toast.error(t('fetchError') + t(error));
+            });
     }
 
     const getAllOffers = async () => {
@@ -137,6 +122,9 @@ const ManagerPage = ({user}) => {
                 break;
             case 'contracts':
                 await getAllContracts();
+                break;
+            case 'students':
+                await getAllStudents();
                 break;
         }
     };

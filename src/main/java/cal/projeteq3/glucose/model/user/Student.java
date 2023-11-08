@@ -25,6 +25,9 @@ public class Student extends User{
 	@Enumerated(EnumType.STRING)
 	private Department department;
 
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<JobApplication> jobApplications;
+
 	@Builder
 	public Student(Long id, String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile){
 		super(id, firstName, lastName, Credentials.builder().email(email).password(password).role(Role.STUDENT).build());

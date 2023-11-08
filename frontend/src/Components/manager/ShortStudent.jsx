@@ -45,7 +45,7 @@ return (
                             <h5>{student.matricule}</h5>
                         </div>
                         <div className="col-12 col-md-3">
-                            <h5>{student.state}</h5>
+                            <h5>{student.studentState}</h5>
                         </div>
                     </div>
                 </div>

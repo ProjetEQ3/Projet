@@ -14,8 +14,8 @@ import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +33,7 @@ public class ManagerService{
 	private final CvFileRepository cvRepository;
 	private final ContractRepository contractRepository;
 	private final SignatureRepository signatureRepository;
+	private final JobApplicationRepository jobApplicationRepository;
 
 	// database operations here
 
@@ -178,7 +179,18 @@ public class ManagerService{
 	}
 
 	public List<StudentDTO> getStudents(Department department){
-		return studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).collect(Collectors.toList());
+		List<StudentDTO> students = studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).toList();
+		for (StudentDTO student : students) {
+			loadJobApplications(student, jobApplicationRepository);
+			student.setStudentState(jobApplicationRepository);
+		}
+		return students;
 	}
 
+	private void loadJobApplications(StudentDTO student, JobApplicationRepository jobApplicationRepository) {
+		student.setJobApplications(jobApplicationRepository.findAllByStudentId(student.getId())
+				.stream()
+				.map(JobApplication::getId)
+				.collect(Collectors.toList()));
+	}
 }

@@ -24,7 +24,7 @@ public class JobApplication{
 	@Enumerated(EnumType.STRING)
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
-	@ManyToOne
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Student student;
 
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -46,6 +46,10 @@ public class JobApplication{
 	}
 
 	public boolean isNotChangeable() {
-		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED;
+		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED || this.jobApplicationState == JobApplicationState.WAITING_APPOINTMENT || this.jobApplicationState == JobApplicationState.CONVOKED;
+	}
+
+	public boolean isAccepted() {
+		return this.jobApplicationState == JobApplicationState.ACCEPTED;
 	}
 }
