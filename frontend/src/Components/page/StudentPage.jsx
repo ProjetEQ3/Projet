@@ -120,7 +120,7 @@ const StudentPage = ({user, setUser}) => {
 
 	async function handleViewJobOffer(jobOffer) {
 		if (!user?.id) return;
-		await axiosInstance.post(`/student/viewedJobOffers/${user.id}/${jobOffer.id}`)
+		await axiosInstance.put(`/student/jobOffer/view/${user.id}/${jobOffer.id}`)
 			.then((response) => {
 				setViewedJobOfferList(response.data);
 			})
@@ -177,14 +177,25 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
+	function getJobOfferNotifCount() {
+		jobOffers.map((jobOffer) => {
+			if (jobOffer.hasApplied === true){
+				setViewedJobOfferList((viewedJobOfferList) => [...viewedJobOfferList, jobOffer.id]);
+			}
+		});
+		return jobOffers.length -
+			// jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length -
+			viewedJobOfferList.length;
+	}
+
 	function getNotificationsCounts() {
 		updateNotifications('home', { green: 0, gray: 0, red: 0 });
 
 		let greenNotificationsStages = 0;
 		let grayNotificationsStages = 0;
-		let redNotificationsStages = jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).length;
-		updateNotifications('stages', {
-			green: greenNotificationsStages, gray: grayNotificationsStages, red: redNotificationsStages});
+		let redNotificationsStages = getJobOfferNotifCount();
+		updateNotifications('stages',
+			{green: greenNotificationsStages, gray: grayNotificationsStages, red: redNotificationsStages});
 
 		let greenNotificationsApplication = 0;
 		let grayNotificationsApplication = 0;

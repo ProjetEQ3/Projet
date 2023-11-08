@@ -157,6 +157,6 @@ public class StudentController {
 
     @PutMapping("/jobOffer/view/{studentId}/{jobOfferId}")
     public ResponseEntity<JobOfferDTO> viewJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId) {
-        return ResponseEntity.accepted().body(studentService.markJobOfferAsViewed(jobOfferId, studentId));
+        return ResponseEntity.accepted().body(studentService.markJobOfferAsViewed(studentId, jobOfferId));
     }
 }
