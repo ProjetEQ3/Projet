@@ -57,7 +57,7 @@ const Home = ({cv, setTab, setIdElement, jobOffers, applications}) => {
                         <h2>{t('availableInternships')}</h2>
                         <p>{t('availableInternshipsToApplyTo')}</p>
                         {
-                            jobOffers.filter((jobOffer) => jobOffer.hasApplied !== true).map((offer, index) => (
+                            jobOffers.filter((jobOffer) => jobOffer.isViewed !== true).map((offer, index) => (
                             <div onClick={() => handleJobOfferClick(offer)} key={index}>
                                 <ShortJobOffer jobOffer={offer} />
                             </div>))
