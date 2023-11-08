@@ -471,8 +471,10 @@ public class StudentControllerTest {
 
 		mockMvc.perform(
 			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
-                           .header("Authorization", token)
-                           .contentType(MediaType.APPLICATION_JSON))
+               .header("Authorization", token)
+               .contentType(MediaType.APPLICATION_JSON)
+				       .content("CoverLetter")
+		       )
 		       .andExpect(status().is(673));
 	}
 
