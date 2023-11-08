@@ -207,5 +207,4 @@ public class StudentService{
 		contract.setStudentSignature(signature);
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
 	}
-
 }

@@ -58,6 +58,7 @@ public class JobOffer{
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Employer employer;
 
+	@ToString.Exclude
 	@OneToMany(mappedBy = "jobOffer", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<JobApplication> jobApplications = new ArrayList<>();
 

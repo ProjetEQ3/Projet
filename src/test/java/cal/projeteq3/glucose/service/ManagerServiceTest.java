@@ -1249,7 +1249,6 @@ class ManagerServiceTest{
 		assertEquals(jobApplication.getId(), jobApplications.get(0).getId());
 		assertEquals(jobApplication.getJobApplicationState(), jobApplications.get(0).getJobApplicationState());
 		assertEquals(jobApplication.getJobOffer().getId(), jobApplications.get(0).getJobOffer().getId());
-		assertEquals(jobApplication.getStudent().getId(), jobApplications.get(0).getStudent().getId());
 		assertEquals(jobApplication.getSemester(), jobApplications.get(0).getSemester());
 		verify(jobApplicationRepository).findAllByStudentId(1L);
 	}

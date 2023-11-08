@@ -27,6 +27,7 @@ public class JobApplication{
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Student student;
 
+	@ToString.Exclude
 	@ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private JobOffer jobOffer;
 
