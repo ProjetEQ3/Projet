@@ -102,7 +102,7 @@ const StudentPage = ({user, setUser}) => {
 		if (!user?.id) return;
 		await axiosInstance.get(`/student/viewedJobOffers/${user.id}`)
 			.then((response) => {
-				setViewedJobOfferList(response.data);
+				setViewedJobOfferList(response.data)
 			})
 			.catch((error) => {
 				toast.error(t('fetchError') + t(error.response?.data.message));
@@ -122,8 +122,8 @@ const StudentPage = ({user, setUser}) => {
 		if (!user?.id) return;
 		await axiosInstance.put(`/student/jobOffer/view/${user.id}/${jobOffer.id}`)
 			.then((response) => {
-				if (viewedDoesNotContain(response.data.id)){
-					setViewedJobOfferList((viewedJobOfferList) => [...viewedJobOfferList, response.data.id]);
+				if (!viewedJobOfferList.includes(jobOffer.id)){
+					setViewedJobOfferList((viewedJobOfferList) => [...viewedJobOfferList, jobOffer.id]);
 				}
 			})
 			.catch((error) => {
@@ -179,19 +179,9 @@ const StudentPage = ({user, setUser}) => {
 		setUser(user)
 	}
 
-	function viewedDoesNotContain(id) {
-		console.log("VIW: ",viewedJobOfferList)
-		return viewedJobOfferList.filter((viewedJobOffer) => viewedJobOffer === id).length === 0;
-	}
-
 	function getJobOfferNotifCount() {
-		jobOffers.map((jobOffer) => {
-			if (jobOffer.hasApplied === true && viewedDoesNotContain(jobOffer.id)) {
-				setViewedJobOfferList((viewedJobOfferList) => [...viewedJobOfferList, jobOffer.id]);
-			}
-		});
-		return jobOffers.length -
-			viewedJobOfferList.length;
+		fetchViewedJobOfferList();
+		return jobOffers.length - viewedJobOfferList.length;
 	}
 
 	function getNotificationsCounts() {
