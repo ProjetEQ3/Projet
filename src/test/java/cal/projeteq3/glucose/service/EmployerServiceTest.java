@@ -1206,6 +1206,16 @@ public class EmployerServiceTest {
     @Test
     public void testGetAllJobOffersWithSubmittedApplicationsFromEmployer_ExistentEmployer() {
 
+        JobApplication jobApplication = JobApplication.builder().id(1L).jobApplicationState(JobApplicationState.SUBMITTED).build();
+        List<JobApplication> jobApplications = Collections.singletonList(jobApplication);
+
+        JobOffer jobOffer = JobOffer.builder().id(1L).jobApplications(jobApplications).build();
+        List<JobOffer> jobOffers = Collections.singletonList(jobOffer);
+
+        Employer employer = Employer.builder().id(1L).jobOffers(jobOffers).build();
+
+        when(employerRepository.findById(employer.getId())).thenReturn(Optional.of(employer));
+
 
 
     }
