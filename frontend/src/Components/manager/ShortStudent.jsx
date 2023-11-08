@@ -4,6 +4,7 @@ import {toast} from "react-toastify";
 import {axiosInstance} from "../../App";
 import State from "../util/State";
 import StudentState from "../util/StudentState";
+import FullJobOffer from "./FullJobOffer";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
