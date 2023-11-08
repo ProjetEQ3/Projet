@@ -2,7 +2,6 @@
 import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
-import {useEffect} from "react";
 
 const Home = ({cv, setTab, setIdElement, jobOffers, applications}) => {
     const {t} = useTranslation();
@@ -16,10 +15,6 @@ const Home = ({cv, setTab, setIdElement, jobOffers, applications}) => {
         setIdElement(application.id);
         setTab('my_applications');
     }
-
-    useEffect(() => {
-        console.log(cv)
-    })
 
     return (
         <div className="container-fluid px-lg-5 px-2 py-2">
