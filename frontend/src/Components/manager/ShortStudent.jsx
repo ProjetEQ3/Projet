@@ -1,12 +1,13 @@
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
+import {toast} from "react-toastify";
+import {axiosInstance} from "../../App";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
     const [isHovered, setHovered] = useState(false);
     const [showApplications, setShowApplications] = useState(false);
     const [studentApplications, setStudentApplications] = useState([]);
-    const [jobApplications, setJobApplications] = useState([]);
 
     const handleMouseEnter = () => {
         setHovered(true);
@@ -17,8 +18,6 @@ const ShortStudent = ({student}) => {
     };
 
     const handleStudentClick = () => {
-        console.log(showApplications)
-
         if (!showApplications) {
             setShowApplications(true);
         }
@@ -26,8 +25,19 @@ const ShortStudent = ({student}) => {
             setShowApplications(false);
             setStudentApplications([]);
         }
+        getStudentApplications().then(r => r);
+    }
 
-        //call API
+    const getStudentApplications = async () => {
+        await axiosInstance.get(`manager/student/jobApplications/${student.id}`)
+            .then((response) => {
+                setStudentApplications(response.data);
+            }).catch((error) => {
+                if (error.response?.status === 401) {
+                    return;
+                }
+                toast.error(t('fetchError') + t(error));
+            });
     }
 
 return (
@@ -49,7 +59,7 @@ return (
                         </div>
                     </div>
                 </div>
-                {(showApplications && jobApplications.length > 0?
+                {(showApplications && studentApplications.length > 0?
                         <div className="row bg-light rounded">
                             <div className="col-12">
                                 {
@@ -62,7 +72,7 @@ return (
                                 }
                             </div>
                         </div>:
-                        showApplications && jobApplications.length === 0 ?
+                        showApplications && studentApplications.length === 0 ?
                             <h5 className="fw-light bg-light p-3 rounded">{t('noApplications')}</h5>
                             :
                             ''

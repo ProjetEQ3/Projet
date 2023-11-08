@@ -136,7 +136,7 @@ public class ManagerController {
                 .body(managerService.getStudents(Department.valueOf(department)));
     }
 
-    @GetMapping("/student/applications/{id}")
+    @GetMapping("/student/jobApplications/{id}")
     public ResponseEntity<List<JobApplicationDTO>> getStudent(@PathVariable Long id){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
