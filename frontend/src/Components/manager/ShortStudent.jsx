@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../App";
+import State from "../util/State";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
@@ -44,18 +45,18 @@ return (
         <div className={`row clickable ${!isHovered? 'm-2':'m-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleStudentClick}>
             <div className="col-12 bg-white rounded">
                 <div className="my-2">
-                    <div className="row">
-                        <div className="col-12 col-md-3">
+                    <div className="row col-11 ms-2">
+                        <div className="col-12 col-md-3 my-auto">
                             <h5>{student.firstName} {student.lastName}</h5>
                         </div>
-                        <div className="col-12 col-md-3">
+                        <div className="col-12 col-md-3 my-auto">
                             <h5>{t(student.department)}</h5>
                         </div>
-                        <div className="col-12 col-md-3">
+                        <div className="col-12 col-md-3 my-auto">
                             <h5>{student.matricule}</h5>
                         </div>
-                        <div className="col-12 col-md-3">
-                            <h5>{student.studentState}</h5>
+                        <div className="col-12 col-md-3 text-center my-auto">
+                            <State state={student.studentState}/>
                         </div>
                     </div>
                 </div>
