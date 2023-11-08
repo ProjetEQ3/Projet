@@ -9,7 +9,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user, getNbPostulations}) => {
+const JobOfferList = ({user, getNbPostulations, selectedById}) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
 	const [offers, setOffers] = useState([])

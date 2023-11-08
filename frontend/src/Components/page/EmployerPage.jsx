@@ -8,19 +8,23 @@ import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import NotificationBadge from "../notification/NotificationBadge";
+import Home from "../employer/Home";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
 	const [t] = useTranslation();
-	const [tab, setTab] = useState('stages');
+	const [tab, setTab] = useState('home');
 	const tabs = [
+		{ id: 'home', label: 'home' },
 		{ id: 'stages', label: 'jobOffers' },
 		{ id: 'entrevue', label: 'convokedStudents' },
 		{ id: 'contract', label: 'contracts' }
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [nbPostulations, setNbPostulations] = useState(0);
+	const [idElement, setIdElement] = useState(null);
 	const [notifications, setNotifications] = useState({
+		home: { red: 0, green: 0, gray: 0 },
 		stages: { red: 0, green: 0, gray: 0 },
 		entrevue: { red: 0, green: 0, gray: 0 },
 		contract: { red: 0, green: 0, gray: 0 },
@@ -92,7 +96,8 @@ const EmployerPage = ({user}) => {
 							))}
 						</div>
 					</div>
-					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} />}
+					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={"rer"} />}
+					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} selectedById={idElement} />}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
 					{tab === 'contract' && <ContractList contracts={contracts} user={user} />}
 			</div>
