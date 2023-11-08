@@ -6,7 +6,7 @@ const NotificationBadge = ({ notifications, tab, setTab, titleInfos }) => {
     const {t} = useTranslation();
     if (titleInfos === undefined) titleInfos = '';
     const badgeTypes = ['red', 'green', 'gray'];
-    let visibleBadges = badgeTypes.filter(type => notifications[type] > 0);
+    let visibleBadges = badgeTypes.filter(type => notifications[type] > 0 || notifications[type] === -1);
     const handleNotificationClick = () => {
         setTab(tab.id);
     };
@@ -21,8 +21,8 @@ const NotificationBadge = ({ notifications, tab, setTab, titleInfos }) => {
                     style={{ right: `${index * 22}px` }}
                     onClick={handleNotificationClick}
                 >
-          {notifications[type]}
-        </button>
+                    {notifications[type] === -1 ? ' ' : notifications[type]}
+                </button>
             ))}
         </>
     );
