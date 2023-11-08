@@ -1,7 +1,9 @@
 package cal.projeteq3.glucose.dto.user;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.model.user.StudentSummary;
 import cal.projeteq3.glucose.repository.JobApplicationRepository;

@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../App";
 import State from "../util/State";
+import StudentState from "../util/StudentState";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
@@ -56,18 +57,25 @@ return (
                             <h5>{student.matricule}</h5>
                         </div>
                         <div className="col-12 col-md-3 text-center my-auto">
-                            <State state={student.studentState}/>
+                            <StudentState state={student.studentState}/>
                         </div>
                     </div>
                 </div>
                 {(showApplications && studentApplications.length > 0?
-                        <div className="row bg-light rounded">
+                        <div className="row">
                             <div className="col-12">
                                 {
                                     studentApplications.map((application, index) => (
-                                        <div key={index}>
-                                            <h6>{application.jobOffer.title}</h6>
-                                            <p>{application.jobOffer.description}</p>
+                                        <div key={index} className="bg-light rounded my-2 py-2 px-3">
+                                            <div className="row">
+                                                <div className="col-8">
+                                                    <h6>{application.jobOffer.title}</h6>
+                                                </div>
+                                                <div className="col-3 text-center">
+                                                    <StudentState state={application.jobApplicationState}/>
+                                                </div>
+                                            </div>
+                                            <p className="fw-light">{application.jobOffer.description}</p>
                                         </div>
                                     ))
                                 }

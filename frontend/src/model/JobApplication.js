@@ -5,7 +5,7 @@ class JobApplication {
     id
     student
     jobOffer
-    state
+    jobApplicationState
     year
     season
 
@@ -27,7 +27,7 @@ class JobApplication {
         else delete this.id
         if (jobApplication.jobOffer) this.jobOffer = jobApplication.jobOffer
         else delete this.jobOffer
-        if (jobApplication.state) this.state = jobApplication.state
+        if (jobApplication.jobApplicationState) this.jobApplicationState = jobApplication.jobApplicationState
         else delete this.state
         if (jobApplication.year) this.year = jobApplication.year
         else delete this.year
