@@ -3,6 +3,7 @@ import {toast} from "react-toastify"
 import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
 import { Modal, Button } from 'react-bootstrap'
+import './FullJobOffer.css'
 
 const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
     const {t} = useTranslation()
@@ -97,7 +98,13 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
             </div>
 
 
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                dialogClassName="custom-modal-size"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
                 <Modal.Header closeButton>
                     <Modal.Title>{t('apply')}</Modal.Title>
                 </Modal.Header>
