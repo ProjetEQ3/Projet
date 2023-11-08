@@ -64,8 +64,8 @@ public class StudentDTO extends UserDTO {
             studentState = StudentState.NO_CV;
         } else if (this.getJobApplications().isEmpty()) {
             studentState = StudentState.NO_JOB_APPLICATION;
-        } else if (this.getJobApplications().stream().allMatch(jobApplicationId ->
-                jobApplicationRepository.findById(jobApplicationId).orElseThrow().isNotChangeable())) {
+        } else if (this.getJobApplications().stream().noneMatch(jobApplicationId ->
+                jobApplicationRepository.findById(jobApplicationId).orElseThrow().hasChosenAppointment())) {
             studentState = StudentState.NO_APPOINTMENT;
         } else if (this.getJobApplications().stream().noneMatch(jobApplicationId ->
                 jobApplicationRepository.findById(jobApplicationId).orElseThrow().isAccepted())) {

@@ -52,4 +52,8 @@ public class JobApplication{
 	public boolean isAccepted() {
 		return this.jobApplicationState == JobApplicationState.ACCEPTED;
 	}
+
+	public boolean hasChosenAppointment() {
+		return this.appointments.stream().anyMatch(Appointment::isChosen);
+	}
 }

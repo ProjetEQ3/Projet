@@ -207,6 +207,12 @@ public class EmployerService{
 		}
 		jobApplication.setJobApplicationState(JobApplicationState.CONVOKED);
 		jobApplicationRepository.save(jobApplication);
+		if (appointmentList.size() == 1) {
+			appointmentList.get(0).setChosen(true);
+			appointmentRepository.save(appointmentList.get(0));
+			jobApplication.setJobApplicationState(JobApplicationState.WAITING_APPOINTMENT);
+			jobApplicationRepository.save(jobApplication);
+		}
 		return jobApplicationRepository.findById(jobApplication.getId())
 			.map(JobApplicationDTO::new)
 			.orElseThrow(JobApplicationNotFoundException::new);
