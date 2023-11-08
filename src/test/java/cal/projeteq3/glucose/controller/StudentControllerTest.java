@@ -444,9 +444,10 @@ public class StudentControllerTest {
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenReturn(mockDto);
 
 		mockMvc
-			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId, "{CoverLetter}")
                     .header("Authorization", token)
-                    .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON)
+			)
 		  .andExpect(status().isAccepted());
 	}
 
@@ -457,7 +458,7 @@ public class StudentControllerTest {
 		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenThrow(mockException);
 
 		mockMvc
-			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
+			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId, "coverLetter").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isUnauthorized())
 		;
 	}
