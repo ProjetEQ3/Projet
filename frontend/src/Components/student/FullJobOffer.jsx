@@ -4,6 +4,8 @@ import React, {useEffect, useState} from "react"
 import {useTranslation} from "react-i18next"
 import { Modal, Button } from 'react-bootstrap'
 import './FullJobOffer.css'
+import {faTimes, faX} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
     const {t} = useTranslation()
@@ -63,16 +65,14 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
                             </button>
                         ) : (
                             <div>
-            <textarea
-                value={coverLetter}
-                onChange={handleCoverLetterChange}
-                placeholder={t('coverLetterPlaceholder')}
-                className="form-control mb-2"
-            />
-                                <button
-                                    className="btn btn-outline-ose"
-                                    onClick={() => applyForJobOffer(jobOffer.id)}
-                                >
+                                <textarea
+                                    value={coverLetter}
+                                    onChange={handleCoverLetterChange}
+                                    placeholder={t('coverLetterPlaceholder')}
+                                    className="form-control mb-2"
+                                />
+                                <button className="btn btn-outline-ose"
+                                    onClick={() => applyForJobOffer(jobOffer.id)}>
                                     {t('apply')}
                                 </button>
                             </div>
@@ -97,36 +97,57 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
                 </div>
             </div>
 
+            <div className={`modal ${showModal ? 'show' : ''}`} tabIndex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h3 className="modal-title">{t('appointments')}</h3>
+                            <FontAwesomeIcon icon={faX} data-bs-dismiss="modal"
+                                             className="danger-hover fa-lg pe-2"/>
+                        </div>
+                        <div className="modal-body">
+                            <form onSubmit={() => applyForJobOffer(jobOffer.id)}>
+                                <textarea></textarea>
+                                <button className="btn btn-success me-3 my-2" type="submit" data-dismiss="modal">
+                                    {t('confirm')}
+                                </button>
+                                <button className="btn btn-danger my-2" type="reset" data-dismiss="modal">
+                                    {t('cancel')}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <Modal
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                dialogClassName="custom-modal-size"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>{t('apply')}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-          <textarea
-              value={coverLetter}
-              onChange={handleCoverLetterChange}
-              placeholder={t('coverLetterPlaceholder')}
-              style={{height: "500px"}}
-              className="form-control mb-2"
-          />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button className={"btn btn-danger text-white"} onClick={() => setShowModal(false)}>
-                        {t('close')}
-                    </Button>
-                    <Button variant="none" className={"btn-outline-ose"} onClick={() => applyForJobOffer(jobOffer.id)}>
-                        {t('apply')}
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
+            {/*{*/}
+            {/*    showModal &&*/}
+            {/*    <div className={`custom-modal show`}>*/}
+            {/*        <div className="custom-modal-content">*/}
+            {/*            <div className="custom-modal-header">*/}
+            {/*                <h5>{t('apply')}</h5>*/}
+            {/*                <button className="btn-close" onClick={() => setShowModal(false)}></button>*/}
+            {/*            </div>*/}
+            {/*            <div className="custom-modal-body">*/}
+            {/*            <textarea*/}
+            {/*                value={coverLetter}*/}
+            {/*                onChange={handleCoverLetterChange}*/}
+            {/*                placeholder={t('coverLetterPlaceholder')}*/}
+            {/*                className="form-control mb-2"*/}
+            {/*                style={{height: "500px"}}*/}
+            {/*            />*/}
+            {/*            </div>*/}
+            {/*            <div className="custom-modal-footer">*/}
+            {/*                <button className="btn btn-danger" onClick={() => setShowModal(false)}>*/}
+            {/*                    {t('close')}*/}
+            {/*                </button>*/}
+            {/*                <button className="btn btn-outline-ose" onClick={applyForJobOffer}>*/}
+            {/*                    {t('apply')}*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*}*/}
         </div>
     )
 }
