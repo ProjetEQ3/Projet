@@ -1014,4 +1014,40 @@ public class StudentServiceTest{
 		assertThrows(ContractAlreadySignedException.class, () -> {studentService.signContract(2L, 2L);});
 	}
 
+	@Test
+	public void markJobOfferAsViewed_Valid() {
+		// Arrange
+		Long studentId = 1L;
+		Long jobOfferId = 1L;
+		Student student = Student.builder().id(studentId).build();
+		JobOffer jobOffer = JobOffer.builder().id(jobOfferId).build();
+		when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+		when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
+		when(studentRepository.save(any(Student.class))).thenAnswer(invocation -> invocation.getArgument(0));
+		// Act
+		JobOfferDTO result = studentService.markJobOfferAsViewed(studentId, jobOfferId);
+		// Assert
+		assertNotNull(result);
+		verify(studentRepository, times(1)).findById(studentId);
+		verify(jobOfferRepository, times(1)).findById(jobOfferId);
+		verify(studentRepository, times(1)).save(any(Student.class));
+	}
+
+	@Test
+	public void getViewedJobOffersByStudentId_Valid() {
+		// Arrange
+		Long studentId = 1L;
+		Student student = Student.builder().id(studentId).build();
+		student.setViewedJobOfferIds(List.of(1L, 2L, 3L));
+		when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
+		// Act
+		List<Long> result = studentService.getViewedJobOffersByStudentId(studentId);
+		// Assert
+		assertNotNull(result);
+		assertEquals(3, result.size());
+		verify(studentRepository, times(1)).findById(studentId);
+	}
+
+
+
 }
