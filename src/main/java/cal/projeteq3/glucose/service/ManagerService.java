@@ -182,7 +182,7 @@ public class ManagerService{
 	public List<StudentDTO> getStudents(Department department){
 		List<StudentDTO> students = studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).toList();
 		for (StudentDTO student : students) {
-			loadJobApplications(student, jobApplicationRepository);
+			loadJobApplications(student);
 			student.setStudentState(jobApplicationRepository);
 		}
 		return students;
@@ -192,7 +192,7 @@ public class ManagerService{
 		return jobApplicationRepository.findAllByStudentId(id).stream().map(JobApplicationDTO::new).toList();
 	}
 
-	private void loadJobApplications(StudentDTO student, JobApplicationRepository jobApplicationRepository) {
+	private void loadJobApplications(StudentDTO student) {
 		student.setJobApplications(jobApplicationRepository.findAllByStudentId(student.getId())
 				.stream()
 				.map(JobApplication::getId)
