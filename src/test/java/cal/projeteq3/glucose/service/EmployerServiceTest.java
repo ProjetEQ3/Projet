@@ -1211,12 +1211,15 @@ public class EmployerServiceTest {
 
         JobOffer jobOffer = JobOffer.builder().id(1L).jobApplications(jobApplications).build();
         List<JobOffer> jobOffers = Collections.singletonList(jobOffer);
+        List<JobOfferDTO> jobOfferDTOS = jobOffers.stream().map(JobOfferDTO::new).toList();
 
         Employer employer = Employer.builder().id(1L).jobOffers(jobOffers).build();
 
         when(employerRepository.findById(employer.getId())).thenReturn(Optional.of(employer));
 
+        List<JobOfferDTO> retrievedJobOffers = employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(employer.getId());
 
+        assertEquals(jobOfferDTOS, retrievedJobOffers);
 
     }
 
