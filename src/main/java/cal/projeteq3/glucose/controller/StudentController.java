@@ -148,13 +148,10 @@ public class StudentController {
     }
 
     @GetMapping("/viewedJobOffers/{studentId}")
-    public ResponseEntity<List<Long>> getViewedJobOffersByStudentId(@PathVariable Long studentId, @RequestParam String season, @RequestParam String year){
+    public ResponseEntity<List<Long>> getViewedJobOffersByStudentId(@PathVariable Long studentId){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(studentService.getViewedJobOffersByStudentId(studentId, Semester.builder()
-                        .season(Semester.Season.valueOf(season))
-                        .year(Integer.parseInt(year))
-                        .build()));
+                .body(studentService.getViewedJobOffersByStudentId(studentId));
     }
 
 

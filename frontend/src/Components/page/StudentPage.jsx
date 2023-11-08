@@ -118,6 +118,17 @@ const StudentPage = ({user, setUser}) => {
 		});
 	}
 
+	async function handleViewJobOffer(jobOffer) {
+		if (!user?.id) return;
+		await axiosInstance.post(`/student/viewedJobOffers/${user.id}/${jobOffer.id}`)
+			.then((response) => {
+				setViewedJobOfferList(response.data);
+			})
+			.catch((error) => {
+				toast.error(t('fetchError') + t(error.response?.data.message));
+			});
+	}
+
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		fetchStudentJobOffers()
@@ -234,7 +245,7 @@ const StudentPage = ({user, setUser}) => {
 					))}
 				</div>
 				{tab === 'home' && <Home cv={user.cvFile} setTab={setTab} setIdElement={setIdElement} jobOffers={jobOffers} applications={myApplications}/>}
-				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} selectedById={idElement} />}
+				{tab === 'stages' && <JobOfferList user={user} jobOffers={jobOffers} setJobOffers={setJobOffers} selectedById={idElement} handleViewJobOffer={handleViewJobOffer}/>}
 				{tab === 'my_applications' && <MyApplications user={user} myApplications={myApplications} setMyApplications={setMyApplications} fetchMyApplications={fetchMyApplications}/>}
 				{tab === 'cv' && <Cv user={user} setCv={setCv} getNotificationsCount={getNotificationsCounts}/>}
 				{tab === 'contract' && <ContractList contracts={contracts} user={user} />}

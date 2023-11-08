@@ -215,7 +215,7 @@ public class StudentService{
 		return new JobOfferDTO(jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new));
 	}
 
-	public List<Long> getViewedJobOffersByStudentId(Long studentId, Semester build) {
+	public List<Long> getViewedJobOffersByStudentId(Long studentId) {
 		return studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new).getViewedJobOfferIds();
 	}
 }
