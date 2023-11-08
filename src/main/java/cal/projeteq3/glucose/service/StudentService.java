@@ -150,7 +150,7 @@ public class StudentService{
 
 	public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId, Semester semester){
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
-		return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId(), semester).stream().map(JobOfferDTO::new)
+		return jobOfferRepository.findAllByJobApplications_Student_IdAndSemester(student.getId(), semester).stream().map(JobOfferDTO::new)
 		                         .collect(Collectors.toList());
 	}
 

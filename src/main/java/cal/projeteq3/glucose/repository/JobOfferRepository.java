@@ -29,8 +29,7 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     List<JobOffer> findJobOffersByDepartmentAndSemester(Department department, Semester semester);
     List<JobOffer> findJobOffersByDepartmentAndJobOfferStateAndSemester(Department department, JobOfferState jobOfferState, Semester semester);
 
-    @Query("SELECT jobOffer FROM JobOffer jobOffer JOIN jobOffer.jobApplications jobApplication WHERE jobApplication.student.id = ?1 AND jobOffer.semester = ?2")
-    List<JobOffer> findAppliedJobOffersByStudent_Id(Long studentId, Semester semester);
+    List<JobOffer> findAllByJobApplications_Student_IdAndSemester(Long studentId, Semester semester);
 
     @Query("SELECT COUNT(ja) FROM JobApplication ja WHERE ja.jobOffer.employer.id = :employerId AND ja.jobApplicationState = 'SUBMITTED'")
     int countSubmittedApplicationsForEmployer(@Param("employerId") Long employerId);
