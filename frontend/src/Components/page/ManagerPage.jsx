@@ -10,6 +10,7 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import StudentList from "../manager/StudentList";
 import Student from "../../model/Student";
+import Home from "../manager/Home";
 
 const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
@@ -141,14 +142,16 @@ const ManagerPage = ({user}) => {
                     {tabConfig.map((item) => (
                         <button
                             key={item.key}
-                            className={`col-6 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
+                            className={`col-6 mx-2 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
                             onClick={() => handleTabClick(item.key)}
                         >
                             {item.label}
                         </button>
                     ))}
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
+                {tab === 'home' && <Home />}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
+                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
                 {tab === 'students' && <StudentList students={students}/>}
