@@ -99,13 +99,14 @@ const NewOfferForm = ({user}) => {
 	}
 
 	const handleBack = () => {
+		console.log('back')
 		navigate(-1)
 	}
 
 	return (
 		<div className="container">
-			<button className="btn btn-outline-ose">
-				<FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2" onClick={handleBack}/>
+			<button className="btn btn-outline-ose" onClick={handleBack}>
+				<FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2"/>
 				{t('back')}
 			</button>
 			<h1 className="text-center fw-light">{t('newInternshipCreation')}</h1>
@@ -138,19 +139,19 @@ const NewOfferForm = ({user}) => {
 									onChange={handleChanges}
 									required
 								>
-									<option value="_410B0">{t('_410B0')}</option>
-									<option value="_241A1">{t('_241A1')}</option>
-									<option value="_420B0">{t('_420B0')}</option>
-									<option value="_210AA">{t('_210AA')}</option>
-									<option value="_144A1">{t('_144A1')}</option>
-									<option value="_310A0">{t('_310A0')}</option>
-									<option value="_145A0">{t('_145A0')}</option>
-									<option value="_388A0">{t('_388A0')}</option>
-									<option value="_140C0">{t('_140C0')}</option>
-									<option value="_243C0">{t('_243C0')}</option>
-									<option value="_243BA">{t('_243BA')}</option>
-									<option value="_241D0">{t('_241D0')}</option>
-									<option value="_243A0">{t('_243A0')}</option>
+									<option className="clickable" value="_410B0">{t('_410B0')}</option>
+									<option className="clickable" value="_241A1">{t('_241A1')}</option>
+									<option className="clickable" value="_420B0">{t('_420B0')}</option>
+									<option className="clickable" value="_210AA">{t('_210AA')}</option>
+									<option className="clickable" value="_144A1">{t('_144A1')}</option>
+									<option className="clickable" value="_310A0">{t('_310A0')}</option>
+									<option className="clickable" value="_145A0">{t('_145A0')}</option>
+									<option className="clickable" value="_388A0">{t('_388A0')}</option>
+									<option className="clickable" value="_140C0">{t('_140C0')}</option>
+									<option className="clickable" value="_243C0">{t('_243C0')}</option>
+									<option className="clickable" value="_243BA">{t('_243BA')}</option>
+									<option className="clickable" value="_241D0">{t('_241D0')}</option>
+									<option className="clickable" value="_243A0">{t('_243A0')}</option>
 									<option value="_221B0">{t('_221B0')}</option>
 									<option disabled={true}>{t('chooseADepartment')}</option>
 								</select>

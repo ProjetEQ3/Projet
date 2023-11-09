@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 
-const FullJobOffer = ({ jobOffer, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal }) => {
+const FullJobOffer = ({ jobOffer, updateJobOfferListAfterApprovalOrRefusal }) => {
     const {t} = useTranslation();
     const [isDecline, setIsDecline] = useState(false);
     const [formData, setFormData] = useState({

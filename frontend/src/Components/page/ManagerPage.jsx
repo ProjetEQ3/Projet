@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom";
 import {useSession} from "../util/SessionContext";
 import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
+import StudentList from "../manager/StudentList";
+import Student from "../../model/Student";
 
 const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
@@ -16,6 +18,7 @@ const ManagerPage = ({user}) => {
     const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
     const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
     const [contracts, setContracts] = useState([new Contract()]);
+    const [students, setStudents] = useState([new Student()])
     const navigate = useNavigate();
     const tabConfig = [
         { key: 'stages', label: t('internship') },
@@ -28,19 +31,34 @@ const ManagerPage = ({user}) => {
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
+        getAllStudents().then(r => r);
     }, [user]);
 
     useEffect(() => {
         handleSessionChange();
-    }, [selectedSessionIndex]);
+    }, [selectedSessionIndex, tab]);
 
     const handleSessionChange = () => {
         setCvs([])
         setOffers([]);
         setContracts([]);
+        setStudents([]);
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
         getAllContracts().then(r => r);
+        getAllStudents().then(r => r);
+    }
+
+    const getAllStudents = async () => {
+        await axiosInstance.get('manager/students')
+            .then((response) => {
+                setStudents(response.data);
+            }).catch((error) => {
+                if (error.response?.status === 401) {
+                    return;
+                }
+                toast.error(t('fetchError') + t(error));
+            });
     }
 
     const getAllOffers = async () => {
@@ -110,6 +128,9 @@ const ManagerPage = ({user}) => {
             case 'contracts':
                 await getAllContracts();
                 break;
+            case 'students':
+                await getAllStudents();
+                break;
         }
     };
 
@@ -127,9 +148,10 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal} />}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
-                {tab === 'contract' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'students' && <StudentList students={students}/>}
             </div>
         </div>
     );

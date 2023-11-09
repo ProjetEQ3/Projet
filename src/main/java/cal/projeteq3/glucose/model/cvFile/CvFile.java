@@ -28,11 +28,12 @@ public final class CvFile{
 	private String refusReason;
 
 	@Builder
-	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState, String refusReason){
+	public CvFile(Long id, String fileName, byte[] fileData, CvState cvState, String refusReason, Student student){
 		setId(id);
 		setFileName(fileName);
 		setFileData(fileData);
 		setCvState(cvState);
+		setStudent(student);
 		setRefusReason(refusReason);
 	}
 

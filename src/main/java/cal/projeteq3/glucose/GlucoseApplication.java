@@ -210,6 +210,7 @@ public class GlucoseApplication implements CommandLineRunner {
 							.password(passwordEncoder.encode("Ose12345"))
 							.matricule("0000000")
 							.phoneNumber("111-111-1111")
+							.department(Department._420B0)
 							.build(),
 					Manager.builder()
 							.firstName("Zaka")
@@ -218,6 +219,7 @@ public class GlucoseApplication implements CommandLineRunner {
 							.password(passwordEncoder.encode("aaaAAA111"))
 							.matricule("0000001")
 							.phoneNumber("123-456-7890")
+							.department(Department._310A0)
 							.build(),
 					Manager.builder()
 							.firstName("Michel")
@@ -226,6 +228,7 @@ public class GlucoseApplication implements CommandLineRunner {
 							.password(passwordEncoder.encode("Ose12345"))
 							.matricule("0000002")
 							.phoneNumber("123-456-7890")
+							.department(Department._420B0)
 							.build()
 		);
 	}

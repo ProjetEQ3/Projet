@@ -103,9 +103,6 @@ public final class ContractPDFGenerator{
 			supervisorDetails.add(new Chunk(employer.getFirstName(), boldTextFont));
 			supervisorDetails.add(new Phrase("\nCourriel :\n", normalTextFont));
 			supervisorDetails.add(new Chunk(employer.getEmail(), boldTextFont));
-			//            TODO: Add job title to employer
-			//            supervisorDetails.add(new Phrase("\nFonction :\n", normalTextFont));
-			//            supervisorDetails.add(new Chunk(employer.getJobTitle, boldTextFont));
 			supervisorDetails.add(new Phrase("\nTéléphone :\n", normalTextFont));
 			supervisorDetails.add(new Chunk(employer.getOrganisationPhone(), boldTextFont));
 			supervisorDetails.setAlignment(Paragraph.ALIGN_LEFT);

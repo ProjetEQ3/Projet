@@ -83,8 +83,8 @@ public class StudentController {
                 .body(studentService.getJobOffersByDepartment(Department.valueOf(department), semester));
     }
 
-    @GetMapping("/jobOffers/open/{department}")
-    public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@PathVariable String department, @RequestParam String season, @RequestParam String year){
+    @GetMapping("/jobOffers/open")
+    public ResponseEntity<List<JobOfferDTO>> getOpenJobOffersByDepartment(@RequestParam String department, @RequestParam String season, @RequestParam String year){
         Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()

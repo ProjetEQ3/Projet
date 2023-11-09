@@ -4,7 +4,7 @@ import {axiosInstance} from "../../App";
 
 const SessionContext = createContext();
 
-export const SessionProvider = ({ children }) => {
+export const SessionProvider = ({ user, children }) => {
     const [sessions, setSessions] = useState([]);
     const [selectedSessionIndex, setSelectedSessionIndex] = useState(0);
 
@@ -23,7 +23,7 @@ export const SessionProvider = ({ children }) => {
                 });
         }
         fetchSessions();
-    }, []);
+    }, [user]);
 
     const updateSession = (index) => {
         setSelectedSessionIndex(index);

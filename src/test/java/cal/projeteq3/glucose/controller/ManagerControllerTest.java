@@ -4,19 +4,19 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.repository.ContractRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
-import cal.projeteq3.glucose.service.StudentService;
 import cal.projeteq3.glucose.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,8 +49,6 @@ public class ManagerControllerTest {
     @MockBean
     private ManagerService managerService;
     @MockBean
-    private StudentService studentService;
-    @MockBean
     private EmployerService employerService;
     @MockBean
     private UserRepository userRepository;
@@ -74,7 +72,7 @@ public class ManagerControllerTest {
         // Arrange
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(managerService.getAllJobOffer(new Semester(LocalDate.now()))).thenReturn(jobOffers);
+        when(managerService.getAllJobOffer(new Semester(LocalDate.now()), Department._420B0)).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders
@@ -82,7 +80,8 @@ public class ManagerControllerTest {
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("season", "FALL")
-                        .param("year", "2021"))
+                        .param("year", "2021")
+                        .param("department", "_420B0"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()))
@@ -135,14 +134,15 @@ public class ManagerControllerTest {
         String jobOfferState = "OPEN";
         List<JobOfferDTO> jobOffers = Arrays.asList(new JobOfferDTO(), new JobOfferDTO());
 
-        when(managerService.getJobOffersWithState(JobOfferState.OPEN,new Semester(LocalDate.now()))).thenReturn(jobOffers);
+        when(managerService.getJobOffersWithState(JobOfferState.OPEN,new Semester(LocalDate.now()), Department._420B0)).thenReturn(jobOffers);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/jobOffers/{jobOfferState}", jobOfferState)
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .param("season", "FALL")
-                        .param("year", "2021"))
+                        .param("year", "2021")
+                        .param("department", "_420B0"))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobOffers.size()))
@@ -228,11 +228,12 @@ public class ManagerControllerTest {
         cvList.add(cv1);
         cvList.add(cv2);
 
-        when(managerService.getAllCv()).thenReturn(cvList);
+        when(managerService.getAllCv(Department._420B0)).thenReturn(cvList);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/cvs/all")
                         .header("Authorization", token)
+                        .param("department", "_420B0")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -256,11 +257,12 @@ public class ManagerControllerTest {
         submittedCvList.add(cv1);
         submittedCvList.add(cv2);
 
-        when(managerService.getSubmittedCv()).thenReturn(submittedCvList);
+        when(managerService.getSubmittedCv(Department._420B0)).thenReturn(submittedCvList);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/cvs/pending")
                         .header("Authorization", token)
+                        .param("department", "_420B0")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isAccepted())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -275,14 +277,15 @@ public class ManagerControllerTest {
         // Arrange
         List<ContractDTO> contracts = Arrays.asList(new ContractDTO(), new ContractDTO());
 
-        when(managerService.getContractsBySession(new Semester(LocalDate.now()))).thenReturn(contracts);
+        when(managerService.getContractsBySession(new Semester(LocalDate.now()), Department._420B0)).thenReturn(contracts);
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/manager/contracts")
                             .header("Authorization", token)
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("season", "FALL")
-                            .param("year", "2021"))
+                            .param("year", "2021")
+                            .param("department", "_420B0"))
                     .andExpect(MockMvcResultMatchers.status().isAccepted())
                     .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -320,5 +323,38 @@ public class ManagerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    public void getStudents_valid() throws Exception{
+        // Arrange
+        List<StudentDTO> studentDTOS = Arrays.asList(new StudentDTO(), new StudentDTO());
+
+        when(managerService.getStudents(Department._420B0)).thenReturn(studentDTOS);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/manager/students")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("department", "_420B0"))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(studentDTOS.size()));
+    }
+
+    @Test
+    public void getStudent_valid() throws Exception {
+        // Arrange
+        Long studentId = 1L;
+        List<JobApplicationDTO> jobApplicationDTOS = Arrays.asList(new JobApplicationDTO(), new JobApplicationDTO());
+
+        when(managerService.getJobApplicationsByStudentId(studentId)).thenReturn(jobApplicationDTOS);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/manager/student/jobApplications/{id}", studentId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobApplicationDTOS.size()));
+    }
 }
 

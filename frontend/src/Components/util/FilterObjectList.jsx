@@ -59,14 +59,14 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 				<div className="d-flex align-items-center col-6">
 					<select className="form-select me-2 flex-grow-1 clickable" value={selectedAttribute} onChange={handleAttributeChange}>
 						{attributes.map(attr => (
-							<option key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
+							<option className="clickable" key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
 						))}
 					</select>
 					{isSelectAttribute ? (
 						<select className="form-control me-2 flex-grow-1 clickable" value={query} onChange={handleInputChange}>
-							<option value="">{t('choose')}</option>
+							<option className="clickable" value="">{t('choose')}</option>
 							{Array.isArray(selectOptions[actualAttribute]) && selectOptions[actualAttribute].map(option => (
-								<option key={option} value={option}>{t(option)}</option>
+								<option className="clickable" key={option} value={option}>{t(option)}</option>
 							))}
 						</select>
 					) : (
@@ -82,7 +82,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 				<div className="d-flex align-items-center col-3">
 					<select className="form-select me-2 clickable" value={itemsPerPage} onChange={handleItemsPerPageChange}>
 						{[5, 10, 20, 50, 100].map(number => (
-							<option key={number} value={number}>
+							<option className="clickable" key={number} value={number}>
 								{number} {t('perPage')}
 							</option>
 						))}

@@ -813,6 +813,58 @@ public class EmployerServiceTest {
     }
 
     @Test
+    public void testAddAppointmentByApplicationId_OneDate() {
+        Long applicationId = 1L;
+        JobOffer jobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .build();
+        Student student = Student
+                .builder()
+                .id(1L)
+                .email("test@test.test")
+                .password("test")
+                .build();
+        JobApplication mockApplication = new JobApplication();
+        mockApplication.setStudent(student);
+        mockApplication.setId(applicationId);
+        mockApplication.setJobOffer(jobOffer);
+
+        LocalDateTime date1 = LocalDateTime.now().plusDays(1);
+
+        Set<LocalDateTime> dateList = new HashSet<>();
+        dateList.add(date1);
+
+        when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
+        when(jobApplicationRepository.save(mockApplication)).thenReturn(mockApplication);
+
+        employerService.addAppointmentByJobApplicationId(mockApplication.getId(), dateList);
+        verify(jobApplicationRepository, times(2)).save(mockApplication);
+        assertEquals(mockApplication.getAppointments().size(), 1);
+        Set<LocalDateTime> dateEnd = new HashSet<>();
+        for (Appointment appointment : mockApplication.getAppointments()) {
+            dateEnd.add(appointment.getAppointmentDate());
+        }
+
+        assertNotNull(mockApplication);
+        assertEquals(jobOffer.getId(), mockApplication.getJobOffer().getId());
+        assertEquals(student.getId(), mockApplication.getStudent().getId());
+        assertEquals(applicationId, mockApplication.getId());
+        assertEquals(dateEnd, dateList);
+    }
+
+    @Test
     public void testAddAppointmentByApplicationId_NullId() {
         Long applicationId = null;
 
@@ -1036,7 +1088,7 @@ public class EmployerServiceTest {
                 .title("JobOfferTitle")
                 .description("  asdads")
                 .location("Location1")
-                .department(Department._145A0)
+                .department(Department._420B0)
                 .jobOfferState(JobOfferState.OPEN)
                 .startDate(LocalDate.now())
                 .expirationDate(LocalDate.now().plusDays(30))
@@ -1077,7 +1129,7 @@ public class EmployerServiceTest {
         when(employerRepository.findById(1L)).thenReturn(Optional.of(employer));
         when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
         when(contractRepository.save(any(Contract.class))).thenReturn(savedContract);
-        when(managerRepository.findAll()).thenReturn(List.of(manager));
+        when(managerRepository.findFirstByDepartment(Department._420B0)).thenReturn(manager);
 
         ContractDTO result = employerService.signContract(1L, 1L);
 

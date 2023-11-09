@@ -211,17 +211,17 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                         <label htmlFor="department" className="mt-3">{t('department')}</label>
                                         <select className={`form-select ${warnings.department ? 'is-invalid' : ''}`}
                                                 id="department" name="department" defaultValue={t('chooseADepartment')} onChange={handleChange}>
-                                            <option value="_410B0">{t('_410B0')}</option>
-                                            <option value="_241A1">{t('_241A1')}</option>
-                                            <option value="_420B0">{t('_420B0')}</option>
-                                            <option value="_210AA">{t('_210AA')}</option>
-                                            <option value="_144A1">{t('_144A1')}</option>
-                                            <option value="_310A0">{t('_310A0')}</option>
-                                            <option value="_145A0">{t('_145A0')}</option>
-                                            <option value="_388A0">{t('_388A0')}</option>
-                                            <option value="_140C0">{t('_140C0')}</option>
-                                            <option value="_243C0">{t('_243C0')}</option>
-                                            <option value="_243BA">{t('_243BA')}</option>
+                                            <option className="clickable" value="_410B0">{t('_410B0')}</option>
+                                            <option className="clickable" value="_241A1">{t('_241A1')}</option>
+                                            <option className="clickable" value="_420B0">{t('_420B0')}</option>
+                                            <option className="clickable" value="_210AA">{t('_210AA')}</option>
+                                            <option className="clickable" value="_144A1">{t('_144A1')}</option>
+                                            <option className="clickable" value="_310A0">{t('_310A0')}</option>
+                                            <option className="clickable" value="_145A0">{t('_145A0')}</option>
+                                            <option className="clickable" value="_388A0">{t('_388A0')}</option>
+                                            <option className="clickable" value="_140C0">{t('_140C0')}</option>
+                                            <option className="clickable" value="_243C0">{t('_243C0')}</option>
+                                            <option className="clickable" value="_243BA">{t('_243BA')}</option>
                                             <option value="_241D0">{t('_241D0')}</option>
                                             <option value="_243A0">{t('_243A0')}</option>
                                             <option value="_221B0">{t('_221B0')}</option>

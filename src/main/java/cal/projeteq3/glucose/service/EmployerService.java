@@ -146,7 +146,7 @@ public class EmployerService{
 				.orElseThrow(JobApplicationNotFoundException::new);
 
 		if (!application.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
-		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isNotChangeable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
@@ -168,7 +168,7 @@ public class EmployerService{
 				.findById(applicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		if (application.isNotChangeble()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isNotChangeable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.REJECTED);
 
@@ -264,8 +264,7 @@ public class EmployerService{
 				.contract(contract)
 				.build());
 		contract.setEmployerSignature(signature);
-//		TODO: get what manager ?
-		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
+		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
 	}
 
 	public int nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(Long employerId) {

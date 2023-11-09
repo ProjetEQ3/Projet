@@ -1,11 +1,13 @@
 package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
-import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
@@ -13,24 +15,26 @@ import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
 public class ManagerService{
-
 	private final ManagerRepository managerRepository;
 	private final StudentRepository studentRepository;
 	private final JobOfferRepository jobOfferRepository;
 	private final CvFileRepository cvRepository;
 	private final ContractRepository contractRepository;
 	private final SignatureRepository signatureRepository;
+	private final JobApplicationRepository jobApplicationRepository;
 
 	// database operations here
 
@@ -40,7 +44,7 @@ public class ManagerService{
 
 	public List<ManagerDTO> getAllManagers(){
 		List<Manager> managers = managerRepository.findAll();
-		return managers.stream().map(ManagerDTO::new).collect(Collectors.toList());
+		return managers.stream().map(ManagerDTO::new).collect(toList());
 	}
 
 	public ManagerDTO getManagerByID(Long id){
@@ -66,12 +70,14 @@ public class ManagerService{
 		return new CvFileDTO(cvRepository.findById(id).orElseThrow());
 	}
 
-	public List<CvFileDTO> getAllCv(){
-		return cvRepository.findAll().stream().map(CvFileDTO::new).toList();
+	public List<CvFileDTO> getAllCv(Department department){
+		List<CvFile> cvFiles = cvRepository.findAll();
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new).toList();
 	}
 
-	public List<CvFileDTO> getSubmittedCv(){
-		return cvRepository.findAllByCvState(CvState.SUBMITTED).stream().map(CvFileDTO::new).toList();
+	public List<CvFileDTO> getSubmittedCv(Department department){
+		List<CvFile> cvFiles = cvRepository.findAllByCvState(CvState.SUBMITTED);
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new).toList();
 	}
 
 	public List<CvFileDTO> getAllCvFileByStudent(Long id){
@@ -104,9 +110,10 @@ public class ManagerService{
 		return new CvFileDTO(cvRepository.save(cvFile));
 	}
 
-	public List<CvFileDTO> getCvFilesWithState(CvState state){
+	public List<CvFileDTO> getCvFilesWithState(CvState state, Department department){
 		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
-		return cvFiles.stream().map(CvFileDTO::new).collect(Collectors.toList());
+		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new)
+		               .toList();
 	}
 
 	public CvFileDTO updateCvState(Long id, CvState newState, String reason){
@@ -118,17 +125,20 @@ public class ManagerService{
 
 	//	Job Offer
 
-	public List<JobOfferDTO> getAllJobOffer(Semester semester){
-		return jobOfferRepository.findAllBySemester(semester).stream().map(JobOfferDTO::new).toList();
+	public List<JobOfferDTO> getAllJobOffer(Semester semester, Department department){
+		List<JobOffer> jobOffers = jobOfferRepository.findAllBySemester(semester);
+		return jobOffers.stream().filter(jobOffer -> jobOffer.getDepartment() == department).map(JobOfferDTO::new)
+		                .toList();
 	}
 
 	public JobOfferDTO getJobOfferByID(Long id){
 		return new JobOfferDTO(jobOfferRepository.findById(id).orElseThrow(() -> new JobOfferNotFoundException(id)));
 	}
 
-	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester){
-		return jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester).stream().map(JobOfferDTO::new)
-		                         .collect(Collectors.toList());
+	public List<JobOfferDTO> getJobOffersWithState(JobOfferState state, Semester semester, Department department){
+		List<JobOffer> jobOffers = jobOfferRepository.findJobOfferByJobOfferStateAndSemester(state, semester);
+		return jobOffers.stream().filter(jobOffer -> jobOffer.getDepartment() == department).map(JobOfferDTO::new)
+		                .toList();
 	}
 
 	public JobOfferDTO updateJobOfferState(Long id, JobOfferState newState, String reason){
@@ -142,9 +152,11 @@ public class ManagerService{
 		jobOfferRepository.deleteById(id);
 	}
 
-	public List<ContractDTO> getContractsBySession(Semester semester){
+	public List<ContractDTO> getContractsBySession(Semester semester, Department department){
 		Manager manager = managerRepository.findAll().get(0);
-		return contractRepository.findAllByJobOffer_Semester(semester).stream().map((contract -> new ContractDTO(contract, manager))).collect(Collectors.toList());
+		List<Contract> contracts = contractRepository.findAllByJobOffer_Semester(semester);
+		return contracts.stream().filter(contract -> contract.getJobOffer().getDepartment() == department)
+		                .map((contract -> new ContractDTO(contract, manager))).collect(toList());
 	}
 
 	public ContractDTO signContract(Long contractId, Long managerId){
@@ -164,7 +176,26 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
-//		TODO: get what manager ?
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
+	}
+
+	public List<StudentDTO> getStudents(Department department){
+		List<StudentDTO> students = studentRepository.findAllByDepartment(department).stream().map(StudentDTO::new).toList();
+		for (StudentDTO student : students) {
+			loadJobApplications(student);
+			student.setStudentState(jobApplicationRepository);
+		}
+		return students;
+	}
+
+	public List<JobApplicationDTO> getJobApplicationsByStudentId(Long id){
+		return jobApplicationRepository.findAllByStudentId(id).stream().map(JobApplicationDTO::new).toList();
+	}
+
+	private void loadJobApplications(StudentDTO student) {
+		student.setJobApplications(jobApplicationRepository.findAllByStudentId(student.getId())
+				.stream()
+				.map(JobApplication::getId)
+				.collect(Collectors.toList()));
 	}
 }
