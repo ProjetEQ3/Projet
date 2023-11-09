@@ -88,11 +88,16 @@ const ShortStudentInfo = ({ application, filterApplicationsList }) => {
             </div>
             {
                 isDisplay ?
-                    <div className="col-12 p-3, m-3" data-testid="pdf-preview-mock-element">
-                        <h3>{t('coverLetter')}</h3>
-                        <p>{coverLetter}</p>
-                        <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
-                    </div> : null
+                    coverLetter !== "N/A" ?
+                        <div className="col-12 p-3, m-3" data-testid="pdf-preview-mock-element">
+                            <h3>{t('coverLetter')}</h3>
+                            <p>{coverLetter}</p>
+                            <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
+                        </div>
+                        :
+                        <div className="col-12 p-3, m-3" data-testid="pdf-preview-mock-element">
+                            <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
+                        </div> : null
             }
             {
                 isConvoque ?
