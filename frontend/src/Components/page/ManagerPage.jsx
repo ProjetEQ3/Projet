@@ -22,6 +22,7 @@ const ManagerPage = ({user}) => {
     const [students, setStudents] = useState([new Student()])
     const navigate = useNavigate();
     const tabConfig = [
+        { key: 'home', label: t('home') },
         { key: 'stages', label: t('internship') },
         { key: 'cvs', label: 'CVs' },
         { key: 'contract', label: t('contracts') },
