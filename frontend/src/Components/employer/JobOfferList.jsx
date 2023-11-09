@@ -124,6 +124,7 @@ const JobOfferList = ({user}) => {
 				})
 		}
 		setSelectedOffer(offer)
+		console.log(selectedOffer)
 	}
 
 	return (
@@ -157,7 +158,7 @@ const JobOfferList = ({user}) => {
 								<FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
 								{
 									selectedOffer.jobOfferState === "OPEN" ?
-										selectedOffer.students != null && selectedOffer.students.length > 0 ?
+										selectedOffer.applications != null && selectedOffer.applications.length > 0 ?
 											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer}/> :
 											<div><p className="display-6">{t('noStudent')}</p></div>
 										: null
