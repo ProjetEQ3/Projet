@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 
-const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
+const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultSelectOpen}) => {
 	const [t, i18n] = useTranslation()
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
@@ -23,9 +23,26 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	useEffect(() => {
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
-		if(attributes.length > 0)
+		if(attributes.length > 0 && !selectedAttribute)
 			setSelectedAttribute(attributes[0])
-	}, [])
+	}, [attributes, items])
+
+	useEffect(() => {
+		if(!items || !items.length) return
+		if(!attributes || !attributes.length) return
+		if(defaultSelectOpen) {
+			console.log("default", defaultSelectOpen)
+			for(let i = 0; i < attributes.length; i++){
+				console.log("checking", getAttributeKey(attributes[i]))
+				if(getAttributeKey(attributes[i]) === defaultSelectOpen){
+					console.log('found', attributes[i])
+					handleAttributeChange({target: {value: attributes[i]}})
+					handleInputChange({target: {value: 'OPEN'}})
+					break
+				}
+			}
+		}
+	}, [attributes, items, defaultSelectOpen])
 
 	const goToNextPage = () => {
 		if(currentPage < totalPages){
@@ -59,7 +76,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 				<div className="d-flex align-items-center col-6">
 					<select className="form-select me-2 flex-grow-1 clickable" value={selectedAttribute} onChange={handleAttributeChange}>
 						{attributes.map(attr => (
-							<option className="clickable" key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
+							<option className="clickable"  key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
 						))}
 					</select>
 					{isSelectAttribute ? (

@@ -110,18 +110,11 @@ const EmployerPage = ({user}) => {
 							))}
 						</div>
 					</div>
-					{tab === 'home' && <Home setTab={setTab}
-											 setIdElement={setIdElement}
-											 jobOffers={offersWithApplications} />}
-					{tab === 'stages' &&
-						<JobOfferList user={user} getNbPostulations={getNbPostulations}
-									  offersWithApplications={offersWithApplications}
-									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}
-									  selectedById={idElement}
-									  setSelectedById={setIdElement}/>}
+					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={offersWithApplications} />}
+					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
+									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement}/>}
 					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
-					{tab === 'contract' && <ContractList user={user}
-														 contracts={contracts} />}
+					{tab === 'contract' && <ContractList user={user} contracts={contracts} />}
 			</div>
 		</div>
 	)

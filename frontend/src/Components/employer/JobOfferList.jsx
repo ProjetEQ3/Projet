@@ -162,6 +162,7 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 							attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
 							renderItem={renderFilteredOffers}
 							selectOptions={{jobOfferState: ["SUBMITTED", "OPEN", "PENDING", "EXPIRED", "TAKEN", "REFUSED"]}}
+							defaultSelectOpen={selectedById > 0 ? 'jobOfferState.select' : ''}
 						/>
 						<div className="row m-2">
 							<button className="btn btn-outline-ose col-12"
