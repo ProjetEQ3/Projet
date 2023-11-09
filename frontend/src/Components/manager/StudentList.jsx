@@ -1,7 +1,5 @@
-import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import ShortStudent from "./ShortStudent";
-import ShortCv from "./ShortCv";
 import FilterObjectList from "../util/FilterObjectList";
 
 const StudentList = ({students}) => {
@@ -29,13 +27,12 @@ const StudentList = ({students}) => {
             <div className="col-12">
                 <h3 className="text-dark fw-light my-5">{t('studentList')}</h3>
                 <div className="row justify-content-around">
-                    <div className="col-12">
-                        <FilterObjectList
-                            items={students}
-                            attributes={['firstName:' + t('firstName'),'lastName:' + t('lastName'),'matricule:'+t('matricule')]}
-                            renderItem={renderFilteredStudents}
-                        />
-                    </div>
+                    <FilterObjectList
+                        items={students}
+                        attributes={['firstName:' + t('firstName'),'lastName:' + t('lastName'),'matricule:'+t('matricule'), 'studentState.select:Status']}
+                        renderItem={renderFilteredStudents}
+                        selectOptions={{studentState: ['STUDENT_NO_CV', 'STUDENT_COMPLETE', 'STUDENT_NO_JOB_APPLICATION', 'STUDENT_APPOINTMENT', 'STUDENT_NO_CONTRACT']}}
+                    />
                 </div>
             </div>
         </div>
