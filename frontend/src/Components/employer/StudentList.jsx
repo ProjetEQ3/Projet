@@ -2,21 +2,22 @@ import React from 'react';
 import ShortStudentInfo from "./ShortStudentInfo";
 
 const StudentList = ({ offer, setSelectedOffer }) => {
-    const filterStudentList = (jobApplicationId) => {
+    const filterApplicationsList = (jobApplicationId) => {
         const updatedOffer = {
             ...offer,
-            students: offer.students.filter((student) => student.jobApplications[0] !== jobApplicationId)
+            applications: offer.applications.filter((application) => application.id !== jobApplicationId)
         };
         setSelectedOffer(updatedOffer);
     }
 
+    console.log(offer);
     return (
         <div className="container">
             <div className="row">
                 <div className="col-12">
-                    {offer?.students?.map((student, index) => (
+                    {offer?.applications?.map((application, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={student} filterStudentList={filterStudentList}/>
+                            <ShortStudentInfo application={application} filterApplicationsList={filterApplicationsList}/>
                         </div>
                     ))}
                 </div>

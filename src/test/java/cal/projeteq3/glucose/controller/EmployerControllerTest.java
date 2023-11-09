@@ -4,7 +4,6 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
-import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -14,6 +13,7 @@ import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoun
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.UserRepository;
@@ -31,15 +31,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -544,23 +540,30 @@ public class EmployerControllerTest {
 	@Test
 	public void getPendingStudentsByJobOffer() throws Exception {
 		// Arrange
-		StudentDTO studentDTO = new StudentDTO("John", "Doe", "1234567", Department._420B0);
-		List<StudentDTO> studentDTOs = new ArrayList<>(List.of(studentDTO));
+		JobApplicationDTO jobApplicationDTO = new JobApplicationDTO();
+		jobApplicationDTO.setId(1L);
+		StudentDTO studentDTO = new StudentDTO();
+		studentDTO.setFirstName("John");
+		studentDTO.setLastName("Doe");
+		studentDTO.setMatricule("1234567");
+		studentDTO.setDepartment(Department._420B0);
+		jobApplicationDTO.setStudent(studentDTO);
+		List<JobApplicationDTO> jobApplicationDTOs = new ArrayList<>(List.of(jobApplicationDTO));
 		Long jobOfferId = 1L;
 
-		when(employerService.getPendingStudentsByJobOfferId(jobOfferId)).thenReturn(studentDTOs);
+		when(employerService.getPendingApplicationsByJobOfferId(jobOfferId)).thenReturn(jobApplicationDTOs);
 
 		// Act & Assert
 		mockMvc.perform(MockMvcRequestBuilders
-						.get("/employer/offer/students/{id}", jobOfferId)
+						.get("/employer/offer/applications/{id}", jobOfferId)
 						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(1))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].firstName").value("John"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].lastName").value("Doe"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].matricule").value("1234567"))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].department").value(Department._420B0.toString()));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].student.firstName").value("John"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].student.lastName").value("Doe"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].student.matricule").value("1234567"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].student.department").value(Department._420B0.toString()));
 	}
 
 	@Test

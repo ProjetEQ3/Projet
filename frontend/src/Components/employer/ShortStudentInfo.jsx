@@ -8,14 +8,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ student, filterStudentList }) => {
+const ShortStudentInfo = ({ application, filterApplicationsList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
     const [dates, setDates] = useState([new Date(now())]);
-
     const todayDate = new Date();
     const minDate = todayDate.toISOString().slice(0, 16);
+    const coverLetter = application?.coverLetter || "N/A"
+    const student = application?.student || undefined
 
     const handleConvoke = (e) => {
         e.preventDefault();
@@ -25,21 +26,22 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
                 return;
             }
         }
-        axiosInstance.put('/employer/offer/appointment/' + student.jobApplications[0], dates)
+        axiosInstance.put('/employer/offer/appointment/' + application.id, dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
-                filterStudentList(student.jobApplications[0]);
+                filterApplicationsList(application.id);
             })
             .catch((error) => {
+                console.log(error);
                 toast.error(t('convokeError') + t(error.response?.data?.message));
             })
     }
     const handleDecline = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/refuse/' + student.jobApplications[0])
+        axiosInstance.put('/employer/offer/refuse/' + application.id)
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
-                filterStudentList(student.jobApplications[0]);
+                filterApplicationsList(application.id);
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
@@ -76,7 +78,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
         <>
             <div className="m-2 p-2 bg-white border rounded border-ose d-lg-flex" data-testid="short-student-info">
                 <div className="col-12 col-lg-6">
-                    <h4 className="text-dark fw-light">{student?.firstName || 'N/A'} {student?.lastName || 'N/A'} - {student?.email || 'N/A'}</h4>
+                    <h4 className="text-dark fw-light">{student.firstName} {student.lastName} - {student.email}</h4>
                 </div>
                 <div className="col-12 col-lg-6 text-end">
                     <button type="button" onClick={handlePreview} className="btn btn-outline-ose">{t('preview')}</button>
@@ -86,7 +88,9 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
             </div>
             {
                 isDisplay ?
-                    <div className="col-12" data-testid="pdf-preview-mock-element">
+                    <div className="col-12 p-3, m-3" data-testid="pdf-preview-mock-element">
+                        <h3>{t('coverLetter')}</h3>
+                        <p>{coverLetter}</p>
                         <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
                     </div> : null
             }
@@ -95,7 +99,7 @@ const ShortStudentInfo = ({ student, filterStudentList }) => {
                     <div className="col-12 text-center" data-testid="convoke-mock-element">
                         <div className="m-2 p-2 bg-white border rounded border-ose">
                             <div className="col-12 text-center">
-                                <h5 className="text-dark fw-light">{t('convokeSentence') + student.firstName + " " + student.lastName}</h5>
+                                <h5 className="text-dark fw-light">{t('convokeSentence') + student?.firstName || 'N/A'+ " " + student.lastName || 'N/A'}</h5>
                             </div>
                             <div className="col-12 text-center">
                                 <h6 className="text-dark fw-light">{t('convokeDates')}</h6>
