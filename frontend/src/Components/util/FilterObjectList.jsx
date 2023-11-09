@@ -31,11 +31,8 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
 		if(defaultSelectOpen) {
-			console.log("default", defaultSelectOpen)
 			for(let i = 0; i < attributes.length; i++){
-				console.log("checking", getAttributeKey(attributes[i]))
 				if(getAttributeKey(attributes[i]) === defaultSelectOpen){
-					console.log('found', attributes[i])
 					handleAttributeChange({target: {value: attributes[i]}})
 					handleInputChange({target: {value: 'OPEN'}})
 					break
