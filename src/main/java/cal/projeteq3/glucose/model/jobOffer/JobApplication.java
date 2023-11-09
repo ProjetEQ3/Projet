@@ -21,6 +21,7 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
+	@Column(length = 5000)
 	private String coverLetter;
 
 	@Enumerated(EnumType.STRING)
