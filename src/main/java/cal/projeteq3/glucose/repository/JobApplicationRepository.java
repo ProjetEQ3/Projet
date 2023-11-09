@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -18,4 +19,6 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     JobApplication findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
 
     List<JobApplication> findAllByJobOffer_Employer_Id(Long employerId);
+
+    List<JobApplication> findAllByStudentId(Long id);
 }

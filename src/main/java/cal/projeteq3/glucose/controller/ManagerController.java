@@ -3,7 +3,10 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
+import cal.projeteq3.glucose.dto.user.StudentDTO;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -29,12 +32,13 @@ public class ManagerController {
 
 //    JobOffer
     @GetMapping("/jobOffers/all")
-    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam String season, @RequestParam String year){
+    public ResponseEntity<List<JobOfferDTO>> getAllJobOffer(@RequestParam String season, @RequestParam String year,
+                                                            @RequestParam String department){
         Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getAllJobOffer(semester));
+                .body(managerService.getAllJobOffer(semester, Department.valueOf(department)));
     }
 
     @GetMapping("jobOffer/{id}")
@@ -54,12 +58,15 @@ public class ManagerController {
     }
 
     @GetMapping("jobOffers/{jobOfferState}")
-    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState, @RequestParam String season, @RequestParam String year){
+    public ResponseEntity<List<JobOfferDTO>> getJobOfferByState(@PathVariable String jobOfferState,
+                                                                @RequestParam String season, @RequestParam String year,
+                                                                @RequestParam String department){
         Semester semester = new Semester(Semester.Season.valueOf(season), Integer.parseInt(year));
 
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getJobOffersWithState(JobOfferState.valueOf(jobOfferState.toUpperCase()), semester));
+                .body(managerService.getJobOffersWithState(
+                        JobOfferState.valueOf(jobOfferState.toUpperCase()), semester, Department.valueOf(department)));
     }
 
     @PutMapping("jobOffer/accept/{id}")
@@ -84,24 +91,26 @@ public class ManagerController {
     }
 
     @GetMapping("cvs/all")
-    public ResponseEntity<List<CvFileDTO>> getAllCV(){
+    public ResponseEntity<List<CvFileDTO>> getAllCV(@RequestParam String department){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getAllCv());
+                .body(managerService.getAllCv(Department.valueOf(department)));
     }
 
     @GetMapping("cvs/pending")
-    public ResponseEntity<List<CvFileDTO>> getCvsSubmitted(){
+    public ResponseEntity<List<CvFileDTO>> getCvsSubmitted(@RequestParam String department){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getSubmittedCv());
+                .body(managerService.getSubmittedCv(Department.valueOf(department)));
     }
 
     @GetMapping("/contracts")
-    public ResponseEntity<List<ContractDTO>> getAllShortContracts(@RequestParam String season, @RequestParam String year){
+    public ResponseEntity<List<ContractDTO>> getAllShortContracts(@RequestParam String season, @RequestParam String year,
+                                                                  @RequestParam String department){
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(managerService.getContractsBySession(new Semester(Semester.Season.valueOf(season), Integer.parseInt(year))));
+                .body(managerService.getContractsBySession(new Semester(Semester.Season.valueOf(season),
+                        Integer.parseInt(year)), Department.valueOf(department)));
     }
 
     @GetMapping("/contract/{contractId}")
@@ -120,4 +129,17 @@ public class ManagerController {
                 .body(this.managerService.signContract(contractId, studentId));
     }
 
+    @GetMapping("/students")
+    public ResponseEntity<List<StudentDTO>> getStudents(@RequestParam String department){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(managerService.getStudents(Department.valueOf(department)));
+    }
+
+    @GetMapping("/student/jobApplications/{id}")
+    public ResponseEntity<List<JobApplicationDTO>> getStudent(@PathVariable Long id){
+        return ResponseEntity.accepted()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(managerService.getJobApplicationsByStudentId(id));
+    }
 }

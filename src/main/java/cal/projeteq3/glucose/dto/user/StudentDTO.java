@@ -1,9 +1,12 @@
 package cal.projeteq3.glucose.dto.user;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.model.Department;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.model.user.StudentSummary;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -18,14 +21,17 @@ public class StudentDTO extends UserDTO {
     private Department department;
     private CvFileDTO cvFile;
     private List<Long> jobApplications = new ArrayList<>();
+    private StudentState studentState;
 
     @Builder
     public StudentDTO(
-      Long id, String firstName, String lastName, String email, String role, String matricule, String department
+      Long id, String firstName, String lastName, String email, String role, String matricule, String department, StudentState studentState, List<Long> jobApplications
     ){
         super(id, firstName, lastName, email, role);
         this.matricule = matricule;
         this.department = Department.valueOf(department);
+        this.studentState = studentState;
+        this.jobApplications = jobApplications;
     }
 
     public StudentDTO(Student student){
@@ -53,5 +59,21 @@ public class StudentDTO extends UserDTO {
         super(firstName, lastName, "STUDENT");
         this.matricule = matricule;
         this.department = department;
+    }
+
+    public void setStudentState(JobApplicationRepository jobApplicationRepository){
+        if (this.getCvFile() == null) {
+            studentState = StudentState.NO_CV;
+        } else if (this.getJobApplications().isEmpty()) {
+            studentState = StudentState.NO_JOB_APPLICATION;
+        } else if (this.getJobApplications().stream().noneMatch(jobApplicationId ->
+                jobApplicationRepository.findById(jobApplicationId).orElseThrow().hasChosenAppointment())) {
+            studentState = StudentState.NO_APPOINTMENT;
+        } else if (this.getJobApplications().stream().noneMatch(jobApplicationId ->
+                jobApplicationRepository.findById(jobApplicationId).orElseThrow().isAccepted())) {
+            studentState = StudentState.NO_CONTRACT;
+        } else {
+            studentState = StudentState.COMPLETE;
+        }
     }
 }

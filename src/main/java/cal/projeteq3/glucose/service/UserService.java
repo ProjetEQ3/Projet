@@ -10,6 +10,7 @@ import cal.projeteq3.glucose.dto.user.UserDTO;
 import cal.projeteq3.glucose.exception.badRequestException.ContractNotFoundException;
 import cal.projeteq3.glucose.exception.badRequestException.UserNotFoundException;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
@@ -87,9 +88,9 @@ public class UserService {
     }
 
 	public ContractDTO getShortContractById(Long id) {
-		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(0);
-		return new ContractDTO(contractRepository.findById(id).orElseThrow(ContractNotFoundException::new), manager);
+		Contract contract = contractRepository.findById(id).orElseThrow(ContractNotFoundException::new);
+		Manager manager = managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment());
+		return new ContractDTO(contract, manager);
 	}
 
 	public List<ContractDTO> getAllContracts() {
@@ -97,8 +98,7 @@ public class UserService {
 	}
 
 	public List<ContractDTO> getAllShortContracts() {
-		//		TODO: get quel manager ?
-		Manager manager = managerRepository.findAll().get(0);
-		return contractRepository.findAll().stream().map((contract -> new ContractDTO(contract, manager))).toList();
+		return contractRepository.findAll().stream().map((contract ->
+			new ContractDTO(contract, managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment())))).toList();
 	}
 }

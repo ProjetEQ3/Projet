@@ -24,8 +24,10 @@
   "accept": "Accept",
   "addInternship": "Add an internship offer",
   "ACCEPTED": "Accepted",
-  "allInternship": "All internship offers: ",
+  "allInternship": "All internship offers",
   "authorizeOffer": "Offer Authorization",
+  "appointments": "Pending appointments",
+  "appointmentChosen": "You have chosen this appointment",
 
   "back": "Back",
 
@@ -40,7 +42,6 @@
   "convokedStudents": "Convoked Student(s)",
   "contractAlreadySigned": "Contract already signed",
   "contractNotReadyToSign": "Contract is not ready to be signed",
-
   "chooseADepartment": "Choose a department",
   "confirmationOfferDelete": "Are you sure you want to delete this internship offer?",
   "cancel": "Cancel",
@@ -137,6 +138,10 @@
   "matriculeInvalid": "College ID must contain only numbers.",
   "matriculeRequired": "College ID is required.",
 
+
+  "noAppointments": "No appointments available",
+  "noAppointmentSelected": "You have not selected an appointment",
+  "noApplications": "No application yet for this student",
   "noJobOffers": "You have no applications.",
   "noStudent": "No students have applied since the last time you visited.",
   "noCV": "No CV uploaded",
@@ -189,7 +194,18 @@
   "REFUSED": "Refused",
   "registerSubmit": "Register",
 
-  "studentCV": "Student CVs: ",
+  "STUDENT_SUBMITTED": "Waiting appointment option",
+  "STUDENT_NO_APPOINTMENT": "Waiting appointment option",
+  "STUDENT_CONVOKED": "Waiting appointment option",
+  "STUDENT_WAITING_APPOINTMENT": "Summoned to interview",
+  "STUDENT_NO_CONTRACT": "Summoned to interview",
+  "STUDENT_NO_CV": "CV missing",
+  "STUDENT_NO_JOB_APPLICATION": "Not applied yet",
+  "STUDENT_ACCEPTED": "Hired",
+  "STUDENT_COMPLETE": "Hired",
+  "students": "Students",
+  "studentCV": "Student CVs",
+  "studentList": "Students List",
   "studentSignatureMissing": "Student signature is missing.",
   "studentAlreadyApplied" : "You have already applied for this internship offer.",
   "startDate": "Start Date of the internship: ",
@@ -225,11 +241,7 @@
 
   "yourInternship": "Your internship offers",
 
-  "noAppointments": "No appointments available",
-  "appointments": "Pending appointments",
   "chooseAppointment": "Choose an appointment",
-  "appointmentChosen": "You have chosen this appointment",
-  "noAppointmentSelected": "You have not selected an appointment",
   "coverLetterPlaceholder": "Enter your cover letter",
 
   "contractsList": "List of your contracts",

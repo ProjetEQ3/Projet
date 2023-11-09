@@ -11,11 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
-    Student findByMatricule(String matricule);
+public interface StudentRepository extends JpaRepository<Student, Long>{
+	Student findByMatricule(String matricule);
 
-    @Query("SELECT s FROM Student s JOIN User u ON u.id = ?1 WHERE s.id = ?1")
-    Optional<StudentSummary> findStudentSummaryById(Long id);
+	@Query("SELECT s FROM Student s JOIN User u ON u.id = ?1 WHERE s.id = ?1")
+	Optional<StudentSummary> findStudentSummaryById(Long id);
+
+	List<Student> findAllByDepartment(Department department);
 
 	List<Student> findAllByDepartment(Department department);
 

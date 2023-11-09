@@ -869,7 +869,7 @@ public class StudentServiceTest{
 				.title("JobOfferTitle")
 				.description("  asdads")
 				.location("Location1")
-				.department(Department._145A0)
+				.department(Department._420B0)
 				.jobOfferState(JobOfferState.OPEN)
 				.startDate(LocalDate.now())
 				.expirationDate(LocalDate.now().plusDays(30))
@@ -909,7 +909,7 @@ public class StudentServiceTest{
 		when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
 		when(contractRepository.findById(1L)).thenReturn(Optional.of(contract));
 		when(contractRepository.save(any(Contract.class))).thenReturn(savedContract);
-		when(managerRepository.findAll()).thenReturn(List.of(manager));
+		when(managerRepository.findFirstByDepartment(Department._420B0)).thenReturn(manager);
 
 		ContractDTO result = studentService.signContract(1L, 1L);
 

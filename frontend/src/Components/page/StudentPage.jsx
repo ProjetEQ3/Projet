@@ -28,7 +28,7 @@ const StudentPage = ({user, setUser}) => {
 
 	async function fetchStudentJobOffers() {
 		if (!user?.id) return;
-		await axiosInstance.get(`/student/jobOffers/open/${user.department}`)
+		await axiosInstance.get(`/student/jobOffers/open`)
 			.then((response) => {
 				setJobOffers(response.data)
 			}).catch((error) => {
