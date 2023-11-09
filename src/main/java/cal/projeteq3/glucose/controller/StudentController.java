@@ -93,8 +93,8 @@ public class StudentController {
     }
 
     @PostMapping("/applyJobOffer/{studentId}/{jobOfferId}")
-    public ResponseEntity<JobOfferDTO> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId) {
-        return ResponseEntity.accepted().body(studentService.applyJobOffer(jobOfferId, studentId));
+    public ResponseEntity<JobOfferDTO> applyJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId, @RequestBody String coverLetter){
+        return ResponseEntity.accepted().body(studentService.applyJobOffer(jobOfferId, studentId, coverLetter));
     }
 
     @GetMapping("/appliedJobOffer/{studentId}")
