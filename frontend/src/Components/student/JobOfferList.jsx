@@ -39,13 +39,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 							<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
 						</div>
 					</div>
-					:
-					<FullJobOffer
-						key={selectedOffer.id}
-						user={user}
-						jobOffer={selectedOffer}
-						updatedOffer={updatedOffer}
-					/>
+					: <FullJobOffer key={selectedOffer.id} user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
 				}
 			</div>
 		</div>
