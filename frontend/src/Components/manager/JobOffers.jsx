@@ -27,10 +27,8 @@ const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApproval
       <div className="col-12">
         <h3 className="text-dark fw-light my-5">{t('allInternship')}</h3>
         <div className="row justify-content-around">
-          <FilterObjectList
-            items={offers}
+          <FilterObjectList items={offers} renderItem={renderFilteredOffers}
             attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
-            renderItem={renderFilteredOffers}
             selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
           />
         </div>
