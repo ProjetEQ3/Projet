@@ -167,9 +167,4 @@ public class ManagerService{
 //		TODO: get what manager ?
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
-
-	public List<Student> getStudentsByDepartment(Department department){
-		return studentRepository.findAllByDepartment(department);
-	}
-
 }

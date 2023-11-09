@@ -641,6 +641,8 @@ public class EmployerServiceTest {
 
         // Arrange the mock objects
         JobOffer mockJobOffer = new JobOffer();
+        mockJobOffer.setId(testJobOfferId);
+        mockJobOffer.setJobOfferState(JobOfferState.OPEN);
         JobApplication mockJobApplication = new JobApplication();
         mockJobApplication.setJobApplicationState(JobApplicationState.SUBMITTED);
         mockJobApplication.setId(1L);
@@ -654,6 +656,8 @@ public class EmployerServiceTest {
                 .build();
         mockJobApplication.setStudent(mockStudent);
         mockJobOffer.setJobApplications(List.of(mockJobApplication));
+        mockJobApplication.setCoverLetter("cover");
+        mockJobApplication.setJobOffer(mockJobOffer);
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
@@ -665,7 +669,7 @@ public class EmployerServiceTest {
         assertEquals(1, result.size());
 
         JobApplicationDTO returnedJobApplication = result.get(0);
-        assertEquals("cover", returnedJobApplication.get());
+        assertEquals("cover", returnedJobApplication.getCoverLetter());
 
         verify(jobOfferRepository, times(1)).findById(testJobOfferId);
     }
@@ -679,7 +683,7 @@ public class EmployerServiceTest {
         when(jobOfferRepository.findById(anyLong())).thenReturn(Optional.of(mockJobOffer));
 
         // Act
-        List<StudentDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
+        List<JobApplicationDTO> result = employerService.getPendingApplicationsByJobOfferId(testJobOfferId);
 
         // Assert
         assertNotNull(result);
