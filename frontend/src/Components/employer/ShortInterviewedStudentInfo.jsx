@@ -67,9 +67,6 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
             date.getHours() + "h" + date.getMinutes().toString().padStart(2, '0');
     }
 
-    // TODO: Add appointment.coverLetter here
-    console.log("APPOINTMENT: ", appointment)
-
     return (
         <>
             <div className="m-2 p-2 bg-white rounded d-lg-flex" data-testid="short-student-info">

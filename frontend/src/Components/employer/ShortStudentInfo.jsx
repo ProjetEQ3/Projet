@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ application, filterApplicationsList, jobApplicationId }) => {
+const ShortStudentInfo = ({ application, filterApplicationsList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
@@ -26,10 +26,10 @@ const ShortStudentInfo = ({ application, filterApplicationsList, jobApplicationI
                 return;
             }
         }
-        axiosInstance.put('/employer/offer/appointment/' + jobApplicationId, dates)
+        axiosInstance.put('/employer/offer/appointment/' + application.id, dates)
             .then((response) => {
                 toast.success(t('convokeSuccess'));
-                filterApplicationsList(jobApplicationId);
+                filterApplicationsList(application.id);
             })
             .catch((error) => {
                 console.log(error);
@@ -38,10 +38,10 @@ const ShortStudentInfo = ({ application, filterApplicationsList, jobApplicationI
     }
     const handleDecline = (e) => {
         e.preventDefault();
-        axiosInstance.put('/employer/offer/refuse/' + jobApplicationId)
+        axiosInstance.put('/employer/offer/refuse/' + application.id)
             .then((response) => {
                 toast.success(t('declineStudentSuccess'));
-                filterApplicationsList(jobApplicationId);
+                filterApplicationsList(application.id);
             })
             .catch((error) => {
                 toast.error(t('declineStudentError') + t(error?.response?.data?.message));
