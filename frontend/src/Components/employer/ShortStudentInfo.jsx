@@ -13,9 +13,10 @@ const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId })
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
     const [dates, setDates] = useState([new Date(now())]);
-
     const todayDate = new Date();
     const minDate = todayDate.toISOString().slice(0, 16);
+    const hardCodedCoverLetter = "Lorem ipsum dolor sit amet, consectet" // TODO: delete
+    const coverLetter = hardCodedCoverLetter;
 
     const handleConvoke = (e) => {
         e.preventDefault();
@@ -65,6 +66,8 @@ const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId })
         e.preventDefault();
         setIsDisplay(!isDisplay);
         setConvoque(false);
+        console.log("student: ", student)
+        console.log("ApplicationList: ", filterApplicationsList)
     }
 
     const handleDateUpdate = (e, index) => {
@@ -87,7 +90,9 @@ const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId })
             </div>
             {
                 isDisplay ?
-                    <div className="col-12" data-testid="pdf-preview-mock-element">
+                    <div className="col-12 p-3, m-3" data-testid="pdf-preview-mock-element">
+                        <h3>{t('coverLetter')}</h3>
+                        <p>{coverLetter}</p>
                         <PDFPreview file={CvFile.readBytes(student.cvFile.fileData)} contractComplete={true}/>
                     </div> : null
             }
