@@ -17,7 +17,11 @@ const StudentList = ({ offer, setSelectedOffer }) => {
                 <div className="col-12">
                     {offer?.applications?.map((application, index) => (
                         <div key={index}>
-                            <ShortStudentInfo student={application.student} filterApplicationsList={filterApplicationsList} jobApplicationId={application.id}/>
+                            <ShortStudentInfo
+                              application={application}
+                              filterApplicationsList={filterApplicationsList}
+                              jobApplicationId={application.id}
+                            />
                         </div>
                     ))}
                 </div>

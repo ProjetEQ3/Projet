@@ -8,15 +8,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMinus, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {now} from "moment";
 
-const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId }) => {
+const ShortStudentInfo = ({ application, filterApplicationsList, jobApplicationId }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [isConvoque, setConvoque] = useState(false);
     const [dates, setDates] = useState([new Date(now())]);
     const todayDate = new Date();
     const minDate = todayDate.toISOString().slice(0, 16);
-    const hardCodedCoverLetter = "Lorem ipsum dolor sit amet, consectet" // TODO: delete
-    const coverLetter = hardCodedCoverLetter;
+    const coverLetter = application?.coverLetter || "N/A"
+    const student = application?.student || undefined
 
     const handleConvoke = (e) => {
         e.preventDefault();
@@ -66,8 +66,6 @@ const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId })
         e.preventDefault();
         setIsDisplay(!isDisplay);
         setConvoque(false);
-        console.log("student: ", student)
-        console.log("ApplicationList: ", filterApplicationsList)
     }
 
     const handleDateUpdate = (e, index) => {
@@ -101,7 +99,7 @@ const ShortStudentInfo = ({ student, filterApplicationsList, jobApplicationId })
                     <div className="col-12 text-center" data-testid="convoke-mock-element">
                         <div className="m-2 p-2 bg-white border rounded border-ose">
                             <div className="col-12 text-center">
-                                <h5 className="text-dark fw-light">{t('convokeSentence') + student.firstName + " " + student.lastName}</h5>
+                                <h5 className="text-dark fw-light">{t('convokeSentence') + student?.firstName || 'N/A'+ " " + student.lastName || 'N/A'}</h5>
                             </div>
                             <div className="col-12 text-center">
                                 <h6 className="text-dark fw-light">{t('convokeDates')}</h6>
