@@ -17,33 +17,20 @@ const EmployerPage = ({user}) => {
 	const tabs = [
 		{ id: 'home', label: 'home' },
 		{ id: 'stages', label: 'jobOffers' },
-		{ id: 'entrevue', label: 'convokedStudents' },
+		{ id: 'interviewed', label: 'convokedStudents' },
 		{ id: 'contract', label: 'contracts' }
 	];
 	const [contracts, setContracts] = useState([new Contract()]);
+	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
 	const [idElement, setIdElement] = useState(null);
 	const [offersWithApplications, setOffersWithApplications] = useState([])
 	const [notifications, setNotifications] = useState({
 		home: { red: 0, green: 0, gray: 0 },
 		stages: { red: 0, green: 0, gray: 0 },
-		entrevue: { red: 0, green: 0, gray: 0 },
+		interviewed: { red: 0, green: 0, gray: 0 },
 		contract: { red: 0, green: 0, gray: 0 },
 	});
-
-	useEffect(() => {
-		setNotifications(notifications => ({
-			...notifications,
-			stages: { ...notifications.stages, red: nbPostulations },
-		}));
-	}, [nbPostulations]);
-
-	useEffect(() => {
-		if (tab === 'home') {
-			getNbPostulations();
-			getOffersWithSubmittedApplications();
-		}
-	}, [tab]);
 
 	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
 		if (!user?.id) return;
@@ -79,9 +66,66 @@ const EmployerPage = ({user}) => {
 			});
 	}
 
+	async function fetchStudentList(userClicked){
+		if (!user?.id) return;
+		await axiosInstance
+			.get('employer/waitingStudents', {
+				params: {employerId: user.id}
+			})
+			.then(res => {
+				if(res.data.length === 0){
+					if (userClicked)
+					{
+						setStudentList([])
+						return
+					}
+					toast.info(t('noStudentsConvoked'))
+					setStudentList([])
+					return
+				}
+				fetchStudentsJobTitles(res.data)
+			})
+			.catch(err => {
+				toast.error(err.message)
+			})
+	}
+
+	async function fetchStudentsJobTitles(fetchedStudentList){
+		for(let student of fetchedStudentList){
+			axiosInstance
+				.get('employer/offerByApplication', {
+					params: {
+						applicationId: student.jobApplications[0]
+					}})
+				.then(response => {
+					student.jobTitle = response.data.title
+				})
+				.catch(error => {
+					toast.error(error.message)
+				})
+		}
+		setStudentList(fetchedStudentList)
+	}
+
+	useEffect(() => {
+		setNotifications(notifications => ({
+			...notifications,
+			stages: { ...notifications.stages, red: nbPostulations },
+			interviewed: { ...notifications.interviewed, red: studentList.length },
+		}));
+	}, [nbPostulations, studentList]);
+
+	useEffect(() => {
+		if (tab === 'home') {
+			getNbPostulations();
+			getOffersWithSubmittedApplications();
+		}
+	}, [tab]);
+
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		getContracts();
+		fetchStudentList(true);
 		getNbPostulations();
 	}, [user])
 
@@ -113,7 +157,7 @@ const EmployerPage = ({user}) => {
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} jobOffers={offersWithApplications} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
 									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement}/>}
-					{tab === 'entrevue' && <InterviewedStudentList user={user}/>}
+					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} />}
 			</div>
 		</div>
