@@ -31,6 +31,7 @@ const EmployerPage = ({user}) => {
 		interviewed: { red: 0, green: 0, gray: 0 },
 		contract: { red: 0, green: 0, gray: 0 },
 	});
+	const [refusedCount, setRefusedCount] = useState(0)
 
 	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
 		if (!user?.id) return;
@@ -110,10 +111,10 @@ const EmployerPage = ({user}) => {
 	useEffect(() => {
 		setNotifications(notifications => ({
 			...notifications,
-			stages: { ...notifications.stages, red: nbPostulations },
+			stages: { ...notifications.stages, red: nbPostulations + refusedCount },
 			interviewed: { ...notifications.interviewed, red: studentList.length },
 		}));
-	}, [nbPostulations, studentList]);
+	}, [nbPostulations, studentList, refusedCount]);
 
 	useEffect(() => {
 		if (tab === 'home') {
@@ -157,7 +158,7 @@ const EmployerPage = ({user}) => {
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} fetchStudentList={fetchStudentList}
 											 jobOffers={offersWithApplications} studentList={studentList} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
-									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement}/>}
+									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} />}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} />}
 			</div>

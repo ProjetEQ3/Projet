@@ -9,7 +9,7 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById}) => {
+const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, setRefusedCount }) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
 	const [offers, setOffers] = useState([])
@@ -17,19 +17,14 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	const {selectedSessionIndex} = useSession()
 
 	useEffect(() => {
-		if (user?.isLoggedIn) {
-			getOffersWithSubmittedApplications();
+		if (!user?.isLoggedIn) {
+			navigate('/');
+			return;
 		}
-	}, [user]);
-
-	useEffect(() => {
-		if(!user?.isLoggedIn) navigate('/')
-		getOffers()
-	}, [user])
-
-	useEffect(() => {
-		handleSessionChange()
-	}, [selectedSessionIndex])
+		getOffers();
+		setSelectedOffer(null);
+		getOffersWithSubmittedApplications();
+	}, [user, selectedSessionIndex]);
 
 	useEffect(() => {
 		if (offers.length === 0) return;
@@ -49,6 +44,9 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
+				console.log(response.data)
+				const refusedCount = response.data.filter(offer => offer.jobOfferState === "REFUSED").length;
+				setRefusedCount(refusedCount)
 			})
 			.catch((error) => {
 				if(error.response?.status === 401){
@@ -73,13 +71,14 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 					filteredOffers.length !== 0 ?
 						filteredOffers.map((offer, index) => {
 							const boldTitle = isOfferInSubmissions(offer.id);
+							const isRefused = offer.jobOfferState === "REFUSED";
 							return (
 								<div key={index} onClick={() => handleSelectOffer(offer)}>
 									<ShortJobOffer
 										jobOffer={offer}
 										updateJobOfferList={updateOffer}
 										deleteOffer={() => deleteOffer(offer.id)}
-										isBold={boldTitle}
+										isBold={boldTitle || isRefused}
 									/>
 								</div>
 							);
