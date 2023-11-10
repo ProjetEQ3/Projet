@@ -29,7 +29,7 @@ const ManagerPage = ({user}) => {
         { key: 'home', label: t('home') },
         { key: 'stages', label: t('internship') },
         { key: 'cvs', label: 'CVs' },
-        { key: 'contract', label: t('contracts') },
+        { key: 'contracts', label: t('contracts') },
         { key: 'students', label: t('students') },
     ];
     const [notifications, setNotifications] = useState({

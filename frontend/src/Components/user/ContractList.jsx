@@ -5,6 +5,7 @@ import {useTranslation} from "react-i18next";
 
 const ContractList = ({ contracts, user }) => {
     const {t} = useTranslation();
+
     return (
         <div className="container" data-testid="contract-list">
             <div className="row">
