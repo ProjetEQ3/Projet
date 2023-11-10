@@ -73,7 +73,7 @@ return (
                                                     <h6>{application.jobOffer.title}</h6>
                                                 </div>
                                                 <div className="col-3 text-center">
-                                                    <StudentState state={application.jobApplicationState}/>
+                                                    <StudentState state={"STUDENT_" + application.jobApplicationState}/>
                                                 </div>
                                             </div>
                                             <h5 className="fw-light">{t(application.jobOffer.department)}</h5>

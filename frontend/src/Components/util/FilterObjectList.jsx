@@ -25,6 +25,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 		if(!attributes || !attributes.length) return
 		if(attributes.length > 0)
 			setSelectedAttribute(attributes[0])
+		console.log(attributes)
 	}, [])
 
 	const goToNextPage = () => {
@@ -51,6 +52,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 
 	const handleInputChange = (e) => {
 		setQuery(e.target.value)
+		console.log(e.target.value)
 	}
 
 	return (
