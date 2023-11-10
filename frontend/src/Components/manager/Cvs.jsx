@@ -3,7 +3,7 @@ import ShortCv from "./ShortCv";
 import FilterObjectList from "../util/FilterObjectList";
 import {useTranslation} from "react-i18next";
 
-const Cvs = ({cvs, updateCvList, getAllCvs }) => {
+const Cvs = ({cvs, updateCvList, getAllCvs, selectedById }) => {
 	const {t} = useTranslation();
 
 	const renderFilteredCvs = (filteredCvs) => {
@@ -33,6 +33,7 @@ const Cvs = ({cvs, updateCvList, getAllCvs }) => {
 						attributes={['fileName:' + t('fileName'),'cvState.select:Status']}
 						renderItem={renderFilteredCvs}
 						selectOptions={{cvState: ['SUBMITTED', 'ACCEPTED', 'REFUSED']}}
+						defaultSelectSubmitted={selectedById === 'cv' ? 'cvState.select' : ''}
 					/>
 				</div>
 			</div>

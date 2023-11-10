@@ -24,6 +24,7 @@ const ManagerPage = ({user}) => {
     const [offers, setOffers] = useState([new JobOffer()]);
     const [contracts, setContracts] = useState([new Contract()]);
     const [students, setStudents] = useState([new Student()])
+    const [idElement, setIdElement] = useState(null);
     const tabConfig = [
         { key: 'home', label: t('home') },
         { key: 'stages', label: t('internship') },
@@ -145,6 +146,7 @@ const ManagerPage = ({user}) => {
                 await getAllStudents();
                 break;
         }
+        setIdElement(null)
     };
 
     useEffect(() => {
@@ -188,10 +190,10 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'home' && <Home setTab={setTab} nbCvs={notifications['cvs'].red}/>}
+                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red}/>}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
                                                 updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
-                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
+                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} selectedById={idElement} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
                 {tab === 'students' && <StudentList students={students}/>}
             </div>

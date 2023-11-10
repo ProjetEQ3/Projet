@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 
-const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultSelectOpen}) => {
+const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultSelectOpen, defaultSelectSubmitted}) => {
 	const [t, i18n] = useTranslation()
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
@@ -40,6 +40,20 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 			}
 		}
 	}, [attributes, items, defaultSelectOpen])
+
+	useEffect(() => {
+		if(!items || !items.length) return
+		if(!attributes || !attributes.length) return
+		if(defaultSelectSubmitted) {
+			for(let i = 0; i < attributes.length; i++){
+				if(getAttributeKey(attributes[i]) === defaultSelectSubmitted){
+					handleAttributeChange({target: {value: attributes[i]}})
+					handleInputChange({target: {value: 'SUBMITTED'}})
+					break
+				}
+			}
+		}
+	}, [attributes, items, defaultSelectSubmitted])
 
 	const goToNextPage = () => {
 		if(currentPage < totalPages){
