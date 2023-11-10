@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
 
-const Home = ({cv, setTab, setIdElement, jobOffers, applications, handleViewJobOffer}) => {
+const Home = ({setTab, setIdElement, jobOffers, applications, cv, handleViewJobOffer}) => {
     const {t} = useTranslation();
 
     const handleJobOfferClick = (jobOffer) => {

@@ -14,6 +14,14 @@ const Home = ({setTab, setIdElement, nbCvs}) => {
     return (
         <div className="container-fluid row px-lg-5 px-2 py-2">
             {
+                nbCvs === 0 &&
+                <div className="col-12 text-center">
+                    <h1 className="rounded rounded-3 alert alert-success p-2 px-4 display-3">
+                        😊<br />{t('allTreated')}
+                    </h1>
+                </div>
+            }
+            {
                 nbCvs > 0 &&
                 <div className="col-12">
                     <h5 className="rounded rounded-3 alert alert-danger p-2 px-4 display-6 clickable"

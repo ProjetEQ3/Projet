@@ -21,7 +21,7 @@ const ShortJobApplicationDisplay = ({ application }) => {
     }
 
     return (
-        application.appointments && application.appointments.length === 1 ? (
+        application.appointments && application.appointments.length > 0 ? (
             <div className="row clickable m-2">
                 <div className="col-12 bg-white rounded d-flex justify-content-between align-items-center">
                     <div>
@@ -33,13 +33,23 @@ const ShortJobApplicationDisplay = ({ application }) => {
                         </p>
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-4 mt-sm-2">
-                        <div className="text-end text-sm-center mb-2">
-                            <button className="btn btn-success my-auto " data-testid="waiting-appointment-button-testid" disabled>
-                                {t('chosenAppointment')}
-                                <p style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} className="pb-1 mb-0"> {dateTimeToShortString(application.appointments[0].appointmentDate)}
-                                    <FontAwesomeIcon icon={faCalendar} className="ms-2"/></p>
-                            </button>
-                        </div>
+                        {
+                            application.appointments.length > 1 ?
+                                <div>
+                                    <button className="btn btn-danger float-end me-5" data-testid="waiting-appointment-button-testid" disabled>
+                                        {t('chooseAppointment')}
+                                    </button>
+                                </div> :
+                            <div className="text-end text-sm-center mb-2">
+                                <button className="btn btn-success my-auto " data-testid="waiting-appointment-button-testid"
+                                        disabled>
+                                    {t('chosenAppointment')}
+                                    <p style={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}
+                                       className="pb-1 mb-0"> {dateTimeToShortString(application.appointments[0].appointmentDate)}
+                                        <FontAwesomeIcon icon={faCalendar} className="ms-2"/></p>
+                                </button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
