@@ -49,7 +49,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList}) 
             {
                 studentList.length > 0 && (
                     <>
-                        <h3>{t('interviewedStudents')}</h3>
+                        <h3>{t('studentApplication')}</h3>
 
                         {studentList.map((student, index) => {
                             return (
