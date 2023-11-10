@@ -85,7 +85,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     }
 
     const OpenCv = () => {
-        isDisplay ? setIsDisplay(false) : setIsDisplay(true)
+        setIsDisplay(!isDisplay)
     }
 
     return (
@@ -118,9 +118,6 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                                         </div>
                                         <div className="modal-body">
                                             <h3 data-testid="bodyTitle" className="text-dark fw-light mb-3 fw-semibold">{cv.fileName}</h3>
-                                            {isDisplay ? (
-                                                <PDFPreview file={CvFile.readBytes(cv.fileData)} setIsDisplay={setIsDisplay}/>
-                                            ) : null}
                                         </div>
                                         <div className="modal-footer">
                                             {isDecline ? (
