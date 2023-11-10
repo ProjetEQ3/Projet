@@ -14,7 +14,6 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
     useEffect(() => {
         axiosInstance.get('/employer/offer/appointment/' + student.jobApplications[0])
             .then((response) => {
-                console.log("CALL: ",response.data)
                 let apt = new Appointment();
                 apt.init(response.data)
                 setAppointment(apt)

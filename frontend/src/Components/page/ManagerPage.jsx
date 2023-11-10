@@ -36,7 +36,7 @@ const ManagerPage = ({user}) => {
         home: { green: 0, gray: 0, red: 0 },
         stages: { green: 0, gray: 0, red: 0 },
         cvs: { green: 0, gray: 0, red: 0 },
-        contract: { green: 0, gray: 0, red: 0 },
+        contracts: { green: 0, gray: 0, red: 0 },
         students: { green: 0, gray: 0, red: 0 },
     });
 
