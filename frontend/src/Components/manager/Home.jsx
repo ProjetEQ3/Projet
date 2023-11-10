@@ -8,7 +8,6 @@ const Home = ({setTab, setIdElement, nbCvs}) => {
 
     return (
         <div className="container-fluid row px-lg-5 px-2 py-2">
-            <h1>{t('home')}</h1>
             {
                 nbCvs > 0 &&
                 <div className="col-12">

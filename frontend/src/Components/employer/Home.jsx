@@ -13,7 +13,6 @@ const Home = ({setTab, setIdElement, jobOffers}) => {
 
     return (
         <div className="container-fluid px-lg-5 px-2 py-2">
-            <h1>{t('home')}</h1>
             {
                 jobOffers.length !== 0 && (
                     <>
