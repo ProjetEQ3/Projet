@@ -72,8 +72,8 @@ const EmployerPage = ({user}) => {
 			.get('employer/waitingStudents', {
 				params: {employerId: user.id}
 			})
-			.then(res => {
-				if(res.data.length === 0){
+			.then(response => {
+				if(response.data.length === 0){
 					if (userClicked)
 					{
 						setStudentList([])
@@ -83,10 +83,10 @@ const EmployerPage = ({user}) => {
 					setStudentList([])
 					return
 				}
-				fetchStudentsJobTitles(res.data)
+				fetchStudentsJobTitles(response.data)
 			})
-			.catch(err => {
-				toast.error(err.message)
+			.catch(error => {
+				toast.error(error.message)
 			})
 	}
 
