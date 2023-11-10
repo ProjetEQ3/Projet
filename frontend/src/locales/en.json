@@ -52,6 +52,7 @@
   "chosenAppointment" : "Chosen appointment : ",
   "cvNotApproved": "CV not approved",
   "CV": "CV",
+  "cvToTreat": "CV(s) to treat",
   "cvAuthorisation": "CV Authorization",
   "confirmRefusal": "Can you provide a reason for your refusal ?",
   "confirm": "Confirm",
@@ -240,6 +241,7 @@
   "winter": "Winter",
 
   "yourInternship": "Your internship offers",
+  "youHave": "You have",
 
   "chooseAppointment": "Choose an appointment",
   "coverLetterPlaceholder": "Enter your cover letter",

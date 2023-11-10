@@ -19,7 +19,7 @@ const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
     const {t} = useTranslation();
     const navigate = useNavigate();
-    const [tab, setTab] = useState('stages');
+    const [tab, setTab] = useState('home');
     const [cvs, setCvs] = useState([new CvFile()]);
     const [offers, setOffers] = useState([new JobOffer()]);
     const [contracts, setContracts] = useState([new Contract()]);
@@ -158,7 +158,6 @@ const ManagerPage = ({user}) => {
         let green = 0;
         let gray = 0;
         let red = cvs.filter(cv => cv.cvState === 'SUBMITTED').length;
-        console.log("RED", red)
         updateNotifications('cvs', { green: green, gray: gray, red: red });
 
         updateNotifications('contracts', { green: 0, gray: 0, red: 0 });
@@ -189,7 +188,7 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'home' && <Home />}
+                {tab === 'home' && <Home setTab={setTab} nbCvs={notifications['cvs'].red}/>}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
                                                 updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}

@@ -53,6 +53,7 @@
   "contractAlreadySigned": "Vous avez déjà signé ce contrat",
   "contractNotReadyToSign": "Le contrat n'est pas prêt à être signé",
   "contracts" : "Contrats",
+  "cvToTreat": "CV(s) à traiter",
   "copyRights": "© 2023 - Tous droits réservés.",
 
   "declineStudentSuccess" : "Étudiant refusé",
@@ -237,6 +238,7 @@
   "winter": "Hiver",
 
   "yourInternship": "Vos offres de stages",
+  "youHave": "Vous avez",
 
   "noAppointments": "Aucun rendez-vous proposé pour le moment",
   "appointments": "Rendez-vous possibles",
