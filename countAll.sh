@@ -1,28 +1,36 @@
+# $1 = date since (dd-mm-yyyy)
 
+if [ -z "$1" ]
+ then
+   echo "No Date supplied ex: 11-11-2011"
+   exit 1
+fi
+
+echo "Ligne écrite depuis le $1"
 echo "Louis: "
 echo "js: "
-./gitcount.sh 2055 js 2023-08-23
+./gitcount.sh 2055 js "$1"
 echo "java: "
-./gitcount.sh 2055 java 2023-08-23
+./gitcount.sh 2055 java "$1"
 echo "Gabriel: "
 echo "js: "
-./gitcount.sh 216 js 2023-08-23
-./gitcount.sh Gab js 2023-08-23
+./gitcount.sh 216 js "$1"
+./gitcount.sh Gab js "$1"
 echo "java: "
-./gitcount.sh 216 java 2023-08-23
-./gitcount.sh Gab java 2023-08-23
+./gitcount.sh 216 java "$1"
+./gitcount.sh Gab java "$1"
 echo "Chawki: "
 echo "js: "
-./gitcount.sh Chouaki js 2023-08-23
+./gitcount.sh Chouaki js "$1"
 echo "java: "
-./gitcount.sh Chouaki java 2023-08-23
+./gitcount.sh Chouaki java "$1"
 echo "Samuel: "
 echo "js: "
-./gitcount.sh Samuel js 2023-08-23
+./gitcount.sh Samuel js "$1"
 echo "java: "
-./gitcount.sh Samuel java 2023-08-23
+./gitcount.sh Samuel java "$1"
 echo "Zakaria: "
 echo "js: "
-./gitcount.sh Zaka js 2023-08-23
+./gitcount.sh Zaka js "$1"
 echo "java: "
-./gitcount.sh Zaka java 2023-08-23
+./gitcount.sh Zaka java "$1"
