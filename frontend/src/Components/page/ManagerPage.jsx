@@ -149,7 +149,7 @@ const ManagerPage = ({user}) => {
 
     useEffect(() => {
         getNotificationsCounts();
-    }, [cvs]);
+    }, [offers, cvs, contracts, students]);
 
     function getNotificationsCounts() {
         updateNotifications('home', { green: 0, gray: 0, red: 0 });
@@ -157,7 +157,8 @@ const ManagerPage = ({user}) => {
 
         let green = 0;
         let gray = 0;
-        let red = 0;
+        let red = cvs.filter(cv => cv.cvState === 'SUBMITTED').length;
+        console.log("RED", red)
         updateNotifications('cvs', { green: green, gray: gray, red: red });
 
         updateNotifications('contracts', { green: 0, gray: 0, red: 0 });
@@ -178,16 +179,14 @@ const ManagerPage = ({user}) => {
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
                     {tabConfig.map((item) => (
-                        <>
-                            <button
-                                key={item.key}
-                                className={`col-6 mx-2 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
-                                onClick={() => handleTabClick(item.key)}
-                            >
-                                {item.label}
-                            </button>
+                        <button
+                            key={item.key}
+                            className={`col-6 mx-2 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
+                            onClick={() => handleTabClick(item.key)}
+                        >
+                            {item.label}
                             <NotificationBadge key={item.label} notifications={notifications[item.key]} tab={item} setTab={setTab} titleInfos={item.label}/>
-                        </>
+                        </button>
                     ))}
                 </div>
                 {tab === 'home' && <Home />}
