@@ -17,6 +17,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -176,6 +177,7 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
+//		TODO: get what manager ?
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
 	}
 

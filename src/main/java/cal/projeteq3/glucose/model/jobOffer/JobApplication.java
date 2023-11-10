@@ -21,6 +21,9 @@ public class JobApplication{
 	@GeneratedValue
 	private Long id;
 
+	@Column(length = 5000)
+	private String coverLetter;
+
 	@Enumerated(EnumType.STRING)
 	private JobApplicationState jobApplicationState = JobApplicationState.SUBMITTED;
 
@@ -46,15 +49,15 @@ public class JobApplication{
 		this.appointments.add(appointment);
 	}
 
-	public boolean isNotChangeable() {
-		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED || this.jobApplicationState == JobApplicationState.WAITING_APPOINTMENT || this.jobApplicationState == JobApplicationState.CONVOKED;
-	}
-
 	public boolean isAccepted() {
 		return this.jobApplicationState == JobApplicationState.ACCEPTED;
 	}
 
 	public boolean hasChosenAppointment() {
-		return this.appointments.stream().anyMatch(Appointment::isChosen);
+        return this.appointments.stream().anyMatch(Appointment::isChosen);
+    }
+
+	public boolean isImmutable() {
+		return this.jobApplicationState == JobApplicationState.ACCEPTED || this.jobApplicationState == JobApplicationState.REJECTED;
 	}
 }

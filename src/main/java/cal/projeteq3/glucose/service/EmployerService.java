@@ -146,7 +146,7 @@ public class EmployerService{
 				.orElseThrow(JobApplicationNotFoundException::new);
 
 		if (!application.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
-		if (application.isNotChangeable()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isImmutable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.ACCEPTED);
 		jobApplicationRepository.save(application);
@@ -168,7 +168,7 @@ public class EmployerService{
 				.findById(applicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		if (application.isNotChangeable()) throw new JobApplicationHasAlreadyADecision();
+		if (application.isImmutable()) throw new JobApplicationHasAlreadyADecision();
 
 		application.setJobApplicationState(JobApplicationState.REJECTED);
 
@@ -176,14 +176,14 @@ public class EmployerService{
 		return new JobApplicationDTO(application);
 	}
 
-	public List<StudentDTO> getPendingStudentsByJobOfferId(Long jobOfferId) {
+	public List<JobApplicationDTO> getPendingApplicationsByJobOfferId(Long jobOfferId) {
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId)
 			.orElseThrow(() -> new JobOfferNotFoundException(jobOfferId));
 		List<JobApplication> jobApplications = jobOffer.getJobApplications();
 		if(jobApplications.isEmpty()) return Collections.emptyList();
 		return jobOffer.getJobApplications().stream()
 			.filter(jobApplication -> jobApplication.getJobApplicationState().equals(JobApplicationState.SUBMITTED))
-			.map(jobApplication -> new StudentDTO(jobApplication.getStudent(), jobApplication.getId()))
+			.map(JobApplicationDTO::new)
 			.collect(Collectors.toList());
 	}
 

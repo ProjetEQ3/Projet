@@ -73,7 +73,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 				<div className="d-flex align-items-center col-6">
 					<select className="form-select me-2 flex-grow-1 clickable" value={selectedAttribute} onChange={handleAttributeChange}>
 						{attributes.map(attr => (
-							<option className="clickable"  key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
+							<option className="clickable" key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
 						))}
 					</select>
 					{isSelectAttribute ? (

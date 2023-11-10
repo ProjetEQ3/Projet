@@ -129,9 +129,9 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	const handleSelectOffer = (offer) => {
 		selectedById = null
 		if(offer.jobOfferState === "OPEN"){
-			axiosInstance.get(`/employer/offer/students/${offer.id}`)
+			axiosInstance.get(`/employer/offer/applications/${offer.id}`)
 				.then((response) => {
-					offer.students = response.data
+					offer.applications = response.data
 
 					const updatedOffers = offers.map((o) => {
 						if(o.id === offer.id){
@@ -182,8 +182,8 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 								<FullJobOffer jobOffer={selectedOffer} updateOffer={updateOffer}/>
 								{
 									selectedOffer.jobOfferState === "OPEN" ?
-										selectedOffer.students != null && selectedOffer.students.length > 0 ?
-											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer} getNbPostulations={getNbPostulations} getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} /> :
+										selectedOffer.applications != null && selectedOffer.applications.length > 0 ?
+											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer} getNbPostulations={getNbPostulations} getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}/> :
 											<div><p className="display-6">{t('noStudent')}</p></div>
 										: null
 								}

@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public final class JobApplicationDTO{
 	private Long id;
+	private String coverLetter;
 	private StudentDTO student;
 	private JobOfferDTO jobOffer;
 	private JobApplicationState jobApplicationState;
@@ -24,6 +25,7 @@ public final class JobApplicationDTO{
 
 	public JobApplicationDTO(JobApplication jobApplication){
 		this.id = jobApplication.getId();
+		this.coverLetter = jobApplication.getCoverLetter();
 		this.student = new StudentDTO(jobApplication.getStudent());
 		this.jobOffer = new JobOfferDTO(jobApplication.getJobOffer());
 		this.jobApplicationState = jobApplication.getJobApplicationState();

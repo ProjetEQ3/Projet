@@ -71,7 +71,9 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     const updateCv = (cv,cvState, reason) => {
         cv.cvState = cvState
         axiosInstance
-            .put(`/manager/cv/update/${cv.id}?newCvState=${cvState}&reason=${reason}`,)
+            .put(`/manager/cv/update/${cv.id}?newCvState=${cvState}&reason=${reason}`,{
+                headers: { 'Content-Type': 'text/plain' }
+            })
             .then((response) => {
                 toast.success(t('updatedCV') + t(cvState))
                 updateCvList(cv)

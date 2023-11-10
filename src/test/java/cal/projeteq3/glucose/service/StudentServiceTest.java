@@ -355,7 +355,7 @@ public class StudentServiceTest{
 		when(jobOfferRepository.findById(1L)).thenReturn(Optional.empty());
 
 		Assertions.assertThrows(JobOfferNotFoundException.class, () -> {
-			studentService.applyJobOffer(1L, 1L);
+			studentService.applyJobOffer(1L, 1L, "CoverLetter");
 		});
 	}
 
@@ -366,7 +366,7 @@ public class StudentServiceTest{
 		when(studentRepository.findById(1L)).thenReturn(Optional.empty());
 
 		Assertions.assertThrows(StudentNotFoundException.class, () -> {
-			studentService.applyJobOffer(1L, 1L);
+			studentService.applyJobOffer(1L, 1L, "CoverLetter");
 		});
 	}
 
@@ -386,7 +386,7 @@ public class StudentServiceTest{
 		when(jobOfferRepository.save(any(JobOffer.class))).thenReturn(jobOffer);
 
 		// Act
-		JobOfferDTO result = studentService.applyJobOffer(jobOfferId, studentId);
+		JobOfferDTO result = studentService.applyJobOffer(jobOfferId, studentId, "CoverLetter");
 
 		// Assert
 		assertNotNull(result);
@@ -405,15 +405,21 @@ public class StudentServiceTest{
 		Student student = Student.builder().id(studentId).cvFile(CvFile.builder().fileName("cv.pdf")
 		                                                               .cvState(CvState.ACCEPTED).build()).build();
 		jobOffer.addJobApplication(
-			new JobApplication(1L, JobApplicationState.SUBMITTED, student, jobOffer, new Semester(LocalDate.now()),
-			                   new ArrayList<>(0)
+			new JobApplication(
+				1L,
+				"CoverLetter",
+				JobApplicationState.SUBMITTED,
+				student,
+				jobOffer,
+				new Semester(LocalDate.now()),
+				new ArrayList<>(0)
 			));
 
 		when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(jobOffer));
 		when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
 
 		// Act and Assert
-		assertThrows(StudentHasAlreadyAppliedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+		assertThrows(StudentHasAlreadyAppliedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId, "CoverLetter"));
 	}
 
 	@Test
@@ -428,7 +434,7 @@ public class StudentServiceTest{
 		when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
 
 		// Act and Assert
-		assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+		assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId, "CoverLetter"));
 	}
 
 	@Test
@@ -443,7 +449,7 @@ public class StudentServiceTest{
 		when(studentRepository.findById(studentId)).thenReturn(Optional.of(student));
 
 		// Act and Assert
-		assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId));
+		assertThrows(CvNotApprovedException.class, () -> studentService.applyJobOffer(jobOfferId, studentId, "CoverLetter"));
 	}
 
 	@Test

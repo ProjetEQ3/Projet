@@ -130,7 +130,7 @@ public class StudentService{
 	}
 
 	@Transactional
-	public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId){
+	public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId, String coverLetter){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
 
@@ -142,6 +142,7 @@ public class StudentService{
 		jobApplication.setStudent(student);
 		jobApplication.setJobOffer(jobOffer);
 		jobApplication.setSemester(jobOffer.getSemester());
+		jobApplication.setCoverLetter(coverLetter);
 		jobOffer.getJobApplications().add(jobApplication);
 
 		jobApplicationRepository.save(jobOffer.getJobApplications().get(jobOffer.getJobApplications().size() - 1));

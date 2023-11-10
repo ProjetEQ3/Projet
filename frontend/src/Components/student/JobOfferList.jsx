@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import ShortJobOffer from "./ShortJobOffer";
-import FullJobOffer from "./FullJobOffer";
-import {useTranslation} from "react-i18next";
+import ShortJobOffer from "./ShortJobOffer"
+import FullJobOffer from "./FullJobOffer"
+import {useTranslation} from "react-i18next"
 
 function JobOfferList({jobOffers, user, setJobOffers, selectedById, handleViewJobOffer}) {
     const {t} = useTranslation();
@@ -10,7 +10,7 @@ function JobOfferList({jobOffers, user, setJobOffers, selectedById, handleViewJo
 	const updatedOffer = (jobOffer) => {
 		setSelectedOffer(jobOffer)
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
-		setJobOffers(updatedOffers);
+		setJobOffers(updatedOffers)
 	}
 
 	const handleClick = (offer) => {
@@ -36,7 +36,7 @@ function JobOfferList({jobOffers, user, setJobOffers, selectedById, handleViewJo
 						</div> :
 						jobOffers.map((offer, index) => (
 							offer.jobOfferState === "OPEN" ? (
-								<div onClick={() => handleClick(offer)}>
+								<div key={offer.id} onClick={() => handleClick(offer)}>
 									<ShortJobOffer user={user} jobOffer={offer} key={offer.id} />
 								</div>
 							) : null
@@ -50,12 +50,11 @@ function JobOfferList({jobOffers, user, setJobOffers, selectedById, handleViewJo
 							<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
 						</div>
 					</div>
-					:
-					<FullJobOffer user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
+					: <FullJobOffer user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
 				}
 			</div>
 		</div>
 	)
 }
 
-export default JobOfferList;
+export default JobOfferList

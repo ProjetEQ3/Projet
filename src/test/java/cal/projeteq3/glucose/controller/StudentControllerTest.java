@@ -451,35 +451,55 @@ public class StudentControllerTest {
 	@Test
 	void testApplyJobOfferSuccess() throws Exception{
 		JobOfferDTO mockDto = new JobOfferDTO();
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenReturn(mockDto);
+
+		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenReturn(mockDto);
 
 		mockMvc
 			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
-                    .header("Authorization", token)
-                    .contentType(MediaType.APPLICATION_JSON))
+                .header("Authorization", token)
+                .contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString("CoverLetter"))
+			)
 		  .andExpect(status().isAccepted());
 	}
+
+    @Test
+    void testApplyJobOfferNoCoverLetter() throws Exception{
+        JobOfferDTO mockDto = new JobOfferDTO();
+
+        when(studentService.applyJobOffer(validJobOfferId, validStudentId, "EMPTY_COVER_LETTER")).thenReturn(mockDto);
+
+        mockMvc
+                .perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(""))
+                )
+                .andExpect(status().isAccepted());
+    }
 
 	@Test
 	void testApplyJobOfferApiException() throws Exception{
 		APIException mockException = new JobOfferNotOpenException();
 
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(mockException);
+		when(studentService.applyJobOffer(validJobOfferId, validStudentId, "CoverLetter")).thenThrow(mockException);
 
 		mockMvc
-			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId).contentType(MediaType.APPLICATION_JSON))
+			.perform(post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId, "coverLetter").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isUnauthorized())
 		;
 	}
 
 	@Test
 	void ApplyJobOffer_GenericException() throws Exception{
-		when(studentService.applyJobOffer(validJobOfferId, validStudentId)).thenThrow(new RuntimeException());
+		when(studentService.applyJobOffer(eq(validJobOfferId), eq(validStudentId), any(String.class))).thenThrow(new RuntimeException());
 
 		mockMvc.perform(
-			       post("/student/applyJobOffer/" + validStudentId + "/" + validJobOfferId)
-                           .header("Authorization", token)
-                           .contentType(MediaType.APPLICATION_JSON))
+			       post("/student/applyJobOffer/" + validJobOfferId + "/" + validStudentId)
+               .header("Authorization", token)
+               .contentType(MediaType.APPLICATION_JSON)
+               .content(objectMapper.writeValueAsString("CoverLetter"))
+		       )
 		       .andExpect(status().is(673));
 	}
 
