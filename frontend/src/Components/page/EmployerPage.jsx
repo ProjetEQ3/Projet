@@ -63,6 +63,7 @@ const EmployerPage = ({user}) => {
 			.catch((error) => {
 				toast.error(t('getOffersWithSubmittedApplicationsError') + t(error.response?.data.message))
 			});
+		fetchStudentList(true);
 	}
 
 	async function getNbPostulations() {
@@ -74,6 +75,7 @@ const EmployerPage = ({user}) => {
 			.catch((error) => {
 				toast.error(t(error.response?.data?.message))
 			});
+		fetchStudentList(true);
 	}
 
 	async function getContracts() {
@@ -95,13 +97,9 @@ const EmployerPage = ({user}) => {
 			})
 			.then(response => {
 				if(response.data.length === 0){
-					if (userClicked)
-					{
-						setStudentList([])
-						return
-					}
-					toast.info(t('noStudentsConvoked'))
 					setStudentList([])
+					if (userClicked) return
+					toast.info(t('noStudentsConvoked'))
 					return
 				}
 				fetchStudentsJobTitles(response.data)
@@ -118,7 +116,8 @@ const EmployerPage = ({user}) => {
 				.get('employer/offerByApplication', {
 					params: {
 						applicationId: student.jobApplications[0]
-					}})
+					}
+				})
 				.then(response => {
 					student.jobTitle = response.data.title
 				})
