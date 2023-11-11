@@ -1,8 +1,8 @@
-# $1 = date since (dd-mm-yyyy)
+# $1 = date since (yyyy-mm-dd)
 
 if [ -z "$1" ]
  then
-   echo "No Date supplied ex: 11-11-2011"
+   echo "No Date supplied ex: 2011-01-01"
    exit 1
 fi
 
