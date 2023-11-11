@@ -6,7 +6,7 @@ import {axiosInstance} from "../../App";
 import Contract from "../../model/Contract";
 import {toast} from "react-toastify";
 
-const ShortContract = ({ contract, user }) => {
+const ShortContract = ({ contract, user, reloadContracts }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [showSigningModal, setShowSigningModal] = useState(false);
@@ -27,8 +27,7 @@ const ShortContract = ({ contract, user }) => {
             password: signaturePassword,
         })
             .then(response => {
-                contract.data = response.data.data;
-                contract.isComplete = response.data.complete;
+                reloadContracts();
                 toast.success(t('contractSigned'));
             })
             .catch(error => {
@@ -48,7 +47,7 @@ const ShortContract = ({ contract, user }) => {
     }
 
     return (
-        <div className={'row'}>
+        <div className='row'>
             <div className="col-12 bg-white rounded pt-1">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
