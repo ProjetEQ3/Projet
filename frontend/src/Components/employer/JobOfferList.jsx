@@ -12,6 +12,7 @@ import {useSession} from "../util/SessionContext"
 const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, getOffers, offers, setOffers }) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
+	const [defaultSelect, setDefaultSelect] = useState('')
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
 
@@ -27,9 +28,17 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	useEffect(() => {
 		if (offers.length === 0) return;
 		if (selectedById === null) return;
-		handleSelectOffer(offers.find((offer) => offer.id === selectedById))
+		let jobOffer = offers.find((offer) => offer.id === selectedById)
+		getSelectedOfferState(jobOffer);
+		handleSelectOffer(jobOffer)
 		setSelectedById(null)
 	}, [offers, selectedById]);
+
+	function getSelectedOfferState(jobOffer) {
+		if(selectedById < 0 || selectedById === null) return ''
+		if(jobOffer === null || jobOffer === undefined) return ''
+		setDefaultSelect('jobOfferState.select:' + jobOffer.jobOfferState)
+	}
 
 	const handleSessionChange = () => {
 		setOffers([])
@@ -142,7 +151,7 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 							attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
 							renderItem={renderFilteredOffers}
 							selectOptions={{jobOfferState: ["SUBMITTED", "OPEN", "PENDING", "EXPIRED", "TAKEN", "REFUSED"]}}
-							defaultSelectOpen={selectedById > 0 ? 'jobOfferState.select' : ''}
+							defaultJobOfferSelect={defaultSelect}
 						/>
 						<div className="row m-2">
 							<button className="btn btn-outline-ose col-12"

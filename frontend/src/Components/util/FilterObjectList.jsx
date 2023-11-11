@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 
-const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultSelectOpen, defaultSelectSubmitted}) => {
+const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultJobOfferSelect, defaultSelectSubmitted}) => {
 	const [t, i18n] = useTranslation()
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
@@ -30,16 +30,18 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 	useEffect(() => {
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
-		if(defaultSelectOpen) {
+		if(defaultJobOfferSelect) {
+			let jobOfferSelect = defaultJobOfferSelect.split(':')[0]
+			let jobOfferState = defaultJobOfferSelect.split(':')[1]
 			for(let i = 0; i < attributes.length; i++){
-				if(getAttributeKey(attributes[i]) === defaultSelectOpen){
+				if(getAttributeKey(attributes[i]) === jobOfferSelect){
 					handleAttributeChange({target: {value: attributes[i]}})
-					handleInputChange({target: {value: 'OPEN'}})
+					handleInputChange({target: {value: jobOfferState}})
 					break
 				}
 			}
 		}
-	}, [attributes, items, defaultSelectOpen])
+	}, [attributes, items, defaultJobOfferSelect])
 
 	useEffect(() => {
 		if(!items || !items.length) return

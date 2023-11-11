@@ -179,7 +179,9 @@ const EmployerPage = ({user}) => {
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} fetchStudentList={fetchStudentList}
 											 jobOffers={offersWithApplications} studentList={studentList} refusedOffers={refusedOffers} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
-									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
+													   getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}
+													   selectedById={idElement} setSelectedById={setIdElement}
+													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} />}
 			</div>
