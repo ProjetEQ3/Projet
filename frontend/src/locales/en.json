@@ -121,7 +121,7 @@
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
 
-  "jobOffers": "Internships Offers",
+  "jobOffers": "Internship Offers",
   "jobOffer": "Internship",
   "jobApplicationNotFound": "Job application not found",
 
@@ -191,6 +191,7 @@
   "placeHolderOrganisationPhone": "Enter the organization phone number",
 
   "refuse": "Refuse",
+  "refusedJobOffers" : "Refused Internship Offers",
   "refusalReason": "Refusal Reason",
   "refusedOffer": "Offer refused",
   "REFUSED": "Refused",

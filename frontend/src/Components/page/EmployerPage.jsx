@@ -33,14 +33,17 @@ const EmployerPage = ({user}) => {
 	});
 	const [offers, setOffers] = useState([])
 	const [refusedCount, setRefusedCount] = useState(0)
+	const [refusedOffers, setRefusedOffers] = useState([]);
 
 	const getOffers = () => {
 		axiosInstance
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
-				const refusedCount = response.data.filter(offer => offer.jobOfferState === "REFUSED").length;
-				setRefusedCount(refusedCount)
+				const refusedOffers = response.data.filter(offer => offer.jobOfferState === "REFUSED");
+				setRefusedOffers(refusedOffers);
+				setRefusedCount(refusedOffers.length)
+
 			})
 			.catch((error) => {
 				if(error.response?.status === 401){
@@ -173,7 +176,7 @@ const EmployerPage = ({user}) => {
 						</div>
 					</div>
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} fetchStudentList={fetchStudentList}
-											 jobOffers={offersWithApplications} studentList={studentList} />}
+											 jobOffers={offersWithApplications} studentList={studentList} refusedOffers={refusedOffers} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
 									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}

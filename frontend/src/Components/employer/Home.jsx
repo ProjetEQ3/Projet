@@ -4,7 +4,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import ShortInterviewedStudentInfo from "./ShortInterviewedStudentInfo";
 import React from "react";
 
-const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList}) => {
+const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, refusedOffers}) => {
     const {t} = useTranslation();
 
 
@@ -58,6 +58,18 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList}) 
                                 </div>
                             )
                         })}
+                    </>
+                )
+            }
+            {
+                refusedOffers.length > 0 && (
+                    <>
+                        <h3>{t('refusedJobOffers')}</h3>
+                        {refusedOffers.map((offer, index) => (
+                            <div key={index} onClick={() => handleSelectOffer(offer)}>
+                                <ShortJobOffer jobOffer={offer} isBold={true} />
+                            </div>
+                        ))}
                     </>
                 )
             }
