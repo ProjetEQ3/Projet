@@ -40,6 +40,7 @@ public class JobOfferDTO{
 		this.expirationDate = jobOffer.getExpirationDate();
 		this.jobOfferState = jobOffer.getJobOfferState();
 		this.hoursPerWeek = jobOffer.getHoursPerWeek();
+		this.refusReason = jobOffer.getRefusReason();
 		this.nbOfCandidates = jobOffer.getNbOfCandidates();
 		this.semester = jobOffer.getSemester();
 	}

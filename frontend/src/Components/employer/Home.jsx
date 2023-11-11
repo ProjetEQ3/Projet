@@ -18,6 +18,10 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
         setTab('interviewed');
     }
 
+    function allTreated() {
+        return jobOffers.length === 0 && studentList.length === 0 && refusedOffers.length === 0;
+    }
+
     function handleContractClick() {
         setTab('contract');
     }
@@ -25,12 +29,24 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
     return (
         <div className="container-fluid px-lg-5 px-2 py-2">
             {
-                jobOffers.length === 0 && studentList.length === 0 && (
+                allTreated() && (
                     <div className="col-12 text-center">
                         <h1 className="rounded rounded-3 alert alert-success p-2 px-4 display-3">
                             😊<br />{t('allTreated')}
                         </h1>
                     </div>
+                )
+            }
+            {
+                refusedOffers.length > 0 && (
+                    <>
+                        <h3>{t('refusedJobOffers')}</h3>
+                        {refusedOffers.map((offer, index) => (
+                            <div key={index} onClick={() => handleSelectOffer(offer)}>
+                                <ShortJobOffer jobOffer={offer} isBold={true} />
+                            </div>
+                        ))}
+                    </>
                 )
             }
             {
@@ -63,18 +79,6 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
                                 </div>
                             )
                         })}
-                    </>
-                )
-            }
-            {
-                refusedOffers.length > 0 && (
-                    <>
-                        <h3>{t('refusedJobOffers')}</h3>
-                        {refusedOffers.map((offer, index) => (
-                            <div key={index} onClick={() => handleSelectOffer(offer)}>
-                                <ShortJobOffer jobOffer={offer} isBold={true} />
-                            </div>
-                        ))}
                     </>
                 )
             }

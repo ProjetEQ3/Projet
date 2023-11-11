@@ -129,13 +129,14 @@ const EmployerPage = ({user}) => {
 	}
 
 	useEffect(() => {
+		getOffers()
 		setNotifications(notifications => ({
 			...notifications,
 			stages: { ...notifications.stages, red: nbPostulations + refusedCount },
 			interviewed: { ...notifications.interviewed, red: studentList.length },
 			contract: { ...notifications.contract, red: contracts.filter(contract => contract.employerSignature === null).length, green: contracts.filter(contract => contract.complete).length },
 		}));
-	}, [nbPostulations, studentList, refusedCount, contracts]);
+	}, [nbPostulations, studentList, refusedCount, contracts, offers]);
 
 	useEffect(() => {
 		getOffers();
@@ -179,7 +180,9 @@ const EmployerPage = ({user}) => {
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} fetchStudentList={fetchStudentList}
 											 jobOffers={offersWithApplications} studentList={studentList} contracts={contracts} refusedOffers={refusedOffers} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
-									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
+													   getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}
+													   selectedById={idElement} setSelectedById={setIdElement}
+													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
 			</div>
