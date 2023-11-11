@@ -16,6 +16,7 @@ import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -126,7 +127,10 @@ public class EmployerService{
 			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
+
 		jobOffer.setSemester(new Semester(jobOffer.getStartDate()));
+		jobOffer.setJobOfferState(JobOfferState.SUBMITTED);
+		jobOffer.setRefusReason(null);
 
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
