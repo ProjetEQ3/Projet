@@ -8,6 +8,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 	const [currentPage, setCurrentPage] = useState(1)
 	const [itemsPerPage, setItemsPerPage] = useState(10)
 	const [query, setQuery] = useState('')
+	const [hasSelected, setHasSelected] = useState(false)
 	const getAttributeKey = (attr) => attr.split(':')[0]
 	const getAttributeDisplayName = (attr) => attr.split(':')[1] || getAttributeKey(attr)
 	const isSelectAttribute = selectedAttribute && getAttributeKey(selectedAttribute).endsWith('.select')
@@ -30,13 +31,15 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 	useEffect(() => {
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
-		if(defaultJobOfferSelect) {
+		if(defaultJobOfferSelect && defaultJobOfferSelect.length > 0 && !hasSelected) {
 			let jobOfferSelect = defaultJobOfferSelect.split(':')[0]
 			let jobOfferState = defaultJobOfferSelect.split(':')[1]
 			for(let i = 0; i < attributes.length; i++){
 				if(getAttributeKey(attributes[i]) === jobOfferSelect){
 					handleAttributeChange({target: {value: attributes[i]}})
 					handleInputChange({target: {value: jobOfferState}})
+					defaultJobOfferSelect = undefined
+					setHasSelected(true)
 					break
 				}
 			}
@@ -46,11 +49,12 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 	useEffect(() => {
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
-		if(defaultSelectSubmitted) {
+		if(defaultSelectSubmitted && defaultSelectSubmitted.length > 0 && !hasSelected) {
 			for(let i = 0; i < attributes.length; i++){
 				if(getAttributeKey(attributes[i]) === defaultSelectSubmitted){
 					handleAttributeChange({target: {value: attributes[i]}})
 					handleInputChange({target: {value: 'SUBMITTED'}})
+					setHasSelected(true)
 					break
 				}
 			}
