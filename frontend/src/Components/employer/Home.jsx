@@ -3,8 +3,9 @@ import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortInterviewedStudentInfo from "./ShortInterviewedStudentInfo";
 import React from "react";
+import ShortContractNotif from "../user/ShortContractNotif";
 
-const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, refusedOffers}) => {
+const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, contracts, refusedOffers}) => {
     const {t} = useTranslation();
 
 
@@ -15,6 +16,10 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, r
 
     function handleSelectStudent() {
         setTab('interviewed');
+    }
+
+    function handleContractClick() {
+        setTab('contract');
     }
 
     return (
@@ -70,6 +75,21 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, r
                                 <ShortJobOffer jobOffer={offer} isBold={true} />
                             </div>
                         ))}
+                    </>
+                )
+            }
+            {
+                contracts.length > 0 && (
+                    <>
+                        <h2>{t('availableContracts')}</h2>
+                        <p>{t('availableContractsToApplyTo')}</p>
+                        {
+                            contracts.filter((contract) => contract.employerSignature === null).map((contract, index) => (
+                                <div onClick={() => handleContractClick()} key={index}>
+                                    <ShortContractNotif contract={contract}/>
+                                </div>
+                            ))
+                        }
                     </>
                 )
             }

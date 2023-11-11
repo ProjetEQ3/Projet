@@ -14,6 +14,8 @@
   "_243A0": "245.A0 - Technologie de systèmes ordinés",
   "_221B0": "221.B0 - Technologie du génie civil",
 
+  "availableContracts": "Nouveaux contrats",
+  "availableContractsToApplyTo": "Les nouveaux contrats sont ou seront indiqués ici",
   "acceptStudentSuccess" : "Étudiant accepté",
   "acceptStudentError" : "Erreur lors de l'acceptation de l'étudiant: ",
   "apply": "Postuler",

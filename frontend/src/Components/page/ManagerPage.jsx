@@ -201,11 +201,11 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red}/>}
+                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts}/>}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
                                                 updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} selectedById={idElement} />}
-                {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'contracts' && <ContractList contracts={contracts} user={user} reloadContracts={getAllContracts}/>}
                 {tab === 'students' && <StudentList students={students}/>}
             </div>
         </div>

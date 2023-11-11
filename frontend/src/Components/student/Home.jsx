@@ -2,8 +2,10 @@
 import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
+import React from "react";
+import ShortContractNotif from "../user/ShortContractNotif";
 
-const Home = ({setTab, setIdElement, jobOffers, applications, cv, handleViewJobOffer}) => {
+const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, handleViewJobOffer}) => {
     const {t} = useTranslation();
 
     const handleJobOfferClick = (jobOffer) => {
@@ -19,6 +21,10 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, handleViewJobO
 
     const handleCvClick = () => {
         setTab('cv');
+    }
+
+    const handleContractClick = () => {
+        setTab('contract');
     }
 
     return (
@@ -61,6 +67,21 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, handleViewJobO
                             <div onClick={() => handleJobOfferClick(offer)} key={index}>
                                 <ShortJobOffer jobOffer={offer} />
                             </div>))
+                        }
+                    </>
+                )
+            }
+            {
+                contracts.length > 0 && (
+                    <>
+                        <h2>{t('availableContracts')}</h2>
+                        <p>{t('availableContractsToApplyTo')}</p>
+                        {
+                            contracts.filter((contract) => contract.studentSignature === null).map((contract, index) => (
+                                <div onClick={() => handleContractClick()} key={index}>
+                                    <ShortContractNotif contract={contract}/>
+                                </div>
+                            ))
                         }
                     </>
                 )

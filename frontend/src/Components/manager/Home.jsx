@@ -2,13 +2,19 @@
 import {useTranslation} from "react-i18next";
 import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ShortContractNotif from "../user/ShortContractNotif";
+import React from "react";
 
-const Home = ({setTab, setIdElement, nbCvs}) => {
+const Home = ({setTab, setIdElement, nbCvs, contracts}) => {
     const {t} = useTranslation();
 
     function handleCvClick() {
         setTab('cvs');
         setIdElement('cv');
+    }
+
+    function handleContractClick() {
+        setTab('contracts');
     }
 
     return (
@@ -30,6 +36,21 @@ const Home = ({setTab, setIdElement, nbCvs}) => {
                         {t('youHave')} <strong >{nbCvs}</strong>  {t('cvToTreat')}
                     </h5>
                 </div>
+            }
+            {
+                contracts.length > 0 && (
+                    <>
+                        <h2>{t('availableContracts')}</h2>
+                        <p>{t('availableContractsToApplyTo')}</p>
+                        {
+                            contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).map((contract, index) => (
+                                <div onClick={() => handleContractClick()} key={index}>
+                                    <ShortContractNotif contract={contract}/>
+                                </div>
+                            ))
+                        }
+                    </>
+                )
             }
         </div>
     )
