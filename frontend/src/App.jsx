@@ -11,6 +11,7 @@ import {BrowserRouter} from "react-router-dom";
 import {TranslationProvider} from "./Components/util/TranslationContext";
 import {SessionProvider} from "./Components/util/SessionContext";
 import {useTranslation} from "react-i18next";
+import sendEmail from "./Components/util/Mail";
 
 function App(){
 	const [t] = useTranslation();
@@ -18,9 +19,13 @@ function App(){
 	let _token = sessionStorage.getItem('token')
 
 	useEffect( () => {
+
+		sendEmail('s@zaka.se', 'test', 'test')
+			.then((response) => {toast.success("Email sent successfully")})
+			.catch((error) => {toast.error('Error sending email:', error)})
+
 		if (_token) {
 			axiosInstance.defaults.headers.common['Authorization'] = _token
-
 			axiosInstance.get('/user/me')
 				.then(res => {
 					let newUser = new User()
