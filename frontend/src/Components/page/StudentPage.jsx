@@ -192,7 +192,6 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function getJobOfferNotifCount() {
-		fetchViewedJobOfferList();
 		return jobOffers.length - viewedJobOfferList.length;
 	}
 
