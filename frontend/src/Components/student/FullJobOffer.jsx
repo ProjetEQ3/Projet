@@ -15,7 +15,6 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
     }, [jobOffer])
 
     const applyForJobOffer = (jobOfferId) => {
-        console.log("COV:",coverLetter,";")
         axiosInstance
             .post(`/student/applyJobOffer/${user.id}/${jobOfferId}`, coverLetter === "" ? "EMPTY_COVER_LETTER" : coverLetter, {
                 headers: { 'Content-Type': 'text/plain' }

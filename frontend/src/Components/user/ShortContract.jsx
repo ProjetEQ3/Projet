@@ -57,6 +57,9 @@ const ShortContract = ({ contract, user }) => {
                         <h5 className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
                         {
+                            contract.complete ?
+                                <div className="text-success fw-bold">{t('complete')}</div>
+                                :
                             user.role === 'ROLE_EMPLOYER' &&
                             contract.employerSignature !== null ?
                                 <div className="text-success fw-bold">{t('signed')}</div>

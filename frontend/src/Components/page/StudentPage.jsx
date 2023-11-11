@@ -243,7 +243,7 @@ const StudentPage = ({user, setUser}) => {
 			contract.studentSignature === null)).length;
 
 		contracts.forEach((contract) => {
-			if (contract.isComplete){
+			if (contract.complete){
 				greenNotificationsContract = -1;
 				redNotificationsContract = 0;
 			}

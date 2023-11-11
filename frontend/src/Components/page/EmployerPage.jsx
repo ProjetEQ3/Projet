@@ -40,7 +40,6 @@ const EmployerPage = ({user}) => {
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
-				console.log(response.data)
 				const refusedOffers = response.data.filter(offer => offer.jobOfferState === "REFUSED");
 				setRefusedOffers(refusedOffers);
 				setRefusedCount(refusedOffers.length)
@@ -134,7 +133,7 @@ const EmployerPage = ({user}) => {
 			...notifications,
 			stages: { ...notifications.stages, red: nbPostulations + refusedCount },
 			interviewed: { ...notifications.interviewed, red: studentList.length },
-			contract: { ...notifications.contract, red: contracts.filter(contract => contract.employerSignature === null).length, green: contracts.filter(contract => contract.isComplete).length },
+			contract: { ...notifications.contract, red: contracts.filter(contract => contract.employerSignature === null).length, green: contracts.filter(contract => contract.complete).length },
 		}));
 	}, [nbPostulations, studentList, refusedCount, contracts]);
 

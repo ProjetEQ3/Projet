@@ -10,7 +10,7 @@ class Contract{
     jobOfferName
     jobOfferCompany
     data
-    isComplete
+    complete
 
     constructor(){
         this.reset()
@@ -21,14 +21,14 @@ class Contract{
         this.employerId = null
         this.studentId = null
         this.jobOfferId = null
-        this.employerSignature = ""
-        this.studentSignature = ""
-        this.managerSignature = ""
+        this.employerSignature = null
+        this.studentSignature = null
+        this.managerSignature = null
         this.studentName = ""
         this.jobOfferName = ""
         this.jobOfferCompany = ""
         this.data = ""
-        this.isComplete = false
+        this.complete = false
     }
 
     init(contract){
@@ -54,8 +54,8 @@ class Contract{
         else delete this.jobOfferCompany
         if(contract.data) this.data = contract.data
         else delete this.data
-        if(contract.isComplete) this.isComplete = contract.isComplete
-        else this.isComplete = false
+        if(contract.complete) this.complete = contract.complete
+        else this.complete = false
     }
 }
 

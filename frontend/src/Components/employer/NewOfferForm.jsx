@@ -99,7 +99,6 @@ const NewOfferForm = ({user}) => {
 	}
 
 	const handleBack = () => {
-		console.log('back')
 		navigate(-1)
 	}
 
