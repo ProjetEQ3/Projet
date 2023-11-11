@@ -56,7 +56,21 @@ const ShortContract = ({ contract, user }) => {
                         <h5 className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</h5>
                         <h5 className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
-                        <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
+                        {
+                            user.role === 'ROLE_EMPLOYER' &&
+                            contract.employerSignature !== null ?
+                                <div className="text-success fw-bold">{t('signed')}</div>
+                                :
+                                user.role === 'ROLE_MANAGER' &&
+                                contract.managerSignature !== null ?
+                                    <div className="text-success fw-bold">{t('signed')}</div>
+                                    :
+                                    user.role === 'ROLE_STUDENT' &&
+                                    contract.studentSignature !== null ?
+                                        <div className="text-success fw-bold">{t('signed')}</div>
+                                        :
+                                <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
+                        }
                     </div>
                 </div>
                 {

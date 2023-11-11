@@ -104,6 +104,7 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/contracts',
         ).then((response) => {
             setContracts(response.data)
+            console.log(contracts[0])
         }).catch((error) => {
             if (error.response?.status === 401) {
                 return;
@@ -162,7 +163,18 @@ const ManagerPage = ({user}) => {
         let red = cvs.filter(cv => cv.cvState === 'SUBMITTED').length;
         updateNotifications('cvs', { green: green, gray: gray, red: red });
 
-        updateNotifications('contracts', { green: 0, gray: 0, red: 0 });
+        let redNotificationsContract = 0;
+        let greenNotificationsContract = 0;
+
+        console.log(contracts[0])
+        redNotificationsContract = contracts.filter((contract) => (
+            contract.managerSignature === null && contract.studentSignature !== null && contract.employerSignature !== null)).length;
+
+        greenNotificationsContract = contracts.filter((contract) => (
+            contract.isComplete)).length;
+
+        updateNotifications('contract', { green: greenNotificationsContract, gray: 0, red: redNotificationsContract});
+
         updateNotifications('students', { green: 0, gray: 0, red: 0 });
 
     }

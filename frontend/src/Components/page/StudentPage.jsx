@@ -233,8 +233,23 @@ const StudentPage = ({user, setUser}) => {
 		} else if (user.cvFile.cvState === 'REFUSED') {
 			redNotificationsCv = -1;
 		}
+
 		updateNotifications('cv', { green: greenNotificationsCv, gray: grayNotificationsCv, red: redNotificationsCv });
-		updateNotifications('contract', { green: 0, gray: 0, red: 0 });
+
+		let redNotificationsContract = 0;
+		let greenNotificationsContract = 0;
+
+		redNotificationsContract = contracts.filter((contract) => (
+			contract.studentSignature === null)).length;
+
+		contracts.forEach((contract) => {
+			if (contract.isComplete){
+				greenNotificationsContract = -1;
+				redNotificationsContract = 0;
+			}
+		});
+
+		updateNotifications('contract', { green: greenNotificationsContract, gray: 0, red: redNotificationsContract});
 	}
 
 	const updateNotifications = (tabId, { green, gray, red }) => {

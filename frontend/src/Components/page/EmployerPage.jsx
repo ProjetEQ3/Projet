@@ -134,8 +134,9 @@ const EmployerPage = ({user}) => {
 			...notifications,
 			stages: { ...notifications.stages, red: nbPostulations + refusedCount },
 			interviewed: { ...notifications.interviewed, red: studentList.length },
+			contract: { ...notifications.contract, red: contracts.filter(contract => contract.employerSignature === null).length, green: contracts.filter(contract => contract.isComplete).length },
 		}));
-	}, [nbPostulations, studentList, refusedCount]);
+	}, [nbPostulations, studentList, refusedCount, contracts]);
 
 	useEffect(() => {
 		getOffers();
