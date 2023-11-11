@@ -59,7 +59,7 @@ function App(){
 						<div className="min-vh-100 p-0 m-0 position-relative">
 							<Header user={user}/>
 							<Main user={user} setUser={setUser}/>
-							<Footer/>
+							<Footer role={user?.role?? ''}/>
 						</div>
 					</BrowserRouter>
 				</div>

@@ -1,0 +1,45 @@
+.footer-links {
+	list-style-type: none;
+	padding: 0;
+	margin: 10px 0;
+	text-align: center;
+}
+
+.footer-links li {
+	display: inline;
+	margin: 0 10px;
+}
+
+.footer-links a {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 1em;
+}
+
+.footer-links a:hover {
+	text-decoration: underline;
+}
+
+.faq-button {
+	padding: 10px 20px;
+	background-color: #4d4d8b;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 1em;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	margin: 20px auto 0 auto;
+	width: 95% !important;
+}
+
+.faq-button:hover {
+	background-color: #8888f5;
+	transform: scale(1.05);
+}
+
+.faq-button:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px #fff, 0 0 0 4px #4d4d8b;
+}
