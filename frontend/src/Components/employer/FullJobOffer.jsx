@@ -166,6 +166,11 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                     <State state={jobOffer.jobOfferState}/>
                             </div>
                         </div>
+                        {jobOffer.jobOfferState === 'REFUSED' && (
+                            <div className="alert alert-danger" role="alert">
+                                {t('refusalReason') + " : " + jobOffer.refusReason}
+                            </div>
+                        )}
                         <div className="row">
                             <div className="col-12">
                                 <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>

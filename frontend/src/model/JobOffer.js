@@ -13,6 +13,7 @@ class JobOffer{
 	dueDate
 	nbOfCandidates
 	hasApplied
+	refusReason
 
 	constructor(){
 		this.reset()
@@ -53,6 +54,8 @@ class JobOffer{
 		else delete this.nbOfCandidates
 		if(jobOffer.hasApplied) this.hasApplied = jobOffer.hasApplied
 		else this.hasApplied = false
+		if(jobOffer.refusReason) this.refusReason = jobOffer.refusReason
+		else delete this.refusReason
 	}
 
 	reset(){
@@ -70,6 +73,7 @@ class JobOffer{
 		this.dueDate = ''
 		this.nbOfCandidates = 0
 		this.hasApplied = false
+		this.refusReason = ''
 	}
 }
 

@@ -40,6 +40,7 @@ const EmployerPage = ({user}) => {
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
 				setOffers(response.data)
+				console.log(response.data)
 				const refusedOffers = response.data.filter(offer => offer.jobOfferState === "REFUSED");
 				setRefusedOffers(refusedOffers);
 				setRefusedCount(refusedOffers.length)
