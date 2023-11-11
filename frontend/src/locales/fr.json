@@ -277,5 +277,14 @@
   "Sep": "Septembre",
   "Oct": "Octobre",
   "Nov": "Novembre",
-  "Dec": "Décembre"
+  "Dec": "Décembre",
+
+
+  "CONSULT_FAQ": "Consultez notre FAQ",
+  "FAQ_TITLE": "Questions Fréquemment Posées",
+  "NO_FAQ": "Aucun FAQ es disponible pour le moment",
+  "QUESTION_UNAVAILABLE": "Question non disponible",
+  "ANSWER_UNAVAILABLE": "Réponse non disponible"
+
+
 }

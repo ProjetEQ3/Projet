@@ -1,8 +1,9 @@
-import React from "react";
-import logo from "../../logo.svg";
-import {NavLink} from "react-router-dom";
-import LngSelector from "../util/LngSelector";
-import {useTranslation} from "react-i18next";
+import React from "react"
+import logo from "../../logo.svg"
+import {NavLink} from "react-router-dom"
+import LngSelector from "../util/LngSelector"
+import {useTranslation} from "react-i18next"
+import FAQModal from "../util/FAQModal"
 
 function Header({user}) {
     const {t} = useTranslation()
@@ -19,6 +20,7 @@ function Header({user}) {
                             </div>
                         </NavLink>
                         <p className="lead d-none d-lg-block col-lg-5 col-md-2 ms-auto m-xl-0 text-center">{t('glucoseFullAcronym')}</p>
+                        <FAQModal role={user.role}/>  {/* TODO: do something */}
                         {user?.isLoggedIn ?
                             <div className="m-3 col-lg-3 col-md-4 col-6 text-center lh-1">
                                 <div className="d-md-flex justify-content-around">
@@ -45,4 +47,4 @@ function Header({user}) {
         </header>
     )
 }
-export default Header;
+export default Header

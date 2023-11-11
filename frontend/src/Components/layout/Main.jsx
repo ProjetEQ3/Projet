@@ -8,6 +8,8 @@ import PageNotFound from "../page/PageNotFound";
 import NewOfferForm from "../employer/NewOfferForm";
 import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
+import FAQModal from "../util/FAQModal";
+import React from "react";
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
@@ -15,11 +17,11 @@ const Main = ({user, setUser}) => {
 
     const fixMargin = {
         paddingBottom: "10em",
-    };
-
+    }
 
     return (
         <main style={fixMargin} className='App-main bg-light mx-auto'>
+            <FAQModal role={user.role}/>  {/* TODO: do something */}
             {user?.isLoggedIn &&
                 <div className="row col-12 justify-content-start pt-2">
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
