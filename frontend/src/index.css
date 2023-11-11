@@ -1,79 +1,110 @@
-:root {
-    --ose-color: #8888f5;
-    --bs-ose-rgb: 136, 136, 245;
+:root{
+	--ose-color: #8888f5;
+	--ose-hover-color: #7676e5;
+	--bs-ose-rgb: 136, 136, 245;
+	--ose-rgb: 0, 0, 30;
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #f8f9fa !important;
-  min-height: 100%;
+body{
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background: #f8f9fa !important;
+	min-height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+code{
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+	monospace;
 }
 
-.text-ose {
-  --bs-text-opacity: 1;
-  color: var(--ose-color);
+.text-ose{
+	--bs-text-opacity: 1;
+	color: var(--ose-color);
 }
 
-.icon-btn {
-  --bs-text-opacity: 1;
-    color: var(--ose-color) !important;
+.icon-btn{
+	--bs-text-opacity: 1;
+	color: var(--ose-color) !important;
 }
 
 .dark-hover:hover{
-  --bs-text-opacity: 1;
-   color: #212529 !important;
-}
-.danger-hover:hover{
-  --bs-text-opacity: 1;
-   color: #dc3545 !important;
-}
-
-.arrow-btn {
-  --bs-text-opacity: 1;
-    color: var(--ose-color) !important;
+	--bs-text-opacity: 1;
+	color: #212529 !important;
 }
 
 .danger-hover:hover{
-  --bs-text-opacity: 1;
-    color: #dc3545 !important;
+	--bs-text-opacity: 1;
+	color: #dc3545 !important;
 }
 
-.bg-ose {
-  background-color: var(--ose-color);
+.arrow-btn{
+	--bs-text-opacity: 1;
+	color: var(--ose-color) !important;
 }
 
-.border-ose {
-  --bs-border-color: rgba(var(--bs-ose-rgb), 1) !important;
+.danger-hover:hover{
+	--bs-text-opacity: 1;
+	color: #dc3545 !important;
 }
 
-.btn-outline-ose {
-  --bs-btn-color: var(--ose-color) !important;
-  --bs-btn-border-color: var(--ose-color) !important;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: var(--ose-color);
-  --bs-btn-hover-border-color: var(--ose-color);
-  --bs-btn-focus-shadow-rgb: 13, 110, 253;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: var(--ose-color);
-  --bs-btn-active-border-color: var(--ose-color);
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: var(--ose-color);
-  --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: var(--ose-color);
-  --bs-gradient: none;
+.bg-ose{
+	background-color: var(--ose-color);
 }
 
-.clickable {
-  cursor: pointer;
+.border-ose{
+	--bs-border-color: rgba(var(--bs-ose-rgb), 1) !important;
 }
 
+.btn-outline-ose{
+	--bs-btn-color: var(--ose-color) !important;
+	--bs-btn-border-color: var(--ose-color) !important;
+	--bs-btn-hover-color: #fff;
+	--bs-btn-hover-bg: var(--ose-color);
+	--bs-btn-hover-border-color: var(--ose-color);
+	--bs-btn-focus-shadow-rgb: 13, 110, 253;
+	--bs-btn-active-color: #fff;
+	--bs-btn-active-bg: var(--ose-color);
+	--bs-btn-active-border-color: var(--ose-color);
+	--bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+	--bs-btn-disabled-color: var(--ose-color);
+	--bs-btn-disabled-bg: transparent;
+	--bs-btn-disabled-border-color: var(--ose-color);
+	--bs-gradient: none;
+}
+
+.clickable{
+	cursor: pointer;
+}
+
+.btn-primary{
+	background-color: var(--ose-color) !important;
+	border-color: var(--ose-color) !important;
+}
+
+.btn-primary:hover {
+	background-color: var(--ose-hover-color);
+	border-color: var(--ose-hover-color);
+}
+
+.faq-button {
+	transition: background-color 0.3s ease, transform 0.2s ease;
+	width: 300px !important;
+}
+
+.faq-button:hover {
+    background-color: #8888f5;
+    transform: scale(1.05);
+}
+
+.faq-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #4d4d8b;
+}
+
+.modal{
+	background-color: rgba(var(--ose-rgb), 0.5);
+}
