@@ -9,10 +9,9 @@ import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
 
-const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, setRefusedCount }) => {
+const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, getOffers, offers, setOffers }) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
-	const [offers, setOffers] = useState([])
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
 
@@ -21,7 +20,6 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 			navigate('/');
 			return;
 		}
-		getOffers();
 		setSelectedOffer(null);
 		getOffersWithSubmittedApplications();
 	}, [user, selectedSessionIndex]);
@@ -37,23 +35,6 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 		setOffers([])
 		setSelectedOffer(null)
 		getOffers()
-	}
-
-	const getOffers = () => {
-		axiosInstance
-			.get('/employer/offer/all', {params: {employerId: user.id}})
-			.then((response) => {
-				setOffers(response.data)
-				console.log(response.data)
-				const refusedCount = response.data.filter(offer => offer.jobOfferState === "REFUSED").length;
-				setRefusedCount(refusedCount)
-			})
-			.catch((error) => {
-				if(error.response?.status === 401){
-					return
-				}
-				toast.error(t('fetchError') + t(error.response?.data.message))
-			})
 	}
 
 	const handleNewButtonClicked = () => {

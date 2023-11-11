@@ -31,9 +31,26 @@ const EmployerPage = ({user}) => {
 		interviewed: { red: 0, green: 0, gray: 0 },
 		contract: { red: 0, green: 0, gray: 0 },
 	});
+	const [offers, setOffers] = useState([])
 	const [refusedCount, setRefusedCount] = useState(0)
 
-	const getOffersWithSubmittedApplications = () => { // TODO : state pour le bold
+	const getOffers = () => {
+		axiosInstance
+			.get('/employer/offer/all', {params: {employerId: user.id}})
+			.then((response) => {
+				setOffers(response.data)
+				const refusedCount = response.data.filter(offer => offer.jobOfferState === "REFUSED").length;
+				setRefusedCount(refusedCount)
+			})
+			.catch((error) => {
+				if(error.response?.status === 401){
+					return
+				}
+				toast.error(t('fetchError') + t(error.response?.data.message))
+			})
+	}
+
+	const getOffersWithSubmittedApplications = () => {
 		if (!user?.id) return;
 		axiosInstance
 			.get(`/employer/offer/submittedApplications/${user.id}`)
@@ -117,14 +134,14 @@ const EmployerPage = ({user}) => {
 	}, [nbPostulations, studentList, refusedCount]);
 
 	useEffect(() => {
-		if (tab === 'home') {
-			getNbPostulations();
-			getOffersWithSubmittedApplications();
-		}
+		getOffers();
+		getNbPostulations();
+		getOffersWithSubmittedApplications();
 	}, [tab]);
 
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
+		getOffers();
 		getContracts();
 		fetchStudentList(true);
 		getNbPostulations();
@@ -158,7 +175,7 @@ const EmployerPage = ({user}) => {
 					{tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} fetchStudentList={fetchStudentList}
 											 jobOffers={offersWithApplications} studentList={studentList} />}
 					{tab === 'stages' && <JobOfferList user={user} getNbPostulations={getNbPostulations} offersWithApplications={offersWithApplications}
-									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} />}
+									  getOffersWithSubmittedApplications={getOffersWithSubmittedApplications} selectedById={idElement} setSelectedById={setIdElement} setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} />}
 			</div>
