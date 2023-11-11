@@ -109,6 +109,7 @@ const EmployerPage = ({user}) => {
 			.catch(error => {
 				toast.error(error.message)
 			})
+		getContracts()
 	}
 
 	async function fetchStudentsJobTitles(fetchedStudentList){
@@ -129,14 +130,15 @@ const EmployerPage = ({user}) => {
 	}
 
 	useEffect(() => {
-		getOffers()
 		setNotifications(notifications => ({
 			...notifications,
 			stages: { ...notifications.stages, red: nbPostulations + refusedCount },
 			interviewed: { ...notifications.interviewed, red: studentList.length },
 			contract: { ...notifications.contract, red: contracts.filter(contract => contract.employerSignature === null).length, green: contracts.filter(contract => contract.complete).length },
 		}));
-	}, [nbPostulations, studentList, refusedCount, contracts, offers]);
+	}, [nbPostulations, studentList, refusedCount, contracts]);
+
+
 
 	useEffect(() => {
 		getOffers();

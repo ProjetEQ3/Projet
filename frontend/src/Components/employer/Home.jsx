@@ -19,7 +19,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
     }
 
     function allTreated() {
-        return jobOffers.length === 0 && studentList.length === 0 && refusedOffers.length === 0;
+        return jobOffers.length === 0 && studentList.length === 0 && refusedOffers.length === 0 && contracts.length === 0;
     }
 
     function handleContractClick() {
