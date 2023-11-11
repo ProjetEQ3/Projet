@@ -55,7 +55,7 @@ public class JobOffer{
 	private int nbOfCandidates;
 
 	@ToString.Exclude
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Employer employer;
 
 	@ToString.Exclude
