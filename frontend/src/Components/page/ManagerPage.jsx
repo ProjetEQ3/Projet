@@ -162,20 +162,15 @@ const ManagerPage = ({user}) => {
         let red = cvs.filter(cv => cv.cvState === 'SUBMITTED').length;
         updateNotifications('cvs', { green: green, gray: gray, red: red });
 
-        let redNotificationsContract = 0;
-        let greenNotificationsContract = 0;
-
-
-        redNotificationsContract = contracts.filter((contract) => (
+        let redNotificationsContract = contracts.filter((contract) => (
             contract.managerSignature === null && contract.studentSignature !== null && contract.employerSignature !== null)).length;
-
-        greenNotificationsContract = contracts.filter((contract) => (
+        let grayNotificationsContract = contracts.filter((contract) => (
+            contract.complete === false && (contract.managerSignature === null || contract.studentSignature !== null || contract.employerSignature !== null))).length;
+        let greenNotificationsContract = contracts.filter((contract) => (
             contract.complete)).length;
 
-        updateNotifications('contracts', { green: greenNotificationsContract, gray: 0, red: redNotificationsContract});
-
+        updateNotifications('contracts', { green: greenNotificationsContract, gray: grayNotificationsContract, red: redNotificationsContract});
         updateNotifications('students', { green: 0, gray: 0, red: 0 });
-
     }
 
 

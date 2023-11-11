@@ -17,10 +17,14 @@ const Home = ({setTab, setIdElement, nbCvs, contracts}) => {
         setTab('contracts');
     }
 
+    function allTreated() {
+        return nbCvs === 0 && contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).length === 0;
+    }
+
     return (
         <div className="container-fluid row px-lg-5 px-2 py-2">
             {
-                nbCvs === 0 &&
+                allTreated() === 0 &&
                 <div className="col-12 text-center">
                     <h1 className="rounded rounded-3 alert alert-success p-2 px-4 display-3">
                         😊<br />{t('allTreated')}
@@ -38,7 +42,7 @@ const Home = ({setTab, setIdElement, nbCvs, contracts}) => {
                 </div>
             }
             {
-                contracts.length > 0 && (
+                contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).length > 0 && (
                     <>
                         <h2>{t('availableContracts')}</h2>
                         <p>{t('availableContractsToApplyTo')}</p>
