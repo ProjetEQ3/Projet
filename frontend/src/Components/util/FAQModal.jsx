@@ -21,11 +21,6 @@ const FAQModal = forwardRef(({role}, ref) => {
 		setFaqs(selectFaqData())
 	}, [isModalOpen])
 
-	const handleCloseClick = (e) => {
-		e.stopPropagation()
-		closeModal()
-	}
-
 	const toggleFAQ = index => {
 		setFaqs(faqs.map((faq, i) => ({...faq, open: i === index ? !faq.open : false})))
 	}
@@ -51,12 +46,14 @@ const FAQModal = forwardRef(({role}, ref) => {
 
 	return (
 		<>
-			<button className="faq-button" onClick={openModal}>{i18n.t("CONSULT_FAQ")}</button>
-			<div className={`modal-overlay ${isModalOpen ? '' : 'hidden'}`} ref={faqRef}>
-				{isModalOpen &&
-					<div className="modal-container">
-						<FontAwesomeIcon icon={faX} className="close-button btn-outline-danger" onClick={handleCloseClick} />
-						<div className="modal-content">
+			<button className="btn btn-ose text-white faq-button m-3" onClick={openModal}>{i18n.t("FAQ_TITLE")}</button>
+			<div className={`modal`} ref={faqRef}>
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<FontAwesomeIcon icon={faX} data-dismiss="modal" className="btn-outline-danger"/>
+						</div>
+						<div className="modal-body">
 							<div className="faq-section">
 								<h2>{i18n.t("FAQ_TITLE")}</h2>
 								{
@@ -79,7 +76,8 @@ const FAQModal = forwardRef(({role}, ref) => {
 							</div>
 						</div>
 					</div>
-				}
+
+				</div>
 			</div>
 		</>
 	)

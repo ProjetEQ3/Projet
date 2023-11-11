@@ -21,7 +21,7 @@ const Main = ({user, setUser}) => {
 
     return (
         <main style={fixMargin} className='App-main bg-light mx-auto'>
-            <FAQModal role={user.role}/>  {/* TODO: do something */}
+            <FAQModal role={user.role}/>
             {user?.isLoggedIn &&
                 <div className="row col-12 justify-content-start pt-2">
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
