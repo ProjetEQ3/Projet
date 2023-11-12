@@ -5,9 +5,11 @@ import LngSelector from "../util/LngSelector";
 import {useTranslation} from "react-i18next";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {useDarkMode} from "../../context/DarkModeContext";
 
-function Header({user, darkMode, toggleDarkMode}) {
+function Header({user}) {
     const {t} = useTranslation()
+    const { darkMode, toggleDarkMode } = useDarkMode();
 
     return (
         <header className="App-header">
