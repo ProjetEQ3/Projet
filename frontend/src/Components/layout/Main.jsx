@@ -8,6 +8,7 @@ import PageNotFound from "../page/PageNotFound";
 import NewOfferForm from "../employer/NewOfferForm";
 import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
@@ -17,9 +18,10 @@ const Main = ({user, setUser}) => {
         paddingBottom: "10em",
     };
 
+    const { darkMode } = useDarkMode();
 
     return (
-        <main style={fixMargin} className='App-main bg-light mx-auto'>
+        <main style={fixMargin} className={`App-main ${darkMode ? 'bg-dark text-light' : 'bg-light'} flex-grow-1`}>
             {user?.isLoggedIn &&
                 <div className="row col-12 justify-content-start pt-2">
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">

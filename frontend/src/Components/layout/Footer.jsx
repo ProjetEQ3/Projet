@@ -1,15 +1,17 @@
 import React from 'react';
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 function Footer() {
-    const {t} = useTranslation()
+    const { t } = useTranslation();
     const footerStyle = {
         position: 'absolute',
         bottom: 0,
-    }
+    };
+    const { darkMode } = useDarkMode();
 
     return (
-        <footer style={footerStyle} className="App-footer col-12">
+        <footer style={footerStyle} className={`App-footer col-12 ${darkMode ? 'bg-dark text-light' : ''}`}>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 d-none d-md-block text-center">
@@ -25,4 +27,5 @@ function Footer() {
         </footer>
     )
 }
+
 export default Footer;

@@ -58,7 +58,7 @@ function App(){
 				<SessionProvider user={user}>
 					<div className="p-0">
 						<BrowserRouter>
-							<div className="min-vh-100 p-0 m-0 position-relative">
+							<div className="d-flex flex-column min-vh-100 p-0 m-0 position-relative">
 								<Header user={user}/>
 								<Main user={user} setUser={setUser}/>
 								<Footer/>
