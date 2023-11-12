@@ -25,6 +25,7 @@ const ManagerPage = ({user}) => {
     const [contracts, setContracts] = useState([new Contract()]);
     const [students, setStudents] = useState([new Student()])
     const [idElement, setIdElement] = useState(null);
+    const [offerFilter, setOfferFilter] = useState(null);
     const tabConfig = [
         { key: 'home', label: t('home') },
         { key: 'stages', label: t('internship') },
@@ -133,6 +134,7 @@ const ManagerPage = ({user}) => {
 
     const handleTabClick = async (tabName) => {
         setTab(tabName);
+        setOfferFilter(null);
         switch(tabName) {
             case 'stages':
                 await getAllOffers();
@@ -200,9 +202,9 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].gray} />}
+                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].gray} setOfferFilter={setOfferFilter} />}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
-                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
+                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal} filter={offerFilter} />}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} selectedById={idElement} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} user={user} reloadContracts={getAllContracts}/>}
                 {tab === 'students' && <StudentList students={students}/>}

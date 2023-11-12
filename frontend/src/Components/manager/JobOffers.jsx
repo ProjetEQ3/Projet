@@ -1,40 +1,43 @@
-import FilterObjectList from "../util/FilterObjectList"
-import ShortJobOffer from "./ShortJobOffer"
+import FilterObjectList from "../util/FilterObjectList";
+import ShortJobOffer from "./ShortJobOffer";
 import {useTranslation} from "react-i18next";
 
-const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal }) => {
-  const { t } = useTranslation()
+const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal, filter }) => {
+  const { t } = useTranslation();
+  const filteredOffers = filter ? offers.filter(offer => offer.jobOfferState === filter) : offers;
 
-  const renderFilteredOffers = (filteredOffers) => {
+  const renderFilteredOffers = () => {
     return (
-      <div className="col-12">
-        {
-          filteredOffers.length !== 0 ?
+        <div className="col-12">
+          {filteredOffers.length !== 0 ?
               filteredOffers.map((offer, index) => (
                   <div key={index} onClick={() => (offer)}>
                     <ShortJobOffer jobOffer={offer} updateJobOfferList={updateJobOfferList} index={index} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>
-                  </div>)) :
-                <div className="col-12">
-                    <h5 className="text-center">{t('noInternship')}</h5>
-                </div>
-        }
-      </div>
-    )
-  }
+                  </div>
+              )) :
+              <div className="col-12">
+                <h5 className="text-center">{t('noInternship')}</h5>
+              </div>
+          }
+        </div>
+    );
+  };
 
   return (
-    <div className="row">
-      <div className="col-12">
-        <h3 className="text-dark fw-light my-5">{t('allInternship')}</h3>
-        <div className="row justify-content-around">
-          <FilterObjectList items={offers} renderItem={renderFilteredOffers}
-            attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
-            selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
-          />
+      <div className="row">
+        <div className="col-12">
+          <h3 className="text-dark fw-light my-5">{t('allInternship')}</h3>
+          <div className="row justify-content-around">
+            <FilterObjectList
+                items={filteredOffers}
+                renderItem={renderFilteredOffers}
+                attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
+                selectOptions={{jobOfferState: ['SUBMITTED', 'OPEN', 'PENDING', 'EXPIRED', 'TAKEN', 'REFUSED']}}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  )
-}
+  );
+};
 
-export default JobOffers
+export default JobOffers;

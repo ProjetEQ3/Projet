@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ShortContractNotif from "../user/ShortContractNotif";
 import React from "react";
 
-const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers }) => {
+const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers, setOfferFilter }) => {
     const {t} = useTranslation();
 
     function handleCvClick() {
@@ -18,6 +18,7 @@ const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers }) => 
 
     function handleOfferClick() {
         setTab('stages');
+        setOfferFilter('SUBMITTED');
     }
 
     function allTreated() {
