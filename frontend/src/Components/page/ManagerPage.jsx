@@ -78,6 +78,7 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/jobOffers/all',
         ).then((response) => {
             setOffers(response.data);
+            console.log(response.data)
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {
@@ -155,7 +156,10 @@ const ManagerPage = ({user}) => {
 
     function getNotificationsCounts() {
         updateNotifications('home', { green: 0, gray: 0, red: 0 });
-        updateNotifications('stages', { green: 0, gray: 0, red: 0 });
+
+        let grayStages = offers.filter(offer => offer.jobOfferState === 'SUBMITTED').length;
+
+        updateNotifications('stages', { green: 0, gray: grayStages, red: 0 });
 
         let green = 0;
         let gray = 0;
