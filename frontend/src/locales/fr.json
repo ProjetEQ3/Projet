@@ -159,6 +159,7 @@
   "newInternshipSubmit": "Soumettre l'offre de stage",
 
   "of": "de",
+  "offersToReview" : "offre(s) de stage à traiter",
   "OPEN": "Ouvert aux candidatures",
   "organisationNameRequired": "Le nom de l'organisation est obligatoire.",
   "organisationPhoneRequired": "Le numéro de téléphone de l'organisation est obligatoire.",

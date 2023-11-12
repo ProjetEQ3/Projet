@@ -56,7 +56,7 @@
   "chosenAppointment" : "Chosen appointment : ",
   "cvNotApproved": "CV not approved",
   "CV": "CV",
-  "cvToTreat": "CV(s) to treat",
+  "cvToTreat": "CV(s) to review",
   "cvAuthorisation": "CV Authorization",
   "confirmRefusal": "Can you provide a reason for your refusal ?",
   "confirm": "Confirm",
@@ -162,6 +162,7 @@
   "newInternshipCreation": "Creating a new internship offer",
 
   "of": "of",
+  "offersToReview" : "internship(s) to review",
   "OPEN": "Open for Applications",
   "organisationNameRequired": "Organization name is required.",
   "organisationPhoneRequired": "Organization phone number is required.",
