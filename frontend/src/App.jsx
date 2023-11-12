@@ -16,6 +16,27 @@ function App(){
 	const [t] = useTranslation();
 	const [user, setUser] = useState(new User())
 	let _token = sessionStorage.getItem('token')
+	const [darkMode, setDarkMode] = useState(false);
+
+	const toggleDarkMode = () => {
+		setDarkMode(!darkMode);
+	}
+
+	useEffect(() => {
+		const isDarkMode = localStorage.getItem('darkMode') === 'true';
+		setDarkMode(isDarkMode);
+	}, []);
+
+	useEffect(() => {
+		if (darkMode) {
+			document.body.classList.add('bg-dark');
+			document.body.classList.add('text-white');
+		} else {
+			document.body.classList.remove('bg-dark');
+			document.body.classList.remove('text-white');
+		}
+		localStorage.setItem('darkMode', darkMode);
+	}, [darkMode]);
 
 	useEffect( () => {
 		if (_token) {
@@ -57,7 +78,7 @@ function App(){
 				<div className="p-0">
 					<BrowserRouter>
 						<div className="min-vh-100 p-0 m-0 position-relative">
-							<Header user={user}/>
+							<Header user={user} darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 							<Main user={user} setUser={setUser}/>
 							<Footer/>
 						</div>

@@ -3,8 +3,10 @@ import logo from "../../logo.svg";
 import {NavLink} from "react-router-dom";
 import LngSelector from "../util/LngSelector";
 import {useTranslation} from "react-i18next";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
-function Header({user}) {
+function Header({user, darkMode, toggleDarkMode}) {
     const {t} = useTranslation()
 
     return (
@@ -21,6 +23,9 @@ function Header({user}) {
                         <p className="lead d-none d-lg-block col-lg-5 col-md-2 ms-auto m-xl-0 text-center">{t('glucoseFullAcronym')}</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 col-lg-3 col-md-4 col-6 text-center lh-1">
+                                <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
+                                    <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
+                                </div>
                                 <div className="d-md-flex justify-content-around">
                                     <LngSelector/>
                                     <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
@@ -31,6 +36,9 @@ function Header({user}) {
                                    onClick={() => sessionStorage.removeItem('token') } >{t('disconnect')}</a>
                             </div> :
                             <div className="align-self-start d-md-flex m-3">
+                                <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
+                                    <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
+                                </div>
                                 <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5">
                                     <LngSelector/>
                                 </div>
