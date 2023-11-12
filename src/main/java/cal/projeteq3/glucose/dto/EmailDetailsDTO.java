@@ -13,5 +13,4 @@ public final class EmailDetailsDTO{
 	private String to;
 	private String subject;
 	private String text;
-
 }

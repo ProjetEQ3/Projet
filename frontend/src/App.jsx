@@ -19,11 +19,6 @@ function App(){
 	let _token = sessionStorage.getItem('token')
 
 	useEffect( () => {
-
-		sendEmail('s@zaka.se', 'test', 'test')
-			.then((response) => {toast.success("Email sent successfully")})
-			.catch((error) => {toast.error('Error sending email:', error)})
-
 		if (_token) {
 			axiosInstance.defaults.headers.common['Authorization'] = _token
 			axiosInstance.get('/user/me')
@@ -45,6 +40,10 @@ function App(){
 		}
 	}, [user])
 
+	const send_email = () => {
+		sendEmail('s@zaka.se', 'MySubject', 'MyTextContent')
+	}
+
 	return (
 		<TranslationProvider>
 			<ToastContainer
@@ -62,6 +61,7 @@ function App(){
 				<div className="p-0">
 					<BrowserRouter>
 						<div className="min-vh-100 p-0 m-0 position-relative">
+							<button onClick={send_email}>Email</button>
 							<Header user={user}/>
 							<Main user={user} setUser={setUser}/>
 							<Footer/>

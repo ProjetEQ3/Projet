@@ -16,11 +16,8 @@ import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.user.*;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -39,7 +36,6 @@ public class UserService{
 	private final UserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final JwtTokenProvider jwtTokenProvider;
-	private final JavaMailSender mailSender;
 
 	public String authenticateUser(LoginDTO loginDto){
 		Authentication authentication = authenticationManager.authenticate(
@@ -116,15 +112,18 @@ public class UserService{
 
 	public String sendEmail(EmailDetailsDTO details){
 		try{
-			System.out.println("service.sendEmail: " + details.getTo());
-			userRepository.findUserByCredentialsEmail(details.getTo()).orElseThrow(UserNotFoundException::new);
-			SimpleMailMessage mailMessage = new SimpleMailMessage();
-			mailMessage.setFrom("glucose@claurendeau.qc.ca");
-			mailMessage.setTo(details.getTo());
-			mailMessage.setSubject(details.getSubject());
-			mailMessage.setText(details.getText());
-			mailSender.send(mailMessage);
-			return "Email sent successfully";
+			System.out.println("UserService.sendEmail");
+			User user = userRepository
+				.findUserByCredentialsEmail(details.getTo())
+				.orElseThrow(UserNotFoundException::new);
+			EmailService emailService = new EmailService();
+			emailService.sendEmail(
+				details.getTo(),
+				user.getFirstName() + ", " + user.getLastName(),
+				details.getSubject(),
+				details.getText()
+			);
+			return "Email sent to " + details.getTo();
 		}catch(MailException e){
 			throw new SendEmailException();
 		}
