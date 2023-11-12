@@ -14,28 +14,19 @@ public class EmailService{
 	private final String htmlContent = "<html><body><h1>h1 title</h1><p>HTML content</p></body></html>";
 
 	public void sendEmail(String toEmail, String toName, String subject, String content){
-		System.out.println("EmailService.sendEmail");
-		System.out.println("apiKey: " + apiKey);
-		System.out.println("uri: " + uri);
-		System.out.println("from: " + fromEmail);
-		StringBuilder requestBody = new StringBuilder(getRequestBody(toEmail, toName, subject, content));
-		System.out.println("requestBody: " + requestBody.toString());
 		HttpRequest request = HttpRequest
 			.newBuilder()
 			.uri(URI.create(uri))
 			.header("Accept", "application/json")
 			.header("Content-Type", "application/json")
 			.header("api-key", apiKey)
-			.POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+			.POST(HttpRequest.BodyPublishers.ofString(getRequestBody(toEmail, toName, subject, content)))
 			.build();
-		System.out.println("request: " + request.toString());
 		try{
-			System.out.println("Sending request...");
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 			System.out.println("Response status code: " + response.statusCode());
 			System.out.println("Response body: " + response.body());
 		}catch(Exception e){
-			System.out.println("Sending request exception... ");
 			System.out.println("Exception: " + e.getMessage());
 		}
 	}
