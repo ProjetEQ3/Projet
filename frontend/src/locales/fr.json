@@ -284,7 +284,123 @@
   "FAQ_TITLE": "Questions Fréquemment Posées",
   "NO_FAQ": "Aucun FAQ es disponible pour le moment",
   "QUESTION_UNAVAILABLE": "Question non disponible",
-  "ANSWER_UNAVAILABLE": "Réponse non disponible"
+  "ANSWER_UNAVAILABLE": "Réponse non disponible",
 
+  "FAQ_LIST": {
+    "FAQ_STUDENT": {
+      "QUESTION_1": {
+        "QUESTION": "Comment postuler pour une offre de stage ?",
+        "ANSWER": "Pour postuler pour une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez sélectionner l'offre de stage qui vous intéresse et cliquer sur le bouton Postuler.",
+        "CATEGORY": "POSTULER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_2": {
+        "QUESTION": "Comment modifier mon CV ?",
+        "ANSWER": "Pour modifier votre CV, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier mon CV.",
+        "CATEGORY": "CV",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_3": {
+        "QUESTION": "Comment modifier mon profil ?",
+        "ANSWER": "Pour modifier votre profil, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier mon profil.",
+        "CATEGORY": "PROFIL",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_4": {
+        "QUESTION": "Comment modifier mon mot de passe ?",
+        "ANSWER": "Pour modifier votre mot de passe, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier mon mot de passe.",
+        "CATEGORY": "MOT DE PASSE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_5": {
+        "QUESTION": "Quels types de stages sont disponibles?",
+        "ANSWER": "Les stages disponibles sont des stages rémunérés.",
+        "CATEGORY": "STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_6": {
+        "QUESTION": "Comment consulter les offres de stage auxquelles j'ai été convoqué?",
+        "ANSWER": "Pour consulter les offres de stage auxquelles vous avez été convoqué, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Mes applications.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_7": {
+        "QUESTION": "Comment consulter les offres de stage disponibles?",
+        "ANSWER": "Pour consulter les offres de stage disponibles, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Offres de stage.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_8": {
+        "QUESTION": "Comment consulter les offres de stage auxquelles j'ai postulé?",
+        "ANSWER": "Pour consulter les offres de stage auxquelles vous avez postulé, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Mes applications.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_9": {
+        "QUESTION": "Comment consulter les offres de stage auxquelles j'ai été accepté?",
+        "ANSWER": "Pour consulter les offres de stage auxquelles vous avez été accepté, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Mes applications.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_10": {
+        "QUESTION": "Comment consulter les offres de stage auxquelles j'ai été refusé?",
+        "ANSWER": "Pour consulter les offres de stage auxquelles vous avez été refusé, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Mes applications.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      }
+    },
+    "FAQ_EMPLOYER": {
+      "QUESTION_1": {
+        "QUESTION": "Comment créer une offre de stage ?",
+        "ANSWER": "Pour créer une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Ajouter une offre de stage.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_2": {
+        "QUESTION": "Comment modifier une offre de stage ?",
+        "ANSWER": "Pour modifier une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier l'offre de stage.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_3": {
+      "QUESTION": "Comment modifier une offre de stage ?",
+      "ANSWER": "Pour modifier une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier l'offre de stage.",
+      "CATEGORY": "OFFRE DE STAGE",
+      "IS_ACTIVE": true
+      },
+      "QUESTION_4": {
+        "QUESTION": "Comment supprimer une offre de stage ?",
+        "ANSWER": "Pour supprimer une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Supprimer l'offre de stage.",
+        "CATEGORY": "OFFRE DE STAGE",
+        "IS_ACTIVE": true
+      }
+    },
+    "FAQ_ADMIN": {
+      "QUESTION_1": {
+        "QUESTION": "Comment créer un compte administrateur ?",
+        "ANSWER": "Pour créer un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Créer un compte administrateur.",
+        "CATEGORY": "COMPTE ADMINISTRATEUR",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_2": {
+        "QUESTION": "Comment modifier un compte administrateur ?",
+        "ANSWER": "Pour modifier un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier un compte administrateur.",
+        "CATEGORY": "COMPTE ADMINISTRATEUR",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_3": {
+        "QUESTION": "Comment supprimer un compte administrateur ?",
+        "ANSWER": "Pour supprimer un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Supprimer un compte administrateur.",
+        "CATEGORY": "COMPTE ADMINISTRATEUR",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_4": {
+        "QUESTION": "Comment créer un compte employeur ?",
+        "ANSWER": "Pour créer un compte employeur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Créer un compte employeur.",
+        "CATEGORY": "COMPTE EMPLOYEUR",
+        "IS_ACTIVE": true
+      }
+    }
+  }
 
 }

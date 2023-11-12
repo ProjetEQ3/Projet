@@ -108,3 +108,24 @@ code{
 .modal{
 	background-color: rgba(var(--ose-rgb), 0.5);
 }
+
+.faq-question{
+	font-weight: bold;
+	font-size: large;
+	color: #161685 !important;
+}
+
+.faq-question:hover{
+	background-color: #5656C5 !important;
+	color: #C6C6FF !important;
+}
+
+.faq-close-btn{
+	color: red;
+}
+
+.faq-close-btn:hover{
+	color: var(--ose-hover-color);
+	background-color: red;
+	box-shadow: none;
+}
