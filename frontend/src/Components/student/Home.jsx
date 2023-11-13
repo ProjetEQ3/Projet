@@ -1,4 +1,3 @@
-
 import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
@@ -37,11 +36,11 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
                                 <h1 onClick={handleCvClick} className={"clickable bg-secondary rounded display-6 text-white text-center py-3"}>{t('cvWaitingApproval')}</h1>
                             </>
                         ) : cv.cvState === "ACCEPTED" ? null : <>
-                                <h1 onClick={handleCvClick} className={"clickable alert alert-danger rounded display-6 text-center py-3"}>{t('cvCurrentlyRefused')}</h1>
-                            </>
-                    ) : <>
-                            <h1 onClick={handleCvClick} className={"clickable alert alert-danger rounded display-6 text-center py-3"}>{t('cvRequiredToContinue')}</h1>
+                            <h1 onClick={handleCvClick} className={"clickable alert alert-danger rounded display-6 text-center py-3"}>{t('cvCurrentlyRefused')}</h1>
                         </>
+                ) : <>
+                    <h1 onClick={handleCvClick} className={"clickable alert alert-danger rounded display-6 text-center py-3"}>{t('cvRequiredToContinue')}</h1>
+                </>
             }
             {
                 applications.length > 0 && (
@@ -50,7 +49,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
                         <p>{t('appointmentsToAttest')}</p>
                         {
                             applications.map((application, index) => (
-                                <div onClick={() => handleJobApplicationClick(application)} key={index}>
+                                <div onClick={() => handleJobApplicationClick(application)} key={index} data-testid="application">
                                     <ShortJobApplicationDisplay application={application} />
                                 </div>))
                         }
@@ -64,9 +63,9 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
                         <p>{t('availableInternshipsToApplyTo')}</p>
                         {
                             jobOffers.filter((jobOffer) => jobOffer.isViewed !== true).map((offer, index) => (
-                            <div onClick={() => handleJobOfferClick(offer)} key={index}>
-                                <ShortJobOffer jobOffer={offer} />
-                            </div>))
+                                <div onClick={() => handleJobOfferClick(offer)} key={index} data-testid="job-offer">
+                                    <ShortJobOffer jobOffer={offer} />
+                                </div>))
                         }
                     </>
                 )
@@ -78,7 +77,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
                         <p>{t('availableContractsToApplyTo')}</p>
                         {
                             contracts.filter((contract) => contract.studentSignature === null).map((contract, index) => (
-                                <div onClick={() => handleContractClick()} key={index}>
+                                <div onClick={() => handleContractClick()} key={index} data-testid="contract">
                                     <ShortContractNotif contract={contract}/>
                                 </div>
                             ))
