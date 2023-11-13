@@ -287,61 +287,43 @@
     "FAQ_STUDENT": {
       "QUESTION_1": {
         "QUESTION": "How do I apply for an internship offer?",
-        "ANSWER": "To apply for an internship offer, you need to log in to your GlucOSE account. Then, select the internship offer you are interested in and click the Apply button.",
+        "ANSWER": "To apply for an internship offer, select the internship offer you are interested in and click the Apply button.",
         "CATEGORY": "APPLICATION",
         "IS_ACTIVE": true
       },
       "QUESTION_2": {
         "QUESTION": "How do I modify my CV?",
-        "ANSWER": "To modify your CV, you need to log in to your GlucOSE account. Then, click on the Modify my CV button.",
+        "ANSWER": "To modify your CV, go to the CV tab. Then, click on the Modify button.",
         "CATEGORY": "CV",
         "IS_ACTIVE": true
       },
       "QUESTION_3": {
-        "QUESTION": "How do I modify my profile?",
-        "ANSWER": "To modify your profile, you need to log in to your GlucOSE account. Then, click on the Modify my profile button.",
-        "CATEGORY": "PROFILE",
+        "QUESTION": "What internships are available on the website?",
+        "ANSWER": "The available internships are paid internships. There are offered internships for every program of study. It is possible to join your internship to the ATÉ program.",
+        "CATEGORY": "INTERNSHIP",
         "IS_ACTIVE": true
       },
       "QUESTION_4": {
-        "QUESTION": "How do I change my password?",
-        "ANSWER": "To change your password, you need to log in to your GlucOSE account. Then, click on the Change my password button.",
-        "CATEGORY": "PASSWORD",
+        "QUESTION": "How do I view available internship offers?",
+        "ANSWER": "To view available internship offers, go on the Internship tab. Then, click on the Internship offers button.",
+        "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       },
       "QUESTION_5": {
-        "QUESTION": "What types of internships are available?",
-        "ANSWER": "The available internships are paid internships.",
-        "CATEGORY": "INTERNSHIP",
+        "QUESTION": "How do I view the internship offers I have applied for?",
+        "ANSWER": "To view the internship offers you have applied for, go to the My applications tab.",
+        "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       },
       "QUESTION_6": {
         "QUESTION": "How do I view the internship offers I have been invited to?",
-        "ANSWER": "To view the internship offers you have been invited to, you need to log in to your GlucOSE account. Then, click on the My applications button.",
+        "ANSWER": "To view the internship offers you have been invited to, go to the My applications tab. The internship offers you have been invited to will be displayed with the date of the invitation in green on the right or with the button Choose an appointment to choose a date.",
         "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       },
       "QUESTION_7": {
-        "QUESTION": "How do I view available internship offers?",
-        "ANSWER": "To view available internship offers, you need to log in to your GlucOSE account. Then, click on the Internship offers button.",
-        "CATEGORY": "INTERNSHIP OFFER",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_8": {
-        "QUESTION": "How do I view the internship offers I have applied for?",
-        "ANSWER": "To view the internship offers you have applied for, you need to log in to your GlucOSE account. Then, click on the My applications button.",
-        "CATEGORY": "INTERNSHIP OFFER",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_9": {
         "QUESTION": "How do I view the internship offers I have been accepted to?",
-        "ANSWER": "To view the internship offers you have been accepted to, you need to log in to your GlucOSE account. Then, click on the My applications button.",
-        "CATEGORY": "INTERNSHIP OFFER",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_10": {
-        "QUESTION": "How do I view the internship offers I have been rejected from?",
-        "ANSWER": "To view the internship offers you have been rejected from, you need to log in to your GlucOSE account. Then, click on the My applications button.",
+        "ANSWER": "To view the internship offers you have been accepted to, go to the Contracts tab to see all your contracts. An other way is to go to the My applications tab where the internship offers you have been accepted to will be displayed with an icon on the right.",
         "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       }
@@ -393,5 +375,4 @@
       }
     }
   }
-
 }
