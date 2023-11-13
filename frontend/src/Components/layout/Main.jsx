@@ -27,16 +27,16 @@ const Main = ({user, setUser}) => {
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
                         {t('displayedSession')}
                     </h4>
-                    <select className="col-2 d-flex justify-content-start text-capitalize clickable"
+                    <select
+                        className={`col-2 d-flex justify-content-start text-capitalize clickable ${darkMode ? "dark-input" : ""}`}
                         onChange={(e) => updateSession(e.target.value)}>
                         {
                             sessions.map((session, index) => (
-                            <option key={index} value={index} className="text-capitalize clickable">
-                                {t(session.season.toLowerCase())} {session.year}
-                            </option>))
+                                <option key={index} value={index} className="text-capitalize clickable">
+                                    {t(session.season.toLowerCase())} {session.year}
+                                </option>))
                         }
                     </select>
-
                 </div>
             }
             <Routes>

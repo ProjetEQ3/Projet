@@ -95,7 +95,9 @@ code {
   cursor: pointer;
 }
 
-input.dark-input {
+
+input.dark-input,
+select.dark-input {
   background-color: #33393f;
   color: #fff;
   border-color: #555;
@@ -105,7 +107,8 @@ input.dark-input::placeholder {
   color: #f8f9fa;
 }
 
-input.dark-input:focus {
+input.dark-input:focus,
+select.dark-input:focus {
   background-color: #33393f;
   color: #fff;
   border-color: #777;
