@@ -95,3 +95,20 @@ code {
   cursor: pointer;
 }
 
+input.dark-input {
+  background-color: #33393f;
+  color: #fff;
+  border-color: #555;
+}
+
+input.dark-input::placeholder {
+  color: #f8f9fa;
+}
+
+input.dark-input:focus {
+  background-color: #33393f;
+  color: #fff;
+  border-color: #777;
+  outline: none;
+}
+
