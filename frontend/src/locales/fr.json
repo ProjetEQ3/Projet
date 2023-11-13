@@ -279,7 +279,6 @@
   "Nov": "Novembre",
   "Dec": "Décembre",
 
-
   "CONSULT_FAQ": "Consultez notre FAQ",
   "FAQ_TITLE": "Questions Fréquemment Posées",
   "NO_FAQ": "Aucun FAQ es disponible pour le moment",
@@ -375,7 +374,7 @@
         "IS_ACTIVE": true
       }
     },
-    "FAQ_ADMIN": {
+    "FAQ_MANAGER": {
       "QUESTION_1": {
         "QUESTION": "Comment créer un compte administrateur ?",
         "ANSWER": "Pour créer un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Créer un compte administrateur.",
