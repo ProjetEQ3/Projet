@@ -349,25 +349,19 @@
     "FAQ_EMPLOYER": {
       "QUESTION_1": {
         "QUESTION": "How do I create an internship offer?",
-        "ANSWER": "To create an internship offer, you need to log in to your GlucOSE account. Then, click on the Add an internship offer button.",
+        "ANSWER": "To create an internship offer, click on the Add an internship offer button on the Internship tab.",
         "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       },
       "QUESTION_2": {
         "QUESTION": "How do I modify an internship offer?",
-        "ANSWER": "To modify an internship offer, you need to log in to your GlucOSE account. Then, click on the Modify internship offer button.",
+        "ANSWER": "To modify an internship offer, click on the internship offer that you want to modify and then click on the Modify internship offer button.",
         "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       },
       "QUESTION_3": {
-        "QUESTION": "How do I modify an internship offer?",
-        "ANSWER": "To modify an internship offer, you need to log in to your GlucOSE account. Then, click on the Modify internship offer button.",
-        "CATEGORY": "INTERNSHIP OFFER",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_4": {
         "QUESTION": "How do I delete an internship offer?",
-        "ANSWER": "To delete an internship offer, you need to log in to your GlucOSE account. Then, click on the Delete internship offer button.",
+        "ANSWER": "To delete an internship offer, click on the trashcan icon at the right of the internship offer.",
         "CATEGORY": "INTERNSHIP OFFER",
         "IS_ACTIVE": true
       }

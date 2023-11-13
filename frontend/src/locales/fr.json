@@ -352,25 +352,19 @@
     "FAQ_EMPLOYER": {
       "QUESTION_1": {
         "QUESTION": "Comment créer une offre de stage ?",
-        "ANSWER": "Pour créer une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Ajouter une offre de stage.",
+        "ANSWER": "Pour créer une offre de stage, vous devez cliquer sur le bouton Ajouter une offre de stage présent dans l'onglet Stage.",
         "CATEGORY": "OFFRE DE STAGE",
         "IS_ACTIVE": true
       },
       "QUESTION_2": {
-        "QUESTION": "Comment modifier une offre de stage ?",
-        "ANSWER": "Pour modifier une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier l'offre de stage.",
-        "CATEGORY": "OFFRE DE STAGE",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_3": {
       "QUESTION": "Comment modifier une offre de stage ?",
-      "ANSWER": "Pour modifier une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier l'offre de stage.",
+      "ANSWER": "Pour modifier une offre de stage, vous devez cliquer sur l'offre de stage à modifier, puis sur le bouton Modifier l'offre de stage.",
       "CATEGORY": "OFFRE DE STAGE",
       "IS_ACTIVE": true
       },
-      "QUESTION_4": {
+      "QUESTION_3": {
         "QUESTION": "Comment supprimer une offre de stage ?",
-        "ANSWER": "Pour supprimer une offre de stage, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Supprimer l'offre de stage.",
+        "ANSWER": "Pour supprimer une offre de stage, vous devez cliquer sur l'icon de poubelle à droite de l'offre l'offre de stage.",
         "CATEGORY": "OFFRE DE STAGE",
         "IS_ACTIVE": true
       }
