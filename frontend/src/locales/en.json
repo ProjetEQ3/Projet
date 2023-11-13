@@ -348,29 +348,11 @@
         "IS_ACTIVE": true
       }
     },
-    "FAQ_ADMIN": {
+    "FAQ_MANAGER": {
       "QUESTION_1": {
-        "QUESTION": "How do I create an administrator account?",
-        "ANSWER": "To create an administrator account, you need to log in to your GlucOSE account. Then, click on the Create an administrator account button.",
-        "CATEGORY": "ADMINISTRATOR ACCOUNT",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_2": {
-        "QUESTION": "How do I modify an administrator account?",
-        "ANSWER": "To modify an administrator account, you need to log in to your GlucOSE account. Then, click on the Modify an administrator account button.",
-        "CATEGORY": "ADMINISTRATOR ACCOUNT",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_3": {
-        "QUESTION": "How do I delete an administrator account?",
-        "ANSWER": "To delete an administrator account, you need to log in to your GlucOSE account. Then, click on the Delete an administrator account button.",
-        "CATEGORY": "ADMINISTRATOR ACCOUNT",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_4": {
-        "QUESTION": "How do I create an employer account?",
-        "ANSWER": "To create an employer account, you need to log in to your GlucOSE account. Then, click on the Create an employer account button.",
-        "CATEGORY": "EMPLOYER ACCOUNT",
+        "QUESTION": "How can I see the list of students and their status?",
+        "ANSWER": "To see the status of each student, go to the Students tab. Their status will be displayed on the right.",
+        "CATEGORY": "STUDENT LIST",
         "IS_ACTIVE": true
       }
     }

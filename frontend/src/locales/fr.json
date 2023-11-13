@@ -353,27 +353,9 @@
     },
     "FAQ_MANAGER": {
       "QUESTION_1": {
-        "QUESTION": "Comment créer un compte administrateur ?",
-        "ANSWER": "Pour créer un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Créer un compte administrateur.",
-        "CATEGORY": "COMPTE ADMINISTRATEUR",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_2": {
-        "QUESTION": "Comment modifier un compte administrateur ?",
-        "ANSWER": "Pour modifier un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Modifier un compte administrateur.",
-        "CATEGORY": "COMPTE ADMINISTRATEUR",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_3": {
-        "QUESTION": "Comment supprimer un compte administrateur ?",
-        "ANSWER": "Pour supprimer un compte administrateur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Supprimer un compte administrateur.",
-        "CATEGORY": "COMPTE ADMINISTRATEUR",
-        "IS_ACTIVE": true
-      },
-      "QUESTION_4": {
-        "QUESTION": "Comment créer un compte employeur ?",
-        "ANSWER": "Pour créer un compte employeur, vous devez vous connecter à votre compte GlucOSE. Ensuite, vous devez cliquer sur le bouton Créer un compte employeur.",
-        "CATEGORY": "COMPTE EMPLOYEUR",
+        "QUESTION": "Comment puis-je voir la liste de mes étudiants et leur status?",
+        "ANSWER": "Pour voir la liste des étudiants et leur status, cliquez sur l'onglet Étudiants. Les status des étudiants seront affichés à droite.",
+        "CATEGORY": "STUDENT LIST",
         "IS_ACTIVE": true
       }
     }
