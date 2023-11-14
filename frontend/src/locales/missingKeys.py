@@ -1,10 +1,10 @@
 import json
 
 # Charger les fichiers JSON
-with open('en.json', 'r', encoding='utf-8') as file1:
+with open('fr.json', 'r', encoding='utf-8') as file1:
     data1 = json.load(file1)
 
-with open('fr.json', 'r', encoding='utf-8') as file2:
+with open('en.json', 'r', encoding='utf-8') as file2:
     data2 = json.load(file2)
 
 # Extraire les ensembles de clés des deux fichiers
