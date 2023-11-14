@@ -62,7 +62,7 @@ const FAQModal = forwardRef(({role}, ref) => {
 										</div>
 									))
 									:
-									<div className="faq">
+									<div className={`faq ${darkMode ? 'text-white':''}`}>
 										<div className="faq-question">{t("NO_FAQ")}</div>
 									</div>
 							}
