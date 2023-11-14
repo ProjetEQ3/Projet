@@ -1,9 +1,5 @@
 import React from 'react'
 import {useTranslation} from "react-i18next"
-import FAQModal from '../util/FAQModal'
-import FAQStudent from "../student/FAQStudent"
-import FAQManager from "../manager/FAQManager";
-import FAQEmployer from "../employer/FAQEmployer";
 
 function Footer({role}){
 	const {t} = useTranslation()

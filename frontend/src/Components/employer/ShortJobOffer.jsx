@@ -32,7 +32,7 @@ const ShortJobOffer = ({ jobOffer, deleteOffer}) => {
                     <div className="col-2 col-sm-2 my-auto text-end">
                         <FontAwesomeIcon
                             icon={faTrash}
-                            className="me-2 fa-lg icon-btn dark-hover"
+                            className="me-2 fa-lg icon-btn danger-hover"
                             data-bs-toggle="modal"
                             data-bs-target={`#delete${jobOffer.id}`}
                             data-testid="trash-icon"

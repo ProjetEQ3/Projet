@@ -1,6 +1,8 @@
-:root {
-    --ose-color: #8888f5;
-    --bs-ose-rgb: 136, 136, 245;
+:root{
+	--ose-color: #8888f5;
+	--ose-hover-color: #7676e5;
+	--bs-ose-rgb: 136, 136, 245;
+	--ose-rgb: 0, 0, 30;
 }
 
 body {
@@ -56,23 +58,6 @@ code {
   --bs-border-color: rgba(var(--bs-ose-rgb), 1) !important;
 }
 
-.btn-ose {
-  --bs-btn-color: var(--ose-color) !important;
-  --bs-btn-bg: var(--ose-color) !important;
-  --bs-btn-border-color: var(--ose-color) !important;
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #6161ef !important;
-  --bs-btn-hover-border-color: #6161ef !important;
-  --bs-btn-focus-shadow-rgb: 60, 153, 110;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #6161ef !important;
-  --bs-btn-active-border-color: #6161ef;
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: var(--ose-color) !important;
-  --bs-btn-disabled-border-color: var(--ose-color) !important;
-}
-
 .btn-outline-ose {
   --bs-btn-color: var(--ose-color) !important;
   --bs-btn-border-color: var(--ose-color) !important;
@@ -93,4 +78,3 @@ code {
 .clickable {
   cursor: pointer;
 }
-

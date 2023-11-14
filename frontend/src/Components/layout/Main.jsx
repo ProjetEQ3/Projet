@@ -10,18 +10,18 @@ import {useTranslation} from "react-i18next";
 import {useSession} from "../util/SessionContext";
 import FAQModal from "../util/FAQModal";
 import React from "react";
+import "../../App.css"
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
     const { sessions, selectedSessionIndex, updateSession } = useSession();
-
     const fixMargin = {
         paddingBottom: "10em",
     }
 
     return (
+        <>
         <main style={fixMargin} className='App-main bg-light mx-auto'>
-            <FAQModal role={user.role}/>
             {user?.isLoggedIn &&
                 <div className="row col-12 justify-content-start pt-2">
                     <h4 className="col-6 d-flex fw-light justify-content-end m-0">
@@ -67,6 +67,8 @@ const Main = ({user, setUser}) => {
                 {<Route path="*" element={<PageNotFound/>}/>}
             </Routes>
         </main>
+        <FAQModal role={user.role}/>
+    </>
     )
 }
 

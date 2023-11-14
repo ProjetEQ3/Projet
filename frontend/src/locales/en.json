@@ -277,12 +277,84 @@
   "Nov": "November",
   "Dec": "December",
 
-  "CONSULT_FAQ": "Consult FAQ",
+  "CONSULT_FAQ": "Q&A",
   "FAQ_TITLE": "Frequently Asked Questions",
   "NO_FAQ": "No FAQ available at the moment",
   "QUESTION_UNAVAILABLE": "Question not available",
-  "ANSWER_UNAVAILABLE": "Answer not available"
+  "ANSWER_UNAVAILABLE": "Answer not available",
 
-
-
+  "FAQ_LIST": {
+    "FAQ_STUDENT": {
+      "QUESTION_1": {
+        "QUESTION": "How do I apply for an internship offer?",
+        "ANSWER": "To apply for an internship offer, select the internship offer you are interested in and click the Apply button.",
+        "CATEGORY": "APPLICATION",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_2": {
+        "QUESTION": "How do I modify my CV?",
+        "ANSWER": "To modify your CV, go to the CV tab. Then, click on the Modify button.",
+        "CATEGORY": "CV",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_3": {
+        "QUESTION": "What internships are available on the website?",
+        "ANSWER": "The available internships are paid internships. There are offered internships for every program of study. It is possible to join your internship to the ATÉ program.",
+        "CATEGORY": "INTERNSHIP",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_4": {
+        "QUESTION": "How do I view available internship offers?",
+        "ANSWER": "To view available internship offers, go on the Internship tab. Then, click on the Internship offers button.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_5": {
+        "QUESTION": "How do I view the internship offers I have applied for?",
+        "ANSWER": "To view the internship offers you have applied for, go to the My applications tab.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_6": {
+        "QUESTION": "How do I view the internship offers I have been invited to?",
+        "ANSWER": "To view the internship offers you have been invited to, go to the My applications tab. The internship offers you have been invited to will be displayed with the date of the invitation in green on the right or with the button Choose an appointment to choose a date.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_7": {
+        "QUESTION": "How do I view the internship offers I have been accepted to?",
+        "ANSWER": "To view the internship offers you have been accepted to, go to the Contracts tab to see all your contracts. An other way is to go to the My applications tab where the internship offers you have been accepted to will be displayed with an icon on the right.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      }
+    },
+    "FAQ_EMPLOYER": {
+      "QUESTION_1": {
+        "QUESTION": "How do I create an internship offer?",
+        "ANSWER": "To create an internship offer, click on the Add an internship offer button on the Internship tab.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_2": {
+        "QUESTION": "How do I modify an internship offer?",
+        "ANSWER": "To modify an internship offer, click on the internship offer that you want to modify and then click on the Modify internship offer button.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      },
+      "QUESTION_3": {
+        "QUESTION": "How do I delete an internship offer?",
+        "ANSWER": "To delete an internship offer, click on the trashcan icon at the right of the internship offer.",
+        "CATEGORY": "INTERNSHIP OFFER",
+        "IS_ACTIVE": true
+      }
+    },
+    "FAQ_MANAGER": {
+      "QUESTION_1": {
+        "QUESTION": "How can I see the list of students and their status?",
+        "ANSWER": "To see the status of each student, go to the Students tab. Their status will be displayed on the right.",
+        "CATEGORY": "STUDENT LIST",
+        "IS_ACTIVE": true
+      }
+    }
+  }
 }
