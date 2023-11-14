@@ -5,12 +5,15 @@ import {axiosInstance} from "../../App";
 import State from "../util/State";
 import StudentState from "../util/StudentState";
 import FullJobOffer from "./FullJobOffer";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
     const [isHovered, setHovered] = useState(false);
     const [showApplications, setShowApplications] = useState(false);
     const [studentApplications, setStudentApplications] = useState([]);
+
+    const { darkMode } = useDarkMode();
 
     const handleMouseEnter = () => {
         setHovered(true);
@@ -45,7 +48,7 @@ const ShortStudent = ({student}) => {
 
 return (
         <div className={`row clickable ${!isHovered? 'm-2':'m-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleStudentClick}>
-            <div className="col-12 bg-white rounded">
+            <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 <div className="my-2">
                     <div className="row col-11 ms-2">
                         <div className="col-12 col-md-3 my-auto">
@@ -67,7 +70,7 @@ return (
                             <div className="col-12">
                                 {
                                     studentApplications.map((application, index) => (
-                                        <div key={index} className="bg-light rounded my-2 py-2 px-3">
+                                        <div key={index} className={`${darkMode ? 'bg-dark' : 'bg-light'} rounded my-2 py-2 px-3`}>
                                             <div className="row">
                                                 <div className="col-8">
                                                     <h6>{application.jobOffer.title}</h6>
@@ -84,7 +87,7 @@ return (
                             </div>
                         </div>:
                         showApplications && studentApplications.length === 0 ?
-                            <h5 className="fw-light bg-light p-3 rounded">{t('noApplications')}</h5>
+                            <h5 className={`fw-light ${darkMode ? 'bg-dark' : 'bg-light'} p-3 rounded`}>{t('noApplications')}</h5>
                             :
                             ''
                     )}
