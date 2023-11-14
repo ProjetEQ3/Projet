@@ -25,10 +25,10 @@ function Header({user}) {
                         <p className="lead d-none d-lg-block col-lg-5 col-md-2 ms-auto m-xl-0 text-center">{t('glucoseFullAcronym')}</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 col-lg-3 col-md-4 col-6 text-center lh-1">
-                                <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
-                                    <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
-                                </div>
-                                <div className="d-md-flex justify-content-around">
+                                <div className="d-md-flex justify-content-around align-items-center">
+                                    <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
+                                        <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
+                                    </div>
                                     <LngSelector/>
                                     <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
                                     <div className="m-0 p-0 float-end">
