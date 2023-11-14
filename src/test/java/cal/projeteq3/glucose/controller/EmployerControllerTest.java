@@ -14,8 +14,13 @@ import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
+import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
@@ -41,6 +46,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -57,6 +63,10 @@ public class EmployerControllerTest {
 	private EmployerService employerService;
 	@MockBean
 	private UserRepository userRepository;
+	@MockBean
+	private JobOfferRepository jobOfferRepository;
+	@MockBean
+	private EmployerRepository employerRepository;
 	@MockBean
 	private UserService userService;
 
@@ -922,4 +932,43 @@ public class EmployerControllerTest {
 				.andExpect(MockMvcResultMatchers.status().isAccepted())
 		;
 	}
+
+	@Test
+	public void TestNbSubmittedApplicationsAcrossAllJobOffersFromEmployer() throws Exception {
+
+		Employer employer = Employer.builder().id(1L).build();
+		int nbSubmittedApplications = 5;
+
+		when(jobOfferRepository.countAllByEmployer_IdAndJobApplications_JobApplicationState(employer.getId(), JobApplicationState.SUBMITTED)).thenReturn(nbSubmittedApplications);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/nbApplications/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+
+	}
+
+	@Test
+	public void TestGetAllJobOffersWithSubmittedApplicationsFromEmployer() throws Exception {
+
+		JobApplication jobApplication = JobApplication.builder().id(1L).jobApplicationState(JobApplicationState.SUBMITTED).build();
+		List<JobApplication> jobApplications = Collections.singletonList(jobApplication);
+
+		JobOffer jobOffer = JobOffer.builder().id(1L).jobApplications(jobApplications).build();
+		List<JobOffer> jobOffers = Collections.singletonList(jobOffer);
+		List<JobOfferDTO> jobOfferDTOS = jobOffers.stream().map(JobOfferDTO::new).toList();
+
+		Employer employer = Employer.builder().id(1L).jobOffers(jobOffers).build();
+
+		when(employerRepository.findById(employer.getId())).thenReturn(Optional.of(employer));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/offer/submittedApplications/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+
+	}
+
 }

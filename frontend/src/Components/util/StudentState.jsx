@@ -8,7 +8,7 @@ const StudentState = ({ state }) => {
     return (
         <>
             {
-                <div className={classes + " border rounded col-12 col-lg-10 float-end"}>{t(state)}</div>
+                <div className={classes + " border border-3 rounded rounded-5 col-12 col-lg-10 float-end fw-bold"}>{t(state)}</div>
             }
         </>
     )

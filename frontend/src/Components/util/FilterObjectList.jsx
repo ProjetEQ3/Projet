@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react'
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
 
-const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
+const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultJobOfferSelect, defaultSelectSubmitted}) => {
 	const [t, i18n] = useTranslation()
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
 	const [itemsPerPage, setItemsPerPage] = useState(10)
 	const [query, setQuery] = useState('')
+	const [hasSelected, setHasSelected] = useState(false)
 	const getAttributeKey = (attr) => attr.split(':')[0]
 	const getAttributeDisplayName = (attr) => attr.split(':')[1] || getAttributeKey(attr)
 	const isSelectAttribute = selectedAttribute && getAttributeKey(selectedAttribute).endsWith('.select')
@@ -23,10 +24,42 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 	useEffect(() => {
 		if(!items || !items.length) return
 		if(!attributes || !attributes.length) return
-		if(attributes.length > 0)
+		if(attributes.length > 0 && !selectedAttribute)
 			setSelectedAttribute(attributes[0])
-		console.log(attributes)
-	}, [])
+	}, [attributes, items])
+
+	useEffect(() => {
+		if(!items || !items.length) return
+		if(!attributes || !attributes.length) return
+		if(defaultJobOfferSelect && defaultJobOfferSelect.length > 0 && !hasSelected) {
+			let jobOfferSelect = defaultJobOfferSelect.split(':')[0]
+			let jobOfferState = defaultJobOfferSelect.split(':')[1]
+			for(let i = 0; i < attributes.length; i++){
+				if(getAttributeKey(attributes[i]) === jobOfferSelect){
+					handleAttributeChange({target: {value: attributes[i]}})
+					handleInputChange({target: {value: jobOfferState}})
+					defaultJobOfferSelect = undefined
+					setHasSelected(true)
+					break
+				}
+			}
+		}
+	}, [attributes, items, defaultJobOfferSelect])
+
+	useEffect(() => {
+		if(!items || !items.length) return
+		if(!attributes || !attributes.length) return
+		if(defaultSelectSubmitted && defaultSelectSubmitted.length > 0 && !hasSelected) {
+			for(let i = 0; i < attributes.length; i++){
+				if(getAttributeKey(attributes[i]) === defaultSelectSubmitted){
+					handleAttributeChange({target: {value: attributes[i]}})
+					handleInputChange({target: {value: 'SUBMITTED'}})
+					setHasSelected(true)
+					break
+				}
+			}
+		}
+	}, [attributes, items, defaultSelectSubmitted])
 
 	const goToNextPage = () => {
 		if(currentPage < totalPages){
@@ -52,7 +85,6 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions}) => {
 
 	const handleInputChange = (e) => {
 		setQuery(e.target.value)
-		console.log(e.target.value)
 	}
 
 	return (

@@ -12,7 +12,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
     const [appointments, setAppointments] = useState([]);
     const [checkboxValue, setCheckboxValue] = useState(false);
 
-    const fetchAppointments = async () => {
+    const fetchAppointmentsByJobOffer = async () => {
         setAppointments([]);
         await axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${jobOffer.id}/${user.id}`)
             .then((response) => {
@@ -33,7 +33,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
     };
 
     useEffect(() => {
-        fetchAppointments();
+        fetchAppointmentsByJobOffer();
     }, [user, jobOffer, t]);
 
     function handleChosenAppointment(e) {

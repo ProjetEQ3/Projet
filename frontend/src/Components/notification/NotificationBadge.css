@@ -1,0 +1,47 @@
+.notification-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background-color: #ff4136;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.notification-badge-red {
+    background-color: #ff4136; /* red */
+}
+
+.notification-badge-gray {
+    background-color: #9f9f9f; /* gray */
+}
+
+.notification-badge-green {
+    background-color: #2ecc40; /* green */
+}
+
+.notification-badge {
+    animation: badge-pop 0.3s ease;
+    border: none;
+}
+
+@keyframes badge-pop {
+    0% {
+        transform: scale(0.5) translate(50%, -50%);
+    }
+    50% {
+        transform: scale(1.5) translate(50%, -50%);
+    }
+    100% {
+        transform: scale(1) translate(50%, -50%);
+    }
+}

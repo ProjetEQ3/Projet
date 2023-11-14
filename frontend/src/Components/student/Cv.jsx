@@ -9,7 +9,7 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import CVFile from "../../model/CvFile";
 import {useTranslation} from "react-i18next";
 
-function Cv({user, setCv}){
+function Cv({user, setCv, getNotificationsCount}){
 	const {t} = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -28,6 +28,7 @@ function Cv({user, setCv}){
 					toast.success(t('uploadedCV'))
 					setCv(response.data)
 					setIsLoading(false)
+					getNotificationsCount()
 				})
 				.catch((error) => {
 					toast.error(t('pushingError') + t(error.response?.data.message))
@@ -46,8 +47,9 @@ function Cv({user, setCv}){
 			.delete(`/student/cv/${user.id}`)
 			.then(() => {
 				toast.success(t('deleteCV'))
-				setCv(null)
+				setCv(undefined)
 				setIsLoading(false)
+				getNotificationsCount()
 			})
 			.catch((error) => {
 				toast.error(t('pushingError') + error.response?.data.message)
@@ -57,6 +59,7 @@ function Cv({user, setCv}){
 
 	const refreshCvState = () => {
 		if (!user?.id) return;
+		if (!user.cvFile || !user.cvFile.id) return;
 		axiosInstance
 			.get(`/student/cv/${user.id}`)
 			.then((response) => {

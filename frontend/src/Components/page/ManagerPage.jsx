@@ -10,16 +10,36 @@ import ContractList from "../user/ContractList";
 import Contract from "../../model/Contract";
 import StudentList from "../manager/StudentList";
 import Student from "../../model/Student";
+import Home from "../manager/Home";
+import NotificationBadge from "../notification/NotificationBadge";
+import JobOffer from "../../model/JobOffer";
+import CvFile from "../../model/CvFile";
 
 const ManagerPage = ({user}) => {
     const {selectedSessionIndex} = useSession();
     const {t} = useTranslation();
-    const [tab, setTab] = useState('stages');
-    const [cvs, setCvs] = useState([{id: 1, fileName: "test"}]);
-    const [offers, setOffers] = useState([{id: 1, title: "test", description: "test", date: "test", duration: "test", salary: "test", manager: "test", status: "test"}]);
+    const navigate = useNavigate();
+    const [tab, setTab] = useState('home');
+    const [cvs, setCvs] = useState([new CvFile()]);
+    const [offers, setOffers] = useState([new JobOffer()]);
     const [contracts, setContracts] = useState([new Contract()]);
     const [students, setStudents] = useState([new Student()])
-    const navigate = useNavigate();
+    const [idElement, setIdElement] = useState(null);
+    const [offerFilter, setOfferFilter] = useState(null);
+    const tabConfig = [
+        { key: 'home', label: t('home') },
+        { key: 'stages', label: t('internship') },
+        { key: 'cvs', label: 'CVs' },
+        { key: 'contracts', label: t('contracts') },
+        { key: 'students', label: t('students') },
+    ];
+    const [notifications, setNotifications] = useState({
+        home: { green: 0, gray: 0, red: 0 },
+        stages: { green: 0, gray: 0, red: 0 },
+        cvs: { green: 0, gray: 0, red: 0 },
+        contracts: { green: 0, gray: 0, red: 0 },
+        students: { green: 0, gray: 0, red: 0 },
+    });
 
     useEffect(() => {
         if (!user?.isLoggedIn) navigate('/');
@@ -36,7 +56,6 @@ const ManagerPage = ({user}) => {
     const handleSessionChange = () => {
         setCvs([])
         setOffers([]);
-        setContracts([]);
         setStudents([]);
         getAllCvs().then(r => r);
         getAllOffers().then(r => r);
@@ -60,6 +79,7 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/jobOffers/all',
         ).then((response) => {
             setOffers(response.data);
+            console.log(response.data)
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {
@@ -85,6 +105,7 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/contracts',
         ).then((response) => {
             setContracts(response.data)
+
         }).catch((error) => {
             if (error.response?.status === 401) {
                 return;
@@ -113,6 +134,7 @@ const ManagerPage = ({user}) => {
 
     const handleTabClick = async (tabName) => {
         setTab(tabName);
+        setOfferFilter(null);
         switch(tabName) {
             case 'stages':
                 await getAllOffers();
@@ -127,24 +149,68 @@ const ManagerPage = ({user}) => {
                 await getAllStudents();
                 break;
         }
+        setIdElement(null)
+    };
+
+    useEffect(() => {
+        getNotificationsCounts();
+    }, [offers, cvs, contracts, students]);
+
+    function getNotificationsCounts() {
+        updateNotifications('home', { green: 0, gray: 0, red: 0 });
+
+        let grayStages = offers.filter(offer => offer.jobOfferState === 'SUBMITTED').length;
+
+        updateNotifications('stages', { green: 0, gray: grayStages, red: 0 });
+
+        let green = 0;
+        let gray = 0;
+        let red = cvs.filter(cv => cv.cvState === 'SUBMITTED').length;
+        updateNotifications('cvs', { green: green, gray: gray, red: red });
+
+        let redNotificationsContract = contracts.filter((contract) => (
+            contract.managerSignature === null && contract.studentSignature !== null && contract.employerSignature !== null)).length;
+        let grayNotificationsContract = contracts.filter((contract) => (
+            contract.complete === false && (contract.managerSignature === null || contract.studentSignature !== null || contract.employerSignature !== null))).length;
+        let greenNotificationsContract = contracts.filter((contract) => (
+            contract.complete)).length;
+
+        updateNotifications('contracts', { green: greenNotificationsContract, gray: grayNotificationsContract, red: redNotificationsContract});
+        updateNotifications('students', { green: 0, gray: 0, red: 0 });
+    }
+
+
+    const updateNotifications = (tabId, { green, gray, red }) => {
+        setNotifications(prevNotifications => ({
+            ...prevNotifications,
+            [tabId]: { green, gray, red }
+        }));
     };
 
     return (
         <div className="container">
             <div>
                 <div className="tabs btn-group my-2 mx-auto col-12">
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'stages' ? 'active' : ''}`} onClick={() => handleTabClick('stages')}>{t('internship')}</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'cvs' ? 'active' : ''}`} onClick={() => handleTabClick('cvs')}>CVs</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'contracts' ? 'active' : ''}`} onClick={() => handleTabClick('contracts')}>{t('contracts')}</button>
-                    <button className={`col-6 btn btn-outline-ose ${tab === 'students' ? 'active' : ''}`} onClick={() => handleTabClick('students')}>{t('students')}</button>
+                    {tabConfig.map((item) => (
+                        <button
+                            key={item.key}
+                            className={`col-6 mx-2 btn btn-outline-ose ${tab === item.key ? 'active' : ''}`}
+                            onClick={() => handleTabClick(item.key)}
+                        >
+                            {item.label}
+                            <NotificationBadge key={item.label} notifications={notifications[item.key]} tab={item} setTab={setTab} titleInfos={item.label}/>
+                        </button>
+                    ))}
                 </div>
-                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList} updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}/>}
-                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} />}
-                {tab === 'contracts' && <ContractList contracts={contracts} user={user} />}
+                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].gray} setOfferFilter={setOfferFilter} />}
+                {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
+                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal} filter={offerFilter} />}
+                {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} selectedById={idElement} />}
+                {tab === 'contracts' && <ContractList contracts={contracts} user={user} reloadContracts={getAllContracts}/>}
                 {tab === 'students' && <StudentList students={students}/>}
             </div>
         </div>
-    )
+    );
 }
 
 export default ManagerPage

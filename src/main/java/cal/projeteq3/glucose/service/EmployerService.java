@@ -16,6 +16,7 @@ import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
@@ -126,7 +127,10 @@ public class EmployerService{
 			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
 		jobOffer.copy(updatedJobOffer.toEntity());
+
 		jobOffer.setSemester(new Semester(jobOffer.getStartDate()));
+		jobOffer.setJobOfferState(JobOfferState.SUBMITTED);
+		jobOffer.setRefusReason(null);
 
 		return new JobOfferDTO(jobOfferRepository.save(jobOffer));
 	}
@@ -198,7 +202,7 @@ public class EmployerService{
 				.toList();
 
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
-			.orElseThrow(JobApplicationNotFoundException::new);
+				.orElseThrow(JobApplicationNotFoundException::new);
 
 		for(Appointment app : appointmentList){
 			app.setJobApplication(jobApplication);
@@ -214,8 +218,8 @@ public class EmployerService{
 			jobApplicationRepository.save(jobApplication);
 		}
 		return jobApplicationRepository.findById(jobApplication.getId())
-			.map(JobApplicationDTO::new)
-			.orElseThrow(JobApplicationNotFoundException::new);
+				.map(JobApplicationDTO::new)
+				.orElseThrow(JobApplicationNotFoundException::new);
 	}
 
 	public List<JobApplicationDTO> getAllJobApplicationsByEmployerId(Long employerId){
@@ -265,6 +269,19 @@ public class EmployerService{
 				.build());
 		contract.setEmployerSignature(signature);
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
+	}
+
+	public int nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(Long employerId) {
+		return jobOfferRepository.countAllByEmployer_IdAndJobApplications_JobApplicationState(employerId, JobApplicationState.SUBMITTED);
+	}
+
+	public List<JobOfferDTO> getAllJobOffersWithSubmittedApplicationsFromEmployer(Long employerId) {
+		return employerRepository.findById(employerId).orElseThrow(() -> new EmployerNotFoundException(employerId))
+				.getJobOffers().stream()
+				.filter(jobOffer -> jobOffer.getJobApplications().stream()
+						.anyMatch(application -> application.getJobApplicationState() == JobApplicationState.SUBMITTED))
+				.map(JobOfferDTO::new)
+				.collect(Collectors.toList());
 	}
 
 }

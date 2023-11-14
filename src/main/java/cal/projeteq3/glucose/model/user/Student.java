@@ -5,10 +5,10 @@ import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
-import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,8 +25,8 @@ public class Student extends User{
 	@Enumerated(EnumType.STRING)
 	private Department department;
 
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<JobApplication> jobApplications;
+	@ElementCollection
+	private List<Long> viewedJobOfferIds = new ArrayList<>();
 
 	@Builder
 	public Student(Long id, String firstName, String lastName, String email, String password, String matricule, String department, CvFile cvFile){

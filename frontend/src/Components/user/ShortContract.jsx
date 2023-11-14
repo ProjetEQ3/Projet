@@ -6,7 +6,7 @@ import {axiosInstance} from "../../App";
 import Contract from "../../model/Contract";
 import {toast} from "react-toastify";
 
-const ShortContract = ({ contract, user }) => {
+const ShortContract = ({ contract, user, reloadContracts }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [showSigningModal, setShowSigningModal] = useState(false);
@@ -27,8 +27,7 @@ const ShortContract = ({ contract, user }) => {
             password: signaturePassword,
         })
             .then(response => {
-                contract.data = response.data.data;
-                contract.isComplete = response.data.complete;
+                reloadContracts();
                 toast.success(t('contractSigned'));
             })
             .catch(error => {
@@ -48,7 +47,7 @@ const ShortContract = ({ contract, user }) => {
     }
 
     return (
-        <div className={'row'}>
+        <div className='row'>
             <div className="col-12 bg-white rounded pt-1">
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
@@ -56,7 +55,24 @@ const ShortContract = ({ contract, user }) => {
                         <h5 className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</h5>
                         <h5 className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
-                        <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
+                        {
+                            contract.complete ?
+                                <div className="text-success fw-bold">{t('complete')}</div>
+                                :
+                            user.role === 'ROLE_EMPLOYER' &&
+                            contract.employerSignature !== null ?
+                                <div className="text-success fw-bold">{t('signed')}</div>
+                                :
+                                user.role === 'ROLE_MANAGER' &&
+                                contract.managerSignature !== null ?
+                                    <div className="text-success fw-bold">{t('signed')}</div>
+                                    :
+                                    user.role === 'ROLE_STUDENT' &&
+                                    contract.studentSignature !== null ?
+                                        <div className="text-success fw-bold">{t('signed')}</div>
+                                        :
+                                <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
+                        }
                     </div>
                 </div>
                 {

@@ -2,7 +2,7 @@ import React from "react";
 import {t} from "i18next";
 
 const State = ({ state }) => {
-    const classes = state === 'OPEN' ? 'border-success text-success' :
+    const classes = state === 'OPEN' || state === 'ACCEPTED' ? 'border-success text-success' :
         state === 'SUBMITTED' ? 'border-secondary text-secondary' :
             state === 'REFUSED' || state === 'EXPIRED' ? 'border-danger text-danger' :
                 state === 'TAKEN' ? 'border-primary text-primary' :
@@ -10,7 +10,7 @@ const State = ({ state }) => {
     return (
         <>
             {
-                <div className={classes + " border rounded col-12 col-lg-10 float-end"}>{t(state)}</div>
+                <div className={classes + " border border-3 rounded rounded-5 col-12 col-lg-10 float-end fw-bold"}>{t(state)}</div>
             }
         </>
     )

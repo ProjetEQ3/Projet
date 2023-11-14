@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-const ShortJobOffer = ({jobOffer}) => {
+const ShortContractNotif = ({contract}) => {
     const {t} = useTranslation()
     const [isHovered, setIsHovered] = useState(false);
 
@@ -17,8 +17,8 @@ const ShortJobOffer = ({jobOffer}) => {
             <div className="col-12 bg-white rounded">
                 <div className="row">
                     <div className="col-12">
-                        <h5 data-testid="job-title" className={`text-dark pt-1 ${jobOffer.isViewed? 'fw-light':''}`}>{jobOffer.title}</h5>
-                        <p data-testid="job-department" className="text-dark fw-light mb-3">{t(jobOffer.department)}</p>
+                        <h5 data-testid="job-title" className='text-dark pt-1'>{contract.jobOfferName}</h5>
+                        <p data-testid="job-department" className="text-dark fw-light mb-3">{t(contract.jobOfferCompany)}</p>
                     </div>
                 </div>
             </div>
@@ -26,4 +26,4 @@ const ShortJobOffer = ({jobOffer}) => {
     );
 }
 
-export default ShortJobOffer;
+export default ShortContractNotif;

@@ -1,7 +1,8 @@
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import React, {useEffect, useState} from "react"
-import {useTranslation} from "react-i18next"
+import {useTranslation} from "react-i18next";
+import JobOffer from "../../model/JobOffer";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
@@ -14,17 +15,17 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
     }, [jobOffer])
 
     const applyForJobOffer = (jobOfferId) => {
-        console.log("COV:",coverLetter,";")
         axiosInstance
             .post(`/student/applyJobOffer/${user.id}/${jobOfferId}`, coverLetter === "" ? "EMPTY_COVER_LETTER" : coverLetter, {
                 headers: { 'Content-Type': 'text/plain' }
-            })
-            .then((response) => {
-                updatedOffer(response.data)
+            }).then((response) => {
+                let updatedJobOffer = new JobOffer()
+                updatedJobOffer.init(response.data)
+                updatedJobOffer.hasApplied = true
+
+                updatedOffer(updatedJobOffer)
                 toast.success(t('appliedJobOffer'))
-                }
-            )
-            .catch((error) => {
+            }).catch((error) => {
                 toast.error(t('pushingError') + t(error.response?.data.message))
             })
     }
@@ -42,8 +43,12 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
                             <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
                         </div>
                         <div className="col-3 my-auto text-center">
-                                <button data-testid="apply-button" className={"btn btn-outline-ose"}
-                                        data-bs-toggle="modal" data-bs-target="#apply">{t('apply')}</button>
+                            {jobOffer.hasApplied ?
+                                <button data-testid="apply-button" className={`btn btn-ose btn-success`} disabled>{t('applied')}</button> :
+                                <button data-testid="apply-button" className={`btn btn-outline-ose`} onClick={
+                                    () => applyForJobOffer(jobOffer.id)}>{t('apply')}</button>
+
+                            }
                         </div>
                     </div>
                     <div className="row">

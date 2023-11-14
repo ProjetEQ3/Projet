@@ -151,7 +151,7 @@ public class StudentService{
 
 	public List<JobOfferDTO> getAppliedJobOfferByStudentId(long studentId, Semester semester){
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
-		return jobOfferRepository.findAppliedJobOffersByStudent_Id(student.getId(), semester).stream().map(JobOfferDTO::new)
+		return jobOfferRepository.findAllByJobApplications_Student_IdAndSemester(student.getId(), semester).stream().map(JobOfferDTO::new)
 		                         .collect(Collectors.toList());
 	}
 
@@ -161,11 +161,9 @@ public class StudentService{
 	}
 
 	public List<AppointmentDTO> findAllAppointmentsForJobOfferAndStudent(Long jobOfferId, Long studentId){
-
-		JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId);
-
+		JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId).orElseThrow(
+			JobApplicationNotFoundException::new);
 		List<Appointment> appointments = new ArrayList<>(jobApplication.getAppointments());
-
 		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
 	}
 
@@ -207,5 +205,17 @@ public class StudentService{
 				.build());
 		contract.setStudentSignature(signature);
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
+	}
+
+	public JobOfferDTO markJobOfferAsViewed(Long studentId, Long jobOfferId) {
+		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+		if(student.getViewedJobOfferIds().contains(jobOfferId)) return null;
+		student.getViewedJobOfferIds().add(jobOfferId);
+		studentRepository.save(student);
+		return new JobOfferDTO(jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new));
+	}
+
+	public List<Long> getViewedJobOffersByStudentId(Long studentId) {
+		return studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new).getViewedJobOfferIds();
 	}
 }

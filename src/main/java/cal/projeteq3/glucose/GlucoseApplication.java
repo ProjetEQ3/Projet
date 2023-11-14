@@ -68,15 +68,10 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentService.addCv(9L, createFakePDF("cv_louis_michaud.pdf"));
 
 		managerService.updateCvState(1L, CvState.ACCEPTED, null);
-		managerService.updateCvState(2L, CvState.ACCEPTED, null);
 		studentService.applyJobOffer(9L, 10L, "CoverLetter");
 		studentService.applyJobOffer(10L, 10L, "CoverLetter");
 
-		studentService.applyJobOffer(9L, 9L, "CoverLetter");
-		studentService.applyJobOffer(10L, 9L, "CoverLetter");
-
 		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
-		employerService.addAppointmentByJobApplicationId(3L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
 	}
 
 	private List<Employer> createEmployer(){

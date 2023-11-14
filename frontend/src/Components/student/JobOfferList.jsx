@@ -3,15 +3,26 @@ import ShortJobOffer from "./ShortJobOffer"
 import FullJobOffer from "./FullJobOffer"
 import {useTranslation} from "react-i18next"
 
-function JobOfferList({jobOffers, user, setJobOffers}){
-    const {t} = useTranslation()
-    const [selectedOffer, setSelectedOffer] = useState(null)
+function JobOfferList({jobOffers, user, setJobOffers, selectedById, handleViewJobOffer}) {
+    const {t} = useTranslation();
+    const [selectedOffer, setSelectedOffer] = useState(null);
 
 	const updatedOffer = (jobOffer) => {
 		setSelectedOffer(jobOffer)
 		const updatedOffers = jobOffers.map((offer) => offer.id === jobOffer.id ? jobOffer : offer)
 		setJobOffers(updatedOffers)
 	}
+
+	const handleClick = (offer) => {
+		setSelectedOffer(offer);
+		handleViewJobOffer(offer);
+	}
+
+	useEffect(() => {
+		if (jobOffers.length === 0) return;
+		if (selectedById === null) return;
+		setSelectedOffer(jobOffers.find((offer) => offer.id === selectedById));
+	}, [selectedById]);
 
 	return (
 		<div className="row justify-content-around mx-2">
@@ -25,8 +36,8 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 						</div> :
 						jobOffers.map((offer, index) => (
 							offer.jobOfferState === "OPEN" ? (
-								<div key={offer.id} onClick={() => setSelectedOffer(offer)}>
-									<ShortJobOffer user={user} jobOffer={offer}/>
+								<div key={offer.id} onClick={() => handleClick(offer)}>
+									<ShortJobOffer user={user} jobOffer={offer} key={offer.id} />
 								</div>
 							) : null
 						))
@@ -39,7 +50,7 @@ function JobOfferList({jobOffers, user, setJobOffers}){
 							<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
 						</div>
 					</div>
-					: <FullJobOffer key={selectedOffer.id} user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
+					: <FullJobOffer user={user} jobOffer={selectedOffer} updatedOffer={updatedOffer}/>
 				}
 			</div>
 		</div>
