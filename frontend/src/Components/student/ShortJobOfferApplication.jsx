@@ -79,10 +79,10 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
             <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 <div className="row">
                     <div className="col-lg-9 col-md-8 col-sm-6">
-                        <h5 data-testid="job-title" className="text-dark fw-light pt-1">
+                        <h5 data-testid="job-title" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>
                             {jobOffer.title}
                         </h5>
-                        <p data-testid="job-department" className="text-dark fw-light mb-3">
+                        <p data-testid="job-department" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>
                             {t(jobOffer.department)}
                         </p>
                     </div>
