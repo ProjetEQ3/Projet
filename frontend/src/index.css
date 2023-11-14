@@ -4,6 +4,12 @@
 	--bs-ose-rgb: 136, 136, 245;
 	--ose-rgb: 0, 0, 30;
 }
+/*:root{*/
+/*	--ose-color: #d0e514;*/
+/*	--ose-hover-color: #4b4b80;*/
+/*	--bs-ose-rgb: 136, 136, 245;*/
+/*	--ose-rgb: 0, 0, 30;*/
+/*}*/
 
 body {
   margin: 0;
