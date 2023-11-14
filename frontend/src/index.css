@@ -115,3 +115,6 @@ select.dark-input:focus {
   outline: none;
 }
 
+.bg-light-dark {
+  background-color: #33393f;
+}
