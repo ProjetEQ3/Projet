@@ -2,9 +2,13 @@ import { useTranslation } from "react-i18next";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortJobApplicationDisplay = ({ application }) => {
     const { t } = useTranslation();
+
+    const { darkMode } = useDarkMode();
+
     function dateTimeToShortString(appointment) {
         const date = new Date(appointment);
 
@@ -23,12 +27,12 @@ const ShortJobApplicationDisplay = ({ application }) => {
     return (
         application.appointments && application.appointments.length > 0 ? (
             <div className="row clickable m-2">
-                <div className="col-12 bg-white rounded d-flex justify-content-between align-items-center">
+                <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded d-flex justify-content-between align-items-center`}>
                     <div>
-                        <h5 data-testid="job-title" className="text-dark fw-light pt-1">
+                        <h5 data-testid="job-title" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>
                             {application.title}
                         </h5>
-                        <p data-testid="job-department" className="text-dark fw-light mb-3">
+                        <p data-testid="job-department" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>
                             {t(application.department)}
                         </p>
                     </div>
