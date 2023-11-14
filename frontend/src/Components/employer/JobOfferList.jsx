@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom"
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, getOffers, offers, setOffers }) => {
 	const {t} = useTranslation()
@@ -15,6 +16,8 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	const [defaultSelect, setDefaultSelect] = useState('')
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
+
+	const { darkMode } = useDarkMode();
 
 	useEffect(() => {
 		if (!user?.isLoggedIn) {
@@ -82,8 +85,8 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 								</div>
 							);
 						}) :
-						<div className="col-12 bg-white rounded p-3">
-							<h2 className="text-dark fw-light pt-1">{t('noInternship')}</h2>
+						<div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded p-3`}>
+							<h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{t('noInternship')}</h2>
 						</div>
 				}
 			</div>
@@ -151,7 +154,7 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	return (
 		<div className="row" data-testid="job-offer-list">
 			<div className="col-12">
-				<h3 className="text-dark fw-light d-none d-lg-block">{t('yourInternship')}</h3>
+				<h3 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light d-none d-lg-block`}>{t('yourInternship')}</h3>
 				<div className="row justify-content-around">
 					<div className="order-2 order-lg-1 col-12 col-lg-6">
 						<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipList')}</h3>
@@ -171,8 +174,8 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 						<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipDetails')}</h3>
 						{selectedOffer === null ?
 							<div className="row m-2">
-								<div className="col-12 bg-white rounded">
-									<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
+								<div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
+									<h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{t('selectInternship')}</h2>
 								</div>
 							</div>
 							:

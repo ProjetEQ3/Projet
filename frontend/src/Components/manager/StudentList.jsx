@@ -1,9 +1,12 @@
 import {useTranslation} from "react-i18next";
 import ShortStudent from "./ShortStudent";
 import FilterObjectList from "../util/FilterObjectList";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const StudentList = ({students}) => {
     const {t} = useTranslation();
+
+    const { darkMode } = useDarkMode();
 
     const renderFilteredStudents = (filteredStudents) => {
         return (
@@ -15,7 +18,7 @@ const StudentList = ({students}) => {
                                 <ShortStudent student={student} index={index}/>
                             </div>)) :
                         <div className="col-12 text-center">
-                            <h4 className="text-dark fw-light">{t('noStudent')}</h4>
+                            <h4 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light`}>{t('noStudent')}</h4>
                         </div>
                 }
             </div>
@@ -25,7 +28,7 @@ const StudentList = ({students}) => {
     return (
         <div className="row">
             <div className="col-12">
-                <h3 className="text-dark fw-light my-5">{t('studentList')}</h3>
+                <h3 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light my-5`}>{t('studentList')}</h3>
                 <div className="row justify-content-around">
                     <FilterObjectList
                         items={students.map(student => {

@@ -1,10 +1,13 @@
 import FilterObjectList from "../util/FilterObjectList";
 import ShortJobOffer from "./ShortJobOffer";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApprovalOrRefusal, filter }) => {
   const { t } = useTranslation();
   const filteredOffers = filter ? offers.filter(offer => offer.jobOfferState === filter) : offers;
+
+  const { darkMode } = useDarkMode();
 
   const renderFilteredOffers = () => {
     return (
@@ -16,7 +19,7 @@ const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApproval
                   </div>
               )) :
               <div className="col-12">
-                <h5 className="text-center">{t('noInternship')}</h5>
+                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} text-center`}>{t('noInternship')}</h5>
               </div>
           }
         </div>
@@ -26,8 +29,8 @@ const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApproval
   return (
       <div className="row">
         <div className="col-12">
-          <h3 className="text-dark fw-light my-5">{t('allInternship')}</h3>
-          <div className="row justify-content-around">
+            <h3 className={`fw-light my-5 ${darkMode ? 'text-light' : 'text-dark'}`}>{t('allInternship')}</h3>
+            <div className="row justify-content-around">
             <FilterObjectList
                 items={filteredOffers}
                 renderItem={renderFilteredOffers}

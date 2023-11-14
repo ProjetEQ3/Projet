@@ -5,12 +5,15 @@ import PDFPreview from "../util/PDF/PDFPreview";
 import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 import Appointment from "../../model/Appointment";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
     const {t} = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [appointment, setAppointment] = useState(new Appointment());
     const [jobTitle, setJobTitle] = useState("");
+
+    const { darkMode } = useDarkMode();
 
     useEffect(() => {
         axiosInstance.get('/employer/offer/appointment/' + student.jobApplications[0])
@@ -25,6 +28,7 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
         );
 
         // Désolé de la monstruosité, mais c'est la seule solution que j'ai trouvé pour garder le titre du jobOffer
+        // 🧐🧐🧐🧐🧐
         if (student.jobTitle !== undefined)
             setJobTitle(student.jobTitle)
     }, []);
@@ -73,11 +77,11 @@ const ShortInterviewedStudentInfo = ({ student, fetchStudentList }) => {
 
     return (
         <>
-            <div className="m-2 p-2 bg-white rounded d-lg-flex" data-testid="short-student-info">
+            <div className={`m-2 p-2 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded d-lg-flex`} data-testid="short-student-info">
                 <div className="col-12 col-lg-6">
-                    <h3 className="text-dark fw-light d-inline-block m-0 p-0">{student.firstName + " " + student.lastName + " - " + student.email}</h3>
-                    <h4 className="text-dark fw-light d-inline-block m-0 p-0">{t('chosenAppointment')} {dateTimeToShortString(appointment.appointmentDate)}</h4>
-                    <h5 className="text-dark fw-light">{t('jobOffer') + ": " + jobTitle}</h5>
+                    <h3 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light d-inline-block m-0 p-0`}>{student.firstName + " " + student.lastName + " - " + student.email}</h3>
+                    <h4 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light d-inline-block m-0 p-0`}>{t('chosenAppointment')} {dateTimeToShortString(appointment.appointmentDate)}</h4>
+                    <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light`}>{t('jobOffer') + ": " + jobTitle}</h5>
                 </div>
                 <div className="col-12 col-lg-6 text-end">
                     <button type="button" onClick={handlePreview} className="btn btn-outline-ose">{t('preview')}</button>

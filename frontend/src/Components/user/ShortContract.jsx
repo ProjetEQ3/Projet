@@ -5,12 +5,15 @@ import CvFile from "../../model/CvFile";
 import {axiosInstance} from "../../App";
 import Contract from "../../model/Contract";
 import {toast} from "react-toastify";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortContract = ({ contract, user, reloadContracts }) => {
     const [t] = useTranslation();
     const [isDisplay, setIsDisplay] = useState(false);
     const [showSigningModal, setShowSigningModal] = useState(false);
     const [signaturePassword, setSignaturePassword] = useState('');
+
+    const { darkMode } = useDarkMode();
 
     const handleSignClick = () => {
         setShowSigningModal(true);
@@ -48,12 +51,12 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
 
     return (
         <div className='row'>
-            <div className="col-12 bg-white rounded pt-1">
+            <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded pt-1`}>
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
-                        <h5 className="text-dark fw-light pt-1" data-testid="job-title">{contract.jobOfferName}</h5>
-                        <h5 className="text-dark fw-light mb-3" data-testid="student-name">{t(contract.studentName)}</h5>
-                        <h5 className="text-dark fw-light mb-3" data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
+                        <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`} data-testid="job-title">{contract.jobOfferName}</h5>
+                        <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`} data-testid="student-name">{t(contract.studentName)}</h5>
+                        <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`} data-testid="employer-name">{t(contract.jobOfferCompany)}</h5>
                         <button onClick={handleClick} className="btn btn-outline-ose btn-sm" data-testid="preview-btn">{t('preview')}</button>
                         {
                             contract.complete ?
@@ -85,7 +88,7 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
             {showSigningModal && (
                 <div className="modal show" tabIndex="-1" style={{ display: 'block' }}>
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
                             <div className="modal-header">
                                 <h5 className="modal-title">{t('signContract')}</h5>
                                 <button type="button" className="btn-close" onClick={handleCloseModal}></button>
@@ -98,7 +101,7 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
                                 <div className="mb-3">
                                     <div className="mb-3">
                                         <label htmlFor="password" className="form-label">{t('password') + " : "}</label>
-                                        <input id="password" type="password" className="form-control" value={signaturePassword} onChange={handleSignaturePasswordChange} />
+                                        <input id="password" type="password" className={`form-control ${darkMode ? "dark-input" : ""}`} value={signaturePassword} onChange={handleSignaturePasswordChange} />
                                     </div>
                                 </div>
                             </div>

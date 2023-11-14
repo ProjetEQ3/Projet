@@ -8,10 +8,13 @@ import State from "../util/State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import CVFile from "../../model/CvFile";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 function Cv({user, setCv, getNotificationsCount}){
 	const {t} = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
+
+	const { darkMode } = useDarkMode();
 
 	const handlePdfUpload = (e) => {
 		setIsLoading(true)
@@ -79,7 +82,7 @@ function Cv({user, setCv, getNotificationsCount}){
 				<Loading/>
 			) : user.cvFile && user.cvFile.id ? (
 				<>
-					<div className="row bg-white rounded">
+					<div className={`row ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
 						<div className="col-lg-8">
 							<h2 className="text-center text-lg-start">{user.cvFile.fileName}</h2>
 						</div>

@@ -5,12 +5,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCalendar, faX} from "@fortawesome/free-solid-svg-icons";
 import {axiosInstance} from "../../App";
 import Appointment from "../../model/Appointment";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
     const { t } = useTranslation();
 
     const [appointments, setAppointments] = useState([]);
     const [checkboxValue, setCheckboxValue] = useState(false);
+
+    const { darkMode } = useDarkMode();
 
     const fetchAppointmentsByJobOffer = async () => {
         setAppointments([]);
@@ -73,13 +76,13 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
 
     return (
         <div className={`row m-2`} >
-            <div className="col-12 bg-white rounded">
+            <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 <div className="row">
                     <div className="col-lg-9 col-md-8 col-sm-6">
-                        <h5 data-testid="job-title" className="text-dark fw-light pt-1">
+                        <h5 data-testid="job-title" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>
                             {jobOffer.title}
                         </h5>
-                        <p data-testid="job-department" className="text-dark fw-light mb-3">
+                        <p data-testid="job-department" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>
                             {t(jobOffer.department)}
                         </p>
                     </div>
@@ -95,7 +98,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
                             </div>
                             <div id={"appointmentModal" + index} className="modal">
                                 <div className="modal-dialog">
-                                    <div className="modal-content">
+                                    <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
                                         <div className="modal-header">
                                             <h3 className="modal-title">{t('appointments')}<br/></h3>
                                             <FontAwesomeIcon icon={faX} data-bs-dismiss="modal"

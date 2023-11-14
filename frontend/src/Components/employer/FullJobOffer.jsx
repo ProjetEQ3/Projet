@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Loading from "../util/Loading";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const loadCalculateEndDate = () => {
         return new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -28,6 +29,9 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         expirationDate: jobOffer.expirationDate,
         nbOfCandidates: jobOffer.nbOfCandidates,
     })
+
+    const { darkMode } = useDarkMode();
+
     useEffect(() => {
         setEstimateEndDate(loadCalculateEndDate())
         setNewOffer({
@@ -153,14 +157,14 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
 
     return (
         <div className="row my-2">
-            <div className="col-12 bg-white rounded">
+            <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 {isLoading ? (
                     <Loading/>
                 ) : (
                     <>
                         <div className="row justify-content-between">
                             <div className="col-9">
-                                <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
+                                <h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{jobOffer.title}</h2>
                             </div>
                             <div className="col-3 my-auto text-center pt-2">
                                     <State state={jobOffer.jobOfferState}/>
@@ -173,19 +177,19 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                         )}
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>
-                                <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
+                                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t(jobOffer.department)}</h5>
+                                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.location}</h5>
                                 { jobOffer.startDate !== null &&
-                                    (<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>)
+                                    (<h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('startDate') + jobOffer.startDate}</h6>)
                                 }
-                                <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('duration') + jobOffer.duration + t('week')}</h6>
                                 { jobOffer.expirationDate !== null &&
-                                    (<h6 className="text-dark fw-light mb-3">{t('expirationDate')} {jobOffer.expirationDate}</h6>)
+                                    (<h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('expirationDate')} {jobOffer.expirationDate}</h6>)
                                 }
-                                <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
-                                <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                                <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
-                                <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
+                                <p className={`fst-italic fw-light ${darkMode ? 'text-light' : 'text-dark'}`}>{t('estimateEndDate')} {estimateEndDate}</p>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.salary}$/h</h6>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.hoursPerWeek}h/{t('week')}</h6>
+                                <p className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.description}</p>
                             </div>
                         </div>
                         <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal" data-testid="editModal">
@@ -198,7 +202,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                 )}
                 <div id="editModal" className="modal">
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
                             <div className="modal-header">
                                 <h3 className="modal-title">{t('edit')}<br/>{jobOffer.title}</h3>
                                 <FontAwesomeIcon icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
@@ -207,14 +211,14 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                 <form ref={formRef} onSubmit={handleSubmit} data-testid="form">
                                     <div className="mb-3">
                                         <label htmlFor="title" className="mt-3">{t('internshipTitle')}</label>
-                                        <input type="text" className={`form-control ${warnings.title ? 'is-invalid' : ''}`} id="title" placeholder={jobOffer.title} onChange={handleChange} name="title"/>
+                                        <input type="text" className={`form-control ${warnings.title ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="title" placeholder={jobOffer.title} onChange={handleChange} name="title"/>
                                         {warnings.title && (
                                             <div className="invalid-feedback">
                                                 {warnings.title}
                                             </div>
                                         )}
                                         <label htmlFor="department" className="mt-3">{t('department')}</label>
-                                        <select className={`form-select ${warnings.department ? 'is-invalid' : ''}`}
+                                        <select className={`form-select ${warnings.department ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
                                                 id="department" name="department" defaultValue={t('chooseADepartment')} onChange={handleChange}>
                                             <option className="clickable" value="_410B0">{t('_410B0')}</option>
                                             <option className="clickable" value="_241A1">{t('_241A1')}</option>
@@ -238,28 +242,28 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                             </div>
                                         )}
                                         <label htmlFor="location" className="mt-3">{t('location')}</label>
-                                        <input type="text" className={`form-control ${warnings.location ? 'is-invalid' : ''}`} id="location" placeholder={jobOffer.location} onChange={handleChange} name="location"/>
+                                        <input type="text" className={`form-control ${warnings.location ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="location" placeholder={jobOffer.location} onChange={handleChange} name="location"/>
                                         {warnings.location && (
                                             <div className="invalid-feedback">
                                                 {warnings.location}
                                             </div>
                                         )}
                                         <label htmlFor="nbOfCandidates">{t('nbOfCandidates')}</label>
-                                        <input type="number" min="0" max="10" className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''}`} id="nbOfCandidates" placeholder={jobOffer.nbOfCandidates} name="nbOfCandidates" onChange={handleChange}/>
+                                        <input type="number" min="0" max="10" className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="nbOfCandidates" placeholder={jobOffer.nbOfCandidates} name="nbOfCandidates" onChange={handleChange}/>
                                         {warnings.nbOfCandidates && (
                                             <div className="invalid-feedback">
                                                 {warnings.nbOfCandidates}
                                             </div>
                                         )}
                                         <label htmlFor="startDate" className="mt-3">{t('startDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`} id="startDate" placeholder={jobOffer.startDate} onChange={handleChange} name="startDate"/>
+                                        <input type="date" className={`form-control ${warnings.startDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="startDate" placeholder={jobOffer.startDate} onChange={handleChange} name="startDate"/>
                                         {warnings.startDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.startDate}
                                             </div>
                                         )}
                                         <label htmlFor="duration" className="mt-3">{t('duration')}</label>
-                                        <input type="number" className={`form-control ${warnings.duration ? 'is-invalid' : ''}`} id="duration" placeholder={`${jobOffer.duration} semaine(s)`} onChange={handleChange} name="duration"/>
+                                        <input type="number" className={`form-control ${warnings.duration ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="duration" placeholder={`${jobOffer.duration} semaine(s)`} onChange={handleChange} name="duration"/>
                                         {warnings.duration && (
                                             <div className="invalid-feedback">
                                                 {warnings.duration}
@@ -267,28 +271,28 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                         )}
                                         <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                         <label htmlFor="expirationDate" className="mt-3">{t('expirationDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
+                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
                                         {warnings.expirationDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.expirationDate}
                                             </div>
                                         )}
                                         <label htmlFor="salary" className="mt-3">{t('salary')}</label>
-                                        <input type="number" className={`form-control ${warnings.salary ? 'is-invalid' : ''}`} id="salary" placeholder={`${jobOffer.salary}$/h`} onChange={handleChange} name="salary"/>
+                                        <input type="number" className={`form-control ${warnings.salary ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="salary" placeholder={`${jobOffer.salary}$/h`} onChange={handleChange} name="salary"/>
                                         {warnings.salary && (
                                             <div className="invalid-feedback">
                                                 {warnings.salary}
                                             </div>
                                         )}
                                         <label htmlFor="hoursPerWeek" className="mt-3">{t('hoursPerWeek')}</label>
-                                        <input type="number" className={`form-control ${warnings.hoursPerWeek ? 'is-invalid' : ''}`} id="hoursPerWeek" placeholder={`${jobOffer.hoursPerWeek}h/semaine`} onChange={handleChange} name="hoursPerWeek"/>
+                                        <input type="number" className={`form-control ${warnings.hoursPerWeek ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="hoursPerWeek" placeholder={`${jobOffer.hoursPerWeek}h/semaine`} onChange={handleChange} name="hoursPerWeek"/>
                                         {warnings.hoursPerWeek && (
                                             <div className="invalid-feedback">
                                                 {warnings.hoursPerWeek}
                                             </div>
                                         )}
                                         <label htmlFor="description" className="mt-3">{t('internshipDetails')}</label>
-                                        <textarea className={`form-control ${warnings.description ? 'is-invalid' : ''}`} id="description" placeholder={jobOffer.description} onChange={handleChange} name="description"/>
+                                        <textarea className={`form-control ${warnings.description ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="description" placeholder={jobOffer.description} onChange={handleChange} name="description"/>
                                         {warnings.description && (
                                             <div className="invalid-feedback">
                                                 {warnings.description}
