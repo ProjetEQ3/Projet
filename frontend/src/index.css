@@ -121,3 +121,11 @@ textarea.dark-input:focus {
 .bg-light-dark {
   background-color: #33393f;
 }
+
+.sun {
+  color: #fddb3a;
+}
+
+.moon {
+  color: #333;
+}

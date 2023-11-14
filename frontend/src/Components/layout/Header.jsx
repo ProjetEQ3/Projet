@@ -27,7 +27,7 @@ function Header({user}) {
                             <div className="m-3 col-lg-3 col-md-4 col-6 text-center lh-1">
                                 <div className="d-md-flex justify-content-around align-items-center">
                                     <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
-                                        <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
+                                        <FontAwesomeIcon className={darkMode ? 'sun' : 'moon'} icon={darkMode ? faSun : faMoon} size="sm"/>
                                     </div>
                                     <LngSelector/>
                                     <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
