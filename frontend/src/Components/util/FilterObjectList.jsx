@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useTranslation} from "react-i18next";
 import {t} from "i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultJobOfferSelect, defaultSelectSubmitted}) => {
 	const [t, i18n] = useTranslation()
@@ -20,6 +21,8 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 		: []
 	const totalPages = Math.ceil(filteredItems.length/itemsPerPage)
 	const displayedItems = filteredItems.slice((currentPage - 1)*itemsPerPage, currentPage*itemsPerPage)
+
+	const { darkMode } = useDarkMode();
 
 	useEffect(() => {
 		if(!items || !items.length) return
@@ -91,13 +94,13 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 		<div className="mb-3">
 			<div className="d-flex align-items-center justify-content-between mb-2 col-12">
 				<div className="d-flex align-items-center col-6">
-					<select className="form-select me-2 flex-grow-1 clickable" value={selectedAttribute} onChange={handleAttributeChange}>
+					<select className={`form-select me-2 flex-grow-1 clickable ${darkMode ? "dark-input" : ""}`} value={selectedAttribute} onChange={handleAttributeChange}>
 						{attributes.map(attr => (
 							<option className="clickable" key={attr} value={attr}>{getAttributeDisplayName(attr)}</option>
 						))}
 					</select>
 					{isSelectAttribute ? (
-						<select className="form-control me-2 flex-grow-1 clickable" value={query} onChange={handleInputChange}>
+						<select className={`form-control me-2 flex-grow-1 clickable ${darkMode ? "dark-input" : ""}`} value={query} onChange={handleInputChange}>
 							<option className="clickable" value="">{t('choose')}</option>
 							{Array.isArray(selectOptions[actualAttribute]) && selectOptions[actualAttribute].map(option => (
 								<option className="clickable" key={option} value={option}>{t(option)}</option>
@@ -105,7 +108,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 						</select>
 					) : (
 						<input
-							className="form-control me-2 flex-grow-1"
+							className={`form-control me-2 flex-grow-1 ${darkMode ? "dark-input" : ""}`}
 							type="text"
 							placeholder={t('filterBy') + getAttributeDisplayName(selectedAttribute)}
 							value={query}
@@ -114,7 +117,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 					)}
 				</div>
 				<div className="d-flex align-items-center col-3">
-					<select className="form-select me-2 clickable" value={itemsPerPage} onChange={handleItemsPerPageChange}>
+					<select className={`form-select me-2 clickable ${darkMode ? "dark-input" : ""}`} value={itemsPerPage} onChange={handleItemsPerPageChange}>
 						{[5, 10, 20, 50, 100].map(number => (
 							<option className="clickable" key={number} value={number}>
 								{number} {t('perPage')}
