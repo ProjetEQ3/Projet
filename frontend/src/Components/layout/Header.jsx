@@ -39,7 +39,7 @@ function Header({user}) {
                             </div> :
                             <div className="align-self-start d-md-flex m-3">
                                 <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
-                                    <FontAwesomeIcon icon={darkMode ? faSun : faMoon} size="sm"/>
+                                    <FontAwesomeIcon className={darkMode ? 'sun' : 'moon'} icon={darkMode ? faSun : faMoon} size="sm"/>
                                 </div>
                                 <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5">
                                     <LngSelector/>
