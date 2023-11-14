@@ -6,6 +6,7 @@ import {toast} from "react-toastify"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faPaperPlane, faArrowLeft} from "@fortawesome/free-solid-svg-icons"
 import {useTranslation} from "react-i18next"
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const NewOfferForm = ({user}) => {
 	const [t] = useTranslation()
@@ -38,6 +39,8 @@ const NewOfferForm = ({user}) => {
 		expirationDate: '',
 		nbOfCandidates: ''
 	})
+
+	const { darkMode } = useDarkMode();
 
 	const saveOffer = async() => {
 		setIsLoading(true)
@@ -119,7 +122,7 @@ const NewOfferForm = ({user}) => {
 								<label htmlFor="title">{t('internshipTitle')}</label>
 								<input
 									type="text"
-									className={`form-control ${warnings.title ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.title ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="title"
 									placeholder={t('internshipTitle')}
 									name="title"
@@ -131,7 +134,7 @@ const NewOfferForm = ({user}) => {
 							<div className="mb-3">
 								<label htmlFor="department">{t('department')}</label>
 								<select
-									className={`form-select ${warnings.department ? 'is-invalid' : ''}`}
+									className={`form-select ${warnings.department ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="department"
 									name="department"
 									defaultValue={t('chooseADepartment')}
@@ -160,7 +163,7 @@ const NewOfferForm = ({user}) => {
 								<label htmlFor="location">{t('location')}</label>
 								<input
 									type="text"
-									className={`form-control ${warnings.location ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.location ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="location"
 									placeholder={t('location')}
 									name="location"
@@ -175,7 +178,7 @@ const NewOfferForm = ({user}) => {
 									type="number"
 									min="0"
 									max="10"
-									className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.nbOfCandidates ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="nbOfCandidates"
 									placeholder={t('nbOfCandidatesPlaceHolder')}
 									name="nbOfCandidates"
@@ -187,7 +190,7 @@ const NewOfferForm = ({user}) => {
 							<div className="mb-3">
 								<label htmlFor="description">{t('internshipDescription')}</label>
 								<textarea
-									className={`form-control ${warnings.description ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.description ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="description"
 									rows="3"
 									placeholder={t('internshipDescription')}
@@ -202,7 +205,7 @@ const NewOfferForm = ({user}) => {
 								<input
 									type="number"
 									step="0.01"
-									className={`form-control ${warnings.salary ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.salary ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="salary"
 									placeholder={t('salary')}
 									name="salary"
@@ -216,7 +219,7 @@ const NewOfferForm = ({user}) => {
 								<input
 									type="number"
 									step="0.01"
-									className={`form-control ${warnings.hoursPerWeek ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.hoursPerWeek ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="hoursPerWeek"
 									placeholder={t('hoursPerWeek')}
 									name="hoursPerWeek"
@@ -229,7 +232,7 @@ const NewOfferForm = ({user}) => {
 								<label htmlFor="startDate">{t('startDate')}</label>
 								<input
 									type="date"
-									className={`form-control ${warnings.startDate ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.startDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="startDate"
 									placeholder={t('startDate')}
 									name="startDate"
@@ -242,7 +245,7 @@ const NewOfferForm = ({user}) => {
 								<label htmlFor="duration">{t('duration')}</label>
 								<input
 									type="number"
-									className={`form-control ${warnings.duration ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.duration ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="duration"
 									placeholder={t('duration')}
 									name="duration"
@@ -256,7 +259,7 @@ const NewOfferForm = ({user}) => {
 								<label htmlFor="expirationDate">{t('expirationDate')}</label>
 								<input
 									type="date"
-									className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''}`}
+									className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`}
 									id="expirationDate"
 									placeholder={t('expirationDate')}
 									name="expirationDate"

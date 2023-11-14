@@ -97,18 +97,21 @@ code {
 
 
 input.dark-input,
-select.dark-input {
+select.dark-input,
+textarea.dark-input {
   background-color: #33393f;
   color: #fff;
   border-color: #555;
 }
 
-input.dark-input::placeholder {
+input.dark-input::placeholder,
+textarea.dark-input::placeholder {
   color: #f8f9fa;
 }
 
 input.dark-input:focus,
-select.dark-input:focus {
+select.dark-input:focus,
+textarea.dark-input:focus {
   background-color: #33393f;
   color: #fff;
   border-color: #777;
