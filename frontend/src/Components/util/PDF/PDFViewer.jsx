@@ -68,7 +68,7 @@ const PdfViewer = ({ pdf, contractComplete }) => {
 
     return (
         <div className={'mx-auto'}>
-            <div className={`text-center ${darkMode ? 'bg-light-dark' : 'bg-white'} m-0 pt-5`}>
+            <div className={`text-center ${darkMode ? 'bg-light-dark' : 'bg-light'} m-0 pt-5`}>
                 <div className="pdf-header btn-group m-0z">
                     <button className={'btn btn-outline-ose col-2'} onClick={handleZoomIn} disabled={scale === 2.5}>
                         <FontAwesomeIcon icon={faSearchPlus} />
