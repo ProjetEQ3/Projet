@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import NotificationBadge from "../notification/NotificationBadge";
 import Home from "../employer/Home";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
@@ -34,6 +35,8 @@ const EmployerPage = ({user}) => {
 	const [offers, setOffers] = useState([])
 	const [refusedCount, setRefusedCount] = useState(0)
 	const [refusedOffers, setRefusedOffers] = useState([]);
+
+	const { darkMode } = useDarkMode();
 
 	const getOffers = () => {
 		axiosInstance
@@ -154,10 +157,10 @@ const EmployerPage = ({user}) => {
 	}, [user])
 
 	return (
-		<div className="bg-light">
+		<div className={`${darkMode ? 'bg-dark' : 'bg-light'}`}>
 				<div className="row text-center m-0 p-0">
 					<div className="col-12 my-3">
-						<h2 className="text-dark fw-light">{t('hello') + user.firstName + " " + user.lastName} !</h2>
+						<h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light`}>{t('hello') + user.firstName + " " + user.lastName} !</h2>
 					</div>
 				</div>
 				<div className="container-fluid col-12 px-lg-5 px-2 py-2">

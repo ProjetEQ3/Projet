@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import Loading from "../util/Loading";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 const FullJobOffer = ({ jobOffer, updateOffer}) => {
     const loadCalculateEndDate = () => {
         return new Date(new Date(jobOffer.startDate).getTime() + jobOffer.duration * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -28,6 +29,9 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
         expirationDate: jobOffer.expirationDate,
         nbOfCandidates: jobOffer.nbOfCandidates,
     })
+
+    const { darkMode } = useDarkMode();
+
     useEffect(() => {
         setEstimateEndDate(loadCalculateEndDate())
         setNewOffer({
@@ -153,14 +157,14 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
 
     return (
         <div className="row my-2">
-            <div className="col-12 bg-white rounded">
+            <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 {isLoading ? (
                     <Loading/>
                 ) : (
                     <>
                         <div className="row justify-content-between">
                             <div className="col-9">
-                                <h2 className="text-dark fw-light pt-1">{jobOffer.title}</h2>
+                                <h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{jobOffer.title}</h2>
                             </div>
                             <div className="col-3 my-auto text-center pt-2">
                                     <State state={jobOffer.jobOfferState}/>
@@ -173,19 +177,19 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                         )}
                         <div className="row">
                             <div className="col-12">
-                                <h5 className="text-dark fw-light mb-3">{t(jobOffer.department)}</h5>
-                                <h5 className="text-dark fw-light mb-3">{jobOffer.location}</h5>
+                                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t(jobOffer.department)}</h5>
+                                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.location}</h5>
                                 { jobOffer.startDate !== null &&
-                                    (<h6 className="text-dark fw-light mb-3">{t('startDate') + jobOffer.startDate}</h6>)
+                                    (<h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('startDate') + jobOffer.startDate}</h6>)
                                 }
-                                <h6 className="text-dark fw-light mb-3">{t('duration') + jobOffer.duration + t('week')}</h6>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('duration') + jobOffer.duration + t('week')}</h6>
                                 { jobOffer.expirationDate !== null &&
-                                    (<h6 className="text-dark fw-light mb-3">{t('expirationDate')} {jobOffer.expirationDate}</h6>)
+                                    (<h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('expirationDate')} {jobOffer.expirationDate}</h6>)
                                 }
-                                <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
-                                <h6 className="text-dark fw-light mb-3">{jobOffer.salary}$/h</h6>
-                                <h6 className="text-dark fw-light mb-3">{jobOffer.hoursPerWeek}h/{t('week')}</h6>
-                                <p className="text-dark fw-light mb-3">{jobOffer.description}</p>
+                                <p className={`fst-italic fw-light ${darkMode ? 'text-light' : 'text-dark'}`}>{t('estimateEndDate')} {estimateEndDate}</p>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.salary}$/h</h6>
+                                <h6 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.hoursPerWeek}h/{t('week')}</h6>
+                                <p className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{jobOffer.description}</p>
                             </div>
                         </div>
                         <div className="text-end mb-2" data-bs-toggle="modal" data-bs-target="#editModal" data-testid="editModal">
