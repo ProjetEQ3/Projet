@@ -19,7 +19,7 @@ const JobOffers = ({ offers, updateJobOfferList, updateJobOfferListAfterApproval
                   </div>
               )) :
               <div className="col-12">
-                <h5 className="text-center">{t('noInternship')}</h5>
+                <h5 className={`${darkMode ? 'text-light' : 'text-dark'} text-center`}>{t('noInternship')}</h5>
               </div>
           }
         </div>

@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../../context/DarkModeContext";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.min.js',
@@ -23,6 +24,8 @@ const PdfViewer = ({ pdf, contractComplete }) => {
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
     const [scale, setScale] = useState(1); // To control zoom level
+
+    const { darkMode } = useDarkMode();
 
     const onDocumentLoadSuccess = ({ numPages }) => {
         setNumPages(numPages);
@@ -65,7 +68,7 @@ const PdfViewer = ({ pdf, contractComplete }) => {
 
     return (
         <div className={'mx-auto'}>
-            <div className="text-center bg-light m-0 pt-5">
+            <div className={`text-center ${darkMode ? 'bg-light-dark' : 'bg-white'} m-0 pt-5`}>
                 <div className="pdf-header btn-group m-0z">
                     <button className={'btn btn-outline-ose col-2'} onClick={handleZoomIn} disabled={scale === 2.5}>
                         <FontAwesomeIcon icon={faSearchPlus} />
@@ -85,8 +88,8 @@ const PdfViewer = ({ pdf, contractComplete }) => {
                     </button>
                 </div>
             </div>
-            <div className="m-0 py-3 bg-light"></div>
-            <div className="pdf-document-container bg-light py-3">
+            <div className={`m-0 py-3 ${darkMode ? 'bg-light-dark' : 'bg-light'}`}></div>
+            <div className={`pdf-document-container ${darkMode ? 'bg-light-dark' : 'bg-light'} py-3`}>
                 <Document className={'overflow-scroll-x pdf-document-page'} file={pdf} onLoadSuccess={onDocumentLoadSuccess} onError={handleError}>
                     {Array.from({ length: numPages }, (_, i) => (
                         <>
@@ -96,7 +99,7 @@ const PdfViewer = ({ pdf, contractComplete }) => {
                     ))}
                 </Document>
             </div>
-            <div className="m-0 py-3 bg-light"></div>
+            <div className={`m-0 py-3 ${darkMode ? 'bg-light-dark' : 'bg-light'}`}></div>
             <div className="my-3"></div>
         </div>
     );

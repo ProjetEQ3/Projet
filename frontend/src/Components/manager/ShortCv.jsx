@@ -7,6 +7,7 @@ import {toast} from "react-toastify";
 import State from "../util/State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     const {t} = useTranslation();
@@ -16,6 +17,8 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
         refusalReason: '',
     });
     const [isHovered, setHovered] = useState(false);
+
+    const { darkMode } = useDarkMode();
 
     const handleMouseEnter = () => {
         if (isDisplay) return;
@@ -91,10 +94,10 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
     return (
         <>
             <div className={`row clickable ${!isHovered? 'm-2':'m-1 shadow'}`} onClick={OpenCv} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} >
-                <div className="col-12 bg-white rounded">
+                <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                     <div className="row">
                         <div className="col-6">
-                            <h3 data-testid="title" className="text-dark fw-light m-0 p-3 fw-semibold">{cv.fileName}</h3>
+                            <h3 data-testid="title" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light m-0 p-3 fw-semibold`}>{cv.fileName}</h3>
                         </div>
                         <div className="col-6 my-auto d-block d-md-flex justify-content-end justify-content-md-between">
                             <div className="my-auto col-6 text-center d-block">
@@ -111,19 +114,19 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                             </div>
                             <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                                 <div className="modal-dialog">
-                                    <div className="modal-content">
+                                    <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
                                         <div className="modal-header">
-                                            <h3 data-testid="headerTitle" className="modal-title">{t('cvAuthorisation')}</h3>
+                                            <h3 data-testid="headerTitle" className={`modal-title ${darkMode ? 'text-light' : 'text-dark'}`}>{t('cvAuthorisation')}</h3>
                                             <FontAwesomeIcon data-testid="headerX" icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                                         </div>
                                         <div className="modal-body">
-                                            <h3 data-testid="bodyTitle" className="text-dark fw-light mb-3 fw-semibold">{cv.fileName}</h3>
+                                            <h3 data-testid="bodyTitle" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3 fw-semibold`}>{cv.fileName}</h3>
                                         </div>
                                         <div className="modal-footer">
                                             {isDecline ? (
                                                     <form id="refusalForm" className="form col-10 mx-auto">
                                                         <label data-testid="footerLabel">{t('confirmRefusal')}</label>
-                                                        <input data-testid="refusalInput" id="refusalReason" name="refusalReason" className="form-control form-text" type="text" onChange={validateReason} placeholder={t('refusalReason')} required/>
+                                                        <input data-testid="refusalInput" id="refusalReason" name="refusalReason" className={`form-control form-text ${darkMode ? "dark-input" : ""}`} type="text" onChange={validateReason} placeholder={t('refusalReason')} required/>
                                                         <button data-testid="confirmButton" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal">{t('confirm')}</button>
                                                         <button data-testid="cancelButton" type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">{t('cancel')}</button>
                                                     </form>) :
