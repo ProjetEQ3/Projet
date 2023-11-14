@@ -13,7 +13,6 @@
   "_241D0": "241.D0 - Industrial Maintenance Technology",
   "_243A0": "245.A0 - Ordered Systems Technology",
   "_221B0": "221.B0 - Civil Engineering Technology",
-
   "acceptStudentSuccess" : "Student accepted",
   "acceptStudentError" : "Error accepting student",
   "apply": "Apply",
@@ -28,9 +27,7 @@
   "authorizeOffer": "Offer Authorization",
   "appointments": "Pending appointments",
   "appointmentChosen": "You have chosen this appointment",
-
   "back": "Back",
-
   "copyRights": "© 2023 - All rights reserved.",
   "convoke": "Convoke",
   "convokeSentence": "You are looking to convoke the student : ",
@@ -55,7 +52,6 @@
   "cvAuthorisation": "CV Authorization",
   "confirmRefusal": "Can you provide a reason for your refusal ?",
   "confirm": "Confirm",
-
   "declineStudentSuccess" : "Student declined",
   "declineStudentError" : "Error declining student",
   "disconnect": "Disconnect",
@@ -74,7 +70,6 @@
   "descriptionRequired": "Description is required.",
   "displayedSession": "Displayed session: ",
   "decidedApplication": "Decided Application",
-
   "errorUpdateCV": "Error updating CV: ",
   "expirationDate": "End Date of the offer: ",
   "existingCv": "Existing CV",
@@ -91,7 +86,6 @@
   "errorLogin": "Incorrect username or password.",
   "email": "Email",
   "empSignatureMissing": "Employer signature is missing.",
-
   "fileName": "File Name",
   "fetchError": "Error retrieving data: ",
   "filterBy": "Filter by ",
@@ -99,11 +93,9 @@
   "firstNameRequired": "First name is required.",
   "firstName": "First Name",
   "fall": "Fall",
-
   "glucoseFullAcronym": "Free, Useful, and Collaborative Management of Student Internship Acquisition.",
   "glucoseAcronym": "GlucOSE",
   "getStudentError": "Error retrieving students: ",
-
   "home": "Home",
   "hoursPerWeek": "Hours per Week",
   "hello": "Hello ",
@@ -112,17 +104,14 @@
   "hireStudentError": "Error hiring student :",
   "hoursPerWeekRequired": "Hours per week are required.",
   "hoursPerWeekMustBePositive": "Hours per week must be positive.",
-
   "internship": "Internship Offers",
   "internshipTitle": "Offer Title",
   "internshipDescription": "Offer Description",
   "internshipDetails": "Offer Details",
   "internshipList": "List of your offers",
-
   "jobOffers": "Internships",
   "jobOffer": "Internship",
   "jobApplicationNotFound": "Job application not found",
-
   "location": "Work Location",
   "locationRequired": "Location is required.",
   "lastNameInvalid": "Last name must contain only letters.",
@@ -130,15 +119,12 @@
   "lastName": "Last Name",
   "loginSubmit": "Log In",
   "login": "Log In",
-
   "matricule": "College ID",
   "myApplications": "My Applications",
   "minimumNbOfCandidates": "Number of candidates must be at least 1.",
   "minimumDuration": "Internship duration must be at least 1 week.",
   "matriculeInvalid": "College ID must contain only numbers.",
   "matriculeRequired": "College ID is required.",
-
-
   "noAppointments": "No appointments available",
   "noAppointmentSelected": "You have not selected an appointment",
   "noApplications": "No application yet for this student",
@@ -155,7 +141,6 @@
   "nbOfCandidatesRequired": "Number of candidates is required.",
   "nbOfCandidatesPlaceHolder": "Enter the number of candidates",
   "newInternshipCreation": "Creating a new internship offer",
-
   "of": "of",
   "OPEN": "Open for Applications",
   "organisationNameRequired": "Organization name is required.",
@@ -164,7 +149,6 @@
   "organisationPhoneInvalid": "Organization phone number must follow a standard phone format. Example: 514-123-4567",
   "organisationPhone": "Organization Phone",
   "organisationName": "Organization Name",
-
   "probation": "Approval",
   "PDFError": "Please select a valid PDF file.",
   "pushingError": "Error sending data: ",
@@ -187,13 +171,11 @@
   "passwordInvalid": "Password must be at least 8 characters long and include at least one letter and one number.",
   "passwordConfirmInvalid": "Passwords do not match.",
   "placeHolderOrganisationPhone": "Enter the organization phone number",
-
   "refuse": "Refuse",
   "refusalReason": "Refusal Reason",
   "refusedOffer": "Offer refused",
   "REFUSED": "Refused",
   "registerSubmit": "Register",
-
   "STUDENT_SUBMITTED": "Waiting appointment option",
   "STUDENT_NO_APPOINTMENT": "Waiting appointment option",
   "STUDENT_CONVOKED": "Waiting appointment option",
@@ -221,10 +203,8 @@
   "successRegister": "Your account has been successfully created.",
   "student": "Student",
   "summer": "Summer",
-
   "TAKEN": "Taken",
   "titleRequired": "Title of the offer is required.",
-
   "update": "Update",
   "updateInternshipSuccess": "Internship offer updated",
   "updateInternshipError": "Error updating internship offer",
@@ -232,28 +212,24 @@
   "uploadCV": "Upload a CV",
   "updatedCV": "CV updated with status: ",
   "unauthorizedSigning": "You are not authorized to sign this contract",
-
   "wrongEmail": "Wrong email",
   "wrongPassword": "Wrong password",
   "welcome": "Welcome to ",
   "week": " week(s)",
   "winter": "Winter",
-
   "yourInternship": "Your internship offers",
-
   "chooseAppointment": "Choose an appointment",
   "coverLetterPlaceholder": "Enter your cover letter",
   "coverLetter": "Cover letter",
-
   "contractsList": "List of your contracts",
-
   "sign" : "Sign",
   "signContract" : "Sign the contract",
   "fullName" : "Full name",
   "submit" : "Submit",
   "contractSigned": "Contract was signed successfully",
   "noContracts": "No contracts available",
-
+  "jobOfferNotFound": "Job offer not found",
+  "contracts": "Contracts",
   "at": "at",
   "the": "the",
   "Sun": "Sunday",
@@ -263,7 +239,6 @@
   "Thu": "Thursday",
   "Fri": "Friday",
   "Sat": "Saturday",
-
   "Jan": "January",
   "Feb": "February",
   "Mar": "March",
@@ -276,13 +251,11 @@
   "Oct": "October",
   "Nov": "November",
   "Dec": "December",
-
   "CONSULT_FAQ": "Q&A",
   "FAQ_TITLE": "Frequently Asked Questions",
   "NO_FAQ": "No FAQ available at the moment",
   "QUESTION_UNAVAILABLE": "Question not available",
   "ANSWER_UNAVAILABLE": "Answer not available",
-
   "FAQ_LIST": {
     "FAQ_STUDENT": {
       "QUESTION_1": {

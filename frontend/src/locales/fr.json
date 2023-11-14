@@ -13,7 +13,6 @@
   "_241D0": "241.D0 - Technologie de maintenance industrielle",
   "_243A0": "245.A0 - Technologie de systèmes ordinés",
   "_221B0": "221.B0 - Technologie du génie civil",
-
   "acceptStudentSuccess" : "Étudiant accepté",
   "acceptStudentError" : "Erreur lors de l'acceptation de l'étudiant: ",
   "apply": "Postuler",
@@ -26,9 +25,7 @@
   "ACCEPTED": "Accepté",
   "allInternship": "Toutes les offres de stage",
   "authorizeOffer": "Autorisation de l'offre de stage",
-
   "back": "Retour",
-
   "cvAuthorisation": "Autorisation du CV",
   "confirmRefusal": "Pouvez-vous fournir une raison de refus ?",
   "confirm": "Confirmer",
@@ -54,7 +51,6 @@
   "contractNotReadyToSign": "Le contrat n'est pas prêt à être signé",
   "contracts" : "Contrats",
   "copyRights": "© 2023 - Tous droits réservés.",
-
   "declineStudentSuccess" : "Étudiant refusé",
   "declineStudentError" : "Erreur lors du refus de l'étudiant: ",
   "deleteCV": "CV est supprimé",
@@ -73,7 +69,6 @@
   "disconnect": "Se Déconnecter",
   "displayedSession": "Session affichée",
   "decidedApplication": "Vous avez déjà décidé pour cette application",
-
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
   "expirationDate": "Date d'expiration de l'offre de stage: ",
   "existingCv": "CV existant",
@@ -90,7 +85,6 @@
   "errorLogin": "Utilisateur ou mot de passe incorrect.",
   "email": "Adresse courriel",
   "empSignatureMissing": "La signature de l'employeur est manquante",
-
   "fileName": "Nom du fichier",
   "fetchError": "Erreur lors de la récupération des données: ",
   "filterBy": "Filtrer par ",
@@ -98,11 +92,9 @@
   "firstNameRequired": "Le prénom est obligatoire.",
   "firstName": "Prénom",
   "fall": "Automne",
-
   "glucoseFullAcronym": "Gestion Libre, Utile et Collaborative de l'Obtention de Stage Étudiant.",
   "glucoseAcronym": "GlucOSE",
   "getStudentError": "Erreur lors de la récupération des étudiants: ",
-
   "home": "Accueil",
   "hoursPerWeek": "Heures par semaine: ",
   "hello": "Bonjour ",
@@ -111,18 +103,15 @@
   "hireStudentError": "Erreur lors de l'embauche de l'étudiant: ",
   "hoursPerWeekRequired": "Le nombre d'heures par semaine est obligatoire.",
   "hoursPerWeekMustBePositive": "Le nombre d'heures par semaine doit être positif.",
-
   "internship": "Offres de stage",
   "internshipTitle": "Titre de l'offre de stage",
   "internshipDescription": "Description de l'offre de stage",
   "internshipDetails": "Détails de l'offre de stage",
   "internshipList": "Liste de vos offres de stage",
-
   "jobOffers": "Stages",
   "jobOffer": "Stage",
   "jobOfferNotFound": "Stage non trouvé",
   "jobApplicationNotFound": "Application non trouvée",
-
   "login": "Connecter",
   "location": "Lieu de travail",
   "locationRequired": "Le lieu est obligatoire.",
@@ -130,14 +119,12 @@
   "lastNameRequired": "Le nom est obligatoire.",
   "lastName": "Nom",
   "loginSubmit": "Se connecter",
-
   "myApplications": "Mes applications",
   "minimumDuration": "La durée du stage doit être d'au moins 1 semaine.",
   "minimumNbOfCandidates": "Le nombre de candidats doit être d'au moins 1.",
   "matriculeInvalid": "Le matricule doit contenir seulement des chiffres.",
   "matriculeRequired": "Le matricule est obligatoire.",
   "matricule": "Matricule du cégep",
-
   "noApplications": "Aucune application pour cette étudiant pour l'instant",
   "noJobOffers": "Vous n'avez pas d'applications.",
   "noInternship": "Aucune offre de stage n'a été trouvée.",
@@ -152,7 +139,6 @@
   "nbOfCandidatesPlaceHolder": "Entrez le nombre de candidats",
   "newInternshipCreation": "Création d'une nouvelle offre de stage",
   "newInternshipSubmit": "Soumettre l'offre de stage",
-
   "of": "de",
   "OPEN": "Ouvert aux candidatures",
   "organisationNameRequired": "Le nom de l'organisation est obligatoire.",
@@ -161,7 +147,6 @@
   "organisationPhoneInvalid": "Le numéro de téléphone de l'organisation doit suivre un format de téléphone standard. Exemple: 514-123-4567",
   "organisationPhone": "Téléphone de l'organisation",
   "organisationName": "Nom de l'organisation",
-
   "probation": "Approbation",
   "PDFError": "Veuillez sélectionner un fichier PDF valide.",
   "pushingError": "Erreur lors de l'envoi des données: ",
@@ -184,13 +169,11 @@
   "placeHolderPasswordConfirm": "Confirmez votre mot de passe",
   "passwordRequired": "Le mot de passe est obligatoire.",
   "placeHolderOrganisationPhone": "Entrez le numéro de téléphone de l'organisation",
-
   "refuse": "Refuser",
   "refusalReason": "Raison de refus",
   "refusedOffer": "Offre de stage refusée",
   "REFUSED": "Refusé",
   "registerSubmit": "S'inscrire",
-
   "STUDENT_SUBMITTED": "Aucun rendez-vous",
   "STUDENT_NO_APPOINTMENT": "Aucun rendez-vous",
   "STUDENT_CONVOKED": "Aucun rendez-vous",
@@ -218,10 +201,8 @@
   "selectInternship": "Sélectionnez une offre de stage",
   "studentAlreadyApplied" : "Vous avez déjà postulé pour cette offre de stage.",
   "summer": "Été",
-
   "TAKEN": "Pris",
   "titleRequired": "Le titre de l'offre est obligatoire.",
-
   "uploadedCV": "CV est téléversé",
   "uploadCV": "Téléverser un CV",
   "update": "Modifier",
@@ -229,15 +210,12 @@
   "updateInternshipError": "Erreur lors de la mise à jour de l'offre de stage",
   "updatedCV": "CV mis à jour avec l'état: ",
   "unauthorizedSigning": "Vous n'êtes pas autorisé à signer ce contrat",
-
   "wrongEmail": "L'adresse courriel est invalide",
   "wrongPassword": "Le mot de passe est invalide",
   "welcome": "Bienvenue sur ",
   "week": " semaine(s)",
   "winter": "Hiver",
-
   "yourInternship": "Vos offres de stages",
-
   "noAppointments": "Aucun rendez-vous proposé pour le moment",
   "appointments": "Rendez-vous possibles",
   "chooseAppointment": "Choisir un rendez-vous",
@@ -245,19 +223,15 @@
   "noAppointmentSelected": "Vous n'aviez pas choisi de rendez-vous",
   "coverLetterPlaceholder": "Entrez votre lettre de présentation",
   "coverLetter": "Lettre de motivation",
-
   "contractsList": "Liste des contrats",
-
   "sign" : "Signer",
   "signContract" : "Signer le contrat",
   "fullName" : "Nom complet",
   "submit" : "Envoyer",
   "contractSigned": "Votre contrat a été signé avec succès",
   "noContracts": "Vous n'avez aucun contrat pour le moment",
-
   "at": "à",
   "the": "le",
-
   "Sun": "Dimanche",
   "Mon": "Lundi",
   "Tue": "Mardi",
@@ -265,7 +239,6 @@
   "Thu": "Jeudi",
   "Fri": "Vendredi",
   "Sat": "Samedi",
-
   "Jan": "Janvier",
   "Feb": "Février",
   "Mar": "Mars",
@@ -278,14 +251,11 @@
   "Oct": "Octobre",
   "Nov": "Novembre",
   "Dec": "Décembre",
-
-
   "CONSULT_FAQ": "FAQ",
   "FAQ_TITLE": "Questions Fréquemment Posées",
   "NO_FAQ": "Aucun FAQ es disponible pour le moment",
   "QUESTION_UNAVAILABLE": "Question non disponible",
   "ANSWER_UNAVAILABLE": "Réponse non disponible",
-
   "FAQ_LIST": {
     "FAQ_STUDENT": {
       "QUESTION_1": {
