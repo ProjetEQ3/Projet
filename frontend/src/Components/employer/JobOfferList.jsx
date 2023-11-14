@@ -40,6 +40,15 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 		setDefaultSelect('jobOfferState.select:' + jobOffer.jobOfferState)
 	}
 
+	useEffect(() => {
+		handleSessionChange()
+	}, [selectedSessionIndex])
+
+	useEffect(() => {
+		if (offers.length === 0)
+			getOffers();
+	});
+
 	const handleSessionChange = () => {
 		setOffers([])
 		setSelectedOffer(null)
