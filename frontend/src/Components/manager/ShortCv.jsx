@@ -97,7 +97,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                 <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                     <div className="row">
                         <div className="col-6">
-                            <h3 data-testid="title" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light m-0 p-3 fw-semibold`}>{cv.fileName}</h3>
+                            <h3 data-testid="title" className={`${darkMode ? 'text-light' : 'text-dark'} ${cv.cvState === 'SUBMITTED' ? '' : 'fw-light'} m-0 p-3`}>{cv.fileName}</h3>
                         </div>
                         <div className="col-6 my-auto d-block d-md-flex justify-content-end justify-content-md-between">
                             <div className="my-auto col-6 text-center d-block">

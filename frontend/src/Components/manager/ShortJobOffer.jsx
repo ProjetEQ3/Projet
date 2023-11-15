@@ -23,7 +23,7 @@ const ShortJobOffer = ({ jobOffer, updateJobOfferList, index, updateJobOfferList
             <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
                 <div className="row">
                     <div className="col-6">
-                        <h4 data-testid="shortTitle" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{jobOffer.title}</h4>
+                        <h4 data-testid="shortTitle" className={`${darkMode ? 'text-light' : 'text-dark'} ${jobOffer.jobOfferState === 'SUBMITTED' ? '' : 'fw-light'} pt-1`}>{jobOffer.title}</h4>
                         <p data-testid="shortDepartment" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t(jobOffer.department)}</p>
                         <p data-testid="shortCandidate" className={`${darkMode ? 'text-light' : 'text-dark'} fw-light float-sm-end`}>{t('nbOfCandidates')} <span><strong>{jobOffer.nbOfCandidates}</strong></span></p>
                     </div>
