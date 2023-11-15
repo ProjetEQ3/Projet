@@ -80,7 +80,7 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
                 </div>
                 {
                     isDisplay ? (
-                            <PDFPreview file={CvFile.readBytes(contract.data)} setIsDisplay={setIsDisplay} contractComplete={contract.isComplete}/>
+                            <PDFPreview file={CvFile.readBytes(contract.data)} setIsDisplay={setIsDisplay} contractComplete={contract.complete}/>
                         ) : null
                 }
             </div>
