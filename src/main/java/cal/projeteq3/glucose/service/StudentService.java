@@ -164,7 +164,7 @@ public class StudentService{
 		JobApplication jobApplication = jobApplicationRepository.findByJobOfferIdAndStudentId(jobOfferId, studentId).orElseThrow(
 			JobApplicationNotFoundException::new);
 		List<Appointment> appointments = new ArrayList<>(jobApplication.getAppointments());
-		return appointments.stream().map(AppointmentDTO::new).collect(Collectors.toList());
+		return appointments.stream().map(AppointmentDTO::new).toList();
 	}
 
 	public AppointmentDTO setAppointmentToChosen(Long id){

@@ -2,7 +2,7 @@ class Appointment {
     id
     jobApplication
     appointmentDate
-    isChosen
+    chosen
 
     constructor(){
         this.reset()
@@ -12,7 +12,7 @@ class Appointment {
         this.id = 0
         this.jobApplication = null
         this.appointmentDate = ""
-        this.isChosen = false
+        this.chosen = false
     }
 
     init(appointment){
@@ -22,8 +22,8 @@ class Appointment {
         else delete this.jobApplication
         if(appointment.appointmentDate) this.appointmentDate = appointment.appointmentDate
         else delete this.appointmentDate
-        if(appointment.isChosen) this.isChosen = appointment.isChosen
-        else delete this.isChosen
+        if(appointment.chosen !== undefined) this.chosen = appointment.chosen
+        else delete this.chosen
     }
 
 }

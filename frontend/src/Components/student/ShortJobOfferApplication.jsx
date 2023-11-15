@@ -51,6 +51,7 @@ const ShortJobOfferApplication = ({ user, jobOffer, index, refresh }) => {
             .then((response) => {
                 toast.success(t('appointmentChosen') + '\n' + dateTimeToShortString(appointments[selectedAppointmentValue].appointmentDate));
                 setCheckboxValue(true)
+                fetchAppointmentsByJobOffer();
             })
             .catch(() => {
                 toast.error(t('errorChoosingAppointment'));
