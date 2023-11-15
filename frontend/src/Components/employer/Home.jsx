@@ -52,8 +52,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
             {
                 jobOffers.length > 0 && (
                     <>
-                        <h3>{t('jobOffers')}</h3>
-
+                        <h3>{t('jobOffersStudentsApplied')}</h3>
                         {jobOffers.map((offer, index) => {
                             return (
                                 <div key={index} onClick={() => handleSelectOffer(offer)}>

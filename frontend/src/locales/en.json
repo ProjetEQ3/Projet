@@ -246,6 +246,7 @@
   "jobOffer": "Internship",
   "jobOfferNotFound": "Job offer not found",
   "jobOffers": "Internship Offers",
+  "jobOffersStudentsApplied": "Internship offers where students applied",
   "lastName": "Last Name",
   "lastNameInvalid": "Last name must contain only letters.",
   "lastNameRequired": "Last name is required.",
