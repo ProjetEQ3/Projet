@@ -48,7 +48,7 @@ const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers, setOf
             {
                 nbSubmittedOffers > 0 &&
                 <div className="col-12">
-                    <h5 className="rounded rounded-3 alert alert-secondary p-2 px-4 display-6 clickable"
+                    <h5 className="rounded rounded-3 alert alert-danger p-2 px-4 display-6 clickable"
                         onClick={handleOfferClick}>
                         <FontAwesomeIcon icon={faCircleExclamation} className="me-4" />
                         {t('youHave')} <strong>{nbSubmittedOffers}</strong> {t('offersToReview')}
