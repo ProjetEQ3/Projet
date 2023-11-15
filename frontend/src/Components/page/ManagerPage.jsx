@@ -158,9 +158,9 @@ const ManagerPage = ({user}) => {
     function getNotificationsCounts() {
         updateNotifications('home', { green: 0, gray: 0, red: 0 });
 
-        let grayStages = offers.filter(offer => offer.jobOfferState === 'SUBMITTED').length;
+        let redStages = offers.filter(offer => offer.jobOfferState === 'SUBMITTED').length;
 
-        updateNotifications('stages', { green: 0, gray: grayStages, red: 0 });
+        updateNotifications('stages', { green: 0, gray: 0, red: redStages });
 
         let green = 0;
         let gray = 0;
@@ -201,7 +201,7 @@ const ManagerPage = ({user}) => {
                         </button>
                     ))}
                 </div>
-                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].gray} setOfferFilter={setOfferFilter} />}
+                {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].red} setOfferFilter={setOfferFilter} />}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
                                                 updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}
                                                 selectedState={offerFilter} />}
