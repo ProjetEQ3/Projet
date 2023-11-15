@@ -246,6 +246,7 @@
   "jobOffer": "Offre de Stage",
   "jobOfferNotFound": "Stage non trouvé",
   "jobOffers": "Offres de Stage",
+  "jobOffersStudentsApplied": "Offres de stage avec des étudiants qui ont postulé",
   "lastName": "Nom",
   "lastNameInvalid": "Le nom doit contenir seulement des lettres.",
   "lastNameRequired": "Le nom est obligatoire.",
