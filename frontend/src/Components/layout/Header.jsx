@@ -25,10 +25,8 @@ function Header({user}) {
                         <p className="lead d-none d-lg-block col-lg-5 col-md-2 ms-auto m-xl-0 text-center">{t('glucoseFullAcronym')}</p>
                         {user?.isLoggedIn ?
                             <div className="m-3 col-lg-3 col-md-4 col-6 text-center lh-1">
-                                <div className="d-md-flex justify-content-around align-items-center">
-                                    <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
-                                        <FontAwesomeIcon className={darkMode ? 'sun' : 'moon'} icon={darkMode ? faSun : faMoon} size="sm"/>
-                                    </div>
+                                <div className="d-md-flex justify-content-around align-items-center row">
+                                    <FontAwesomeIcon onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }} className={`col-3 ${darkMode ? 'sun' : 'moon'}`} icon={darkMode ? faSun : faMoon} size="sm"/>
                                     <LngSelector/>
                                     <h2 className="display-6">{user.firstName + " " + user.lastName}</h2>
                                     <div className="m-0 p-0 float-end">
@@ -38,10 +36,8 @@ function Header({user}) {
                                    onClick={() => sessionStorage.removeItem('token') } >{t('disconnect')}</a>
                             </div> :
                             <div className="align-self-start d-md-flex m-3">
-                                <div onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }}>
-                                    <FontAwesomeIcon className={darkMode ? 'sun' : 'moon'} icon={darkMode ? faSun : faMoon} size="sm"/>
-                                </div>
-                                <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5">
+                                <div className="p-0 ps-5 ms-5 ms-md-0 ps-md-5 me-md-5 row">
+                                    <FontAwesomeIcon onClick={toggleDarkMode} style={{ cursor: 'pointer', padding: '5px' }} className={`col-3 ${darkMode ? 'sun' : 'moon'}`} icon={darkMode ? faSun : faMoon} size="sm"/>
                                     <LngSelector/>
                                 </div>
                                 <a className="text-light text-decoration-none m-2 h6" href="/auth/login">{t('login')}</a>
