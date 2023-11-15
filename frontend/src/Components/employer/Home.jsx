@@ -2,12 +2,47 @@
 import {useTranslation} from "react-i18next";
 import ShortJobOffer from "./ShortJobOffer";
 import ShortInterviewedStudentInfo from "./ShortInterviewedStudentInfo";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ShortContractNotif from "../user/ShortContractNotif";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
+import JobOffer from "../../model/JobOffer";
 
 const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, contracts, refusedOffers}) => {
     const {t} = useTranslation();
+    const [offers, setOffers] = useState([]);
+    const [fetched, setFetched] = useState(false);
 
+
+    useEffect(() => {
+        if (jobOffers.length === 0) return;
+        setOffers(jobOffers);
+    }, [jobOffers]);
+
+    useEffect(() => {
+        if (fetched) return;
+        if (offers.length > 0) {
+            for (const offer of offers) {
+                axiosInstance.get(`/employer/offer/applications/${offer.id}`)
+                    .then((response) => {
+                        setFetched(true)
+                        offer.applications = response.data;
+                        const updatedOffers = offers.map((o) => {
+                            if(o.id === offer.id){
+                                return offer
+                            }else{
+                                return o
+                            }
+                        })
+
+                        setOffers(updatedOffers)
+                    })
+                    .catch((error) => {
+                        toast.error(t('getStudentsError') + t(error.response?.data.message))
+                    })
+            }
+        }
+    }, [offers]);
 
     function handleSelectOffer(offer) {
         setIdElement(offer.id);
@@ -53,7 +88,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
                 jobOffers.length > 0 && (
                     <>
                         <h3>{t('jobOffersStudentsApplied')}</h3>
-                        {jobOffers.map((offer, index) => {
+                        {offers.map((offer, index) => {
                             return (
                                 <div key={index} onClick={() => handleSelectOffer(offer)}>
                                     <ShortJobOffer

@@ -5,6 +5,7 @@ import {useState} from "react";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
+import jobApplication from "../../model/JobApplication";
 
 const ShortJobOffer = ({ jobOffer, deleteOffer, isBold}) => {
     const [t, i18n] = useTranslation();
@@ -27,6 +28,10 @@ const ShortJobOffer = ({ jobOffer, deleteOffer, isBold}) => {
                     <div className="col-10 col-sm-6">
                         <h5 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1 ${isBold ? 'fw-bold' : ''}`} data-testid="job-title">{jobOffer.title}</h5>
                         <p className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`} data-testid="job-department">{t(jobOffer.department)}</p>
+                        {
+                            jobOffer.applications?.length !== null && jobOffer.applications?.length > 0 &&
+                            <p className={`${darkMode ? 'text-light' : 'text-dark'} fw-light mb-3`}>{t('nbOfStudentPostulations')} <strong>{jobOffer.applications?.length}</strong></p>
+                        }
                         <p className={`${darkMode ? 'text-light' : 'text-dark'} fw-light float-sm-end`}>{t('nbOfCandidates')} <span><strong>{jobOffer.nbOfCandidates}</strong></span></p>
                     </div>
                     <div className="col-4 col-sm-4 my-auto text-center d-none d-sm-block">
