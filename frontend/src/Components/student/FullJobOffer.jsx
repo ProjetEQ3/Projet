@@ -48,8 +48,8 @@ const FullJobOffer = ({user, jobOffer, updatedOffer}) => {
                         <div className="col-3 my-auto text-center">
                             {jobOffer.hasApplied ?
                                 <button data-testid="apply-button" className={`btn btn-ose btn-success`} disabled>{t('applied')}</button> :
-                                <button data-testid="apply-button" className={`btn btn-outline-ose`} onClick={
-                                    () => applyForJobOffer(jobOffer.id)}>{t('apply')}</button>
+                                <button data-testid="apply-button" className={"btn btn-outline-ose"}
+                                        data-bs-toggle="modal" data-bs-target="#apply">{t('apply')}</button>
 
                             }
                         </div>
