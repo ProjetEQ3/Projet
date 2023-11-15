@@ -127,10 +127,10 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	}
 
 	const handleSelectOffer = (offer) => {
-		if (selectedById === offer.id) {
-			return
-		}
 		setSelectedById(offer.id)
+		if (selectedById === selectedOffer?.id) {
+			return;
+		}
 		if(offer.jobOfferState === "OPEN"){
 			axiosInstance.get(`/employer/offer/applications/${offer.id}`)
 				.then((response) => {
