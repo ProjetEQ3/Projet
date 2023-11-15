@@ -37,17 +37,15 @@ const RegisterEmployerForm = () => {
     const validateForm = () => {
         const validationErrors = {};
 
-        if(formData.firstName === ''){
+        if (formData.firstName === '') {
             validationErrors.firstName = t('firstNameRequired');
-        }
-        else if (!/^[a-zA-Z-]+$/.test(formData.firstName)) {
+        } else if (!/^[a-zA-Z- \u00C0-\u017F]+$/.test(formData.firstName)) {
             validationErrors.firstName = t('firstNameInvalid');
         }
 
-        if(formData.lastName === ''){
+        if (formData.lastName === '') {
             validationErrors.lastName = t('lastNameRequired');
-        }
-        else if(formData.lastName && !/^[a-zA-Z-]+$/.test(formData.lastName)){
+        } else if (!/^[a-zA-Z- \u00C0-\u017F]+$/.test(formData.lastName)) {
             validationErrors.lastName = t('lastNameInvalid');
         }
 
