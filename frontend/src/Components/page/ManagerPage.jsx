@@ -79,7 +79,6 @@ const ManagerPage = ({user}) => {
         await axiosInstance.get('manager/jobOffers/all',
         ).then((response) => {
             setOffers(response.data);
-            console.log(response.data)
             return response.data;
         }).catch((error) => {
             if (error.response?.status === 401) {
@@ -204,7 +203,8 @@ const ManagerPage = ({user}) => {
                 </div>
                 {tab === 'home' && <Home setTab={setTab} setIdElement={setIdElement} nbCvs={notifications['cvs'].red} contracts={contracts} nbSubmittedOffers={notifications['stages'].gray} setOfferFilter={setOfferFilter} />}
                 {tab === 'stages' && <JobOffers offers={offers} updateJobOfferList={updateJobOfferList}
-                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal} filter={offerFilter} />}
+                                                updateJobOfferListAfterApprovalOrRefusal={updateJobOfferListAfterApprovalOrRefusal}
+                                                selectedState={offerFilter} />}
                 {tab === 'cvs' && <Cvs cvs={cvs} updateCvList={updateCvList} getAllCvs={getAllCvs} selectedById={idElement} />}
                 {tab === 'contracts' && <ContractList contracts={contracts} user={user} reloadContracts={getAllContracts}/>}
                 {tab === 'students' && <StudentList students={students}/>}
