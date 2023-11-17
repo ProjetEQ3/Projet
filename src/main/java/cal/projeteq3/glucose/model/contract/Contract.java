@@ -21,13 +21,13 @@ public class Contract{
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Employer employer;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Student student;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private JobOffer jobOffer;
 
 	@OneToOne

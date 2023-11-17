@@ -189,6 +189,7 @@ public class StudentService{
 			(contract -> new ContractDTO(contract, manager))).toList();
 	}
 
+	@Transactional
 	public ContractDTO signContract(Long contractId, Long studentId){
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
 		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
@@ -204,6 +205,7 @@ public class StudentService{
 				.contract(contract)
 				.build());
 		contract.setStudentSignature(signature);
+		contractRepository.deleteAllByIdNot(contractId);
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
 	}
 
