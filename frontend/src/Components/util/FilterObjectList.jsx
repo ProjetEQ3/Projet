@@ -131,9 +131,11 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 			</div>
 			<div className="pagination-controls mx-auto col-12">
 				<div className="d-flex align-items-center justify-content-around">
-					<button className="btn btn-outline-ose me-2 col-md-2 col-3" onClick={goToPreviousPage} disabled={currentPage === 1}>
-						{t('previous')}
-					</button>
+					{currentPage > 1 && totalPages >1 && (
+						<button className="btn btn-outline-ose me-2 col-md-2 col-3" onClick={goToPreviousPage} disabled={currentPage === 1}>
+							{t('previous')}
+						</button>
+					)}
 					<div className="d-flex align-items-center me-2">
 						<span className="me-1">Page</span>
 						{
@@ -144,9 +146,13 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 						<span className="mx-1">{t('of')}</span>
 						<span>{totalPages}</span>
 					</div>
-					<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage} disabled={currentPage === totalPages || totalPages === 0}>
-						{t('next')}
-					</button>
+					{
+						currentPage < totalPages && totalPages > 1 &&(
+							<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage} disabled={currentPage === totalPages || totalPages === 0}>
+								{t('next')}
+							</button>
+						)
+					}
 				</div>
 			</div>
 		</div>
