@@ -199,11 +199,9 @@ const StudentPage = ({user, setUser}) => {
 
 		updateNotifications('home', { green: 0, gray: 0, red: 0 });
 
-		let greenNotificationsStages = 0;
-		let grayNotificationsStages = 0;
 		let redNotificationsStages = getJobOfferNotifCount();
 		updateNotifications('stages',
-			{green: greenNotificationsStages, gray: grayNotificationsStages, red: redNotificationsStages});
+			{green: 0, gray: 0, red: redNotificationsStages});
 
 		let greenNotificationsApplication = 0;
 		let grayNotificationsApplication = 0;
@@ -222,7 +220,6 @@ const StudentPage = ({user, setUser}) => {
 		updateNotifications('my_applications', { green: greenNotificationsApplication, gray: grayNotificationsApplication, red: redNotificationsApplication });
 
 		let redNotificationsCv = 0;
-		let greenNotificationsCv = 0;
 		let grayNotificationsCv = 0;
 
 		if (user.cvFile === undefined) {
@@ -233,22 +230,13 @@ const StudentPage = ({user, setUser}) => {
 			redNotificationsCv = -1;
 		}
 
-		updateNotifications('cv', { green: greenNotificationsCv, gray: grayNotificationsCv, red: redNotificationsCv });
+		updateNotifications('cv', { green: 0, gray: grayNotificationsCv, red: redNotificationsCv });
 
-		let redNotificationsContract = 0;
-		let greenNotificationsContract = 0;
 
-		redNotificationsContract = contracts.filter((contract) => (
+		let redNotificationsContract = contracts.filter((contract) => (
 			contract.studentSignature === null)).length;
 
-		contracts.forEach((contract) => {
-			if (contract.complete){
-				greenNotificationsContract = -1;
-				redNotificationsContract = 0;
-			}
-		});
-
-		updateNotifications('contract', { green: greenNotificationsContract, gray: 0, red: redNotificationsContract});
+		updateNotifications('contract', { green: 0, gray: 0, red: redNotificationsContract});
 	}
 
 	const updateNotifications = (tabId, { green, gray, red }) => {
