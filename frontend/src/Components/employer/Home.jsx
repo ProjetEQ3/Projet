@@ -117,7 +117,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
                 )
             }
             {
-                contracts.length > 0 && (
+                contracts.filter((contract) => contract.employerSignature === null).length > 0 && (
                     <>
                         <h2>{t('availableContracts')}</h2>
                         <p>{t('availableContractsToApplyTo')}</p>
