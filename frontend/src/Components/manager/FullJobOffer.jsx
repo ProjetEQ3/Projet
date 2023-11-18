@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import State from "../util/State";
+import State from "./State";
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
 
