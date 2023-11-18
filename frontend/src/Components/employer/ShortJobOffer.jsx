@@ -5,7 +5,6 @@ import {useState} from "react";
 import State from "../util/State";
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
-import jobApplication from "../../model/JobApplication";
 
 const ShortJobOffer = ({ jobOffer, deleteOffer, isBold}) => {
     const [t, i18n] = useTranslation();
