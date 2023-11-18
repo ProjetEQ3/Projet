@@ -4,7 +4,7 @@ import {t} from "i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
 
 const FilterObjectList = ({items, attributes, renderItem, selectOptions, defaultJobOfferSelect, defaultSelectSubmitted}) => {
-	const [t, i18n] = useTranslation()
+	const [t] = useTranslation()
 	const [selectedAttribute, setSelectedAttribute] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
 	const [itemsPerPage, setItemsPerPage] = useState(10)
@@ -133,7 +133,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 				<div className="d-flex align-items-center justify-content-around">
 					{
 						currentPage > 1 && totalPages > 1 ? (
-							<button className="btn btn-outline-ose me-2 col-md-2 col-3" onClick={goToPreviousPage} disabled={currentPage === 1}>
+							<button className="btn btn-outline-ose me-2 col-md-2 col-3" onClick={goToPreviousPage}>
 								{t('previous')}
 							</button>
 						) : (<div className="col-md-2 col-3"></div>)
@@ -150,7 +150,7 @@ const FilterObjectList = ({items, attributes, renderItem, selectOptions, default
 					</div>
 					{
 						currentPage < totalPages && totalPages > 1 ? (
-							<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage} disabled={currentPage === totalPages || totalPages === 0}>
+							<button className="btn btn-outline-ose col-md-2 col-3" onClick={goToNextPage}>
 								{t('next')}
 							</button>
 						) : (<div className="col-md-2 col-3"></div>)
