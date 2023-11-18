@@ -23,8 +23,8 @@ public class Signature{
 	@Column(nullable = false)
 	private LocalDate signatureDate = LocalDate.now();
 
-	@JoinColumn(nullable = false)
-	@ManyToOne
+	@JoinColumn
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Contract contract;
 
 	@Override
