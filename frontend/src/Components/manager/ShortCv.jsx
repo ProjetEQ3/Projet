@@ -103,15 +103,15 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                             <div className="my-auto col-6 text-center d-block">
                                 <State state={cv.cvState}/>
                             </div>
-                            <div
+                            <button
                                 data-testid="modalButton"
-                                className={`btn btn-outline-ose my-auto ${cv.cvState !== 'SUBMITTED' ? 'disabled' : ''}`}
+                                className={`btn btn-outline-ose my-auto ${cv.cvState !== 'SUBMITTED' ? 'd-none' : ''}`}
                                 data-bs-toggle={cv.cvState === 'SUBMITTED' ? 'modal' : ''}
                                 data-bs-target={`#fullViewModal${index}`}
                                 onClick={cv.cvState !== 'SUBMITTED' ? (e) => e.preventDefault() : undefined}
                             >
                                 {t('probation')}
-                            </div>
+                            </button>
                             <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
