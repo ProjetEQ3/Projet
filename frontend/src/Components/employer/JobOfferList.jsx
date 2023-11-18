@@ -127,6 +127,7 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	}
 
 	const handleSelectOffer = (offer) => {
+		if (offer === undefined) return;
 		setSelectedById(offer.id)
 		if (selectedById === selectedOffer?.id) {
 			return;
