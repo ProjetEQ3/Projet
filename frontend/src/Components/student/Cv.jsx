@@ -60,22 +60,6 @@ function Cv({user, setCv, getNotificationsCount}){
 			})
 	}
 
-	const refreshCvState = () => {
-		if (!user?.id) return;
-		if (!user.cvFile || !user.cvFile.id) return;
-		axiosInstance
-			.get(`/student/cv/${user.id}`)
-			.then((response) => {
-				setCv(response.data)
-			})
-			.catch((error) => {
-			})
-	}
-
-	useEffect(() => {
-		refreshCvState()
-	}, [user])
-
 	return (
 		<div className="container">
 			{isLoading ? (

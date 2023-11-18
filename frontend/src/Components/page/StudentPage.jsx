@@ -139,6 +139,18 @@ const StudentPage = ({user, setUser}) => {
 			});
 	}
 
+	const refreshCvState = () => {
+		if (!user?.id) return;
+		if (!user.cvFile || !user.cvFile.id) return;
+		axiosInstance
+			.get(`/student/cv/${user.id}`)
+			.then((response) => {
+				setCv(response.data)
+			})
+			.catch((error) => {
+			})
+	}
+
 	useEffect(() => {
 		if (!user?.isLoggedIn) navigate('/');
 		fetchStudentJobOffers()
@@ -170,6 +182,10 @@ const StudentPage = ({user, setUser}) => {
 		getNotificationsCounts();
 	}, [viewedJobOfferList, jobOffers, myApplications, contracts, appointments, user]);
 
+	useEffect(() => {
+		refreshCvState()
+	}, [user])
+
 	const handleSessionChange = () => {
 	  handleRefresh()
 	}
@@ -183,6 +199,7 @@ const StudentPage = ({user, setUser}) => {
 		fetchMyApplications();
 		fetchViewedJobOfferList();
 		fetchContracts();
+		refreshCvState();
 		getNotificationsCounts();
 	}
 
@@ -257,7 +274,6 @@ const StudentPage = ({user, setUser}) => {
 							onClick={() => {
 								setTab(tabItem.id)
 								handleRefresh();
-								
 							}}
 							style={{ position: 'relative' }}
 						>
