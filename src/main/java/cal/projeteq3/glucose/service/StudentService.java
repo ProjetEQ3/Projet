@@ -204,7 +204,7 @@ public class StudentService{
 				.build());
 		contract.setStudentSignature(signature);
 		contractRepository.deleteAllByIdNotAndJobOfferSemester(contractId, contract.getJobOffer().getSemester());
-		jobApplicationRepository.findAllByStudentId(studentId).forEach(jobApplication -> {
+		jobApplicationRepository.findAllByStudentIdAndSemester(studentId, contract.getJobOffer().getSemester()).forEach(jobApplication -> {
 			jobApplication.setJobApplicationState(JobApplicationState.REJECTED);
 			jobApplicationRepository.save(jobApplication);
 		});
