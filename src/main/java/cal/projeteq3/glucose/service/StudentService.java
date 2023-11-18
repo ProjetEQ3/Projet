@@ -131,7 +131,10 @@ public class StudentService{
 	public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId, String coverLetter){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+		List<Contract> contracts = contractRepository.findAllByStudentId(studentId);
 
+		if(contracts.stream().anyMatch(contract -> contract.getStudentSignature() != null))
+			throw new StudentAlreadyHasContractException();
 		if(jobOffer.hasApplied(studentId)) throw new StudentHasAlreadyAppliedException();
 		if(!student.hasApprovedCv()) throw new CvNotApprovedException();
 		if(jobOffer.getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
