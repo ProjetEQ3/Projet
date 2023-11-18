@@ -26,10 +26,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -205,7 +203,7 @@ public class StudentService{
 				.contract(contract)
 				.build());
 		contract.setStudentSignature(signature);
-		contractRepository.deleteAllByIdNot(contractId);
+		contractRepository.deleteAllByIdNotAndJobOfferSemester(contractId, contract.getJobOffer().getSemester());
 		jobApplicationRepository.findAllByStudentId(studentId).forEach(jobApplication -> {
 			jobApplication.setJobApplicationState(JobApplicationState.REJECTED);
 			jobApplicationRepository.save(jobApplication);

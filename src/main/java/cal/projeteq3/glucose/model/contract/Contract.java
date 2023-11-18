@@ -30,13 +30,13 @@ public class Contract{
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private JobOffer jobOffer;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Signature employerSignature;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Signature studentSignature;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Signature managerSignature;
 
 	@Temporal(TemporalType.TIMESTAMP)
