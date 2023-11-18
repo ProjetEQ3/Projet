@@ -6,7 +6,6 @@ import React, {useEffect, useState} from "react";
 import ShortContractNotif from "../user/ShortContractNotif";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import JobOffer from "../../model/JobOffer";
 
 const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, contracts, refusedOffers}) => {
     const {t} = useTranslation();
