@@ -205,7 +205,10 @@ public class StudentService{
 		contract.setStudentSignature(signature);
 		contractRepository.deleteAllByIdNotAndJobOfferSemester(contractId, contract.getJobOffer().getSemester());
 		jobApplicationRepository.findAllByStudentIdAndSemester(studentId, contract.getJobOffer().getSemester()).forEach(jobApplication -> {
-			jobApplication.setJobApplicationState(JobApplicationState.REJECTED);
+			if (contract.getJobOffer().getId().equals(jobApplication.getJobOffer().getId()))
+				jobApplication.setJobApplicationState(JobApplicationState.ACCEPTED);
+			else
+				jobApplication.setJobApplicationState(JobApplicationState.REJECTED);
 			jobApplicationRepository.save(jobApplication);
 		});
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
