@@ -82,6 +82,13 @@ function Cv({user, setCv, getNotificationsCount}){
 				<Loading/>
 			) : user.cvFile && user.cvFile.id ? (
 				<>
+					{
+						user.cvFile.cvState === "REFUSED" &&
+						<div className="text-center text-lg-start alert alert-danger py-0">
+							<h1 className={"display-4 py-2"}>{t('refusedCV')}</h1>
+							<h3 className={"display-6 py-0 text-center"}>{user.cvFile.refusReason}</h3>
+						</div>
+					}
 					<div className={`row ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
 						<div className="col-lg-8">
 							<h2 className="text-center text-lg-start">{user.cvFile.fileName}</h2>

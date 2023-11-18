@@ -186,6 +186,7 @@
   "cvNotApproved": "CV not approved",
   "cvRequiredToContinue": "You must upload a CV to continue",
   "cvToTreat": "CV(s) to review",
+  "refusedCV": "Refused CV for the following reason: ",
   "cvWaitingApproval": "Your CV is waiting for approval",
   "decidedApplication": "Decided Application",
   "declineStudentError": "Error declining student",

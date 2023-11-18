@@ -186,6 +186,7 @@
   "cvNotApproved": "CV non approuvé",
   "cvRequiredToContinue": "Vous devez téléverser un CV pour continuer",
   "cvToTreat": "CV(s) à traiter",
+  "refusedCV": "CV refusé pour la raison suivante: ",
   "cvWaitingApproval": "Votre CV est en attente d'approbation",
   "decidedApplication": "Vous avez déjà décidé pour cette application",
   "declineStudentError": "Erreur lors du refus de l'étudiant: ",
