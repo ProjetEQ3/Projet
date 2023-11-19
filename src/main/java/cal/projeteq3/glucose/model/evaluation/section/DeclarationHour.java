@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.model.evaluation;
+package cal.projeteq3.glucose.model.evaluation.section;
 
 import jakarta.persistence.Embeddable;
 import lombok.*;

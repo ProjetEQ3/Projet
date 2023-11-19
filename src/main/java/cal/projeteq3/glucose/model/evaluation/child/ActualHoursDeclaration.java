@@ -1,6 +1,6 @@
 package cal.projeteq3.glucose.model.evaluation.child;
 
-import cal.projeteq3.glucose.model.evaluation.DeclarationHour;
+import cal.projeteq3.glucose.model.evaluation.section.DeclarationHour;
 import cal.projeteq3.glucose.model.evaluation.Evaluation;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
