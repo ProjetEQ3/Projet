@@ -132,7 +132,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                                                     </form>) :
                                                 (<div>
                                                     <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
-                                                    <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger">{t('refuse')}</button>
+                                                    <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger" >{t('refuse')}</button>
                                                 </div>)}
                                         </div>
                                     </div>
