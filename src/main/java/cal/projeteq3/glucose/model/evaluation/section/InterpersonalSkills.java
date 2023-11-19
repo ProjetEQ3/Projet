@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.model.evaluation.section;
 
 import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -17,5 +18,6 @@ public final class InterpersonalSkills{
 	private AgreementLevel accept_constructive_criticism;
 	private AgreementLevel be_respectful;
 	private AgreementLevel be_a_good_listener;
+	@Column(name = "interpersonal_skills_comment")
 	private String comment;
 }

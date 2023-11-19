@@ -1,8 +1,5 @@
 package cal.projeteq3.glucose.model.evaluation;
 
-import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.model.user.Manager;
-import cal.projeteq3.glucose.model.user.Student;
 import jakarta.persistence.*;
 
 @MappedSuperclass
@@ -11,17 +8,17 @@ public abstract class Evaluation{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@ManyToOne
-	@JoinColumn(name = "student_id", referencedColumnName = "id")
-	private Student student;
-
-	@ManyToOne
-	@JoinColumn(name = "manager_id", referencedColumnName = "id")
-	private Manager manager;
-
-	@ManyToOne
-	@JoinColumn(name = "employer_id", referencedColumnName = "id")
-	private Employer employer;
-
+	private String studentName;
+	private String studentProgram;
+	private String companyName;
+	private String supervisorName;
+	private String supervisorPosition;
+	private String supervisorPhoneNumber;
+	private String supervisorAddress;
+	private String supervisorAddressVille;
+	private String supervisorAddressPostalCode;
+	private String supervisorFax;
+	private String internshipTitle;
+	private String internshipStartDate;
+	private String internshipNumber;
 }
