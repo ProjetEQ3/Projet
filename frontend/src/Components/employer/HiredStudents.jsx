@@ -1,13 +1,32 @@
-import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../../App';
 
-const HiredStudents = ({ jobApplications }) => {
+const HiredStudents = ({ user }) => {
     const [t] = useTranslation();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [acceptedApplications, setAcceptedApplications] = useState([]);
+
+    useEffect(() => {
+        getAcceptedApplications();
+    }, [user.id]);
+
+    const getAcceptedApplications = () => {
+        if (!user?.id) return;
+        axiosInstance
+            .get(`/employer/applications/${user.id}`)
+            .then((response) => {
+                console.log(response.data)
+                setAcceptedApplications(response.data);
+            })
+            .catch((error) => {
+            });
+    };
 
     const handleTimeSheetButton = () => {
-        navigate('/employer/timeSheet')
-    }
+        navigate('/employer/timeSheet');
+    };
 
     return (
         <div>
@@ -16,6 +35,7 @@ const HiredStudents = ({ jobApplications }) => {
                 <button className="btn btn-outline-ose col-12" onClick={handleTimeSheetButton}>BOUTON TEMPORAIRE POUR FEUILLE DE TEMPS</button>
             </div>
         </div>
-    )
-}
+    );
+};
+
 export default HiredStudents;

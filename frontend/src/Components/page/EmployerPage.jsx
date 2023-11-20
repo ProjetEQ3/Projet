@@ -27,7 +27,6 @@ const EmployerPage = ({user}) => {
 		{ id: 'student', label: 'hiredStudents' }
 	];
 
-	const [hiredStudents, setHiredStudents] = useState([new JobApplication()]);
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
@@ -45,15 +44,6 @@ const EmployerPage = ({user}) => {
 	const [refusedOffers, setRefusedOffers] = useState([]);
 
 	const { darkMode } = useDarkMode();
-
-	// setHiredStudents(new Array(1).fill(new JobApplication(
-	// 	1,
-	// 	new Student(),
-	// 	new JobOffer(),
-	// 	"test",
-	// 	2023,
-	// 	"Winter"
-	// )));
 
 	const getOffers = () => {
 		axiosInstance
@@ -206,7 +196,7 @@ const EmployerPage = ({user}) => {
 													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
-					{tab === 'student' && <HiredStudents jobApplications={hiredStudents}/>}
+					{tab === 'student' && <HiredStudents user={user}/>}
 			</div>
 		</div>
 	)
