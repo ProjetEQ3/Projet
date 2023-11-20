@@ -11,6 +11,9 @@ import NotificationBadge from "../notification/NotificationBadge";
 import Home from "../employer/Home";
 import {useDarkMode} from "../../context/DarkModeContext";
 import HiredStudents from "../employer/HiredStudents";
+import JobApplication from "../../model/JobApplication";
+import Student from "../../model/Student";
+import JobOffer from "../../model/JobOffer";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
@@ -23,6 +26,8 @@ const EmployerPage = ({user}) => {
 		{ id: 'contract', label: 'contracts' },
 		{ id: 'student', label: 'hiredStudents' }
 	];
+
+	const [hiredStudents, setHiredStudents] = useState([new JobApplication()]);
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
@@ -40,6 +45,15 @@ const EmployerPage = ({user}) => {
 	const [refusedOffers, setRefusedOffers] = useState([]);
 
 	const { darkMode } = useDarkMode();
+
+	setHiredStudents(new Array(1).fill(new JobApplication(
+		1,
+		new Student(),
+		new JobOffer(),
+		"test",
+		2023,
+		"Winter"
+	)));
 
 	const getOffers = () => {
 		axiosInstance
@@ -192,7 +206,7 @@ const EmployerPage = ({user}) => {
 													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
-					{tab === 'student' && <HiredStudents/>}
+					{tab === 'student' && <HiredStudents jobApplications={hiredStudents}/>}
 			</div>
 		</div>
 	)
