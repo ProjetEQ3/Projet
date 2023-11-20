@@ -254,6 +254,7 @@
   "locationRequired": "Le lieu est obligatoire.",
   "login": "Connecter",
   "loginSubmit": "Se connecter",
+  "hiredStudents": "Étudiant(s) embauché(s)",
   "matricule": "Matricule du cégep",
   "matriculeInvalid": "Le matricule doit contenir seulement des chiffres.",
   "matriculeRequired": "Le matricule est obligatoire.",

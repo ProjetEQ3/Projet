@@ -260,6 +260,7 @@
   "minimumDuration": "Internship duration must be at least 1 week.",
   "minimumNbOfCandidates": "Number of candidates must be at least 1.",
   "myApplications": "My Applications",
+  "hiredStudents": "Hired Student(s)",
   "myAppointments": "My appointments",
   "nbOfCandidates": "Number of candidates looked for : ",
   "nbOfCandidatesPlaceHolder": "Enter the number of candidates",
