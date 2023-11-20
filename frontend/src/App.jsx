@@ -42,7 +42,7 @@ function App(){
 	}, [user])
 
 	const send_email = () => {
-		sendEmail('s@zaka.se', 'MySubject', 'MyTextContent')
+		sendEmail('patatepoilu876@gmail.com', 'MySubject', 'MyTextContent')
 	}
 
 	return (

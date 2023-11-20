@@ -8,10 +8,26 @@ import java.net.http.HttpResponse.BodyHandlers;
 public class EmailService{
 	private final String apiKey = "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";
 	private final String uri = "https://api.sendinblue.com/v3/smtp/email";
-	private final String fromEmail = "1@zaka.se";
-	private final String fromName = "Zakaria Gannoun";
+	private final String fromEmail = "glucose.pro@gmail.com";
+	private final String fromName = "GlucOSE Notification";
 	private final HttpClient client = HttpClient.newHttpClient();
-	private final String htmlContent = "<html><body><h1>h1 title</h1><p>HTML content</p></body></html>";
+	private final String htmlContent = "<html>" +
+		"<head>" +
+		"<title>Email Notification</title>" +
+		"</head>" +
+		"<body>" +
+		"<h1>GlucOSE</h1>" +
+		"<h2>NOTIFICATION_TITLE</h2>" +
+		"<div>" +
+		"<p>Bonjour,</p>" +
+		"<p>CONTENT_NOTIFICATION</p>" +
+		"<p>Merci d'utiliser notre application!</p>" +
+		"</div>" +
+		"<footer>" +
+		"<p>&copy; 2023 GlucOSE Tous droits réservés.</p>" +
+		"</footer>" +
+		"</body>" +
+		"</html>";
 
 	public void sendEmail(String toEmail, String toName, String subject, String content){
 		HttpRequest request = HttpRequest

@@ -224,6 +224,15 @@ public class GlucoseApplication implements CommandLineRunner {
 							.matricule("0000002")
 							.phoneNumber("123-456-7890")
 							.department(Department._420B0)
+							.build(),
+					Manager.builder()
+							.firstName("Emailer")
+							.lastName("Tester")
+							.email("patatepoilu876@gmail.com")
+							.password(passwordEncoder.encode("Ose12345"))
+							.matricule("0000111")
+							.phoneNumber("123-456-7890")
+							.department(Department._420B0)
 							.build()
 		);
 	}
