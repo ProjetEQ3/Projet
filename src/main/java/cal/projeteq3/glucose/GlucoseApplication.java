@@ -18,6 +18,7 @@ import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
+import cal.projeteq3.glucose.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
