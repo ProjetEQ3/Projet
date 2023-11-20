@@ -27,7 +27,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
     }
 
     function allTreated() {
-        return jobOffers.filter((jobOffer) => jobOffer.isViewed !== true).length === 0 && applications.length === 0 && contracts.filter((contract) => contract.studentSignature === null).length === 0;
+        return cv?.cvState === 'ACCEPTED' && jobOffers.filter((jobOffer) => jobOffer.isViewed !== true).length === 0 && applications.length === 0 && contracts.filter((contract) => contract.studentSignature === null).length === 0;
     }
 
     return (
