@@ -8,22 +8,48 @@ import {useNavigate} from "react-router-dom"
 import {axiosInstance} from "../../App"
 import {toast} from "react-toastify"
 import {useSession} from "../util/SessionContext"
+import {useDarkMode} from "../../context/DarkModeContext";
 
-const JobOfferList = ({user}) => {
+const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffersWithSubmittedApplications, selectedById, setSelectedById, getOffers, offers, setOffers }) => {
 	const {t} = useTranslation()
 	const [selectedOffer, setSelectedOffer] = useState(null)
-	const [offers, setOffers] = useState([])
+	const [defaultSelect, setDefaultSelect] = useState('')
 	const navigate = useNavigate()
 	const {selectedSessionIndex} = useSession()
 
+	const { darkMode } = useDarkMode();
+
 	useEffect(() => {
-		if(!user?.isLoggedIn) navigate('/')
-		getOffers()
-	}, [user])
+		if (!user?.isLoggedIn) {
+			navigate('/');
+			return;
+		}
+		setSelectedOffer(null);
+		getOffersWithSubmittedApplications();
+	}, [user, selectedSessionIndex]);
+
+	useEffect(() => {
+		if (offers.length === 0) return;
+		if (selectedById === null) return;
+		let jobOffer = offers.find((offer) => offer.id === selectedById)
+		getSelectedOfferState(jobOffer);
+		handleSelectOffer(jobOffer)
+	}, [offers, selectedById]);
+
+	function getSelectedOfferState(jobOffer) {
+		if(selectedById < 0 || selectedById === null) return ''
+		if(jobOffer === null || jobOffer === undefined) return ''
+		setDefaultSelect('jobOfferState.select:' + jobOffer.jobOfferState)
+	}
 
 	useEffect(() => {
 		handleSessionChange()
 	}, [selectedSessionIndex])
+
+	useEffect(() => {
+		if (offers.length === 0)
+			getOffers();
+	});
 
 	const handleSessionChange = () => {
 		setOffers([])
@@ -31,59 +57,56 @@ const JobOfferList = ({user}) => {
 		getOffers()
 	}
 
-	const getOffers = () => {
-		axiosInstance
-			.get('/employer/offer/all', {params: {employerId: user.id}})
-			.then((response) => {
-				setOffers(response.data)
-			})
-			.catch((error) => {
-				if(error.response?.status === 401){
-					return
-				}
-				toast.error(t('fetchError') + t(error.response?.data.message))
-			})
-	}
-
 	const handleNewButtonClicked = () => {
 		navigate('/employer/newOffer')
 	}
+
+	const isOfferInSubmissions = (offerId) => {
+		return offersWithApplications.some((submission) => submission.id === offerId);
+	};
 
 	const renderFilteredOffers = (filteredOffers) => {
 		return (
 			<div className="col-12">
 				{
 					filteredOffers.length !== 0 ?
-						filteredOffers.map((offer, index) => (
-							<div key={index} onClick={() => handleSelectOffer(offer)}>
-								<ShortJobOffer
-									jobOffer={offer}
-									updateJobOfferList={updateOffer}
-								  deleteOffer={() => deleteOffer(offer.id)}
-								/>
-							</div>)) :
-						<div className="col-12 bg-white rounded p-3">
-							<h2 className="text-dark fw-light pt-1">{t('noInternship')}</h2>
+						filteredOffers.map((offer, index) => {
+							const boldTitle = isOfferInSubmissions(offer.id);
+							const isRefused = offer.jobOfferState === "REFUSED";
+							return (
+								<div key={index} onClick={() => handleSelectOffer(offer)}>
+									<ShortJobOffer
+										jobOffer={offer}
+										deleteOffer={() => deleteOffer(offer.id)}
+										isBold={boldTitle || isRefused}
+									/>
+								</div>
+							);
+						}) :
+						<div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded p-3`}>
+							<h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{t('noInternship')}</h2>
 						</div>
 				}
 			</div>
-		)
-	}
+		);
+	};
+
 	const updateOffer = (offer) => {
 		axiosInstance
 			.put('/employer/offer', offer)
-			.then(() => {
-				const offerIndex = offers.findIndex((o) => o.id === offer.id)
+			.then((response) => {
 				const updatedOffers = offers.map((element, index) => {
-					if(index === offerIndex){
-						return offer
+					if(index === response.data.id){
+						console.log(response.data)
+						return response.data
 					}else{
 						return element
 					}
 				})
 				toast.success(t('updateInternshipSuccess'))
 				setOffers(updatedOffers)
-				setSelectedOffer(offer)
+				getOffers()
+				setSelectedOffer(response.data)
 			})
 			.catch((error) => {
 				toast.error(t('updateInternshipError') + t(error.response?.data.message))
@@ -104,6 +127,11 @@ const JobOfferList = ({user}) => {
 	}
 
 	const handleSelectOffer = (offer) => {
+		if (offer === undefined) return;
+		setSelectedById(offer.id)
+		if (selectedById === selectedOffer?.id) {
+			return;
+		}
 		if(offer.jobOfferState === "OPEN"){
 			axiosInstance.get(`/employer/offer/applications/${offer.id}`)
 				.then((response) => {
@@ -124,13 +152,12 @@ const JobOfferList = ({user}) => {
 				})
 		}
 		setSelectedOffer(offer)
-		console.log(selectedOffer)
 	}
 
 	return (
 		<div className="row" data-testid="job-offer-list">
 			<div className="col-12">
-				<h3 className="text-dark fw-light d-none d-lg-block">{t('yourInternship')}</h3>
+				<h3 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light d-none d-lg-block`}>{t('yourInternship')}</h3>
 				<div className="row justify-content-around">
 					<div className="order-2 order-lg-1 col-12 col-lg-6">
 						<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipList')}</h3>
@@ -139,6 +166,7 @@ const JobOfferList = ({user}) => {
 							attributes={['title:' + t('internshipTitle'), 'department:' + t('department'), 'jobOfferState.select:Status']}
 							renderItem={renderFilteredOffers}
 							selectOptions={{jobOfferState: ["SUBMITTED", "OPEN", "PENDING", "EXPIRED", "TAKEN", "REFUSED"]}}
+							defaultJobOfferSelect={defaultSelect}
 						/>
 						<div className="row m-2">
 							<button className="btn btn-outline-ose col-12"
@@ -149,8 +177,8 @@ const JobOfferList = ({user}) => {
 						<h3 className="fw-light d-lg-none d-block text-ose">{t('internshipDetails')}</h3>
 						{selectedOffer === null ?
 							<div className="row m-2">
-								<div className="col-12 bg-white rounded">
-									<h2 className="text-dark fw-light pt-1">{t('selectInternship')}</h2>
+								<div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
+									<h2 className={`${darkMode ? 'text-light' : 'text-dark'} fw-light pt-1`}>{t('selectInternship')}</h2>
 								</div>
 							</div>
 							:
@@ -159,7 +187,7 @@ const JobOfferList = ({user}) => {
 								{
 									selectedOffer.jobOfferState === "OPEN" ?
 										selectedOffer.applications != null && selectedOffer.applications.length > 0 ?
-											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer}/> :
+											<StudentList offer={selectedOffer} setSelectedOffer={setSelectedOffer} getNbPostulations={getNbPostulations} getOffersWithSubmittedApplications={getOffersWithSubmittedApplications}/> :
 											<div><p className="display-6">{t('noStudent')}</p></div>
 										: null
 								}

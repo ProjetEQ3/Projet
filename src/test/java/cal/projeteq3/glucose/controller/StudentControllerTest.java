@@ -671,4 +671,40 @@ public class StudentControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
+    @Test
+    public void getViewedJobOffersByStudentId_Valid() throws Exception {
+        //        Arrange
+        List<Long> viewedJobOffers = new ArrayList<>();
+        viewedJobOffers.add(1L);
+        viewedJobOffers.add(2L);
+        viewedJobOffers.add(3L);
+
+        when(studentService.getViewedJobOffersByStudentId(validStudentId)).thenReturn(viewedJobOffers);
+        //        Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/viewedJobOffers/{studentId}", validStudentId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+
+    //    @PutMapping("/jobOffer/view/{studentId}/{jobOfferId}")
+    //    public ResponseEntity<JobOfferDTO> viewJobOffer(@PathVariable Long studentId, @PathVariable Long jobOfferId) {
+    //        return ResponseEntity.accepted().body(studentService.markJobOfferAsViewed(jobOfferId, studentId));
+    //    }
+    @Test
+    public void viewJobOffer_Valid() throws Exception {
+        Student student = Student.builder().id(1L).build();
+        JobOffer jobOffer = JobOffer.builder().id(1L).build();
+
+        when(studentService.markJobOfferAsViewed(jobOffer.getId(), student.getId())).thenReturn(new JobOfferDTO(jobOffer));
+
+        mockMvc.perform(put("/student/jobOffer/view/{studentId}/{jobOfferId}", student.getId(), jobOffer.getId())
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
 }

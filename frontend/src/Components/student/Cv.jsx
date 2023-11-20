@@ -8,10 +8,13 @@ import State from "../util/State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import CVFile from "../../model/CvFile";
 import {useTranslation} from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
-function Cv({user, setCv}){
+function Cv({user, setCv, getNotificationsCount}){
 	const {t} = useTranslation()
 	const [isLoading, setIsLoading] = useState(false)
+
+	const { darkMode } = useDarkMode();
 
 	const handlePdfUpload = (e) => {
 		setIsLoading(true)
@@ -28,6 +31,7 @@ function Cv({user, setCv}){
 					toast.success(t('uploadedCV'))
 					setCv(response.data)
 					setIsLoading(false)
+					getNotificationsCount()
 				})
 				.catch((error) => {
 					toast.error(t('pushingError') + t(error.response?.data.message))
@@ -46,8 +50,9 @@ function Cv({user, setCv}){
 			.delete(`/student/cv/${user.id}`)
 			.then(() => {
 				toast.success(t('deleteCV'))
-				setCv(null)
+				setCv(undefined)
 				setIsLoading(false)
+				getNotificationsCount()
 			})
 			.catch((error) => {
 				toast.error(t('pushingError') + error.response?.data.message)
@@ -55,28 +60,20 @@ function Cv({user, setCv}){
 			})
 	}
 
-	const refreshCvState = () => {
-		if (!user?.id) return;
-		axiosInstance
-			.get(`/student/cv/${user.id}`)
-			.then((response) => {
-				setCv(response.data)
-			})
-			.catch((error) => {
-			})
-	}
-
-	useEffect(() => {
-		refreshCvState()
-	}, [user])
-
 	return (
 		<div className="container">
 			{isLoading ? (
 				<Loading/>
 			) : user.cvFile && user.cvFile.id ? (
 				<>
-					<div className="row bg-white rounded">
+					{
+						user.cvFile.cvState === "REFUSED" &&
+						<div className="text-center text-lg-start alert alert-danger py-0">
+							<h1 className={"display-4 py-2"}>{t('refusedCV')}</h1>
+							<h3 className={"display-6 py-0 text-center"}>{user.cvFile.refusReason}</h3>
+						</div>
+					}
+					<div className={`row ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
 						<div className="col-lg-8">
 							<h2 className="text-center text-lg-start">{user.cvFile.fileName}</h2>
 						</div>

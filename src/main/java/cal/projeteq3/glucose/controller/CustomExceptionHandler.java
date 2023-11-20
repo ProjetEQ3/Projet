@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -30,6 +32,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
 
         return ResponseEntity.status(ex.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<CustomErrorResponse> handleSQLException(SQLException ex) {
+        CustomErrorResponse response = CustomErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(673)
+                .message("Erreur de la base de données")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @ExceptionHandler(Exception.class)

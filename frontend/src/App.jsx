@@ -11,6 +11,7 @@ import {BrowserRouter} from "react-router-dom";
 import {TranslationProvider} from "./Components/util/TranslationContext";
 import {SessionProvider} from "./Components/util/SessionContext";
 import {useTranslation} from "react-i18next";
+import {DarkModeProvider} from "./context/DarkModeContext";
 import sendEmail from "./Components/util/Mail";
 
 function App(){
@@ -45,31 +46,33 @@ function App(){
 	}
 
 	return (
-		<TranslationProvider>
-			<ToastContainer
-				position="top-center"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				pauseOnHover
-				theme="colored"
-			/>
-			<SessionProvider user={user}>
-				<div className="p-0">
-					<BrowserRouter>
-						<div className="min-vh-100 p-0 m-0 position-relative">
-							<button onClick={send_email}>Email</button>
-							<Header user={user}/>
-							<Main user={user} setUser={setUser}/>
-							<Footer/>
-						</div>
-					</BrowserRouter>
-				</div>
-			</SessionProvider>
-		</TranslationProvider>
+		<DarkModeProvider>
+			<TranslationProvider>
+				<ToastContainer
+					position="top-center"
+					autoClose={5000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					pauseOnHover
+					theme="colored"
+				/>
+				<SessionProvider user={user}>
+					<div className="p-0">
+						<BrowserRouter>
+							<div className="d-flex flex-column min-vh-100 p-0 m-0 position-relative">
+                                <button onClick={send_email}>Email</button>
+								<Header user={user}/>
+								<Main user={user} setUser={setUser}/>
+								<Footer role={user?.role?? ''}/>
+							</div>
+						</BrowserRouter>
+					</div>
+				</SessionProvider>
+			</TranslationProvider>
+		</DarkModeProvider>
 	)
 }
 

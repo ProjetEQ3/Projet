@@ -5,6 +5,7 @@ import User from "../../model/User";
 import Loading from "../util/Loading";
 import { useTranslation } from "react-i18next";
 import {toast} from "react-toastify";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const LoginForm = ({ user, setUser }) => {
 	const { t, i18n } = useTranslation();
@@ -21,6 +22,8 @@ const LoginForm = ({ user, setUser }) => {
 	});
 
 	const [formAttempted, setFormAttempted] = useState(false);
+
+	const { darkMode } = useDarkMode();
 
 	const validateUser = () => {
 		let isValid = true;
@@ -123,10 +126,10 @@ const LoginForm = ({ user, setUser }) => {
 							<div className="col-9 mx-auto">
 								<form id="login-form" className="form-group" onSubmit={handleSubmit}>
 									<label htmlFor="email" className="mt-3">{t('email')}</label>
-									<input id="email" type="email" className={`form-control ${warnings.email ? "is-invalid" : ""}`} placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges} required />
+									<input id="email" type="email" className={`form-control ${warnings.email ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`} placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges} required />
 									<div className="text-danger">{warnings.email}</div>
 									<label htmlFor="password" className="mt-3">{t('password')}</label>
-									<input id="password" type="password" className={`form-control ${warnings.password ? "is-invalid" : ""}`} placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges} required />
+									<input id="password" type="password" className={`form-control ${warnings.password ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`} placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges} required />
 									<div className="text-danger">{warnings.password}</div>
 									<div className="row col-6 mx-auto">
 										<button type="submit" className="btn btn-outline-ose my-5 mx-auto">{t('loginSubmit')}</button>

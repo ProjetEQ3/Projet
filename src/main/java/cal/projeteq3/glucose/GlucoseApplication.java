@@ -68,22 +68,17 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentService.addCv(9L, createFakePDF("cv_louis_michaud.pdf"));
 
 		managerService.updateCvState(1L, CvState.ACCEPTED, null);
-		managerService.updateCvState(2L, CvState.ACCEPTED, null);
 		studentService.applyJobOffer(9L, 10L, "CoverLetter");
 		studentService.applyJobOffer(10L, 10L, "CoverLetter");
 
-		studentService.applyJobOffer(9L, 9L, "CoverLetter");
-		studentService.applyJobOffer(10L, 9L, "CoverLetter");
-
 		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
-		employerService.addAppointmentByJobApplicationId(3L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
 	}
 
 	private List<Employer> createEmployer(){
 		return List.of(
 				Employer.builder()
 						.firstName("Gabriel")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("gabriel@professionnel.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
@@ -91,7 +86,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Employer.builder()
 						.firstName("Chawki")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("chawki@professionnel.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
@@ -99,7 +94,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Employer.builder()
 						.firstName("Zakaria")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("e@zaka.se")
 						.password(passwordEncoder.encode("aaaAAA111"))
 						.organisationName("Fritz")
@@ -107,7 +102,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Employer.builder()
 						.firstName("Samuel")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("samuel@professionnel.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
@@ -115,7 +110,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Employer.builder()
 						.firstName("Louis")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("louis@professionnel.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
@@ -123,7 +118,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Employer.builder()
 						.firstName("Jean")
-						.lastName("Non")
+						.lastName("Employeur")
 						.email("terss@professionnel.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.organisationName("Fritz")
@@ -136,7 +131,7 @@ public class GlucoseApplication implements CommandLineRunner {
 		return List.of(
 				Student.builder()
 						.firstName("Jean")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("jean@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000001")
@@ -144,7 +139,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Joe")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("joe@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000002")
@@ -152,7 +147,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Louis")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("louis@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000003")
@@ -160,7 +155,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Chawki")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("chawki@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000004")
@@ -176,7 +171,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Gabriel")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("gabriel@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000006")
@@ -184,7 +179,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Samuel")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("samuel@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000007")
@@ -192,7 +187,7 @@ public class GlucoseApplication implements CommandLineRunner {
 						.build(),
 				Student.builder()
 						.firstName("Karim")
-						.lastName("Michaud")
+						.lastName("Étudiant")
 						.email("karim@michaud.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000008")

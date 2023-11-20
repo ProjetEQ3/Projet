@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../util/Loading";
 import { useTranslation } from "react-i18next";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const RegisterStudentForm = () => {
     const { t, i18n } = useTranslation();
@@ -31,18 +32,20 @@ const RegisterStudentForm = () => {
 
     const [formAttempted, setFormAttempted] = useState(false);
 
+    const { darkMode } = useDarkMode();
+
     const validateForm = () => {
         const validationErrors = {};
 
         if (formData.firstName === '') {
             validationErrors.firstName = t('firstNameRequired');
-        } else if (!/^[a-zA-Z- ]+$/.test(formData.firstName)) {
+        } else if (!/^[a-zA-Z- \u00C0-\u017F]+$/.test(formData.firstName)) {
             validationErrors.firstName = t('firstNameInvalid');
         }
 
         if (formData.lastName === '') {
             validationErrors.lastName = t('lastNameRequired');
-        } else if (!/^[a-zA-Z- ]+$/.test(formData.lastName)) {
+        } else if (!/^[a-zA-Z- \u00C0-\u017F]+$/.test(formData.lastName)) {
             validationErrors.lastName = t('lastNameInvalid');
         }
 
@@ -135,23 +138,23 @@ const RegisterStudentForm = () => {
                 <div className="col-9 mx-auto">
                     <form onSubmit={handleSubmit} className="form-group">
                         <label htmlFor="firstName" className="mt-3">{t('firstName')}</label>
-                        <input type="text" className={`form-control ${warnings.firstName ? "is-invalid" : ""}`}
+                        <input type="text" className={`form-control ${warnings.firstName ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`}
                                id="firstName" placeholder={t('placeHolderFirstName')} name="firstName" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.firstName}</div>
                         <label htmlFor="lastName" className="mt-3">{t('lastName')}</label>
-                        <input type="text" className={`form-control ${warnings.lastName ? "is-invalid" : ""}`}
+                        <input type="text" className={`form-control ${warnings.lastName ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`}
                                id="lastName" placeholder={t('placeHolderLastName')} name="lastName" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.lastName}</div>
                         <label htmlFor="email" className="mt-3">{t('email')}</label>
-                        <input type="email" className={`form-control ${warnings.email ? "is-invalid" : ""}`} id="email"
+                        <input type="email" className={`form-control ${warnings.email ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`} id="email"
                                placeholder={t('placeHolderEmail')} name="email" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.email}</div>
                         <label htmlFor="matricule" className="mt-3">{t('matricule')}</label>
-                        <input type="text" className={`form-control ${warnings.matricule ? "is-invalid" : ""}`}
+                        <input type="text" className={`form-control ${warnings.matricule ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`}
                                id="matricule" placeholder={t('placeHolderMatricule')} name="matricule" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.matricule}</div>
                         <label htmlFor="department" className="mt-3">{t('departmentStudent')}</label>
-                        <select className={`form-select ${warnings.department ? "is-invalid" : ""}`} id="department"
+                        <select className={`form-select ${warnings.department ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`} id="department"
                                 onChange={handleChanges} name="department" defaultValue="default">
                             <option className="clickable" value="_410B0">{t('_410B0')}</option>
                             <option className="clickable" value="_241A1">{t('_241A1')}</option>
@@ -171,11 +174,11 @@ const RegisterStudentForm = () => {
                         </select>
                         <div className="text-danger">{warnings.department}</div>
                         <label htmlFor="password" className="mt-3">{t('password')}</label>
-                        <input type="password" className={`form-control ${warnings.password ? "is-invalid" : ""}`}
+                        <input type="password" className={`form-control ${warnings.password ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`}
                                id="password" placeholder={t('placeHolderPassword')} name="password" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.password}</div>
                         <label htmlFor="passwordConfirm" className="mt-3">{t('passwordConfirm')}</label>
-                        <input type="password" className={`form-control ${warnings.passwordConfirm ? "is-invalid" : ""}`}
+                        <input type="password" className={`form-control ${warnings.passwordConfirm ? "is-invalid" : ""} ${darkMode ? "dark-input" : ""}`}
                                id="passwordConfirm" placeholder={t('placeHolderPasswordConfirm')} name="passwordConfirm" onChange={handleChanges}/>
                         <div className="text-danger">{warnings.passwordConfirm}</div>
                         <div className="row my-4">

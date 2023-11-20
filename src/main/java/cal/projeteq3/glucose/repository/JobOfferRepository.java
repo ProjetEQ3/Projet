@@ -2,11 +2,13 @@ package cal.projeteq3.glucose.repository;
 
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,7 +30,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
     List<JobOffer> findJobOffersByDepartmentAndSemester(Department department, Semester semester);
     List<JobOffer> findJobOffersByDepartmentAndJobOfferStateAndSemester(Department department, JobOfferState jobOfferState, Semester semester);
 
-    @Query("SELECT jobOffer FROM JobOffer jobOffer JOIN jobOffer.jobApplications jobApplication WHERE jobApplication.student.id = ?1 AND jobOffer.semester = ?2")
-    List<JobOffer> findAppliedJobOffersByStudent_Id(Long studentId, Semester semester);
+    List<JobOffer> findAllByJobApplications_Student_IdAndSemester(Long studentId, Semester semester);
+
+    int countAllByEmployer_IdAndJobApplications_JobApplicationState(Long employerId, JobApplicationState jobApplicationState);
 
 }

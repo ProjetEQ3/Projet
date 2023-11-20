@@ -1,8 +1,11 @@
 import React from "react";
 import { useTranslationContext } from "./TranslationContext";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const LngSelector = () => {
     const { langue, changeLanguage } = useTranslationContext();
+
+    const { darkMode, toggleDarkMode } = useDarkMode();
 
     const handleLanguageChange = (e) => {
         const selectedLanguage = e.target.value;
@@ -16,7 +19,7 @@ const LngSelector = () => {
     return (
         <form style={maxWidthStyle} className="w-25">
             <div>
-                <select className="btn btn-light p-1" id="lng-selector" onChange={handleLanguageChange} value={langue}>
+                <select className={`btn btn-light p-1 ${darkMode ? "dark-input" : ""}`} id="lng-selector" onChange={handleLanguageChange} value={langue}>
                     <option className="clickable" value="fr">FR</option>
                     <option className="clickable" value="en">EN</option>
                 </select>

@@ -1244,4 +1244,52 @@ public class EmployerServiceTest {
         assertThrows(UnauthorizedContractToSignException.class, () -> {employerService.signContract(1L, 2L);});
         assertThrows(ContractAlreadySignedException.class, () -> {employerService.signContract(2L, 2L);});
     }
+
+    @Test
+    public void testNbSubmittedApplicationsAcrossAllJobOffersFromEmployer() {
+
+        Employer employer = Employer.builder().id(1L).build();
+        int nbSubmittedApplications = 5;
+
+        when(jobOfferRepository.countAllByEmployer_IdAndJobApplications_JobApplicationState(employer.getId(), JobApplicationState.SUBMITTED)).thenReturn(nbSubmittedApplications);
+
+        int count = employerService.nbSubmittedApplicationsAcrossAllJobOffersFromEmployer(employer.getId());
+
+        assertEquals(count, nbSubmittedApplications);
+
+    }
+
+    @Test
+    public void testGetAllJobOffersWithSubmittedApplicationsFromEmployer_ExistentEmployer() {
+
+        JobApplication jobApplication = JobApplication.builder().id(1L).jobApplicationState(JobApplicationState.SUBMITTED).build();
+        List<JobApplication> jobApplications = Collections.singletonList(jobApplication);
+
+        JobOffer jobOffer = JobOffer.builder().id(1L).jobApplications(jobApplications).build();
+        List<JobOffer> jobOffers = Collections.singletonList(jobOffer);
+        List<JobOfferDTO> jobOfferDTOS = jobOffers.stream().map(JobOfferDTO::new).toList();
+
+        Employer employer = Employer.builder().id(1L).jobOffers(jobOffers).build();
+
+        when(employerRepository.findById(employer.getId())).thenReturn(Optional.of(employer));
+
+        List<JobOfferDTO> retrievedJobOffers = employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(employer.getId());
+
+        assertEquals(jobOfferDTOS, retrievedJobOffers);
+
+    }
+
+    @Test
+    public void testGetAllJobOffersWithSubmittedApplicationsFromEmployer_NonExistentEmployer() {
+
+        Long nonExistentEmployerId = -1L;
+
+        when(employerRepository.findById(nonExistentEmployerId)).thenThrow(new EmployerNotFoundException(nonExistentEmployerId));
+
+        assertThrows(EmployerNotFoundException.class, () -> {
+            employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(nonExistentEmployerId);
+        });
+
+    }
+
 }

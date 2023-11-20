@@ -1,6 +1,7 @@
 package cal.projeteq3.glucose.repository;
 
 import cal.projeteq3.glucose.model.Appointment;
+import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JobApplicationRepository extends JpaRepository<JobApplication, Long> {
@@ -16,9 +18,10 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
     @Query("SELECT ja.appointments FROM JobApplication ja WHERE ja.id = :jobApplicationId")
     List<Appointment> findAppointmentsByJobApplicationId(@Param("jobApplicationId") Long jobApplicationId);
 
-    JobApplication findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
+    Optional<JobApplication> findByJobOfferIdAndStudentId(Long jobOfferId, Long studentId);
 
     List<JobApplication> findAllByJobOffer_Employer_Id(Long employerId);
 
     List<JobApplication> findAllByStudentId(Long id);
+    List<JobApplication> findAllByStudentIdAndSemester(Long student_id, Semester semester);
 }
