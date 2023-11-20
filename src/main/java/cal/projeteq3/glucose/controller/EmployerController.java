@@ -154,4 +154,11 @@ public class EmployerController{
 				.body(this.employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(employerId));
 	}
 
+	@GetMapping("/applications/{employerId}")
+	public ResponseEntity<List<JobApplicationDTO>> getAllAcceptedJobApplicationsByEmployerId(@PathVariable Long employerId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getAllAcceptedJobApplicationsByEmployerId(employerId));
+	}
+
 }

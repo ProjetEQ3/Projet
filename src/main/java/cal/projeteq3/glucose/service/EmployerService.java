@@ -284,4 +284,11 @@ public class EmployerService{
 				.collect(Collectors.toList());
 	}
 
+	public List<JobApplicationDTO> getAllAcceptedJobApplicationsByEmployerId(Long employerId) {
+		return jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, employerId)
+				.stream()
+				.map(JobApplicationDTO::new)
+				.collect(Collectors.toList());
+	}
+
 }
