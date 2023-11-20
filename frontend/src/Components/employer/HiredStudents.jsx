@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../../App';
+import ShortJobApplication from './ShortJobApplication';
 
 const HiredStudents = ({ user }) => {
     const [t] = useTranslation();
@@ -17,7 +18,6 @@ const HiredStudents = ({ user }) => {
         axiosInstance
             .get(`/employer/applications/${user.id}`)
             .then((response) => {
-                console.log(response.data)
                 setAcceptedApplications(response.data);
             })
             .catch((error) => {
@@ -33,6 +33,11 @@ const HiredStudents = ({ user }) => {
             <h1>{t('hiredStudents')}</h1>
             <div className="row">
                 <button className="btn btn-outline-ose col-12" onClick={handleTimeSheetButton}>BOUTON TEMPORAIRE POUR FEUILLE DE TEMPS</button>
+            </div>
+            <div>
+                {acceptedApplications.map((application) => (
+                    <ShortJobApplication key={application.id} jobApplication={application} />
+                ))}
             </div>
         </div>
     );
