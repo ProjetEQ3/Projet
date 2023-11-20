@@ -51,8 +51,24 @@ public class EmailNotificationAspect {
                     emailService.sendEmail(s.getEmail(), s.getFirstName() + " " + s.getLastName(), "Job offer", "Une nouvelle offre d'emploi est disponible");
                 }
             }
+        } else if (result instanceof User) {
+            System.out.println("USER");
+            sendEmail((User) result, "User", "Votre compte a été mis à jour");
         }
         // Add similar logic for other update methods
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.rejectCv(..))",
+            returning = "result")
+    public void managerRejectNotification(JoinPoint joinPoint, Object result) {
+        System.out.println("CV REJECTED: " + result);
+        User student = userRepository.findById(((CvFileDTO) result).getStudentId()).orElseThrow();
+        sendEmail(student, "CV", "Votre CV a été rejeté");
+    }
+
+    private void sendEmail(User user, String subject, String content){
+        emailService.sendEmail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), subject, content);
     }
 
 }

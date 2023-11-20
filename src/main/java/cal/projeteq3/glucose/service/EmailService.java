@@ -33,6 +33,20 @@ public class EmailService{
 	}
 
 	private String getRequestBody(String toEmail, String toName, String subject, String content){
+		String htmlContent = getString(subject);
+		String fromName = "GlucOSE Notification";
+		return String.format(
+			"{" +
+				"\"sender\":{\"name\":\"%s\",\"email\":\"%s\"}," +
+				"\"to\":[{\"email\":\"%s\",\"name\":\"%s\"}]," +
+				"\"subject\":\"%s\"," +
+				"\"htmlContent\":\"%s\"," +
+				"\"textContent\":\"%s\"}",
+				fromName, fromEmail, toEmail, toName, subject, htmlContent, content
+		);
+	}
+
+	private static String getString(String subject) {
 		String htmlContent = "<html>" +
 				"<head>" +
 				"<title>Email Notification</title>" +
@@ -50,16 +64,8 @@ public class EmailService{
 				"</footer>" +
 				"</body>" +
 				"</html>";
-		String fromName = "GlucOSE Notification";
-		return String.format(
-			"{" +
-				"\"sender\":{\"name\":\"%s\",\"email\":\"%s\"}," +
-				"\"to\":[{\"email\":\"%s\",\"name\":\"%s\"}]," +
-				"\"subject\":\"%s\"," +
-				"\"htmlContent\":\"%s\"," +
-				"\"textContent\":\"%s\"}",
-				fromName, fromEmail, toEmail, toName, subject, htmlContent, content
-		);
+		htmlContent = htmlContent.replace("NOTIFICATION_TITLE", subject);
+		return htmlContent;
 	}
 
 }
