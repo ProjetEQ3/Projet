@@ -46,14 +46,14 @@ const EmployerPage = ({user}) => {
 
 	const { darkMode } = useDarkMode();
 
-	setHiredStudents(new Array(1).fill(new JobApplication(
-		1,
-		new Student(),
-		new JobOffer(),
-		"test",
-		2023,
-		"Winter"
-	)));
+	// setHiredStudents(new Array(1).fill(new JobApplication(
+	// 	1,
+	// 	new Student(),
+	// 	new JobOffer(),
+	// 	"test",
+	// 	2023,
+	// 	"Winter"
+	// )));
 
 	const getOffers = () => {
 		axiosInstance
