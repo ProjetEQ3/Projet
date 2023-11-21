@@ -18,7 +18,7 @@ const ShortJobApplication = ({ jobApplication }) => {
     };
 
     const handleTimeSheetButton = () => {
-        navigate('/employer/timeSheet');
+        navigate('/employer/timeSheet', { state: { jobApplication } });
     };
 
     return (

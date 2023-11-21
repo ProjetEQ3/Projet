@@ -5,12 +5,15 @@ import Loading from "../util/Loading";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {useDarkMode} from "../../context/DarkModeContext";
+import { useLocation } from 'react-router-dom';
 
 const TimeSheet = ({ user }) => {
     const [t] = useTranslation()
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const { darkMode } = useDarkMode();
+    const location = useLocation();
+    const { jobApplication } = location.state || {};
 
     const handleBack = () => {
         navigate(-1)
