@@ -5,20 +5,18 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
-import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.jobOffer.JobOffer;
-import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
 import cal.projeteq3.glucose.service.StudentService;
-import cal.projeteq3.glucose.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -149,7 +147,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				Student.builder()
 						.firstName("Louis")
 						.lastName("Étudiant")
-						.email("louis@michaud.com")
+						.email("bonjourmichel44@gmail.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000003")
 						.department("_420B0")

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,10 +21,10 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class EmailNotificationAspect {
+    private final EmailService emailService;
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
 
-    private EmailService emailService;
-    private UserRepository userRepository;
-    private StudentRepository studentRepository;
 
 //    TODO: Change messages
     @AfterReturning(
@@ -33,8 +32,6 @@ public class EmailNotificationAspect {
             returning = "result")
     public void managerUpdatesNotification(JoinPoint joinPoint, Object result) {
         // Example: Send an email when an update is successful
-        String methodName = joinPoint.getSignature().getName();
-        System.out.println("Method name: " + methodName);
 
         if (result instanceof ManagerDTO updatedManager) {
             String emailBody = "Manager " + updatedManager.getFirstName() + " " + updatedManager.getLastName() + " has been updated.";
@@ -44,18 +41,16 @@ public class EmailNotificationAspect {
 //            User student = userRepository.findById(((CvFileDTO) result).getStudentId()).orElseThrow();
 //            emailService.sendEmail(student.getEmail(), student.getFirstName() + " " + student.getLastName(), "CV", "Votre CV a été mis à jour");
         } else if (result instanceof JobOfferDTO) {
-            System.out.println("JOB offer");
             if (((JobOfferDTO) result).getJobOfferState().equals(JobOfferState.OPEN)) {
-                List<Student> students = studentRepository.findAllByDepartment(((JobOfferDTO) result).getDepartment());
-                for (User s : students) {
-                    emailService.sendEmail(s.getEmail(), s.getFirstName() + " " + s.getLastName(), "Job offer", "Une nouvelle offre d'emploi est disponible");
-                }
+                List<Student> temp = studentRepository.findAllByDepartment(((JobOfferDTO) result).getDepartment())
+                        .stream().peek((User u) -> sendEmail(u, "Nouvelle offre de stage disponible",
+                                "Une nouvelle offre de stage est disponible dans votre département." + getJobOfferHtml((JobOfferDTO) result))).toList();
+                System.out.println("STUDENTS: " + temp.size());
             }
         } else if (result instanceof User) {
             System.out.println("USER");
             sendEmail((User) result, "User", "Votre compte a été mis à jour");
         }
-        // Add similar logic for other update methods
     }
 
     @AfterReturning(
@@ -64,11 +59,21 @@ public class EmailNotificationAspect {
     public void managerRejectNotification(JoinPoint joinPoint, Object result) {
         System.out.println("CV REJECTED: " + result);
         User student = userRepository.findById(((CvFileDTO) result).getStudentId()).orElseThrow();
-        sendEmail(student, "CV", "Votre CV a été rejeté");
+        sendEmail(student, "Votre CV a été rejeté", "Votre CV a été rejeté");
     }
 
     private void sendEmail(User user, String subject, String content){
         emailService.sendEmail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), subject, content);
+    }
+
+    private static String getJobOfferHtml(JobOfferDTO result) {
+        return "<h1>" + result.getTitle() + "</h1>" +
+                "<p>" + result.getDescription() + "</p>" +
+                "<h4>" + result.getLocation() + "</h4>" +
+                "<p><strong>Salaire par heure:</strong>" + result.getSalary() + "</p>" +
+                "<p><strong>Date de départ:</strong>" + result.getStartDate() + "</p>" +
+                "<p><strong>Nombre de semaine:</strong>" + result.getDuration() + "</p>" +
+                "<p><strong>Nombre d'heure par semaine:</strong>" + result.getHoursPerWeek() + "</p>";
     }
 
 }

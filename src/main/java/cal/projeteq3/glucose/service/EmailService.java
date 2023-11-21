@@ -12,6 +12,7 @@ public class EmailService{
 	private final String apiKey = "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";
 	private final String uri = "https://api.sendinblue.com/v3/smtp/email";
 	private final String fromEmail = "glucose.pro@gmail.com";
+    private final String fromName = "GlucOSE Notification";
 	private final HttpClient client = HttpClient.newHttpClient();
 
 	public void sendEmail(String toEmail, String toName, String subject, String content){
@@ -26,15 +27,13 @@ public class EmailService{
 		try{
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 			System.out.println("Response status code: " + response.statusCode());
-			System.out.println("Response body: " + response.body());
 		}catch(Exception e){
 			System.out.println("Exception: " + e.getMessage());
 		}
 	}
 
 	private String getRequestBody(String toEmail, String toName, String subject, String content){
-		String htmlContent = getString(subject);
-		String fromName = "GlucOSE Notification";
+		String htmlContent = getString(subject, content);
 		return String.format(
 			"{" +
 				"\"sender\":{\"name\":\"%s\",\"email\":\"%s\"}," +
@@ -46,17 +45,18 @@ public class EmailService{
 		);
 	}
 
-	private static String getString(String subject) {
-		String htmlContent = "<html>" +
+	private static String getString(String subject, String content) {
+		return "<html>" +
 				"<head>" +
 				"<title>Email Notification</title>" +
 				"</head>" +
 				"<body>" +
 				"<h1>GlucOSE</h1>" +
-				"<h2>NOTIFICATION_TITLE</h2>" +
+				"<h2>" + subject +"</h2>" +
 				"<div>" +
 				"<p>Bonjour,</p>" +
-				"<p>CONTENT_NOTIFICATION</p>" +
+				"<p>"+ content +"</p>" +
+				"Vous pouvez toujours consulter sur l'application GlucOSE." +
 				"<p>Merci d'utiliser notre application!</p>" +
 				"</div>" +
 				"<footer>" +
@@ -64,8 +64,5 @@ public class EmailService{
 				"</footer>" +
 				"</body>" +
 				"</html>";
-		htmlContent = htmlContent.replace("NOTIFICATION_TITLE", subject);
-		return htmlContent;
 	}
-
 }
