@@ -27,7 +27,16 @@ const EmployerPage = ({user}) => {
 		{ id: 'student', label: 'hiredStudents' }
 	];
 
-	const [hiredStudents, setHiredStudents] = useState([new JobApplication()]);
+	const [hiredStudents, setHiredStudents] = useState([new JobApplication(
+		1,
+		new Student(
+
+		),
+		new JobOffer(),
+		"test",
+		2023,
+		"Winter"
+	)]);
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
@@ -46,14 +55,53 @@ const EmployerPage = ({user}) => {
 
 	const { darkMode } = useDarkMode();
 
-	setHiredStudents(new Array(1).fill(new JobApplication(
-		1,
-		new Student(),
-		new JobOffer(),
-		"test",
-		2023,
-		"Winter"
-	)));
+	const jobApplication = new JobApplication();
+	jobApplication.init(
+		{
+			id: 1,
+			student: {
+				id: 1,
+				firstName: "John",
+				lastName: "Doe",
+				email: "john@doe.com",
+				matricule: "2164584",
+				department: "_420B0",
+				studentState: "HIRED"
+			},
+			jobOffer: {
+				id: 1,
+				title: "Développeur web",
+				department: "_420B0",
+				location: "Montréal",
+				description: "Développeur web pour le projet de l'année",
+				salary: 20,
+				startDate: "2021-09-01",
+				duration: 4,
+				expirationDate: "2021-08-01",
+				jobOfferState: "TAKEN",
+				hoursPerWeek: 40,
+				dueDate: "2021-08-01",
+				nbOfCandidates: 1,
+				hasApplied: true,
+				refusReason: "Pas assez d'expérience",
+			},
+			state: "SUBMITTED",
+			year: 2023,
+			semester: "Winter"
+		},
+		{
+			id: 1,
+			firstName: "John",
+			lastName: "Doe",
+			email: "john@doe.com",
+			matricule: "2164584",
+			department: "_420B0",
+			studentState: "HIRED"
+		}
+	);
+	const listJA = [
+		jobApplication,
+	];
 
 	const getOffers = () => {
 		axiosInstance
@@ -206,7 +254,7 @@ const EmployerPage = ({user}) => {
 													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
-					{tab === 'student' && <HiredStudents jobApplications={hiredStudents}/>}
+					{tab === 'student' && <HiredStudents jobApplications={listJA}/>}
 			</div>
 		</div>
 	)
