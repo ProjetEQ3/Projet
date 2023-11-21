@@ -1,19 +1,20 @@
 package cal.projeteq3.glucose.aspect;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
+import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
 import cal.projeteq3.glucose.model.user.User;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.ManagerRepository;
-import cal.projeteq3.glucose.repository.StudentRepository;
-import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
@@ -21,7 +22,9 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Aspect
 @Component
@@ -32,6 +35,9 @@ public class EmailNotificationAspect {
     private final StudentRepository studentRepository;
     private final EmployerRepository employerRepository;
     private final ManagerRepository managerRepository;
+    private final JobApplicationRepository jobApplicationRepository;
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
 
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.update*(..))",
@@ -52,7 +58,7 @@ public class EmailNotificationAspect {
             pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.signContract(..))",
             returning = "contractDTO")
     public void managerSignature(JoinPoint joinPoint, ContractDTO contractDTO) {
-        String body = "Votre contrat est maintenant complet. Vous pouvez maintenant le télécharger.";
+        String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
 
         Student student = studentRepository.findFirstByFirstNameAndLastName(
                 contractDTO.getStudentSignature().getFirstName(),
@@ -63,6 +69,18 @@ public class EmailNotificationAspect {
 
         sendEmail(student, "Votre contrat est maintenant complet", body);
         sendEmail(employer, "Votre contrat est maintenant complet", body);
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.addAppointmentByJobApplicationId(..))",
+            returning = "jobApplicationDTO")
+    public void employerAppointment(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+        JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationDTO.getId()).orElseThrow();
+        String body = getAppointmentHtml(jobApplication);
+
+        Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
+
+        sendEmail(student, "Vous avez un nouvel entretien", body);
     }
 
     private void sendJobOfferEmail(JobOfferDTO result) {
@@ -113,6 +131,18 @@ public class EmailNotificationAspect {
 
     private void sendEmail(User user, String subject, String content) {
         emailService.sendEmail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), subject, content);
+    }
+
+    private String getAppointmentHtml(JobApplication jobApplication) {
+        StringBuilder appointmentsHtml = new StringBuilder();
+        for (Appointment appointment : jobApplication.getAppointments()) {
+            appointmentsHtml.append("<p><strong>Date:</strong> ")
+                    .append(appointment.getAppointmentDate().format(formatter)).append("</p>");
+        }
+
+        return "<h1>Détails de l'application</h1>" +
+                "<p><strong>Offre de stage:</strong> " + jobApplication.getJobOffer().getTitle() + "</p>" +
+                "<h2>Rendez-vous</h2>" + appointmentsHtml;
     }
 
     private static String getJobOfferHtml(JobOfferDTO result) {
