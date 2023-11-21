@@ -52,11 +52,11 @@ public class EmailService{
 				"</head>" +
 				"<body>" +
 				"<h1>GlucOSE</h1>" +
-				"<h2>" + subject +"</h2>" +
+				"<h2>" + subject + "</h2>" +
 				"<div>" +
 				"<p>Bonjour,</p>" +
-				"<p>"+ content +"</p>" +
-				"Vous pouvez toujours consulter sur l'application GlucOSE." +
+				"<p>" + content + "</p>" +
+				"Vous pouvez toujours voir plus de détail sur l'application GlucOSE." +
 				"<p>Merci d'utiliser notre application!</p>" +
 				"</div>" +
 				"<footer>" +
