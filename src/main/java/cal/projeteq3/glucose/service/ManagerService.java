@@ -170,8 +170,7 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
-//		TODO: get what manager ?
-		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
+		return new ContractDTO(contractRepository.save(contract), manager);
 	}
 
 	public List<StudentDTO> getStudents(Department department){
