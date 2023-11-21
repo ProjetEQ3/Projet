@@ -9,6 +9,7 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -36,6 +37,7 @@ public class EmailNotificationAspect {
     private final EmployerRepository employerRepository;
     private final ManagerRepository managerRepository;
     private final JobApplicationRepository jobApplicationRepository;
+    private final JobOfferRepository jobOfferRepository;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
 
@@ -81,6 +83,30 @@ public class EmailNotificationAspect {
         Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
 
         sendEmail(student, "Vous avez un nouvel entretien", body);
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.acceptApplication(..))",
+            returning = "jobApplicationDTO")
+    public void employerAcceptNotification(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+        String body = "Votre candidature a été acceptée. Vous pouvez maintenant signer votre contrat pour l'application suivante: " +
+                getJobOfferHtml(jobApplicationDTO.getJobOffer());
+
+        Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
+
+        sendEmail(student, "Candidature Accepté!", body);
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.refuseApplication(..))",
+            returning = "jobApplicationDTO")
+    public void employerRefuseNotification(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+        String body = "Nous sommes désolés de vous informer que votre candidature a été refusée pour l'application suivante: " +
+                getJobOfferHtml(jobApplicationDTO.getJobOffer());
+
+        Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
+
+        sendEmail(student, "Candidature Refusé", body);
     }
 
     private void sendJobOfferEmail(JobOfferDTO result) {
