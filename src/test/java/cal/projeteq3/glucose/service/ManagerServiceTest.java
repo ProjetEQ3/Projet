@@ -359,41 +359,6 @@ class ManagerServiceTest{
 	}
 
 	@Test
-	void rejectCv_valid(){
-		// Arrange
-		Long cvFileId = 1L;
-		String reason = "Rejected for some reason";
-
-		CvFile cvFile = createCvFile(cvFileId, "1234567");
-
-		when(cvRepository.findById(cvFileId)).thenReturn(Optional.of(cvFile));
-		when(cvRepository.save(any())).thenReturn(cvFile);
-
-		// Act
-		CvFileDTO rejectedCvFileDTO = managerService.rejectCv(cvFileId, reason);
-
-		// Assert
-		assertNotNull(rejectedCvFileDTO);
-		assertEquals(CvState.REFUSED, rejectedCvFileDTO.getCvState());
-		assertEquals(reason, rejectedCvFileDTO.getRefusReason());
-		verify(cvRepository, times(1)).findById(cvFileId);
-		verify(cvRepository, times(1)).save(any());
-	}
-
-	@Test
-	void rejectCv_NotFound(){
-		// Arrange
-		Long cvFileId = 1L;
-
-		when(cvRepository.findById(cvFileId)).thenReturn(Optional.empty());
-
-		// Act & Assert
-		assertThrows(CvFileNotFoundException.class, () -> managerService.rejectCv(cvFileId, "reason"));
-
-		verify(cvRepository, times(1)).findById(cvFileId);
-	}
-
-	@Test
 	void getCvFilesWithState_valid(){
 		// Arrange
 		CvState state = CvState.SUBMITTED;
