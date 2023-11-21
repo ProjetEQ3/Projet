@@ -27,16 +27,6 @@ const EmployerPage = ({user}) => {
 		{ id: 'student', label: 'hiredStudents' }
 	];
 
-	const [hiredStudents, setHiredStudents] = useState([new JobApplication(
-		1,
-		new Student(
-
-		),
-		new JobOffer(),
-		"test",
-		2023,
-		"Winter"
-	)]);
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
@@ -254,7 +244,7 @@ const EmployerPage = ({user}) => {
 													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
-					{tab === 'student' && <HiredStudents jobApplications={listJA}/>}
+					{tab === 'student' && <HiredStudents user={user} jobApplications={listJA}/>}
 			</div>
 		</div>
 	)

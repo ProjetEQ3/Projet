@@ -12,6 +12,7 @@ import FAQModal from "../util/FAQModal";
 import React from "react";
 import "../../App.css"
 import {useDarkMode} from "../../context/DarkModeContext";
+import TimeSheet from "../employer/TimeSheet";
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
@@ -66,6 +67,10 @@ const Main = ({user, setUser}) => {
                     <Route
                         path="employer/newOffer"
                         element={<NewOfferForm user={user}/>}
+                    />
+                    <Route
+                        path="employer/timeSheet"
+                        element={<TimeSheet user={user}/>}
                     />
                     {<Route path="*" element={<PageNotFound/>}/>}
                 </Routes>
