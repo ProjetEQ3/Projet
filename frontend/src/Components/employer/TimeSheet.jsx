@@ -25,12 +25,12 @@ const TimeSheet = ({ user }) => {
         navigate(-1);
     };
 
-    // LOAD TIME SHEET FROM DB
+    // LOAD TIME SHEET FROM DB (API)
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // SAVE TIME SHEET TO DB
+        // SAVE TIME SHEET TO DB (API)
 
     };
 
