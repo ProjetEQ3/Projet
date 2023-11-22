@@ -1,6 +1,5 @@
 package cal.projeteq3.glucose.aspect;
 
-import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
@@ -9,7 +8,6 @@ import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
-import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
@@ -26,6 +24,8 @@ import org.springframework.stereotype.Component;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Aspect
 @Component
@@ -37,9 +37,8 @@ public class EmailNotificationAspect {
     private final EmployerRepository employerRepository;
     private final ManagerRepository managerRepository;
     private final JobApplicationRepository jobApplicationRepository;
-    private final JobOfferRepository jobOfferRepository;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
 
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.update*(..))",
@@ -47,8 +46,8 @@ public class EmailNotificationAspect {
     public void managerUpdatesNotification(JoinPoint joinPoint, Object result) {
         if (result instanceof ManagerDTO updatedManager) {
             String emailBody = "Le gestionnaire " + updatedManager.getFirstName() + " " + updatedManager.getLastName() + " a été mis à jour.";
-            User manager = userRepository.findById(updatedManager.getId()).orElseThrow();
-            sendEmail(manager, "Gestionnaire mis à jour", emailBody);
+            Optional<User> optManager = userRepository.findById(updatedManager.getId());
+            optManager.ifPresent(manager -> sendEmail(manager, "Gestionnaire mis à jour", emailBody));
         } else if (result instanceof CvFileDTO cvFileDTO) {
             sendCvEmail(cvFileDTO);
         } else if (result instanceof JobOfferDTO jobOfferDTO) {
@@ -62,27 +61,59 @@ public class EmailNotificationAspect {
     public void managerSignature(JoinPoint joinPoint, ContractDTO contractDTO) {
         String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
 
-        Student student = studentRepository.findFirstByFirstNameAndLastName(
+        Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
                 contractDTO.getStudentSignature().getFirstName(),
-                contractDTO.getStudentSignature().getLastName()).orElseThrow();
-        Employer employer = employerRepository.findFirstByFirstNameAndLastName(
-                contractDTO.getEmployerSignature().getFirstName(),
-                contractDTO.getEmployerSignature().getLastName()).orElseThrow();
+                contractDTO.getStudentSignature().getLastName());
+        optStudent.ifPresent(student -> sendEmail(student, "Votre contrat est maintenant complet", body));
 
-        sendEmail(student, "Votre contrat est maintenant complet", body);
-        sendEmail(employer, "Votre contrat est maintenant complet", body);
+        Optional<Employer> optEmployer = employerRepository.findFirstByFirstNameAndLastName(
+                contractDTO.getEmployerSignature().getFirstName(),
+                contractDTO.getEmployerSignature().getLastName());
+        optEmployer.ifPresent(employer -> sendEmail(employer, "Votre contrat est maintenant complet", body));
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.update*(..))",
+            returning = "result")
+    public void employerUpdateNotification(JoinPoint joinPoint, Object result) {
+
+        if (result instanceof Employer updatedEmployer) {
+            String emailBody = "L'employeur " + updatedEmployer.getFirstName() + " " + updatedEmployer.getLastName() + " a été mis à jour.";
+            Optional<User> optEmployer = userRepository.findById(updatedEmployer.getId());
+            optEmployer.ifPresent(employer -> sendEmail(employer, "Employeur mis à jour", emailBody));
+        } else if (result instanceof JobOfferDTO jobOfferDTO) {
+            sendJobOfferEmail(jobOfferDTO);
+        } else {
+            System.out.println("Unhandled employer update notification");
+        }
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.createJobOffer(..))",
+            returning = "jobOfferDTO")
+    public void employerCreateNotification(JoinPoint joinPoint, JobOfferDTO jobOfferDTO) {
+        String body = "Une nouvelle offre de stage dans votre département est disponible. " +
+                "Vous pouvez la consulter et l'accepter ou la refuser." + getJobOfferHtml(jobOfferDTO);
+
+        List<Manager> managers = managerRepository.findAllByDepartment(jobOfferDTO.getDepartment()).stream()
+                .peek(manager -> sendEmail(manager, "Nouvelle offre de stage", body)).toList();
+        System.out.println("MANAGERS: " + managers.size());
     }
 
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.addAppointmentByJobApplicationId(..))",
             returning = "jobApplicationDTO")
     public void employerAppointment(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
-        JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationDTO.getId()).orElseThrow();
-        String body = getAppointmentHtml(jobApplication);
+        AtomicReference<String> body = new AtomicReference<>("");
 
-        Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
+        Optional<JobApplication> optApplication = jobApplicationRepository.findById(jobApplicationDTO.getId());
+        optApplication.ifPresent((jobApplication) -> {
+            body.set(getAppointmentHtml(jobApplication));
 
-        sendEmail(student, "Vous avez un nouvel entretien", body);
+            Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
+
+            sendEmail(student, "Vous avez un nouvel entretien", body.get());
+        });
     }
 
     @AfterReturning(
@@ -120,13 +151,13 @@ public class EmailNotificationAspect {
             case REFUSED:
                 final String refusedBody = "Veuillez modifier votre offre de stage et la soumettre à nouveau pour qu'elle soit acceptée" +
                         "<p><strong>Raison du refus: </strong>" + result.getRefusReason() + "</p>";
-                Employer employer = employerRepository.findByJobOffers_id(result.getId()).orElseThrow();
-                sendEmail(employer, "Votre offre de stage a été rejetée", refusedBody);
+                Optional<Employer> employer = employerRepository.findByJobOffers_id(result.getId());
+                employer.ifPresent(emp -> sendEmail(emp, "Votre offre de stage a été rejetée", refusedBody));
                 break;
             case EXPIRED:
                 final String expiredBody = "Votre offre de stage a expirée. Vous pouvez la modifier et la soumettre à nouveau pour qu'elle soit acceptée";
-                Employer employer1 = employerRepository.findByJobOffers_id(result.getId()).orElseThrow();
-                sendEmail(employer1, "Votre offre de stage a expirée", expiredBody);
+                Optional<Employer> employer1 = employerRepository.findByJobOffers_id(result.getId());
+                employer1.ifPresent(emp -> sendEmail(emp, "Votre offre de stage a expirée", expiredBody));
                 break;
         }
     }
@@ -136,21 +167,26 @@ public class EmailNotificationAspect {
             case ACCEPTED:
 //                TODO: Décommenter quand le command line runner sera retiré
                 final String acceptedBody = "Votre CV a été mis à jour et est maintenant accepté. Vous pouvez maintenant postuler à des offres de stage.";
-                User acceptedStudent = userRepository.findById(cvFileDTO.getStudentId()).orElseThrow();
-                sendEmail(acceptedStudent, "Votre CV a été accepté", acceptedBody);
+                Optional<User> acceptedStudent = userRepository.findById(cvFileDTO.getStudentId());
+                acceptedStudent.ifPresent(student -> sendEmail(student, "Votre CV a été accepté", acceptedBody));
                 break;
             case REFUSED:
                 final String refusedBody = "Veuillez modifier votre CV et le soumettre à nouveau pour qu'il soit accepté" +
                         "<p><strong>Raison du refus: </strong>" + cvFileDTO.getRefusReason() + "</p>";
-                User refusedStudent = userRepository.findById(cvFileDTO.getStudentId()).orElseThrow();
-                sendEmail(refusedStudent, "Votre CV a été rejeté", refusedBody);
+                Optional<User> refusedStudent = userRepository.findById(cvFileDTO.getStudentId());
+                refusedStudent.ifPresent(student -> sendEmail(student, "Votre CV a été rejeté", refusedBody));
                 break;
             case SUBMITTED:
                 final String submittedBody = "Un nouveau CV est à approuver dans votre département.";
-                Student submittedStudent = studentRepository.findById(cvFileDTO.getStudentId()).orElseThrow();
-                List<Manager> manager = managerRepository.findAllByDepartment(submittedStudent.getDepartment()).stream()
-                        .peek((User u) -> sendEmail(u, "Un nouveau cv est disponible", submittedBody)).toList();
-                System.out.println("MANAGERS: " + manager.size());
+                Optional<Student> submittedStudent = studentRepository.findById(cvFileDTO.getStudentId());
+                if (submittedStudent.isPresent()) {
+                    List<Manager> manager = managerRepository.findAllByDepartment(submittedStudent.get().getDepartment()).stream()
+                            .peek((User u) -> sendEmail(u, "Un nouveau cv est disponible", submittedBody)).toList();
+
+                    System.out.println("MANAGERS: " + manager.size());
+                } else {
+                    System.out.println("Student not found");
+                }
                 break;
         }
     }
