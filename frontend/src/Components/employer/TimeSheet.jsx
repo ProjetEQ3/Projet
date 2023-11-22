@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import {faArrowLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../util/Loading";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -25,8 +25,13 @@ const TimeSheet = ({ user }) => {
         navigate(-1);
     };
 
+    // LOAD TIME SHEET FROM DB
+
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // SAVE TIME SHEET TO DB
+
     };
 
     useEffect(() => {
@@ -82,7 +87,7 @@ const TimeSheet = ({ user }) => {
                 <div className="row">
                     <div className="col-md-9 mx-auto">
                         <form onSubmit={handleSubmit}>
-                            <table className="table table-striped">
+                            <table className={`table table-striped ${darkMode ? 'table-dark' : ''}`}>
                                 <thead>
                                 <tr>
                                     <th>{t('weekFrom')}</th>
@@ -99,7 +104,7 @@ const TimeSheet = ({ user }) => {
                                         <td>
                                             <input
                                                 type="number"
-                                                className="form-control"
+                                                className={`form-control ${darkMode ? "dark-input" : ""}`}
                                                 value={week.hoursWorked}
                                                 onChange={(e) => handleHoursChange(e, week.weekNumber)}
                                             />
@@ -107,7 +112,7 @@ const TimeSheet = ({ user }) => {
                                         <td>
                                             <input
                                                 type="number"
-                                                className="form-control"
+                                                className={`form-control ${darkMode ? "dark-input" : ""}`}
                                                 value={week.directSupervisionHours}
                                                 onChange={(e) => handleSupervisionHoursChange(e, week.weekNumber)}
                                             />
@@ -116,7 +121,11 @@ const TimeSheet = ({ user }) => {
                                 ))}
                                 </tbody>
                             </table>
-                            <button type="submit" className="btn btn-outline-ose">{t('submit')}</button>
+                            <div className="row my-4">
+                                <div className="col-4 mx-auto">
+                                    <button type="submit" className="btn btn-outline-ose col-12">{t('save')}</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
