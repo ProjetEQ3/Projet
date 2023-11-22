@@ -40,6 +40,37 @@ public class EmailNotificationAspect {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
 
+//    All users
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.*.signContract*(..))",
+            returning = "signedContract")
+    public void contractSignatureNotification(JoinPoint joinPoint, ContractDTO signedContract) {
+        if (signedContract.getStudentSignature() != null && signedContract.getEmployerSignature() != null && signedContract.getManagerSignature() == null) {
+            String body = "Le contrat est maintenant prêt à être signé.";
+
+            Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
+                    signedContract.getStudentSignature().getFirstName(),
+                    signedContract.getStudentSignature().getLastName());
+            optStudent.ifPresent(student -> sendEmail(student, "Contrat prêt à être signé", body));
+        } else if (signedContract.getManagerSignature() != null) {
+            String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
+            String subject = "Votre contrat est maintenant complet";
+
+            Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
+                    signedContract.getStudentSignature().getFirstName(),
+                    signedContract.getStudentSignature().getLastName());
+            optStudent.ifPresent(student -> sendEmail(student, subject, body));
+
+            Optional<Employer> optEmployer = employerRepository.findFirstByFirstNameAndLastName(
+                    signedContract.getEmployerSignature().getFirstName(),
+                    signedContract.getEmployerSignature().getLastName());
+            optEmployer.ifPresent(employer -> sendEmail(employer, subject, body));
+
+
+        }
+    }
+
+//    Manager
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.update*(..))",
             returning = "result")
@@ -55,23 +86,7 @@ public class EmailNotificationAspect {
         }
     }
 
-    @AfterReturning(
-            pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.signContract(..))",
-            returning = "contractDTO")
-    public void managerSignature(JoinPoint joinPoint, ContractDTO contractDTO) {
-        String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
-
-        Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
-                contractDTO.getStudentSignature().getFirstName(),
-                contractDTO.getStudentSignature().getLastName());
-        optStudent.ifPresent(student -> sendEmail(student, "Votre contrat est maintenant complet", body));
-
-        Optional<Employer> optEmployer = employerRepository.findFirstByFirstNameAndLastName(
-                contractDTO.getEmployerSignature().getFirstName(),
-                contractDTO.getEmployerSignature().getLastName());
-        optEmployer.ifPresent(employer -> sendEmail(employer, "Votre contrat est maintenant complet", body));
-    }
-
+//    Employer
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.update*(..))",
             returning = "result")
@@ -140,6 +155,10 @@ public class EmailNotificationAspect {
         sendEmail(student, "Candidature Refusé", body);
     }
 
+//    Student
+
+
+
     private void sendJobOfferEmail(JobOfferDTO result) {
         switch (JobOfferState.valueOf(result.getJobOfferState().toString())) {
             case OPEN:
@@ -165,7 +184,6 @@ public class EmailNotificationAspect {
     private void sendCvEmail(CvFileDTO cvFileDTO) {
         switch (CvState.valueOf(cvFileDTO.getCvState().toString())) {
             case ACCEPTED:
-//                TODO: Décommenter quand le command line runner sera retiré
                 final String acceptedBody = "Votre CV a été mis à jour et est maintenant accepté. Vous pouvez maintenant postuler à des offres de stage.";
                 Optional<User> acceptedStudent = userRepository.findById(cvFileDTO.getStudentId());
                 acceptedStudent.ifPresent(student -> sendEmail(student, "Votre CV a été accepté", acceptedBody));
