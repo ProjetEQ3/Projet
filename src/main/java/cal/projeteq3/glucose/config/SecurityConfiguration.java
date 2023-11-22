@@ -45,8 +45,6 @@ public class SecurityConfiguration {
                         .requestMatchers(GET, "/user/me").hasAnyAuthority("STUDENT", "EMPLOYER", "MANAGER")
                         .requestMatchers(GET, "/user/semesters").permitAll()
                         .requestMatchers(GET, "/user/contract/").hasAnyAuthority("STUDENT", "EMPLOYER", "MANAGER")
-                        // .requestMatchers(POST, "/user/send-email/").hasAnyAuthority("STUDENT", "EMPLOYER", "MANAGER")
-                        .requestMatchers(POST, "/user/sendemail").permitAll()
                         .requestMatchers(POST, "/student/register").permitAll()
                         .requestMatchers("/student/**").hasAuthority("STUDENT")
                         .requestMatchers(POST, "/employer/register").permitAll()

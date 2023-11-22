@@ -36,11 +36,4 @@ public class UserController{
 	public ResponseEntity<List<SemesterDTO>> getSemesters(){
 		return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(userService.getSemesters());
 	}
-
-	@PostMapping("/sendemail")
-	public ResponseEntity<?> sendEmail(@RequestBody EmailDetailsDTO details){
-		System.out.println("UserController.sendEmail");
-		return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON).body(userService.sendEmail(details));
-	}
-
 }

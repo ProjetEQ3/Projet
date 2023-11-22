@@ -109,24 +109,4 @@ public class UserService{
 			)))
 			.toList();
 	}
-
-	public String sendEmail(EmailDetailsDTO details){
-		try{
-			System.out.println("UserService.sendEmail");
-			User user = userRepository
-				.findUserByCredentialsEmail(details.getTo())
-				.orElseThrow(UserNotFoundException::new);
-			EmailService emailService = new EmailService();
-			emailService.sendEmail(
-				details.getTo(),
-				user.getFirstName() + ", " + user.getLastName(),
-				details.getSubject(),
-				details.getText()
-			);
-			return "Email sent to " + details.getTo();
-		}catch(MailException e){
-			throw new SendEmailException();
-		}
-	}
-
 }
