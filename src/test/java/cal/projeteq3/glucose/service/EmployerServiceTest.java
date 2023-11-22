@@ -37,6 +37,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 
@@ -1288,6 +1289,35 @@ public class EmployerServiceTest {
 
         assertThrows(EmployerNotFoundException.class, () -> {
             employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(nonExistentEmployerId);
+        });
+
+    }
+
+    @Test
+    public void testGetAllAcceptedJobApplicationsByEmployerId_ExistentEmployer() {
+
+        Employer employer = Employer.builder().id(1L).build();
+        List<JobApplication> jobApplications = new ArrayList<>();
+
+        when(jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, employer.getId()))
+                .thenReturn(jobApplications);
+
+        List<JobApplicationDTO> retrievedJobApplications = employerService.getAllAcceptedJobApplicationsByEmployerId(employer.getId());
+        List<JobApplicationDTO> jobApplicationDTOS = jobApplications.stream().map(JobApplicationDTO::new).collect(Collectors.toList());
+
+        assertEquals(retrievedJobApplications, jobApplicationDTOS);
+
+    }
+
+    @Test
+    public void testGetAllAcceptedJobApplicationsByEmployerId_NonExistentEmployer() {
+
+        Long nonExistentEmployerId = -1L;
+
+        when(jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, nonExistentEmployerId)).thenThrow(new EmployerNotFoundException(nonExistentEmployerId));
+
+        assertThrows(EmployerNotFoundException.class, () -> {
+            employerService.getAllAcceptedJobApplicationsByEmployerId(nonExistentEmployerId);
         });
 
     }

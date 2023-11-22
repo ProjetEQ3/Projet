@@ -20,6 +20,7 @@ import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.repository.EmployerRepository;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.JobOfferRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
@@ -45,6 +46,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -63,6 +65,8 @@ public class EmployerControllerTest {
 	private EmployerService employerService;
 	@MockBean
 	private UserRepository userRepository;
+	@MockBean
+	private JobApplicationRepository jobApplicationRepository;
 	@MockBean
 	private JobOfferRepository jobOfferRepository;
 	@MockBean
@@ -965,6 +969,23 @@ public class EmployerControllerTest {
 
 		mockMvc.perform(MockMvcRequestBuilders
 						.get("/employer/offer/submittedApplications/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+
+	}
+
+	@Test
+	public void testGetAllAcceptedJobApplicationsByEmployerId() throws Exception {
+
+		Employer employer = Employer.builder().id(1L).build();
+		List<JobApplication> jobApplications = new ArrayList<>();
+
+		when(jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, employer.getId()))
+				.thenReturn(jobApplications);
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/applications/1")
 						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted());
