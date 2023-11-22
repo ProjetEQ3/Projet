@@ -13,6 +13,7 @@ import React from "react";
 import "../../App.css"
 import {useDarkMode} from "../../context/DarkModeContext";
 import TimeSheet from "../employer/TimeSheet";
+import StudentEval from "../employer/StudentEval";
 
 const Main = ({user, setUser}) => {
     const { t } = useTranslation();
@@ -71,6 +72,10 @@ const Main = ({user, setUser}) => {
                     <Route
                         path="employer/timeSheet"
                         element={<TimeSheet user={user}/>}
+                    />
+                    <Route
+                        path="employer/studentEval"
+                        element={<StudentEval user={user}/>}
                     />
                     {<Route path="*" element={<PageNotFound/>}/>}
                 </Routes>

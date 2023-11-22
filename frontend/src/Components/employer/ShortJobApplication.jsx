@@ -21,6 +21,10 @@ const ShortJobApplication = ({ jobApplication }) => {
         navigate('/employer/timeSheet', { state: { jobApplication } });
     };
 
+    const handleStudentEvalButton = () => {
+        navigate('/employer/studentEval', { state: { jobApplication } });
+    };
+
     return (
         <div className={`row clickable ${!isHovered ? 'm-2' : 'm-1 shadow'}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded`}>
@@ -35,7 +39,7 @@ const ShortJobApplication = ({ jobApplication }) => {
                     </div>
                     <div className="col-md-4 col-sm-6 d-flex justify-content-end align-items-center">
                         <button className="btn btn-outline-ose btn-sm m-2" onClick={handleTimeSheetButton}>{t('timeSheet')}</button>
-                        <button className="btn btn-outline-ose btn-sm">Bouton pour Gab</button>
+                        <button className="btn btn-outline-ose btn-sm m-2" onClick={handleStudentEvalButton}>{t('evaluateStudent')}</button>
                     </div>
                 </div>
             </div>
