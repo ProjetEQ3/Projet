@@ -50,8 +50,36 @@ public class GlucoseApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		createDatabase();
-		createApplication();
+		studentRepository.save(Student.builder()
+				.firstName("Louis")
+				.lastName("Étudiant")
+				.email("bonjourmichel44@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.matricule("0000003")
+				.department("_420B0")
+				.build());
+		employerRepository.save(Employer.builder()
+				.firstName("Louis")
+				.lastName("Employeur")
+				.email("glucose.professionnel@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build());
+		managerRepository.save(Manager.builder()
+				.firstName("Emailer")
+				.lastName("Tester")
+				.email("patatepoilu876@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.matricule("0000111")
+				.phoneNumber("123-456-7890")
+				.department(Department._420B0)
+				.build());
+
+		studentService.addCv(1L, createFakePDF("cv_louis_michaud.pdf"));
+
+//		createDatabase();
+//		createApplication();
 	}
 
 	private void createDatabase(){

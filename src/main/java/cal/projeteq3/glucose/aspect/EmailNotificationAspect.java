@@ -238,7 +238,7 @@ public class EmailNotificationAspect {
     }
 
     private void sendEmail(User user, String subject, String content) {
-        emailService.sendEmail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), subject, content);
+        emailService.sendEmail(user.getEmail(), subject, content);
     }
 
     private String getAppointmentHtml(JobApplication jobApplication) {
