@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
     Manager findFirstByDepartment(Department department);
     List<Manager> findAllByDepartment(Department department);
+    Optional<Manager> findFirstByFirstNameAndLastName(String firstName, String lastName);
 }

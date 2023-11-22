@@ -26,7 +26,7 @@ public class EmailService{
 			.build();
 		try{
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-			System.out.println("Response status code: " + response.statusCode());
+			System.out.println("CODE: " + response.statusCode() + " TO: " + toEmail);
 		}catch(Exception e){
 			System.out.println("Exception: " + e.getMessage());
 		}

@@ -1,5 +1,6 @@
 package cal.projeteq3.glucose.aspect;
 
+import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
@@ -16,7 +17,6 @@ import cal.projeteq3.glucose.model.user.User;
 import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.service.EmailService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -40,22 +40,24 @@ public class EmailNotificationAspect {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE 'le' dd MMMM 'à' HH'h'mm", Locale.FRENCH);
 
-//    All users
+//    All users Service
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.*.signContract*(..))",
             returning = "signedContract")
-    public void contractSignatureNotification(JoinPoint joinPoint, ContractDTO signedContract) {
+    public void contractSignatureNotification(ContractDTO signedContract) {
         if (signedContract.getStudentSignature() != null && signedContract.getEmployerSignature() != null && signedContract.getManagerSignature() == null) {
-            String body = "Le contrat est maintenant prêt à être signé.";
+            String body = "Vous avez un nouveau contrat qui est maintenant prêt à être signé." + getContractHtml(signedContract);
 
-            Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
+            Optional<Manager> optManager = managerRepository.findFirstByFirstNameAndLastName(
                     signedContract.getStudentSignature().getFirstName(),
                     signedContract.getStudentSignature().getLastName());
-            optStudent.ifPresent(student -> sendEmail(student, "Contrat prêt à être signé", body));
+            optManager.ifPresent(manager -> sendEmail(manager, "Contrat prêt à être signé", body));
+
         } else if (signedContract.getManagerSignature() != null) {
             String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
             String subject = "Votre contrat est maintenant complet";
 
+            assert signedContract.getStudentSignature() != null;
             Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
                     signedContract.getStudentSignature().getFirstName(),
                     signedContract.getStudentSignature().getLastName());
@@ -70,11 +72,11 @@ public class EmailNotificationAspect {
         }
     }
 
-//    Manager
+    //    Manager Service
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.ManagerService.update*(..))",
             returning = "result")
-    public void managerUpdatesNotification(JoinPoint joinPoint, Object result) {
+    public void managerUpdatesNotification(Object result) {
         if (result instanceof ManagerDTO updatedManager) {
             String emailBody = "Le gestionnaire " + updatedManager.getFirstName() + " " + updatedManager.getLastName() + " a été mis à jour.";
             Optional<User> optManager = userRepository.findById(updatedManager.getId());
@@ -86,11 +88,11 @@ public class EmailNotificationAspect {
         }
     }
 
-//    Employer
+//    Employer Service
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.update*(..))",
             returning = "result")
-    public void employerUpdateNotification(JoinPoint joinPoint, Object result) {
+    public void employerUpdateNotification(Object result) {
 
         if (result instanceof Employer updatedEmployer) {
             String emailBody = "L'employeur " + updatedEmployer.getFirstName() + " " + updatedEmployer.getLastName() + " a été mis à jour.";
@@ -106,7 +108,7 @@ public class EmailNotificationAspect {
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.createJobOffer(..))",
             returning = "jobOfferDTO")
-    public void employerCreateNotification(JoinPoint joinPoint, JobOfferDTO jobOfferDTO) {
+    public void employerCreateNotification(JobOfferDTO jobOfferDTO) {
         String body = "Une nouvelle offre de stage dans votre département est disponible. " +
                 "Vous pouvez la consulter et l'accepter ou la refuser." + getJobOfferHtml(jobOfferDTO);
 
@@ -118,7 +120,7 @@ public class EmailNotificationAspect {
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.addAppointmentByJobApplicationId(..))",
             returning = "jobApplicationDTO")
-    public void employerAppointment(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+    public void employerAppointment(JobApplicationDTO jobApplicationDTO) {
         AtomicReference<String> body = new AtomicReference<>("");
 
         Optional<JobApplication> optApplication = jobApplicationRepository.findById(jobApplicationDTO.getId());
@@ -134,7 +136,7 @@ public class EmailNotificationAspect {
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.acceptApplication(..))",
             returning = "jobApplicationDTO")
-    public void employerAcceptNotification(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+    public void employerAcceptNotification(JobApplicationDTO jobApplicationDTO) {
         String body = "Votre candidature a été acceptée. Vous pouvez maintenant signer votre contrat pour l'application suivante: " +
                 getJobOfferHtml(jobApplicationDTO.getJobOffer());
 
@@ -146,7 +148,7 @@ public class EmailNotificationAspect {
     @AfterReturning(
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.refuseApplication(..))",
             returning = "jobApplicationDTO")
-    public void employerRefuseNotification(JoinPoint joinPoint, JobApplicationDTO jobApplicationDTO) {
+    public void employerRefuseNotification(JobApplicationDTO jobApplicationDTO) {
         String body = "Nous sommes désolés de vous informer que votre candidature a été refusée pour l'application suivante: " +
                 getJobOfferHtml(jobApplicationDTO.getJobOffer());
 
@@ -155,8 +157,34 @@ public class EmailNotificationAspect {
         sendEmail(student, "Candidature Refusé", body);
     }
 
-//    Student
+//    Student Service
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.StudentService.addCv(..))",
+            returning = "cvFileDTO")
+    public void addCvNotification(CvFileDTO cvFileDTO) {
+        sendCvEmail(cvFileDTO);
+    }
 
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.StudentService.applyJobOffer(..))",
+            returning = "jobOfferDTO")
+    public void applyJobOfferNotification(JobOfferDTO jobOfferDTO) {
+        String body = "Vous avez une nouvelle candidature sur l'offre de stage suivante: " + getJobOfferHtml(jobOfferDTO);
+
+        Optional<Employer> employer = employerRepository.findByJobOffers_id(jobOfferDTO.getId());
+        employer.ifPresent(emp -> sendEmail(emp, "Nouvelle candidature", body));
+    }
+
+    @AfterReturning(
+            pointcut = "execution(* cal.projeteq3.glucose.service.StudentService.setAppointmentToChosen(..))",
+            returning = "appointmentDTO")
+    public void chosenAppointmentNotification(AppointmentDTO appointmentDTO) {
+        String body = "Vous avez un nouvel entretien. " +
+                "<p><strong>Date: </strong> " + appointmentDTO.getAppointmentDate().format(formatter) + "</p>";
+
+        Optional<Employer> employer = employerRepository.findByJobOffers_id(appointmentDTO.getJobApplication().getJobOffer().getId());
+        employer.ifPresent(emp -> sendEmail(emp, "Nouvel entretien", body));
+    }
 
 
     private void sendJobOfferEmail(JobOfferDTO result) {
@@ -216,12 +244,12 @@ public class EmailNotificationAspect {
     private String getAppointmentHtml(JobApplication jobApplication) {
         StringBuilder appointmentsHtml = new StringBuilder();
         for (Appointment appointment : jobApplication.getAppointments()) {
-            appointmentsHtml.append("<p><strong>Date:</strong> ")
+            appointmentsHtml.append("<p><strong>Date: </strong> ")
                     .append(appointment.getAppointmentDate().format(formatter)).append("</p>");
         }
 
         return "<h1>Détails de l'application</h1>" +
-                "<p><strong>Offre de stage:</strong> " + jobApplication.getJobOffer().getTitle() + "</p>" +
+                "<p><strong>Offre de stage: </strong> " + jobApplication.getJobOffer().getTitle() + "</p>" +
                 "<h2>Rendez-vous</h2>" + appointmentsHtml;
     }
 
@@ -229,10 +257,21 @@ public class EmailNotificationAspect {
         return "<h1>" + result.getTitle() + "</h1>" +
                 "<p>" + result.getDescription() + "</p>" +
                 "<h4>" + result.getLocation() + "</h4>" +
-                "<p><strong>Salaire par heure:</strong>" + result.getSalary() + "</p>" +
-                "<p><strong>Date de départ:</strong>" + result.getStartDate() + "</p>" +
-                "<p><strong>Nombre de semaine:</strong>" + result.getDuration() + "</p>" +
-                "<p><strong>Nombre d'heure par semaine:</strong>" + result.getHoursPerWeek() + "</p>";
+                "<p><strong>Salaire par heure: </strong>" + result.getSalary() + "</p>" +
+                "<p><strong>Date de départ: </strong>" + result.getStartDate() + "</p>" +
+                "<p><strong>Nombre de semaine: </strong>" + result.getDuration() + "</p>" +
+                "<p><strong>Nombre d'heure par semaine: </strong>" + result.getHoursPerWeek() + "</p>";
+    }
+
+    private static String getContractHtml(ContractDTO signedContract) {
+        return "<h1>Détails du contrat</h1>" +
+                "<p><strong>Nom de l'étudiant: </strong> " + signedContract.getStudentName() + "</p>" +
+                "<p><strong>Pour le stage: </strong> " + signedContract.getJobOfferName() + "</p>" +
+                "<p><strong>Dans la compagnie: </strong> " + signedContract.getJobOfferCompany() + "</p>" +
+                "<h2>Signatures</h2>" +
+                "<p><strong>Signature de l'employer: </strong> " + (signedContract.getEmployerSignature() != null ? "Signed" : "Not Signed") + "</p>" +
+                "<p><strong>Signature de l'étudiant: </strong> " + (signedContract.getStudentSignature() != null ? "Signed" : "Not Signed") + "</p>" +
+                "<p><strong>Signature du gestionnaire: </strong> " + (signedContract.getManagerSignature() != null ? "Signed" : "Not Signed") + "</p>";
     }
 
 }
