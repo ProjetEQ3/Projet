@@ -51,11 +51,11 @@ public class EmailNotificationAspect {
             Optional<Manager> optManager = managerRepository.findFirstByFirstNameAndLastName(
                     signedContract.getStudentSignature().getFirstName(),
                     signedContract.getStudentSignature().getLastName());
-            optManager.ifPresent(manager -> sendEmail(manager, "Contrat prêt à être signé", body));
+            optManager.ifPresent(manager -> sendEmail(manager, "Contrat prêt à signer", body));
 
         } else if (signedContract.getManagerSignature() != null) {
             String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
-            String subject = "Votre contrat est maintenant complet";
+            String subject = "Contrat maintenant complet";
 
             assert signedContract.getStudentSignature() != null;
             Optional<Student> optStudent = studentRepository.findFirstByFirstNameAndLastName(
@@ -199,12 +199,12 @@ public class EmailNotificationAspect {
                 final String refusedBody = "Veuillez modifier votre offre de stage et la soumettre à nouveau pour qu'elle soit acceptée" +
                         "<p><strong>Raison du refus: </strong>" + result.getRefusReason() + "</p>";
                 Optional<Employer> employer = employerRepository.findByJobOffers_id(result.getId());
-                employer.ifPresent(emp -> sendEmail(emp, "Votre offre de stage a été rejetée", refusedBody));
+                employer.ifPresent(emp -> sendEmail(emp, "Offre de stage rejetée", refusedBody));
                 break;
             case EXPIRED:
-                final String expiredBody = "Votre offre de stage a expirée. Vous pouvez la modifier et la soumettre à nouveau pour qu'elle soit acceptée";
+                final String expiredBody = "Votre offre de stage est expirée. Vous pouvez la modifier et la soumettre à nouveau pour qu'elle soit acceptée";
                 Optional<Employer> employer1 = employerRepository.findByJobOffers_id(result.getId());
-                employer1.ifPresent(emp -> sendEmail(emp, "Votre offre de stage a expirée", expiredBody));
+                employer1.ifPresent(emp -> sendEmail(emp, "Offre de stage expirée", expiredBody));
                 break;
         }
     }
@@ -214,20 +214,20 @@ public class EmailNotificationAspect {
             case ACCEPTED:
                 final String acceptedBody = "Votre CV a été mis à jour et est maintenant accepté. Vous pouvez maintenant postuler à des offres de stage.";
                 Optional<User> acceptedStudent = userRepository.findById(cvFileDTO.getStudentId());
-                acceptedStudent.ifPresent(student -> sendEmail(student, "Votre CV a été accepté", acceptedBody));
+                acceptedStudent.ifPresent(student -> sendEmail(student, "CV accepté", acceptedBody));
                 break;
             case REFUSED:
                 final String refusedBody = "Veuillez modifier votre CV et le soumettre à nouveau pour qu'il soit accepté" +
                         "<p><strong>Raison du refus: </strong>" + cvFileDTO.getRefusReason() + "</p>";
                 Optional<User> refusedStudent = userRepository.findById(cvFileDTO.getStudentId());
-                refusedStudent.ifPresent(student -> sendEmail(student, "Votre CV a été rejeté", refusedBody));
+                refusedStudent.ifPresent(student -> sendEmail(student, "CV rejeté", refusedBody));
                 break;
             case SUBMITTED:
                 final String submittedBody = "Un nouveau CV est à approuver dans votre département.";
                 Optional<Student> submittedStudent = studentRepository.findById(cvFileDTO.getStudentId());
                 if (submittedStudent.isPresent()) {
                     List<Manager> manager = managerRepository.findAllByDepartment(submittedStudent.get().getDepartment()).stream()
-                            .peek((User u) -> sendEmail(u, "Un nouveau cv est disponible", submittedBody)).toList();
+                            .peek((User u) -> sendEmail(u, "Nouveau cv disponible", submittedBody)).toList();
 
                     System.out.println("MANAGERS: " + manager.size());
                 } else {
@@ -239,6 +239,7 @@ public class EmailNotificationAspect {
 
     private void sendEmail(User user, String subject, String content) {
         emailService.sendEmail(user.getEmail(), subject, content);
+//        emailService.sendEmail(user.getEmail(), user.getFirstName() + " " + user.getLastName(), subject, content);
     }
 
     private String getAppointmentHtml(JobApplication jobApplication) {

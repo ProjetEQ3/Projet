@@ -69,7 +69,7 @@ public class GlucoseApplication implements CommandLineRunner {
 		managerRepository.save(Manager.builder()
 				.firstName("Emailer")
 				.lastName("Tester")
-				.email("patatepoilu876@gmail.com")
+				.email("glucose.pro@gmail.com")
 				.password(passwordEncoder.encode("Ose12345"))
 				.matricule("0000111")
 				.phoneNumber("123-456-7890")
