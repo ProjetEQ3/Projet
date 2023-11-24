@@ -6,8 +6,16 @@
 2. Changer le thème
 3. Changer la langue
 4. Monter la FAQ (SI DES QUESTIONS SONT AJOUTÉES)
-5. Créer un Employeur 
+5. Créer un Employeur
+   - Prenom: `Patrick`
+   - Nom: `Tremblay`
+   - Courriel: `glucose.professionnel@gmail.com`
+   - Organisation: `Service Partagé Canada`
+   - Téléphone: `1-855-591-0550`
+   - Mot de passe: `Glucose123`
 6. Se connecter en tant qu'employeur
+   - Courriel: `glucose.professionnel@gmail.com`
+   - Mot de passe: `Glucose123`
 7. Monter le changement de session 
 ---
 ### Samuel
