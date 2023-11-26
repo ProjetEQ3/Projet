@@ -29,9 +29,19 @@ const TimeSheet = ({ user }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // SAVE TIME SHEET TO DB (API)
-
+        setIsLoading(true);
+        let hoursWorkedList = [];
+        let directSupervisedHoursList = [];
+        weeks.forEach(week => {
+            hoursWorkedList.push(week.hoursWorked);
+            directSupervisedHoursList.push(week.directSupervisionHours);
+        });
+        const savedHours = {
+            jobApplicationId: jobApplication.id,
+            hoursWorkedList,
+            directSupervisedHoursList,
+        }
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -79,7 +89,7 @@ const TimeSheet = ({ user }) => {
                 <FontAwesomeIcon icon={faArrowLeft} className="fa-2 me-2"/>
                 {t('back')}
             </button>
-            <h1 className="text-center fw-light">{t('timeSheet')}</h1>
+            <h1 className="text-center fw-light">{t('timeSheet')} - {jobApplication.student.firstName} {jobApplication.student.lastName}</h1>
             <br/>
             {isLoading ? (
                 <Loading/>
