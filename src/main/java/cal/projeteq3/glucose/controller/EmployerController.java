@@ -9,6 +9,8 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.evaluation.child.ActualHoursDeclaration;
+import cal.projeteq3.glucose.model.evaluation.section.DeclarationHour;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -159,6 +161,22 @@ public class EmployerController{
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getAllAcceptedJobApplicationsByEmployerId(employerId));
+	}
+
+	@GetMapping("/employer/timeSheet/{jobApplicationId}")
+	public ResponseEntity<ActualHoursDeclaration> getTimeSheet(@PathVariable Long jobApplicationId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getTimeSheetByJobApplicationId(jobApplicationId));
+	}
+
+	@PostMapping("/employer/timeSheet/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> saveTimeSheet(@PathVariable Long jobApplicationId, @RequestBody List<DeclarationHour> declarationHours){
+		System.out.println("declarationHours");
+		System.out.print(declarationHours);
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.saveTimeSheetForJobApplicationId(jobApplicationId, declarationHours));
 	}
 
 }

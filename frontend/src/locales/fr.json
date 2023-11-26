@@ -402,5 +402,7 @@
   "wrongEmail": "L'adresse courriel est invalide",
   "wrongPassword": "Le mot de passe est invalide",
   "youHave": "Vous avez",
-  "yourInternship": "Vos offres de stages"
+  "yourInternship": "Vos offres de stages",
+  "timeSheetSaved" : "La feuille de temps a été sauvegardée.",
+  "timeSheetNotSaved" : "La feuille de temps n'a pas été sauvegardée."
 }

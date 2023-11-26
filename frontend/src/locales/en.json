@@ -402,5 +402,7 @@
   "wrongEmail": "Wrong email",
   "wrongPassword": "Wrong password",
   "youHave": "You have",
-  "yourInternship": "Your internship offers"
+  "yourInternship": "Your internship offers",
+  "timeSheetSaved" : "Time sheet saved.",
+  "timeSheetNotSaved" : "Time sheet not saved."
 }

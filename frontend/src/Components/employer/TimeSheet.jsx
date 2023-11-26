@@ -5,6 +5,8 @@ import Loading from "../util/Loading";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDarkMode } from "../../context/DarkModeContext";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
 
 const TimeSheet = ({ user }) => {
     const [t] = useTranslation();
@@ -25,23 +27,52 @@ const TimeSheet = ({ user }) => {
         navigate(-1);
     };
 
-    // LOAD TIME SHEET FROM DB (API)
+    useEffect(() => {
+        fetchForExistingTimeSheet();
+    });
+
+    const fetchForExistingTimeSheet = () => {
+        axiosInstance.get(`/employer/timeSheet/${jobApplication.jobApplicationId}`)
+            .then(res => {
+                if (res.data && res.data.declarationHours) {
+                    const weeks = res.data.declarationHours.map(week => {
+                        return {
+                            weekNumber: week.weekNumber,
+                            from: week.weekStartDate,
+                            to: week.weekEndDate,
+                            hoursWorked: week.internRealWorkingHours,
+                            directSupervisionHours: week.directSupervisionHours,
+                        };
+                    });
+                    setWeeks(weeks);
+                }
+            })
+            .catch(err => {
+            })
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        let hoursWorkedList = [];
-        let directSupervisedHoursList = [];
-        weeks.forEach(week => {
-            hoursWorkedList.push(week.hoursWorked);
-            directSupervisedHoursList.push(week.directSupervisionHours);
+        const declarationHours = weeks.map(week => {
+            return {
+                weekNumber: week.weekNumber,
+                weekStartDate: week.from,
+                weekEndDate: week.to,
+                internRealWorkingHours: week.hoursWorked,
+                directSupervisionHours: week.directSupervisionHours,
+            };
         });
-        const savedHours = {
-            jobApplicationId: jobApplication.id,
-            hoursWorkedList,
-            directSupervisedHoursList,
-        }
-        setIsLoading(false);
+        axiosInstance.post(`/employer/timeSheet/${jobApplication.jobApplicationId}`, declarationHours)
+            .then(res => {
+                toast.success(t('timeSheetSaved'));
+            })
+            .catch(err => {
+                toast.error(t('timeSheetNotSaved'));
+            })
+            .finally(() => {
+                setIsLoading(false);
+            })
     };
 
     useEffect(() => {
