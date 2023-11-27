@@ -172,7 +172,6 @@ public class EmployerController{
 
 	@PostMapping("/employer/timeSheet/{jobApplicationId}")
 	public ResponseEntity<JobApplicationDTO> saveTimeSheet(@PathVariable Long jobApplicationId, @RequestBody List<DeclarationHour> declarationHours){
-		System.out.println("declarationHours");
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.saveTimeSheetForJobApplicationId(jobApplicationId, declarationHours));
