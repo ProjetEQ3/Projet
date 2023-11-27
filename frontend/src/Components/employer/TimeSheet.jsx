@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDarkMode } from "../../context/DarkModeContext";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import TimeSheetWeek from "../../model/TimeSheetWeek";
 
 const TimeSheet = ({ user }) => {
     const [t] = useTranslation();
@@ -35,34 +36,34 @@ const TimeSheet = ({ user }) => {
         axiosInstance.get(`/employer/timeSheet/${jobApplication.jobApplicationId}`)
             .then(res => {
                 if (res.data && res.data.declarationHours) {
-                    const weeks = res.data.declarationHours.map(week => {
-                        return {
-                            weekNumber: week.weekNumber,
-                            from: week.weekStartDate,
-                            to: week.weekEndDate,
-                            hoursWorked: week.internRealWorkingHours,
-                            directSupervisionHours: week.directSupervisionHours,
-                        };
+                    const weeks = res.data.declarationHours.map(weekData => {
+                        let week = new TimeSheetWeek();
+                        week.init({
+                            weekNumber: weekData.weekNumber,
+                            from: weekData.weekStartDate,
+                            to: weekData.weekEndDate,
+                            hoursWorked: weekData.internRealWorkingHours,
+                            directSupervisionHours: weekData.directSupervisionHours,
+                        });
+                        return week;
                     });
                     setWeeks(weeks);
                 }
             })
             .catch(err => {
-            })
-    }
+            });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const declarationHours = weeks.map(week => {
-            return {
-                weekNumber: week.weekNumber,
-                weekStartDate: week.from,
-                weekEndDate: week.to,
-                internRealWorkingHours: week.hoursWorked,
-                directSupervisionHours: week.directSupervisionHours,
-            };
-        });
+        const declarationHours = weeks.map(week => ({
+            weekNumber: week.weekNumber,
+            weekStartDate: week.from,
+            weekEndDate: week.to,
+            internRealWorkingHours: week.hoursWorked,
+            directSupervisionHours: week.directSupervisionHours,
+        }));
         axiosInstance.post(`/employer/timeSheet/${jobApplication.jobApplicationId}`, declarationHours)
             .then(res => {
                 toast.success(t('timeSheetSaved'));
@@ -80,15 +81,15 @@ const TimeSheet = ({ user }) => {
             const { startDate, duration } = jobApplication.jobOffer;
             const start = new Date(startDate);
             const calculatedWeeks = Array.from({ length: duration }, (_, i) => {
-                const from = new Date(start.getTime() + i * 7 * 24 * 60 * 60 * 1000);
-                const to = new Date(from.getTime() + 6 * 24 * 60 * 60 * 1000);
-                return {
+                let week = new TimeSheetWeek();
+                week.init({
                     weekNumber: i + 1,
-                    from: from.toISOString().split('T')[0],
-                    to: to.toISOString().split('T')[0],
+                    from: new Date(start.getTime() + i * 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    to: new Date(start.getTime() + (i + 1) * 7 * 24 * 60 * 60 * 1000 - 1).toISOString().split('T')[0],
                     hoursWorked: '',
                     directSupervisionHours: '',
-                };
+                });
+                return week;
             });
             setWeeks(calculatedWeeks);
         }
@@ -98,7 +99,9 @@ const TimeSheet = ({ user }) => {
         const newHours = e.target.value;
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
-                return { ...week, hoursWorked: newHours };
+                let updatedWeek = new TimeSheetWeek();
+                updatedWeek.init({ ...week, hoursWorked: newHours });
+                return updatedWeek;
             }
             return week;
         }));
@@ -108,7 +111,9 @@ const TimeSheet = ({ user }) => {
         const newSupervisionHours = e.target.value;
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
-                return { ...week, directSupervisionHours: newSupervisionHours };
+                let updatedWeek = new TimeSheetWeek();
+                updatedWeek.init({ ...week, directSupervisionHours: newSupervisionHours });
+                return updatedWeek;
             }
             return week;
         }));
