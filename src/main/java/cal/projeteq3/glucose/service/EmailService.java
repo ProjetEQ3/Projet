@@ -23,7 +23,7 @@ public class EmailService {
 	private final JavaMailSender javaMailSender;
 
 	@Value("${spring.mail.username}")
-	private final static String FROM = "glucOSE.professionnel@outlook.com";
+	private final static String FROM = "GlucoseMaster@outlook.com";
 
 	public void sendEmail(String to, String subject, String content) {
 		MimeMessage message = javaMailSender.createMimeMessage();
