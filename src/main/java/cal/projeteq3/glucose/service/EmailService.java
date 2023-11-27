@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -35,10 +36,10 @@ public class EmailService {
 			javaMailSender.send(message);
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
-		} catch (MailSendException e){
+		} catch (MailSendException | MailAuthenticationException e){
 			System.out.println(e.getMessage());
 		}
-	}
+    }
 
 //	private final String apiKey = "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";
 //	private final String uri = "https://api.sendinblue.com/v3/smtp/email";
