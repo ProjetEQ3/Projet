@@ -72,8 +72,11 @@ return (
                                     studentApplications.map((application, index) => (
                                         <div key={index} className={`${darkMode ? 'bg-dark' : 'bg-light'} rounded my-2 py-2 px-3`}>
                                             <div className="row">
-                                                <div className="col-8">
+                                                <div className="col-6">
                                                     <h6>{application.jobOffer.title}</h6>
+                                                </div>
+                                                <div className="col-3 text-center">
+                                                    <button type="button" className="btn btn-outline-ose btn-sm">{t('envEvaluation')}</button>
                                                 </div>
                                                 <div className="col-3 text-center">
                                                     <StudentState state={"STUDENT_" + application.jobApplicationState}/>

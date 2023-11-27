@@ -215,6 +215,7 @@
   "endDateFormat": "La date de fin du stage doit être au format YYYY-MM-DD.",
   "endDateInternship": "Date de fin du stage: ",
   "endDateNotPassed": "La date de fin du stage ne doit pas être dans le passé.",
+  "envEvaluation": "Évaluation du milieu de stage",
   "errorLogin": "Utilisateur ou mot de passe incorrect.",
   "errorUpdateCV": "Erreur lors de la mis à jour du CV: ",
   "estimateEndDate": "Date de fin estimée :",
