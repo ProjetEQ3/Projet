@@ -23,18 +23,4 @@ public class TimeSheet extends Evaluation {
 		joinColumns = @JoinColumn(name = "timeSheet_id")
 	)
 	private List<WeeklyHours> weeklyHours;
-
-	public TimeSheetDTO toDTO() {
-		List<WeeklyHoursDTO> weeklyHoursDTO = this.getWeeklyHours().stream().map(weeklyHour -> WeeklyHoursDTO.builder()
-				.weekStartDate(weeklyHour.getWeekStartDate())
-				.weekEndDate(weeklyHour.getWeekEndDate())
-				.internRealWorkingHours(weeklyHour.getInternRealWorkingHours())
-				.directSupervisionHours(weeklyHour.getDirectSupervisionHours())
-				.build()).toList();
-		return TimeSheetDTO.builder()
-				.id(this.getId())
-				.jobApplicationId(this.getJobApplication().getId())
-				.weeklyHours(weeklyHoursDTO)
-				.build();
-	}
 }

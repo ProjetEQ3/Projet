@@ -1,20 +1,19 @@
 package cal.projeteq3.glucose.dto.evaluation;
 
-import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Builder
 public class WeeklyHoursDTO {
-    private LocalDateTime weekStartDate;
-    private LocalDateTime weekEndDate;
+    private LocalDate weekStartDate;
+    private LocalDate weekEndDate;
     private Integer internRealWorkingHours;
     private Integer directSupervisionHours;
 
-    public WeeklyHoursDTO(LocalDateTime weekStartDate, LocalDateTime weekEndDate, Integer internRealWorkingHours, Integer directSupervisionHours) {
+    public WeeklyHoursDTO(LocalDate weekStartDate, LocalDate weekEndDate, Integer internRealWorkingHours, Integer directSupervisionHours) {
         this.weekStartDate = weekStartDate;
         this.weekEndDate = weekEndDate;
         this.internRealWorkingHours = internRealWorkingHours;

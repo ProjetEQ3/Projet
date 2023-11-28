@@ -314,8 +314,7 @@ public class EmployerService{
 	}
 
 	public TimeSheetDTO getTimeSheetByJobApplicationId(Long jobApplicationId) {
-		return timeSheetRepository.findByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new).toDTO();
-
+		return new TimeSheetDTO(timeSheetRepository.findByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new));
 	}
 
 	public InternEvaluationDTO saveInternEvaluationForJobApplicationId(Long jobApplicationId, List<SectionDTO> sections) {
