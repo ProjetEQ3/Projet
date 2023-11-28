@@ -62,7 +62,6 @@ const TimeSheet = ({user}) => {
             internRealWorkingHours: week.hoursWorked,
             directSupervisionHours: week.directSupervisionHours,
         }));
-        console.log(weeklyHours)
         axiosInstance.post(`/employer/timeSheet/${jobApplication.id}`, weeklyHours)
             .then(() => {
                 toast.success(t('timeSheetSaved'));
@@ -96,7 +95,6 @@ const TimeSheet = ({user}) => {
 
     const handleHoursChange = (e, weekNumber) => {
         const newHours = e.target.value;
-        console.log(weekNumber)
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
                 let updatedWeek = new TimeSheetWeek();
