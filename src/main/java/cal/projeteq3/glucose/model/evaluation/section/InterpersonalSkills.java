@@ -12,6 +12,16 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class InterpersonalSkills{
+	private static final String TITLE = "QUALITÉS DES RELATIONS INTERPERSONNELLES";
+	private static final String SUBTITLE = "Capacité d’établir des interrelations harmonieuses dans son milieu de travail";
+	private static final String[] INTERPERSONAL_SKILLS_QUESTIONS = {
+		"établir facilement des contacts avec les gens",
+		"contribuer activement au travail d’équipe",
+		"s’adapter facilement à la culture de l’entreprise",
+		"accepter les critiques constructives",
+		"être respectueux envers les gens",
+		"faire preuve d’écoute active en essayant de comprendre le point de vue de l’autre"
+	};
 	private AgreementLevel establish_contacts;
 	private AgreementLevel contribute_to_teamwork;
 	private AgreementLevel adapt_to_company_culture;

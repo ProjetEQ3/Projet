@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class DeclarationHour{
-	private LocalDateTime semaineStartDate;
-	private LocalDateTime semaineEndDate;
+	private LocalDateTime weekStartDate;
+	private LocalDateTime weekEndDate;
 	private Integer internRealWorkingHours;
 	private Integer directSupervisionHours;
 }

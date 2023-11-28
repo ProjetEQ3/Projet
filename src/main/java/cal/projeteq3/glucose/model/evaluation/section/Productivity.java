@@ -12,6 +12,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class Productivity{
+	private static final String TITLE = "Productivité";
+	private static final String SUBTITLE = "Capacité d’optimiser son rendement au travail";
+	private static final String[] PRODUCTIVITY_QUESTIONS = {
+		"planifier et organiser son travail de façon efficace",
+		"comprendre rapidement les directives relatives à son travail",
+		"maintenir un rythme de travail soutenu",
+		"établir ses priorités",
+		"respecter ses échéanciers"
+	};
 	private AgreementLevel plan_and_organize_work;
 	private AgreementLevel understand_directives;
 	private AgreementLevel maintain_sustained_work_rhythm;
