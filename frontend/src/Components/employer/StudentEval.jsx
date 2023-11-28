@@ -2,7 +2,8 @@ import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, {useState} from "react";
+import {useDarkMode} from "../../context/DarkModeContext";
 
 const StudentEval = ({ user }) => {
     const { t } = useTranslation();
@@ -10,11 +11,19 @@ const StudentEval = ({ user }) => {
     const { jobApplication } = location.state || {};
     const student = jobApplication.student;
     const navigate = useNavigate();
+    const { darkMode } = useDarkMode();
+    const [signaturePassword, setSignaturePassword] = useState('');
 
     const handleBack = () => {
         navigate(-1);
     };
 
+    const handleSignaturePasswordChange = (e) => {
+        setSignaturePassword(e.target.value);
+    }
+
+    console.log(jobApplication)
+    console.log(student)
     return (
         <div className="container">
             <button className="btn btn-outline-ose" onClick={handleBack}>
@@ -22,7 +31,7 @@ const StudentEval = ({ user }) => {
                 {t('back')}
             </button>
             <h1 className="text-center fw-light my-2">{t('evaluationOf')} {student.firstName} {student.lastName}</h1>
-            <form className="col-10 mx-auto">
+            <form className="col-10 mx-auto text-center">
                 <div className="row">
                     <div className="col-12 text-center border border-ose rounded p-3 my-2">
                         <h3 className="fw-light text-start">1. {t('productivity')}</h3>
@@ -308,8 +317,41 @@ const StudentEval = ({ user }) => {
                             <label className="text-start">{t('preciseYourAppreciation')} :</label>
                             <textarea placeholder={t('preciseYourAppreciation')}/>
                         </div>
+                        <div className="row mt-2">
+                            <p className="col-6 text-end m-0">{t('discussedWithStudent')}</p>
+                            <div className="col-3 text-center">
+                                <label htmlFor="yes" className="me-1">{t('yes')}</label>
+                                <input type="radio" id='yes' name="discussedWithStudent"/>
+                            </div>
+                            <div className="col-3 text-start">
+                                <label htmlFor="no" className="me-1">{t('no')}</label>
+                                <input type="radio" id='no' name="discussedWithStudent"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 border border-ose rounded p-3 my-2">
+                        <h4 className="fw-light text-start">{t('enterpriseWillTakeTheIntern')}</h4>
+                        <div className="row mt-2">
+                            <div className="col-4 text-center">
+                                <label htmlFor="yesTake" className="me-1">{t('yes')}</label>
+                                <input type="radio" id='yesTake' name="takeItAgain"/>
+                            </div>
+                            <div className="col-4 text-center">
+                                <label htmlFor="noTake" className="me-1">{t('no')}</label>
+                                <input type="radio" id='noTake' name="takeItAgain"/>
+                            </div>
+                            <div className="col-4 text-center">
+                                <label htmlFor="maybe" className="me-1">{t('maybe')}</label>
+                                <input type="radio" id='maybe' name="takeItAgain"/>
+                            </div>
+                        </div>
+                        <div className="row mt-2">
+                            <label className="text-start">{t('sufficientToCarryOut')} :</label>
+                            <textarea placeholder={t('sufficientToCarryOut')}/>
+                        </div>
                     </div>
                 </div>
+                <button className="btn btn-outline-ose my-auto" >{t('save')}</button>
             </form>
         </div>
     );
