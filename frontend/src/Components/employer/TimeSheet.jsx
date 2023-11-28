@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import React, {useEffect, useState} from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../util/Loading";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useDarkMode } from "../../context/DarkModeContext";
+import {useTranslation} from "react-i18next";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useDarkMode} from "../../context/DarkModeContext";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import TimeSheetWeek from "../../model/TimeSheetWeek";
 
-const TimeSheet = ({ user }) => {
+const TimeSheet = ({user}) => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const { darkMode } = useDarkMode();
+    const {darkMode} = useDarkMode();
     const location = useLocation();
-    const { jobApplication } = location.state || {};
+    const {jobApplication} = location.state || {};
     const [weeks, setWeeks] = useState([]);
     const [loadedPage, setLoadedPage] = useState(false);
 
@@ -31,10 +31,10 @@ const TimeSheet = ({ user }) => {
 
     const fetchForExistingTimeSheet = () => {
         axiosInstance.get(`/employer/timeSheet/${jobApplication.id}`)
-            .then(res => {
-                if (res.data && res.data.weeklyHours) {
+            .then(response => {
+                if (response.data && response.data.weeklyHours) {
                     let weekIndex = 1;
-                    const weeks = res.data.weeklyHours.map(weekData => {
+                    const weeks = response.data.weeklyHours.map(weekData => {
                         let week = new TimeSheetWeek();
                         week.init({
                             weekNumber: weekIndex++,
@@ -57,12 +57,11 @@ const TimeSheet = ({ user }) => {
         setIsLoading(true);
         const weeklyHours = weeks.map(week => ({
             weekNumber: week.weekNumber,
-            weekStartDate: week.from + 'T00:00:00.000Z',
-            weekEndDate: week.to + 'T23:59:59.999Z',
+            weekStartDate: week.from,
+            weekEndDate: week.to,
             internRealWorkingHours: week.hoursWorked,
             directSupervisionHours: week.directSupervisionHours,
         }));
-        console.log(weeklyHours)
         axiosInstance.post(`/employer/timeSheet/${jobApplication.id}`, weeklyHours)
             .then(() => {
                 toast.success(t('timeSheetSaved'));
@@ -77,9 +76,9 @@ const TimeSheet = ({ user }) => {
 
     useEffect(() => {
         if (jobApplication && jobApplication.jobOffer) {
-            const { startDate, duration } = jobApplication.jobOffer;
+            const {startDate, duration} = jobApplication.jobOffer;
             const start = new Date(startDate);
-            const calculatedWeeks = Array.from({ length: duration }, (_, i) => {
+            const calculatedWeeks = Array.from({length: duration}, (_, i) => {
                 let week = new TimeSheetWeek();
                 week.init({
                     weekNumber: i + 1,
@@ -96,11 +95,10 @@ const TimeSheet = ({ user }) => {
 
     const handleHoursChange = (e, weekNumber) => {
         const newHours = e.target.value;
-        console.log(weekNumber)
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
                 let updatedWeek = new TimeSheetWeek();
-                updatedWeek.init({ ...week, hoursWorked: newHours });
+                updatedWeek.init({...week, hoursWorked: newHours});
                 return updatedWeek;
             }
             return week;
@@ -112,7 +110,7 @@ const TimeSheet = ({ user }) => {
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
                 let updatedWeek = new TimeSheetWeek();
-                updatedWeek.init({ ...week, directSupervisionHours: newSupervisionHours });
+                updatedWeek.init({...week, directSupervisionHours: newSupervisionHours});
                 return updatedWeek;
             }
             return week;

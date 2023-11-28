@@ -81,8 +81,6 @@ const StudentEval = ({ user }) => {
         setSignaturePassword(e.target.value);
     }
 
-    console.log(jobApplication)
-    console.log(student)
     return (
         <div className="container">
             <button className="btn btn-outline-ose" onClick={handleBack}>
