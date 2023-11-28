@@ -40,6 +40,7 @@ public class InternEvalPDFGenerator {
             document.add(new Paragraph("Téléphone: " + employer.getOrganisationPhone(), normalTextFont));
 
             document.add(new Paragraph("Productivité", titleTextFont));
+//            TODO: Faire un vrai paragraphe de texte
             document.add(new Paragraph("Productivité: " + internEvaluation.getProductivity().toString()));
 
             document.add(new Paragraph("Qualité du travail", titleTextFont));
