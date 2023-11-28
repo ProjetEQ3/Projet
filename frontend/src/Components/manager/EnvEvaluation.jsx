@@ -77,18 +77,18 @@ function EnvEvaluation({ user }) {
                                 <br />
                                 <div className="row mb-2">
                                     <div className="col-md-4"></div>
-                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Totally Agree</div>
-                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Somewhat Agree</div>
-                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Somewhat Disagree</div>
-                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Totally Disagree</div>
-                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Cannot Say</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>{t('stronglyAgreeing')}</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>{t('agreeing')}</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>{t('disagreeing')}</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>{t('stronglyDisagreeing')}</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>{t('cannotSay')}</div>
                                 </div>
                                 {Object.keys(evaluation).map((key, index) => (
                                     <div className="row mb-3 align-items-center" key={index}>
                                         <div className="col-md-4">
                                             <label className={`form-label ${darkMode ? 'text-light' : ''}`}>{t(key)}</label>
                                         </div>
-                                        {['totallyAgree', 'somewhatAgree', 'somewhatDisagree', 'totallyDisagree', 'cannotSay'].map((response, idx) => (
+                                        {['stronglyAgreeing', 'agreeing', 'disagreeing', 'stronglyDisagreeing', 'cannotSay'].map((response, idx) => (
                                             <div className="col d-flex justify-content-center" key={idx}>
                                                 <div className="form-check">
                                                     <input
@@ -104,7 +104,12 @@ function EnvEvaluation({ user }) {
                                         ))}
                                     </div>
                                 ))}
-                                <button type="submit" className="btn btn-primary">{t('submit')}</button>
+                                <br/>
+                                <div className="row my-4">
+                                    <div className="col-4 mx-auto">
+                                        <button type="submit" className="btn btn-outline-ose col-12">{t('save')}</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
