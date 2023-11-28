@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+import java.util.List;
+
 @Embeddable
 @Builder
 @Getter
@@ -29,4 +31,13 @@ public final class QualityOfWork{
 	private AgreementLevel good_analysis_of_problems;
 	@Column(name = "quality_of_work_comment")
 	private String comment;
+
+	public QualityOfWork(List<AgreementLevel> agreementLevels, String comment) {
+		this.respect_mandates = agreementLevels.get(0);
+		this.attention_to_details = agreementLevels.get(1);
+		this.verify_work = agreementLevels.get(2);
+		this.look_for_opportunities_to_improve = agreementLevels.get(3);
+		this.good_analysis_of_problems = agreementLevels.get(4);
+		this.comment = comment;
+	}
 }

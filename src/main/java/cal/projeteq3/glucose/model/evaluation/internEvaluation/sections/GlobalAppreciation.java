@@ -1,6 +1,8 @@
 package cal.projeteq3.glucose.model.evaluation.internEvaluation.sections;
 
+import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
 import cal.projeteq3.glucose.model.evaluation.enums.InternshipPerformance;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -9,7 +11,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public final class GlobalAppreciation{
 	private static final String TITLE = "APPRÉCIATION GLOBALE DU STAGIAIRE";
 	private static final String[] GLOBAL_APPRECIATION_QUESTIONS = {
@@ -22,4 +23,13 @@ public final class GlobalAppreciation{
 	private InternshipPerformance skills;
 	private String specificAppraisal;
 	private boolean evaluationDiscussedWithIntern;
+	@Column(name = "global_appreciation_comment")
+	private String comment;
+
+	public GlobalAppreciation(InternshipPerformance internshipPerformance, String specificAppraisal, boolean evaluationDiscussedWithIntern) {
+		this.skills = internshipPerformance;
+		this.specificAppraisal = specificAppraisal;
+		this.evaluationDiscussedWithIntern = evaluationDiscussedWithIntern;
+		this.comment = comment;
+	}
 }
