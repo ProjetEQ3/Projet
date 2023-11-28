@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import {axiosInstance} from "../../App";
 
 function EnvEvaluation({ user }) {
     const [t] = useTranslation();
@@ -12,6 +14,7 @@ function EnvEvaluation({ user }) {
     const { darkMode } = useDarkMode();
     const location = useLocation();
     const { application } = location.state || {};
+    const { loadedPage, setLoadedPage } = useState(false);
 
     const [evaluation, setEvaluation] = useState({
         taskConformity: '',
@@ -34,12 +37,20 @@ function EnvEvaluation({ user }) {
         });
     };
 
-    // LOAD FROM DB
+    useEffect(() => {
+    }, [loadedPage]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(evaluation);
-        // SAVE TO DB
+        axiosInstance.post(`/manager/environmentEvaluation/${application.id}`, evaluation)
+            .then((response) => {
+                console.log(response);
+                navigate(-1);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     const handleBack = () => {
@@ -97,7 +108,7 @@ function EnvEvaluation({ user }) {
                                         <div className="col-md-4">
                                             <label className={`form-label ${darkMode ? 'text-light' : ''}`}>{t(key)}</label>
                                         </div>
-                                        {['stronglyAgreeing', 'agreeing', 'disagreeing', 'stronglyDisagreeing', 'cannotSay'].map((response, idx) => (
+                                        {['TOTALLY_AGREE', 'SOMEWHAT_AGREE', 'SOMEWHAT_DISAGREE', 'TOTALLY_DISAGREE', 'NOT_APPLICABLE'].map((response, idx) => (
                                             <div className="col d-flex justify-content-center" key={idx}>
                                                 <div className="form-check">
                                                     <input

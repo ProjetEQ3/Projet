@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InternEvaluationRepository extends JpaRepository<InternEvaluation, Long> {
 
+    public boolean existsByJobApplicationId(Long jobApplicationId);
 }

@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.InternEvaluationAlreadyExistsException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
@@ -318,6 +319,7 @@ public class EmployerService{
 	}
 
 	public InternEvaluationDTO saveInternEvaluationForJobApplicationId(Long jobApplicationId, List<SectionDTO> sections) {
+		if (internEvaluationRepository.existsByJobApplicationId(jobApplicationId)) throw new InternEvaluationAlreadyExistsException();
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 		SectionDTO productivity = sections.get(0);
