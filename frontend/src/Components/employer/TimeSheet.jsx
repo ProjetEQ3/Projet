@@ -17,31 +17,28 @@ const TimeSheet = ({ user }) => {
     const location = useLocation();
     const { jobApplication } = location.state || {};
     const [weeks, setWeeks] = useState([]);
-
-    const calculateEndDate = (startDate, weekNumber) => {
-        const oneWeek = 7 * 24 * 60 * 60 * 1000;
-        const endDate = new Date(new Date(startDate).getTime() + (oneWeek * (weekNumber - 1)));
-        return endDate.toISOString().split('T')[0];
-    };
+    const [loadedPage, setLoadedPage] = useState(false);
 
     const handleBack = () => {
         navigate(-1);
     };
 
     useEffect(() => {
+        if (loadedPage) return;
         fetchForExistingTimeSheet();
-    });
+        setLoadedPage(true);
+    }, [loadedPage]);
 
     const fetchForExistingTimeSheet = () => {
-        axiosInstance.get(`/employer/timeSheet/${jobApplication.jobApplicationId}`)
+        axiosInstance.get(`/employer/timeSheet/${jobApplication.id}`)
             .then(res => {
-                if (res.data && res.data.declarationHours) {
-                    const weeks = res.data.declarationHours.map(weekData => {
+                if (res.data && res.data.weeklyHours) {
+                    const weeks = res.data.weeklyHours.map(weekData => {
                         let week = new TimeSheetWeek();
                         week.init({
                             weekNumber: weekData.weekNumber,
-                            from: weekData.weekStartDate,
-                            to: weekData.weekEndDate,
+                            from: weekData.weekStartDate.split('T')[0],
+                            to: weekData.weekEndDate.split('T')[0],
                             hoursWorked: weekData.internRealWorkingHours,
                             directSupervisionHours: weekData.directSupervisionHours,
                         });
@@ -50,25 +47,25 @@ const TimeSheet = ({ user }) => {
                     setWeeks(weeks);
                 }
             })
-            .catch(err => {
+            .catch(() => {
             });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const declarationHours = weeks.map(week => ({
+        const weeklyHours = weeks.map(week => ({
             weekNumber: week.weekNumber,
-            weekStartDate: week.from,
-            weekEndDate: week.to,
+            weekStartDate: week.from + 'T00:00:00.000Z',
+            weekEndDate: week.to + 'T23:59:59.999Z',
             internRealWorkingHours: week.hoursWorked,
             directSupervisionHours: week.directSupervisionHours,
         }));
-        axiosInstance.post(`/employer/timeSheet/${jobApplication.jobApplicationId}`, declarationHours)
-            .then(res => {
+        axiosInstance.post(`/employer/timeSheet/${jobApplication.id}`, weeklyHours)
+            .then(() => {
                 toast.success(t('timeSheetSaved'));
             })
-            .catch(err => {
+            .catch(() => {
                 toast.error(t('timeSheetNotSaved'));
             })
             .finally(() => {

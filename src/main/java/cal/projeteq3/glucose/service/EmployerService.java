@@ -3,6 +3,8 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
+import cal.projeteq3.glucose.dto.evaluation.WeeklyHoursDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -28,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +46,7 @@ public class EmployerService{
 	private final PasswordEncoder passwordEncoder;
 	private final ManagerRepository managerRepository;
 	private final SignatureRepository signatureRepository;
+	private final TimeSheetRepository timeSheetRepository;
 
 	// database operations here
 
@@ -297,15 +301,17 @@ public class EmployerService{
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		TimeSheet timeSheet = new TimeSheet();
+		TimeSheet timeSheet = timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId).orElse(new TimeSheet());
 		timeSheet.setWeeklyHours(weeklyHours);
 		timeSheet.setJobApplication(jobApplication);
 
 		jobApplicationRepository.save(jobApplication);
+		timeSheetRepository.save(timeSheet);
 		return new JobApplicationDTO(jobApplication);
 	}
 
-	public TimeSheet getTimeSheetByJobApplicationId(Long jobApplicationId) {
-		throw new UnsupportedOperationException("Not implemented yet");
+	public TimeSheetDTO getTimeSheetByJobApplicationId(Long jobApplicationId) {
+		return timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new).toDTO();
+
 	}
 }

@@ -4,7 +4,7 @@ import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
 
 import java.util.List;
 
-public class sectionDTO {
+public class SectionDTO {
     private List<AgreementLevel> agreementLevels;
     private String comment;
 }

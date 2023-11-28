@@ -4,6 +4,7 @@ import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -163,18 +164,17 @@ public class EmployerController{
 				.body(this.employerService.getAllAcceptedJobApplicationsByEmployerId(employerId));
 	}
 
-	@GetMapping("/employer/timeSheet/{jobApplicationId}")
-	public ResponseEntity<TimeSheet> getTimeSheet(@PathVariable Long jobApplicationId){
+	@GetMapping("/timeSheet/{jobApplicationId}")
+	public ResponseEntity<TimeSheetDTO> getTimeSheet(@PathVariable Long jobApplicationId){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.getTimeSheetByJobApplicationId(jobApplicationId));
 	}
 
-	@PostMapping("/employer/timeSheet/{jobApplicationId}")
+	@PostMapping("/timeSheet/{jobApplicationId}")
 	public ResponseEntity<JobApplicationDTO> saveTimeSheet(@PathVariable Long jobApplicationId, @RequestBody List<WeeklyHours> weeklyHours){
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.saveTimeSheetForJobApplicationId(jobApplicationId, weeklyHours));
 	}
-
 }
