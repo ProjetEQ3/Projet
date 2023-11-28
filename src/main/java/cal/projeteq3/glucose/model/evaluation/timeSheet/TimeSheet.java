@@ -14,13 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ActualHoursDeclaration extends Evaluation {
+public class TimeSheet extends Evaluation {
 	@ElementCollection
 	@CollectionTable(
-		name = "actual_hours_declaration_hours",
-		joinColumns = @JoinColumn(name = "actual_hours_declaration_id")
+		name = "weekHours",
+		joinColumns = @JoinColumn(name = "timeSheet_id")
 	)
-	private List<DeclarationHour> declarationHours;
+	private List<WeeklyHours> weeklyHours;
 	private String signatureFonction;
 	private boolean isSigned;
 }

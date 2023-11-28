@@ -13,8 +13,8 @@ import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
-import cal.projeteq3.glucose.model.evaluation.timeSheet.ActualHoursDeclaration;
-import cal.projeteq3.glucose.model.evaluation.timeSheet.DeclarationHour;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -293,19 +293,19 @@ public class EmployerService{
 				.collect(Collectors.toList());
 	}
 
-	public JobApplicationDTO saveTimeSheetForJobApplicationId(Long jobApplicationId, List<DeclarationHour> declarationHours) {
+	public JobApplicationDTO saveTimeSheetForJobApplicationId(Long jobApplicationId, List<WeeklyHours> weeklyHours) {
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		ActualHoursDeclaration actualHoursDeclaration = new ActualHoursDeclaration();
-		actualHoursDeclaration.setDeclarationHours(declarationHours);
-		actualHoursDeclaration.setJobApplication(jobApplication);
+		TimeSheet timeSheet = new TimeSheet();
+		timeSheet.setWeeklyHours(weeklyHours);
+		timeSheet.setJobApplication(jobApplication);
 
 		jobApplicationRepository.save(jobApplication);
 		return new JobApplicationDTO(jobApplication);
 	}
 
-	public ActualHoursDeclaration getTimeSheetByJobApplicationId(Long jobApplicationId) {
+	public TimeSheet getTimeSheetByJobApplicationId(Long jobApplicationId) {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
 }

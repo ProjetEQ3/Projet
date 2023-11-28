@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class DeclarationHour{
+public class WeeklyHours {
 	private LocalDateTime weekStartDate;
 	private LocalDateTime weekEndDate;
 	private Integer internRealWorkingHours;
