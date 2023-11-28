@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useDarkMode } from "../../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import Loading from "../util/Loading";
 
 function EnvEvaluation({ user }) {
     const [t] = useTranslation();
