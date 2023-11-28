@@ -3,8 +3,9 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
 import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
-import cal.projeteq3.glucose.dto.evaluation.WeeklyHoursDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
@@ -15,6 +16,8 @@ import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.InternEvaluation;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.sections.*;
 import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
 import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -30,7 +33,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,6 +49,7 @@ public class EmployerService{
 	private final ManagerRepository managerRepository;
 	private final SignatureRepository signatureRepository;
 	private final TimeSheetRepository timeSheetRepository;
+	private final InternEvaluationRepository internEvaluationRepository;
 
 	// database operations here
 
@@ -313,5 +316,29 @@ public class EmployerService{
 	public TimeSheetDTO getTimeSheetByJobApplicationId(Long jobApplicationId) {
 		return timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new).toDTO();
 
+	}
+
+	public InternEvaluationDTO saveInternEvaluationForJobApplicationId(Long jobApplicationId, List<SectionDTO> sections) {
+		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+		SectionDTO productivity = sections.get(0);
+		SectionDTO qualityOfWork = sections.get(1);
+		SectionDTO interpersonalSkills = sections.get(2);
+		SectionDTO personalSkills = sections.get(3);
+		SectionDTO globalAppreciation = sections.get(4);
+		SectionDTO reAdmit = sections.get(5);
+
+		Productivity productivityEntity = new Productivity(productivity.getAgreementLevels(), productivity.getComment());
+		QualityOfWork qualityOfWorkEntity = new QualityOfWork(qualityOfWork.getAgreementLevels(), qualityOfWork.getComment());
+		InterpersonalSkills interpersonalSkillsEntity = new InterpersonalSkills(interpersonalSkills.getAgreementLevels(), interpersonalSkills.getComment());
+		PersonalSkills personalSkillsEntity = new PersonalSkills(personalSkills.getAgreementLevels(), personalSkills.getComment());
+		GlobalAppreciation globalAppreciationEntity = new GlobalAppreciation(globalAppreciation.getInternshipPerformance(), globalAppreciation.getComment(), globalAppreciation.isDiscusssedWithIntern());
+		ReAdmit reAdmitEntity = new ReAdmit(reAdmit.getWelcomeInternBackStatus(), reAdmit.getComment());
+
+		InternEvaluation internEvaluation = new InternEvaluation(productivityEntity, qualityOfWorkEntity, interpersonalSkillsEntity, personalSkillsEntity, globalAppreciationEntity, reAdmitEntity);
+		internEvaluation.setJobApplication(jobApplication);
+		internEvaluationRepository.save(internEvaluation);
+
+		return new InternEvaluationDTO(sections);
 	}
 }

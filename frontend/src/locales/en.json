@@ -417,5 +417,7 @@
   "youHave": "You have",
   "yourInternship": "Your internship offers",
   "timeSheetSaved" : "Time sheet saved.",
-  "timeSheetNotSaved" : "Time sheet not saved."
+  "timeSheetNotSaved" : "Time sheet not saved.",
+  "evaluationSent": "Evaluation sent.",
+  "evaluationNotSent": "Evaluation not sent."
 }

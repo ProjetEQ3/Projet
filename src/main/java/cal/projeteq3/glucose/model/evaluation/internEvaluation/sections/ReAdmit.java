@@ -9,8 +9,13 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ReAdmit{
 	private WelcomeInternBackStatus wouldWelcomeInternBack;
 	private String technicalFormationSufficient;
+	public static final String TITLE = "RÉADMISSION";
+
+	public ReAdmit(WelcomeInternBackStatus wouldWelcomeInternBack, String technicalFormationSufficient) {
+		this.wouldWelcomeInternBack = wouldWelcomeInternBack;
+		this.technicalFormationSufficient = technicalFormationSufficient;
+	}
 }

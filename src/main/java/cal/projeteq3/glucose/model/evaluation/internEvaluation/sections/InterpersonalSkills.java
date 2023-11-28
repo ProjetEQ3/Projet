@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+import java.util.List;
+
 @Embeddable
 @Builder
 @Getter
@@ -30,4 +32,14 @@ public final class InterpersonalSkills{
 	private AgreementLevel be_a_good_listener;
 	@Column(name = "interpersonal_skills_comment")
 	private String comment;
+
+	public InterpersonalSkills(List<AgreementLevel> agreementLevels, String comment) {
+		this.establish_contacts = agreementLevels.get(0);
+		this.contribute_to_teamwork = agreementLevels.get(1);
+		this.adapt_to_company_culture = agreementLevels.get(2);
+		this.accept_constructive_criticism = agreementLevels.get(3);
+		this.be_respectful = agreementLevels.get(4);
+		this.be_a_good_listener = agreementLevels.get(5);
+		this.comment = comment;
+	}
 }

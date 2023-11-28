@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
+import java.util.List;
+
 @Embeddable
 @Builder
 @Getter
@@ -28,4 +30,13 @@ public final class Productivity{
 	private AgreementLevel respect_deadlines;
 	@Column(name = "productivity_comment")
 	private String comment;
+
+	public Productivity(List<AgreementLevel> agreementLevels, String comment) {
+		this.plan_and_organize_work = agreementLevels.get(0);
+		this.understand_directives = agreementLevels.get(1);
+		this.maintain_sustained_work_rhythm = agreementLevels.get(2);
+		this.establish_priorities = agreementLevels.get(3);
+		this.respect_deadlines = agreementLevels.get(4);
+		this.comment = comment;
+	}
 }
