@@ -304,7 +304,7 @@ public class EmployerService{
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
 
-		TimeSheet timeSheet = timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId).orElse(new TimeSheet());
+		TimeSheet timeSheet = timeSheetRepository.findByJobApplicationId(jobApplicationId).orElse(new TimeSheet());
 		timeSheet.setWeeklyHours(weeklyHours);
 		timeSheet.setJobApplication(jobApplication);
 
@@ -314,7 +314,7 @@ public class EmployerService{
 	}
 
 	public TimeSheetDTO getTimeSheetByJobApplicationId(Long jobApplicationId) {
-		return timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new).toDTO();
+		return timeSheetRepository.findByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new).toDTO();
 
 	}
 

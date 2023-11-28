@@ -1385,7 +1385,7 @@ public class EmployerServiceTest {
         timeSheet.setWeeklyHours(weeklyHours);
         timeSheet.setJobApplication(jobApplication);
 
-        when(timeSheetRepository.findTimeSheetByJobApplicationId(jobApplicationId)).thenReturn(Optional.of(timeSheet));
+        when(timeSheetRepository.findByJobApplicationId(jobApplicationId)).thenReturn(Optional.of(timeSheet));
 
         // Act
         TimeSheetDTO result = employerService.getTimeSheetByJobApplicationId(jobApplicationId);
@@ -1393,7 +1393,7 @@ public class EmployerServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(jobApplicationId, result.getJobApplicationId());
-        verify(timeSheetRepository, times(1)).findTimeSheetByJobApplicationId(jobApplicationId);
+        verify(timeSheetRepository, times(1)).findByJobApplicationId(jobApplicationId);
     }
 
     @Test

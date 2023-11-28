@@ -4,25 +4,30 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
+import cal.projeteq3.glucose.dto.evaluation.WeeklyHoursDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
+import cal.projeteq3.glucose.dto.user.StudentState;
 import cal.projeteq3.glucose.exception.badRequestException.JobApplicationNotFoundException;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.InternEvaluation;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
-import cal.projeteq3.glucose.repository.EmployerRepository;
-import cal.projeteq3.glucose.repository.JobApplicationRepository;
-import cal.projeteq3.glucose.repository.JobOfferRepository;
-import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.*;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -64,6 +69,8 @@ public class EmployerControllerTest {
 	@MockBean
 	private EmployerService employerService;
 	@MockBean
+	private UserService userService;
+	@MockBean
 	private UserRepository userRepository;
 	@MockBean
 	private JobApplicationRepository jobApplicationRepository;
@@ -72,7 +79,7 @@ public class EmployerControllerTest {
 	@MockBean
 	private EmployerRepository employerRepository;
 	@MockBean
-	private UserService userService;
+	private TimeSheetRepository timeSheetRepository;
 
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
@@ -990,6 +997,58 @@ public class EmployerControllerTest {
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isAccepted());
 
+	}
+
+	@Test
+	public void testGetTimeSheetByJobApplicationId() throws Exception {
+		JobApplication jobApplication = JobApplication.builder().id(1L).build();
+		TimeSheet timeSheet = new TimeSheet();
+		timeSheet.setJobApplication(jobApplication);
+		timeSheet.setId(1L);
+
+		when(timeSheetRepository.findByJobApplicationId(jobApplication.getId())).thenReturn(Optional.of(timeSheet));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.get("/employer/timeSheet/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+	}
+
+	@Test
+	public void testSaveTimeSheet() throws Exception {
+		Student student = Student.builder().id(1L).build();
+		JobApplication jobApplication = JobApplication.builder().id(1L).build();
+		jobApplication.setStudent(student);
+
+		when(timeSheetRepository.findByJobApplicationId(jobApplication.getId())).thenReturn(Optional.of(new TimeSheet()));
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.post("/employer/timeSheet/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content("{\"weeklyHours\": [{\"startDateTime\": \"2023-11-28T12:34:56.789\",\"endDateTime\": \"2023-12-05T12:34:56.789\",\"hoursWorked\": 12,\"overtimeHours\": 1}]}"))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
+	}
+
+	@Test
+	public void testSaveStudentEvaluation() throws Exception {
+		Student student = Student.builder().id(1L).build();
+		JobApplication jobApplication = JobApplication.builder().id(1L).build();
+		jobApplication.setStudent(student);
+		InternEvaluation internEvaluation = new InternEvaluation();
+		internEvaluation.setJobApplication(jobApplication);
+		internEvaluation.setId(1L);
+		List<SectionDTO> sections = new ArrayList<>();
+
+		when(employerService.saveInternEvaluationForJobApplicationId(jobApplication.getId(), sections)).thenReturn(new InternEvaluationDTO());
+
+		mockMvc.perform(MockMvcRequestBuilders
+						.post("/employer/internEvaluation/1")
+						.header("Authorization", token)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(objectMapper.writeValueAsString(sections)))
+				.andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
 }
