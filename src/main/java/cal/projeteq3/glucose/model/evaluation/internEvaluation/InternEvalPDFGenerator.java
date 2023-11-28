@@ -1,6 +1,5 @@
-package cal.projeteq3.glucose.model.evaluation;
+package cal.projeteq3.glucose.model.evaluation.internEvaluation;
 
-import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.evaluation.internEvaluation.InternEvaluation;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.user.Employer;
