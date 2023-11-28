@@ -1,4 +1,4 @@
-package cal.projeteq3.glucose.model.evaluation.section;
+package cal.projeteq3.glucose.model.evaluation.internEvaluation.sections;
 
 import cal.projeteq3.glucose.model.evaluation.enums.WelcomeInternBackStatus;
 import jakarta.persistence.Embeddable;

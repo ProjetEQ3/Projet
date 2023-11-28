@@ -1,6 +1,5 @@
-package cal.projeteq3.glucose.model.evaluation.child;
+package cal.projeteq3.glucose.model.evaluation.timeSheet;
 
-import cal.projeteq3.glucose.model.evaluation.section.DeclarationHour;
 import cal.projeteq3.glucose.model.evaluation.Evaluation;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ActualHoursDeclaration extends Evaluation{
+public class ActualHoursDeclaration extends Evaluation {
 	@ElementCollection
 	@CollectionTable(
 		name = "actual_hours_declaration_hours",

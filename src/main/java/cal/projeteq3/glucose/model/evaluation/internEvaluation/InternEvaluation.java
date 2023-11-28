@@ -1,7 +1,7 @@
-package cal.projeteq3.glucose.model.evaluation.child;
+package cal.projeteq3.glucose.model.evaluation.internEvaluation;
 
 import cal.projeteq3.glucose.model.evaluation.Evaluation;
-import cal.projeteq3.glucose.model.evaluation.section.*;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.sections.*;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public final class InternEvaluation extends Evaluation{
+public final class InternEvaluation extends Evaluation {
 	@Embedded private Productivity productivity;
 	@Embedded private QualityOfWork qualityOfWork;
 	@Embedded private InterpersonalSkills interpersonalSkills;

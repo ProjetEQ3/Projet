@@ -1,6 +1,6 @@
-package cal.projeteq3.glucose.model.evaluation.section;
+package cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.sections;
 
-import cal.projeteq3.glucose.model.evaluation.TimeRange;
+import cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.TimeRange;
 import jakarta.persistence.*;
 import lombok.*;
 
