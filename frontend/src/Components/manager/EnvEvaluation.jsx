@@ -17,7 +17,14 @@ function EnvEvaluation({ user }) {
     const [evaluation, setEvaluation] = useState({
         taskConformity: '',
         welcomeMeasures: '',
-        sufficientSupervision: ''
+        sufficientSupervision: '',
+        safetyCompliance: '',
+        positiveAtmosphere: '',
+        accessibility: '',
+        competitiveSalary: '',
+        effectiveCommunication: '',
+        adequateEquipment: '',
+        reasonableWorkload: ''
     });
 
     const handleInputChange = (event) => {
@@ -28,9 +35,12 @@ function EnvEvaluation({ user }) {
         });
     };
 
+    // LOAD FROM DB
+
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(evaluation);
+        // SAVE TO DB
     };
 
     const handleBack = () => {
