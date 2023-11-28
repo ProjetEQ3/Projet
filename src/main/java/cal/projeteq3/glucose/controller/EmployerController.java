@@ -4,6 +4,8 @@ import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
 import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
@@ -176,5 +178,12 @@ public class EmployerController{
 		return ResponseEntity.accepted()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(this.employerService.saveTimeSheetForJobApplicationId(jobApplicationId, weeklyHours));
+	}
+
+	@PostMapping("/internEvaluation/{jobApplicationId}")
+	public ResponseEntity<InternEvaluationDTO> saveStudentEvaluation(@PathVariable Long jobApplicationId, @RequestBody List<SectionDTO> sections){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.saveInternEvaluationForJobApplicationId(jobApplicationId, sections));
 	}
 }

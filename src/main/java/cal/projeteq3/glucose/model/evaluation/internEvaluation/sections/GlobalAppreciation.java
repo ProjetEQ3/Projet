@@ -7,7 +7,6 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 @Embeddable
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor

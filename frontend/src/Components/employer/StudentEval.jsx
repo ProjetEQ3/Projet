@@ -4,6 +4,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import {useDarkMode} from "../../context/DarkModeContext";
+import {axiosInstance} from "../../App";
+import {toast} from "react-toastify";
 
 const StudentEval = ({ user }) => {
     const { t } = useTranslation();
@@ -17,6 +19,63 @@ const StudentEval = ({ user }) => {
     const handleBack = () => {
         navigate(-1);
     };
+
+    // TODO : use FormData to send the evaluation
+    const sendEvaluation = () => {
+        let sections = [];
+        let section1 = [];
+        let section2 = [];
+        let section3 = [];
+        let section4 = [];
+        let section5 = [];
+        let section6 = [];
+        section1.push(document.querySelector('input[name="1a"]:checked').value);
+        section1.push(document.querySelector('input[name="1b"]:checked').value);
+        section1.push(document.querySelector('input[name="1c"]:checked').value);
+        section1.push(document.querySelector('input[name="1d"]:checked').value);
+        section1.push(document.querySelector('input[name="1e"]:checked').value);
+        section1.push(document.querySelector('textarea[id="1"].value'));
+        section2.push(document.querySelector('input[name="2a"]:checked').value);
+        section2.push(document.querySelector('input[name="2b"]:checked').value);
+        section2.push(document.querySelector('input[name="2c"]:checked').value);
+        section2.push(document.querySelector('input[name="2d"]:checked').value);
+        section2.push(document.querySelector('input[name="2e"]:checked').value);
+        section2.push(document.querySelector('textarea[id="2"].value'));
+        section3.push(document.querySelector('input[name="3a"]:checked').value);
+        section3.push(document.querySelector('input[name="3b"]:checked').value);
+        section3.push(document.querySelector('input[name="3c"]:checked').value);
+        section3.push(document.querySelector('input[name="3d"]:checked').value);
+        section3.push(document.querySelector('input[name="3e"]:checked').value);
+        section3.push(document.querySelector('input[name="3f"]:checked').value);
+        section3.push(document.querySelector('textarea[id="3"].value'));
+        section4.push(document.querySelector('input[name="4a"]:checked').value);
+        section4.push(document.querySelector('input[name="4b"]:checked').value);
+        section4.push(document.querySelector('input[name="4c"]:checked').value);
+        section4.push(document.querySelector('input[name="4d"]:checked').value);
+        section4.push(document.querySelector('input[name="4e"]:checked').value);
+        section4.push(document.querySelector('input[name="4f"]:checked').value);
+        section4.push(document.querySelector('textarea[id="4"].value'));
+        section5.push(document.querySelector('input[name="globalAppreciationIntern"]:checked').value);
+        section5.push(document.querySelector('textarea[id="globalAppreciationIntern"].value'));
+        section6.push(document.querySelector('input[name="discussedWithStudent"]:checked').value);
+        section6.push(document.querySelector('textarea[id="discussedWithStudent"].value'));
+        section6.push(document.querySelector('input[name="takeItAgain"]:checked').value);
+        section6.push(document.querySelector('textarea[id="takeItAgain"].value'));
+        sections.push(section1);
+        sections.push(section2);
+        sections.push(section3);
+        sections.push(section4);
+        sections.push(section5);
+        sections.push(section6);
+
+        axiosInstance.post(`/employer/internEvaluation/${jobApplication.id}`, sections)
+            .then(() => {
+                toast.success(t('evaluationSent'));
+            })
+            .catch(() => {
+                toast.error(t('evaluationNotSent'));
+            })
+    }
 
     const handleSignaturePasswordChange = (e) => {
         setSignaturePassword(e.target.value);
