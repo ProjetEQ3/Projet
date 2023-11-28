@@ -14,6 +14,25 @@ function EnvEvaluation({ user }) {
     const location = useLocation();
     const { application } = location.state || {};
 
+    const [evaluation, setEvaluation] = useState({
+        taskConformity: '',
+        welcomeMeasures: '',
+        sufficientSupervision: ''
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setEvaluation({
+            ...evaluation,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(evaluation);
+    };
+
     const handleBack = () => {
         navigate(-1);
     };
@@ -51,13 +70,44 @@ function EnvEvaluation({ user }) {
             <br/>
             <div className="row justify-content-center">
                 <div className="col-md-8">
-                    <div className="card">
-                        <div className={`card-body ${darkMode ? 'bg-light-dark' : ''}`}>
-                            <h5 className={`card-title ${darkMode ? 'text-light' : ''}`}>{t('evaluation')}</h5>
-                            <br/>
-                            {/* TODO : evaluation */}
+                    <form onSubmit={handleSubmit}>
+                        <div className="card">
+                            <div className={`card-body ${darkMode ? 'bg-light-dark' : ''}`}>
+                                <h5 className={`card-title ${darkMode ? 'text-light' : ''}`}>{t('evaluation')}</h5>
+                                <br />
+                                <div className="row mb-2">
+                                    <div className="col-md-4"></div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Totally Agree</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Somewhat Agree</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Somewhat Disagree</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Totally Disagree</div>
+                                    <div className={`col text-center ${darkMode ? 'text-light' : ''}`}>Cannot Say</div>
+                                </div>
+                                {Object.keys(evaluation).map((key, index) => (
+                                    <div className="row mb-3 align-items-center" key={index}>
+                                        <div className="col-md-4">
+                                            <label className={`form-label ${darkMode ? 'text-light' : ''}`}>{t(key)}</label>
+                                        </div>
+                                        {['totallyAgree', 'somewhatAgree', 'somewhatDisagree', 'totallyDisagree', 'cannotSay'].map((response, idx) => (
+                                            <div className="col d-flex justify-content-center" key={idx}>
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name={key}
+                                                        id={`${key}-${response}`}
+                                                        value={response}
+                                                        onChange={handleInputChange}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ))}
+                                <button type="submit" className="btn btn-primary">{t('submit')}</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
