@@ -430,5 +430,6 @@
   "evaluationNotSent" : "L'évaluation n'a pas été envoyée.",
   "errorRegister": "Erreur lors de la création du compte: ",
   "emailAlreadyUsed" : "Cette adresse courriel est déjà utilisée.",
-  "matriculeAlreadyUsed" : "Ce matricule est déjà utilisé."
+  "matriculeAlreadyUsed" : "Ce matricule est déjà utilisé.",
+  "hoursPerWeekMustBeInt": "Le nombre d'heures par semaine doit être un nombre entier."
 }

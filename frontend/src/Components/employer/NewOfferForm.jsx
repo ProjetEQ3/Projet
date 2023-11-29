@@ -85,6 +85,7 @@ const NewOfferForm = ({user}) => {
 		else if(formData.salary <= 0) validationErrors.salary = t('salaryMustBePositive')
 		if(formData.hoursPerWeek === '')validationErrors.hoursPerWeek = t('hoursPerWeekRequired')
 		else if(formData.hoursPerWeek <= 0) validationErrors.hoursPerWeek = t('hoursPerWeekMustBePositive')
+		else if(!(formData.hoursPerWeek % 1 === 0)) validationErrors.hoursPerWeek = t('hoursPerWeekMustBeInt')
 		if(formData.startDate === '') validationErrors.startDate = t('startDateRequired')
 		else if(formData.startDate && !/^\d{4}-\d{2}-\d{2}$/.test(formData.startDate))
 			validationErrors.startDate = t('startDateFormat')
