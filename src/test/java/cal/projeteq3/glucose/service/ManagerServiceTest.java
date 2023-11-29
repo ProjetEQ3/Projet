@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.WorkEnvironmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
@@ -19,6 +20,7 @@ import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.WorkEnvironmentEvaluation;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -52,6 +54,8 @@ class ManagerServiceTest{
 	private ContractRepository contractRepository;
 	@Mock
 	private JobApplicationRepository jobApplicationRepository;
+	@Mock
+	private WorkEnvironmentEvaluationRepository workEnvironmentEvaluationRepository;
 	@Mock
 	private CvFileRepository cvRepository;
 
@@ -1252,5 +1256,57 @@ class ManagerServiceTest{
 		assertEquals(jobApplication.getSemester(), jobApplications.get(0).getSemester());
 		verify(jobApplicationRepository).findAllByStudentId(1L);
 	}
+
+	@Test
+	public void saveWorkEnvironmentEvaluationWithJobApplicationId_ValidJobApplication() {
+		// Arrange
+		Long validJobApplicationId = 1L;
+		WorkEnvironmentDTO workEnvironmentDTO = new WorkEnvironmentDTO();
+
+		JobApplication jobApplication = new JobApplication();
+		jobApplication.setId(validJobApplicationId);
+		jobApplication.setCoverLetter("mock");
+
+		Credentials credentials = new Credentials();
+		credentials.setEmail("mock@email.com");
+
+		Role role = Role.STUDENT;
+
+		Student student = new Student();
+		student.setCredentials(credentials);
+		student.setRole(role);
+
+		JobOffer jobOffer = new JobOffer();
+
+		jobApplication.setStudent(student);
+		jobApplication.setJobOffer(jobOffer);
+
+		when(jobApplicationRepository.findById(validJobApplicationId)).thenReturn(Optional.of(jobApplication));
+		when(workEnvironmentEvaluationRepository.existsByJobApplicationId(validJobApplicationId)).thenReturn(false);
+		when(jobApplicationRepository.save(any(JobApplication.class))).thenReturn(jobApplication);
+
+		// Act
+		JobApplicationDTO result = managerService.saveWorkEnvironmentEvaluationWithJobApplicationId(validJobApplicationId, workEnvironmentDTO);
+
+		// Assert
+		assertNotNull(result);
+		verify(workEnvironmentEvaluationRepository, times(1)).save(any(WorkEnvironmentEvaluation.class));
+	}
+
+	@Test
+	public void saveWorkEnvironmentEvaluationWithJobApplicationId_InvalidJobApplication() {
+		// Arrange
+		Long invalidJobApplicationId = -1L;
+		WorkEnvironmentDTO workEnvironmentDTO = new WorkEnvironmentDTO();
+
+		when(jobApplicationRepository.findById(invalidJobApplicationId)).thenReturn(Optional.empty());
+
+		assertThrows(JobApplicationNotFoundException.class, () -> {
+			managerService.saveWorkEnvironmentEvaluationWithJobApplicationId(invalidJobApplicationId, workEnvironmentDTO);
+		});
+
+		verify(workEnvironmentEvaluationRepository, never()).save(any(WorkEnvironmentEvaluation.class));
+	}
+
 }
 
