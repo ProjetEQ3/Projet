@@ -3,6 +3,7 @@ import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
 import React from "react";
 import ShortContractNotif from "../user/ShortContractNotif";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, handleViewJobOffer}) => {
     const {t} = useTranslation();
@@ -28,6 +29,15 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
 
     function allTreated() {
         return cv?.cvState === 'ACCEPTED' && jobOffers.filter((jobOffer) => jobOffer.isViewed !== true).length === 0 && applications.length === 0 && contracts.filter((contract) => contract.studentSignature === null).length === 0;
+    }
+
+    const needBeingShown = () => {
+        forEach(applications, (application) => {
+            if (application.appointments.length > 0) {
+                return true;
+            }
+        })
+        return false;
     }
 
     return (
@@ -84,7 +94,7 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
                 )
             }
             {
-                applications.length > 0 && (
+                applications.length > 0 && needBeingShown (
                     <>
                         <h2 className={"mb-3"}>{t('myAppointments')}</h2>
                         {
