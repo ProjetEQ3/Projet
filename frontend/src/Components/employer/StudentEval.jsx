@@ -2,10 +2,11 @@ import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDarkMode} from "../../context/DarkModeContext";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
+import SectionDTO from "../../model/SectionDTO";
 
 const StudentEval = ({ user }) => {
     const { t } = useTranslation();
@@ -164,43 +165,43 @@ const StudentEval = ({ user }) => {
         }
 
         let sections = [];
-        let section1 = [];
-        let section2 = [];
-        let section3 = [];
-        let section4 = [];
-        let section5 = [];
-        let section6 = [];
-        section1.push(document.querySelector('input[name="a1"]:checked').value);
-        section1.push(document.querySelector('input[name="b1"]:checked').value);
-        section1.push(document.querySelector('input[name="c1"]:checked').value);
-        section1.push(document.querySelector('input[name="d1"]:checked').value);
-        section1.push(document.querySelector('input[name="e1"]:checked').value);
-        section1.push(document.querySelector('textarea[name="comment1"]').value.trim());
-        section2.push(document.querySelector('input[name="a2"]:checked').value);
-        section2.push(document.querySelector('input[name="b2"]:checked').value);
-        section2.push(document.querySelector('input[name="c2"]:checked').value);
-        section2.push(document.querySelector('input[name="d2"]:checked').value);
-        section2.push(document.querySelector('input[name="e2"]:checked').value);
-        section2.push(document.querySelector('textarea[name="comment2"]').value.trim());
-        section3.push(document.querySelector('input[name="a3"]:checked').value);
-        section3.push(document.querySelector('input[name="b3"]:checked').value);
-        section3.push(document.querySelector('input[name="c3"]:checked').value);
-        section3.push(document.querySelector('input[name="d3"]:checked').value);
-        section3.push(document.querySelector('input[name="e3"]:checked').value);
-        section3.push(document.querySelector('input[name="f3"]:checked').value);
-        section2.push(document.querySelector('textarea[name="comment3"]').value.trim());
-        section4.push(document.querySelector('input[name="a4"]:checked').value);
-        section4.push(document.querySelector('input[name="b4"]:checked').value);
-        section4.push(document.querySelector('input[name="c4"]:checked').value);
-        section4.push(document.querySelector('input[name="d4"]:checked').value);
-        section4.push(document.querySelector('input[name="e4"]:checked').value);
-        section4.push(document.querySelector('input[name="f4"]:checked').value);
-        section2.push(document.querySelector('textarea[name="comment4"]').value.trim());
-        section5.push(document.querySelector('input[name="globalAppreciationIntern"]:checked').value);
-        section5.push(preciseYourAppreciation.value.trim());
-        section5.push(document.querySelector('input[name="discussedWithStudent"]:checked').value);
-        section6.push(document.querySelector('input[name="takeItAgain"]:checked').value);
-        section6.push(sufficientToCarryOut.value.trim());
+        let section1 = new SectionDTO();
+        let section2 = new SectionDTO();
+        let section3 = new SectionDTO();
+        let section4 = new SectionDTO();
+        let section5 = new SectionDTO();
+        let section6 = new SectionDTO();
+        section1.agreementLevels.push(document.querySelector('input[name="a1"]:checked').value);
+        section1.agreementLevels.push(document.querySelector('input[name="b1"]:checked').value);
+        section1.agreementLevels.push(document.querySelector('input[name="c1"]:checked').value);
+        section1.agreementLevels.push(document.querySelector('input[name="d1"]:checked').value);
+        section1.agreementLevels.push(document.querySelector('input[name="e1"]:checked').value);
+        section1.comment = (document.querySelector('textarea[name="comment1"]').value.trim());
+        section2.agreementLevels.push(document.querySelector('input[name="a2"]:checked').value);
+        section2.agreementLevels.push(document.querySelector('input[name="b2"]:checked').value);
+        section2.agreementLevels.push(document.querySelector('input[name="c2"]:checked').value);
+        section2.agreementLevels.push(document.querySelector('input[name="d2"]:checked').value);
+        section2.agreementLevels.push(document.querySelector('input[name="e2"]:checked').value);
+        section2.comment = (document.querySelector('textarea[name="comment2"]').value.trim());
+        section3.agreementLevels.push(document.querySelector('input[name="a3"]:checked').value);
+        section3.agreementLevels.push(document.querySelector('input[name="b3"]:checked').value);
+        section3.agreementLevels.push(document.querySelector('input[name="c3"]:checked').value);
+        section3.agreementLevels.push(document.querySelector('input[name="d3"]:checked').value);
+        section3.agreementLevels.push(document.querySelector('input[name="e3"]:checked').value);
+        section3.agreementLevels.push(document.querySelector('input[name="f3"]:checked').value);
+        section3.comment = (document.querySelector('textarea[name="comment3"]').value.trim());
+        section4.agreementLevels.push(document.querySelector('input[name="a4"]:checked').value);
+        section4.agreementLevels.push(document.querySelector('input[name="b4"]:checked').value);
+        section4.agreementLevels.push(document.querySelector('input[name="c4"]:checked').value);
+        section4.agreementLevels.push(document.querySelector('input[name="d4"]:checked').value);
+        section4.agreementLevels.push(document.querySelector('input[name="e4"]:checked').value);
+        section4.agreementLevels.push(document.querySelector('input[name="f4"]:checked').value);
+        section4.comment = (document.querySelector('textarea[name="comment4"]').value.trim());
+        section5.internshipPerformance = (document.querySelector('input[name="globalAppreciationIntern"]:checked').value);
+        section5.comment = (preciseYourAppreciation.value.trim());
+        section6.discussedWithIntern = (document.querySelector('input[name="discussedWithStudent"]:checked').value) === 'true';
+        section6.comment = (sufficientToCarryOut.value.trim());
+        section6.welcomeInternBackStatus = document.querySelector('input[name="takeItAgain"]:checked').value;
 
         sections.push(section1);
         sections.push(section2);
@@ -483,31 +484,31 @@ const StudentEval = ({ user }) => {
                         <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillFarExceedExpectations')}</label>
                             <div className="col-6 text-center">
-                                <input value='SKILL_FAR_EXCEED' type="radio" name="globalAppreciationIntern"/>
+                                <input value='EXCEEDS_EXPECTATIONS' type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
                         <div className="row py-2">
                             <label className="col-6">{t('skillExceedExpectations')}</label>
                             <div className="col-6 text-center">
-                                <input value='SKILL_EXCEED' type="radio" name="globalAppreciationIntern"/>
+                                <input value='ABOVE_EXPECTATIONS' type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
                         <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillMeetsExpectations')}</label>
                             <div className="col-6 text-center">
-                                <input value='SKILL_MEET' type="radio" name="globalAppreciationIntern"/>
+                                <input value='MEET_EXPECTATIONS' type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
                         <div className="row py-2">
                             <label className="col-6">{t('skillPartiallyMeetsExpectations')}</label>
                             <div className="col-6 text-center">
-                                <input value='SKILL_PARTIALLY_MEET' type="radio" name="globalAppreciationIntern"/>
+                                <input value='PARTIALLY_MEET_EXPECTATIONS' type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
                         <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillDoesNotMeetExpectations')}</label>
                             <div className="col-6 text-center">
-                                <input value='SKILL_NOT_MEET' type="radio" name="globalAppreciationIntern"/>
+                                <input value='DOES_NOT_MEET_EXPECTATIONS' type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
                         <div className="row mt-2">

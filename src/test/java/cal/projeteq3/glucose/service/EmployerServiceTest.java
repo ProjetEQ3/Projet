@@ -802,6 +802,7 @@ public class EmployerServiceTest {
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
         mockApplication.setJobOffer(jobOffer);
+        jobOffer.addJobApplication(mockApplication);
 
         LocalDateTime date1 = LocalDateTime.now().plusDays(1);
         LocalDateTime date2 = LocalDateTime.now().plusDays(2);
@@ -858,6 +859,7 @@ public class EmployerServiceTest {
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
         mockApplication.setJobOffer(jobOffer);
+        jobOffer.addJobApplication(mockApplication);
 
         LocalDateTime date1 = LocalDateTime.now().plusDays(1);
 

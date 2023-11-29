@@ -1020,6 +1020,12 @@ public class EmployerControllerTest {
 		Student student = Student.builder().id(1L).build();
 		JobApplication jobApplication = JobApplication.builder().id(1L).build();
 		jobApplication.setStudent(student);
+		TimeSheetDTO timeSheetDTO = new TimeSheetDTO();
+		timeSheetDTO.setJobApplicationId(jobApplication.getId());
+		timeSheetDTO.setWeeklyHours(List.of(
+				new WeeklyHoursDTO(LocalDate.now(), LocalDate.now().plusDays(7), 40, 40)
+
+		));
 
 		when(timeSheetRepository.findByJobApplicationId(jobApplication.getId())).thenReturn(Optional.of(new TimeSheet()));
 
@@ -1027,7 +1033,7 @@ public class EmployerControllerTest {
 						.post("/employer/timeSheet/1")
 						.header("Authorization", token)
 						.contentType(MediaType.APPLICATION_JSON)
-						.content("{\"weeklyHours\": [{\"startDateTime\": \"2023-11-28T12:34:56.789\",\"endDateTime\": \"2023-12-05T12:34:56.789\",\"hoursWorked\": 12,\"overtimeHours\": 1}]}"))
+						.content(objectMapper.writeValueAsString(timeSheetDTO.getWeeklyHours())))
 				.andExpect(MockMvcResultMatchers.status().isAccepted());
 	}
 
