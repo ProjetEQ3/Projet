@@ -7,6 +7,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.model.Appointment;
+import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
@@ -48,10 +49,14 @@ public class EmailNotificationAspect {
         if (signedContract.getStudentSignature() != null && signedContract.getEmployerSignature() != null && signedContract.getManagerSignature() == null) {
             String body = "Vous avez un nouveau contrat qui est maintenant prêt à être signé." + getContractHtml(signedContract);
 
-            Optional<Manager> optManager = managerRepository.findFirstByFirstNameAndLastName(
+            Optional<Student> student = studentRepository.findFirstByFirstNameAndLastName(
                     signedContract.getStudentSignature().getFirstName(),
                     signedContract.getStudentSignature().getLastName());
-            optManager.ifPresent(manager -> sendEmail(manager, "Contrat prêt à signer", body));
+
+            student.ifPresent(stud -> {
+                Manager manager = managerRepository.findFirstByDepartment(stud.getDepartment());
+                sendEmail(manager, "Contrat prêt à signer", body);
+            });
 
         } else if (signedContract.getManagerSignature() != null) {
             String body = "Votre contrat est maintenant complet. Vous pouvez le télécharger.";
