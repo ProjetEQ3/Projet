@@ -36,11 +36,11 @@
    - Date d'expiration: `2023-12-12`
 
    **Offre 2**
-   - Titre: `Développeur c#`
+   - Titre: `Développeur C#`
    - Département: `420.B0`
    - Lieu de travail : `Télétravail`
    - Nombres de candidats demandés: `5`
-   - Description: `Développer des applications Java`
+   - Description: `Développeur d'applications C#`
    - Salaire: `20`
    - Nombre d'heures par semaine: `40`
    - Date de début: `2024-01-28`
