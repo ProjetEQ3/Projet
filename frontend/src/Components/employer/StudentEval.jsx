@@ -22,8 +22,7 @@ const StudentEval = ({ user }) => {
         toast.error(t('pleaseAnswerAllQuestions'));
         console.log(id)
         document.querySelector(`#${id}`).scrollIntoView({behavior: 'smooth'})
-        //Quand on change la couleur avec ca fuck le theme
-        //document.querySelector(`#${id}`).style.color = 'red';
+        document.querySelector(`#${id}`).classList.add('text-danger');
         document.querySelector(`#${id}`).style.fontWeight = 'bold';
         document.querySelector(`#${id}`).style.textDecoration = 'underline';
     }

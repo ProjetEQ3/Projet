@@ -13,7 +13,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "_user") // Obligation ici de mettre un nom puisque la table user est déjà utilisé par la BD
+@Table(name = "_user")
 public abstract class User{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

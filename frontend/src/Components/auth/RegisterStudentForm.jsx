@@ -108,9 +108,10 @@ const RegisterStudentForm = () => {
             setIsLoading(false)
             toast.success(t('successRegister'));
             navigate('/auth/login')
-        }).catch(() =>
+        }).catch(() => {
             setIsLoading(false)
-        )
+            toast.error(t('errorRegister'))
+        })
     }
 
     const handleChanges = (e) => {

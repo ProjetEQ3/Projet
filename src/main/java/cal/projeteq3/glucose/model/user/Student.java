@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class Student extends User{
+public class Student extends User {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private CvFile cvFile;
 

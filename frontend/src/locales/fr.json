@@ -427,5 +427,8 @@
   "timeSheetSaved" : "La feuille de temps a été sauvegardée.",
   "timeSheetNotSaved" : "La feuille de temps n'a pas été sauvegardée.",
   "evaluationSent" : "L'évaluation a été envoyée.",
-  "evaluationNotSent" : "L'évaluation n'a pas été envoyée."
+  "evaluationNotSent" : "L'évaluation n'a pas été envoyée.",
+  "errorRegister": "Erreur lors de la création du compte: ",
+  "emailAlreadyUsed" : "Cette adresse courriel est déjà utilisée.",
+  "matriculeAlreadyUsed" : "Ce matricule est déjà utilisé."
 }

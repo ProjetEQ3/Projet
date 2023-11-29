@@ -115,9 +115,18 @@ const RegisterEmployerForm = () => {
             setIsLoading(false)
             toast.success(t('successRegister'));
             navigate('/auth/login')
-        }).catch(() =>
+        }).catch((err) => {
+            if (err.response) {
+                if (err.response.status === 400) {
+                    toast.error(t('errorRegister'))
+                } else if (err.response.status === 401) {
+                    toast.error(t('errorRegister'))
+                } else if (err.response.status === 673) {
+                    toast.error(t('errorRegister') + " " + t(err.response.data.message))
+                }
+            }
             setIsLoading(false)
-        )
+        })
     }
 
     const handleChanges = (e) => {
