@@ -49,32 +49,29 @@
           
    - Modifier une offre de stage
    - Supprimer une offre de stage
-2.Se connecter en tant que manager
+2. Se connecter en tant que manager
    - Courriel: `buzzwares@gmail.com`
    - Mot de passe: `Glucose123`
-3Approuver une offre de stage
+3. Approuver une offre de stage
    - Commenter qu'on peut refuser avec une raison, mais annuler le refus
-4.Créer un compte Étudiant
+4. Créer un compte Étudiant
     - Prénom: `Jean`
     - Nom: `Tremblay`
     - Courriel: `jeantremblayglucose@gmail.com`
     - Matricule: `1111111`
     - Programme: `420.B0`
     - Mot de passe: `Glucose123`
-5.Se connecter en tant qu'étudiant
+5. Se connecter en tant qu'étudiant
    - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
-6.Essayer de postuler sur une offre de stage sans cv
-7.Téléverser CV
+6. Essayer de postuler sur une offre de stage sans cv
+7. Téléverser CV
 8. Approuver un CV
    - Commenter qu'on peut refuser avec une raison, mais annuler le refus
+9. Postuler pour l'offre de stage `Développeur Java` avec une lettre de motivation
+   * Commenter qu'on peut postuler sans mettre lettre de motivation
 ---
 ### Zaka
-1. Se connecter en tant qu'étudiant
-   - Courriel: `jeantremblayglucose@gmail.com`
-   - Mot de passe: `Glucose123`
-2. Postuler pour l'offre de stage `Développeur Java` avec une lettre de motivation
-   * Commenter qu'on peut postuler sans mettre lettre de motivation
 3. Se connecter en tant qu'employeur
    - Courriel: `lokolokololo41@gmail.com`
    - Mot de passe: `Glucose123`
