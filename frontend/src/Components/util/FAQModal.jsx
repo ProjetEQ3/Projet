@@ -36,7 +36,7 @@ const FAQModal = forwardRef(({role}, ref) => {
 
 	return (
 		<>
-			<button className="btn btn-outline-ose FAQ-button" data-bs-toggle="modal" data-bs-target="#faqModal">
+			<button className={`btn ${darkMode ? 'btn-dark-mode' : 'btn-outline-ose'} FAQ-button`} data-bs-toggle="modal" data-bs-target="#faqModal">
 				{t("CONSULT_FAQ")}
 				<FontAwesomeIcon icon={faCircleQuestion} className="ms-2"/>
 			</button>
