@@ -13,10 +13,8 @@ import java.util.Optional;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
 	Student findByMatricule(String matricule);
-
 	@Query("SELECT s FROM Student s JOIN User u ON u.id = ?1 WHERE s.id = ?1")
 	Optional<StudentSummary> findStudentSummaryById(Long id);
-	
 	List<Student> findAllByDepartment(Department department);
-
+	Optional<Student> findFirstByFirstNameAndLastName(String firstName, String lastName);
 }

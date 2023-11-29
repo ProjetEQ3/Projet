@@ -34,7 +34,6 @@ const FAQModal = forwardRef(({role}, ref) => {
 		setFaqs(faqDataArray)
 	}
 
-
 	return (
 		<>
 			<button className="btn btn-outline-ose FAQ-button" data-bs-toggle="modal" data-bs-target="#faqModal">

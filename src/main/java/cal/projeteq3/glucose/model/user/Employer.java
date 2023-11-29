@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.model.user;
 
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import jakarta.persistence.*;
 import lombok.*;

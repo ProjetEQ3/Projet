@@ -1,5 +1,7 @@
 package cal.projeteq3.glucose.model.evaluation.timeSheet;
 
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
+import cal.projeteq3.glucose.dto.evaluation.WeeklyHoursDTO;
 import cal.projeteq3.glucose.model.evaluation.Evaluation;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
@@ -14,13 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ActualHoursDeclaration extends Evaluation {
+public class TimeSheet extends Evaluation {
 	@ElementCollection
 	@CollectionTable(
-		name = "actual_hours_declaration_hours",
-		joinColumns = @JoinColumn(name = "actual_hours_declaration_id")
+		name = "weekHours",
+		joinColumns = @JoinColumn(name = "timeSheet_id")
 	)
-	private List<DeclarationHour> declarationHours;
-	private String signatureFonction;
-	private boolean isSigned;
+	private List<WeeklyHours> weeklyHours;
 }

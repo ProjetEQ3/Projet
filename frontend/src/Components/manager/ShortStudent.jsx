@@ -81,9 +81,12 @@ return (
                                                 <div className="col-6">
                                                     <h6>{application.jobOffer.title}</h6>
                                                 </div>
-                                                <div className="col-3 text-center">
-                                                    <button type="button" className="btn btn-outline-ose btn-sm" onClick={() => handleEnvEvaluationButton(application)}>{t('envEvaluation')}</button>
-                                                </div>
+                                                {
+                                                    (application.jobApplicationState === "ACCEPTED" || application.jobApplicationState === "COMPLETE") && <div className="col-3 text-center">
+                                                        <button type="button" className="btn btn-outline-ose btn-sm"
+                                                            onClick={() => handleEnvEvaluationButton(application)}>{t('envEvaluation')}</button>
+                                                    </div>
+                                                }
                                                 <div className="col-3 text-center">
                                                     <StudentState state={"STUDENT_" + application.jobApplicationState}/>
                                                 </div>

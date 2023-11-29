@@ -1,6 +1,6 @@
 import {useState} from "react"
 import FullJobOffer from "./FullJobOffer"
-import State from "../util/State"
+import State from "./State"
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
 

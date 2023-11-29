@@ -6,7 +6,6 @@ import React, {useEffect, useState} from "react";
 import ShortContractNotif from "../user/ShortContractNotif";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import JobOffer from "../../model/JobOffer";
 
 const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, contracts, refusedOffers}) => {
     const {t} = useTranslation();
@@ -54,7 +53,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
     }
 
     function allTreated() {
-        return jobOffers.length === 0 && studentList.length === 0 && refusedOffers.length === 0 && contracts.length === 0;
+        return jobOffers.length === 0 && studentList.length === 0 && refusedOffers.length === 0 && contracts.filter((contract) => contract.employerSignature === null).length === 0;
     }
 
     function handleContractClick() {
@@ -117,7 +116,7 @@ const Home = ({setTab, setIdElement, fetchStudentList, jobOffers, studentList, c
                 )
             }
             {
-                contracts.length > 0 && (
+                contracts.filter((contract) => contract.employerSignature === null).length > 0 && (
                     <>
                         <h2>{t('availableContracts')}</h2>
                         <p>{t('availableContractsToApplyTo')}</p>

@@ -1,47 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faArrowLeft, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import React, {useEffect, useState} from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../util/Loading";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useDarkMode } from "../../context/DarkModeContext";
+import {useTranslation} from "react-i18next";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useDarkMode} from "../../context/DarkModeContext";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
 import TimeSheetWeek from "../../model/TimeSheetWeek";
 
-const TimeSheet = ({ user }) => {
+const TimeSheet = ({user}) => {
     const [t] = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const { darkMode } = useDarkMode();
+    const {darkMode} = useDarkMode();
     const location = useLocation();
-    const { jobApplication } = location.state || {};
+    const {jobApplication} = location.state || {};
     const [weeks, setWeeks] = useState([]);
-
-    const calculateEndDate = (startDate, weekNumber) => {
-        const oneWeek = 7 * 24 * 60 * 60 * 1000;
-        const endDate = new Date(new Date(startDate).getTime() + (oneWeek * (weekNumber - 1)));
-        return endDate.toISOString().split('T')[0];
-    };
+    const [loadedPage, setLoadedPage] = useState(false);
 
     const handleBack = () => {
         navigate(-1);
     };
 
     useEffect(() => {
+        if (loadedPage) return;
         fetchForExistingTimeSheet();
-    });
+        setLoadedPage(true);
+    }, [loadedPage]);
 
     const fetchForExistingTimeSheet = () => {
-        axiosInstance.get(`/employer/timeSheet/${jobApplication.jobApplicationId}`)
-            .then(res => {
-                if (res.data && res.data.declarationHours) {
-                    const weeks = res.data.declarationHours.map(weekData => {
+        axiosInstance.get(`/employer/timeSheet/${jobApplication.id}`)
+            .then(response => {
+                if (response.data && response.data.weeklyHours) {
+                    let weekIndex = 1;
+                    const weeks = response.data.weeklyHours.map(weekData => {
                         let week = new TimeSheetWeek();
                         week.init({
-                            weekNumber: weekData.weekNumber,
-                            from: weekData.weekStartDate,
-                            to: weekData.weekEndDate,
+                            weekNumber: weekIndex++,
+                            from: weekData.weekStartDate.split('T')[0],
+                            to: weekData.weekEndDate.split('T')[0],
                             hoursWorked: weekData.internRealWorkingHours,
                             directSupervisionHours: weekData.directSupervisionHours,
                         });
@@ -50,25 +48,25 @@ const TimeSheet = ({ user }) => {
                     setWeeks(weeks);
                 }
             })
-            .catch(err => {
+            .catch(() => {
             });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        const declarationHours = weeks.map(week => ({
+        const weeklyHours = weeks.map(week => ({
             weekNumber: week.weekNumber,
             weekStartDate: week.from,
             weekEndDate: week.to,
             internRealWorkingHours: week.hoursWorked,
             directSupervisionHours: week.directSupervisionHours,
         }));
-        axiosInstance.post(`/employer/timeSheet/${jobApplication.jobApplicationId}`, declarationHours)
-            .then(res => {
+        axiosInstance.post(`/employer/timeSheet/${jobApplication.id}`, weeklyHours)
+            .then(() => {
                 toast.success(t('timeSheetSaved'));
             })
-            .catch(err => {
+            .catch(() => {
                 toast.error(t('timeSheetNotSaved'));
             })
             .finally(() => {
@@ -78,9 +76,9 @@ const TimeSheet = ({ user }) => {
 
     useEffect(() => {
         if (jobApplication && jobApplication.jobOffer) {
-            const { startDate, duration } = jobApplication.jobOffer;
+            const {startDate, duration} = jobApplication.jobOffer;
             const start = new Date(startDate);
-            const calculatedWeeks = Array.from({ length: duration }, (_, i) => {
+            const calculatedWeeks = Array.from({length: duration}, (_, i) => {
                 let week = new TimeSheetWeek();
                 week.init({
                     weekNumber: i + 1,
@@ -100,7 +98,7 @@ const TimeSheet = ({ user }) => {
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
                 let updatedWeek = new TimeSheetWeek();
-                updatedWeek.init({ ...week, hoursWorked: newHours });
+                updatedWeek.init({...week, hoursWorked: newHours});
                 return updatedWeek;
             }
             return week;
@@ -112,7 +110,7 @@ const TimeSheet = ({ user }) => {
         setWeeks(weeks.map(week => {
             if (week.weekNumber === weekNumber) {
                 let updatedWeek = new TimeSheetWeek();
-                updatedWeek.init({ ...week, directSupervisionHours: newSupervisionHours });
+                updatedWeek.init({...week, directSupervisionHours: newSupervisionHours});
                 return updatedWeek;
             }
             return week;

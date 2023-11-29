@@ -136,3 +136,7 @@ textarea.dark-input:focus {
 .moon {
   color: #333;
 }
+
+.FAQ-button{
+  --bs-btn-bg: #F3F3F3 !important;
+}

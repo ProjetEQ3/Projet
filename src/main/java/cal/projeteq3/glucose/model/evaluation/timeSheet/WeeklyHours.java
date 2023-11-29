@@ -1,8 +1,10 @@
 package cal.projeteq3.glucose.model.evaluation.timeSheet;
 
+import cal.projeteq3.glucose.dto.evaluation.WeeklyHoursDTO;
 import jakarta.persistence.Embeddable;
 import lombok.*;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Embeddable
 @Getter
@@ -10,9 +12,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class DeclarationHour{
-	private LocalDateTime weekStartDate;
-	private LocalDateTime weekEndDate;
+public class WeeklyHours {
+	private LocalDate weekStartDate;
+	private LocalDate weekEndDate;
 	private Integer internRealWorkingHours;
 	private Integer directSupervisionHours;
 }

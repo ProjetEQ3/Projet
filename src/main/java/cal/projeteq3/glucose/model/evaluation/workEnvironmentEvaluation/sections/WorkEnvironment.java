@@ -1,5 +1,4 @@
 package cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.sections;
-
 import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
 import jakarta.persistence.Embeddable;
 import lombok.*;
@@ -11,15 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public final class WorkEnvironment{
-	private AgreementLevel tasks;
-	private AgreementLevel integration;
-	private AgreementLevel time;
-	private AgreementLevel hygieneAndSecurity;
-	private AgreementLevel environmentIsPleasant;
-	private AgreementLevel publicTransport;
-	private AgreementLevel interestingSalary;
-	private float salary;
-	private AgreementLevel communication;
+	private AgreementLevel taskConformity;
+	private AgreementLevel welcomeMeasures;
+	private AgreementLevel sufficientSupervision;
+	private AgreementLevel safetyCompliance;
+	private AgreementLevel positiveAtmosphere;
+	private AgreementLevel competitiveSalary;
+	private AgreementLevel effectiveCommunication;
 	private AgreementLevel adequateEquipment;
-	private AgreementLevel acceptableWorkVolume;
+	private AgreementLevel reasonableWorkload;
 }
