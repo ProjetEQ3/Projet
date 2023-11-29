@@ -19,6 +19,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 	Optional<Student> findFirstByFirstNameAndLastName(String firstName, String lastName);
 
 	boolean existsByMatricule(String matricule);
-	@Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM Student s JOIN User u ON u.id = s.id WHERE u.credentials.email = ?1")
+	@Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.credentials.email = ?1")
 	boolean existsByEmail(String email);
 }

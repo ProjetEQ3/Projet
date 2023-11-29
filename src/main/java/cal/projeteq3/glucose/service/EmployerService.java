@@ -11,6 +11,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.EmailAlreadyUsedException;
 import cal.projeteq3.glucose.exception.unauthorizedException.InternEvaluationAlreadyExistsException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
@@ -55,6 +56,7 @@ public class EmployerService{
 	// database operations here
 
 	public EmployerDTO createEmployer(RegisterEmployerDTO registerEmployerDTO) {
+		if (employerRepository.existsByEmail(registerEmployerDTO.getRegisterDTO().getEmail())) throw new EmailAlreadyUsedException();
 		Employer employer = Employer.builder()
 				.email(registerEmployerDTO.getRegisterDTO().getEmail())
 				.password(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword()))

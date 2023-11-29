@@ -116,6 +116,7 @@ const RegisterEmployerForm = () => {
             toast.success(t('successRegister'));
             navigate('/auth/login')
         }).catch((err) => {
+            console.log(err)
             if (err.response) {
                 if (err.response.status === 400) {
                     toast.error(t('errorRegister'))

@@ -109,7 +109,6 @@ const EmployerPage = ({user}) => {
 				if(response.data.length === 0){
 					setStudentList([])
 					if (userClicked) return
-					toast.info(t('noStudentsConvoked'))
 					return
 				}
 				fetchStudentsJobTitles(response.data)
