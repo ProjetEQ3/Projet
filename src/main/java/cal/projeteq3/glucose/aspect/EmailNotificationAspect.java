@@ -126,15 +126,10 @@ public class EmailNotificationAspect {
             pointcut = "execution(* cal.projeteq3.glucose.service.EmployerService.addAppointmentByJobApplicationId(..))",
             returning = "jobApplicationDTO")
     public void employerAppointment(JobApplicationDTO jobApplicationDTO) {
-        AtomicReference<String> body = new AtomicReference<>("");
-
-        Optional<JobApplication> optApplication = jobApplicationRepository.findById(jobApplicationDTO.getId());
-        optApplication.ifPresent((jobApplication) -> {
-            body.set(getAppointmentHtml(jobApplication));
-
+        jobApplicationRepository.findById(jobApplicationDTO.getId()).ifPresent(jobApplication -> {
+            String body = getAppointmentHtml(jobApplication);
             Student student = studentRepository.findByMatricule(jobApplicationDTO.getStudent().getMatricule());
-
-            sendEmail(student, "Vous avez un nouvel entretien", body.get());
+            sendEmail(student, "Vous avez un nouvel entretien", body);
         });
     }
 
