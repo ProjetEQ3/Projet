@@ -80,7 +80,7 @@
 ---
 ### Chawki
 1. Monitorer les étudiants
-   - Courriel :
+   - Courriel : `buzzwares@gmail.com`
    - Mot de passe: `Glucose123`
 2. Évaluer le milieu de stage (CHECK SI DONE)
    - Expliquer que l'on peut évaluer le milieu de stage à tout moment
