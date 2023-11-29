@@ -13,7 +13,7 @@
    - Nom: `Tremblay`
    - Courriel: `lokolokololo41@gmail.com`
    - Organisation: `Service Partagé Canada`
-   - Téléphone: `1-855-591-0550`
+   - Téléphone: `855-591-0550`
    - Mot de passe: `Glucose123`
 6. Se connecter en tant qu'employeur
    - Courriel: `lokolokololo41@gmail.com`
@@ -28,7 +28,7 @@
    - Département: `420.B0`
    - Lieu de travail : `1111 rue laPierre, LaSalle, QC, H8N 2J4`
    - Nombres de candidats demandés: `2`
-   - Description: `Développer des applications Java`
+   - Description: `Développeur d'applications Java`
    - Salaire: `20`
    - Nombre d'heures par semaine: `40`
    - Date de début: `2024-01-28`
