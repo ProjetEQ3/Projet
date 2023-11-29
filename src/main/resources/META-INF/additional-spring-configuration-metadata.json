@@ -1,0 +1,27 @@
+{
+	"properties": [
+		{
+			"name": "sendinblue.api.url",
+			"type": "java.lang.String",
+			"description": "Description for sendinblue.api.url.",
+			"defaultValue": "https://api.sendinblue.com/v3/smtp/email"
+		},
+		{
+			"name": "sendinblue.api.key",
+			"type": "java.lang.String",
+			"description": "Description for sendinblue.api.key."
+		},
+		{
+			"name": "sendinblue.api.timeout",
+			"type": "java.lang.Integer",
+			"description": "Description for sendinblue.api.timeout.",
+			"defaultValue": 10000
+		},
+		{
+			"name": "sendinblue.api.from",
+			"type": "java.lang.String",
+			"description": "Description for sendinblue.api.from.",
+			"defaultValue": "1@zaka.se"
+		}
+	]
+}

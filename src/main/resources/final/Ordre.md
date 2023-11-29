@@ -11,12 +11,12 @@
 5. Créer un Employeur
    - Prenom: `Patrick`
    - Nom: `Tremblay`
-   - Courriel: 
+   - Courriel: `lokolokololo41@gmail.com`
    - Organisation: `Service Partagé Canada`
    - Téléphone: `1-855-591-0550`
    - Mot de passe: `Glucose123`
 6. Se connecter en tant qu'employeur
-   - Courriel: 
+   - Courriel: `lokolokololo41@gmail.com`
    - Mot de passe: `Glucose123`
 7. Montrer le changement de session 
 ---
@@ -35,7 +35,7 @@
 11. Essayer de postuler sur une offre de stage sans cv
 12. Téléverser CV
 13. Se connecter en tant que manager
-    - Courriel:
+    - Courriel: `buzzwares@gmail.com`
     - Mot de passe: `Glucose123`
 14. Approuver une offre de stage 
 	- Commenter qu'on peut refuser avec une raison, mais annuler le refus
@@ -49,10 +49,11 @@
 17. Postuler à une offre de stage avec une lettre de motivation
 	* Commenter qu'on peut postuler sans mettre lettre de motivation
 18. Se connecter en tant qu'employeur
-    - Courriel:
+    - Courriel: `lokolokololo41@gmail.com`
     - Mot de passe: `Glucose123`
 19. Convoquer un étudiant à une entrevue
     - Mettre à cinq dates puis à deux dates et expliquer que si on met une date, la convocation ne peut être choisie par l'étudiant
+    * Commenter qu'on peut embaucher avant la date de l'entrevue 
 20. Se connecter en tant qu'étudiant
     - Courriel:
     - Mot de passe: `Glucose123`
@@ -60,7 +61,7 @@
 ---
 ### Gab
 22. Se connecter en tant qu'employeur
-    - Courriel:
+    - Courriel: `lokolokololo41@gmail.com`
     - Mot de passe: `Glucose123`
 23. Embaucher un étudiant
     - Dire qu'on peut le refuser et qu'on peut voir le détail de ton CV à nouveau
@@ -70,8 +71,8 @@
     - Courriel:
     - Mot de passe: `Glucose123`
 26. Signer un contrat de stage
-27. Se connecter en tant que manager
-    - Courriel:
+13. Se connecter en tant que manager
+    - Courriel: `buzzwares@gmail.com`
     - Mot de passe: `Glucose123`
 28. Signer le contrat
 29. Télécharger le contrat
@@ -84,7 +85,7 @@
 31. Évaluer le milieu de stage (CHECK SI DONE)
     - Expliquer que l'on peut évaluer le milieu de stage à tout moment
 32. Se connecter en tant qu'employeur
-    - Courriel:
+    - Courriel: `lokolokololo41@gmail.com`
     - Mot de passe: `Glucose123`
 33. Remplir la feuille de temps
     - Expliquer brièvement le fonctionnement + que l'on peut sauvegarder et revenir plus tard
