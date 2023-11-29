@@ -213,6 +213,8 @@ public class EmployerService{
 
 		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
 				.orElseThrow(JobApplicationNotFoundException::new);
+		if (jobApplication.isImmutable()) throw new JobApplicationHasAlreadyADecision();
+		else if (!jobApplication.getJobOffer().isHiring()) throw new JobOfferNotOpenException();
 
 		for(Appointment app : appointmentList){
 			app.setJobApplication(jobApplication);

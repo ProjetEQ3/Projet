@@ -21,7 +21,6 @@ function App(){
 	useEffect( () => {
 		if (_token) {
 			axiosInstance.defaults.headers.common['Authorization'] = _token
-
 			axiosInstance.get('/user/me')
 				.then(res => {
 					let newUser = new User()

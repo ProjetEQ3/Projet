@@ -13,6 +13,7 @@ public class CvFileDTO{
 	private byte[] fileData;
 	private CvState cvState;
 	private String refusReason;
+	private Long studentId;
 
 	public CvFileDTO(CvFile cvFile){
 		id = cvFile.getId();
@@ -20,6 +21,7 @@ public class CvFileDTO{
 		fileData = cvFile.getFileData();
 		cvState = cvFile.getCvState();
 		refusReason = cvFile.getRefusReason();
+		if(cvFile.getStudent() != null) studentId = cvFile.getStudent().getId();
 	}
 
 	public CvFile toEntity(){

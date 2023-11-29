@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faX} from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import State from "../util/State";
+import State from "./State";
 import PDFPreview from "../util/PDF/PDFPreview";
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
@@ -103,15 +103,15 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                             <div className="my-auto col-6 text-center d-block">
                                 <State state={cv.cvState}/>
                             </div>
-                            <div
+                            <button
                                 data-testid="modalButton"
-                                className={`btn btn-outline-ose my-auto ${cv.cvState !== 'SUBMITTED' ? 'disabled' : ''}`}
+                                className={`btn btn-outline-ose my-auto ${cv.cvState !== 'SUBMITTED' ? 'd-none' : ''}`}
                                 data-bs-toggle={cv.cvState === 'SUBMITTED' ? 'modal' : ''}
                                 data-bs-target={`#fullViewModal${index}`}
                                 onClick={cv.cvState !== 'SUBMITTED' ? (e) => e.preventDefault() : undefined}
                             >
                                 {t('probation')}
-                            </div>
+                            </button>
                             <div id={"fullViewModal" + index} className="modal modal-lg" aria-hidden="true">
                                 <div className="modal-dialog">
                                     <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
@@ -132,7 +132,7 @@ const ShortCv = ({cv, index, updateCvList, getAllCvs }) => {
                                                     </form>) :
                                                 (<div>
                                                     <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
-                                                    <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger">{t('refuse')}</button>
+                                                    <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger" >{t('refuse')}</button>
                                                 </div>)}
                                         </div>
                                     </div>

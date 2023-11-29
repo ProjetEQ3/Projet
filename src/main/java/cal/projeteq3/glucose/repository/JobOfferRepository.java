@@ -19,8 +19,6 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
 
     List<JobOffer> findAllBySemester(Semester semester);
 
-    Optional<JobOffer> findJById(Long id);
-
     List<JobOffer> findJobOfferByEmployer_IdAndSemester(Long employerId, Semester semester);
 
     List<JobOffer> findJobOffersByEmployer(Employer employer);

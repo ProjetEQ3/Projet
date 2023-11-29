@@ -25,6 +25,10 @@ const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers, setOf
         return nbCvs === 0 && contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).length === 0 && nbSubmittedOffers === 0;
     }
 
+    function getNbSignableContract() {
+        return contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).length;
+    }
+
     return (
         <div className="container-fluid row px-lg-5 px-2 py-2">
             {
@@ -57,17 +61,13 @@ const Home = ({ setTab, setIdElement, nbCvs, contracts, nbSubmittedOffers, setOf
             }
             {
                 contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).length > 0 && (
-                    <>
-                        <h2>{t('availableContracts')}</h2>
-                        <p>{t('availableContractsToApplyTo')}</p>
-                        {
-                            contracts.filter((contract) => contract.managerSignature === null && contract.employerSignature !== null && contract.studentSignature !== null).map((contract, index) => (
-                                <div onClick={() => handleContractClick()} key={index}>
-                                    <ShortContractNotif contract={contract}/>
-                                </div>
-                            ))
-                        }
-                    </>
+                    <div className="col-12">
+                        <h5 className="rounded rounded-3 alert alert-danger p-2 px-4 display-6 clickable"
+                            onClick={handleContractClick}>
+                            <FontAwesomeIcon icon={faCircleExclamation} className="me-4" />
+                            {t('youHave')} <strong>{getNbSignableContract()}</strong> {t('contractsToSign')}
+                        </h5>
+                    </div>
                 )
             }
         </div>

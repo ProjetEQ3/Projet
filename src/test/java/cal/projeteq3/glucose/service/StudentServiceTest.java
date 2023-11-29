@@ -494,7 +494,7 @@ public class StudentServiceTest{
 		// Arrange
 		Long studentId = 1L;
 		CvFileDTO cvFileDTO = new CvFileDTO(1L, "cv.pdf", new byte[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, CvState.SUBMITTED,
-		                                    null
+		                                    null,1L
 		);
 
 		Student student = Student.builder().id(studentId).build();

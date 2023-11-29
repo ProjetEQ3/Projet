@@ -26,10 +26,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -133,7 +131,10 @@ public class StudentService{
 	public JobOfferDTO applyJobOffer(Long jobOfferId, Long studentId, String coverLetter){
 		JobOffer jobOffer = jobOfferRepository.findById(jobOfferId).orElseThrow(JobOfferNotFoundException::new);
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
+		List<Contract> contracts = contractRepository.findAllByStudentId(studentId);
 
+		if(contracts.stream().anyMatch(contract -> contract.getStudentSignature() != null))
+			throw new StudentAlreadyHasContractException();
 		if(jobOffer.hasApplied(studentId)) throw new StudentHasAlreadyAppliedException();
 		if(!student.hasApprovedCv()) throw new CvNotApprovedException();
 		if(jobOffer.getJobOfferState() != JobOfferState.OPEN) throw new JobOfferNotOpenException();
@@ -189,6 +190,7 @@ public class StudentService{
 			(contract -> new ContractDTO(contract, manager))).toList();
 	}
 
+	@Transactional
 	public ContractDTO signContract(Long contractId, Long studentId){
 		Student student = studentRepository.findById(studentId).orElseThrow(StudentNotFoundException::new);
 		Contract contract = contractRepository.findById(contractId).orElseThrow(ContractNotFoundException::new);
@@ -204,6 +206,14 @@ public class StudentService{
 				.contract(contract)
 				.build());
 		contract.setStudentSignature(signature);
+		contractRepository.deleteAllByIdNotAndJobOfferSemester(contractId, contract.getJobOffer().getSemester());
+		jobApplicationRepository.findAllByStudentIdAndSemester(studentId, contract.getJobOffer().getSemester()).forEach(jobApplication -> {
+			if (contract.getJobOffer().getId().equals(jobApplication.getJobOffer().getId()))
+				jobApplication.setJobApplicationState(JobApplicationState.ACCEPTED);
+			else
+				jobApplication.setJobApplicationState(JobApplicationState.REJECTED);
+			jobApplicationRepository.save(jobApplication);
+		});
 		return new ContractDTO(contractRepository.save(contract), managerRepository.findFirstByDepartment(contract.getJobOffer().getDepartment()));
 	}
 
