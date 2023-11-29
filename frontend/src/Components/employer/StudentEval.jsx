@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {useLocation, useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDarkMode} from "../../context/DarkModeContext";
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
@@ -13,6 +13,12 @@ const StudentEval = ({ user }) => {
     const { jobApplication } = location.state || {};
     const navigate = useNavigate();
     const { darkMode } = useDarkMode();
+
+    useEffect(() => {
+        if (!(user && user.role === 'EMPLOYER'))
+            return;
+        navigate('/');
+    }, []);
 
     const handleBack = () => {
         navigate(-1);
@@ -30,9 +36,9 @@ const StudentEval = ({ user }) => {
     const resetLabels = () => {
         const labels = document.querySelectorAll('label');
         labels.forEach(label => {
+            label.classList.remove('text-danger');
             label.style.fontWeight = 'normal';
             label.style.textDecoration = 'none';
-
         })
     }
 
@@ -40,7 +46,6 @@ const StudentEval = ({ user }) => {
 
     const sendEvaluation = (e) => {
         e.preventDefault();
-
         resetLabels();
         if (!document.querySelector('input[name="a1"]:checked')) {
             notFilled('a1')
@@ -204,6 +209,8 @@ const StudentEval = ({ user }) => {
         sections.push(section5);
         sections.push(section6);
 
+        console.log(sections)
+
         axiosInstance.post(`/employer/internEvaluation/${jobApplication.id}`, sections)
             .then(() => {
                 toast.success(t('evaluationSent'));
@@ -212,7 +219,6 @@ const StudentEval = ({ user }) => {
             .catch(() => {
                 toast.error(t('evaluationNotSent'));
             })
-
     }
 
     return (

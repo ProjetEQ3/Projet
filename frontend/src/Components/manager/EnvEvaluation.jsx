@@ -14,7 +14,6 @@ function EnvEvaluation({ user }) {
     const { darkMode } = useDarkMode();
     const location = useLocation();
     const { application } = location.state || {};
-    const { loadedPage, setLoadedPage } = useState(false);
 
     const [evaluation, setEvaluation] = useState({
         taskConformity: '',
@@ -29,6 +28,11 @@ function EnvEvaluation({ user }) {
         reasonableWorkload: ''
     });
 
+    useEffect(() => {
+        if (!(user && user.role === 'MANAGER')) return;
+        navigate('/');
+    }, []);
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setEvaluation({
@@ -36,9 +40,6 @@ function EnvEvaluation({ user }) {
             [name]: value
         });
     };
-
-    useEffect(() => {
-    }, [loadedPage]);
 
     const handleSubmit = (event) => {
         event.preventDefault();

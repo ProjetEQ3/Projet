@@ -24,6 +24,12 @@ const TimeSheet = ({user}) => {
     };
 
     useEffect(() => {
+        if (!(user && user.role === 'EMPLOYER'))
+            return;
+        navigate('/');
+    }, []);
+
+    useEffect(() => {
         if (loadedPage) return;
         fetchForExistingTimeSheet();
         setLoadedPage(true);
