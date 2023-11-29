@@ -271,7 +271,7 @@ const FullJobOffer = ({ jobOffer, updateOffer}) => {
                                         )}
                                         <p className="fst-italic fw-light text-dark">{t('estimateEndDate')} {estimateEndDate}</p>
                                         <label htmlFor="expirationDate" className="mt-3">{t('expirationDate')}</label>
-                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="expirationDate" placeholder={jobOffer.expirationDate.split('T')[0]} onChange={handleChange} name="expirationDate"/>
+                                        <input type="date" className={`form-control ${warnings.expirationDate ? 'is-invalid' : ''} ${darkMode ? "dark-input" : ""}`} id="expirationDate" placeholder={jobOffer.expirationDate ? String(jobOffer.expirationDate).split('T')[0] : ''} onChange={handleChange} name="expirationDate"/>
                                         {warnings.expirationDate && (
                                             <div className="invalid-feedback">
                                                 {warnings.expirationDate}
