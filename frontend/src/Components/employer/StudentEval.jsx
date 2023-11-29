@@ -31,7 +31,6 @@ const StudentEval = ({ user }) => {
         document.querySelector(`#${id}`).scrollIntoView({behavior: 'smooth'})
         document.querySelector(`#${id}`).classList.add('text-danger');
         document.querySelector(`#${id}`).style.fontWeight = 'bold';
-        document.querySelector(`#${id}`).style.textDecoration = 'underline';
     }
 
     const resetLabels = () => {
@@ -39,7 +38,6 @@ const StudentEval = ({ user }) => {
         labels.forEach(label => {
             label.classList.remove('text-danger');
             label.style.fontWeight = 'normal';
-            label.style.textDecoration = 'none';
         })
     }
 

@@ -546,8 +546,21 @@ public class EmployerServiceTest {
         updatedJobOffer.setId(jobOfferId);
         updatedJobOffer.setStartDate(LocalDate.now());
 
-        JobOffer returnedJobOffer = JobOffer.builder()
-                .id(jobOfferId)
+        JobOffer returnedJobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
                 .build();
 
         when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(returnedJobOffer));
@@ -567,7 +580,24 @@ public class EmployerServiceTest {
     public void DeleteJobOffer_valid() {
         // Arrange
         Long jobOfferId = 1L;
+        JobOffer returnedJobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
+                .build();
 
+        when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(returnedJobOffer));
         // Act
         employerService.deleteJobOffer(jobOfferId);
 
@@ -786,11 +816,13 @@ public class EmployerServiceTest {
                 .department(Department._420B0)
                 .jobOfferState(JobOfferState.OPEN)
                 .duration(6)
+                .nbOfCandidates(2)
                 .hoursPerWeek(40)
                 .salary(20.0f)
-                .startDate(LocalDate.now())
+                .startDate(LocalDate.now().plusDays(90))
                 .expirationDate(LocalDate.now().plusDays(30))
-                .semester(new Semester(LocalDate.now()))
+                .semester(new Semester(LocalDate.now().plusDays(90)))
+                .jobApplications(new ArrayList<>())
                 .build();
         Student student = Student
                 .builder()
@@ -843,11 +875,13 @@ public class EmployerServiceTest {
                 .department(Department._420B0)
                 .jobOfferState(JobOfferState.OPEN)
                 .duration(6)
+                .nbOfCandidates(2)
                 .hoursPerWeek(40)
                 .salary(20.0f)
                 .startDate(LocalDate.now())
                 .expirationDate(LocalDate.now().plusDays(30))
                 .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
                 .build();
         Student student = Student
                 .builder()
@@ -868,6 +902,8 @@ public class EmployerServiceTest {
 
         when(jobApplicationRepository.findById(applicationId)).thenReturn(Optional.of(mockApplication));
         when(jobApplicationRepository.save(mockApplication)).thenReturn(mockApplication);
+
+        System.out.println("APP: " + mockApplication.getJobOffer().isHiring());
 
         employerService.addAppointmentByJobApplicationId(mockApplication.getId(), dateList);
         verify(jobApplicationRepository, times(2)).save(mockApplication);
