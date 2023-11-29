@@ -21,7 +21,23 @@
 7. Montrer le changement de session 
 ---
 ### Samuel
-1. Créer 2 offres de stage
+1. Créer 2 offres de stage 
+
+   **Offre 1**
+   - Titre: `Développeur Java`
+   - Description: `Développer des applications Java`
+   - Date de début: `2021-01-01`
+   - Date de fin: `2021-04-30`
+   - Nombre d'heures par semaine: `40`
+   - Salaire: `20`
+    - **Offre 2**
+    - Titre: `Développeur C#`
+    - Description: `Développer des applications C#`
+    - Date de début: `2021-01-01`
+    - Date de fin: `2021-04-30`
+    - Nombre d'heures par semaine: `40`
+    - Salaire: `20`
+          
     - Modifier une offre de stage
     - Supprimer une offre de stage
 2. Créer un compte Étudiant

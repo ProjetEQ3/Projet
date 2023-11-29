@@ -46,6 +46,7 @@ const EmployerPage = ({user}) => {
 	const { darkMode } = useDarkMode();
 
 	const getOffers = () => {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		axiosInstance
 			.get('/employer/offer/all', {params: {employerId: user.id}})
 			.then((response) => {
@@ -65,6 +66,7 @@ const EmployerPage = ({user}) => {
 
 	const getOffersWithSubmittedApplications = () => {
 		if (!user?.id) return;
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		axiosInstance
 			.get(`/employer/offer/submittedApplications/${user.id}`)
 			.then((response) => {
@@ -89,6 +91,7 @@ const EmployerPage = ({user}) => {
 	}
 
 	async function getContracts() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.get(`employer/contracts/${user.id}`)
 			.then((response) => {
@@ -100,6 +103,7 @@ const EmployerPage = ({user}) => {
 	}
 
 	async function fetchStudentList(userClicked){
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance
 			.get('employer/waitingStudents', {
@@ -120,6 +124,7 @@ const EmployerPage = ({user}) => {
 	}
 
 	async function fetchStudentsJobTitles(fetchedStudentList){
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		for(let student of fetchedStudentList){
 			axiosInstance
 				.get('employer/offerByApplication', {

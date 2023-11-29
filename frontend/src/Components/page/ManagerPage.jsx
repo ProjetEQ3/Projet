@@ -64,6 +64,7 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllStudents = async () => {
+        if (axiosInstance.defaults.params['season'] === undefined) return;
         await axiosInstance.get('manager/students')
             .then((response) => {
                 setStudents(response.data);
@@ -76,6 +77,7 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllOffers = async () => {
+        if (axiosInstance.defaults.params['season'] === undefined) return;
         await axiosInstance.get('manager/jobOffers/all',
         ).then((response) => {
             setOffers(response.data);
@@ -88,6 +90,7 @@ const ManagerPage = ({user}) => {
         });
     }
     const getAllCvs = async () => {
+        if (axiosInstance.defaults.params['season'] === undefined) return;
         await axiosInstance.get('manager/cvs/all',
         ).then((response) => {
             setCvs(response.data);
@@ -101,6 +104,7 @@ const ManagerPage = ({user}) => {
     }
 
     const getAllContracts = async () => {
+        if (axiosInstance.defaults.params['season'] === undefined) return;
         await axiosInstance.get('manager/contracts',
         ).then((response) => {
             setContracts(response.data)
