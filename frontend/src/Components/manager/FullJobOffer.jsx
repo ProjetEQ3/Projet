@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import {axiosInstance} from "../../App";
 import {toast} from "react-toastify";
-import State from "../util/State";
+import State from "./State";
 import {useTranslation} from "react-i18next";
 import {useDarkMode} from "../../context/DarkModeContext";
 
@@ -80,7 +80,7 @@ const FullJobOffer = ({ jobOffer, updateJobOfferListAfterApprovalOrRefusal }) =>
         <div className="modal-dialog">
             <div className={`modal-content ${darkMode ? 'bg-dark' : ''}`}>
                 <div className="modal-header">
-                    <h3 className={`modal-title ${darkMode ? 'text-light' : 'text-dark'}`}>{t('authorizeOffer')}</h3>
+                    <h3 className={`modal-title ${darkMode ? 'text-light' : 'text-dark'}`}>{t('offerDetails')}</h3>
                     <FontAwesomeIcon data-testid="faX" icon={faX} data-bs-dismiss="modal" className="danger-hover fa-lg pe-2" onClick={handleClose}/>
                 </div>
                 <div className="modal-body">
@@ -107,10 +107,17 @@ const FullJobOffer = ({ jobOffer, updateJobOfferListAfterApprovalOrRefusal }) =>
                             <button data-testid="confirmButton" type="submit" onClick={confirmDecline} className="btn btn-primary m-2" data-bs-dismiss="modal">{t('confirm')}</button>
                             <button data-testid="cancelButton" type="button" onClick={cancelDecline} className="btn btn-outline-secondary ms-2" data-bs-dismiss="modal">{t('cancel')}</button>
                         </form>) :
-                        (<div>
-                            <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal" disabled={jobOffer.jobOfferState !== 'SUBMITTED'}>{t('accept')}</button>
-                            <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger" disabled={jobOffer.jobOfferState !== 'SUBMITTED'}>{t('refuse')}</button>
-                        </div>)}
+                        jobOffer.jobOfferState === 'SUBMITTED' ?
+                        (
+                            <div>
+                                <button data-testid="acceptButton" type="button" onClick={handleAccept} className="btn btn-success mx-2" data-bs-dismiss="modal">{t('accept')}</button>
+                                <button data-testid="refuseButton" type="button" onClick={handleDecline} className="btn btn-danger" >{t('refuse')}</button>
+                            </div>
+                        ):
+                        (
+                            <button data-testid="closeButton" type="button" onClick={handleClose} className="btn btn-outline-danger" data-bs-dismiss="modal">{t('close')}</button>
+                        )
+                    }
                 </div>
              </div>
         </div>

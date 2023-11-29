@@ -77,7 +77,6 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 								<div key={index} onClick={() => handleSelectOffer(offer)}>
 									<ShortJobOffer
 										jobOffer={offer}
-										updateJobOfferList={updateOffer}
 										deleteOffer={() => deleteOffer(offer.id)}
 										isBold={boldTitle || isRefused}
 									/>
@@ -95,18 +94,19 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	const updateOffer = (offer) => {
 		axiosInstance
 			.put('/employer/offer', offer)
-			.then(() => {
-				const offerIndex = offers.findIndex((o) => o.id === offer.id)
+			.then((response) => {
 				const updatedOffers = offers.map((element, index) => {
-					if(index === offerIndex){
-						return offer
+					if(index === response.data.id){
+						console.log(response.data)
+						return response.data
 					}else{
 						return element
 					}
 				})
 				toast.success(t('updateInternshipSuccess'))
 				setOffers(updatedOffers)
-				setSelectedOffer(offer)
+				getOffers()
+				setSelectedOffer(response.data)
 			})
 			.catch((error) => {
 				toast.error(t('updateInternshipError') + t(error.response?.data.message))
@@ -127,6 +127,7 @@ const JobOfferList = ({user, getNbPostulations, offersWithApplications, getOffer
 	}
 
 	const handleSelectOffer = (offer) => {
+		if (offer === undefined) return;
 		setSelectedById(offer.id)
 		if (selectedById === selectedOffer?.id) {
 			return;

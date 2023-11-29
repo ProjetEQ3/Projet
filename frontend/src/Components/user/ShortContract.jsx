@@ -50,7 +50,7 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
     }
 
     return (
-        <div className='row'>
+        <div className='row my-2'>
             <div className={`col-12 ${darkMode ? 'bg-light-dark' : 'bg-white'} rounded pt-1`}>
                 <div className="row">
                     <div className="col-12 d-flex justify-content-around align-items-baseline">
@@ -74,6 +74,9 @@ const ShortContract = ({ contract, user, reloadContracts }) => {
                                     contract.studentSignature !== null ?
                                         <div className="text-success fw-bold">{t('signed')}</div>
                                         :
+                                        user.role === 'ROLE_MANAGER' && (contract.studentSignature === null || contract.employerSignature === null) ?
+                                            ''
+                                            :
                                 <button onClick={handleSignClick} className="btn btn-primary btn-sm" data-testid="sign-btn">{t('sign')}</button>
                         }
                     </div>
