@@ -125,6 +125,10 @@ textarea.dark-input:focus {
   background-color: #33393f;
 }
 
+.bg-dark-dark {
+  background-color: #22272e;
+}
+
 .sun {
   color: #fddb3a;
 }

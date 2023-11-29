@@ -12,15 +12,49 @@ const StudentEval = ({ user }) => {
     const student = jobApplication.student;
     const navigate = useNavigate();
     const { darkMode } = useDarkMode();
-    const [signaturePassword, setSignaturePassword] = useState('');
+    const [formData, setFormData] = useState({
+        a1: "",
+        b1: "",
+        c1: "",
+        d1: "",
+        e1: "",
+        comment1: "",
+        a2: "",
+        b2: "",
+        c2: "",
+        d2: "",
+        e2: "",
+        comment2: "",
+        a3: "",
+        b3: "",
+        c3: "",
+        d3: "",
+        e3: "",
+        f3: "",
+        comment3: "",
+        a4: "",
+        b4: "",
+        c4: "",
+        d4: "",
+        e4: "",
+        f4: "",
+        comment4: "",
+        globalAppreciationIntern: "",
+        discussedWithStudent: "",
+        takeItAgain: "",
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((fData) => ({
+            ...fData,
+            [name]: value,
+        }));
+    }
 
     const handleBack = () => {
         navigate(-1);
     };
-
-    const handleSignaturePasswordChange = (e) => {
-        setSignaturePassword(e.target.value);
-    }
 
     console.log(jobApplication)
     console.log(student)
@@ -46,49 +80,49 @@ const StudentEval = ({ user }) => {
                             <div className="col-1 my-auto">{t('stronglyDisagreeing')}</div>
                             <div className="col-1 my-auto">N/A</div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">a) {t('1a')}</label>
-                            <div className="col-1"><input type="radio" name="1a"/></div>
-                            <div className="col-1"><input type="radio" name="1a"/></div>
-                            <div className="col-1"><input type="radio" name="1a"/></div>
-                            <div className="col-1"><input type="radio" name="1a"/></div>
-                            <div className="col-1"><input type="radio" name="1a"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">a) {t('a1')}</label>
+                            <div className="col-1"><input type="radio" name="a1"/></div>
+                            <div className="col-1"><input type="radio" name="a1"/></div>
+                            <div className="col-1"><input type="radio" name="a1"/></div>
+                            <div className="col-1"><input type="radio" name="a1"/></div>
+                            <div className="col-1"><input type="radio" name="a1"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">b) {t('1b')}</label>
-                            <div className="col-1"><input type="radio" name="1b"/></div>
-                            <div className="col-1"><input type="radio" name="1b"/></div>
-                            <div className="col-1"><input type="radio" name="1b"/></div>
-                            <div className="col-1"><input type="radio" name="1b"/></div>
-                            <div className="col-1"><input type="radio" name="1b"/></div>
+                            <label className="col-7 text-start">b) {t('b1')}</label>
+                            <div className="col-1"><input type="radio" name="b1"/></div>
+                            <div className="col-1"><input type="radio" name="b1"/></div>
+                            <div className="col-1"><input type="radio" name="b1"/></div>
+                            <div className="col-1"><input type="radio" name="b1"/></div>
+                            <div className="col-1"><input type="radio" name="b1"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">c) {t('1c')}</label>
-                            <div className="col-1"><input type="radio" name="1c"/></div>
-                            <div className="col-1"><input type="radio" name="1c"/></div>
-                            <div className="col-1"><input type="radio" name="1c"/></div>
-                            <div className="col-1"><input type="radio" name="1c"/></div>
-                            <div className="col-1"><input type="radio" name="1c"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">c) {t('c1')}</label>
+                            <div className="col-1"><input type="radio" name="c1"/></div>
+                            <div className="col-1"><input type="radio" name="c1"/></div>
+                            <div className="col-1"><input type="radio" name="c1"/></div>
+                            <div className="col-1"><input type="radio" name="c1"/></div>
+                            <div className="col-1"><input type="radio" name="c1"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">d) {t('1d')}</label>
-                            <div className="col-1"><input type="radio" name="1d"/></div>
-                            <div className="col-1"><input type="radio" name="1d"/></div>
-                            <div className="col-1"><input type="radio" name="1d"/></div>
-                            <div className="col-1"><input type="radio" name="1d"/></div>
-                            <div className="col-1"><input type="radio" name="1d"/></div>
+                            <label className="col-7 text-start">d) {t('d1')}</label>
+                            <div className="col-1"><input type="radio" name="d1"/></div>
+                            <div className="col-1"><input type="radio" name="d1"/></div>
+                            <div className="col-1"><input type="radio" name="d1"/></div>
+                            <div className="col-1"><input type="radio" name="d1"/></div>
+                            <div className="col-1"><input type="radio" name="d1"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">e) {t('1e')}</label>
-                            <div className="col-1"><input type="radio" name="1e"/></div>
-                            <div className="col-1"><input type="radio" name="1e"/></div>
-                            <div className="col-1"><input type="radio" name="1e"/></div>
-                            <div className="col-1"><input type="radio" name="1e"/></div>
-                            <div className="col-1"><input type="radio" name="1e"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">e) {t('e1')}</label>
+                            <div className="col-1"><input type="radio" name="e1"/></div>
+                            <div className="col-1"><input type="radio" name="e1"/></div>
+                            <div className="col-1"><input type="radio" name="e1"/></div>
+                            <div className="col-1"><input type="radio" name="e1"/></div>
+                            <div className="col-1"><input type="radio" name="e1"/></div>
                         </div>
                         <div className="row mt-2">
                             <label className="text-start">{t('comments')} :</label>
-                            <textarea placeholder={t('comments')}/>
+                            <textarea name="comment1" placeholder={t('comments')}/>
                         </div>
                     </div>
                     <div className="col-12 text-center border border-ose rounded p-3 my-2">
@@ -104,49 +138,49 @@ const StudentEval = ({ user }) => {
                             <div className="col-1 my-auto">{t('stronglyDisagreeing')}</div>
                             <div className="col-1 my-auto">N/A</div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">a) {t('2a')}</label>
-                            <div className="col-1"><input type="radio" name="2a"/></div>
-                            <div className="col-1"><input type="radio" name="2a"/></div>
-                            <div className="col-1"><input type="radio" name="2a"/></div>
-                            <div className="col-1"><input type="radio" name="2a"/></div>
-                            <div className="col-1"><input type="radio" name="2a"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">a) {t('a2')}</label>
+                            <div className="col-1"><input type="radio" name="a2"/></div>
+                            <div className="col-1"><input type="radio" name="a2"/></div>
+                            <div className="col-1"><input type="radio" name="a2"/></div>
+                            <div className="col-1"><input type="radio" name="a2"/></div>
+                            <div className="col-1"><input type="radio" name="a2"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">b) {t('2b')}</label>
-                            <div className="col-1"><input type="radio" name="2b"/></div>
-                            <div className="col-1"><input type="radio" name="2b"/></div>
-                            <div className="col-1"><input type="radio" name="2b"/></div>
-                            <div className="col-1"><input type="radio" name="2b"/></div>
-                            <div className="col-1"><input type="radio" name="2b"/></div>
+                            <label className="col-7 text-start">b) {t('b2')}</label>
+                            <div className="col-1"><input type="radio" name="b2"/></div>
+                            <div className="col-1"><input type="radio" name="b2"/></div>
+                            <div className="col-1"><input type="radio" name="b2"/></div>
+                            <div className="col-1"><input type="radio" name="b2"/></div>
+                            <div className="col-1"><input type="radio" name="b2"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">c) {t('2c')}</label>
-                            <div className="col-1"><input type="radio" name="2c"/></div>
-                            <div className="col-1"><input type="radio" name="2c"/></div>
-                            <div className="col-1"><input type="radio" name="2c"/></div>
-                            <div className="col-1"><input type="radio" name="2c"/></div>
-                            <div className="col-1"><input type="radio" name="2c"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">c) {t('c2')}</label>
+                            <div className="col-1"><input type="radio" name="c2"/></div>
+                            <div className="col-1"><input type="radio" name="c2"/></div>
+                            <div className="col-1"><input type="radio" name="c2"/></div>
+                            <div className="col-1"><input type="radio" name="c2"/></div>
+                            <div className="col-1"><input type="radio" name="c2"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">d) {t('2d')}</label>
-                            <div className="col-1"><input type="radio" name="2d"/></div>
-                            <div className="col-1"><input type="radio" name="2d"/></div>
-                            <div className="col-1"><input type="radio" name="2d"/></div>
-                            <div className="col-1"><input type="radio" name="2d"/></div>
-                            <div className="col-1"><input type="radio" name="2d"/></div>
+                            <label className="col-7 text-start">d) {t('d2')}</label>
+                            <div className="col-1"><input type="radio" name="d2"/></div>
+                            <div className="col-1"><input type="radio" name="d2"/></div>
+                            <div className="col-1"><input type="radio" name="d2"/></div>
+                            <div className="col-1"><input type="radio" name="d2"/></div>
+                            <div className="col-1"><input type="radio" name="d2"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">e) {t('2e')}</label>
-                            <div className="col-1"><input type="radio" name="2e"/></div>
-                            <div className="col-1"><input type="radio" name="2e"/></div>
-                            <div className="col-1"><input type="radio" name="2e"/></div>
-                            <div className="col-1"><input type="radio" name="2e"/></div>
-                            <div className="col-1"><input type="radio" name="2e"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">e) {t('e2')}</label>
+                            <div className="col-1"><input type="radio" name="e2"/></div>
+                            <div className="col-1"><input type="radio" name="e2"/></div>
+                            <div className="col-1"><input type="radio" name="e2"/></div>
+                            <div className="col-1"><input type="radio" name="e2"/></div>
+                            <div className="col-1"><input type="radio" name="e2"/></div>
                         </div>
                         <div className="row mt-2">
                             <label className="text-start">{t('comments')} :</label>
-                            <textarea placeholder={t('comments')}/>
+                            <textarea name="comment2" placeholder={t('comments')}/>
                         </div>
                     </div>
                     <div className="col-12 text-center border border-ose rounded p-3 my-2">
@@ -162,57 +196,57 @@ const StudentEval = ({ user }) => {
                             <div className="col-1 my-auto">{t('stronglyDisagreeing')}</div>
                             <div className="col-1 my-auto">N/A</div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">a) {t('3a')}</label>
-                            <div className="col-1"><input type="radio" name="3a"/></div>
-                            <div className="col-1"><input type="radio" name="3a"/></div>
-                            <div className="col-1"><input type="radio" name="3a"/></div>
-                            <div className="col-1"><input type="radio" name="3a"/></div>
-                            <div className="col-1"><input type="radio" name="3a"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">a) {t('a3')}</label>
+                            <div className="col-1"><input type="radio" name="a3"/></div>
+                            <div className="col-1"><input type="radio" name="a3"/></div>
+                            <div className="col-1"><input type="radio" name="a3"/></div>
+                            <div className="col-1"><input type="radio" name="a3"/></div>
+                            <div className="col-1"><input type="radio" name="a3"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">b) {t('3b')}</label>
-                            <div className="col-1"><input type="radio" name="3b"/></div>
-                            <div className="col-1"><input type="radio" name="3b"/></div>
-                            <div className="col-1"><input type="radio" name="3b"/></div>
-                            <div className="col-1"><input type="radio" name="3b"/></div>
-                            <div className="col-1"><input type="radio" name="3b"/></div>
+                            <label className="col-7 text-start">b) {t('b3')}</label>
+                            <div className="col-1"><input type="radio" name="b3"/></div>
+                            <div className="col-1"><input type="radio" name="b3"/></div>
+                            <div className="col-1"><input type="radio" name="b3"/></div>
+                            <div className="col-1"><input type="radio" name="b3"/></div>
+                            <div className="col-1"><input type="radio" name="b3"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">c) {t('3c')}</label>
-                            <div className="col-1"><input type="radio" name="3c"/></div>
-                            <div className="col-1"><input type="radio" name="3c"/></div>
-                            <div className="col-1"><input type="radio" name="3c"/></div>
-                            <div className="col-1"><input type="radio" name="3c"/></div>
-                            <div className="col-1"><input type="radio" name="3c"/></div>
-                        </div>
-                        <div className="row py-2">
-                            <label className="col-7 text-start">d) {t('3d')}</label>
-                            <div className="col-1"><input type="radio" name="3d"/></div>
-                            <div className="col-1"><input type="radio" name="3d"/></div>
-                            <div className="col-1"><input type="radio" name="3d"/></div>
-                            <div className="col-1"><input type="radio" name="3d"/></div>
-                            <div className="col-1"><input type="radio" name="3d"/></div>
-                        </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">e) {t('3e')}</label>
-                            <div className="col-1"><input type="radio" name="3e"/></div>
-                            <div className="col-1"><input type="radio" name="3e"/></div>
-                            <div className="col-1"><input type="radio" name="3e"/></div>
-                            <div className="col-1"><input type="radio" name="3e"/></div>
-                            <div className="col-1"><input type="radio" name="3e"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">c) {t('c3')}</label>
+                            <div className="col-1"><input type="radio" name="c3"/></div>
+                            <div className="col-1"><input type="radio" name="c3"/></div>
+                            <div className="col-1"><input type="radio" name="c3"/></div>
+                            <div className="col-1"><input type="radio" name="c3"/></div>
+                            <div className="col-1"><input type="radio" name="c3"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">e) {t('3f')}</label>
-                            <div className="col-1"><input type="radio" name="3f"/></div>
-                            <div className="col-1"><input type="radio" name="3f"/></div>
-                            <div className="col-1"><input type="radio" name="3f"/></div>
-                            <div className="col-1"><input type="radio" name="3f"/></div>
-                            <div className="col-1"><input type="radio" name="3f"/></div>
+                            <label className="col-7 text-start">d) {t('d3')}</label>
+                            <div className="col-1"><input type="radio" name="d3"/></div>
+                            <div className="col-1"><input type="radio" name="d3"/></div>
+                            <div className="col-1"><input type="radio" name="d3"/></div>
+                            <div className="col-1"><input type="radio" name="d3"/></div>
+                            <div className="col-1"><input type="radio" name="d3"/></div>
+                        </div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">e) {t('e3')}</label>
+                            <div className="col-1"><input type="radio" name="e3"/></div>
+                            <div className="col-1"><input type="radio" name="e3"/></div>
+                            <div className="col-1"><input type="radio" name="e3"/></div>
+                            <div className="col-1"><input type="radio" name="e3"/></div>
+                            <div className="col-1"><input type="radio" name="e3"/></div>
+                        </div>
+                        <div className="row py-2">
+                            <label className="col-7 text-start">e) {t('f3')}</label>
+                            <div className="col-1"><input type="radio" name="f3"/></div>
+                            <div className="col-1"><input type="radio" name="f3"/></div>
+                            <div className="col-1"><input type="radio" name="f3"/></div>
+                            <div className="col-1"><input type="radio" name="f3"/></div>
+                            <div className="col-1"><input type="radio" name="f3"/></div>
                         </div>
                         <div className="row mt-2">
                             <label className="text-start">{t('comments')} :</label>
-                            <textarea placeholder={t('comments')}/>
+                            <textarea name="comment3" placeholder={t('comments')}/>
                         </div>
                     </div>
                     <div className="col-12 text-center border border-ose rounded p-3 my-2">
@@ -228,62 +262,62 @@ const StudentEval = ({ user }) => {
                             <div className="col-1 my-auto">{t('stronglyDisagreeing')}</div>
                             <div className="col-1 my-auto">N/A</div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">a) {t('4a')}</label>
-                            <div className="col-1"><input type="radio" name="4a"/></div>
-                            <div className="col-1"><input type="radio" name="4a"/></div>
-                            <div className="col-1"><input type="radio" name="4a"/></div>
-                            <div className="col-1"><input type="radio" name="4a"/></div>
-                            <div className="col-1"><input type="radio" name="4a"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">a) {t('a4')}</label>
+                            <div className="col-1"><input type="radio" name="a4"/></div>
+                            <div className="col-1"><input type="radio" name="a4"/></div>
+                            <div className="col-1"><input type="radio" name="a4"/></div>
+                            <div className="col-1"><input type="radio" name="a4"/></div>
+                            <div className="col-1"><input type="radio" name="a4"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">b) {t('4b')}</label>
-                            <div className="col-1"><input type="radio" name="4b"/></div>
-                            <div className="col-1"><input type="radio" name="4b"/></div>
-                            <div className="col-1"><input type="radio" name="4b"/></div>
-                            <div className="col-1"><input type="radio" name="4b"/></div>
-                            <div className="col-1"><input type="radio" name="4b"/></div>
+                            <label className="col-7 text-start">b) {t('b4')}</label>
+                            <div className="col-1"><input type="radio" name="b4"/></div>
+                            <div className="col-1"><input type="radio" name="b4"/></div>
+                            <div className="col-1"><input type="radio" name="b4"/></div>
+                            <div className="col-1"><input type="radio" name="b4"/></div>
+                            <div className="col-1"><input type="radio" name="b4"/></div>
                         </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">c) {t('4c')}</label>
-                            <div className="col-1"><input type="radio" name="4c"/></div>
-                            <div className="col-1"><input type="radio" name="4c"/></div>
-                            <div className="col-1"><input type="radio" name="4c"/></div>
-                            <div className="col-1"><input type="radio" name="4c"/></div>
-                            <div className="col-1"><input type="radio" name="4c"/></div>
-                        </div>
-                        <div className="row py-2">
-                            <label className="col-7 text-start">d) {t('4d')}</label>
-                            <div className="col-1"><input type="radio" name="4d"/></div>
-                            <div className="col-1"><input type="radio" name="4d"/></div>
-                            <div className="col-1"><input type="radio" name="4d"/></div>
-                            <div className="col-1"><input type="radio" name="4d"/></div>
-                            <div className="col-1"><input type="radio" name="4d"/></div>
-                        </div>
-                        <div className="row bg-white py-2">
-                            <label className="col-7 text-start">e) {t('4e')}</label>
-                            <div className="col-1"><input type="radio" name="4e"/></div>
-                            <div className="col-1"><input type="radio" name="4e"/></div>
-                            <div className="col-1"><input type="radio" name="4e"/></div>
-                            <div className="col-1"><input type="radio" name="4e"/></div>
-                            <div className="col-1"><input type="radio" name="4e"/></div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">c) {t('c4')}</label>
+                            <div className="col-1"><input type="radio" name="c4"/></div>
+                            <div className="col-1"><input type="radio" name="c4"/></div>
+                            <div className="col-1"><input type="radio" name="c4"/></div>
+                            <div className="col-1"><input type="radio" name="c4"/></div>
+                            <div className="col-1"><input type="radio" name="c4"/></div>
                         </div>
                         <div className="row py-2">
-                            <label className="col-7 text-start">e) {t('4f')}</label>
-                            <div className="col-1"><input type="radio" name="4f"/></div>
-                            <div className="col-1"><input type="radio" name="4f"/></div>
-                            <div className="col-1"><input type="radio" name="4f"/></div>
-                            <div className="col-1"><input type="radio" name="4f"/></div>
-                            <div className="col-1"><input type="radio" name="4f"/></div>
+                            <label className="col-7 text-start">d) {t('d4')}</label>
+                            <div className="col-1"><input type="radio" name="d4"/></div>
+                            <div className="col-1"><input type="radio" name="d4"/></div>
+                            <div className="col-1"><input type="radio" name="d4"/></div>
+                            <div className="col-1"><input type="radio" name="d4"/></div>
+                            <div className="col-1"><input type="radio" name="d4"/></div>
+                        </div>
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
+                            <label className="col-7 text-start">e) {t('e4')}</label>
+                            <div className="col-1"><input type="radio" name="e4"/></div>
+                            <div className="col-1"><input type="radio" name="e4"/></div>
+                            <div className="col-1"><input type="radio" name="e4"/></div>
+                            <div className="col-1"><input type="radio" name="e4"/></div>
+                            <div className="col-1"><input type="radio" name="e4"/></div>
+                        </div>
+                        <div className="row py-2">
+                            <label className="col-7 text-start">e) {t('f4')}</label>
+                            <div className="col-1"><input type="radio" name="f4"/></div>
+                            <div className="col-1"><input type="radio" name="f4"/></div>
+                            <div className="col-1"><input type="radio" name="f4"/></div>
+                            <div className="col-1"><input type="radio" name="f4"/></div>
+                            <div className="col-1"><input type="radio" name="f4"/></div>
                         </div>
                         <div className="row mt-2">
                             <label className="text-start">{t('comments')} :</label>
-                            <textarea placeholder={t('comments')}/>
+                            <textarea name="comment4" placeholder={t('comments')}/>
                         </div>
                     </div>
                     <div className="col-12 border border-ose rounded p-3 my-2">
                         <h3 className="fw-light text-start">{t('globaleAppreciationIntern')}</h3>
-                        <div className="row bg-white py-2">
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillFarExceedExpectations')}</label>
                             <div className="col-6 text-center">
                                 <input type="radio" name="globalAppreciationIntern"/>
@@ -295,7 +329,7 @@ const StudentEval = ({ user }) => {
                                 <input type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
-                        <div className="row bg-white py-2">
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillMeetsExpectations')}</label>
                             <div className="col-6 text-center">
                                 <input type="radio" name="globalAppreciationIntern"/>
@@ -307,7 +341,7 @@ const StudentEval = ({ user }) => {
                                 <input type="radio" name="globalAppreciationIntern"/>
                             </div>
                         </div>
-                        <div className="row bg-white py-2">
+                        <div className={`row ${darkMode ? 'bg-dark-dark' : 'bg-white'} py-2`}>
                             <label className="col-6">{t('skillDoesNotMeetExpectations')}</label>
                             <div className="col-6 text-center">
                                 <input type="radio" name="globalAppreciationIntern"/>
