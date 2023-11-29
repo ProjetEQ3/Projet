@@ -546,8 +546,21 @@ public class EmployerServiceTest {
         updatedJobOffer.setId(jobOfferId);
         updatedJobOffer.setStartDate(LocalDate.now());
 
-        JobOffer returnedJobOffer = JobOffer.builder()
-                .id(jobOfferId)
+        JobOffer returnedJobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
                 .build();
 
         when(jobOfferRepository.findById(jobOfferId)).thenReturn(Optional.of(returnedJobOffer));
@@ -567,7 +580,24 @@ public class EmployerServiceTest {
     public void DeleteJobOffer_valid() {
         // Arrange
         Long jobOfferId = 1L;
+        JobOffer returnedJobOffer = JobOffer
+                .builder()
+                .id(1L)
+                .title("test")
+                .description("test")
+                .location("test")
+                .department(Department._420B0)
+                .jobOfferState(JobOfferState.OPEN)
+                .duration(6)
+                .hoursPerWeek(40)
+                .salary(20.0f)
+                .startDate(LocalDate.now())
+                .expirationDate(LocalDate.now().plusDays(30))
+                .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
+                .build();
 
+        when (jobOfferRepository.existsById(jobOfferId)).thenReturn(true);
         // Act
         employerService.deleteJobOffer(jobOfferId);
 
@@ -791,6 +821,7 @@ public class EmployerServiceTest {
                 .startDate(LocalDate.now())
                 .expirationDate(LocalDate.now().plusDays(30))
                 .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
                 .build();
         Student student = Student
                 .builder()
@@ -848,6 +879,7 @@ public class EmployerServiceTest {
                 .startDate(LocalDate.now())
                 .expirationDate(LocalDate.now().plusDays(30))
                 .semester(new Semester(LocalDate.now()))
+                .jobApplications(new ArrayList<>())
                 .build();
         Student student = Student
                 .builder()
