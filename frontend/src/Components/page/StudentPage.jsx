@@ -14,7 +14,6 @@ import Home from "../student/Home";
 import NotificationBadge from '../notification/NotificationBadge';
 import Application from "../../model/Application";
 import Appointment from "../../model/Appointment";
-import cv from "../student/Cv";
 
 const StudentPage = ({user, setUser}) => {
   const {selectedSessionIndex} = useSession();
@@ -45,6 +44,7 @@ const StudentPage = ({user, setUser}) => {
   });
 
 	async function fetchStudentJobOffers() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.get(`/student/jobOffers/open`)
 			.then((response) => {
@@ -55,6 +55,7 @@ const StudentPage = ({user, setUser}) => {
 			});
 	}
 	const fetchAppointments = async () => {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		myApplications.map((application) => {
 			if (application.id === 0) return;
 			axiosInstance.get(`/student/appointmentsByJobOfferIdAndStudentId/${application.id}/${user.id}`)
@@ -77,6 +78,7 @@ const StudentPage = ({user, setUser}) => {
 	};
 
 	async function fetchContracts() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.get(`student/contracts/${user.id}`)
 			.then((response) => {
@@ -88,6 +90,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	async function fetchMyApplications() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.get(`/student/appliedJobOffer/${user.id}`)
 			.then((response) => {
@@ -99,6 +102,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	async function fetchViewedJobOfferList() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.get(`/student/viewedJobOffers/${user.id}`)
 			.then((response) => {
@@ -110,6 +114,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	function filterApplicationsFromJobOffers() {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		return jobOffers.map((jobOffer) => {
 			myApplications.map((application) => {
 				if (application.id === jobOffer.id)
@@ -127,6 +132,7 @@ const StudentPage = ({user, setUser}) => {
 	}
 
 	async function handleViewJobOffer(jobOffer) {
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		if (!user?.id) return;
 		await axiosInstance.put(`/student/jobOffer/view/${user.id}/${jobOffer.id}`)
 			.then((response) => {
@@ -142,6 +148,7 @@ const StudentPage = ({user, setUser}) => {
 	const refreshCvState = () => {
 		if (!user?.id) return;
 		if (!user.cvFile || !user.cvFile.id) return;
+		if (axiosInstance.defaults.params['season'] === undefined) return;
 		axiosInstance
 			.get(`/student/cv/${user.id}`)
 			.then((response) => {
