@@ -73,18 +73,21 @@
 1. Se connecter en tant qu'étudiant
    - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
-2. Postuler pour une offre de stage avec une lettre de motivation
+2. Postuler pour l'offre de stage `Développeur Java` avec une lettre de motivation
    * Commenter qu'on peut postuler sans mettre lettre de motivation
 3. Se connecter en tant qu'employeur
    - Courriel: `lokolokololo41@gmail.com`
    - Mot de passe: `Glucose123`
 4. Convoquer un étudiant à une entrevue
    - Mettre à cinq dates puis à deux dates et expliquer que si on met une date, la convocation ne peut être choisie par l'étudiant
-   * Commenter qu'on peut embaucher avant la date de l'entrevue 
+   * Commenter qu'on peut embaucher avant la date de l'entrevue
+   - `2023-12-12 12:00`
+   - `2023-12-13 13:00`
 5. Se connecter en tant qu'étudiant
    - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
 6. Choisir une date de rendez-vous pour une application
+   - `2023-12-12 12:00`
 ---
 ### Gab
 1. Se connecter en tant qu'employeur
@@ -92,12 +95,12 @@
    - Mot de passe: `Glucose123`
 2. Embaucher un étudiant
    - Dire qu'on peut le refuser et qu'on peut voir le détail de ton CV à nouveau
-3. Signer un contrat
-   - Expliquer que si l'on ne signe pas, l'offre de stage ne sera pas valide.
+3. Signer le contrat
+   - Expliquer que si l'on ne signe pas, l'embauche ne sera pas valide mais que le système laisse passer au cas ou des complications administratives arrivent (Pas faire barrière si une version papier est disponible par example).
 4. Se connecter en tant qu'étudiant
    - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
-5. Signer un contrat de stage
+5. Signer le contrat de stage
 6. Se connecter en tant que manager
    - Courriel: `buzzwares@gmail.com`
    - Mot de passe: `Glucose123`
