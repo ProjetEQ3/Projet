@@ -3,7 +3,6 @@ import ShortJobOffer from "./ShortJobOffer";
 import ShortJobApplicationDisplay from "./ShortJobApplicationDisplay";
 import React from "react";
 import ShortContractNotif from "../user/ShortContractNotif";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, handleViewJobOffer}) => {
     const {t} = useTranslation();
@@ -32,11 +31,11 @@ const Home = ({setTab, setIdElement, jobOffers, applications, cv, contracts, han
     }
 
     const needBeingShown = () => {
-        forEach(applications, (application) => {
-            if (application.appointments.length > 0) {
+        for (let application in applications) {
+            if (application.appointments?.length > 0) {
                 return true;
             }
-        })
+        }
         return false;
     }
 
