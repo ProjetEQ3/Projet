@@ -52,11 +52,13 @@
 2. Créer un compte Étudiant
     - Prénom: `Jean`
     - Nom: `Tremblay`
-    - Courriel:
+    - Courriel: `jeantremblayglucose@gmail.com`
     - Matricule: `1111111`
     - Programme: `420.B0`
     - Mot de passe: `Glucose123`
 3. Se connecter en tant qu'étudiant
+   - Courriel: `jeantremblayglucose@gmail.com`
+   - Mot de passe: `Glucose123`
 4. Essayer de postuler sur une offre de stage sans cv
 5. Téléverser CV
 6. Se connecter en tant que manager
@@ -69,7 +71,7 @@
 ---
 ### Zaka
 1. Se connecter en tant qu'étudiant
-   - Courriel:
+   - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
 2. Postuler pour une offre de stage avec une lettre de motivation
    * Commenter qu'on peut postuler sans mettre lettre de motivation
@@ -80,7 +82,7 @@
    - Mettre à cinq dates puis à deux dates et expliquer que si on met une date, la convocation ne peut être choisie par l'étudiant
    * Commenter qu'on peut embaucher avant la date de l'entrevue 
 5. Se connecter en tant qu'étudiant
-   - Courriel:
+   - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
 6. Choisir une date de rendez-vous pour une application
 ---
@@ -93,7 +95,7 @@
 3. Signer un contrat
    - Expliquer que si l'on ne signe pas, l'offre de stage ne sera pas valide.
 4. Se connecter en tant qu'étudiant
-   - Courriel:
+   - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
 5. Signer un contrat de stage
 6. Se connecter en tant que manager
