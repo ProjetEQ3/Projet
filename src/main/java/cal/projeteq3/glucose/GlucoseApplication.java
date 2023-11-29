@@ -5,13 +5,12 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
-import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
+import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Employer;
 import cal.projeteq3.glucose.model.user.Manager;
 import cal.projeteq3.glucose.model.user.Student;
-import cal.projeteq3.glucose.model.jobOffer.JobOffer;
-import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.repository.EmployerRepository;
 import cal.projeteq3.glucose.repository.ManagerRepository;
 import cal.projeteq3.glucose.repository.StudentRepository;
@@ -51,8 +50,36 @@ public class GlucoseApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		createDatabase();
-		createApplication();
+		studentRepository.save(Student.builder()
+				.firstName("Louis")
+				.lastName("Étudiant")
+				.email("bonjourmichel44@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.matricule("0000003")
+				.department("_420B0")
+				.build());
+		employerRepository.save(Employer.builder()
+				.firstName("Louis")
+				.lastName("Employeur")
+				.email("glucose.professionnel@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.organisationName("Fritz")
+				.organisationPhone("123-456-7890")
+				.build());
+		managerRepository.save(Manager.builder()
+				.firstName("Emailer")
+				.lastName("Tester")
+				.email("glucose.pro@gmail.com")
+				.password(passwordEncoder.encode("Ose12345"))
+				.matricule("0000111")
+				.phoneNumber("123-456-7890")
+				.department(Department._420B0)
+				.build());
+
+		studentService.addCv(1L, createFakePDF("cv_louis_michaud.pdf"));
+
+//		createDatabase();
+//		createApplication();
 	}
 
 	private void createDatabase(){
@@ -71,7 +98,10 @@ public class GlucoseApplication implements CommandLineRunner {
 		studentService.applyJobOffer(9L, 10L, "CoverLetter");
 		studentService.applyJobOffer(10L, 10L, "CoverLetter");
 
-		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(Set.of(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), LocalDateTime.now().plusDays(3))));
+		employerService.addAppointmentByJobApplicationId(1L, new HashSet<>(
+				Set.of(LocalDateTime.now().plusDays(1),
+						LocalDateTime.now().plusDays(2),
+						LocalDateTime.now().plusDays(3))));
 	}
 
 	private List<Employer> createEmployer(){
@@ -148,7 +178,7 @@ public class GlucoseApplication implements CommandLineRunner {
 				Student.builder()
 						.firstName("Louis")
 						.lastName("Étudiant")
-						.email("louis@michaud.com")
+						.email("bonjourmichel44@gmail.com")
 						.password(passwordEncoder.encode("Ose12345"))
 						.matricule("0000003")
 						.department("_420B0")
@@ -222,6 +252,15 @@ public class GlucoseApplication implements CommandLineRunner {
 							.email("michel@michaud.com")
 							.password(passwordEncoder.encode("Ose12345"))
 							.matricule("0000002")
+							.phoneNumber("123-456-7890")
+							.department(Department._420B0)
+							.build(),
+					Manager.builder()
+							.firstName("Emailer")
+							.lastName("Tester")
+							.email("patatepoilu876@gmail.com")
+							.password(passwordEncoder.encode("Ose12345"))
+							.matricule("0000111")
 							.phoneNumber("123-456-7890")
 							.department(Department._420B0)
 							.build()

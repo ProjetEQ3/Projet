@@ -2,6 +2,7 @@ package cal.projeteq3.glucose.controller;
 
 import cal.projeteq3.glucose.exception.APIException;
 import cal.projeteq3.glucose.exception.CustomErrorResponse;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .timestamp(LocalDateTime.now().toString())
                 .status(673)
                 .message("Erreur de la base de données")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(MessagingException.class)
+    public ResponseEntity<CustomErrorResponse> handleMessagingException(MessagingException ex) {
+        CustomErrorResponse response = CustomErrorResponse.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(HttpStatus.I_AM_A_TEAPOT.value())
+                .message("Erreur lors de la notification par courriel: " + ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
 

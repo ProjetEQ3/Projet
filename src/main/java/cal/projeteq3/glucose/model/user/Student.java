@@ -3,6 +3,7 @@ package cal.projeteq3.glucose.model.user;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
+import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
 import jakarta.persistence.*;

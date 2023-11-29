@@ -104,13 +104,6 @@ public class ManagerService{
 		cvRepository.deleteAllByStudent(studentRepository.findByMatricule(matricule));
 	}
 
-	public CvFileDTO rejectCv(Long id, String reason){
-		CvFile cvFile = cvRepository.findById(id).orElseThrow(CvFileNotFoundException::new);
-		cvFile.setCvState(CvState.REFUSED);
-		cvFile.setRefusReason(reason);
-		return new CvFileDTO(cvRepository.save(cvFile));
-	}
-
 	public List<CvFileDTO> getCvFilesWithState(CvState state, Department department){
 		List<CvFile> cvFiles = cvRepository.findAllByCvState(state);
 		return cvFiles.stream().filter(cvFile -> cvFile.getStudent().getDepartment() == department).map(CvFileDTO::new)
@@ -177,8 +170,7 @@ public class ManagerService{
 				.contract(contract)
 				.build());
 		contract.setManagerSignature(signature);
-//		TODO: get what manager ?
-		return new ContractDTO(contractRepository.save(contract), managerRepository.findAll().get(0));
+		return new ContractDTO(contractRepository.save(contract), manager);
 	}
 
 	public List<StudentDTO> getStudents(Department department){
