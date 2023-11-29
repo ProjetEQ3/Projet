@@ -59,7 +59,7 @@ const RegisterEmployerForm = () => {
         if(formData.organisationName === ''){
             validationErrors.organisationName = t('organisationNameRequired');
         }
-        else if(!/^[a-zA-Z0-9-. ]+$/.test(formData.organisationName)){
+        else if(!/^[a-zA-Z- \u00C0-\u017F]+$/.test(formData.organisationName)){
             validationErrors.organisationName = t('organisationNameInvalid');
         }
 
