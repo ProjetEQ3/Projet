@@ -107,8 +107,7 @@
 1. Monitorer les étudiants
    - Courriel : `buzzwares@gmail.com`
    - Mot de passe: `Glucose123`
-2. Évaluer le milieu de stage (CHECK SI DONE)
-   - Expliquer que l'on peut évaluer le milieu de stage à tout moment
+2. Évaluer le milieu de stage
 3. Se connecter en tant qu'employeur
    - Courriel: `lokolokololo41@gmail.com`
    - Mot de passe: `Glucose123`
