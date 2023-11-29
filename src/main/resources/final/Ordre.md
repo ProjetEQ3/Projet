@@ -49,23 +49,23 @@
           
    - Modifier une offre de stage
    - Supprimer une offre de stage
-2. Créer un compte Étudiant
+2.Se connecter en tant que manager
+   - Courriel: `buzzwares@gmail.com`
+   - Mot de passe: `Glucose123`
+3Approuver une offre de stage
+   - Commenter qu'on peut refuser avec une raison, mais annuler le refus
+4.Créer un compte Étudiant
     - Prénom: `Jean`
     - Nom: `Tremblay`
     - Courriel: `jeantremblayglucose@gmail.com`
     - Matricule: `1111111`
     - Programme: `420.B0`
     - Mot de passe: `Glucose123`
-3. Se connecter en tant qu'étudiant
+5.Se connecter en tant qu'étudiant
    - Courriel: `jeantremblayglucose@gmail.com`
    - Mot de passe: `Glucose123`
-4. Essayer de postuler sur une offre de stage sans cv
-5. Téléverser CV
-6. Se connecter en tant que manager
-   - Courriel: `buzzwares@gmail.com`
-   - Mot de passe: `Glucose123`
-7. Approuver une offre de stage 
-   - Commenter qu'on peut refuser avec une raison, mais annuler le refus
+6.Essayer de postuler sur une offre de stage sans cv
+7.Téléverser CV
 8. Approuver un CV
    - Commenter qu'on peut refuser avec une raison, mais annuler le refus
 ---
