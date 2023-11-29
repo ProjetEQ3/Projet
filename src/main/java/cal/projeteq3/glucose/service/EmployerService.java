@@ -8,6 +8,7 @@ import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferHasApplicationsException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
@@ -126,6 +127,8 @@ public class EmployerService{
 		JobOffer jobOffer = jobOfferRepository.findById(updatedJobOffer.getId())
 			.orElseThrow(() -> new JobOfferNotFoundException(updatedJobOffer.getId()));
 
+		if (!jobOffer.getJobApplications().isEmpty()) throw new JobOfferHasApplicationsException();
+
 		jobOffer.copy(updatedJobOffer.toEntity());
 
 		jobOffer.setSemester(new Semester(jobOffer.getStartDate()));
@@ -136,6 +139,9 @@ public class EmployerService{
 	}
 
 	public void deleteJobOffer(Long id){
+		JobOffer jobOffer = jobOfferRepository.findById(id)
+			.orElseThrow(() -> new JobOfferNotFoundException(id));
+		if (!jobOffer.getJobApplications().isEmpty()) throw new JobOfferHasApplicationsException();
 		jobOfferRepository.deleteById(id);
 	}
 
