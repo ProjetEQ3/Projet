@@ -3,12 +3,14 @@ package cal.projeteq3.glucose.controller;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.WorkEnvironmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.sections.WorkEnvironment;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.ManagerService;
@@ -141,5 +143,11 @@ public class ManagerController {
         return ResponseEntity.accepted()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(managerService.getJobApplicationsByStudentId(id));
+    }
+
+    @PostMapping("/environmentEvaluation/{jobApplicationId}")
+    public ResponseEntity<Void> addEnvironmentEvaluation(@PathVariable Long jobApplicationId, @RequestBody WorkEnvironmentDTO workEnvironment){
+        managerService.saveWorkEnvironmentEvaluationWithJobApplicationId(jobApplicationId, workEnvironment);
+        return ResponseEntity.accepted().build();
     }
 }

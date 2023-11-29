@@ -10,6 +10,10 @@ import {useNavigate} from "react-router-dom";
 import NotificationBadge from "../notification/NotificationBadge";
 import Home from "../employer/Home";
 import {useDarkMode} from "../../context/DarkModeContext";
+import HiredStudents from "../employer/HiredStudents";
+import JobApplication from "../../model/JobApplication";
+import Student from "../../model/Student";
+import JobOffer from "../../model/JobOffer";
 
 const EmployerPage = ({user}) => {
 	const navigate = useNavigate();
@@ -19,8 +23,10 @@ const EmployerPage = ({user}) => {
 		{ id: 'home', label: 'home' },
 		{ id: 'stages', label: 'jobOffers' },
 		{ id: 'interviewed', label: 'convokedStudents' },
-		{ id: 'contract', label: 'contracts' }
+		{ id: 'contract', label: 'contracts' },
+		{ id: 'student', label: 'hiredStudents' }
 	];
+
 	const [contracts, setContracts] = useState([new Contract()]);
 	const [studentList, setStudentList] = useState([])
 	const [nbPostulations, setNbPostulations] = useState(0);
@@ -31,6 +37,7 @@ const EmployerPage = ({user}) => {
 		stages: { red: 0, green: 0, gray: 0 },
 		interviewed: { red: 0, green: 0, gray: 0 },
 		contract: { red: 0, green: 0, gray: 0 },
+		student: { red: 0, green: 0, gray: 0 },
 	});
 	const [offers, setOffers] = useState([])
 	const [refusedCount, setRefusedCount] = useState(0)
@@ -102,7 +109,6 @@ const EmployerPage = ({user}) => {
 				if(response.data.length === 0){
 					setStudentList([])
 					if (userClicked) return
-					toast.info(t('noStudentsConvoked'))
 					return
 				}
 				fetchStudentsJobTitles(response.data)
@@ -189,6 +195,7 @@ const EmployerPage = ({user}) => {
 													   setRefusedCount={setRefusedCount} getOffers={getOffers} offers={offers} setOffers={setOffers}/>}
 					{tab === 'interviewed' && <InterviewedStudentList user={user} fetchStudentList={fetchStudentList} studentList={studentList}/>}
 					{tab === 'contract' && <ContractList user={user} contracts={contracts} reloadContracts={getContracts}/>}
+					{tab === 'student' && <HiredStudents user={user}/>}
 			</div>
 		</div>
 	)

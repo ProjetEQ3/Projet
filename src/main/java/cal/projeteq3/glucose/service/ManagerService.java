@@ -2,17 +2,22 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.WorkEnvironmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.ManagerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.WorkEnvironmentEvaluationAlreadyExistsException;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
 import cal.projeteq3.glucose.model.cvFile.CvFile;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
+import cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.WorkEnvironmentEvaluation;
+import cal.projeteq3.glucose.model.evaluation.workEnvironmentEvaluation.sections.WorkEnvironment;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
@@ -36,6 +41,7 @@ public class ManagerService{
 	private final ContractRepository contractRepository;
 	private final SignatureRepository signatureRepository;
 	private final JobApplicationRepository jobApplicationRepository;
+	private final WorkEnvironmentEvaluationRepository workEnvironmentEvaluationRepository;
 
 	// database operations here
 
@@ -184,6 +190,31 @@ public class ManagerService{
 
 	public List<JobApplicationDTO> getJobApplicationsByStudentId(Long id){
 		return jobApplicationRepository.findAllByStudentId(id).stream().map(JobApplicationDTO::new).toList();
+	}
+
+	public JobApplicationDTO saveWorkEnvironmentEvaluationWithJobApplicationId(Long jobApplicationId, WorkEnvironmentDTO workEnvironmentDTO){
+		if (workEnvironmentEvaluationRepository.existsByJobApplicationId(jobApplicationId)) throw new WorkEnvironmentEvaluationAlreadyExistsException();
+		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId).orElseThrow(JobApplicationNotFoundException::new);
+		WorkEnvironmentEvaluation workEnvironmentEvaluation = new WorkEnvironmentEvaluation();
+		workEnvironmentEvaluation.setJobApplication(jobApplication);
+		WorkEnvironment workEnvironment = getWorkEnvironment(workEnvironmentDTO);
+		workEnvironmentEvaluation.setWorkEnvironment(workEnvironment);
+		workEnvironmentEvaluationRepository.save(workEnvironmentEvaluation);
+		return new JobApplicationDTO(jobApplicationRepository.save(jobApplication));
+	}
+
+	private static WorkEnvironment getWorkEnvironment(WorkEnvironmentDTO workEnvironmentDTO) {
+		WorkEnvironment workEnvironment = new WorkEnvironment();
+		workEnvironment.setAdequateEquipment(workEnvironmentDTO.getAdequateEquipment());
+		workEnvironment.setCompetitiveSalary(workEnvironmentDTO.getCompetitiveSalary());
+		workEnvironment.setEffectiveCommunication(workEnvironmentDTO.getEffectiveCommunication());
+		workEnvironment.setPositiveAtmosphere(workEnvironmentDTO.getPositiveAtmosphere());
+		workEnvironment.setReasonableWorkload(workEnvironmentDTO.getReasonableWorkload());
+		workEnvironment.setSafetyCompliance(workEnvironmentDTO.getSafetyCompliance());
+		workEnvironment.setSufficientSupervision(workEnvironmentDTO.getSufficientSupervision());
+		workEnvironment.setTaskConformity(workEnvironmentDTO.getTaskConformity());
+		workEnvironment.setWelcomeMeasures(workEnvironmentDTO.getWelcomeMeasures());
+		return workEnvironment;
 	}
 
 	private void loadJobApplications(StudentDTO student) {

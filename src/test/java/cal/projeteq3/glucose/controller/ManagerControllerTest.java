@@ -4,15 +4,23 @@ import cal.projeteq3.glucose.config.SecurityConfiguration;
 import cal.projeteq3.glucose.dto.CvFileDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.WorkEnvironmentDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Department;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.auth.Credentials;
+import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.cvFile.CvState;
+import cal.projeteq3.glucose.model.jobOffer.JobApplication;
+import cal.projeteq3.glucose.model.jobOffer.JobOffer;
 import cal.projeteq3.glucose.model.jobOffer.JobOfferState;
 import cal.projeteq3.glucose.model.user.Manager;
+import cal.projeteq3.glucose.model.user.Student;
+import cal.projeteq3.glucose.repository.JobApplicationRepository;
 import cal.projeteq3.glucose.repository.UserRepository;
+import cal.projeteq3.glucose.repository.WorkEnvironmentEvaluationRepository;
 import cal.projeteq3.glucose.security.JwtAuthenticationEntryPoint;
 import cal.projeteq3.glucose.security.JwtTokenProvider;
 import cal.projeteq3.glucose.service.EmployerService;
@@ -37,6 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -46,6 +55,8 @@ import static org.mockito.Mockito.when;
 public class ManagerControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
     @MockBean
     private ManagerService managerService;
     @MockBean
@@ -53,12 +64,15 @@ public class ManagerControllerTest {
     @MockBean
     private UserRepository userRepository;
     @MockBean
+    private JobApplicationRepository jobApplicationRepository;
+    @MockBean
+    private WorkEnvironmentEvaluationRepository workEnvironmentEvaluationRepository;
+    @MockBean
     private UserService userService;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
     private String token;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     public void setUp() {
@@ -356,5 +370,45 @@ public class ManagerControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(jobApplicationDTOS.size()));
     }
+
+    @Test
+    public void addEnvironmentEvaluation_Valid() throws Exception {
+        // Arrange
+        Long validJobApplicationId = 1L;
+        WorkEnvironmentDTO workEnvironmentDTO = new WorkEnvironmentDTO();
+
+        JobApplication jobApplication = new JobApplication();
+        jobApplication.setId(validJobApplicationId);
+        jobApplication.setCoverLetter("mock");
+
+        Credentials credentials = new Credentials();
+        credentials.setEmail("mock@email.com");
+
+        Role role = Role.STUDENT;
+
+        Student student = new Student();
+        student.setCredentials(credentials);
+        student.setRole(role);
+
+        JobOffer jobOffer = new JobOffer();
+
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+
+        when(jobApplicationRepository.findById(validJobApplicationId)).thenReturn(Optional.of(jobApplication));
+        when(workEnvironmentEvaluationRepository.existsByJobApplicationId(validJobApplicationId)).thenReturn(false);
+        when(jobApplicationRepository.save(any(JobApplication.class))).thenReturn(jobApplication);
+
+        String workEnvironmentJson = objectMapper.writeValueAsString(workEnvironmentDTO);
+
+        // Act & Assert
+        mockMvc.perform(MockMvcRequestBuilders.post("/manager/environmentEvaluation/{jobApplicationId}", validJobApplicationId)
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(workEnvironmentJson))
+                .andExpect(MockMvcResultMatchers.status().isAccepted());
+
+    }
+
 }
 

@@ -48,6 +48,8 @@ public class StudentService{
 	// database operations here
 
 	public StudentDTO createStudent(RegisterStudentDTO registerStudentDTO){
+		if (studentRepository.existsByEmail(registerStudentDTO.getRegisterDTO().getEmail())) throw new EmailAlreadyUsedException();
+		if (studentRepository.existsByMatricule(registerStudentDTO.getStudentDTO().getMatricule())) throw new MatriculeAlreadyUsedException();
 		Student student = Student.builder().email(registerStudentDTO.getRegisterDTO().getEmail()).password(
 			                         passwordEncoder.encode(registerStudentDTO.getRegisterDTO().getPassword())).firstName(
 			                         registerStudentDTO.getStudentDTO().getFirstName()).lastName(registerStudentDTO.getStudentDTO().getLastName())

@@ -115,8 +115,18 @@ textarea.dark-input:focus {
   outline: none;
 }
 
+.card-dark-mode {
+  background-color: #33393f;
+  color: #fff;
+  border-color: #444;
+}
+
 .bg-light-dark {
   background-color: #33393f;
+}
+
+.bg-dark-dark {
+  background-color: #22272e;
 }
 
 .sun {

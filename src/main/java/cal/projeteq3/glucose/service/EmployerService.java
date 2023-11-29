@@ -3,17 +3,26 @@ package cal.projeteq3.glucose.service;
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.exception.badRequestException.*;
+import cal.projeteq3.glucose.exception.unauthorizedException.EmailAlreadyUsedException;
+import cal.projeteq3.glucose.exception.unauthorizedException.InternEvaluationAlreadyExistsException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferHasApplicationsException;
 import cal.projeteq3.glucose.exception.unauthorizedException.JobOfferNotOpenException;
 import cal.projeteq3.glucose.model.Appointment;
 import cal.projeteq3.glucose.model.Semester;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.InternEvaluation;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.sections.*;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -42,10 +51,13 @@ public class EmployerService{
 	private final PasswordEncoder passwordEncoder;
 	private final ManagerRepository managerRepository;
 	private final SignatureRepository signatureRepository;
+	private final TimeSheetRepository timeSheetRepository;
+	private final InternEvaluationRepository internEvaluationRepository;
 
 	// database operations here
 
 	public EmployerDTO createEmployer(RegisterEmployerDTO registerEmployerDTO) {
+		if (employerRepository.existsByEmail(registerEmployerDTO.getRegisterDTO().getEmail())) throw new EmailAlreadyUsedException();
 		Employer employer = Employer.builder()
 				.email(registerEmployerDTO.getRegisterDTO().getEmail())
 				.password(passwordEncoder.encode(registerEmployerDTO.getRegisterDTO().getPassword()))
@@ -292,4 +304,52 @@ public class EmployerService{
 				.collect(Collectors.toList());
 	}
 
+	public List<JobApplicationDTO> getAllAcceptedJobApplicationsByEmployerId(Long employerId) {
+		return jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, employerId)
+				.stream()
+				.map(JobApplicationDTO::new)
+				.collect(Collectors.toList());
+	}
+
+	public JobApplicationDTO saveTimeSheetForJobApplicationId(Long jobApplicationId, List<WeeklyHours> weeklyHours) {
+		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+
+		TimeSheet timeSheet = timeSheetRepository.findByJobApplicationId(jobApplicationId).orElse(new TimeSheet());
+		timeSheet.setWeeklyHours(weeklyHours);
+		timeSheet.setJobApplication(jobApplication);
+
+		jobApplicationRepository.save(jobApplication);
+		timeSheetRepository.save(timeSheet);
+		return new JobApplicationDTO(jobApplication);
+	}
+
+	public TimeSheetDTO getTimeSheetByJobApplicationId(Long jobApplicationId) {
+		return new TimeSheetDTO(timeSheetRepository.findByJobApplicationId(jobApplicationId).orElseThrow(TimeSheetNotFoundException::new));
+	}
+
+	public InternEvaluationDTO saveInternEvaluationForJobApplicationId(Long jobApplicationId, List<SectionDTO> sections) {
+		if (internEvaluationRepository.existsByJobApplicationId(jobApplicationId)) throw new InternEvaluationAlreadyExistsException();
+		JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId)
+				.orElseThrow(JobApplicationNotFoundException::new);
+		SectionDTO productivity = sections.get(0);
+		SectionDTO qualityOfWork = sections.get(1);
+		SectionDTO interpersonalSkills = sections.get(2);
+		SectionDTO personalSkills = sections.get(3);
+		SectionDTO globalAppreciation = sections.get(4);
+		SectionDTO reAdmit = sections.get(5);
+
+		Productivity productivityEntity = new Productivity(productivity.getAgreementLevels(), productivity.getComment());
+		QualityOfWork qualityOfWorkEntity = new QualityOfWork(qualityOfWork.getAgreementLevels(), qualityOfWork.getComment());
+		InterpersonalSkills interpersonalSkillsEntity = new InterpersonalSkills(interpersonalSkills.getAgreementLevels(), interpersonalSkills.getComment());
+		PersonalSkills personalSkillsEntity = new PersonalSkills(personalSkills.getAgreementLevels(), personalSkills.getComment());
+		GlobalAppreciation globalAppreciationEntity = new GlobalAppreciation(globalAppreciation.getInternshipPerformance(), globalAppreciation.getComment(), globalAppreciation.isDiscusssedWithIntern());
+		ReAdmit reAdmitEntity = new ReAdmit(reAdmit.getWelcomeInternBackStatus(), reAdmit.getComment());
+
+		InternEvaluation internEvaluation = new InternEvaluation(productivityEntity, qualityOfWorkEntity, interpersonalSkillsEntity, personalSkillsEntity, globalAppreciationEntity, reAdmitEntity);
+		internEvaluation.setJobApplication(jobApplication);
+		internEvaluationRepository.save(internEvaluation);
+
+		return new InternEvaluationDTO(sections);
+	}
 }

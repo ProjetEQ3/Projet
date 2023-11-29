@@ -4,11 +4,16 @@ import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.auth.LoginDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobApplicationDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.user.EmployerDTO;
 import cal.projeteq3.glucose.dto.user.StudentDTO;
 import cal.projeteq3.glucose.model.Semester;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import cal.projeteq3.glucose.service.EmployerService;
 import cal.projeteq3.glucose.service.UserService;
 import cal.projeteq3.glucose.validation.Validation;
@@ -154,4 +159,31 @@ public class EmployerController{
 				.body(this.employerService.getAllJobOffersWithSubmittedApplicationsFromEmployer(employerId));
 	}
 
+	@GetMapping("/applications/{employerId}")
+	public ResponseEntity<List<JobApplicationDTO>> getAllAcceptedJobApplicationsByEmployerId(@PathVariable Long employerId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getAllAcceptedJobApplicationsByEmployerId(employerId));
+	}
+
+	@GetMapping("/timeSheet/{jobApplicationId}")
+	public ResponseEntity<TimeSheetDTO> getTimeSheet(@PathVariable Long jobApplicationId){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.getTimeSheetByJobApplicationId(jobApplicationId));
+	}
+
+	@PostMapping("/timeSheet/{jobApplicationId}")
+	public ResponseEntity<JobApplicationDTO> saveTimeSheet(@PathVariable Long jobApplicationId, @RequestBody List<WeeklyHours> weeklyHours){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.saveTimeSheetForJobApplicationId(jobApplicationId, weeklyHours));
+	}
+
+	@PostMapping("/internEvaluation/{jobApplicationId}")
+	public ResponseEntity<InternEvaluationDTO> saveStudentEvaluation(@PathVariable Long jobApplicationId, @RequestBody List<SectionDTO> sections){
+		return ResponseEntity.accepted()
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(this.employerService.saveInternEvaluationForJobApplicationId(jobApplicationId, sections));
+	}
 }

@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 import ShortInterviewedStudentInfo from "./ShortInterviewedStudentInfo"
-import {toast} from "react-toastify"
-import {axiosInstance} from "../../App"
 import {useTranslation} from "react-i18next"
 
 const InterviewedStudentList = ({user, fetchStudentList, studentList}) => {

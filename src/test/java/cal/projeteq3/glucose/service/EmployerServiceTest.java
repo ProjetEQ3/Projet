@@ -2,6 +2,9 @@ package cal.projeteq3.glucose.service;
 
 import cal.projeteq3.glucose.dto.AppointmentDTO;
 import cal.projeteq3.glucose.dto.contract.ContractDTO;
+import cal.projeteq3.glucose.dto.evaluation.InternEvaluationDTO;
+import cal.projeteq3.glucose.dto.evaluation.SectionDTO;
+import cal.projeteq3.glucose.dto.evaluation.TimeSheetDTO;
 import cal.projeteq3.glucose.dto.jobOffer.JobOfferDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterDTO;
 import cal.projeteq3.glucose.dto.auth.RegisterEmployerDTO;
@@ -16,6 +19,11 @@ import cal.projeteq3.glucose.model.auth.Credentials;
 import cal.projeteq3.glucose.model.auth.Role;
 import cal.projeteq3.glucose.model.contract.Contract;
 import cal.projeteq3.glucose.model.contract.Signature;
+import cal.projeteq3.glucose.model.evaluation.enums.AgreementLevel;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.InternEvaluation;
+import cal.projeteq3.glucose.model.evaluation.internEvaluation.sections.*;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.TimeSheet;
+import cal.projeteq3.glucose.model.evaluation.timeSheet.WeeklyHours;
 import cal.projeteq3.glucose.model.jobOffer.JobApplication;
 import cal.projeteq3.glucose.model.jobOffer.JobApplicationState;
 import cal.projeteq3.glucose.model.jobOffer.JobOffer;
@@ -27,6 +35,7 @@ import cal.projeteq3.glucose.repository.*;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Embedded;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,6 +46,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.when;
 
@@ -66,6 +76,10 @@ public class EmployerServiceTest {
     private ManagerRepository managerRepository;
     @Mock
     private SignatureRepository signatureRepository;
+    @Mock
+    private TimeSheetRepository timeSheetRepository;
+    @Mock
+    private InternEvaluationRepository internEvaluationRepository;
 
     @Test
     void createEmployer_valid(){
@@ -788,6 +802,7 @@ public class EmployerServiceTest {
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
         mockApplication.setJobOffer(jobOffer);
+        jobOffer.addJobApplication(mockApplication);
 
         LocalDateTime date1 = LocalDateTime.now().plusDays(1);
         LocalDateTime date2 = LocalDateTime.now().plusDays(2);
@@ -844,6 +859,7 @@ public class EmployerServiceTest {
         mockApplication.setStudent(student);
         mockApplication.setId(applicationId);
         mockApplication.setJobOffer(jobOffer);
+        jobOffer.addJobApplication(mockApplication);
 
         LocalDateTime date1 = LocalDateTime.now().plusDays(1);
 
@@ -1292,4 +1308,169 @@ public class EmployerServiceTest {
 
     }
 
+    @Test
+    public void testGetAllAcceptedJobApplicationsByEmployerId_ExistentEmployer() {
+
+        Employer employer = Employer.builder().id(1L).build();
+        List<JobApplication> jobApplications = new ArrayList<>();
+
+        when(jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, employer.getId()))
+                .thenReturn(jobApplications);
+
+        List<JobApplicationDTO> retrievedJobApplications = employerService.getAllAcceptedJobApplicationsByEmployerId(employer.getId());
+        List<JobApplicationDTO> jobApplicationDTOS = jobApplications.stream().map(JobApplicationDTO::new).collect(Collectors.toList());
+
+        assertEquals(retrievedJobApplications, jobApplicationDTOS);
+
+    }
+
+    @Test
+    public void testGetAllAcceptedJobApplicationsByEmployerId_NonExistentEmployer() {
+
+        Long nonExistentEmployerId = -1L;
+
+        when(jobApplicationRepository.findJobApplicationsByJobApplicationStateAndEmployerId(JobApplicationState.ACCEPTED, nonExistentEmployerId)).thenThrow(new EmployerNotFoundException(nonExistentEmployerId));
+
+        assertThrows(EmployerNotFoundException.class, () -> {
+            employerService.getAllAcceptedJobApplicationsByEmployerId(nonExistentEmployerId);
+        });
+
+    }
+
+    @Test
+    public void testSaveTimeSheetForJobApplicationId_existentJobApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        JobOffer jobOffer = JobOffer.builder().id(jobOfferId).build();
+        Long studentId = 1L;
+        Student student = Student.builder().id(studentId).build();
+        Long jobApplicationId = 1L;
+        JobApplication jobApplication = JobApplication.builder().id(jobApplicationId).build();
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+        List<WeeklyHours> weeklyHours = new ArrayList<>();
+        weeklyHours.add(new WeeklyHours());
+        weeklyHours.add(new WeeklyHours());
+        weeklyHours.add(new WeeklyHours());
+        TimeSheet timeSheet = new TimeSheet();
+        timeSheet.setWeeklyHours(weeklyHours);
+
+        when(jobApplicationRepository.findById(jobApplicationId)).thenReturn(Optional.of(jobApplication));
+        when(timeSheetRepository.save(any(TimeSheet.class))).thenReturn(timeSheet);
+
+        // Act
+        JobApplicationDTO result = employerService.saveTimeSheetForJobApplicationId(jobApplicationId, weeklyHours);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(jobApplicationId, result.getId());
+        verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
+        verify(timeSheetRepository, times(1)).save(any(TimeSheet.class));
+    }
+
+    @Test
+    public void testGetTimeSheetByJobApplicationId_existentJobApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        JobOffer jobOffer = JobOffer.builder().id(jobOfferId).build();
+        Long studentId = 1L;
+        Student student = Student.builder().id(studentId).build();
+        Long jobApplicationId = 1L;
+        JobApplication jobApplication = JobApplication.builder().id(jobApplicationId).build();
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+        List<WeeklyHours> weeklyHours = new ArrayList<>();
+        weeklyHours.add(new WeeklyHours());
+        weeklyHours.add(new WeeklyHours());
+        weeklyHours.add(new WeeklyHours());
+        TimeSheet timeSheet = new TimeSheet();
+        timeSheet.setWeeklyHours(weeklyHours);
+        timeSheet.setJobApplication(jobApplication);
+
+        when(timeSheetRepository.findByJobApplicationId(jobApplicationId)).thenReturn(Optional.of(timeSheet));
+
+        // Act
+        TimeSheetDTO result = employerService.getTimeSheetByJobApplicationId(jobApplicationId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(jobApplicationId, result.getJobApplicationId());
+        verify(timeSheetRepository, times(1)).findByJobApplicationId(jobApplicationId);
+    }
+
+    @Test
+    public void testSaveInternEvaluationForJobApplicationId_existentJobApplication() {
+        // Arrange
+        Long jobOfferId = 1L;
+        Long studentId = 1L;
+        Long jobApplicationId = 1L;
+        JobOffer jobOffer = JobOffer.builder().id(jobOfferId).build();
+        Student student = Student.builder().id(studentId).build();
+        JobApplication jobApplication = JobApplication.builder().id(jobApplicationId).build();
+
+        jobApplication.setStudent(student);
+        jobApplication.setJobOffer(jobOffer);
+        List<SectionDTO> sections = new ArrayList<>();
+
+        SectionDTO productivityDTO = new SectionDTO();
+        productivityDTO.setAgreementLevels(List.of(
+                AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_DISAGREE, AgreementLevel.TOTALLY_DISAGREE, AgreementLevel.TOTALLY_DISAGREE, AgreementLevel.TOTALLY_DISAGREE
+        ));
+        productivityDTO.setComment("Test");
+        sections.add(productivityDTO);
+
+        SectionDTO qualityOfWorkDTO = new SectionDTO();
+        qualityOfWorkDTO.setAgreementLevels(
+                List.of(AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE)
+        );
+        qualityOfWorkDTO.setComment("Test");
+        sections.add(qualityOfWorkDTO);
+
+        SectionDTO interpersonalSkillsDTO = new SectionDTO();
+        interpersonalSkillsDTO.setAgreementLevels(
+                List.of(AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE)
+        );
+        interpersonalSkillsDTO.setComment("Test");
+        sections.add(interpersonalSkillsDTO);
+
+        SectionDTO personalSkillsDTO = new SectionDTO();
+        personalSkillsDTO.setAgreementLevels(
+                List.of(AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE)
+        );
+        personalSkillsDTO.setComment("Test");
+        sections.add(personalSkillsDTO);
+
+        SectionDTO globalAppreciationDTO = new SectionDTO();
+        globalAppreciationDTO.setAgreementLevels(
+                List.of(AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE)
+        );
+        globalAppreciationDTO.setComment("Test");
+        sections.add(globalAppreciationDTO);
+
+        SectionDTO reAdmitDTO = new SectionDTO();
+        reAdmitDTO.setAgreementLevels(
+                List.of(AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE, AgreementLevel.TOTALLY_AGREE)
+        );
+        reAdmitDTO.setComment("Test");
+        sections.add(reAdmitDTO);
+
+        List<AgreementLevel> agreementLevelsToExpect = new ArrayList<>();
+        agreementLevelsToExpect.add(AgreementLevel.TOTALLY_AGREE);
+        agreementLevelsToExpect.add(AgreementLevel.TOTALLY_DISAGREE);
+        agreementLevelsToExpect.add(AgreementLevel.TOTALLY_DISAGREE);
+        agreementLevelsToExpect.add(AgreementLevel.TOTALLY_DISAGREE);
+        agreementLevelsToExpect.add(AgreementLevel.TOTALLY_DISAGREE);
+
+        when(jobApplicationRepository.findById(jobApplicationId)).thenReturn(Optional.of(jobApplication));
+        when(internEvaluationRepository.save(any(InternEvaluation.class))).thenReturn(new InternEvaluation());
+
+        // Act
+        InternEvaluationDTO result = employerService.saveInternEvaluationForJobApplicationId(jobApplicationId, sections);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(agreementLevelsToExpect, result.getSections().get(0).getAgreementLevels());
+        verify(jobApplicationRepository, times(1)).findById(jobApplicationId);
+        verify(internEvaluationRepository, times(1)).save(any(InternEvaluation.class));
+    }
 }

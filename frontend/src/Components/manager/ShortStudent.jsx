@@ -6,12 +6,14 @@ import State from "../util/State";
 import StudentState from "../util/StudentState";
 import FullJobOffer from "./FullJobOffer";
 import {useDarkMode} from "../../context/DarkModeContext";
+import {useNavigate} from "react-router-dom";
 
 const ShortStudent = ({student}) => {
     const {t} = useTranslation();
     const [isHovered, setHovered] = useState(false);
     const [showApplications, setShowApplications] = useState(false);
     const [studentApplications, setStudentApplications] = useState([]);
+    const navigate = useNavigate();
 
     const { darkMode } = useDarkMode();
 
@@ -21,6 +23,10 @@ const ShortStudent = ({student}) => {
 
     const handleMouseLeave = () => {
         setHovered(false);
+    };
+
+    const handleEnvEvaluationButton = (application) => {
+        navigate('/manager/envEvaluation', { state: { application } });
     };
 
     const handleStudentClick = () => {
@@ -72,9 +78,15 @@ return (
                                     studentApplications.map((application, index) => (
                                         <div key={index} className={`${darkMode ? 'bg-dark' : 'bg-light'} rounded my-2 py-2 px-3`}>
                                             <div className="row">
-                                                <div className="col-8">
+                                                <div className="col-6">
                                                     <h6>{application.jobOffer.title}</h6>
                                                 </div>
+                                                {
+                                                    (application.jobApplicationState === "ACCEPTED" || application.jobApplicationState === "COMPLETE") && <div className="col-3 text-center">
+                                                        <button type="button" className="btn btn-outline-ose btn-sm"
+                                                            onClick={() => handleEnvEvaluationButton(application)}>{t('envEvaluation')}</button>
+                                                    </div>
+                                                }
                                                 <div className="col-3 text-center">
                                                     <StudentState state={"STUDENT_" + application.jobApplicationState}/>
                                                 </div>
