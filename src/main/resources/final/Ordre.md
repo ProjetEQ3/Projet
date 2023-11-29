@@ -25,21 +25,30 @@
 
    **Offre 1**
    - Titre: `Développeur Java`
+   - Département: `420.B0`
+   - Lieu de travail : `1111 rue laPierre, LaSalle, QC, H8N 2J4`
+   - Nombres de candidats demandés: `2`
    - Description: `Développer des applications Java`
-   - Date de début: `2021-01-01`
-   - Date de fin: `2021-04-30`
-   - Nombre d'heures par semaine: `40`
    - Salaire: `20`
-    - **Offre 2**
-    - Titre: `Développeur C#`
-    - Description: `Développer des applications C#`
-    - Date de début: `2021-01-01`
-    - Date de fin: `2021-04-30`
-    - Nombre d'heures par semaine: `40`
-    - Salaire: `20`
+   - Nombre d'heures par semaine: `40`
+   - Date de début: `2024-01-28`
+   - Durée: `8`
+   - Date d'expiration: `2023-12-12`
+
+   **Offre 2**
+   - Titre: `Développeur c#`
+   - Département: `420.B0`
+   - Lieu de travail : `Télétravail`
+   - Nombres de candidats demandés: `5`
+   - Description: `Développer des applications Java`
+   - Salaire: `20`
+   - Nombre d'heures par semaine: `40`
+   - Date de début: `2024-01-28`
+   - Durée: `8`
+   - Date d'expiration: `2023-12-12`
           
-    - Modifier une offre de stage
-    - Supprimer une offre de stage
+   - Modifier une offre de stage
+   - Supprimer une offre de stage
 2. Créer un compte Étudiant
     - Prénom: `Jean`
     - Nom: `Tremblay`
